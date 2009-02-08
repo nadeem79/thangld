@@ -10,6 +10,24 @@
     <form id="form1" runat="server">
     <div>
     
+        <asp:ScriptManager ID="ScriptManager1" runat="server">
+        </asp:ScriptManager>
+    
+    </div>
+    <div style="width:900px;">
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+        <ContentTemplate>
+            <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+            <br />
+            <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+            <br />
+            <asp:Button ID="Button1" runat="server" onclick="Button1_Click" Text="Button" />
+            <br />
+            <br />
+            <br />
+            <br />
+        </ContentTemplate>
+    </asp:UpdatePanel>
     </div>
     </form>
 </body>
