@@ -5,9 +5,10 @@ using System.Text;
 
 namespace TWLib
 {
-    public enum Sex
+    public enum ResourcesType
     {
-        Female = 0,
-        Male = 1,
+        Clay = 1,
+        Wood = 2,
+        Iron = 3,
     }
 }

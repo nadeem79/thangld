@@ -8,8 +8,8 @@
     <ProjectGuid>{774F5470-2180-41FA-979A-FB27F8CEDB86}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ClassLibrary1</RootNamespace>
-    <AssemblyName>ClassLibrary1</AssemblyName>
+    <RootNamespace>TWLib</RootNamespace>
+    <AssemblyName>TWLib</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -45,9 +45,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attack.cs" />
+    <Compile Include="Build.cs" />
+    <Compile Include="BuildingType.cs" />
     <Compile Include="Group.cs" />
+    <Compile Include="Movement.cs" />
+    <Compile Include="MoveType.cs" />
+    <Compile Include="Offer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResourcesType.cs" />
     <Compile Include="Sex.cs" />
+    <Compile Include="Support.cs" />
+    <Compile Include="Trading.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Village.cs" />
   </ItemGroup>
