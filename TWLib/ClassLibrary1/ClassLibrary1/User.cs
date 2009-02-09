@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ClassLibrary1
+namespace TWLib
 {
     public class User
     {
@@ -35,10 +35,10 @@ namespace ClassLibrary1
             set { tribe = value; }
         }
 
-        public List<Village> AVillages
+        public List<Village> Villages
         {
-            get { return aVillages; }
-            set { aVillages = value; }
+            get { return villages; }
+            set { villages = value; }
         }
 
         public string Username

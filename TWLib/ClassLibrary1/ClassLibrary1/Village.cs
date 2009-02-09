@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ClassLibrary1
+namespace TWLib
 {
     
 
@@ -37,8 +37,20 @@ namespace ClassLibrary1
         private int wall;
         private int points;
         private DateTime lastUpdate;
-
-        
+        private int spear;
+        private int sword;
+        private int axe;
+        private int catapult;
+        private int scout;
+        private int light;
+        private int ram;
+        private int heavy;
+        private int noble;
+        private List<Attack> attacks;
+        private List<Offer> offers;
+        private List<Trading> sendings;
+        private List<Support> supports;
+        private List<Trading> returnings;
         #endregion
 
         #region Properties
@@ -88,13 +100,11 @@ namespace ClassLibrary1
             set { clayPit = value; }
         }
 
-
         public int TimberCamp
         {
             get { return timberCamp; }
             set { timberCamp = value; }
         }
-
 
         public int Market
         {
@@ -113,7 +123,6 @@ namespace ClassLibrary1
             get { return smithy; }
             set { smithy = value; }
         }
-
 
         public int Academy
         {
@@ -145,7 +154,6 @@ namespace ClassLibrary1
             set { headquarter = value; }
         }
 
-
         public int Id
         {
             get { return id; }
@@ -161,13 +169,13 @@ namespace ClassLibrary1
             get { return y; }
             set { y = value; }
         }
+
         public string Name
         {
             get { return name; }
             set { name = value; }
         }
         
-
         public User Owner
         {
             get { return owner; }
@@ -208,14 +216,104 @@ namespace ClassLibrary1
                 this.iron = value;
             }
         }
+
+        public int Noble
+        {
+            get { return noble; }
+            set { noble = value; }
+        }
+
+        public int Spear
+        {
+            get { return spear; }
+            set { spear = value; }
+        }
+
+        public int Sword
+        {
+            get { return sword; }
+            set { sword = value; }
+        }
+
+        public int Axe
+        {
+            get { return axe; }
+            set { axe = value; }
+        }
+
+        public int Scout
+        {
+            get { return scout; }
+            set { scout = value; }
+        }
+
+        public int Light
+        {
+            get { return light; }
+            set { light = value; }
+        }
+
+        public int Heavy
+        {
+            get { return heavy; }
+            set { heavy = value; }
+        }
+
+        public int Ram
+        {
+            get { return ram; }
+            set { ram = value; }
+        }
+
+        public int Catapult
+        {
+            get { return catapult; }
+            set { catapult = value; }
+        }
+
+        public List<Attack> Attacks
+        {
+            get { return attacks; }
+            set { attacks = value; }
+        }
+
+        private List<Trading> Returnings
+        {
+            get { return returnings; }
+            set { returnings = value; }
+        }
+
+        private List<Offer> Offers
+        {
+            get { return offers; }
+            set { offers = value; }
+        }
+
+        private List<Trading> Sendings
+        {
+            get { return sendings; }
+            set { sendings = value; }
+        }
+
+        private List<Support> Supports
+        {
+            get { return supports; }
+            set { supports = value; }
+        }
         #endregion
 
         #region Constructors
-        public Village() { }
+        public Village() 
+        {
+            this.attacks = new List<Attack>();
+            this.supports = new List<Support>();
+            this.sendings = new List<Trading>();
+            this.returnings = new List<Trading>();
+            this.offers = new List<Offer>();
+        }
         public Village(int id):this()
         {
             this.id = id;
-
         }
         #endregion
 

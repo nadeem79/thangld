@@ -5,9 +5,10 @@ using System.Text;
 
 namespace TWLib
 {
-    public enum Sex
+    public enum MoveType
     {
-        Female = 0,
-        Male = 1,
+        SendResources = 1,
+        Attack = 2,
+        Support = 3,
     }
 }
