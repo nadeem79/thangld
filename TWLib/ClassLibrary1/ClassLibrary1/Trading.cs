@@ -3,16 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace TWLib
+namespace Beans
 {
     public class Trading
     {
         #region Variables
         private int id;
-        private ResourcesType type;
-        private int quantity;
+        private int wood;
+        private int clay;
+        private int iron;
+
+        
         private Village fromVillage;
         private Village toVillage;
+        private bool hide;
+
+        
 
         #endregion
 
@@ -23,16 +29,22 @@ namespace TWLib
             set { id = value; }
         }
 
-        public ResourcesType Type
+        public int Wood
         {
-            get { return type; }
-            set { type = value; }
+            get { return wood; }
+            set { wood = value; }
         }
 
-        public int Quantity
+        public int Clay
         {
-            get { return quantity; }
-            set { quantity = value; }
+            get { return clay; }
+            set { clay = value; }
+        }
+
+        public int Iron
+        {
+            get { return iron; }
+            set { iron = value; }
         }
 
         public Village FromVillage
@@ -45,6 +57,12 @@ namespace TWLib
         {
             get { return toVillage; }
             set { toVillage = value; }
+        }
+
+        public bool Hide
+        {
+            get { return hide; }
+            set { hide = value; }
         }
         #endregion
 
