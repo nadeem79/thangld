@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace TWLib
+namespace Beans
 {
     
 
@@ -17,9 +17,11 @@ namespace TWLib
         private int y;
         private string name;
         private User owner;
+
         private int wood;
         private int iron;
         private int clay;
+
         private int headquarter;
         private int barracks;
         private int stable;
@@ -36,7 +38,7 @@ namespace TWLib
         private int hidingPlace;
         private int wall;
         private int points;
-        private DateTime lastUpdate;
+
         private int spear;
         private int sword;
         private int axe;
@@ -46,6 +48,9 @@ namespace TWLib
         private int ram;
         private int heavy;
         private int noble;
+
+        private DateTime lastUpdate;
+        
         private List<Attack> attacks;
         private List<Offer> offers;
         private List<Trading> sendings;

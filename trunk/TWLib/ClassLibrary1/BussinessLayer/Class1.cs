@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Beans
+namespace BussinessLayer
 {
-    public enum MoveType
+    public class Class1
     {
-        SendResources = 1,
-        Attack = 2,
-        Support = 3,
     }
 }

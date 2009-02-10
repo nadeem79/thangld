@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace TWLib
+namespace Beans
 {
     public class User
     {
         #region Variable
-        private int id;
         private string username;
         private List<Village> villages;
         private Group tribe;
@@ -47,11 +46,6 @@ namespace TWLib
             set { username = value; }
         }
 
-        public int ID
-        {
-            get { return id; }
-            set { id = value; }
-        }
         #endregion
 
         #region Constructors
@@ -60,9 +54,9 @@ namespace TWLib
             this.villages = new List<Village>();
         }
 
-        public User(int id):this()
+        public User(string username):this()
         {
-            this.id = id;
+            this.username = username;
 
         }
         #endregion
