@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Database Name="tribalwars" Class="TribalWarsMappingDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=DREAMINGFIGHTER\SQLEXPRESS;Initial Catalog=tribalwars;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="tribalwarsConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.diplomates" Member="diplomates">
+    <Type Name="diplomate">
+      <Column Name="group_1" Type="System.String" DbType="NVarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="group_2" Type="System.String" DbType="NVarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="type" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="group_diplomate" Member="group" ThisKey="group_1" OtherKey="ID" Type="Group" IsForeignKey="true" />
+      <Association Name="group_diplomate1" Member="Group1" ThisKey="group_2" OtherKey="ID" Type="Group" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.groups" Member="Groups">
+    <Type Name="Group">
+      <Column Name="id" Member="ID" Type="System.String" DbType="NVarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="name" Member="Name" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Member="Allies" Type="System.Xml.Linq.XElement" CanBeNull="false" />
+      <Column Member="Property1" Type="System.String" CanBeNull="false" />
+      <Association Name="group_diplomate" Member="diplomates" ThisKey="ID" OtherKey="group_1" Type="diplomate" />
+      <Association Name="group_diplomate1" Member="diplomates1" ThisKey="ID" OtherKey="group_2" Type="diplomate" />
+      <Association Name="group_user" Member="Users" ThisKey="ID" OtherKey="group_id" Type="User" />
+    </Type>
+  </Table>
+  <Table Name="dbo.offers" Member="Offers">
+    <Type Name="Offer">
+      <Column Name="id" Member="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="offertype" Member="OfferType" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="offerquantity" Member="OfferQuantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="fortype" Member="ForType" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="forquantity" Member="ForQuantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="offernumber" Member="OfferNumber" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="maxtransporttime" Member="MaxTransportTime" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="village_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="village_offer" Member="Village" ThisKey="village_id" OtherKey="ID" Type="Village" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.users" Member="Users">
+    <Type Name="User">
+      <Column Name="username" Member="Username" Type="System.String" DbType="NVarChar(200) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="group_id" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="sex" Member="Sex" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="birthdate" Member="Birthdate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="last_update" Member="LastUpdate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="user_village" Member="Villages" ThisKey="Username" OtherKey="userid" Type="Village" />
+      <Association Name="group_user" Member="Group" ThisKey="group_id" OtherKey="ID" Type="Group" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.villages" Member="Villages">
+    <Type Name="Village">
+      <Column Name="id" Member="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="x" Member="X" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="y" Member="Y" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="name" Member="Name" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="userid" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="wood" Member="Wood" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="clay" Member="Clay" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="iron" Member="Iron" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="headquarter" Member="Headquarter" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="barracks" Member="Barracks" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="stable" Member="Stable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="workshop" Member="Workshop" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="academy" Member="Academy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="smithy" Member="Smithy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="rally" Member="Rally" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="market" Member="Market" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="timbercamp" Member="TimberCamp" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="claypit" Member="ClayPit" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ironmine" Member="IronMine" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="storage" Member="Storage" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="farm" Member="Farm" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="hide" Member="HiddenPlace" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="wall" Member="Wall" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="points" Member="Points" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="unit_spear_tec_level" Member="SpearTechLevel" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="unit_sword_tec_level" Member="SwordTechLevel" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="unit_axe_tec_level" Member="AxeTechLevel" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="unit_spy_tec_level" Member="ScoutTechLevel" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="unit_light_tec_level" Member="LightTechLevel" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="unit_heavy_tec_level" Member="HeavyTechLevel" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="unit_ram_tec_level" Member="RamTechLevel" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="unit_catapult_tec_level" Member="CatapultTechLevel" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="all_unit_spear" Member="Spear" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="all_unit_sword" Member="Sword" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="all_unit_axe" Member="Axe" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="all_unit_spy" Member="Scout" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="all_unit_light" Member="Light" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="all_unit_heavy" Member="Heavy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="all_unit_ram" Member="Ram" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="all_unit_catapult" Member="Catapult" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="all_unit_snob" Member="Nobleman" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="last_update" Member="LastUpdate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="loyal" Member="Loyal" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="village_offer" Member="Offers" ThisKey="ID" OtherKey="village_id" Type="Offer" />
+      <Association Name="user_village" Member="User" ThisKey="userid" OtherKey="Username" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
