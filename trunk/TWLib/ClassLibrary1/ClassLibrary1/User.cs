@@ -13,9 +13,19 @@ namespace Beans
         private Group tribe;
         private Sex gender;
         private DateTime birthdate;
+        private DateTime lastUpdate;
+
+        
         #endregion
 
         #region Properties
+
+        public DateTime LastUpdate
+        {
+            get { return lastUpdate; }
+            set { lastUpdate = value; }
+        }
+
         public DateTime Birthdate
         {
             get { return birthdate; }
