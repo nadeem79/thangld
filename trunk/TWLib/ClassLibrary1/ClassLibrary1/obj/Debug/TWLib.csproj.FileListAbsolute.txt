@@ -1,5 +1,0 @@
-D:\My Documents\Projects\tw\TWLib\ClassLibrary1\ClassLibrary1\obj\Debug\ResolveAssemblyReference.cache
-D:\My Documents\Projects\tw\TWLib\ClassLibrary1\ClassLibrary1\bin\Debug\TWLib.dll
-D:\My Documents\Projects\tw\TWLib\ClassLibrary1\ClassLibrary1\bin\Debug\TWLib.pdb
-D:\My Documents\Projects\tw\TWLib\ClassLibrary1\ClassLibrary1\obj\Debug\TWLib.dll
-D:\My Documents\Projects\tw\TWLib\ClassLibrary1\ClassLibrary1\obj\Debug\TWLib.pdb
