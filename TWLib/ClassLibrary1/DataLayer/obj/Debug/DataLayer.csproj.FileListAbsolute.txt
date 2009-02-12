@@ -1,8 +1,0 @@
-D:\My Documents\Projects\tw\TWLib\ClassLibrary1\DataLayer\bin\Debug\DataLayer.dll.config
-D:\My Documents\Projects\tw\TWLib\ClassLibrary1\DataLayer\bin\Debug\DataLayer.dll
-D:\My Documents\Projects\tw\TWLib\ClassLibrary1\DataLayer\bin\Debug\DataLayer.pdb
-D:\My Documents\Projects\tw\TWLib\ClassLibrary1\DataLayer\bin\Debug\TWLib.dll
-D:\My Documents\Projects\tw\TWLib\ClassLibrary1\DataLayer\bin\Debug\TWLib.pdb
-D:\My Documents\Projects\tw\TWLib\ClassLibrary1\DataLayer\obj\Debug\ResolveAssemblyReference.cache
-D:\My Documents\Projects\tw\TWLib\ClassLibrary1\DataLayer\obj\Debug\DataLayer.dll
-D:\My Documents\Projects\tw\TWLib\ClassLibrary1\DataLayer\obj\Debug\DataLayer.pdb

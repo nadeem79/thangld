@@ -1,5 +1,0 @@
-D:\My Documents\Projects\tw\TWLib\ClassLibrary1\ClassLibrary1\bin\Debug\Beans.dll
-D:\My Documents\Projects\tw\TWLib\ClassLibrary1\ClassLibrary1\bin\Debug\Beans.pdb
-D:\My Documents\Projects\tw\TWLib\ClassLibrary1\ClassLibrary1\obj\Debug\ResolveAssemblyReference.cache
-D:\My Documents\Projects\tw\TWLib\ClassLibrary1\ClassLibrary1\obj\Debug\Beans.dll
-D:\My Documents\Projects\tw\TWLib\ClassLibrary1\ClassLibrary1\obj\Debug\Beans.pdb
