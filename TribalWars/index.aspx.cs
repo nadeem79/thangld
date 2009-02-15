@@ -16,8 +16,8 @@ public partial class index : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        this.error.Text = (5 ^ 3).ToString();
-        
+
+        this.error.Text = DateTime.Now.AddSeconds(-500).ToString();
         
     }
 
