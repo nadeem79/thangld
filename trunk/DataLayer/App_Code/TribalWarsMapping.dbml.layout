@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11.125, 12" name="TribalWarsMapping">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 12" name="TribalWarsMapping">
   <DataContextMoniker Name="/TribalWarsMappingDataContext" />
   <nestedChildShapes>
     <classShape Id="f5db1ee2-1e01-458d-afb3-63a3c78471c1" absoluteBounds="6.25, 0.75, 2, 1.26050048828125">
@@ -8,63 +8,203 @@
         <elementListCompartment Id="01a466fb-abd3-4d77-aed2-4c116be9a9e6" absoluteBounds="6.265, 1.21, 1.9700000000000002, 0.70050048828125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="4e0295ed-b928-4e05-80c0-fb559737e4bb" absoluteBounds="8.375, 3.125, 2, 1.4248478190104166">
+    <classShape Id="4e0295ed-b928-4e05-80c0-fb559737e4bb" absoluteBounds="8.375, 3.125, 2, 1.5891951497395827">
       <DataClassMoniker Name="/TribalWarsMappingDataContext/Group" />
       <nestedChildShapes>
-        <elementListCompartment Id="33eb1422-9cc5-4e02-ad0a-a6fefcf475e1" absoluteBounds="8.39, 3.585, 1.9700000000000002, 0.86484781901041663" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="33eb1422-9cc5-4e02-ad0a-a6fefcf475e1" absoluteBounds="8.39, 3.585, 1.9700000000000002, 1.0291951497395833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(8.375 : 3.5566390625); (7.2871078125 : 3.5566390625); (7.2871078125 : 2.01050048828125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/TribalWarsMappingDataContext/Group/group_diplomate" />
-      <nodes>
-        <classShapeMoniker Id="4e0295ed-b928-4e05-80c0-fb559737e4bb" />
-        <classShapeMoniker Id="f5db1ee2-1e01-458d-afb3-63a3c78471c1" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(8.375 : 3.30956703125); (7.79980640625 : 3.30956703125); (7.79980640625 : 2.01050048828125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/TribalWarsMappingDataContext/Group/group_diplomate1" />
-      <nodes>
-        <classShapeMoniker Id="4e0295ed-b928-4e05-80c0-fb559737e4bb" />
-        <classShapeMoniker Id="f5db1ee2-1e01-458d-afb3-63a3c78471c1" />
-      </nodes>
-    </associationConnector>
     <classShape Id="f3cbbe29-0c49-47ba-9391-71a1061e34f2" absoluteBounds="3.875, 0.5, 2, 2.0822371419270831">
       <DataClassMoniker Name="/TribalWarsMappingDataContext/Offer" />
       <nestedChildShapes>
         <elementListCompartment Id="40f0f906-be09-498a-9cd8-72bf0fe1e873" absoluteBounds="3.89, 0.96, 1.9700000000000002, 1.5222371419270833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="ebe54fc5-ec3c-4c45-b6da-ba14bd2e06b0" absoluteBounds="8.875, 0.625, 2, 1.5891951497395831">
+    <classShape Id="ebe54fc5-ec3c-4c45-b6da-ba14bd2e06b0" absoluteBounds="8.5, 5.375, 2, 1.5891951497395831">
       <DataClassMoniker Name="/TribalWarsMappingDataContext/User" />
       <nestedChildShapes>
-        <elementListCompartment Id="bd221904-ff42-4f55-9342-9f28a4f436de" absoluteBounds="8.89, 1.085, 1.9700000000000002, 1.0291951497395833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="bd221904-ff42-4f55-9342-9f28a4f436de" absoluteBounds="8.515, 5.835, 1.9700000000000002, 1.0291951497395833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(9.625 : 3.125); (9.625 : 2.21419514973958)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/TribalWarsMappingDataContext/Group/group_user" />
-      <nodes>
-        <classShapeMoniker Id="4e0295ed-b928-4e05-80c0-fb559737e4bb" />
-        <classShapeMoniker Id="ebe54fc5-ec3c-4c45-b6da-ba14bd2e06b0" />
-      </nodes>
-    </associationConnector>
     <classShape Id="ef498a89-9a31-4cee-8a17-d10cf9550501" absoluteBounds="4.75, 3.875, 2, 7.8343937174479148">
       <DataClassMoniker Name="/TribalWarsMappingDataContext/Village" />
       <nestedChildShapes>
         <elementListCompartment Id="2beb1ba7-c1ba-4db8-9805-ccb45994c225" absoluteBounds="4.7650000000000006, 4.335, 1.9700000000000002, 7.2743937174479161" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(5.3125 : 3.875); (5.3125 : 2.58223714192708)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/TribalWarsMappingDataContext/Village/village_offer" />
+    <associationConnector edgePoints="[(8.375 : 3.5635762177282); (7.27108598144531 : 3.5635762177282); (7.27108598144531 : 2.01050048828125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/TribalWarsMappingDataContext/Group/Group_diplomate" />
+      <nodes>
+        <classShapeMoniker Id="4e0295ed-b928-4e05-80c0-fb559737e4bb" />
+        <classShapeMoniker Id="f5db1ee2-1e01-458d-afb3-63a3c78471c1" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.375 : 3.3130356088641); (7.79179549072266 : 3.3130356088641); (7.79179549072266 : 2.01050048828125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/TribalWarsMappingDataContext/Group/Group_diplomate1" />
+      <nodes>
+        <classShapeMoniker Id="4e0295ed-b928-4e05-80c0-fb559737e4bb" />
+        <classShapeMoniker Id="f5db1ee2-1e01-458d-afb3-63a3c78471c1" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.3125 : 3.875); (5.3125 : 2.58223714192708)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/TribalWarsMappingDataContext/Village/Village_Offer" />
       <nodes>
         <classShapeMoniker Id="ef498a89-9a31-4cee-8a17-d10cf9550501" />
         <classShapeMoniker Id="f3cbbe29-0c49-47ba-9391-71a1061e34f2" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(10.65625 : 2.21419514973958); (10.65625 : 8.16087076822917); (6.75 : 8.16087076822917)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/TribalWarsMappingDataContext/User/user_village" />
+    <associationConnector edgePoints="[(9.4375 : 4.71419514973958); (9.4375 : 5.375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/TribalWarsMappingDataContext/Group/Group_User" />
+      <nodes>
+        <classShapeMoniker Id="4e0295ed-b928-4e05-80c0-fb559737e4bb" />
+        <classShapeMoniker Id="ebe54fc5-ec3c-4c45-b6da-ba14bd2e06b0" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.5 : 6.16959757486979); (6.75 : 6.16959757486979)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/TribalWarsMappingDataContext/User/User_Village" />
       <nodes>
         <classShapeMoniker Id="ebe54fc5-ec3c-4c45-b6da-ba14bd2e06b0" />
         <classShapeMoniker Id="ef498a89-9a31-4cee-8a17-d10cf9550501" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="4869493b-d0c9-4855-bfc7-9acd1246f547" isExpanded="false" absoluteBounds="1.125, 4, 2, 0.45">
+      <DataClassMoniker Name="/TribalWarsMappingDataContext/AttackTo" />
+      <nestedChildShapes>
+        <elementListCompartment Id="596825f6-7550-4686-8b2b-101e5fa673c9" absoluteBounds="1.1400000000000001, 4.46, 1.9700000000000002, 2.8370157877604165" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(4.75 : 4.225); (3.125 : 4.225)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/TribalWarsMappingDataContext/Village/Village_movement" />
+      <nodes>
+        <classShapeMoniker Id="ef498a89-9a31-4cee-8a17-d10cf9550501" />
+        <classShapeMoniker Id="4869493b-d0c9-4855-bfc7-9acd1246f547" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(4.75 : 4.05); (3.125 : 4.05)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/TribalWarsMappingDataContext/Village/Village_movement1" />
+      <nodes>
+        <classShapeMoniker Id="ef498a89-9a31-4cee-8a17-d10cf9550501" />
+        <classShapeMoniker Id="4869493b-d0c9-4855-bfc7-9acd1246f547" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="b3995644-4736-4c52-8915-7c30e3144d8a" isExpanded="false" absoluteBounds="1.125, 4.5, 2, 0.45">
+      <DataClassMoniker Name="/TribalWarsMappingDataContext/SupportTo" />
+      <nestedChildShapes>
+        <elementListCompartment Id="caa92228-224c-4139-a4d0-d1f9e124f614" absoluteBounds="1.1400000000000001, 4.96, 1.9700000000000002, 2.67266845703125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(4.75 : 4.725); (3.125 : 4.725)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/TribalWarsMappingDataContext/Village/Village_movement2" />
+      <nodes>
+        <classShapeMoniker Id="ef498a89-9a31-4cee-8a17-d10cf9550501" />
+        <classShapeMoniker Id="b3995644-4736-4c52-8915-7c30e3144d8a" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(4.75 : 4.55); (3.125 : 4.55)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/TribalWarsMappingDataContext/Village/Village_movement3" />
+      <nodes>
+        <classShapeMoniker Id="ef498a89-9a31-4cee-8a17-d10cf9550501" />
+        <classShapeMoniker Id="b3995644-4736-4c52-8915-7c30e3144d8a" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="a2b4ec26-0fa8-4f59-b483-119d0ea21568" isExpanded="false" absoluteBounds="1.125, 5, 2, 0.45">
+      <DataClassMoniker Name="/TribalWarsMappingDataContext/TradingTo" />
+      <nestedChildShapes>
+        <elementListCompartment Id="eaa0d854-a968-4b97-ae28-b5efc36c1e25" absoluteBounds="1.1400000000000001, 5.46, 1.9700000000000002, 1.68658447265625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(4.75 : 5.225); (3.125 : 5.225)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/TribalWarsMappingDataContext/Village/Village_movement4" />
+      <nodes>
+        <classShapeMoniker Id="ef498a89-9a31-4cee-8a17-d10cf9550501" />
+        <classShapeMoniker Id="a2b4ec26-0fa8-4f59-b483-119d0ea21568" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(4.75 : 5.05); (3.125 : 5.05)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/TribalWarsMappingDataContext/Village/Village_movement5" />
+      <nodes>
+        <classShapeMoniker Id="ef498a89-9a31-4cee-8a17-d10cf9550501" />
+        <classShapeMoniker Id="a2b4ec26-0fa8-4f59-b483-119d0ea21568" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="1e5305c5-17fa-4d82-b07b-cb28a9bfb9f9" isExpanded="false" absoluteBounds="1.125, 5.5, 2, 0.45">
+      <DataClassMoniker Name="/TribalWarsMappingDataContext/Return" />
+      <nestedChildShapes>
+        <elementListCompartment Id="28cc87a5-a8ff-4815-a03f-538f6f77d5f6" absoluteBounds="1.1400000000000001, 5.96, 1.9700000000000002, 3.001363118489583" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(4.75 : 5.725); (3.125 : 5.725)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/TribalWarsMappingDataContext/Village/Village_movement6" />
+      <nodes>
+        <classShapeMoniker Id="ef498a89-9a31-4cee-8a17-d10cf9550501" />
+        <classShapeMoniker Id="1e5305c5-17fa-4d82-b07b-cb28a9bfb9f9" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(4.75 : 5.55); (3.125 : 5.55)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/TribalWarsMappingDataContext/Village/Village_movement7" />
+      <nodes>
+        <classShapeMoniker Id="ef498a89-9a31-4cee-8a17-d10cf9550501" />
+        <classShapeMoniker Id="1e5305c5-17fa-4d82-b07b-cb28a9bfb9f9" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="414485c0-ba63-4e15-b0e4-7f1f800e4aec" isExpanded="false" absoluteBounds="1.125, 6, 2, 0.45">
+      <DataClassMoniker Name="/TribalWarsMappingDataContext/AttackFrom" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6062df32-4d45-4002-8e62-cb0e54673bd8" absoluteBounds="1.1400000000000001, 6.46, 1.9700000000000002, 2.8370157877604165" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(4.75 : 6.225); (3.125 : 6.225)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/TribalWarsMappingDataContext/Village/Village_movement8" />
+      <nodes>
+        <classShapeMoniker Id="ef498a89-9a31-4cee-8a17-d10cf9550501" />
+        <classShapeMoniker Id="414485c0-ba63-4e15-b0e4-7f1f800e4aec" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(4.75 : 6.05); (3.125 : 6.05)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/TribalWarsMappingDataContext/Village/Village_movement9" />
+      <nodes>
+        <classShapeMoniker Id="ef498a89-9a31-4cee-8a17-d10cf9550501" />
+        <classShapeMoniker Id="414485c0-ba63-4e15-b0e4-7f1f800e4aec" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="3d577105-c131-4f2c-b3eb-743d3952d3d6" isExpanded="false" absoluteBounds="1.125, 6.5, 2, 0.45">
+      <DataClassMoniker Name="/TribalWarsMappingDataContext/SupportFrom" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b9b97107-a32d-4cab-a075-91e9d5d295fa" absoluteBounds="1.1400000000000001, 6.96, 1.9700000000000002, 2.67266845703125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(4.75 : 6.725); (3.125 : 6.725)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/TribalWarsMappingDataContext/Village/Village_movement10" />
+      <nodes>
+        <classShapeMoniker Id="ef498a89-9a31-4cee-8a17-d10cf9550501" />
+        <classShapeMoniker Id="3d577105-c131-4f2c-b3eb-743d3952d3d6" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(4.75 : 6.55); (3.125 : 6.55)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/TribalWarsMappingDataContext/Village/Village_movement11" />
+      <nodes>
+        <classShapeMoniker Id="ef498a89-9a31-4cee-8a17-d10cf9550501" />
+        <classShapeMoniker Id="3d577105-c131-4f2c-b3eb-743d3952d3d6" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="284169e7-1a16-4c73-8a5d-9f6e0d8d1542" isExpanded="false" absoluteBounds="1.125, 7, 2, 0.45">
+      <DataClassMoniker Name="/TribalWarsMappingDataContext/TradingFrom" />
+      <nestedChildShapes>
+        <elementListCompartment Id="9a18de2b-57a0-4814-9084-cd49cfc8c9d1" absoluteBounds="1.1400000000000001, 7.46, 1.9700000000000002, 1.68658447265625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(4.75 : 7.225); (3.125 : 7.225)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/TribalWarsMappingDataContext/Village/Village_movement12" />
+      <nodes>
+        <classShapeMoniker Id="ef498a89-9a31-4cee-8a17-d10cf9550501" />
+        <classShapeMoniker Id="284169e7-1a16-4c73-8a5d-9f6e0d8d1542" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(4.75 : 7.05); (3.125 : 7.05)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/TribalWarsMappingDataContext/Village/Village_movement13" />
+      <nodes>
+        <classShapeMoniker Id="ef498a89-9a31-4cee-8a17-d10cf9550501" />
+        <classShapeMoniker Id="284169e7-1a16-4c73-8a5d-9f6e0d8d1542" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>

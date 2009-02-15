@@ -21,6 +21,8 @@ public class BussinessLayerService : System.Web.Services.WebService
 
         //Uncomment the following line if using designed components 
         //InitializeComponent(); 
+        //DataLayer.BussinessLayerService service = new DataLayer.BussinessLayerService();
+        //service.
     }
 
     [WebMethod]
