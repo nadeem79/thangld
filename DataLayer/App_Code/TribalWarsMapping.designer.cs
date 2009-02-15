@@ -44,6 +44,27 @@ public partial class TribalWarsMappingDataContext : System.Data.Linq.DataContext
   partial void InsertVillage(Village instance);
   partial void UpdateVillage(Village instance);
   partial void DeleteVillage(Village instance);
+  partial void InsertAttackTo(AttackTo instance);
+  partial void UpdateAttackTo(AttackTo instance);
+  partial void DeleteAttackTo(AttackTo instance);
+  partial void InsertSupportTo(SupportTo instance);
+  partial void UpdateSupportTo(SupportTo instance);
+  partial void DeleteSupportTo(SupportTo instance);
+  partial void InsertTradingTo(TradingTo instance);
+  partial void UpdateTradingTo(TradingTo instance);
+  partial void DeleteTradingTo(TradingTo instance);
+  partial void InsertReturn(Return instance);
+  partial void UpdateReturn(Return instance);
+  partial void DeleteReturn(Return instance);
+  partial void InsertAttackFrom(AttackFrom instance);
+  partial void UpdateAttackFrom(AttackFrom instance);
+  partial void DeleteAttackFrom(AttackFrom instance);
+  partial void InsertSupportFrom(SupportFrom instance);
+  partial void UpdateSupportFrom(SupportFrom instance);
+  partial void DeleteSupportFrom(SupportFrom instance);
+  partial void InsertTradingFrom(TradingFrom instance);
+  partial void UpdateTradingFrom(TradingFrom instance);
+  partial void DeleteTradingFrom(TradingFrom instance);
   #endregion
 	
 	public TribalWarsMappingDataContext() : 
@@ -113,6 +134,62 @@ public partial class TribalWarsMappingDataContext : System.Data.Linq.DataContext
 		get
 		{
 			return this.GetTable<Village>();
+		}
+	}
+	
+	public System.Data.Linq.Table<AttackTo> AttackTos
+	{
+		get
+		{
+			return this.GetTable<AttackTo>();
+		}
+	}
+	
+	public System.Data.Linq.Table<SupportTo> SupportTos
+	{
+		get
+		{
+			return this.GetTable<SupportTo>();
+		}
+	}
+	
+	public System.Data.Linq.Table<TradingTo> TradingTos
+	{
+		get
+		{
+			return this.GetTable<TradingTo>();
+		}
+	}
+	
+	public System.Data.Linq.Table<Return> Returns
+	{
+		get
+		{
+			return this.GetTable<Return>();
+		}
+	}
+	
+	public System.Data.Linq.Table<AttackFrom> AttackFroms
+	{
+		get
+		{
+			return this.GetTable<AttackFrom>();
+		}
+	}
+	
+	public System.Data.Linq.Table<SupportFrom> SupportFroms
+	{
+		get
+		{
+			return this.GetTable<SupportFrom>();
+		}
+	}
+	
+	public System.Data.Linq.Table<TradingFrom> TradingFroms
+	{
+		get
+		{
+			return this.GetTable<TradingFrom>();
 		}
 	}
 }
@@ -220,7 +297,7 @@ public partial class diplomate : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[Association(Name="group_diplomate", Storage="_group", ThisKey="group_1", OtherKey="ID", IsForeignKey=true)]
+	[Association(Name="Group_diplomate", Storage="_group", ThisKey="group_1", OtherKey="ID", IsForeignKey=true)]
 	public Group group
 	{
 		get
@@ -254,7 +331,7 @@ public partial class diplomate : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[Association(Name="group_diplomate1", Storage="_Group1", ThisKey="group_2", OtherKey="ID", IsForeignKey=true)]
+	[Association(Name="Group_diplomate1", Storage="_Group1", ThisKey="group_2", OtherKey="ID", IsForeignKey=true)]
 	public Group Group1
 	{
 		get
@@ -319,9 +396,11 @@ public partial class Group : INotifyPropertyChanging, INotifyPropertyChanged
 	
 	private string _Name;
 	
-	private System.Xml.Linq.XElement _Allies;
+	private string _Allies;
 	
-	private string _Property1;
+	private string _Naps;
+	
+	private string _Enemies;
 	
 	private EntitySet<diplomate> _diplomates;
 	
@@ -337,10 +416,12 @@ public partial class Group : INotifyPropertyChanging, INotifyPropertyChanged
     partial void OnIDChanged();
     partial void OnNameChanging(string value);
     partial void OnNameChanged();
-    partial void OnAlliesChanging(System.Xml.Linq.XElement value);
+    partial void OnAlliesChanging(string value);
     partial void OnAlliesChanged();
-    partial void OnProperty1Changing(string value);
-    partial void OnProperty1Changed();
+    partial void OnNapsChanging(string value);
+    partial void OnNapsChanged();
+    partial void OnEnemiesChanging(string value);
+    partial void OnEnemiesChanged();
     #endregion
 	
 	public Group()
@@ -392,7 +473,7 @@ public partial class Group : INotifyPropertyChanging, INotifyPropertyChanged
 	}
 	
 	[Column(Storage="_Allies", CanBeNull=false)]
-	public System.Xml.Linq.XElement Allies
+	public string Allies
 	{
 		get
 		{
@@ -411,27 +492,47 @@ public partial class Group : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[Column(Storage="_Property1", CanBeNull=false)]
-	public string Property1
+	[Column(Storage="_Naps", CanBeNull=false)]
+	public string Naps
 	{
 		get
 		{
-			return this._Property1;
+			return this._Naps;
 		}
 		set
 		{
-			if ((this._Property1 != value))
+			if ((this._Naps != value))
 			{
-				this.OnProperty1Changing(value);
+				this.OnNapsChanging(value);
 				this.SendPropertyChanging();
-				this._Property1 = value;
-				this.SendPropertyChanged("Property1");
-				this.OnProperty1Changed();
+				this._Naps = value;
+				this.SendPropertyChanged("Naps");
+				this.OnNapsChanged();
 			}
 		}
 	}
 	
-	[Association(Name="group_diplomate", Storage="_diplomates", ThisKey="ID", OtherKey="group_1")]
+	[Column(Storage="_Enemies", CanBeNull=false)]
+	public string Enemies
+	{
+		get
+		{
+			return this._Enemies;
+		}
+		set
+		{
+			if ((this._Enemies != value))
+			{
+				this.OnEnemiesChanging(value);
+				this.SendPropertyChanging();
+				this._Enemies = value;
+				this.SendPropertyChanged("Enemies");
+				this.OnEnemiesChanged();
+			}
+		}
+	}
+	
+	[Association(Name="Group_diplomate", Storage="_diplomates", ThisKey="ID", OtherKey="group_1")]
 	public EntitySet<diplomate> diplomates
 	{
 		get
@@ -444,7 +545,7 @@ public partial class Group : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[Association(Name="group_diplomate1", Storage="_diplomates1", ThisKey="ID", OtherKey="group_2")]
+	[Association(Name="Group_diplomate1", Storage="_diplomates1", ThisKey="ID", OtherKey="group_2")]
 	public EntitySet<diplomate> diplomates1
 	{
 		get
@@ -457,7 +558,7 @@ public partial class Group : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[Association(Name="group_user", Storage="_Users", ThisKey="ID", OtherKey="group_id")]
+	[Association(Name="Group_User", Storage="_Users", ThisKey="ID", OtherKey="group_id")]
 	public EntitySet<User> Users
 	{
 		get
@@ -743,7 +844,7 @@ public partial class Offer : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[Association(Name="village_offer", Storage="_Village", ThisKey="village_id", OtherKey="ID", IsForeignKey=true)]
+	[Association(Name="Village_Offer", Storage="_Village", ThisKey="village_id", OtherKey="ID", IsForeignKey=true)]
 	public Village Village
 	{
 		get
@@ -945,7 +1046,7 @@ public partial class User : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[Association(Name="user_village", Storage="_Villages", ThisKey="Username", OtherKey="userid")]
+	[Association(Name="User_Village", Storage="_Villages", ThisKey="Username", OtherKey="userid")]
 	public EntitySet<Village> Villages
 	{
 		get
@@ -958,7 +1059,7 @@ public partial class User : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[Association(Name="group_user", Storage="_Group", ThisKey="group_id", OtherKey="ID", IsForeignKey=true)]
+	[Association(Name="Group_User", Storage="_Group", ThisKey="group_id", OtherKey="ID", IsForeignKey=true)]
 	public Group Group
 	{
 		get
@@ -1119,6 +1220,34 @@ public partial class Village : INotifyPropertyChanging, INotifyPropertyChanged
 	
 	private EntitySet<Offer> _Offers;
 	
+	private EntitySet<AttackTo> _movements;
+	
+	private EntitySet<AttackTo> _AttackTos;
+	
+	private EntitySet<SupportTo> _movements1;
+	
+	private EntitySet<SupportTo> _SupportTos;
+	
+	private EntitySet<TradingTo> _movements2;
+	
+	private EntitySet<TradingTo> _TradingTos;
+	
+	private EntitySet<Return> _movements3;
+	
+	private EntitySet<Return> _Returns;
+	
+	private EntitySet<AttackFrom> _movements4;
+	
+	private EntitySet<AttackFrom> _AttackFroms;
+	
+	private EntitySet<SupportFrom> _movements5;
+	
+	private EntitySet<SupportFrom> _SupportFroms;
+	
+	private EntitySet<TradingFrom> _movements6;
+	
+	private EntitySet<TradingFrom> _TradingFroms;
+	
 	private EntityRef<User> _User;
 	
     #region Extensibility Method Definitions
@@ -1216,6 +1345,20 @@ public partial class Village : INotifyPropertyChanging, INotifyPropertyChanged
 	public Village()
 	{
 		this._Offers = new EntitySet<Offer>(new Action<Offer>(this.attach_Offers), new Action<Offer>(this.detach_Offers));
+		this._movements = new EntitySet<AttackTo>(new Action<AttackTo>(this.attach_movements), new Action<AttackTo>(this.detach_movements));
+		this._AttackTos = new EntitySet<AttackTo>(new Action<AttackTo>(this.attach_AttackTos), new Action<AttackTo>(this.detach_AttackTos));
+		this._movements1 = new EntitySet<SupportTo>(new Action<SupportTo>(this.attach_movements1), new Action<SupportTo>(this.detach_movements1));
+		this._SupportTos = new EntitySet<SupportTo>(new Action<SupportTo>(this.attach_SupportTos), new Action<SupportTo>(this.detach_SupportTos));
+		this._movements2 = new EntitySet<TradingTo>(new Action<TradingTo>(this.attach_movements2), new Action<TradingTo>(this.detach_movements2));
+		this._TradingTos = new EntitySet<TradingTo>(new Action<TradingTo>(this.attach_TradingTos), new Action<TradingTo>(this.detach_TradingTos));
+		this._movements3 = new EntitySet<Return>(new Action<Return>(this.attach_movements3), new Action<Return>(this.detach_movements3));
+		this._Returns = new EntitySet<Return>(new Action<Return>(this.attach_Returns), new Action<Return>(this.detach_Returns));
+		this._movements4 = new EntitySet<AttackFrom>(new Action<AttackFrom>(this.attach_movements4), new Action<AttackFrom>(this.detach_movements4));
+		this._AttackFroms = new EntitySet<AttackFrom>(new Action<AttackFrom>(this.attach_AttackFroms), new Action<AttackFrom>(this.detach_AttackFroms));
+		this._movements5 = new EntitySet<SupportFrom>(new Action<SupportFrom>(this.attach_movements5), new Action<SupportFrom>(this.detach_movements5));
+		this._SupportFroms = new EntitySet<SupportFrom>(new Action<SupportFrom>(this.attach_SupportFroms), new Action<SupportFrom>(this.detach_SupportFroms));
+		this._movements6 = new EntitySet<TradingFrom>(new Action<TradingFrom>(this.attach_movements6), new Action<TradingFrom>(this.detach_movements6));
+		this._TradingFroms = new EntitySet<TradingFrom>(new Action<TradingFrom>(this.attach_TradingFroms), new Action<TradingFrom>(this.detach_TradingFroms));
 		this._User = default(EntityRef<User>);
 		OnCreated();
 	}
@@ -2084,7 +2227,7 @@ public partial class Village : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[Association(Name="village_offer", Storage="_Offers", ThisKey="ID", OtherKey="village_id")]
+	[Association(Name="Village_Offer", Storage="_Offers", ThisKey="ID", OtherKey="village_id")]
 	public EntitySet<Offer> Offers
 	{
 		get
@@ -2097,7 +2240,189 @@ public partial class Village : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[Association(Name="user_village", Storage="_User", ThisKey="userid", OtherKey="Username", IsForeignKey=true)]
+	[Association(Name="Village_movement", Storage="_movements", ThisKey="ID", OtherKey="From")]
+	public EntitySet<AttackTo> movements
+	{
+		get
+		{
+			return this._movements;
+		}
+		set
+		{
+			this._movements.Assign(value);
+		}
+	}
+	
+	[Association(Name="Village_movement1", Storage="_AttackTos", ThisKey="ID", OtherKey="To")]
+	public EntitySet<AttackTo> AttackTos
+	{
+		get
+		{
+			return this._AttackTos;
+		}
+		set
+		{
+			this._AttackTos.Assign(value);
+		}
+	}
+	
+	[Association(Name="Village_movement2", Storage="_movements1", ThisKey="ID", OtherKey="From")]
+	public EntitySet<SupportTo> movements1
+	{
+		get
+		{
+			return this._movements1;
+		}
+		set
+		{
+			this._movements1.Assign(value);
+		}
+	}
+	
+	[Association(Name="Village_movement3", Storage="_SupportTos", ThisKey="ID", OtherKey="To")]
+	public EntitySet<SupportTo> SupportTos
+	{
+		get
+		{
+			return this._SupportTos;
+		}
+		set
+		{
+			this._SupportTos.Assign(value);
+		}
+	}
+	
+	[Association(Name="Village_movement4", Storage="_movements2", ThisKey="ID", OtherKey="From")]
+	public EntitySet<TradingTo> movements2
+	{
+		get
+		{
+			return this._movements2;
+		}
+		set
+		{
+			this._movements2.Assign(value);
+		}
+	}
+	
+	[Association(Name="Village_movement5", Storage="_TradingTos", ThisKey="ID", OtherKey="To")]
+	public EntitySet<TradingTo> TradingTos
+	{
+		get
+		{
+			return this._TradingTos;
+		}
+		set
+		{
+			this._TradingTos.Assign(value);
+		}
+	}
+	
+	[Association(Name="Village_movement6", Storage="_movements3", ThisKey="ID", OtherKey="From")]
+	public EntitySet<Return> movements3
+	{
+		get
+		{
+			return this._movements3;
+		}
+		set
+		{
+			this._movements3.Assign(value);
+		}
+	}
+	
+	[Association(Name="Village_movement7", Storage="_Returns", ThisKey="ID", OtherKey="To")]
+	public EntitySet<Return> Returns
+	{
+		get
+		{
+			return this._Returns;
+		}
+		set
+		{
+			this._Returns.Assign(value);
+		}
+	}
+	
+	[Association(Name="Village_movement8", Storage="_movements4", ThisKey="ID", OtherKey="From")]
+	public EntitySet<AttackFrom> movements4
+	{
+		get
+		{
+			return this._movements4;
+		}
+		set
+		{
+			this._movements4.Assign(value);
+		}
+	}
+	
+	[Association(Name="Village_movement9", Storage="_AttackFroms", ThisKey="ID", OtherKey="To")]
+	public EntitySet<AttackFrom> AttackFroms
+	{
+		get
+		{
+			return this._AttackFroms;
+		}
+		set
+		{
+			this._AttackFroms.Assign(value);
+		}
+	}
+	
+	[Association(Name="Village_movement10", Storage="_movements5", ThisKey="ID", OtherKey="From")]
+	public EntitySet<SupportFrom> movements5
+	{
+		get
+		{
+			return this._movements5;
+		}
+		set
+		{
+			this._movements5.Assign(value);
+		}
+	}
+	
+	[Association(Name="Village_movement11", Storage="_SupportFroms", ThisKey="ID", OtherKey="To")]
+	public EntitySet<SupportFrom> SupportFroms
+	{
+		get
+		{
+			return this._SupportFroms;
+		}
+		set
+		{
+			this._SupportFroms.Assign(value);
+		}
+	}
+	
+	[Association(Name="Village_movement12", Storage="_movements6", ThisKey="ID", OtherKey="From")]
+	public EntitySet<TradingFrom> movements6
+	{
+		get
+		{
+			return this._movements6;
+		}
+		set
+		{
+			this._movements6.Assign(value);
+		}
+	}
+	
+	[Association(Name="Village_movement13", Storage="_TradingFroms", ThisKey="ID", OtherKey="To")]
+	public EntitySet<TradingFrom> TradingFroms
+	{
+		get
+		{
+			return this._TradingFroms;
+		}
+		set
+		{
+			this._TradingFroms.Assign(value);
+		}
+	}
+	
+	[Association(Name="User_Village", Storage="_User", ThisKey="userid", OtherKey="Username", IsForeignKey=true)]
 	public User User
 	{
 		get
@@ -2161,6 +2486,3286 @@ public partial class Village : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		this.SendPropertyChanging();
 		entity.Village = null;
+	}
+	
+	private void attach_movements(AttackTo entity)
+	{
+		this.SendPropertyChanging();
+		entity.Village = this;
+	}
+	
+	private void detach_movements(AttackTo entity)
+	{
+		this.SendPropertyChanging();
+		entity.Village = null;
+	}
+	
+	private void attach_AttackTos(AttackTo entity)
+	{
+		this.SendPropertyChanging();
+		entity.Village1 = this;
+	}
+	
+	private void detach_AttackTos(AttackTo entity)
+	{
+		this.SendPropertyChanging();
+		entity.Village1 = null;
+	}
+	
+	private void attach_movements1(SupportTo entity)
+	{
+		this.SendPropertyChanging();
+		entity.Village = this;
+	}
+	
+	private void detach_movements1(SupportTo entity)
+	{
+		this.SendPropertyChanging();
+		entity.Village = null;
+	}
+	
+	private void attach_SupportTos(SupportTo entity)
+	{
+		this.SendPropertyChanging();
+		entity.Village1 = this;
+	}
+	
+	private void detach_SupportTos(SupportTo entity)
+	{
+		this.SendPropertyChanging();
+		entity.Village1 = null;
+	}
+	
+	private void attach_movements2(TradingTo entity)
+	{
+		this.SendPropertyChanging();
+		entity.Village = this;
+	}
+	
+	private void detach_movements2(TradingTo entity)
+	{
+		this.SendPropertyChanging();
+		entity.Village = null;
+	}
+	
+	private void attach_TradingTos(TradingTo entity)
+	{
+		this.SendPropertyChanging();
+		entity.Village1 = this;
+	}
+	
+	private void detach_TradingTos(TradingTo entity)
+	{
+		this.SendPropertyChanging();
+		entity.Village1 = null;
+	}
+	
+	private void attach_movements3(Return entity)
+	{
+		this.SendPropertyChanging();
+		entity.Village = this;
+	}
+	
+	private void detach_movements3(Return entity)
+	{
+		this.SendPropertyChanging();
+		entity.Village = null;
+	}
+	
+	private void attach_Returns(Return entity)
+	{
+		this.SendPropertyChanging();
+		entity.Village1 = this;
+	}
+	
+	private void detach_Returns(Return entity)
+	{
+		this.SendPropertyChanging();
+		entity.Village1 = null;
+	}
+	
+	private void attach_movements4(AttackFrom entity)
+	{
+		this.SendPropertyChanging();
+		entity.Village = this;
+	}
+	
+	private void detach_movements4(AttackFrom entity)
+	{
+		this.SendPropertyChanging();
+		entity.Village = null;
+	}
+	
+	private void attach_AttackFroms(AttackFrom entity)
+	{
+		this.SendPropertyChanging();
+		entity.Village1 = this;
+	}
+	
+	private void detach_AttackFroms(AttackFrom entity)
+	{
+		this.SendPropertyChanging();
+		entity.Village1 = null;
+	}
+	
+	private void attach_movements5(SupportFrom entity)
+	{
+		this.SendPropertyChanging();
+		entity.Village = this;
+	}
+	
+	private void detach_movements5(SupportFrom entity)
+	{
+		this.SendPropertyChanging();
+		entity.Village = null;
+	}
+	
+	private void attach_SupportFroms(SupportFrom entity)
+	{
+		this.SendPropertyChanging();
+		entity.Village1 = this;
+	}
+	
+	private void detach_SupportFroms(SupportFrom entity)
+	{
+		this.SendPropertyChanging();
+		entity.Village1 = null;
+	}
+	
+	private void attach_movements6(TradingFrom entity)
+	{
+		this.SendPropertyChanging();
+		entity.Village = this;
+	}
+	
+	private void detach_movements6(TradingFrom entity)
+	{
+		this.SendPropertyChanging();
+		entity.Village = null;
+	}
+	
+	private void attach_TradingFroms(TradingFrom entity)
+	{
+		this.SendPropertyChanging();
+		entity.Village1 = this;
+	}
+	
+	private void detach_TradingFroms(TradingFrom entity)
+	{
+		this.SendPropertyChanging();
+		entity.Village1 = null;
+	}
+}
+
+[Table(Name="dbo.movement")]
+public partial class AttackTo : INotifyPropertyChanging, INotifyPropertyChanged
+{
+	
+	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+	
+	private int _ID;
+	
+	private int _From;
+	
+	private int _To;
+	
+	private int _Type;
+	
+	private System.DateTime _StartingTime;
+	
+	private System.DateTime _LandingTime;
+	
+	private System.Nullable<int> _Building;
+	
+	private System.Nullable<int> _Scout;
+	
+	private System.Nullable<int> _Spear;
+	
+	private System.Nullable<int> _Sword;
+	
+	private System.Nullable<int> _Axe;
+	
+	private System.Nullable<int> _Light;
+	
+	private System.Nullable<int> _Heavy;
+	
+	private System.Nullable<int> _Ram;
+	
+	private System.Nullable<int> _Catapult;
+	
+	private System.Nullable<int> _Noble;
+	
+	private EntityRef<Village> _Village;
+	
+	private EntityRef<Village> _Village1;
+	
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnFromChanging(int value);
+    partial void OnFromChanged();
+    partial void OnToChanging(int value);
+    partial void OnToChanged();
+    partial void OnTypeChanging(int value);
+    partial void OnTypeChanged();
+    partial void OnStartingTimeChanging(System.DateTime value);
+    partial void OnStartingTimeChanged();
+    partial void OnLandingTimeChanging(System.DateTime value);
+    partial void OnLandingTimeChanged();
+    partial void OnBuildingChanging(System.Nullable<int> value);
+    partial void OnBuildingChanged();
+    partial void OnScoutChanging(System.Nullable<int> value);
+    partial void OnScoutChanged();
+    partial void OnSpearChanging(System.Nullable<int> value);
+    partial void OnSpearChanged();
+    partial void OnSwordChanging(System.Nullable<int> value);
+    partial void OnSwordChanged();
+    partial void OnAxeChanging(System.Nullable<int> value);
+    partial void OnAxeChanged();
+    partial void OnLightChanging(System.Nullable<int> value);
+    partial void OnLightChanged();
+    partial void OnHeavyChanging(System.Nullable<int> value);
+    partial void OnHeavyChanged();
+    partial void OnRamChanging(System.Nullable<int> value);
+    partial void OnRamChanged();
+    partial void OnCatapultChanging(System.Nullable<int> value);
+    partial void OnCatapultChanged();
+    partial void OnNobleChanging(System.Nullable<int> value);
+    partial void OnNobleChanged();
+    #endregion
+	
+	public AttackTo()
+	{
+		this._Village = default(EntityRef<Village>);
+		this._Village1 = default(EntityRef<Village>);
+		OnCreated();
+	}
+	
+	[Column(Name="id", Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+	public int ID
+	{
+		get
+		{
+			return this._ID;
+		}
+		set
+		{
+			if ((this._ID != value))
+			{
+				this.OnIDChanging(value);
+				this.SendPropertyChanging();
+				this._ID = value;
+				this.SendPropertyChanged("ID");
+				this.OnIDChanged();
+			}
+		}
+	}
+	
+	[Column(Name="[from]", Storage="_From", DbType="Int NOT NULL")]
+	public int From
+	{
+		get
+		{
+			return this._From;
+		}
+		set
+		{
+			if ((this._From != value))
+			{
+				this.OnFromChanging(value);
+				this.SendPropertyChanging();
+				this._From = value;
+				this.SendPropertyChanged("From");
+				this.OnFromChanged();
+			}
+		}
+	}
+	
+	[Column(Name="[to]", Storage="_To", DbType="Int NOT NULL")]
+	public int To
+	{
+		get
+		{
+			return this._To;
+		}
+		set
+		{
+			if ((this._To != value))
+			{
+				this.OnToChanging(value);
+				this.SendPropertyChanging();
+				this._To = value;
+				this.SendPropertyChanged("To");
+				this.OnToChanged();
+			}
+		}
+	}
+	
+	[Column(Name="type", Storage="_Type", DbType="Int NOT NULL")]
+	public int Type
+	{
+		get
+		{
+			return this._Type;
+		}
+		set
+		{
+			if ((this._Type != value))
+			{
+				this.OnTypeChanging(value);
+				this.SendPropertyChanging();
+				this._Type = value;
+				this.SendPropertyChanged("Type");
+				this.OnTypeChanged();
+			}
+		}
+	}
+	
+	[Column(Name="starting_time", Storage="_StartingTime", DbType="DateTime NOT NULL")]
+	public System.DateTime StartingTime
+	{
+		get
+		{
+			return this._StartingTime;
+		}
+		set
+		{
+			if ((this._StartingTime != value))
+			{
+				this.OnStartingTimeChanging(value);
+				this.SendPropertyChanging();
+				this._StartingTime = value;
+				this.SendPropertyChanged("StartingTime");
+				this.OnStartingTimeChanged();
+			}
+		}
+	}
+	
+	[Column(Name="landing_time", Storage="_LandingTime", DbType="DateTime NOT NULL")]
+	public System.DateTime LandingTime
+	{
+		get
+		{
+			return this._LandingTime;
+		}
+		set
+		{
+			if ((this._LandingTime != value))
+			{
+				this.OnLandingTimeChanging(value);
+				this.SendPropertyChanging();
+				this._LandingTime = value;
+				this.SendPropertyChanged("LandingTime");
+				this.OnLandingTimeChanged();
+			}
+		}
+	}
+	
+	[Column(Name="building", Storage="_Building", DbType="Int")]
+	public System.Nullable<int> Building
+	{
+		get
+		{
+			return this._Building;
+		}
+		set
+		{
+			if ((this._Building != value))
+			{
+				this.OnBuildingChanging(value);
+				this.SendPropertyChanging();
+				this._Building = value;
+				this.SendPropertyChanged("Building");
+				this.OnBuildingChanged();
+			}
+		}
+	}
+	
+	[Column(Name="scoutSent", Storage="_Scout", DbType="Int")]
+	public System.Nullable<int> Scout
+	{
+		get
+		{
+			return this._Scout;
+		}
+		set
+		{
+			if ((this._Scout != value))
+			{
+				this.OnScoutChanging(value);
+				this.SendPropertyChanging();
+				this._Scout = value;
+				this.SendPropertyChanged("Scout");
+				this.OnScoutChanged();
+			}
+		}
+	}
+	
+	[Column(Name="spearSent", Storage="_Spear", DbType="Int")]
+	public System.Nullable<int> Spear
+	{
+		get
+		{
+			return this._Spear;
+		}
+		set
+		{
+			if ((this._Spear != value))
+			{
+				this.OnSpearChanging(value);
+				this.SendPropertyChanging();
+				this._Spear = value;
+				this.SendPropertyChanged("Spear");
+				this.OnSpearChanged();
+			}
+		}
+	}
+	
+	[Column(Name="swordSent", Storage="_Sword", DbType="Int")]
+	public System.Nullable<int> Sword
+	{
+		get
+		{
+			return this._Sword;
+		}
+		set
+		{
+			if ((this._Sword != value))
+			{
+				this.OnSwordChanging(value);
+				this.SendPropertyChanging();
+				this._Sword = value;
+				this.SendPropertyChanged("Sword");
+				this.OnSwordChanged();
+			}
+		}
+	}
+	
+	[Column(Name="axeSent", Storage="_Axe", DbType="Int")]
+	public System.Nullable<int> Axe
+	{
+		get
+		{
+			return this._Axe;
+		}
+		set
+		{
+			if ((this._Axe != value))
+			{
+				this.OnAxeChanging(value);
+				this.SendPropertyChanging();
+				this._Axe = value;
+				this.SendPropertyChanged("Axe");
+				this.OnAxeChanged();
+			}
+		}
+	}
+	
+	[Column(Name="lightSent", Storage="_Light", DbType="Int")]
+	public System.Nullable<int> Light
+	{
+		get
+		{
+			return this._Light;
+		}
+		set
+		{
+			if ((this._Light != value))
+			{
+				this.OnLightChanging(value);
+				this.SendPropertyChanging();
+				this._Light = value;
+				this.SendPropertyChanged("Light");
+				this.OnLightChanged();
+			}
+		}
+	}
+	
+	[Column(Name="heavySent", Storage="_Heavy", DbType="Int")]
+	public System.Nullable<int> Heavy
+	{
+		get
+		{
+			return this._Heavy;
+		}
+		set
+		{
+			if ((this._Heavy != value))
+			{
+				this.OnHeavyChanging(value);
+				this.SendPropertyChanging();
+				this._Heavy = value;
+				this.SendPropertyChanged("Heavy");
+				this.OnHeavyChanged();
+			}
+		}
+	}
+	
+	[Column(Name="ramSent", Storage="_Ram", DbType="Int")]
+	public System.Nullable<int> Ram
+	{
+		get
+		{
+			return this._Ram;
+		}
+		set
+		{
+			if ((this._Ram != value))
+			{
+				this.OnRamChanging(value);
+				this.SendPropertyChanging();
+				this._Ram = value;
+				this.SendPropertyChanged("Ram");
+				this.OnRamChanged();
+			}
+		}
+	}
+	
+	[Column(Name="catapultSent", Storage="_Catapult", DbType="Int")]
+	public System.Nullable<int> Catapult
+	{
+		get
+		{
+			return this._Catapult;
+		}
+		set
+		{
+			if ((this._Catapult != value))
+			{
+				this.OnCatapultChanging(value);
+				this.SendPropertyChanging();
+				this._Catapult = value;
+				this.SendPropertyChanged("Catapult");
+				this.OnCatapultChanged();
+			}
+		}
+	}
+	
+	[Column(Name="nobleSent", Storage="_Noble", DbType="Int")]
+	public System.Nullable<int> Noble
+	{
+		get
+		{
+			return this._Noble;
+		}
+		set
+		{
+			if ((this._Noble != value))
+			{
+				this.OnNobleChanging(value);
+				this.SendPropertyChanging();
+				this._Noble = value;
+				this.SendPropertyChanged("Noble");
+				this.OnNobleChanged();
+			}
+		}
+	}
+	
+	[Association(Name="Village_movement", Storage="_Village", ThisKey="From", OtherKey="ID", IsForeignKey=true)]
+	public Village Village
+	{
+		get
+		{
+			return this._Village.Entity;
+		}
+		set
+		{
+			Village previousValue = this._Village.Entity;
+			if (((previousValue != value) 
+						|| (this._Village.HasLoadedOrAssignedValue == false)))
+			{
+				this.SendPropertyChanging();
+				if ((previousValue != null))
+				{
+					this._Village.Entity = null;
+					previousValue.movements.Remove(this);
+				}
+				this._Village.Entity = value;
+				if ((value != null))
+				{
+					value.movements.Add(this);
+					this._From = value.ID;
+				}
+				else
+				{
+					this._From = default(int);
+				}
+				this.SendPropertyChanged("Village");
+			}
+		}
+	}
+	
+	[Association(Name="Village_movement1", Storage="_Village1", ThisKey="To", OtherKey="ID", IsForeignKey=true)]
+	public Village Village1
+	{
+		get
+		{
+			return this._Village1.Entity;
+		}
+		set
+		{
+			Village previousValue = this._Village1.Entity;
+			if (((previousValue != value) 
+						|| (this._Village1.HasLoadedOrAssignedValue == false)))
+			{
+				this.SendPropertyChanging();
+				if ((previousValue != null))
+				{
+					this._Village1.Entity = null;
+					previousValue.AttackTos.Remove(this);
+				}
+				this._Village1.Entity = value;
+				if ((value != null))
+				{
+					value.AttackTos.Add(this);
+					this._To = value.ID;
+				}
+				else
+				{
+					this._To = default(int);
+				}
+				this.SendPropertyChanged("Village1");
+			}
+		}
+	}
+	
+	public event PropertyChangingEventHandler PropertyChanging;
+	
+	public event PropertyChangedEventHandler PropertyChanged;
+	
+	protected virtual void SendPropertyChanging()
+	{
+		if ((this.PropertyChanging != null))
+		{
+			this.PropertyChanging(this, emptyChangingEventArgs);
+		}
+	}
+	
+	protected virtual void SendPropertyChanged(String propertyName)
+	{
+		if ((this.PropertyChanged != null))
+		{
+			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+		}
+	}
+}
+
+[Table(Name="dbo.movement")]
+public partial class SupportTo : INotifyPropertyChanging, INotifyPropertyChanged
+{
+	
+	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+	
+	private int _ID;
+	
+	private int _From;
+	
+	private int _To;
+	
+	private int _Type;
+	
+	private System.DateTime _StartingTime;
+	
+	private System.DateTime _LandingTime;
+	
+	private System.Nullable<int> _Scout;
+	
+	private System.Nullable<int> _Spear;
+	
+	private System.Nullable<int> _Sword;
+	
+	private System.Nullable<int> _Axe;
+	
+	private System.Nullable<int> _Light;
+	
+	private System.Nullable<int> _Heavy;
+	
+	private System.Nullable<int> _Ram;
+	
+	private System.Nullable<int> _Catapult;
+	
+	private System.Nullable<int> _Noble;
+	
+	private EntityRef<Village> _Village;
+	
+	private EntityRef<Village> _Village1;
+	
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnFromChanging(int value);
+    partial void OnFromChanged();
+    partial void OnToChanging(int value);
+    partial void OnToChanged();
+    partial void OnTypeChanging(int value);
+    partial void OnTypeChanged();
+    partial void OnStartingTimeChanging(System.DateTime value);
+    partial void OnStartingTimeChanged();
+    partial void OnLandingTimeChanging(System.DateTime value);
+    partial void OnLandingTimeChanged();
+    partial void OnScoutChanging(System.Nullable<int> value);
+    partial void OnScoutChanged();
+    partial void OnSpearChanging(System.Nullable<int> value);
+    partial void OnSpearChanged();
+    partial void OnSwordChanging(System.Nullable<int> value);
+    partial void OnSwordChanged();
+    partial void OnAxeChanging(System.Nullable<int> value);
+    partial void OnAxeChanged();
+    partial void OnLightChanging(System.Nullable<int> value);
+    partial void OnLightChanged();
+    partial void OnHeavyChanging(System.Nullable<int> value);
+    partial void OnHeavyChanged();
+    partial void OnRamChanging(System.Nullable<int> value);
+    partial void OnRamChanged();
+    partial void OnCatapultChanging(System.Nullable<int> value);
+    partial void OnCatapultChanged();
+    partial void OnNobleChanging(System.Nullable<int> value);
+    partial void OnNobleChanged();
+    #endregion
+	
+	public SupportTo()
+	{
+		this._Village = default(EntityRef<Village>);
+		this._Village1 = default(EntityRef<Village>);
+		OnCreated();
+	}
+	
+	[Column(Name="id", Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+	public int ID
+	{
+		get
+		{
+			return this._ID;
+		}
+		set
+		{
+			if ((this._ID != value))
+			{
+				this.OnIDChanging(value);
+				this.SendPropertyChanging();
+				this._ID = value;
+				this.SendPropertyChanged("ID");
+				this.OnIDChanged();
+			}
+		}
+	}
+	
+	[Column(Name="[from]", Storage="_From", DbType="Int NOT NULL")]
+	public int From
+	{
+		get
+		{
+			return this._From;
+		}
+		set
+		{
+			if ((this._From != value))
+			{
+				this.OnFromChanging(value);
+				this.SendPropertyChanging();
+				this._From = value;
+				this.SendPropertyChanged("From");
+				this.OnFromChanged();
+			}
+		}
+	}
+	
+	[Column(Name="[to]", Storage="_To", DbType="Int NOT NULL")]
+	public int To
+	{
+		get
+		{
+			return this._To;
+		}
+		set
+		{
+			if ((this._To != value))
+			{
+				this.OnToChanging(value);
+				this.SendPropertyChanging();
+				this._To = value;
+				this.SendPropertyChanged("To");
+				this.OnToChanged();
+			}
+		}
+	}
+	
+	[Column(Name="type", Storage="_Type", DbType="Int NOT NULL")]
+	public int Type
+	{
+		get
+		{
+			return this._Type;
+		}
+		set
+		{
+			if ((this._Type != value))
+			{
+				this.OnTypeChanging(value);
+				this.SendPropertyChanging();
+				this._Type = value;
+				this.SendPropertyChanged("Type");
+				this.OnTypeChanged();
+			}
+		}
+	}
+	
+	[Column(Name="starting_time", Storage="_StartingTime", DbType="DateTime NOT NULL")]
+	public System.DateTime StartingTime
+	{
+		get
+		{
+			return this._StartingTime;
+		}
+		set
+		{
+			if ((this._StartingTime != value))
+			{
+				this.OnStartingTimeChanging(value);
+				this.SendPropertyChanging();
+				this._StartingTime = value;
+				this.SendPropertyChanged("StartingTime");
+				this.OnStartingTimeChanged();
+			}
+		}
+	}
+	
+	[Column(Name="landing_time", Storage="_LandingTime", DbType="DateTime NOT NULL")]
+	public System.DateTime LandingTime
+	{
+		get
+		{
+			return this._LandingTime;
+		}
+		set
+		{
+			if ((this._LandingTime != value))
+			{
+				this.OnLandingTimeChanging(value);
+				this.SendPropertyChanging();
+				this._LandingTime = value;
+				this.SendPropertyChanged("LandingTime");
+				this.OnLandingTimeChanged();
+			}
+		}
+	}
+	
+	[Column(Name="scoutSent", Storage="_Scout", DbType="Int")]
+	public System.Nullable<int> Scout
+	{
+		get
+		{
+			return this._Scout;
+		}
+		set
+		{
+			if ((this._Scout != value))
+			{
+				this.OnScoutChanging(value);
+				this.SendPropertyChanging();
+				this._Scout = value;
+				this.SendPropertyChanged("Scout");
+				this.OnScoutChanged();
+			}
+		}
+	}
+	
+	[Column(Name="spearSent", Storage="_Spear", DbType="Int")]
+	public System.Nullable<int> Spear
+	{
+		get
+		{
+			return this._Spear;
+		}
+		set
+		{
+			if ((this._Spear != value))
+			{
+				this.OnSpearChanging(value);
+				this.SendPropertyChanging();
+				this._Spear = value;
+				this.SendPropertyChanged("Spear");
+				this.OnSpearChanged();
+			}
+		}
+	}
+	
+	[Column(Name="swordSent", Storage="_Sword", DbType="Int")]
+	public System.Nullable<int> Sword
+	{
+		get
+		{
+			return this._Sword;
+		}
+		set
+		{
+			if ((this._Sword != value))
+			{
+				this.OnSwordChanging(value);
+				this.SendPropertyChanging();
+				this._Sword = value;
+				this.SendPropertyChanged("Sword");
+				this.OnSwordChanged();
+			}
+		}
+	}
+	
+	[Column(Name="axeSent", Storage="_Axe", DbType="Int")]
+	public System.Nullable<int> Axe
+	{
+		get
+		{
+			return this._Axe;
+		}
+		set
+		{
+			if ((this._Axe != value))
+			{
+				this.OnAxeChanging(value);
+				this.SendPropertyChanging();
+				this._Axe = value;
+				this.SendPropertyChanged("Axe");
+				this.OnAxeChanged();
+			}
+		}
+	}
+	
+	[Column(Name="lightSent", Storage="_Light", DbType="Int")]
+	public System.Nullable<int> Light
+	{
+		get
+		{
+			return this._Light;
+		}
+		set
+		{
+			if ((this._Light != value))
+			{
+				this.OnLightChanging(value);
+				this.SendPropertyChanging();
+				this._Light = value;
+				this.SendPropertyChanged("Light");
+				this.OnLightChanged();
+			}
+		}
+	}
+	
+	[Column(Name="heavySent", Storage="_Heavy", DbType="Int")]
+	public System.Nullable<int> Heavy
+	{
+		get
+		{
+			return this._Heavy;
+		}
+		set
+		{
+			if ((this._Heavy != value))
+			{
+				this.OnHeavyChanging(value);
+				this.SendPropertyChanging();
+				this._Heavy = value;
+				this.SendPropertyChanged("Heavy");
+				this.OnHeavyChanged();
+			}
+		}
+	}
+	
+	[Column(Name="ramSent", Storage="_Ram", DbType="Int")]
+	public System.Nullable<int> Ram
+	{
+		get
+		{
+			return this._Ram;
+		}
+		set
+		{
+			if ((this._Ram != value))
+			{
+				this.OnRamChanging(value);
+				this.SendPropertyChanging();
+				this._Ram = value;
+				this.SendPropertyChanged("Ram");
+				this.OnRamChanged();
+			}
+		}
+	}
+	
+	[Column(Name="catapultSent", Storage="_Catapult", DbType="Int")]
+	public System.Nullable<int> Catapult
+	{
+		get
+		{
+			return this._Catapult;
+		}
+		set
+		{
+			if ((this._Catapult != value))
+			{
+				this.OnCatapultChanging(value);
+				this.SendPropertyChanging();
+				this._Catapult = value;
+				this.SendPropertyChanged("Catapult");
+				this.OnCatapultChanged();
+			}
+		}
+	}
+	
+	[Column(Name="nobleSent", Storage="_Noble", DbType="Int")]
+	public System.Nullable<int> Noble
+	{
+		get
+		{
+			return this._Noble;
+		}
+		set
+		{
+			if ((this._Noble != value))
+			{
+				this.OnNobleChanging(value);
+				this.SendPropertyChanging();
+				this._Noble = value;
+				this.SendPropertyChanged("Noble");
+				this.OnNobleChanged();
+			}
+		}
+	}
+	
+	[Association(Name="Village_movement2", Storage="_Village", ThisKey="From", OtherKey="ID", IsForeignKey=true)]
+	public Village Village
+	{
+		get
+		{
+			return this._Village.Entity;
+		}
+		set
+		{
+			Village previousValue = this._Village.Entity;
+			if (((previousValue != value) 
+						|| (this._Village.HasLoadedOrAssignedValue == false)))
+			{
+				this.SendPropertyChanging();
+				if ((previousValue != null))
+				{
+					this._Village.Entity = null;
+					previousValue.movements1.Remove(this);
+				}
+				this._Village.Entity = value;
+				if ((value != null))
+				{
+					value.movements1.Add(this);
+					this._From = value.ID;
+				}
+				else
+				{
+					this._From = default(int);
+				}
+				this.SendPropertyChanged("Village");
+			}
+		}
+	}
+	
+	[Association(Name="Village_movement3", Storage="_Village1", ThisKey="To", OtherKey="ID", IsForeignKey=true)]
+	public Village Village1
+	{
+		get
+		{
+			return this._Village1.Entity;
+		}
+		set
+		{
+			Village previousValue = this._Village1.Entity;
+			if (((previousValue != value) 
+						|| (this._Village1.HasLoadedOrAssignedValue == false)))
+			{
+				this.SendPropertyChanging();
+				if ((previousValue != null))
+				{
+					this._Village1.Entity = null;
+					previousValue.SupportTos.Remove(this);
+				}
+				this._Village1.Entity = value;
+				if ((value != null))
+				{
+					value.SupportTos.Add(this);
+					this._To = value.ID;
+				}
+				else
+				{
+					this._To = default(int);
+				}
+				this.SendPropertyChanged("Village1");
+			}
+		}
+	}
+	
+	public event PropertyChangingEventHandler PropertyChanging;
+	
+	public event PropertyChangedEventHandler PropertyChanged;
+	
+	protected virtual void SendPropertyChanging()
+	{
+		if ((this.PropertyChanging != null))
+		{
+			this.PropertyChanging(this, emptyChangingEventArgs);
+		}
+	}
+	
+	protected virtual void SendPropertyChanged(String propertyName)
+	{
+		if ((this.PropertyChanged != null))
+		{
+			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+		}
+	}
+}
+
+[Table(Name="dbo.movement")]
+public partial class TradingTo : INotifyPropertyChanging, INotifyPropertyChanged
+{
+	
+	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+	
+	private int _ID;
+	
+	private int _From;
+	
+	private int _To;
+	
+	private int _Type;
+	
+	private System.DateTime _StartingTime;
+	
+	private System.DateTime _LandingTime;
+	
+	private System.Nullable<int> _Iron;
+	
+	private System.Nullable<int> _Clay;
+	
+	private System.Nullable<int> _Wood;
+	
+	private EntityRef<Village> _Village;
+	
+	private EntityRef<Village> _Village1;
+	
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnFromChanging(int value);
+    partial void OnFromChanged();
+    partial void OnToChanging(int value);
+    partial void OnToChanged();
+    partial void OnTypeChanging(int value);
+    partial void OnTypeChanged();
+    partial void OnStartingTimeChanging(System.DateTime value);
+    partial void OnStartingTimeChanged();
+    partial void OnLandingTimeChanging(System.DateTime value);
+    partial void OnLandingTimeChanged();
+    partial void OnIronChanging(System.Nullable<int> value);
+    partial void OnIronChanged();
+    partial void OnClayChanging(System.Nullable<int> value);
+    partial void OnClayChanged();
+    partial void OnWoodChanging(System.Nullable<int> value);
+    partial void OnWoodChanged();
+    #endregion
+	
+	public TradingTo()
+	{
+		this._Village = default(EntityRef<Village>);
+		this._Village1 = default(EntityRef<Village>);
+		OnCreated();
+	}
+	
+	[Column(Name="id", Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+	public int ID
+	{
+		get
+		{
+			return this._ID;
+		}
+		set
+		{
+			if ((this._ID != value))
+			{
+				this.OnIDChanging(value);
+				this.SendPropertyChanging();
+				this._ID = value;
+				this.SendPropertyChanged("ID");
+				this.OnIDChanged();
+			}
+		}
+	}
+	
+	[Column(Name="[from]", Storage="_From", DbType="Int NOT NULL")]
+	public int From
+	{
+		get
+		{
+			return this._From;
+		}
+		set
+		{
+			if ((this._From != value))
+			{
+				this.OnFromChanging(value);
+				this.SendPropertyChanging();
+				this._From = value;
+				this.SendPropertyChanged("From");
+				this.OnFromChanged();
+			}
+		}
+	}
+	
+	[Column(Name="[to]", Storage="_To", DbType="Int NOT NULL")]
+	public int To
+	{
+		get
+		{
+			return this._To;
+		}
+		set
+		{
+			if ((this._To != value))
+			{
+				this.OnToChanging(value);
+				this.SendPropertyChanging();
+				this._To = value;
+				this.SendPropertyChanged("To");
+				this.OnToChanged();
+			}
+		}
+	}
+	
+	[Column(Name="type", Storage="_Type", DbType="Int NOT NULL")]
+	public int Type
+	{
+		get
+		{
+			return this._Type;
+		}
+		set
+		{
+			if ((this._Type != value))
+			{
+				this.OnTypeChanging(value);
+				this.SendPropertyChanging();
+				this._Type = value;
+				this.SendPropertyChanged("Type");
+				this.OnTypeChanged();
+			}
+		}
+	}
+	
+	[Column(Name="starting_time", Storage="_StartingTime", DbType="DateTime NOT NULL")]
+	public System.DateTime StartingTime
+	{
+		get
+		{
+			return this._StartingTime;
+		}
+		set
+		{
+			if ((this._StartingTime != value))
+			{
+				this.OnStartingTimeChanging(value);
+				this.SendPropertyChanging();
+				this._StartingTime = value;
+				this.SendPropertyChanged("StartingTime");
+				this.OnStartingTimeChanged();
+			}
+		}
+	}
+	
+	[Column(Name="landing_time", Storage="_LandingTime", DbType="DateTime NOT NULL")]
+	public System.DateTime LandingTime
+	{
+		get
+		{
+			return this._LandingTime;
+		}
+		set
+		{
+			if ((this._LandingTime != value))
+			{
+				this.OnLandingTimeChanging(value);
+				this.SendPropertyChanging();
+				this._LandingTime = value;
+				this.SendPropertyChanged("LandingTime");
+				this.OnLandingTimeChanged();
+			}
+		}
+	}
+	
+	[Column(Name="iron", Storage="_Iron", DbType="Int")]
+	public System.Nullable<int> Iron
+	{
+		get
+		{
+			return this._Iron;
+		}
+		set
+		{
+			if ((this._Iron != value))
+			{
+				this.OnIronChanging(value);
+				this.SendPropertyChanging();
+				this._Iron = value;
+				this.SendPropertyChanged("Iron");
+				this.OnIronChanged();
+			}
+		}
+	}
+	
+	[Column(Name="clay", Storage="_Clay", DbType="Int")]
+	public System.Nullable<int> Clay
+	{
+		get
+		{
+			return this._Clay;
+		}
+		set
+		{
+			if ((this._Clay != value))
+			{
+				this.OnClayChanging(value);
+				this.SendPropertyChanging();
+				this._Clay = value;
+				this.SendPropertyChanged("Clay");
+				this.OnClayChanged();
+			}
+		}
+	}
+	
+	[Column(Name="wood", Storage="_Wood", DbType="Int")]
+	public System.Nullable<int> Wood
+	{
+		get
+		{
+			return this._Wood;
+		}
+		set
+		{
+			if ((this._Wood != value))
+			{
+				this.OnWoodChanging(value);
+				this.SendPropertyChanging();
+				this._Wood = value;
+				this.SendPropertyChanged("Wood");
+				this.OnWoodChanged();
+			}
+		}
+	}
+	
+	[Association(Name="Village_movement4", Storage="_Village", ThisKey="From", OtherKey="ID", IsForeignKey=true)]
+	public Village Village
+	{
+		get
+		{
+			return this._Village.Entity;
+		}
+		set
+		{
+			Village previousValue = this._Village.Entity;
+			if (((previousValue != value) 
+						|| (this._Village.HasLoadedOrAssignedValue == false)))
+			{
+				this.SendPropertyChanging();
+				if ((previousValue != null))
+				{
+					this._Village.Entity = null;
+					previousValue.movements2.Remove(this);
+				}
+				this._Village.Entity = value;
+				if ((value != null))
+				{
+					value.movements2.Add(this);
+					this._From = value.ID;
+				}
+				else
+				{
+					this._From = default(int);
+				}
+				this.SendPropertyChanged("Village");
+			}
+		}
+	}
+	
+	[Association(Name="Village_movement5", Storage="_Village1", ThisKey="To", OtherKey="ID", IsForeignKey=true)]
+	public Village Village1
+	{
+		get
+		{
+			return this._Village1.Entity;
+		}
+		set
+		{
+			Village previousValue = this._Village1.Entity;
+			if (((previousValue != value) 
+						|| (this._Village1.HasLoadedOrAssignedValue == false)))
+			{
+				this.SendPropertyChanging();
+				if ((previousValue != null))
+				{
+					this._Village1.Entity = null;
+					previousValue.TradingTos.Remove(this);
+				}
+				this._Village1.Entity = value;
+				if ((value != null))
+				{
+					value.TradingTos.Add(this);
+					this._To = value.ID;
+				}
+				else
+				{
+					this._To = default(int);
+				}
+				this.SendPropertyChanged("Village1");
+			}
+		}
+	}
+	
+	public event PropertyChangingEventHandler PropertyChanging;
+	
+	public event PropertyChangedEventHandler PropertyChanged;
+	
+	protected virtual void SendPropertyChanging()
+	{
+		if ((this.PropertyChanging != null))
+		{
+			this.PropertyChanging(this, emptyChangingEventArgs);
+		}
+	}
+	
+	protected virtual void SendPropertyChanged(String propertyName)
+	{
+		if ((this.PropertyChanged != null))
+		{
+			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+		}
+	}
+}
+
+[Table(Name="dbo.movement")]
+public partial class Return : INotifyPropertyChanging, INotifyPropertyChanged
+{
+	
+	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+	
+	private int _ID;
+	
+	private int _From;
+	
+	private int _To;
+	
+	private int _Type;
+	
+	private System.DateTime _StartingTime;
+	
+	private System.DateTime _LandingTime;
+	
+	private System.Nullable<int> _Sword;
+	
+	private System.Nullable<int> _Axe;
+	
+	private System.Nullable<int> _Scout;
+	
+	private System.Nullable<int> _Light;
+	
+	private System.Nullable<int> _Heavy;
+	
+	private System.Nullable<int> _Ram;
+	
+	private System.Nullable<int> _Catapult;
+	
+	private System.Nullable<int> _Noble;
+	
+	private System.Nullable<int> _Iron;
+	
+	private System.Nullable<int> _Clay;
+	
+	private System.Nullable<int> _Wood;
+	
+	private EntityRef<Village> _Village;
+	
+	private EntityRef<Village> _Village1;
+	
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnFromChanging(int value);
+    partial void OnFromChanged();
+    partial void OnToChanging(int value);
+    partial void OnToChanged();
+    partial void OnTypeChanging(int value);
+    partial void OnTypeChanged();
+    partial void OnStartingTimeChanging(System.DateTime value);
+    partial void OnStartingTimeChanged();
+    partial void OnLandingTimeChanging(System.DateTime value);
+    partial void OnLandingTimeChanged();
+    partial void OnSwordChanging(System.Nullable<int> value);
+    partial void OnSwordChanged();
+    partial void OnAxeChanging(System.Nullable<int> value);
+    partial void OnAxeChanged();
+    partial void OnScoutChanging(System.Nullable<int> value);
+    partial void OnScoutChanged();
+    partial void OnLightChanging(System.Nullable<int> value);
+    partial void OnLightChanged();
+    partial void OnHeavyChanging(System.Nullable<int> value);
+    partial void OnHeavyChanged();
+    partial void OnRamChanging(System.Nullable<int> value);
+    partial void OnRamChanged();
+    partial void OnCatapultChanging(System.Nullable<int> value);
+    partial void OnCatapultChanged();
+    partial void OnNobleChanging(System.Nullable<int> value);
+    partial void OnNobleChanged();
+    partial void OnIronChanging(System.Nullable<int> value);
+    partial void OnIronChanged();
+    partial void OnClayChanging(System.Nullable<int> value);
+    partial void OnClayChanged();
+    partial void OnWoodChanging(System.Nullable<int> value);
+    partial void OnWoodChanged();
+    #endregion
+	
+	public Return()
+	{
+		this._Village = default(EntityRef<Village>);
+		this._Village1 = default(EntityRef<Village>);
+		OnCreated();
+	}
+	
+	[Column(Name="id", Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+	public int ID
+	{
+		get
+		{
+			return this._ID;
+		}
+		set
+		{
+			if ((this._ID != value))
+			{
+				this.OnIDChanging(value);
+				this.SendPropertyChanging();
+				this._ID = value;
+				this.SendPropertyChanged("ID");
+				this.OnIDChanged();
+			}
+		}
+	}
+	
+	[Column(Name="[from]", Storage="_From", DbType="Int NOT NULL")]
+	public int From
+	{
+		get
+		{
+			return this._From;
+		}
+		set
+		{
+			if ((this._From != value))
+			{
+				this.OnFromChanging(value);
+				this.SendPropertyChanging();
+				this._From = value;
+				this.SendPropertyChanged("From");
+				this.OnFromChanged();
+			}
+		}
+	}
+	
+	[Column(Name="[to]", Storage="_To", DbType="Int NOT NULL")]
+	public int To
+	{
+		get
+		{
+			return this._To;
+		}
+		set
+		{
+			if ((this._To != value))
+			{
+				this.OnToChanging(value);
+				this.SendPropertyChanging();
+				this._To = value;
+				this.SendPropertyChanged("To");
+				this.OnToChanged();
+			}
+		}
+	}
+	
+	[Column(Name="type", Storage="_Type", DbType="Int NOT NULL")]
+	public int Type
+	{
+		get
+		{
+			return this._Type;
+		}
+		set
+		{
+			if ((this._Type != value))
+			{
+				this.OnTypeChanging(value);
+				this.SendPropertyChanging();
+				this._Type = value;
+				this.SendPropertyChanged("Type");
+				this.OnTypeChanged();
+			}
+		}
+	}
+	
+	[Column(Name="starting_time", Storage="_StartingTime", DbType="DateTime NOT NULL")]
+	public System.DateTime StartingTime
+	{
+		get
+		{
+			return this._StartingTime;
+		}
+		set
+		{
+			if ((this._StartingTime != value))
+			{
+				this.OnStartingTimeChanging(value);
+				this.SendPropertyChanging();
+				this._StartingTime = value;
+				this.SendPropertyChanged("StartingTime");
+				this.OnStartingTimeChanged();
+			}
+		}
+	}
+	
+	[Column(Name="landing_time", Storage="_LandingTime", DbType="DateTime NOT NULL")]
+	public System.DateTime LandingTime
+	{
+		get
+		{
+			return this._LandingTime;
+		}
+		set
+		{
+			if ((this._LandingTime != value))
+			{
+				this.OnLandingTimeChanging(value);
+				this.SendPropertyChanging();
+				this._LandingTime = value;
+				this.SendPropertyChanged("LandingTime");
+				this.OnLandingTimeChanged();
+			}
+		}
+	}
+	
+	[Column(Name="swordReturnt", Storage="_Sword", DbType="Int")]
+	public System.Nullable<int> Sword
+	{
+		get
+		{
+			return this._Sword;
+		}
+		set
+		{
+			if ((this._Sword != value))
+			{
+				this.OnSwordChanging(value);
+				this.SendPropertyChanging();
+				this._Sword = value;
+				this.SendPropertyChanged("Sword");
+				this.OnSwordChanged();
+			}
+		}
+	}
+	
+	[Column(Name="axeReturnt", Storage="_Axe", DbType="Int")]
+	public System.Nullable<int> Axe
+	{
+		get
+		{
+			return this._Axe;
+		}
+		set
+		{
+			if ((this._Axe != value))
+			{
+				this.OnAxeChanging(value);
+				this.SendPropertyChanging();
+				this._Axe = value;
+				this.SendPropertyChanged("Axe");
+				this.OnAxeChanged();
+			}
+		}
+	}
+	
+	[Column(Name="scoutReturnt", Storage="_Scout", DbType="Int")]
+	public System.Nullable<int> Scout
+	{
+		get
+		{
+			return this._Scout;
+		}
+		set
+		{
+			if ((this._Scout != value))
+			{
+				this.OnScoutChanging(value);
+				this.SendPropertyChanging();
+				this._Scout = value;
+				this.SendPropertyChanged("Scout");
+				this.OnScoutChanged();
+			}
+		}
+	}
+	
+	[Column(Name="lightReturnt", Storage="_Light", DbType="Int")]
+	public System.Nullable<int> Light
+	{
+		get
+		{
+			return this._Light;
+		}
+		set
+		{
+			if ((this._Light != value))
+			{
+				this.OnLightChanging(value);
+				this.SendPropertyChanging();
+				this._Light = value;
+				this.SendPropertyChanged("Light");
+				this.OnLightChanged();
+			}
+		}
+	}
+	
+	[Column(Name="heavyReturnt", Storage="_Heavy", DbType="Int")]
+	public System.Nullable<int> Heavy
+	{
+		get
+		{
+			return this._Heavy;
+		}
+		set
+		{
+			if ((this._Heavy != value))
+			{
+				this.OnHeavyChanging(value);
+				this.SendPropertyChanging();
+				this._Heavy = value;
+				this.SendPropertyChanged("Heavy");
+				this.OnHeavyChanged();
+			}
+		}
+	}
+	
+	[Column(Name="ramReturnt", Storage="_Ram", DbType="Int")]
+	public System.Nullable<int> Ram
+	{
+		get
+		{
+			return this._Ram;
+		}
+		set
+		{
+			if ((this._Ram != value))
+			{
+				this.OnRamChanging(value);
+				this.SendPropertyChanging();
+				this._Ram = value;
+				this.SendPropertyChanged("Ram");
+				this.OnRamChanged();
+			}
+		}
+	}
+	
+	[Column(Name="catapultReturnt", Storage="_Catapult", DbType="Int")]
+	public System.Nullable<int> Catapult
+	{
+		get
+		{
+			return this._Catapult;
+		}
+		set
+		{
+			if ((this._Catapult != value))
+			{
+				this.OnCatapultChanging(value);
+				this.SendPropertyChanging();
+				this._Catapult = value;
+				this.SendPropertyChanged("Catapult");
+				this.OnCatapultChanged();
+			}
+		}
+	}
+	
+	[Column(Name="nobleReturnt", Storage="_Noble", DbType="Int")]
+	public System.Nullable<int> Noble
+	{
+		get
+		{
+			return this._Noble;
+		}
+		set
+		{
+			if ((this._Noble != value))
+			{
+				this.OnNobleChanging(value);
+				this.SendPropertyChanging();
+				this._Noble = value;
+				this.SendPropertyChanged("Noble");
+				this.OnNobleChanged();
+			}
+		}
+	}
+	
+	[Column(Name="iron", Storage="_Iron", DbType="Int")]
+	public System.Nullable<int> Iron
+	{
+		get
+		{
+			return this._Iron;
+		}
+		set
+		{
+			if ((this._Iron != value))
+			{
+				this.OnIronChanging(value);
+				this.SendPropertyChanging();
+				this._Iron = value;
+				this.SendPropertyChanged("Iron");
+				this.OnIronChanged();
+			}
+		}
+	}
+	
+	[Column(Name="clay", Storage="_Clay", DbType="Int")]
+	public System.Nullable<int> Clay
+	{
+		get
+		{
+			return this._Clay;
+		}
+		set
+		{
+			if ((this._Clay != value))
+			{
+				this.OnClayChanging(value);
+				this.SendPropertyChanging();
+				this._Clay = value;
+				this.SendPropertyChanged("Clay");
+				this.OnClayChanged();
+			}
+		}
+	}
+	
+	[Column(Name="wood", Storage="_Wood", DbType="Int")]
+	public System.Nullable<int> Wood
+	{
+		get
+		{
+			return this._Wood;
+		}
+		set
+		{
+			if ((this._Wood != value))
+			{
+				this.OnWoodChanging(value);
+				this.SendPropertyChanging();
+				this._Wood = value;
+				this.SendPropertyChanged("Wood");
+				this.OnWoodChanged();
+			}
+		}
+	}
+	
+	[Association(Name="Village_movement6", Storage="_Village", ThisKey="From", OtherKey="ID", IsForeignKey=true)]
+	public Village Village
+	{
+		get
+		{
+			return this._Village.Entity;
+		}
+		set
+		{
+			Village previousValue = this._Village.Entity;
+			if (((previousValue != value) 
+						|| (this._Village.HasLoadedOrAssignedValue == false)))
+			{
+				this.SendPropertyChanging();
+				if ((previousValue != null))
+				{
+					this._Village.Entity = null;
+					previousValue.movements3.Remove(this);
+				}
+				this._Village.Entity = value;
+				if ((value != null))
+				{
+					value.movements3.Add(this);
+					this._From = value.ID;
+				}
+				else
+				{
+					this._From = default(int);
+				}
+				this.SendPropertyChanged("Village");
+			}
+		}
+	}
+	
+	[Association(Name="Village_movement7", Storage="_Village1", ThisKey="To", OtherKey="ID", IsForeignKey=true)]
+	public Village Village1
+	{
+		get
+		{
+			return this._Village1.Entity;
+		}
+		set
+		{
+			Village previousValue = this._Village1.Entity;
+			if (((previousValue != value) 
+						|| (this._Village1.HasLoadedOrAssignedValue == false)))
+			{
+				this.SendPropertyChanging();
+				if ((previousValue != null))
+				{
+					this._Village1.Entity = null;
+					previousValue.Returns.Remove(this);
+				}
+				this._Village1.Entity = value;
+				if ((value != null))
+				{
+					value.Returns.Add(this);
+					this._To = value.ID;
+				}
+				else
+				{
+					this._To = default(int);
+				}
+				this.SendPropertyChanged("Village1");
+			}
+		}
+	}
+	
+	public event PropertyChangingEventHandler PropertyChanging;
+	
+	public event PropertyChangedEventHandler PropertyChanged;
+	
+	protected virtual void SendPropertyChanging()
+	{
+		if ((this.PropertyChanging != null))
+		{
+			this.PropertyChanging(this, emptyChangingEventArgs);
+		}
+	}
+	
+	protected virtual void SendPropertyChanged(String propertyName)
+	{
+		if ((this.PropertyChanged != null))
+		{
+			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+		}
+	}
+}
+
+[Table(Name="dbo.movement")]
+public partial class AttackFrom : INotifyPropertyChanging, INotifyPropertyChanged
+{
+	
+	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+	
+	private int _ID;
+	
+	private int _From;
+	
+	private int _To;
+	
+	private int _Type;
+	
+	private System.DateTime _StartingTime;
+	
+	private System.DateTime _LandingTime;
+	
+	private System.Nullable<int> _Building;
+	
+	private System.Nullable<int> _Scout;
+	
+	private System.Nullable<int> _Spear;
+	
+	private System.Nullable<int> _Sword;
+	
+	private System.Nullable<int> _Axe;
+	
+	private System.Nullable<int> _Light;
+	
+	private System.Nullable<int> _Heavy;
+	
+	private System.Nullable<int> _Ram;
+	
+	private System.Nullable<int> _Catapult;
+	
+	private System.Nullable<int> _Noble;
+	
+	private EntityRef<Village> _Village;
+	
+	private EntityRef<Village> _Village1;
+	
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnFromChanging(int value);
+    partial void OnFromChanged();
+    partial void OnToChanging(int value);
+    partial void OnToChanged();
+    partial void OnTypeChanging(int value);
+    partial void OnTypeChanged();
+    partial void OnStartingTimeChanging(System.DateTime value);
+    partial void OnStartingTimeChanged();
+    partial void OnLandingTimeChanging(System.DateTime value);
+    partial void OnLandingTimeChanged();
+    partial void OnBuildingChanging(System.Nullable<int> value);
+    partial void OnBuildingChanged();
+    partial void OnScoutChanging(System.Nullable<int> value);
+    partial void OnScoutChanged();
+    partial void OnSpearChanging(System.Nullable<int> value);
+    partial void OnSpearChanged();
+    partial void OnSwordChanging(System.Nullable<int> value);
+    partial void OnSwordChanged();
+    partial void OnAxeChanging(System.Nullable<int> value);
+    partial void OnAxeChanged();
+    partial void OnLightChanging(System.Nullable<int> value);
+    partial void OnLightChanged();
+    partial void OnHeavyChanging(System.Nullable<int> value);
+    partial void OnHeavyChanged();
+    partial void OnRamChanging(System.Nullable<int> value);
+    partial void OnRamChanged();
+    partial void OnCatapultChanging(System.Nullable<int> value);
+    partial void OnCatapultChanged();
+    partial void OnNobleChanging(System.Nullable<int> value);
+    partial void OnNobleChanged();
+    #endregion
+	
+	public AttackFrom()
+	{
+		this._Village = default(EntityRef<Village>);
+		this._Village1 = default(EntityRef<Village>);
+		OnCreated();
+	}
+	
+	[Column(Name="id", Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+	public int ID
+	{
+		get
+		{
+			return this._ID;
+		}
+		set
+		{
+			if ((this._ID != value))
+			{
+				this.OnIDChanging(value);
+				this.SendPropertyChanging();
+				this._ID = value;
+				this.SendPropertyChanged("ID");
+				this.OnIDChanged();
+			}
+		}
+	}
+	
+	[Column(Name="[from]", Storage="_From", DbType="Int NOT NULL")]
+	public int From
+	{
+		get
+		{
+			return this._From;
+		}
+		set
+		{
+			if ((this._From != value))
+			{
+				this.OnFromChanging(value);
+				this.SendPropertyChanging();
+				this._From = value;
+				this.SendPropertyChanged("From");
+				this.OnFromChanged();
+			}
+		}
+	}
+	
+	[Column(Name="[to]", Storage="_To", DbType="Int NOT NULL")]
+	public int To
+	{
+		get
+		{
+			return this._To;
+		}
+		set
+		{
+			if ((this._To != value))
+			{
+				this.OnToChanging(value);
+				this.SendPropertyChanging();
+				this._To = value;
+				this.SendPropertyChanged("To");
+				this.OnToChanged();
+			}
+		}
+	}
+	
+	[Column(Name="type", Storage="_Type", DbType="Int NOT NULL")]
+	public int Type
+	{
+		get
+		{
+			return this._Type;
+		}
+		set
+		{
+			if ((this._Type != value))
+			{
+				this.OnTypeChanging(value);
+				this.SendPropertyChanging();
+				this._Type = value;
+				this.SendPropertyChanged("Type");
+				this.OnTypeChanged();
+			}
+		}
+	}
+	
+	[Column(Name="starting_time", Storage="_StartingTime", DbType="DateTime NOT NULL")]
+	public System.DateTime StartingTime
+	{
+		get
+		{
+			return this._StartingTime;
+		}
+		set
+		{
+			if ((this._StartingTime != value))
+			{
+				this.OnStartingTimeChanging(value);
+				this.SendPropertyChanging();
+				this._StartingTime = value;
+				this.SendPropertyChanged("StartingTime");
+				this.OnStartingTimeChanged();
+			}
+		}
+	}
+	
+	[Column(Name="landing_time", Storage="_LandingTime", DbType="DateTime NOT NULL")]
+	public System.DateTime LandingTime
+	{
+		get
+		{
+			return this._LandingTime;
+		}
+		set
+		{
+			if ((this._LandingTime != value))
+			{
+				this.OnLandingTimeChanging(value);
+				this.SendPropertyChanging();
+				this._LandingTime = value;
+				this.SendPropertyChanged("LandingTime");
+				this.OnLandingTimeChanged();
+			}
+		}
+	}
+	
+	[Column(Name="building", Storage="_Building", DbType="Int")]
+	public System.Nullable<int> Building
+	{
+		get
+		{
+			return this._Building;
+		}
+		set
+		{
+			if ((this._Building != value))
+			{
+				this.OnBuildingChanging(value);
+				this.SendPropertyChanging();
+				this._Building = value;
+				this.SendPropertyChanged("Building");
+				this.OnBuildingChanged();
+			}
+		}
+	}
+	
+	[Column(Name="scoutSent", Storage="_Scout", DbType="Int")]
+	public System.Nullable<int> Scout
+	{
+		get
+		{
+			return this._Scout;
+		}
+		set
+		{
+			if ((this._Scout != value))
+			{
+				this.OnScoutChanging(value);
+				this.SendPropertyChanging();
+				this._Scout = value;
+				this.SendPropertyChanged("Scout");
+				this.OnScoutChanged();
+			}
+		}
+	}
+	
+	[Column(Name="spearSent", Storage="_Spear", DbType="Int")]
+	public System.Nullable<int> Spear
+	{
+		get
+		{
+			return this._Spear;
+		}
+		set
+		{
+			if ((this._Spear != value))
+			{
+				this.OnSpearChanging(value);
+				this.SendPropertyChanging();
+				this._Spear = value;
+				this.SendPropertyChanged("Spear");
+				this.OnSpearChanged();
+			}
+		}
+	}
+	
+	[Column(Name="swordSent", Storage="_Sword", DbType="Int")]
+	public System.Nullable<int> Sword
+	{
+		get
+		{
+			return this._Sword;
+		}
+		set
+		{
+			if ((this._Sword != value))
+			{
+				this.OnSwordChanging(value);
+				this.SendPropertyChanging();
+				this._Sword = value;
+				this.SendPropertyChanged("Sword");
+				this.OnSwordChanged();
+			}
+		}
+	}
+	
+	[Column(Name="axeSent", Storage="_Axe", DbType="Int")]
+	public System.Nullable<int> Axe
+	{
+		get
+		{
+			return this._Axe;
+		}
+		set
+		{
+			if ((this._Axe != value))
+			{
+				this.OnAxeChanging(value);
+				this.SendPropertyChanging();
+				this._Axe = value;
+				this.SendPropertyChanged("Axe");
+				this.OnAxeChanged();
+			}
+		}
+	}
+	
+	[Column(Name="lightSent", Storage="_Light", DbType="Int")]
+	public System.Nullable<int> Light
+	{
+		get
+		{
+			return this._Light;
+		}
+		set
+		{
+			if ((this._Light != value))
+			{
+				this.OnLightChanging(value);
+				this.SendPropertyChanging();
+				this._Light = value;
+				this.SendPropertyChanged("Light");
+				this.OnLightChanged();
+			}
+		}
+	}
+	
+	[Column(Name="heavySent", Storage="_Heavy", DbType="Int")]
+	public System.Nullable<int> Heavy
+	{
+		get
+		{
+			return this._Heavy;
+		}
+		set
+		{
+			if ((this._Heavy != value))
+			{
+				this.OnHeavyChanging(value);
+				this.SendPropertyChanging();
+				this._Heavy = value;
+				this.SendPropertyChanged("Heavy");
+				this.OnHeavyChanged();
+			}
+		}
+	}
+	
+	[Column(Name="ramSent", Storage="_Ram", DbType="Int")]
+	public System.Nullable<int> Ram
+	{
+		get
+		{
+			return this._Ram;
+		}
+		set
+		{
+			if ((this._Ram != value))
+			{
+				this.OnRamChanging(value);
+				this.SendPropertyChanging();
+				this._Ram = value;
+				this.SendPropertyChanged("Ram");
+				this.OnRamChanged();
+			}
+		}
+	}
+	
+	[Column(Name="catapultSent", Storage="_Catapult", DbType="Int")]
+	public System.Nullable<int> Catapult
+	{
+		get
+		{
+			return this._Catapult;
+		}
+		set
+		{
+			if ((this._Catapult != value))
+			{
+				this.OnCatapultChanging(value);
+				this.SendPropertyChanging();
+				this._Catapult = value;
+				this.SendPropertyChanged("Catapult");
+				this.OnCatapultChanged();
+			}
+		}
+	}
+	
+	[Column(Name="nobleSent", Storage="_Noble", DbType="Int")]
+	public System.Nullable<int> Noble
+	{
+		get
+		{
+			return this._Noble;
+		}
+		set
+		{
+			if ((this._Noble != value))
+			{
+				this.OnNobleChanging(value);
+				this.SendPropertyChanging();
+				this._Noble = value;
+				this.SendPropertyChanged("Noble");
+				this.OnNobleChanged();
+			}
+		}
+	}
+	
+	[Association(Name="Village_movement8", Storage="_Village", ThisKey="From", OtherKey="ID", IsForeignKey=true)]
+	public Village Village
+	{
+		get
+		{
+			return this._Village.Entity;
+		}
+		set
+		{
+			Village previousValue = this._Village.Entity;
+			if (((previousValue != value) 
+						|| (this._Village.HasLoadedOrAssignedValue == false)))
+			{
+				this.SendPropertyChanging();
+				if ((previousValue != null))
+				{
+					this._Village.Entity = null;
+					previousValue.movements4.Remove(this);
+				}
+				this._Village.Entity = value;
+				if ((value != null))
+				{
+					value.movements4.Add(this);
+					this._From = value.ID;
+				}
+				else
+				{
+					this._From = default(int);
+				}
+				this.SendPropertyChanged("Village");
+			}
+		}
+	}
+	
+	[Association(Name="Village_movement9", Storage="_Village1", ThisKey="To", OtherKey="ID", IsForeignKey=true)]
+	public Village Village1
+	{
+		get
+		{
+			return this._Village1.Entity;
+		}
+		set
+		{
+			Village previousValue = this._Village1.Entity;
+			if (((previousValue != value) 
+						|| (this._Village1.HasLoadedOrAssignedValue == false)))
+			{
+				this.SendPropertyChanging();
+				if ((previousValue != null))
+				{
+					this._Village1.Entity = null;
+					previousValue.AttackFroms.Remove(this);
+				}
+				this._Village1.Entity = value;
+				if ((value != null))
+				{
+					value.AttackFroms.Add(this);
+					this._To = value.ID;
+				}
+				else
+				{
+					this._To = default(int);
+				}
+				this.SendPropertyChanged("Village1");
+			}
+		}
+	}
+	
+	public event PropertyChangingEventHandler PropertyChanging;
+	
+	public event PropertyChangedEventHandler PropertyChanged;
+	
+	protected virtual void SendPropertyChanging()
+	{
+		if ((this.PropertyChanging != null))
+		{
+			this.PropertyChanging(this, emptyChangingEventArgs);
+		}
+	}
+	
+	protected virtual void SendPropertyChanged(String propertyName)
+	{
+		if ((this.PropertyChanged != null))
+		{
+			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+		}
+	}
+}
+
+[Table(Name="dbo.movement")]
+public partial class SupportFrom : INotifyPropertyChanging, INotifyPropertyChanged
+{
+	
+	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+	
+	private int _ID;
+	
+	private int _From;
+	
+	private int _To;
+	
+	private int _Type;
+	
+	private System.DateTime _StartingTime;
+	
+	private System.DateTime _LandingTime;
+	
+	private System.Nullable<int> _Scout;
+	
+	private System.Nullable<int> _Spear;
+	
+	private System.Nullable<int> _Sword;
+	
+	private System.Nullable<int> _Axe;
+	
+	private System.Nullable<int> _Light;
+	
+	private System.Nullable<int> _Heavy;
+	
+	private System.Nullable<int> _Ram;
+	
+	private System.Nullable<int> _Catapult;
+	
+	private System.Nullable<int> _Noble;
+	
+	private EntityRef<Village> _Village;
+	
+	private EntityRef<Village> _Village1;
+	
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnFromChanging(int value);
+    partial void OnFromChanged();
+    partial void OnToChanging(int value);
+    partial void OnToChanged();
+    partial void OnTypeChanging(int value);
+    partial void OnTypeChanged();
+    partial void OnStartingTimeChanging(System.DateTime value);
+    partial void OnStartingTimeChanged();
+    partial void OnLandingTimeChanging(System.DateTime value);
+    partial void OnLandingTimeChanged();
+    partial void OnScoutChanging(System.Nullable<int> value);
+    partial void OnScoutChanged();
+    partial void OnSpearChanging(System.Nullable<int> value);
+    partial void OnSpearChanged();
+    partial void OnSwordChanging(System.Nullable<int> value);
+    partial void OnSwordChanged();
+    partial void OnAxeChanging(System.Nullable<int> value);
+    partial void OnAxeChanged();
+    partial void OnLightChanging(System.Nullable<int> value);
+    partial void OnLightChanged();
+    partial void OnHeavyChanging(System.Nullable<int> value);
+    partial void OnHeavyChanged();
+    partial void OnRamChanging(System.Nullable<int> value);
+    partial void OnRamChanged();
+    partial void OnCatapultChanging(System.Nullable<int> value);
+    partial void OnCatapultChanged();
+    partial void OnNobleChanging(System.Nullable<int> value);
+    partial void OnNobleChanged();
+    #endregion
+	
+	public SupportFrom()
+	{
+		this._Village = default(EntityRef<Village>);
+		this._Village1 = default(EntityRef<Village>);
+		OnCreated();
+	}
+	
+	[Column(Name="id", Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+	public int ID
+	{
+		get
+		{
+			return this._ID;
+		}
+		set
+		{
+			if ((this._ID != value))
+			{
+				this.OnIDChanging(value);
+				this.SendPropertyChanging();
+				this._ID = value;
+				this.SendPropertyChanged("ID");
+				this.OnIDChanged();
+			}
+		}
+	}
+	
+	[Column(Name="[from]", Storage="_From", DbType="Int NOT NULL")]
+	public int From
+	{
+		get
+		{
+			return this._From;
+		}
+		set
+		{
+			if ((this._From != value))
+			{
+				this.OnFromChanging(value);
+				this.SendPropertyChanging();
+				this._From = value;
+				this.SendPropertyChanged("From");
+				this.OnFromChanged();
+			}
+		}
+	}
+	
+	[Column(Name="[to]", Storage="_To", DbType="Int NOT NULL")]
+	public int To
+	{
+		get
+		{
+			return this._To;
+		}
+		set
+		{
+			if ((this._To != value))
+			{
+				this.OnToChanging(value);
+				this.SendPropertyChanging();
+				this._To = value;
+				this.SendPropertyChanged("To");
+				this.OnToChanged();
+			}
+		}
+	}
+	
+	[Column(Name="type", Storage="_Type", DbType="Int NOT NULL")]
+	public int Type
+	{
+		get
+		{
+			return this._Type;
+		}
+		set
+		{
+			if ((this._Type != value))
+			{
+				this.OnTypeChanging(value);
+				this.SendPropertyChanging();
+				this._Type = value;
+				this.SendPropertyChanged("Type");
+				this.OnTypeChanged();
+			}
+		}
+	}
+	
+	[Column(Name="starting_time", Storage="_StartingTime", DbType="DateTime NOT NULL")]
+	public System.DateTime StartingTime
+	{
+		get
+		{
+			return this._StartingTime;
+		}
+		set
+		{
+			if ((this._StartingTime != value))
+			{
+				this.OnStartingTimeChanging(value);
+				this.SendPropertyChanging();
+				this._StartingTime = value;
+				this.SendPropertyChanged("StartingTime");
+				this.OnStartingTimeChanged();
+			}
+		}
+	}
+	
+	[Column(Name="landing_time", Storage="_LandingTime", DbType="DateTime NOT NULL")]
+	public System.DateTime LandingTime
+	{
+		get
+		{
+			return this._LandingTime;
+		}
+		set
+		{
+			if ((this._LandingTime != value))
+			{
+				this.OnLandingTimeChanging(value);
+				this.SendPropertyChanging();
+				this._LandingTime = value;
+				this.SendPropertyChanged("LandingTime");
+				this.OnLandingTimeChanged();
+			}
+		}
+	}
+	
+	[Column(Name="scoutSent", Storage="_Scout", DbType="Int")]
+	public System.Nullable<int> Scout
+	{
+		get
+		{
+			return this._Scout;
+		}
+		set
+		{
+			if ((this._Scout != value))
+			{
+				this.OnScoutChanging(value);
+				this.SendPropertyChanging();
+				this._Scout = value;
+				this.SendPropertyChanged("Scout");
+				this.OnScoutChanged();
+			}
+		}
+	}
+	
+	[Column(Name="spearSent", Storage="_Spear", DbType="Int")]
+	public System.Nullable<int> Spear
+	{
+		get
+		{
+			return this._Spear;
+		}
+		set
+		{
+			if ((this._Spear != value))
+			{
+				this.OnSpearChanging(value);
+				this.SendPropertyChanging();
+				this._Spear = value;
+				this.SendPropertyChanged("Spear");
+				this.OnSpearChanged();
+			}
+		}
+	}
+	
+	[Column(Name="swordSent", Storage="_Sword", DbType="Int")]
+	public System.Nullable<int> Sword
+	{
+		get
+		{
+			return this._Sword;
+		}
+		set
+		{
+			if ((this._Sword != value))
+			{
+				this.OnSwordChanging(value);
+				this.SendPropertyChanging();
+				this._Sword = value;
+				this.SendPropertyChanged("Sword");
+				this.OnSwordChanged();
+			}
+		}
+	}
+	
+	[Column(Name="axeSent", Storage="_Axe", DbType="Int")]
+	public System.Nullable<int> Axe
+	{
+		get
+		{
+			return this._Axe;
+		}
+		set
+		{
+			if ((this._Axe != value))
+			{
+				this.OnAxeChanging(value);
+				this.SendPropertyChanging();
+				this._Axe = value;
+				this.SendPropertyChanged("Axe");
+				this.OnAxeChanged();
+			}
+		}
+	}
+	
+	[Column(Name="lightSent", Storage="_Light", DbType="Int")]
+	public System.Nullable<int> Light
+	{
+		get
+		{
+			return this._Light;
+		}
+		set
+		{
+			if ((this._Light != value))
+			{
+				this.OnLightChanging(value);
+				this.SendPropertyChanging();
+				this._Light = value;
+				this.SendPropertyChanged("Light");
+				this.OnLightChanged();
+			}
+		}
+	}
+	
+	[Column(Name="heavySent", Storage="_Heavy", DbType="Int")]
+	public System.Nullable<int> Heavy
+	{
+		get
+		{
+			return this._Heavy;
+		}
+		set
+		{
+			if ((this._Heavy != value))
+			{
+				this.OnHeavyChanging(value);
+				this.SendPropertyChanging();
+				this._Heavy = value;
+				this.SendPropertyChanged("Heavy");
+				this.OnHeavyChanged();
+			}
+		}
+	}
+	
+	[Column(Name="ramSent", Storage="_Ram", DbType="Int")]
+	public System.Nullable<int> Ram
+	{
+		get
+		{
+			return this._Ram;
+		}
+		set
+		{
+			if ((this._Ram != value))
+			{
+				this.OnRamChanging(value);
+				this.SendPropertyChanging();
+				this._Ram = value;
+				this.SendPropertyChanged("Ram");
+				this.OnRamChanged();
+			}
+		}
+	}
+	
+	[Column(Name="catapultSent", Storage="_Catapult", DbType="Int")]
+	public System.Nullable<int> Catapult
+	{
+		get
+		{
+			return this._Catapult;
+		}
+		set
+		{
+			if ((this._Catapult != value))
+			{
+				this.OnCatapultChanging(value);
+				this.SendPropertyChanging();
+				this._Catapult = value;
+				this.SendPropertyChanged("Catapult");
+				this.OnCatapultChanged();
+			}
+		}
+	}
+	
+	[Column(Name="nobleSent", Storage="_Noble", DbType="Int")]
+	public System.Nullable<int> Noble
+	{
+		get
+		{
+			return this._Noble;
+		}
+		set
+		{
+			if ((this._Noble != value))
+			{
+				this.OnNobleChanging(value);
+				this.SendPropertyChanging();
+				this._Noble = value;
+				this.SendPropertyChanged("Noble");
+				this.OnNobleChanged();
+			}
+		}
+	}
+	
+	[Association(Name="Village_movement10", Storage="_Village", ThisKey="From", OtherKey="ID", IsForeignKey=true)]
+	public Village Village
+	{
+		get
+		{
+			return this._Village.Entity;
+		}
+		set
+		{
+			Village previousValue = this._Village.Entity;
+			if (((previousValue != value) 
+						|| (this._Village.HasLoadedOrAssignedValue == false)))
+			{
+				this.SendPropertyChanging();
+				if ((previousValue != null))
+				{
+					this._Village.Entity = null;
+					previousValue.movements5.Remove(this);
+				}
+				this._Village.Entity = value;
+				if ((value != null))
+				{
+					value.movements5.Add(this);
+					this._From = value.ID;
+				}
+				else
+				{
+					this._From = default(int);
+				}
+				this.SendPropertyChanged("Village");
+			}
+		}
+	}
+	
+	[Association(Name="Village_movement11", Storage="_Village1", ThisKey="To", OtherKey="ID", IsForeignKey=true)]
+	public Village Village1
+	{
+		get
+		{
+			return this._Village1.Entity;
+		}
+		set
+		{
+			Village previousValue = this._Village1.Entity;
+			if (((previousValue != value) 
+						|| (this._Village1.HasLoadedOrAssignedValue == false)))
+			{
+				this.SendPropertyChanging();
+				if ((previousValue != null))
+				{
+					this._Village1.Entity = null;
+					previousValue.SupportFroms.Remove(this);
+				}
+				this._Village1.Entity = value;
+				if ((value != null))
+				{
+					value.SupportFroms.Add(this);
+					this._To = value.ID;
+				}
+				else
+				{
+					this._To = default(int);
+				}
+				this.SendPropertyChanged("Village1");
+			}
+		}
+	}
+	
+	public event PropertyChangingEventHandler PropertyChanging;
+	
+	public event PropertyChangedEventHandler PropertyChanged;
+	
+	protected virtual void SendPropertyChanging()
+	{
+		if ((this.PropertyChanging != null))
+		{
+			this.PropertyChanging(this, emptyChangingEventArgs);
+		}
+	}
+	
+	protected virtual void SendPropertyChanged(String propertyName)
+	{
+		if ((this.PropertyChanged != null))
+		{
+			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+		}
+	}
+}
+
+[Table(Name="dbo.movement")]
+public partial class TradingFrom : INotifyPropertyChanging, INotifyPropertyChanged
+{
+	
+	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+	
+	private int _ID;
+	
+	private int _From;
+	
+	private int _To;
+	
+	private int _Type;
+	
+	private System.DateTime _StartingTime;
+	
+	private System.DateTime _LandingTime;
+	
+	private System.Nullable<int> _Iron;
+	
+	private System.Nullable<int> _Clay;
+	
+	private System.Nullable<int> _Wood;
+	
+	private EntityRef<Village> _Village;
+	
+	private EntityRef<Village> _Village1;
+	
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnFromChanging(int value);
+    partial void OnFromChanged();
+    partial void OnToChanging(int value);
+    partial void OnToChanged();
+    partial void OnTypeChanging(int value);
+    partial void OnTypeChanged();
+    partial void OnStartingTimeChanging(System.DateTime value);
+    partial void OnStartingTimeChanged();
+    partial void OnLandingTimeChanging(System.DateTime value);
+    partial void OnLandingTimeChanged();
+    partial void OnIronChanging(System.Nullable<int> value);
+    partial void OnIronChanged();
+    partial void OnClayChanging(System.Nullable<int> value);
+    partial void OnClayChanged();
+    partial void OnWoodChanging(System.Nullable<int> value);
+    partial void OnWoodChanged();
+    #endregion
+	
+	public TradingFrom()
+	{
+		this._Village = default(EntityRef<Village>);
+		this._Village1 = default(EntityRef<Village>);
+		OnCreated();
+	}
+	
+	[Column(Name="id", Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+	public int ID
+	{
+		get
+		{
+			return this._ID;
+		}
+		set
+		{
+			if ((this._ID != value))
+			{
+				this.OnIDChanging(value);
+				this.SendPropertyChanging();
+				this._ID = value;
+				this.SendPropertyChanged("ID");
+				this.OnIDChanged();
+			}
+		}
+	}
+	
+	[Column(Name="[from]", Storage="_From", DbType="Int NOT NULL")]
+	public int From
+	{
+		get
+		{
+			return this._From;
+		}
+		set
+		{
+			if ((this._From != value))
+			{
+				this.OnFromChanging(value);
+				this.SendPropertyChanging();
+				this._From = value;
+				this.SendPropertyChanged("From");
+				this.OnFromChanged();
+			}
+		}
+	}
+	
+	[Column(Name="[to]", Storage="_To", DbType="Int NOT NULL")]
+	public int To
+	{
+		get
+		{
+			return this._To;
+		}
+		set
+		{
+			if ((this._To != value))
+			{
+				this.OnToChanging(value);
+				this.SendPropertyChanging();
+				this._To = value;
+				this.SendPropertyChanged("To");
+				this.OnToChanged();
+			}
+		}
+	}
+	
+	[Column(Name="type", Storage="_Type", DbType="Int NOT NULL")]
+	public int Type
+	{
+		get
+		{
+			return this._Type;
+		}
+		set
+		{
+			if ((this._Type != value))
+			{
+				this.OnTypeChanging(value);
+				this.SendPropertyChanging();
+				this._Type = value;
+				this.SendPropertyChanged("Type");
+				this.OnTypeChanged();
+			}
+		}
+	}
+	
+	[Column(Name="starting_time", Storage="_StartingTime", DbType="DateTime NOT NULL")]
+	public System.DateTime StartingTime
+	{
+		get
+		{
+			return this._StartingTime;
+		}
+		set
+		{
+			if ((this._StartingTime != value))
+			{
+				this.OnStartingTimeChanging(value);
+				this.SendPropertyChanging();
+				this._StartingTime = value;
+				this.SendPropertyChanged("StartingTime");
+				this.OnStartingTimeChanged();
+			}
+		}
+	}
+	
+	[Column(Name="landing_time", Storage="_LandingTime", DbType="DateTime NOT NULL")]
+	public System.DateTime LandingTime
+	{
+		get
+		{
+			return this._LandingTime;
+		}
+		set
+		{
+			if ((this._LandingTime != value))
+			{
+				this.OnLandingTimeChanging(value);
+				this.SendPropertyChanging();
+				this._LandingTime = value;
+				this.SendPropertyChanged("LandingTime");
+				this.OnLandingTimeChanged();
+			}
+		}
+	}
+	
+	[Column(Name="iron", Storage="_Iron", DbType="Int")]
+	public System.Nullable<int> Iron
+	{
+		get
+		{
+			return this._Iron;
+		}
+		set
+		{
+			if ((this._Iron != value))
+			{
+				this.OnIronChanging(value);
+				this.SendPropertyChanging();
+				this._Iron = value;
+				this.SendPropertyChanged("Iron");
+				this.OnIronChanged();
+			}
+		}
+	}
+	
+	[Column(Name="clay", Storage="_Clay", DbType="Int")]
+	public System.Nullable<int> Clay
+	{
+		get
+		{
+			return this._Clay;
+		}
+		set
+		{
+			if ((this._Clay != value))
+			{
+				this.OnClayChanging(value);
+				this.SendPropertyChanging();
+				this._Clay = value;
+				this.SendPropertyChanged("Clay");
+				this.OnClayChanged();
+			}
+		}
+	}
+	
+	[Column(Name="wood", Storage="_Wood", DbType="Int")]
+	public System.Nullable<int> Wood
+	{
+		get
+		{
+			return this._Wood;
+		}
+		set
+		{
+			if ((this._Wood != value))
+			{
+				this.OnWoodChanging(value);
+				this.SendPropertyChanging();
+				this._Wood = value;
+				this.SendPropertyChanged("Wood");
+				this.OnWoodChanged();
+			}
+		}
+	}
+	
+	[Association(Name="Village_movement12", Storage="_Village", ThisKey="From", OtherKey="ID", IsForeignKey=true)]
+	public Village Village
+	{
+		get
+		{
+			return this._Village.Entity;
+		}
+		set
+		{
+			Village previousValue = this._Village.Entity;
+			if (((previousValue != value) 
+						|| (this._Village.HasLoadedOrAssignedValue == false)))
+			{
+				this.SendPropertyChanging();
+				if ((previousValue != null))
+				{
+					this._Village.Entity = null;
+					previousValue.movements6.Remove(this);
+				}
+				this._Village.Entity = value;
+				if ((value != null))
+				{
+					value.movements6.Add(this);
+					this._From = value.ID;
+				}
+				else
+				{
+					this._From = default(int);
+				}
+				this.SendPropertyChanged("Village");
+			}
+		}
+	}
+	
+	[Association(Name="Village_movement13", Storage="_Village1", ThisKey="To", OtherKey="ID", IsForeignKey=true)]
+	public Village Village1
+	{
+		get
+		{
+			return this._Village1.Entity;
+		}
+		set
+		{
+			Village previousValue = this._Village1.Entity;
+			if (((previousValue != value) 
+						|| (this._Village1.HasLoadedOrAssignedValue == false)))
+			{
+				this.SendPropertyChanging();
+				if ((previousValue != null))
+				{
+					this._Village1.Entity = null;
+					previousValue.TradingFroms.Remove(this);
+				}
+				this._Village1.Entity = value;
+				if ((value != null))
+				{
+					value.TradingFroms.Add(this);
+					this._To = value.ID;
+				}
+				else
+				{
+					this._To = default(int);
+				}
+				this.SendPropertyChanged("Village1");
+			}
+		}
+	}
+	
+	public event PropertyChangingEventHandler PropertyChanging;
+	
+	public event PropertyChangedEventHandler PropertyChanged;
+	
+	protected virtual void SendPropertyChanging()
+	{
+		if ((this.PropertyChanging != null))
+		{
+			this.PropertyChanging(this, emptyChangingEventArgs);
+		}
+	}
+	
+	protected virtual void SendPropertyChanged(String propertyName)
+	{
+		if ((this.PropertyChanged != null))
+		{
+			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+		}
 	}
 }
 #pragma warning restore 1591

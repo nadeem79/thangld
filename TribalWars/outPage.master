@@ -1,0 +1,98 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="outPage.master.cs" Inherits="outPage" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Untitled Page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="description" content="Tribal Wars is a browserbased online game. Every player controls a small village, striving for power and glory." />
+    <meta name="keywords" content="Browser game, Browser games, Browsergame, Online game, Onlinegame, Online games, middle ages, knight, castle, honour, loyalty, war, wars, fight, village, Tribal Wars, tribes" />
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <!--[if lt IE 7]>
+		<link rel="stylesheet" type="text/css" href="css/index_ie6.css" media="screen"/>
+		<![endif]-->
+    <link rel="alternate" type="application/rss+xml" title="Tribal Wars - News" href="http://www.tribalwars.net/news.php?type=rss2.0" />
+
+    <script type="text/javascript">
+		if(top!=self)
+			top.location=self.location;
+    </script>
+
+    <style type="text/css">
+        #login-btn-input
+        {
+            display: block;
+            line-height: 22px;
+            height: 26px;
+            width: 106px;
+            padding: 0;
+            margin: 0;
+            border: 0;
+            overflow: hidden;
+            background: url(images/login.png) no-repeat 0 0;
+            float: right;
+        }
+        #login-btn-input.login-btn-input-hover
+        {
+            width: 106px;
+            background: url(images/login.png) no-repeat -106px 0;
+        }
+    </style>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <div id="main">
+        <div id="header">
+            <h1>
+                <a href="/index.aspx" style="background: url(images/bg-logo.jpg) no-repeat 100% 0;">
+                    Tribal Wars</a></h1>
+            <div class="navigation">
+                <div class="navigation-holder">
+                    <div class="navigation-wrapper">
+                        <div id="navigation_span">
+                            <a href="help2.php">Help</a> - <a href="rules.php">Rules</a> - <a href="http://irc2go.com/pjirc/?net=QuakeNet&room=tribalwars">
+                                Chat</a> - <a href="http://wiki.tribalwars.net/wiki/Welcome">Wiki</a> - <a href="sds_rounds.php?mode=present">
+                                    Speed Rounds</a> - <a href="ticket.php">Support</a> - <a href="http://www.twstats.com">
+                                        TW Stats</a> - <a href="stat.php">Statistics</a> - <a href="http://forum.tribalwars.net/">
+                                            Forum</a> - <a href="team.php">Team</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <span class="paladin">
+                <img src="images/bg-paladin.png" alt="" /></span>
+        </div>
+        <form id="form1" runat="server">
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+        </form>
+        <div class="closure">
+            thangld</div>
+    </div>
+    <!-- main -->
+
+    <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+    </script>
+
+    <script type="text/javascript">
+_uacct = "UA-1897727-3";
+urchinTracker();
+
+    </script>
+
+    <script type="text/javascript" src="js/mootools.js"></script>
+
+    <script type="text/javascript" src="js/index.js">
+
+    </script>
+
+    <div id="screenshot" style="visibility: hidden" onclick="hide_screenshot();">
+        <div id="screenshot_image">
+        </div>
+    </div>
+    </div>
+</body>
+</html>
