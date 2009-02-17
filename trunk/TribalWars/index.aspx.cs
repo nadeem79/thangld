@@ -17,8 +17,6 @@ public partial class index : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
 
-        this.error.Text = DateTime.Now.AddSeconds(-500).ToString();
-        
     }
 
     protected void login_Click(object sender, ImageClickEventArgs e)

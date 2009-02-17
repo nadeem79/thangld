@@ -41,7 +41,7 @@ public partial class Default2 : System.Web.UI.Page
         conn.Close();
         if (success > 0)
         {
-            Session.Add("username", username);
+            Session.Add("username", username.Text);
             Response.Redirect("overview.aspx", true);
         }
         else
