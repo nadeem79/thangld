@@ -27,9 +27,9 @@ public class Map
         return Math.Sqrt(Math.Pow(sourceX - desX, 2) + Math.Pow(sourceY - desY, 2));
     }
 
-    public static DateTime LandingTime(int troop, int sourceX, int sourceY, int desX, int desY)
+    public static DateTime LandingTime(int troop, int sourceX, int sourceY, int desX, int desY, DateTime start)
     {
-        return DateTime.Now.AddMilliseconds(MovingCalculator(sourceX, sourceY, desX, desY) * 300000);
+        return start.AddMilliseconds(MovingCalculator(sourceX, sourceY, desX, desY) * 300000);
     }
 
     public static Decimal CreateVillage(string username)

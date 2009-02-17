@@ -26,9 +26,9 @@ public class AttackCalculator
         int bowAttack = aBowman * 15 + dMounted * 120;
         int totalAttack = infantryAttack + cavalryAttack + bowAttack;
 
-        double pInfantry = infantryAttack / totalAttack;
-        double pCavalry = cavalryAttack / totalAttack;
-        double pBow = bowAttack / totalAttack;
+        double pInfantry = (double)infantryAttack / (double)totalAttack;
+        double pCavalry = (double)cavalryAttack / (double)totalAttack;
+        double pBow = (double)bowAttack / (double)totalAttack;
 
         int infantryDefense = dSpear * 15 + dSword * 50 + dAxe * 10 + dBowman * 50 + dLight * 30 + dMounted * 40 + dHeavy * 200 + dNoble * 100;
         int cavalryDefense = dSpear * 45 + dSword * 15 + dAxe * 5 + dBowman * 40 + dLight * 40 + dMounted * 30 + dHeavy * 80 + dNoble * 50;
@@ -40,20 +40,19 @@ public class AttackCalculator
         double ratio;
         if (totalAttack > totalDefense)
         {
-            ratio = totalAttack * (totalAttack - totalDefense) / totalDefense;
+            ratio = (double)totalDefense / (double)totalAttack;
 
-            spear = (int)(aSpear * ratio);
-            sword = (int)(aSword * ratio);
-            axe = (int)(aAxe * ratio);
-            bowman = (int)(aBowman * ratio);
-            
-            light = (int)(aLight * ratio);
-            heavy = (int)(aHeavy * ratio);
-            mounted = (int)(aMounted * ratio);
-            ram = (int)(aRam * ratio);
-            catapult = (int)(aCatapult * ratio);
-            noble = (int)(aNoble * ratio);
-            scout = (int)(aScout * ratio);
+            spear = aSpear - (int)(aSpear * ratio);
+            sword = aSword - (int)(aSword * ratio);
+            axe = aAxe - (int)(aAxe * ratio);
+            bowman = aBowman - (int)(aBowman * ratio);
+            light = aLight - (int)(aLight * ratio);
+            heavy = aHeavy - (int)(aHeavy * ratio);
+            mounted = aMounted - (int)(aMounted * ratio);
+            ram = aRam - (int)(aRam * ratio);
+            catapult = aCatapult - (int)(aCatapult * ratio);
+            noble = aNoble - (int)(aNoble * ratio);
+            scout = aScout - (int)(aScout * ratio);
 
             return true;
         }
@@ -61,17 +60,17 @@ public class AttackCalculator
         {
             ratio = totalAttack * (totalDefense - totalAttack) / totalAttack;
 
-            spear = (int)(dSpear * ratio);
-            sword = (int)(dSword * ratio);
-            axe = (int)(dAxe * ratio);
-            bowman = (int)(dBowman * ratio);
-            light = (int)(dLight * ratio);
-            heavy = (int)(dHeavy * ratio);
-            mounted = (int)(dMounted * ratio);
-            ram = (int)(dRam * ratio);
-            catapult = (int)(dCatapult * ratio);
-            noble = (int)(dNoble * ratio);
-            scout = dScout;
+            spear = dSpear - (int)(dSpear * ratio);
+            sword = dSword - (int)(dSword * ratio);
+            axe = dAxe - (int)(dAxe * ratio);
+            bowman = dBowman - (int)(dBowman * ratio);
+            light = dLight - (int)(dLight * ratio);
+            heavy = dHeavy - (int)(dHeavy * ratio);
+            mounted = dMounted - (int)(dMounted * ratio);
+            ram = dRam - (int)(dRam * ratio);
+            catapult = dCatapult - (int)(dCatapult * ratio);
+            noble = dNoble - (int)(dNoble * ratio);
+            scout = aScout - (int)(dScout * ratio);
             
             return false;
         }

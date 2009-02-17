@@ -43,6 +43,7 @@ public class Village
 
     public static DataRow refresh(int village_id, DateTime refreshingTime)
     {
+        #region lan 1
         //SqlCommand cmdGetVillageInfo = conn.CreateCommand();
         //cmdGetVillageInfo.CommandText = "select * from villages where id=@id";
         //cmdGetVillageInfo.Parameters.Add("@id", SqlDbType.Int).Value = village_id;
@@ -640,7 +641,7 @@ public class Village
         //    conn.Close();
         //return village_info;
 
-
+        #endregion
 
         #region DEMO: không xét chuyển tiền hay support
 
@@ -657,11 +658,10 @@ public class Village
         SqlCommand cmdGetVillageInfo = conn.CreateCommand();
         cmdGetVillageInfo.CommandText = "select v.* from villages v where v.id=@id";
         cmdGetVillageInfo.Parameters.Add("@id", SqlDbType.Int).Value = village_id;
-        cmdGetVillageInfo.Parameters.Add("@landing_time", SqlDbType.DateTime).Value = refreshingTime;
         SqlDataAdapter daGetVillageInfo = new SqlDataAdapter(cmdGetVillageInfo);
 
         SqlCommand cmdGetVillageIncoming = conn.CreateCommand();
-        cmdGetVillageIncoming.CommandText = "select m.*, v1.x as vil_x, v1.y as vil_y from movement m inner join villages v on (m.[to]=v.id and m.landing_time>=v.last_update) inner join villages v1 on (m.[from]=v1.id) where type=2 and [from]=@id and landing_time<=@landing order by landing_time asc";
+        cmdGetVillageIncoming.CommandText = "select m.*, v1.userid, v1.x as vil_x, v1.y as vil_y from movement m inner join villages v on (m.[to]=v.id and m.landing_time>=v.last_update) inner join villages v1 on (m.[from]=v1.id) where type=2 and [to]=@id and landing_time<=@landing order by landing_time asc";
         cmdGetVillageIncoming.Parameters.Add("@id", SqlDbType.Int).Value = village_id;
         cmdGetVillageIncoming.Parameters.Add("@landing", SqlDbType.DateTime).Value = refreshingTime;
         SqlDataAdapter daGetVillageIncoming = new SqlDataAdapter(cmdGetVillageIncoming);
@@ -702,7 +702,7 @@ public class Village
             #region Quân quay về từ làng khác
 
             cmdGetVillageReturning = conn.CreateCommand();
-            cmdGetVillageReturning.CommandText = "select m.* from movement m inner join villages v on (m.[to]=v.id) where type=4 and [to]=@id and m.landing_time>=@from_time and m.landing_time<=@to_time";
+            cmdGetVillageReturning.CommandText = "select m.* from movement = where type=4 and [to]=@id and landing_time>=@from_time and landing_time<=@to_time";
             cmdGetVillageReturning.Parameters.Add("@id", SqlDbType.Int).Value = village_id;
             cmdGetVillageReturning.Parameters.Add("@from_time", SqlDbType.DateTime).Value = last_update;
             cmdGetVillageReturning.Parameters.Add("@to_time", SqlDbType.DateTime).Value = this_point;
@@ -728,115 +728,10 @@ public class Village
 
             #endregion
 
-            #region Công trình, bao gồm cả tăng tài nguyên
-            cmdGetVillageBuilding = conn.CreateCommand();
-            cmdGetVillageBuilding.CommandText = "select b.* from build b inner join villages v on (b.village_id=v.id) where village_id=@id and stop_time>=@from_time and stop_time<=@to_time";
-            cmdGetVillageBuilding.Parameters.Add("@id", SqlDbType.Int).Value = village_id;
-            cmdGetVillageBuilding.Parameters.Add("@from_time", SqlDbType.DateTime).Value = last_update;
-            cmdGetVillageBuilding.Parameters.Add("@to_time", SqlDbType.DateTime).Value = this_point;
-            daGetVillageBuilding = new SqlDataAdapter(cmdGetVillageBuilding);
-            if (dsCommand.Tables.Contains("build"))
-                dsCommand.Tables["build"].Rows.Clear();
-            daGetVillageAttacking.Fill(dsCommand, "build");
-
-            if (dsCommand.Tables["build"].Rows.Count == 0)
-            {
-                village_info["clay"] = Resource.update((int)village_info["claypit"], (int)village_info["clay"], last_update, this_point);
-                village_info["wood"] = Resource.update((int)village_info["timbercamp"], (int)village_info["wood"], last_update, this_point);
-                village_info["iron"] = Resource.update((int)village_info["ironmine"], (int)village_info["iron"], last_update, this_point);
-            }
-
-            foreach (DataRow rowBuild in dsCommand.Tables["build"].Rows)
-            {
-                string sBuilding = "headquarter";
-                switch ((int)rowBuild["building"])
-                {
-                    case 1:
-                        sBuilding = "headquarter";
-                        break;
-                    case 2:
-                        sBuilding = "barracks";
-                        break;
-                    case 3:
-                        sBuilding = "stable";
-                        break;
-                    case 4:
-                        sBuilding = "workshop";
-                        break;
-                    case 5:
-                        sBuilding = "academy";
-                        break;
-                    case 6:
-                        sBuilding = "smithy";
-                        break;
-                    case 7:
-                        sBuilding = "rally";
-                        break;
-                    case 8:
-                        sBuilding = "market";
-                        break;
-                    case 9:
-                        sBuilding = "timbercamp";
-                        break;
-                    case 10:
-                        sBuilding = "claypit";
-                        break;
-                    case 11:
-                        sBuilding = "ironmine";
-                        break;
-                    case 12:
-                        sBuilding = "farm";
-                        break;
-                    case 13:
-                        sBuilding = "storage";
-                        break;
-                    case 14:
-                        sBuilding = "hide";
-                        break;
-                    case 15:
-                        sBuilding = "wall";
-                        break;
-                    default:
-                        break;
-                }
-                village_info[sBuilding] = (int)village_info[sBuilding] + 1;
-
-                
-
-                #region Tài nguyên
-                if ((int)rowBuild["building"] == 9)
-                {
-                    village_info["wood"] = Resource.update((int)village_info["timbercamp"] - 1, (int)village_info["wood"], last_update, (DateTime)rowBuild["stop_time"]);
-                    village_info["wood"] = Resource.update((int)village_info["timbercamp"], (int)village_info["wood"], (DateTime)rowBuild["stop_time"], this_point);
-                    village_info["clay"] = Resource.update((int)village_info["claypit"], (int)village_info["clay"], last_update, this_point);
-                    village_info["iron"] = Resource.update((int)village_info["ironmine"], (int)village_info["iron"], last_update, this_point);
-                }
-                else if ((int)rowBuild["building"] == 11)
-                {
-                    village_info["iron"] = Resource.update((int)village_info["ironmine"] - 1, (int)village_info["iron"], last_update, (DateTime)rowBuild["stop_time"]);
-                    village_info["iron"] = Resource.update((int)village_info["ironmine"], (int)village_info["iron"], (DateTime)rowBuild["stop_time"], this_point);
-                    village_info["clay"] = Resource.update((int)village_info["claypit"], (int)village_info["clay"], last_update, this_point);
-                    village_info["wood"] = Resource.update((int)village_info["timbercamp"], (int)village_info["wood"], last_update, this_point);
-                }
-                else if ((int)rowBuild["building"] == 10)
-                {
-                    village_info["clay"] = Resource.update((int)village_info["claypit"] - 1, (int)village_info["clay"], last_update, (DateTime)rowBuild["stop_time"]);
-                    village_info["clay"] = Resource.update((int)village_info["claypit"], (int)village_info["clay"], (DateTime)rowBuild["stop_time"], this_point);
-                    village_info["wood"] = Resource.update((int)village_info["timbercamp"], (int)village_info["wood"], last_update, this_point);
-                    village_info["iron"] = Resource.update((int)village_info["ironmine"], (int)village_info["iron"], last_update, this_point);
-                }
-                else
-                {
-                    village_info["clay"] = Resource.update((int)village_info["claypit"], (int)village_info["clay"], last_update, this_point);
-                    village_info["wood"] = Resource.update((int)village_info["timbercamp"], (int)village_info["wood"], last_update, this_point);
-                    village_info["iron"] = Resource.update((int)village_info["ironmine"], (int)village_info["iron"], last_update, this_point);
-                }
-
-                #endregion
-
-
-            }
-
+            #region Tăng tài nguyên
+            village_info["clay"] = Resource.update((int)village_info["claypit"], (int)village_info["clay"], last_update, this_point);
+            village_info["wood"] = Resource.update((int)village_info["timbercamp"], (int)village_info["wood"], last_update, this_point);
+            village_info["iron"] = Resource.update((int)village_info["ironmine"], (int)village_info["iron"], last_update, this_point);
             #endregion 
 
             #region Quân tự xây
@@ -915,6 +810,8 @@ public class Village
                     cmdUpdateRecruit.Parameters.Add("@start_time", SqlDbType.DateTime).Value = ((DateTime)rowRecruit["start_time"]).AddSeconds(recruit * Recruit.recruit_unit_time((int)village_info[sBuilding], (int)rowRecruit["troop"]));
                     cmdUpdateRecruit.Parameters.Add("@quantity", SqlDbType.DateTime).Value = (int)rowRecruit["quantity"] - recruit;
                     cmdUpdateRecruit.Parameters.Add("@id", SqlDbType.Int).Value = (int)rowRecruit["id"];
+                    if (conn.State != ConnectionState.Open)
+                        conn.Open();
                     cmdUpdateRecruit.ExecuteNonQuery();
                 }
 
@@ -966,12 +863,12 @@ public class Village
                 village_info["clay"] = (int)village_info["clay"] - clay1;
                 village_info["iron"] = (int)village_info["iron"] - iron1;
 
-                DateTime landing_time = Map.LandingTime(1, (int)village_info["x"], (int)village_info["y"], (int)row1["vil_x"], (int)row1["vil_y"]);
+                DateTime landing_time = Map.LandingTime(1, (int)village_info["x"], (int)village_info["y"], (int)row1["vil_x"], (int)row1["vil_y"], this_point);
                 SqlCommand cmdReturn = conn.CreateCommand();
                 cmdReturn.CommandText = "insert into movement " +
                     "([from], [to], type, starting_time, landing_time, spear, sword, axe, scout, light, heavy, ram, catapult, noble, clay, wood, iron) values " +
                     "(@from, @to, 4, @starting_time, @landing_time, @spear, @sword, @axe, @scout, @light, @heavy, @ram, @catapult, @noble, @clay, @wood, @iron)";
-
+                
                 cmdReturn.Parameters.Add("@from", SqlDbType.Int).Value = village_id;
                 cmdReturn.Parameters.Add("@to", SqlDbType.Int).Value = row1["from"];
                 cmdReturn.Parameters.Add("@starting_time", SqlDbType.DateTime).Value = (DateTime)row1["landing_time"];
@@ -990,6 +887,8 @@ public class Village
                 cmdReturn.Parameters.Add("@wood", SqlDbType.Int).Value = wood1;
                 cmdReturn.Parameters.Add("@iron", SqlDbType.Int).Value = iron1;
 
+                if (conn.State != ConnectionState.Open)
+                    conn.Open();
                 cmdReturn.ExecuteNonQuery();
                 #endregion
             }
@@ -1011,7 +910,13 @@ public class Village
                 #endregion
             }
 
-            Report.WriteAttackReport((int)row1["spear"], (int)row1["sword"], (int)row1["axe"], (int)row1["bowman"], (int)row1["light"], (int)row1["scout"], (int)row1["heavy"], (int)row1["mounted"], (int)row1["ram"], (int)row1["catapult"], (int)row1["noble"],
+            Report.WriteAttackReport((int) row1["from"], village_id, (string)village_info["userid"], this_point, (int)row1["spear"], (int)row1["sword"], (int)row1["axe"], (int)row1["bowman"], (int)row1["light"], (int)row1["scout"], (int)row1["heavy"], (int)row1["mounted"], (int)row1["ram"], (int)row1["catapult"], (int)row1["noble"],
+                                        (int)village_info["spear"], (int)village_info["sword"], (int)village_info["axe"], (int)village_info["bowman"], (int)village_info["light"], (int)village_info["scout"], (int)village_info["heavy"], (int)village_info["mounted"], (int)village_info["ram"], (int)village_info["catapult"], (int)village_info["noble"],
+                                        attackWin1,
+                                        spear1, sword1, axe1, bowman1, light1, scout1, heavy1, mounted1, ram1, catapult1, noble1,
+                                        wood1, clay1, iron1);
+
+            Report.WriteAttackReport((int)row1["from"], village_id, (string)row1["userid"], this_point, (int)row1["spear"], (int)row1["sword"], (int)row1["axe"], (int)row1["bowman"], (int)row1["light"], (int)row1["scout"], (int)row1["heavy"], (int)row1["mounted"], (int)row1["ram"], (int)row1["catapult"], (int)row1["noble"],
                                         (int)village_info["spear"], (int)village_info["sword"], (int)village_info["axe"], (int)village_info["bowman"], (int)village_info["light"], (int)village_info["scout"], (int)village_info["heavy"], (int)village_info["mounted"], (int)village_info["ram"], (int)village_info["catapult"], (int)village_info["noble"],
                                         attackWin1,
                                         spear1, sword1, axe1, bowman1, light1, scout1, heavy1, mounted1, ram1, catapult1, noble1,
@@ -1030,31 +935,31 @@ public class Village
         #region Cập nhật từ trận đánh cuối cùng đến thời điểm hiện tại
         this_point = now;
         #region Quân đánh làng khác
-            cmdGetVillageAttacking = conn.CreateCommand();
-            cmdGetVillageAttacking.CommandText = "select m.* from movement m inner join villages v on (m.[from]=v.id) where m.type=2 and m.[from]=@id and m.landing_time>=@from_time and m.landing_time<=@to_time";
-            cmdGetVillageAttacking.Parameters.Add("@id", SqlDbType.Int).Value = village_id;
-            cmdGetVillageAttacking.Parameters.Add("@from_time", SqlDbType.DateTime).Value = last_update;
-            cmdGetVillageAttacking.Parameters.Add("@to_time", SqlDbType.DateTime).Value = this_point;
-            daGetVillageAttacking = new SqlDataAdapter(cmdGetVillageAttacking);
-            if (dsCommand.Tables.Contains("attack"))
-                dsCommand.Tables["attack"].Rows.Clear();
-            daGetVillageAttacking.Fill(dsCommand, "attack");
-            foreach (DataRow rowAttack in dsCommand.Tables["attack"].Rows)
-                Village.refresh((int)rowAttack["to"], this_point);
+        cmdGetVillageAttacking = conn.CreateCommand();
+        cmdGetVillageAttacking.CommandText = "select m.* from movement m inner join villages v on (m.[from]=v.id) where m.type=2 and m.[from]=@id and m.landing_time>=@from_time and m.landing_time<=@to_time";
+        cmdGetVillageAttacking.Parameters.Add("@id", SqlDbType.Int).Value = village_id;
+        cmdGetVillageAttacking.Parameters.Add("@from_time", SqlDbType.DateTime).Value = last_update;
+        cmdGetVillageAttacking.Parameters.Add("@to_time", SqlDbType.DateTime).Value = this_point;
+        daGetVillageAttacking = new SqlDataAdapter(cmdGetVillageAttacking);
+        if (dsCommand.Tables.Contains("attack"))
+            dsCommand.Tables["attack"].Rows.Clear();
+        daGetVillageAttacking.Fill(dsCommand, "attack");
+        foreach (DataRow rowAttack in dsCommand.Tables["attack"].Rows)
+            Village.refresh((int)rowAttack["to"], this_point);
 
-            #endregion
+        #endregion
 
         #region Quân quay về từ làng khác
 
         cmdGetVillageReturning = conn.CreateCommand();
-        cmdGetVillageReturning.CommandText = "select m.* from movement m inner join villages v on (m.[to]=v.id) where type=4 and [to]=@id and m.landing_time>=@from_time and m.landing_time<=@to_time";
+        cmdGetVillageReturning.CommandText = "select * from movement where type=4 and [to]=@id and landing_time>=@from_time and landing_time<=@to_time";
         cmdGetVillageReturning.Parameters.Add("@id", SqlDbType.Int).Value = village_id;
         cmdGetVillageReturning.Parameters.Add("@from_time", SqlDbType.DateTime).Value = last_update;
         cmdGetVillageReturning.Parameters.Add("@to_time", SqlDbType.DateTime).Value = this_point;
         daGetVillageReturning = new SqlDataAdapter(cmdGetVillageReturning);
         if (dsCommand.Tables.Contains("return"))
             dsCommand.Tables["return"].Rows.Clear();
-        daGetVillageAttacking.Fill(dsCommand, "return");
+        daGetVillageReturning.Fill(dsCommand, "return");
         foreach (DataRow rowReturn in dsCommand.Tables["return"].Rows)
         {
             village_info["spear"] = (int)village_info["spear"] + (int)rowReturn["spear"];
@@ -1193,7 +1098,7 @@ public class Village
         daGetVillageRecruiting = new SqlDataAdapter(cmdGetVillageRecruiting);
         if (dsCommand.Tables.Contains("recruit"))
             dsCommand.Tables["recruit"].Rows.Clear();
-        daGetVillageAttacking.Fill(dsCommand, "recruit");
+        daGetVillageRecruiting.Fill(dsCommand, "recruit");
 
         foreach (DataRow rowRecruit in dsCommand.Tables["recruit"].Rows)
         {
@@ -1258,8 +1163,10 @@ public class Village
                 cmdUpdateRecruit = conn.CreateCommand();
                 cmdUpdateRecruit.CommandText = "update recruit set quantity=@quantity, start_time=@start_time where id=@id";
                 cmdUpdateRecruit.Parameters.Add("@start_time", SqlDbType.DateTime).Value = ((DateTime)rowRecruit["start_time"]).AddSeconds(recruit * Recruit.recruit_unit_time((int)village_info[sBuilding], (int)rowRecruit["troop"]));
-                cmdUpdateRecruit.Parameters.Add("@quantity", SqlDbType.DateTime).Value = (int)rowRecruit["quantity"] - recruit;
+                cmdUpdateRecruit.Parameters.Add("@quantity", SqlDbType.Int).Value = (int)rowRecruit["quantity"] - recruit;
                 cmdUpdateRecruit.Parameters.Add("@id", SqlDbType.Int).Value = (int)rowRecruit["id"];
+                if (conn.State != ConnectionState.Open)
+                    conn.Open();
                 cmdUpdateRecruit.ExecuteNonQuery();
             }
 
@@ -1312,6 +1219,10 @@ public class Village
         cmdUpdateVillage.Parameters.Add("@hide", SqlDbType.Int).Value = village_info["hide"];
         cmdUpdateVillage.Parameters.Add("@wall", SqlDbType.Int).Value = village_info["wall"];
         cmdUpdateVillage.Parameters.Add("@last_update", SqlDbType.DateTime).Value = now;
+        if (conn.State != ConnectionState.Open)
+            conn.Open();
+        if (conn.State != ConnectionState.Open)
+            conn.Open();
         cmdUpdateVillage.ExecuteNonQuery();
         #endregion
 

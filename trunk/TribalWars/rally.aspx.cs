@@ -36,12 +36,12 @@ public partial class rally : System.Web.UI.Page
         DataSet ds = new DataSet();
 
         SqlCommand cmdGetOutwardCommand = conn.CreateCommand();
-        cmdGetOutwardCommand.CommandText = "select m.id as mid, m.type, m.landing_time, m.[to], v.name, v.x, v.y, v.id as vid from movement m inner join villages v on (m.[to]=v.id) where m.landing_time>getdate() and m.[from]=@id order by landing_time desc";
+        cmdGetOutwardCommand.CommandText = "select m.id as mid, m.type, m.landing_time, m.[to], v.name, v.x, v.y, v.id as vid from movement m inner join villages v on (m.[to]=v.id) where m.landing_time>getdate() and m.[from]=@id order by landing_time asc";
         cmdGetOutwardCommand.Parameters.Add("@id", SqlDbType.Int).Value = id;
         SqlDataAdapter daOutward = new SqlDataAdapter(cmdGetOutwardCommand);
         
         SqlCommand cmdGetInwardCommand = conn.CreateCommand();
-        cmdGetInwardCommand.CommandText = "select m.id as mid, m.type, m.landing_time, m.[from], v.name, v.x, v.y, v.id as vid from movement m inner join villages v on (m.[from]=v.id) where m.landing_time>getdate() and m.[to]=@id order by landing_time desc";
+        cmdGetInwardCommand.CommandText = "select m.id as mid, m.type, m.landing_time, m.[from], v.name, v.x, v.y, v.id as vid from movement m inner join villages v on (m.[from]=v.id) where m.landing_time>getdate() and m.[to]=@id order by landing_time asc";
         cmdGetInwardCommand.Parameters.Add("@id", SqlDbType.Int).Value = id;
         SqlDataAdapter daInward = new SqlDataAdapter(cmdGetInwardCommand);
 
@@ -131,6 +131,7 @@ public partial class rally : System.Web.UI.Page
                 this.x.Text = "";
                 this.y.Text = "";
             }
+            rdr.Close();
             this.conn.Close();
         }
         
@@ -239,7 +240,7 @@ public partial class rally : System.Web.UI.Page
         cmdCreateCommand.Parameters.Add("@from", SqlDbType.Int).Value = this.village["id"];
         cmdCreateCommand.Parameters.Add("@to", SqlDbType.Int).Value = o;
         cmdCreateCommand.Parameters.Add("@starting", SqlDbType.DateTime).Value = DateTime.Now;
-        cmdCreateCommand.Parameters.Add("@landing", SqlDbType.DateTime).Value = Map.LandingTime(1, (int)village["x"], (int)village["y"], x, y);
+        cmdCreateCommand.Parameters.Add("@landing", SqlDbType.DateTime).Value = Map.LandingTime(1, (int)village["x"], (int)village["y"], x, y, DateTime.Now);
         cmdCreateCommand.Parameters.Add("@spear", SqlDbType.Int).Value = spear;
         cmdCreateCommand.Parameters.Add("@sword", SqlDbType.Int).Value = sword;
         cmdCreateCommand.Parameters.Add("@axe", SqlDbType.Int).Value = axe;
@@ -381,7 +382,7 @@ public partial class rally : System.Web.UI.Page
         cmdCreateCommand.Parameters.Add("@from", SqlDbType.Int).Value = this.village["id"];
         cmdCreateCommand.Parameters.Add("@to", SqlDbType.Int).Value = o;
         cmdCreateCommand.Parameters.Add("@starting", SqlDbType.DateTime).Value = DateTime.Now;
-        cmdCreateCommand.Parameters.Add("@landing", SqlDbType.DateTime).Value = Map.LandingTime(1, (int)village["x"], (int)village["y"], x, y);
+        cmdCreateCommand.Parameters.Add("@landing", SqlDbType.DateTime).Value = Map.LandingTime(1, (int)village["x"], (int)village["y"], x, y, DateTime.Now);
         cmdCreateCommand.Parameters.Add("@spear", SqlDbType.Int).Value = spear;
         cmdCreateCommand.Parameters.Add("@sword", SqlDbType.Int).Value = sword;
         cmdCreateCommand.Parameters.Add("@axe", SqlDbType.Int).Value = axe;
