@@ -16,18 +16,19 @@ using System.Xml.Linq;
 public class Resource
 {
 
-    protected static int production(int level)
+    public static int production(int level)
     {
-        if (level == 1)
-            return 30;
-        return production(level - 1);
+        int result = 30;
+        for (int i=0; i<level;i++)
+            result += (int)(result*0.2);
+        return result;
     }
 
     public static int update(int level, int current, DateTime start, DateTime stop)
     {
         TimeSpan span = stop - start;
         double time = span.TotalHours;
-        return (int)time*production(level) + current;
+        return (int)(time*production(level)) + current;
     }
 
     public Resource()

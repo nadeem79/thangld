@@ -33,7 +33,7 @@ public class AttackCalculator
         int infantryDefense = dSpear * 15 + dSword * 50 + dAxe * 10 + dBowman * 50 + dLight * 30 + dMounted * 40 + dHeavy * 200 + dNoble * 100;
         int cavalryDefense = dSpear * 45 + dSword * 15 + dAxe * 5 + dBowman * 40 + dLight * 40 + dMounted * 30 + dHeavy * 80 + dNoble * 50;
         int bowDefense = dSpear * 20 + dSword * 40 + dAxe * 10 + dBowman * 5 + dLight * 30 + dMounted * 50 + dHeavy * 180 + dNoble * 35;
-        int totalDefense = (int)(infantryDefense * pInfantry + cavalryDefense * pCavalry + bowDefense * pBow);
+        int totalDefense = (int)(infantryDefense * pInfantry + cavalryDefense * pCavalry + bowDefense * pBow) + 100;
 
         totalAttack = (totalAttack / totalDefense)*totalAttack;
 

@@ -45,8 +45,9 @@ public class Recruit
         int total_troop = t.Seconds / 900;
 
         return (total_troop < quantity) ? total_troop : quantity;
-
     }
+
+    
 
    
 
