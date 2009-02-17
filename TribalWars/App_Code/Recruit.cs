@@ -17,7 +17,18 @@ using System.Data.SqlClient;
 public class Recruit
 {
     private static SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["tw"].ConnectionString);
-    
+
+    public static int CanRecruit(int totalClay, int totalWood, int totalIron, int priceClay, int priceWood, int priceIron)
+    {
+        int sumClay = totalClay / priceClay;
+        int sumWood = totalWood / priceWood;
+        int sumIron = totalIron / priceIron;
+
+        int result = (sumClay < sumWood) ? sumClay : sumWood;
+        return ((result < sumIron) ? result : sumIron);
+            
+    }
+
     public static int recruit_unit_time(int level, int troop)
     {
         int second = 900;

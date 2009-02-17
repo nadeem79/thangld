@@ -162,8 +162,8 @@
                                             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                                             </asp:ContentPlaceHolder>
                                             <p align="right" class="server_info">
-                                                generated in 
-                                                <asp:Label ID="delay" runat="server" Text="Label"></asp:Label>ms Server time: <asp:Label ID="time" runat="server"></asp:Label></p>
+                                                trang web được tạo trong 
+                                                <asp:Label ID="delay" runat="server" Text="Label"></asp:Label>ms Thời gian: <asp:Label ID="time" runat="server"></asp:Label></p>
                                         </td>
                                     </tr>
                                 </table>

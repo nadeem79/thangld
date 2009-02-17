@@ -85,7 +85,7 @@ public partial class inPage : System.Web.UI.MasterPage
         this.village = Village.refresh(id, start);
 
         SqlCommand cmdGetAttackCount = conn.CreateCommand();
-        cmdGetAttackCount.CommandText = "select count(*) from movement where landing_time>=@landing_time and [to]=@id";
+        cmdGetAttackCount.CommandText = "select count(*) from movement where landing_time>=@landing_time and [to]=@id and type=2";
         cmdGetAttackCount.Parameters.Add("@id", SqlDbType.Int).Value = id;
         cmdGetAttackCount.Parameters.Add("@landing_time", SqlDbType.DateTime).Value = start;
 
