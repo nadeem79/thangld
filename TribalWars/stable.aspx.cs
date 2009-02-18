@@ -86,9 +86,9 @@ public partial class stable : System.Web.UI.Page
 
         if (int.TryParse(this.txtScout.Text, out scout))
         {
-            clay += spear * 50;
-            wood += spear * 50;
-            iron += spear * 20;
+            clay += scout * 50;
+            wood += scout * 50;
+            iron += scout * 20;
             if ((scout > 0) && (clay < (int)village_info["clay"]) && (wood < (int)village_info["wood"]) && (iron < (int)village_info["iron"]))
             {
                 cmdRecruitScout = conn.CreateCommand();
@@ -102,9 +102,9 @@ public partial class stable : System.Web.UI.Page
 
         if (int.TryParse(this.txtLight.Text, out light))
         {
-            clay += spear * 100;
-            wood += spear * 125;
-            iron += spear * 250;
+            clay += light * 100;
+            wood += light * 125;
+            iron += light * 250;
             if ((light > 0) && (clay < (int)village_info["clay"]) && (wood < (int)village_info["wood"]) && (iron < (int)village_info["iron"]))
             {
                 cmdRecruitLight = conn.CreateCommand();
@@ -118,9 +118,9 @@ public partial class stable : System.Web.UI.Page
 
         if (int.TryParse(this.txtHeavy.Text, out heavy))
         {
-            clay += spear * 150;
-            wood += spear * 200;
-            iron += spear * 600;
+            clay += heavy * 150;
+            wood += heavy * 200;
+            iron += heavy * 600;
             if ((heavy > 0) && (clay < (int)village_info["clay"]) && (wood < (int)village_info["wood"]) && (iron < (int)village_info["iron"]))
             {
                 cmdRecruitHeavy = conn.CreateCommand();

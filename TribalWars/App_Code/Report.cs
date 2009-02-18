@@ -30,8 +30,8 @@ public class Report
 
         cmdReport.CommandText = "insert into reports (owner, village_1, village_2, create_time, winningside," +
             "aspear, asword, aaxe, abow, ascout, alight, aheavy, amounted, aram, acatapult, anoble, " +
-            "dspear, dsword, daxe, dbow, dscout, dlight, dheavy, dmounted, dram, dcatapult, dnoble, " +
-            "sspear, ssword, saxe, sbow, sscout, slight, sheavy, smounted, sram, scatapult, snoble, " +
+            "dspear, dsword, daxe, dbowman, dscout, dlight, dheavy, dmounted, dram, dcatapult, dnoble, " +
+            "sspear, ssword, saxe, sbowman, sscout, slight, sheavy, smounted, sram, scatapult, snoble, " +
             "clay, wood, iron) " +
             " values (@owner, @village_1, @village_2, @create_time, @winningside," +
             "@aspear, @asword, @aaxe, @abow, @ascout, @alight, @aheavy, @amounted, @aram, @acatapult, @anoble, " +
@@ -80,6 +80,10 @@ public class Report
         cmdReport.Parameters.Add("@sram", SqlDbType.Int).Value = sRam;
         cmdReport.Parameters.Add("@scatapult", SqlDbType.Int).Value = sCatapult;
         cmdReport.Parameters.Add("@snoble", SqlDbType.Int).Value = sNoble;
+
+        cmdReport.Parameters.Add("@clay", SqlDbType.Int).Value = clay;
+        cmdReport.Parameters.Add("@wood", SqlDbType.Int).Value = wood;
+        cmdReport.Parameters.Add("@iron", SqlDbType.Int).Value = iron;
 
         conn.Open();
         cmdReport.ExecuteNonQuery();
