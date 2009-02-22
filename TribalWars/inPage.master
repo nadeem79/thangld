@@ -1,9 +1,9 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="inPage.master.cs" Inherits="inPage" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="inPage.master.cs" Inherits="inPage"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Untitled Page</title>
+    <title>Medieval War</title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
     <link rel="stylesheet" type="text/css" href="css/inventory.css" />
@@ -11,8 +11,17 @@
     <link rel="stylesheet" type="text/css" href="css/stamm.css" />
     <link rel="stylesheet" type="text/css" href="css/overview.css" />
 
-    <script src="js/mootools.js" type="text/javascript"></script>
+    <script src="js/jquery.js" type="text/javascript"></script>
+
     <script src="js/script.js" type="text/javascript"></script>
+    
+
+    <script language="javascript" type="text/javascript">
+        var iron;
+        var wood;
+        var clay;
+    </script>
+
 </head>
 <body>
     <form id="form1" runat="server">
@@ -48,7 +57,7 @@
                                 <a href="/game.php?village=51549&amp;screen=ally">Tribe</a>
                             </td>
                             <td>
-                                <a href="/game.php?village=51549&amp;screen=report">Reports</a>
+                                <asp:HyperLink ID="lblReport" runat="server">Thông báo</asp:HyperLink>
                             </td>
                             <td>
                                 <a href="/game.php?village=51549&amp;screen=mail">Mail</a>
@@ -96,19 +105,19 @@
                             <table class="box" cellspacing="0">
                                 <tr style="height: 20px;">
                                     <td>
-                                        <asp:HyperLink ID="wood_url" runat="server" ImageUrl="~/images/holz.png"></asp:HyperLink>
+                                        <asp:HyperLink ID="wood_url" runat="server" ImageUrl="~/images/holz.png" rel="lightbox"></asp:HyperLink>
                                     </td>
                                     <td>
                                         <asp:Label ID="wood" runat="server"></asp:Label>
                                     </td>
                                     <td>
-                                        <asp:HyperLink ID="clay_url" runat="server" ImageUrl="~/images/lehm.png"></asp:HyperLink>
+                                        <asp:HyperLink ID="clay_url" runat="server" ImageUrl="~/images/lehm.png" rel="lightbox"></asp:HyperLink>
                                     </td>
                                     <td>
                                         <asp:Label ID="clay" runat="server"></asp:Label>
                                     </td>
                                     <td>
-                                        <asp:HyperLink ID="iron_url" runat="server" ImageUrl="~/images/eisen.png"></asp:HyperLink>
+                                        <asp:HyperLink ID="iron_url" runat="server" ImageUrl="~/images/eisen.png" rel="lightbox"></asp:HyperLink>
                                     </td>
                                     <td>
                                         <asp:Label ID="iron" runat="server"></asp:Label>
@@ -139,14 +148,16 @@
                                     </td>
                                 </tr>
                             </table>
-                            
                         </td>
-                        
                     </tr>
                 </table>
             </td>
-            <asp:Label ID="incoming" runat="server" ></asp:Label>
-
+            
+        </tr>
+        <tr>
+            <td>
+                <asp:Label ID="incoming" runat="server"></asp:Label>
+            </td>
         </tr>
     </table>
     <div>
@@ -159,11 +170,21 @@
                                 <table class="main" width="840" align="center">
                                     <tr>
                                         <td>
-                                            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-                                            </asp:ContentPlaceHolder>
-                                            <p align="right" class="server_info">
-                                                trang web được tạo trong 
-                                                <asp:Label ID="delay" runat="server" Text="Label"></asp:Label>ms Thời gian: <asp:Label ID="time" runat="server"></asp:Label></p>
+                                            <table width="100%">
+                                                <tr>
+                                                    <td>
+                                                        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                                                        </asp:ContentPlaceHolder>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="right" style="font-size:11px;">
+                                                        trang web được tạo trong
+                                                        <asp:Label ID="delay" runat="server" Text="Label"></asp:Label>ms Thời gian:
+                                                        <asp:Label ID="time" runat="server"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                            </table>
                                         </td>
                                     </tr>
                                 </table>
@@ -175,5 +196,20 @@
         </table>
     </div>
     </form>
+    
+    <script language="javascript" type="text/javascript">
+        var woodProduction  = <% Response.Write(Resource.SecondPerUnit((int)village["timbercamp"])); %>*1000;
+        var woodID = '<% Response.Write(this.wood.ClientID); %>';
+        var clayProduction  = <% Response.Write(Resource.SecondPerUnit((int)village["claypit"])); %>*1000;
+        var clayID = '<% Response.Write(this.clay.ClientID); %>';
+        var ironProduction  = <% Response.Write(Resource.SecondPerUnit((int)village["ironmine"])); %>*1000;
+        var ironID = '<% Response.Write(this.iron.ClientID); %>';
+        
+        setTimeout("production('" + clayID + "', " + clayProduction + ");", clayProduction);
+        setTimeout("production('" + woodID + "', " + woodProduction + ");", woodProduction);
+        setTimeout("production('" + ironID + "', " + ironProduction + ");", ironProduction);
+
+        attackTimer();
+    </script>
 </body>
 </html>

@@ -53,7 +53,7 @@ public class Recruit
     {
         TimeSpan t = end - start;
         int time = recruit_time(level, quantity, troop);
-        int total_troop = t.Seconds / 900;
+        int total_troop = (int)(t.TotalSeconds / 900);
 
         return (total_troop < quantity) ? total_troop : quantity;
     }

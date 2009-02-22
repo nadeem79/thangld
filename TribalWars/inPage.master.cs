@@ -26,8 +26,6 @@ public partial class inPage : System.Web.UI.MasterPage
     void inPage_Init(object sender, EventArgs e)
     {
 
-
-
         DateTime start = DateTime.Now;
         int count = 0;
 
@@ -103,6 +101,8 @@ public partial class inPage : System.Web.UI.MasterPage
         this.iron_url.NavigateUrl = "iron.aspx?id=" + id.ToString();
         this.clay_url.NavigateUrl = "clay.aspx?id=" + id.ToString();
         this.wood_url.NavigateUrl = "wood.aspx?id=" + id.ToString();
+        this.lblReport.NavigateUrl = "list_report.aspx?id=" + id.ToString();
+        this.map.NavigateUrl = "map.aspx?id=" + id.ToString();
 
         this.resource.Text = Village.getMaxResource((int)this.village["storage"]).ToString();
         this.pop.Text = Village.getMaxPopulation((int)this.village["farm"]).ToString();
@@ -116,11 +116,11 @@ public partial class inPage : System.Web.UI.MasterPage
 
         DateTime stop = DateTime.Now;
         this.delay.Text = (stop - start).Milliseconds.ToString();
-        this.time.Text = start.ToString();
+        this.time.Text = start.ToString("dd/MM/yyyy hh:mm:ss");
     }
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        
+
     }
 }

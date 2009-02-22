@@ -294,3 +294,14 @@ a.sel { color:#0082BE; text-decoration:underline;}
 	margin-top:0px;
 	margin-bottom:0px;
 }
+
+.cell_map
+{
+    border:1px solid black;
+}
+
+.cell_no_village
+{
+    width:2px;
+    height:2px;
+}

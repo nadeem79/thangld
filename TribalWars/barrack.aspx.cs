@@ -23,7 +23,7 @@ public partial class barrack : System.Web.UI.Page
 
         int id = int.Parse(Request["id"]);
 
-        cmdUpdate.CommandText = "select v.id, v.wood, v.clay, v.iron, v.spear, v.sword, v.axe, sum(c.spear) as total_spear, sum(c.sword) as total_sword, sum(c.axe) as total_axe from villages v LEFT join movement c on ((c.[to]=v.id and c.type=4) or ((c.type=2 or c.type=3) and c.[from]=v.id)) where v.id=@id and c.landing_time>@landing_time group by v.id, v.wood, v.clay, v.iron, v.spear, v.sword, v.axe";
+        cmdUpdate.CommandText = "select v.id, v.wood, v.clay, v.iron, v.spear, v.sword, v.axe, isnull(sum(c.spear), 0) as total_spear, isnull(sum(c.sword), 0) as total_sword, isnull(sum(c.axe), 0) as total_axe from villages v LEFT join movement c on ((c.[to]=v.id and c.type=4) or ((c.type=2 or c.type=3) and c.[from]=v.id) and c.landing_time>getdate()) where v.id=@id group by v.id, v.wood, v.clay, v.iron, v.spear, v.sword, v.axe";
         cmdUpdate.Parameters.Add("@id", SqlDbType.Int).Value = id;
         cmdUpdate.Parameters.Add("@landing_time", SqlDbType.DateTime).Value = DateTime.Now;
 
@@ -69,7 +69,7 @@ public partial class barrack : System.Web.UI.Page
                 default:
                     break;
             }
-            sRecruitCommands += "<td>" + ((DateTime)rdrRecruitCommands["end_time"] - DateTime.Now).ToString() + "</td>";
+            sRecruitCommands += "<td><span class='timer'>" + ((DateTime)rdrRecruitCommands["end_time"] - DateTime.Now).ToString() + "</span></td>";
             sRecruitCommands += "<td>" + rdrRecruitCommands["end_time"].ToString() + "</td>";
         }
         rdrRecruitCommands.Close();

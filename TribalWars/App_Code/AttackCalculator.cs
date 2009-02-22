@@ -19,6 +19,7 @@ public class AttackCalculator
     public static bool attack(
         int aSpear,  int aSword,  int aAxe,  int aBowman,  int aLight,  int aScout,  int aHeavy,  int aMounted,  int aRam,  int aCatapult,  int aNoble,
         int dSpear,  int dSword,  int dAxe,  int dBowman,  int dLight,  int dScout,  int dHeavy,  int dMounted,  int dRam,  int dCatapult,  int dNoble,
+        double luck, //-0.3 => 0.3
         out int spear, out int sword, out int axe, out int bowman, out int light, out int scout, out int heavy, out int mounted, out int ram, out int catapult, out int noble)
     {
         int infantryAttack = aSpear * 10 + aSword * 25 + aAxe * 40 + aNoble * 30;
@@ -36,6 +37,7 @@ public class AttackCalculator
         int totalDefense = (int)(infantryDefense * pInfantry + cavalryDefense * pCavalry + bowDefense * pBow) + 100;
 
         totalAttack = (totalAttack / totalDefense)*totalAttack;
+        totalAttack += (int)(totalAttack * luck);
 
         double ratio;
         if (totalAttack > totalDefense)

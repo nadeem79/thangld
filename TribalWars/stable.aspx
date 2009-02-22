@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/inPage.master" AutoEventWireup="true" CodeFile="stable.aspx.cs"
-    Inherits="stable" Title="Untitled Page" %>
+    Inherits="stable"  %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
@@ -33,7 +33,7 @@
                 <th width="120">
                     Duration
                 </th>
-                <th width="150">
+                <th width="200">
                     Completion
                 </th>
             </tr>
@@ -90,8 +90,7 @@
                 </td>
                 <td>
                     <asp:TextBox ID="txtScout" runat="server" Width="33px"></asp:TextBox>
-                    &nbsp;(<asp:Label ID="lblMaxScout" runat="server"></asp:Label>
-                    )
+                    &nbsp;(<asp:Label ID="lblMaxScout" runat="server"></asp:Label>)
                 </td>
             </tr>
             <tr class="row_a">
@@ -124,8 +123,7 @@
                 </td>
                 <td>
                     <asp:TextBox ID="txtLight" runat="server" Width="33px"></asp:TextBox>
-                    &nbsp;(<asp:Label ID="lblMaxLight" runat="server"></asp:Label>
-                    )
+                    &nbsp;(<asp:Label ID="lblMaxLight" runat="server"></asp:Label>)
                 </td>
             </tr>
             <tr class="row_a">
@@ -158,8 +156,7 @@
                 </td>
                 <td>
                     <asp:TextBox ID="txtHeavy" runat="server" Width="33px"></asp:TextBox>
-                    &nbsp;(<asp:Label ID="lblMaxHeavy" runat="server"></asp:Label>
-                    )
+                    &nbsp;(<asp:Label ID="lblMaxHeavy" runat="server"></asp:Label>)
                 </td>
             </tr>
             <tr>

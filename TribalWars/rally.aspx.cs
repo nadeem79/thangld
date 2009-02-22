@@ -19,10 +19,10 @@ public partial class rally : System.Web.UI.Page
     
     protected void Page_Load(object sender, EventArgs e)
     {
+        inPage p = (inPage)this.Master;
         string sID = Request["id"];
         int id = int.Parse(sID);
-        village = Village.refresh(id, DateTime.Now);
-
+        village = p.village;
         this.lblSpear.Text = village["spear"].ToString();
         this.lblSword.Text = village["sword"].ToString();
         this.lblAxe.Text = village["axe"].ToString();
@@ -60,7 +60,7 @@ public partial class rally : System.Web.UI.Page
                 sOutwardsCommand += "<img src='images/attack.png'/>Tấn công làng ";
                 sOutwardsCommand += row["name"].ToString() + " (" + row["x"].ToString() + "|" + row["y"].ToString() + ")</td>";
                 sOutwardsCommand += "<td>" + row["landing_time"] + "</td>";
-                sOutwardsCommand += "<td>" + ((DateTime)row["landing_time"] - DateTime.Now).ToString() + "</td></tr>";
+                sOutwardsCommand += "<td><span class='timer'>" + Functions.FormatTime((DateTime)row["landing_time"] - DateTime.Now) + "</span></td></tr>";
             }
             else if (command_type == 3)
             {
@@ -68,7 +68,7 @@ public partial class rally : System.Web.UI.Page
                 sOutwardsCommand += "<img src='images/support.png'/>Hỗ trợ làng ";
                 sOutwardsCommand += row["name"].ToString() + " (" + row["x"].ToString() + "|" + row["y"].ToString() + ")</td>";
                 sOutwardsCommand += "<td>" + row["landing_time"] + "</td>";
-                sOutwardsCommand += "<td>" + ((DateTime)row["landing_time"] - DateTime.Now).ToString() + "</td></tr>";
+                sOutwardsCommand += "<td><span class='timer'>" + Functions.FormatTime((DateTime)row["landing_time"] - DateTime.Now) + "</span></td></tr>";
             }
         }
         foreach (DataRow row in ds.Tables["inwards"].Rows)
@@ -80,7 +80,7 @@ public partial class rally : System.Web.UI.Page
                 sInwardsCommand += "<img src='images/attack.png'/>Tấn công từ ";
                 sInwardsCommand += row["name"].ToString() + " (" + row["x"].ToString() + "|" + row["y"].ToString() + ")</td>";
                 sInwardsCommand += "<td>" + row["landing_time"] + "</td>";
-                sInwardsCommand += "<td>" + ((DateTime)row["landing_time"] - DateTime.Now).ToString() + "</td></tr>";
+                sInwardsCommand += "<td><span class='timer'>" + Functions.FormatTime((DateTime)row["landing_time"] - DateTime.Now) + "</span></td></tr>";
             }
             else if (command_type == 3)
             {
@@ -88,7 +88,7 @@ public partial class rally : System.Web.UI.Page
                 sInwardsCommand += "<img src='images/support.png'/>Hỗ trợ từ ";
                 sInwardsCommand += row["name"].ToString() + " (" + row["x"].ToString() + "|" + row["y"].ToString() + ")</td>";
                 sInwardsCommand += "<td>" + row["landing_time"] + "</td>";
-                sInwardsCommand += "<td>" + ((DateTime)row["landing_time"] - DateTime.Now).ToString() + "</td></tr>";
+                sInwardsCommand += "<td><span class='timer'>" + Functions.FormatTime((DateTime)row["landing_time"] - DateTime.Now) + "</span></td></tr>";
             }
             else if (command_type == 4)
             {
@@ -96,7 +96,7 @@ public partial class rally : System.Web.UI.Page
                 sInwardsCommand += "<img src='images/back.png'/>Quay về từ ";
                 sInwardsCommand += row["name"].ToString() + " (" + row["x"].ToString() + "|" + row["y"].ToString() + ")</td>";
                 sInwardsCommand += "<td>" + row["landing_time"] + "</td>";
-                sInwardsCommand += "<td>" + ((DateTime)row["landing_time"] - DateTime.Now).ToString() + "</td></tr>";
+                sInwardsCommand += "<td><span class='timer'>" + Functions.FormatTime((DateTime)row["landing_time"] - DateTime.Now) + "</span></td></tr>";
             }
         }
 
@@ -270,19 +270,7 @@ public partial class rally : System.Web.UI.Page
 
         this.conn.Close();
 
-        this.spear.Text = "";
-        this.sword.Text = "";
-        this.axe.Text = "";
-        this.scout.Text = "";
-        this.light.Text = "";
-        this.heavy.Text = "";
-        this.ram.Text = "";
-        this.catapult.Text = "";
-        this.noble.Text = "";
-        this.x.Text = "";
-        this.y.Text = "";
-
-        this.Page_Load(sender, e);
+        Response.Redirect("rally.aspx?id=" + Request["id"], true);
     }
     protected void bttnSupport_Click(object sender, EventArgs e)
     {
@@ -395,18 +383,6 @@ public partial class rally : System.Web.UI.Page
         cmdCreateCommand.ExecuteNonQuery();
         this.conn.Close();
 
-        this.spear.Text = "";
-        this.sword.Text = "";
-        this.axe.Text = "";
-        this.scout.Text = "";
-        this.light.Text = "";
-        this.heavy.Text = "";
-        this.ram.Text = "";
-        this.catapult.Text = "";
-        this.noble.Text = "";
-        this.x.Text = "";
-        this.y.Text = "";
-
-        this.Page_Load(sender, e);
+        Response.Redirect("rally.aspx?id=" + Request["id"], true);
     }
 }
