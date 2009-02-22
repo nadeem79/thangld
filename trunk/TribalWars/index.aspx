@@ -17,11 +17,11 @@
                         Tribal Wars là game mô phỏng chiến tranh trung cổ chơi trên trình duyệt web.</p>
                     <a class="btn-kostenlos-anmelden" href="register.aspx">Đăng ký</a> <strong>Screenshots:</strong>
                     <ul class="screenshots">
-                        <li><a href="javascript:toggle_screenshot(1)">
+                        <li><a href="images/screenshot-1.jpg" class="lightbox">
                             <img src="images/bg-screenshots-thumb-1.jpg" alt="" /></a></li>
-                        <li><a href="javascript:toggle_screenshot(2)">
+                        <li><a href="images/screenshot-2.jpg" class="lightbox">
                             <img src="images/bg-screenshots-thumb-2.jpg" alt="" /></a></li>
-                        <li class="last"><a href="javascript:toggle_screenshot(3)">
+                        <li class="last"><a href="images/screenshot-3.jpg" class="lightbox">
                             <img src="images/bg-screenshots-thumb-3.jpg" alt="" /></a></li>
                     </ul>
                     &nbsp;</div>

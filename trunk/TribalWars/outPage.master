@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Untitled Page</title>
+    <title>Medievel War</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="description" content="Tribal Wars is a browserbased online game. Every player controls a small village, striving for power and glory." />
     <meta name="keywords" content="Browser game, Browser games, Browsergame, Online game, Onlinegame, Online games, middle ages, knight, castle, honour, loyalty, war, wars, fight, village, Tribal Wars, tribes" />
@@ -11,12 +11,7 @@
     <!--[if lt IE 7]>
 		<link rel="stylesheet" type="text/css" href="css/index_ie6.css" media="screen"/>
 		<![endif]-->
-    <link rel="alternate" type="application/rss+xml" title="Tribal Wars - News" href="http://www.tribalwars.net/news.php?type=rss2.0" />
 
-    <script type="text/javascript">
-		if(top!=self)
-			top.location=self.location;
-    </script>
 
     <style type="text/css">
         #login-btn-input
@@ -38,6 +33,19 @@
             background: url(images/login.png) no-repeat -106px 0;
         }
     </style>
+    
+
+    
+    <script language="javascript" type="text/javascript" src="js/jquery.js"></script>
+    <script language="javascript" type="text/javascript" src="js/jquery.lightbox.js"></script>
+    <link rel="stylesheet" href="css/lightbox.css" type="text/css" media="screen" />
+    
+    <script language="javascript" type="text/javascript">
+        $(document).ready(function(){
+			        $(".lightbox").lightbox();
+		        });
+    </script>
+    
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -73,26 +81,5 @@
             thangld</div>
     </div>
     <!-- main -->
-
-    <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
-    </script>
-
-    <script type="text/javascript">
-_uacct = "UA-1897727-3";
-urchinTracker();
-
-    </script>
-
-    <script type="text/javascript" src="js/mootools.js"></script>
-
-    <script type="text/javascript" src="js/index.js">
-
-    </script>
-
-    <div id="screenshot" style="visibility: hidden" onclick="hide_screenshot();">
-        <div id="screenshot_image">
-        </div>
-    </div>
-    </div>
 </body>
 </html>

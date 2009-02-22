@@ -58,6 +58,42 @@ function popup_scroll(url, width, height) {
 	wnd.focus();
 }
 
+function production(element, timeout)
+{
+    var quantity = $("#" + element).html();
+    quantity++;
+    $("#" + element).html(quantity);
+    setTimeout("production('" + element + "', " + timeout + ")", timeout);
+}
+
+function attackTimer()
+{
+    $('span.timer').each(function () 
+        {
+            var arr = $(this).html().split(":");
+            var hour = eval(arr[0]);
+            var minute = eval(arr[1]);
+            var second = eval(arr[2]);
+            
+            second--;
+            if (second<0)
+            {
+                minute--;
+                second=59;
+            }
+            if (minute<0)
+            {
+                hour--;
+                minute=59;
+            }
+            if (hour<0)
+            {
+                history.go(0);
+            }
+            $(this).html(hour + ":" + minute + ":" + second);
+        });
+        setTimeout("attackTimer()", 1000);
+}
 
 function addTimer(element, endTime, reload) {
 	var timer = new Object();
@@ -66,6 +102,7 @@ function addTimer(element, endTime, reload) {
 	timer['reload'] = reload;
 	timers.push(timer);
 }
+
 
 function startTimer() {
 	var serverTime = getTime(document.getElementById("serverTime"));

@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/inPage.master" AutoEventWireup="true" CodeFile="barrack.aspx.cs"
-    Inherits="barrack" Title="Untitled Page" %>
+    Inherits="barrack"  %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>

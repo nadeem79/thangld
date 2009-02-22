@@ -11,7 +11,7 @@ using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using System.Data.SqlClient;
 using System.Diagnostics;
-
+using NHibernate;
 
 
 /// <summary>
@@ -55,7 +55,7 @@ public class Map
             cmdCreateVillage.CommandText = "insert into villages(x, y, name, userid, last_update) values (@x, @y, @name, @userid, @time);select @@identity as id";
 
             cmdCreateVillage.Parameters.Add("@x", SqlDbType.Int).Value = x;
-            cmdCreateVillage.Parameters.Add("@y", SqlDbType.Int).Value = x;
+            cmdCreateVillage.Parameters.Add("@y", SqlDbType.Int).Value = y;
             cmdCreateVillage.Parameters.Add("@name", SqlDbType.NVarChar, 100).Value = username + " village";
             cmdCreateVillage.Parameters.Add("@userid", SqlDbType.NVarChar, 200).Value = username;
             cmdCreateVillage.Parameters.Add("@time", SqlDbType.DateTime).Value = DateTime.Now;
@@ -76,10 +76,7 @@ public class Map
             //Debugger.Log(1, "abc", cmdCreateVillage.ExecuteScalar().GetType().ToString());
             id = (Decimal)cmdCreateVillage.ExecuteScalar();
             if (id <= 0)
-            {
-                conn.Close();
                 continue;
-            }
             
             conn.Close();
         }

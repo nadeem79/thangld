@@ -179,25 +179,6 @@
                         </tbody>
                     </table>
 
-                    <script type="text/javascript">setImageTitles();</script>
-
-                    <script type="text/javascript" src="js/mootools-plugin-drag.js"></script>
-
-                    <script type="text/javascript">
-	var popup_options = {
-			image_base: '/graphic',
-			offset_x: 50,
-			offset_y: -90
-	};
-
-	window.addEvent('domready', function(){
-		$('inline_popup').makeDraggable({
-							handle: 'inline_popup_menu',
-							container: 'ds_body'
-		});
-	});
-                    </script>
-
                     <h3>
                         Troop movements</h3>
                     <table class="vis">
@@ -238,4 +219,6 @@
             </tr>
         </tbody>
     </table>
+    <div id="abc"></div>
+    
 </asp:Content>

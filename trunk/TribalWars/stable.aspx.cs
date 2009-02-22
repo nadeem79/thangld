@@ -19,13 +19,13 @@ public partial class stable : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        inPage p = (inPage)this.Master;
         SqlCommand cmdUpdate = conn.CreateCommand();
 
         int id = int.Parse(Request["id"]);
 
-        cmdUpdate.CommandText = "select v.id, v.wood, v.clay, v.iron, v.scout, v.light, v.heavy, sum(c.scout) as total_scout, sum(c.light) as total_light, sum(c.heavy) as total_heavy from villages v left join movement c on ((c.[to]=v.id and c.type=4) or ((c.type=2 or c.type=3) and c.[from]=v.id)) where v.id=@id and c.landing_time>@landing_time  group by v.id, v.wood, v.clay, v.iron, v.scout, v.light, v.heavy";
+        cmdUpdate.CommandText = "select v.id, v.wood, v.clay, v.iron, v.scout, v.light, v.heavy, isnull(sum(c.scout), 0) as total_scout, isnull(sum(c.light), 0) as total_light, isnull(sum(c.heavy), 0) as total_heavy from villages v full outer join movement c on ((c.[to]=v.id and c.type=4) or ((c.type=2 or c.type=3) and c.[from]=v.id) and (c.landing_time>getdate())) where v.id=@id group by v.id, v.wood, v.clay, v.iron, v.scout, v.light, v.heavy";
         cmdUpdate.Parameters.Add("@id", SqlDbType.Int).Value = id;
-        cmdUpdate.Parameters.Add("@landing_time", SqlDbType.DateTime).Value = DateTime.Now;
 
         SqlCommand cmdGetRecruitCommands = conn.CreateCommand();
         cmdGetRecruitCommands.CommandText = "select * from recruit where village_id=@id and troop in (5, 6, 7, 8) and end_time>getdate()";
@@ -70,8 +70,8 @@ public partial class stable : System.Web.UI.Page
                 default:
                     break;
             }
-            sRecruitCommands += "<td>" + ((DateTime)rdrRecruitCommands["end_time"] - DateTime.Now).ToString() + "</td>";
-            sRecruitCommands += "<td>" + rdrRecruitCommands["end_time"].ToString() + "</td>";
+            sRecruitCommands += "<td><span class='timer'>" + Functions.FormatTime((DateTime)rdrRecruitCommands["end_time"] - DateTime.Now) + "</span></td>";
+            sRecruitCommands += "<td>" + ((DateTime)rdrRecruitCommands["end_time"]).ToString("dd/MM/yyyy hh:mm:ss") + "</td>";
         }
         rdrRecruitCommands.Close();
 

@@ -18,6 +18,8 @@ public class Resource
 
     public static int production(int level)
     {
+        if (level == 0)
+            return 0;
         int result = 30;
         for (int i=0; i<level;i++)
             result += (int)(result*0.2);
@@ -29,6 +31,13 @@ public class Resource
         TimeSpan span = stop - start;
         double time = span.TotalHours;
         return (int)(time*production(level)) + current;
+    }
+
+    public static double SecondPerUnit(int level)
+    {
+        if (level == 0)
+            return double.MaxValue;
+        return (double)3600 / (double)production(level);
     }
 
     public Resource()
