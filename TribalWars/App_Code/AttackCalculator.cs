@@ -60,6 +60,8 @@ public class AttackCalculator
         }
         else
         {
+            if (totalAttack == 0)
+                totalAttack = 1;
             ratio = totalAttack * (totalDefense - totalAttack) / totalAttack;
 
             spear = dSpear - (int)(dSpear * ratio);

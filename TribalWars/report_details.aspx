@@ -162,31 +162,31 @@
                                                                         Thiệt hại:
                                                                     </td>
                                                                     <td>
-                                                                        <% Response.Write((int)report_info["saspear"] - (int)report_info["aspear"]); %>
+                                                                        <% Response.Write((int)report_info["aspear"] - (int)report_info["saspear"]); %>
                                                                     </td>
                                                                     <td>
-                                                                        <% Response.Write((int)report_info["sasword"] - (int)report_info["asword"]); %>
+                                                                        <% Response.Write((int)report_info["asword"] - (int)report_info["sasword"]); %>
                                                                     </td>
                                                                     <td>
-                                                                        <% Response.Write((int)report_info["saaxe"] - (int)report_info["aaxe"]); %>
+                                                                        <% Response.Write((int)report_info["aaxe"] - (int)report_info["aaxe"]); %>
                                                                     </td>
                                                                     <td>
-                                                                        <% Response.Write((int)report_info["sascout"] - (int)report_info["ascout"]); %>
+                                                                        <% Response.Write((int)report_info["ascout"] - (int)report_info["sascout"]); %>
                                                                     </td>
                                                                     <td>
-                                                                        <% Response.Write((int)report_info["salight"] - (int)report_info["alight"]); %>
+                                                                        <% Response.Write((int)report_info["alight"] - (int)report_info["salight"]); %>
                                                                     </td>
                                                                     <td>
-                                                                        <% Response.Write((int)report_info["saheavy"] - (int)report_info["aheavy"]); %>
+                                                                        <% Response.Write((int)report_info["aheavy"] - (int)report_info["saheavy"]); %>
                                                                     </td>
                                                                     <td>
-                                                                        <% Response.Write((int)report_info["saram"] - (int)report_info["aram"]); %>
+                                                                        <% Response.Write((int)report_info["aram"] - (int)report_info["aram"]); %>
                                                                     </td>
                                                                     <td>
-                                                                        <% Response.Write((int)report_info["sacatapult"] - (int)report_info["acatapult"]); %>
+                                                                        <% Response.Write((int)report_info["acatapult"] - (int)report_info["sacatapult"]); %>
                                                                     </td>
                                                                     <td>
-                                                                        <% Response.Write((int)report_info["sanoble"] - (int)report_info["anoble"]); %>
+                                                                        <% Response.Write((int)report_info["anoble"] - (int)report_info["sanoble"]); %>
                                                                     </td>
                                                                 </tr>
                                                             </tbody>

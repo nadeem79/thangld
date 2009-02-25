@@ -24,18 +24,22 @@ public partial class stable : System.Web.UI.Page
 
         int id = int.Parse(Request["id"]);
 
-        cmdUpdate.CommandText = "select v.id, v.wood, v.clay, v.iron, v.scout, v.light, v.heavy, isnull(sum(c.scout), 0) as total_scout, isnull(sum(c.light), 0) as total_light, isnull(sum(c.heavy), 0) as total_heavy from villages v full outer join movement c on ((c.[to]=v.id and c.type=4) or ((c.type=2 or c.type=3) and c.[from]=v.id) and (c.landing_time>getdate())) where v.id=@id group by v.id, v.wood, v.clay, v.iron, v.scout, v.light, v.heavy";
+        cmdUpdate.CommandText = "select v.id, v.wood, v.clay, v.iron, v.scout, v.light, v.heavy, 0 as total_scout, 0 as total_light, 0 as total_heavy from villages v full outer join movement c on ((c.[to]=v.id and c.type=4) or ((c.type=2 or c.type=3) and c.[from]=v.id) and (c.landing_time>getdate())) where v.id=@id group by v.id, v.wood, v.clay, v.iron, v.scout, v.light, v.heavy";
         cmdUpdate.Parameters.Add("@id", SqlDbType.Int).Value = id;
 
         SqlCommand cmdGetRecruitCommands = conn.CreateCommand();
         cmdGetRecruitCommands.CommandText = "select * from recruit where village_id=@id and troop in (5, 6, 7, 8) and end_time>getdate()";
         cmdGetRecruitCommands.Parameters.Add("@id", SqlDbType.Int).Value = id;
+        SqlDataAdapter da1 = new SqlDataAdapter(cmdUpdate);
+        DataTable dtGetRecruit = new DataTable();
+        da1.Fill(dtGetRecruit);
 
         conn.Open();
-        SqlDataReader rdr = cmdUpdate.ExecuteReader();
+        //SqlDataReader rdr = cmdUpdate.ExecuteReader();
 
-        if (rdr.Read())
+        if (dtGetRecruit.Rows.Count>0)
         {
+            DataRow rdr = dtGetRecruit.Rows[0];
             this.lblMaxScout.Text = Recruit.CanRecruit((int)rdr["clay"], (int)rdr["wood"], (int)rdr["iron"], 50, 50, 20).ToString();
             this.lblMaxLight.Text = Recruit.CanRecruit((int)rdr["clay"], (int)rdr["wood"], (int)rdr["iron"], 100, 125, 250).ToString();
             this.lblMaxHeavy.Text = Recruit.CanRecruit((int)rdr["clay"], (int)rdr["wood"], (int)rdr["iron"], 150, 200, 600).ToString();
@@ -45,7 +49,7 @@ public partial class stable : System.Web.UI.Page
             this.lblHeavy.Text = rdr["heavy"].ToString() + "/" + ((int)rdr["heavy"] + (int)rdr["total_heavy"]).ToString();
         }
 
-        rdr.Close();
+        //rdr.Close();
 
         SqlDataReader rdrRecruitCommands = cmdGetRecruitCommands.ExecuteReader();
         string sRecruitCommands = "";
