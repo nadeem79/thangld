@@ -4,16 +4,16 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "TribalWars", "TribalWars\", "{B9AEB5FC-45B0-4F4B-9737-AC40FCF5C4AA}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFramework = "3.5"
-		ProjectReferences = "{774F5470-2180-41FA-979A-FB27F8CEDB86}|TWLib.dll;"
+		ProjectReferences = ""
 		Debug.AspNetCompiler.VirtualPath = "/TribalWars"
-		Debug.AspNetCompiler.PhysicalPath = "E:\tw\TribalWars\"
+		Debug.AspNetCompiler.PhysicalPath = "TribalWars\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\TribalWars\"
 		Debug.AspNetCompiler.Updateable = "true"
 		Debug.AspNetCompiler.ForceOverwrite = "true"
 		Debug.AspNetCompiler.FixedNames = "false"
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.VirtualPath = "/TribalWars"
-		Release.AspNetCompiler.PhysicalPath = "E:\tw\TribalWars\"
+		Release.AspNetCompiler.PhysicalPath = "TribalWars\"
 		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\TribalWars\"
 		Release.AspNetCompiler.Updateable = "true"
 		Release.AspNetCompiler.ForceOverwrite = "true"
@@ -21,8 +21,6 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "TribalWars", "TribalWars\",
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "1341"
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TWLib", "TWLib\TWLib.csproj", "{774F5470-2180-41FA-979A-FB27F8CEDB86}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,16 +42,6 @@ Global
 		{B9AEB5FC-45B0-4F4B-9737-AC40FCF5C4AA}.Release|Any CPU.ActiveCfg = Debug|.NET
 		{B9AEB5FC-45B0-4F4B-9737-AC40FCF5C4AA}.Release|Mixed Platforms.ActiveCfg = Debug|.NET
 		{B9AEB5FC-45B0-4F4B-9737-AC40FCF5C4AA}.Release|Mixed Platforms.Build.0 = Debug|.NET
-		{774F5470-2180-41FA-979A-FB27F8CEDB86}.Debug|.NET.ActiveCfg = Debug|Any CPU
-		{774F5470-2180-41FA-979A-FB27F8CEDB86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{774F5470-2180-41FA-979A-FB27F8CEDB86}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{774F5470-2180-41FA-979A-FB27F8CEDB86}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{774F5470-2180-41FA-979A-FB27F8CEDB86}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{774F5470-2180-41FA-979A-FB27F8CEDB86}.Release|.NET.ActiveCfg = Release|Any CPU
-		{774F5470-2180-41FA-979A-FB27F8CEDB86}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{774F5470-2180-41FA-979A-FB27F8CEDB86}.Release|Any CPU.Build.0 = Release|Any CPU
-		{774F5470-2180-41FA-979A-FB27F8CEDB86}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{774F5470-2180-41FA-979A-FB27F8CEDB86}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
