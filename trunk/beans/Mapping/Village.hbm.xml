@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+
+  <class name="beans.Village, beans" table="villages" lazy="false">
+
+    <id name="ID" column="id" type="Int32">
+      <generator class="identity"/>
+    </id>
+    
+    <property name="Name" column="name" length="100" type="String"/>
+    <property name="X" column="x" type="Int32" />
+    <property name="Y" column="y" type="Int32" />
+    <many-to-one name="Owner" class="beans.User, beans" column="userid" not-null="false" fetch="join" cascade="save-update" />
+    <property name="Headquarter" column="headquarter" type="Int32" />
+    <property name="Barracks" column="barracks" type="Int32" />
+    <property name="Stable" column="stable" type="Int32" />
+    <property name="Workshop" column="workshop" type="Int32" />
+    <property name="Academy" column="academy" type="Int32" />
+    <property name="Smithy" column="smithy" type="Int32" />
+    <property name="Rally" column="rally" type="Int32" />
+    <property name="Market" column="market" type="Int32" />
+    <property name="ClayPit" column="claypit" type="Int32" />
+    <property name="IronMine" column="ironmine" type="Int32" />
+    <property name="TimberCamp" column="timbercamp" type="Int32" />
+    <property name="Warehouse" column="storage" type="Int32" />
+    <property name="Farm" column="farm" type="Int32" />
+    <property name="HidingPlace" column="hide" type="Int32" />
+    <property name="Points" column="points" type="Int32" />
+    <property name="Spear" column="spear" type="Int32" />
+    <property name="Sword" column="sword" type="Int32" />
+    <property name="Axe" column="axe" type="Int32" />
+    <property name="Scout" column="scout" type="Int32" />
+    <property name="Light" column="light" type="Int32" />
+    <property name="Heavy" column="heavy" type="Int32" />
+    <property name="Catapult" column="catapult" type="Int32" />
+    <property name="Ram" column="ram" type="Int32" />
+    <property name="Noble" column="noble" type="Int32" />
+    <property name="Loyal" column="loyal" type="Int32" />
+    <property name="LastUpdate" column="last_update" type="timestamp" not-null="true" />
+    <property name="Clay" column="clay" type="Int32" />
+    <property name="Wood" column="wood" type="Int32" />
+    <property name="Iron" column="iron" type="Int32" />
+    <bag name="StationedTroops" table="stationed" cascade="all" fetch="join" inverse="true" lazy="false">
+      <key column="at_village" />
+      <one-to-many class="beans.Stationed, beans"/>
+    </bag>
+    <bag name="TroopsOutside" table="stationed" cascade="all" fetch="join" inverse="true" lazy="true">
+      <key column="from_village" />
+      <one-to-many class="beans.Stationed, beans"/>
+    </bag>
+    
+          
+  </class>
+
+</hibernate-mapping>

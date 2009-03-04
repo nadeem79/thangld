@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+
+  <class name="beans.User, beans" table="users" lazy="false">
+
+    <id name="ID" column="id" type="Int32">
+      <generator class="identity"/>
+    </id>
+    
+    <property name="Username" column="username" length="200" type="String" not-null="true"/>
+    <property name="Password" column="password" type="String" />
+    <property name="Birthdate" column="birthdate" type="date" not-null="false" />
+    <property name="Gender" column="sex" type="beans.Sex, beans" not-null="false" />
+    <property name="Yahoo" column="yahoo" type="string" length="50" not-null="false" unique="true" />
+    <property name="Msn" column="msn" type="string" length="50" not-null="false" unique="true"/>
+    <property name="Skype" column="skype" type="string" length="50" not-null="false" unique="true"/>
+    <property name="Email" column="email" type="string" length="50" not-null="false" unique="true"/>
+    <property name="Description" column="description" type="string" not-null="false" />
+    <property name="Avatar" column="avatar" type="string" length="100" not-null="false" />
+    <property name="Address" column="address" type="string" length="500" not-null="false" />
+
+    <bag name="Villages" table="villages" cascade="all" fetch="join" inverse="true" lazy="false">
+      <key column="userid" />
+      <one-to-many class="beans.Village, beans"/>
+    </bag>
+          
+  </class>
+
+</hibernate-mapping>

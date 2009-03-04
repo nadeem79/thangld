@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+
+  <import class="beans.IMovingCommand, beans" rename="IMovingCommand"/>
+  <class name="beans.Support, beans" table="movement" lazy="false">
+
+    <id name="ID" column="id" type="Int32">
+      <generator class="identity"/>
+    </id>
+
+    <many-to-one name="From" class="beans.Village, beans" column="[from]" not-null="true" />
+    <many-to-one name="To" class="beans.Village, beans" column="[to]" not-null="true" />
+    <property name="StartTime" column="starting_time" type="DateTime"/>
+    <property name="LandingTime" column="landing_time" type="DateTime"/>
+    <property name="Spear" column="spear" type="Int32" />
+    <property name="Sword" column="sword" type="Int32" />
+    <property name="Axe" column="axe" type="Int32" />
+    <property name="Scout" column="scout" type="Int32" />
+    <property name="Light" column="light" type="Int32" />
+    <property name="Heavy" column="heavy" type="Int32" />
+    <property name="Catapult" column="catapult" type="Int32" />
+    <property name="Ram" column="ram" type="Int32" />
+    <property name="Noble" column="noble" type="Int32" />
+    <property name="Type" column="type" type="beans.MoveType, beans" />
+    <filter condition="type=3" name="support"></filter>
+  </class>
+
+</hibernate-mapping>

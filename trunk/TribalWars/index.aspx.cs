@@ -11,34 +11,58 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using System.Data.SqlClient;
+using NHibernate;
+using beans;
 
 public partial class index : System.Web.UI.Page
 {
+
     protected void Page_Load(object sender, EventArgs e)
     {
+        
+        //ISession session = NHibernateHelper.SessionFactory.OpenSession();
+        //ITransaction trans = session.BeginTransaction();
+        //User u = session.Load<User>(1);
+        //u.Villages[0].LastUpdate = DateTime.Now.AddDays(-1);
+        //this.error.Text = u.Villages[0].LastUpdate.Millisecond.ToString();
+        //session.Save(u.Villages[0]);
+        //session.Save(u);
+        //trans.Commit();
+        ISession session = NHibernateHelper.SessionFactory.OpenSession();
 
+        IQuery query = session.CreateQuery("select count(*) from Village as v where v.Owner = (from User where Username=:username)");
+        query.SetString("username", "drea");
+        IList result = query.List();
+        this.error.Text = result[0].ToString();
+        this.error.Text = session.CacheMode.ToString();
+        session.Close();
+        
     }
 
     protected void login_Click(object sender, ImageClickEventArgs e)
     {
-        SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["tw"].ConnectionString);
-
-        SqlCommand cmdCheckLogin = conn.CreateCommand();
-        cmdCheckLogin.CommandText = "select username from users where username=@username and password=@password";
-        cmdCheckLogin.Parameters.Add("@username", SqlDbType.NVarChar, 200).Value = this.username.Text;
-        cmdCheckLogin.Parameters.Add("@password", SqlDbType.NVarChar, 200).Value = this.password.Text;
-
-        conn.Open();
-        string username = (string)cmdCheckLogin.ExecuteScalar();
-        conn.Close();
-        if (object.Equals(username, null))
+        ISession session = NHibernateHelper.SessionFactory.OpenSession();
+        try
         {
-            this.error.Text = "Tài khoản không tồn tại";
+            bool authenticated = beans.User.Authentication(this.username.Text, this.password.Text, session);
+            if (!authenticated)
+            {
+                this.error.Text = "Tên đăng nhập hoặc mật khẩu không đúng";
+                Session.Remove("user");
+            }
+            else
+            {
+                Session.Add("user", this.username.Text);
+                Response.Redirect("overview.aspx", true);
+            }
         }
-        else
+        catch (Exception exc)
         {
-            Session.Add("username", username);
-            Response.Redirect("overview.aspx", true);
+            this.error.Text = exc.Message;
+        }
+        finally
+        {
+            session.Close();
         }
     }
 }

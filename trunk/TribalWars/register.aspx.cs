@@ -12,6 +12,7 @@ using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using CaptchaDLL;
 using System.Data.SqlClient;
+using NHibernate;
 
 public partial class Default2 : System.Web.UI.Page
 {
@@ -28,25 +29,29 @@ public partial class Default2 : System.Web.UI.Page
             return;
         }
 
-        SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["tw"].ConnectionString);
+        beans.User user = new beans.User();
+        user.Username = this.username.Text;
+        user.Password = this.password.Text;
+        user.Email = this.email.Text;
 
-        SqlCommand cmdCheckLogin = conn.CreateCommand();
-        cmdCheckLogin.CommandText = "INSERT INTO users (username, password, email) values (@username, @password, @email)";
-        cmdCheckLogin.Parameters.Add("@username", SqlDbType.NVarChar, 200).Value = this.username.Text;
-        cmdCheckLogin.Parameters.Add("@password", SqlDbType.NVarChar, 200).Value = this.password.Text;
-        cmdCheckLogin.Parameters.Add("@email", SqlDbType.NVarChar, 200).Value = this.email.Text;
-
-        conn.Open();
-        int success = cmdCheckLogin.ExecuteNonQuery();
-        conn.Close();
-        if (success > 0)
+        NHibernate.ISession session = null;
+        try
         {
-            Session.Add("username", username.Text);
+            session = NHibernateHelper.CreateSession;
+            ITransaction trans = session.BeginTransaction();
+            session.Save(user);
+            trans.Commit();
+            Session.Add("user", user.Username);
             Response.Redirect("overview.aspx", true);
         }
-        else
+        catch (Exception exc)
         {
-
+            this.lblError.Text = exc.Message;
         }
+        finally
+        {
+            session.Close();
+        }
+
     }
 }
