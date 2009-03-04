@@ -65,9 +65,6 @@
                             </table>
                         </label>
                         <asp:ImageButton ID="login" runat="server" ImageUrl="images/login1.png" OnClick="login_Click" />
-                        <br style="clear: both;" />
-                        <asp:CheckBox ID="cookie" runat="server" Text="Tự đăng nhập" />
-                        </label>
                     </div>
                 </div>
             </div>
@@ -75,5 +72,4 @@
             </div>
         </div>
     </div>
-    </div> </div>
 </asp:Content>

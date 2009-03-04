@@ -1,0 +1,34 @@
+D:\My Documents\Visual Studio 2008\Projects\MW\beans\bin\Debug\beans.dll
+D:\My Documents\Visual Studio 2008\Projects\MW\beans\bin\Debug\beans.pdb
+D:\My Documents\Visual Studio 2008\Projects\MW\beans\obj\Debug\ResolveAssemblyReference.cache
+D:\My Documents\Visual Studio 2008\Projects\MW\beans\obj\Debug\beans.dll
+D:\My Documents\Visual Studio 2008\Projects\MW\beans\obj\Debug\beans.pdb
+D:\My Documents\Visual Studio 2008\Projects\MW\beans\bin\Debug\NHibernate.dll
+D:\My Documents\Visual Studio 2008\Projects\MW\beans\bin\Debug\Iesi.Collections.dll
+D:\My Documents\Visual Studio 2008\Projects\MW\beans\bin\Debug\log4net.dll
+D:\My Documents\Visual Studio 2008\Projects\MW\beans\bin\Debug\NHibernate.xml
+D:\My Documents\Visual Studio 2008\Projects\MW\beans\bin\Debug\Iesi.Collections.xml
+D:\My Documents\Visual Studio 2008\Projects\MW\beans\bin\Debug\log4net.xml
+D:\My Documents\Visual Studio 2008\Projects\MW\beans\bin\Debug\Castle.Core.dll
+D:\My Documents\Visual Studio 2008\Projects\MW\beans\bin\Debug\Castle.DynamicProxy2.dll
+D:\My Documents\Visual Studio 2008\Projects\MW\beans\bin\Debug\Castle.Core.xml
+D:\My Documents\Visual Studio 2008\Projects\MW\beans\bin\Debug\Castle.DynamicProxy2.xml
+D:\My Documents\Visual Studio 2008\Projects\MW\beans\bin\Debug\nhibernate-mapping.xsd
+D:\My Documents\Projects\tw\beans\obj\Debug\ResolveAssemblyReference.cache
+D:\My Documents\Projects\tw\beans\obj\Debug\beans.dll
+D:\My Documents\Projects\tw\beans\obj\Debug\beans.pdb
+D:\My Documents\Projects\tw\beans\bin\Debug\beans.dll
+D:\My Documents\Projects\tw\beans\bin\Debug\beans.pdb
+D:\My Documents\Projects\tw\beans\bin\Debug\Iesi.Collections.dll
+D:\My Documents\Projects\tw\beans\bin\Debug\log4net.dll
+D:\My Documents\Projects\tw\beans\bin\Debug\Castle.Core.dll
+D:\My Documents\Projects\tw\beans\bin\Debug\Castle.DynamicProxy2.dll
+D:\My Documents\Projects\tw\beans\bin\Debug\NHibernate.xml
+D:\My Documents\Projects\tw\beans\bin\Debug\Iesi.Collections.xml
+D:\My Documents\Projects\tw\beans\bin\Debug\log4net.xml
+D:\My Documents\Projects\tw\beans\bin\Debug\Castle.Core.xml
+D:\My Documents\Projects\tw\beans\bin\Debug\Castle.DynamicProxy2.xml
+D:\My Documents\Projects\tw\beans\bin\Debug\Mapping\nhibernate-mapping.xsd
+D:\My Documents\Projects\tw\beans\bin\Debug\beans.dll.config
+D:\My Documents\Projects\tw\beans\obj\Debug\beans.Properties.Resources.resources
+D:\My Documents\Projects\tw\beans\obj\Debug\beans.csproj.GenerateResource.Cache
