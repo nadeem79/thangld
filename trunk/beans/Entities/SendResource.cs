@@ -54,11 +54,11 @@ namespace beans
 
         #region Methods
 
-        public override void effect(Village village, ISession session)
+        public override void effect(ISession session)
         {
-            village.Clay += this.Clay;
-            village.Wood += this.Wood;
-            village.Iron += this.Iron;
+            this.To.Clay += this.Clay;
+            this.To.Wood += this.Wood;
+            this.To.Iron += this.Iron;
         }
 
         #endregion

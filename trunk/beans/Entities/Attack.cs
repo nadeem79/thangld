@@ -108,13 +108,13 @@ namespace beans
 
 
         //chưa xét trường hợp phá tường, phá nhà
-        public override void effect(Village village, ISession session)
+        public override void effect(ISession session)
         {
             AttackReport report = new AttackReport();
             report.Time = this.LandingTime;
             report.Title = this.From.Owner.Username + " tấn công " + this.To.Name + "(" + this.To.X.ToString() + "|" + this.To.Y.ToString() + ")";
             report.From = this.From;
-            report.To = village;
+            report.To = this.To;
             
             report.SpearSent = this.Spear;
             report.SwordSent = this.Sword;
@@ -126,19 +126,19 @@ namespace beans
             report.CatapultSent = this.Catapult;
             report.NobleSent = this.Noble;
 
-            report.SpearDefense = village.TotalSpear;
-            report.SwordDefense = village.TotalSword;
-            report.AxeDefense = village.TotalAxe;
-            report.ScoutDefense = village.TotalScout;
-            report.LightDefense = village.TotalLight;
-            report.HeavyDefense = village.TotalHeavy;
-            report.RamDefense = village.TotalRam;
-            report.CatapultDefense = village.TotalCatapult;
-            report.NobleDefense = village.TotalNoble;
+            report.SpearDefense = this.To.TotalSpear;
+            report.SwordDefense = this.To.TotalSword;
+            report.AxeDefense = this.To.TotalAxe;
+            report.ScoutDefense = this.To.TotalScout;
+            report.LightDefense = this.To.TotalLight;
+            report.HeavyDefense = this.To.TotalHeavy;
+            report.RamDefense = this.To.TotalRam;
+            report.CatapultDefense = this.To.TotalCatapult;
+            report.NobleDefense = this.To.TotalNoble;
 
-            report.LoyalAfter = village.Loyal;
+            report.LoyalAfter = this.To.Loyal;
             report.Building = this.Building;
-            report.BuildingAfter = village[this.Building];
+            report.BuildingAfter = this.To[this.Building];
             
             
 
@@ -151,15 +151,15 @@ namespace beans
             double pInfantry = (double)infantryAttack / (double)totalAttack;
             double pCavalry = (double)cavalryAttack / (double)totalAttack;
 
-            int infantryDefense = village.TotalSpear * 15 + village.TotalSword * 50 + village.TotalAxe * 10 + village.TotalLight * 30 + village.TotalHeavy * 200 + village.TotalNoble * 100;
-            int cavalryDefense = village.TotalSpear * 45 + village.TotalSword * 15 + village.TotalAxe * 5 + village.TotalLight * 40 + village.TotalHeavy * 80 + village.TotalNoble * 50;
+            int infantryDefense = this.To.TotalSpear * 15 + this.To.TotalSword * 50 + this.To.TotalAxe * 10 + this.To.TotalLight * 30 + this.To.TotalHeavy * 200 + this.To.TotalNoble * 100;
+            int cavalryDefense = this.To.TotalSpear * 45 + this.To.TotalSword * 15 + this.To.TotalAxe * 5 + this.To.TotalLight * 40 + this.To.TotalHeavy * 80 + this.To.TotalNoble * 50;
             int totalDefense = (int)(infantryDefense * pInfantry + cavalryDefense * pCavalry) + 100;
 
             totalAttack = (totalAttack / totalDefense) * totalAttack;
             totalAttack += (int)(totalAttack * luck);
 
             double ratio;
-            User owner = village.Owner;
+            User owner = this.To.Owner;
             if (totalAttack > totalDefense)
             {
                 ratio = 1 - ((double)totalDefense / (double)totalAttack);
@@ -173,31 +173,31 @@ namespace beans
                 this.Ram = (int)Math.Round(this.Ram * ratio);
                 this.Catapult = (int)Math.Round(this.Catapult * ratio);
                 this.Noble = (int)Math.Round(this.Noble * ratio);
-                village.StationedTroops.Clear();
+                this.To.StationedTroops.Clear();
 
-                village.Spear = 0;
-                village.Sword = 0;
-                village.Axe = 0;
-                village.Scout = 0;
-                village.Light = 0;
-                village.Heavy = 0;
-                village.Ram = 0;
-                village.Catapult = 0;
-                village.Noble = 0;
+                this.To.Spear = 0;
+                this.To.Sword = 0;
+                this.To.Axe = 0;
+                this.To.Scout = 0;
+                this.To.Light = 0;
+                this.To.Heavy = 0;
+                this.To.Ram = 0;
+                this.To.Catapult = 0;
+                this.To.Noble = 0;
 
                 if (this.Noble > 0)
-                    village.Loyal -= (r.Next(15) + 20);
-                if (village.Loyal <= 0)
+                    this.To.Loyal -= (r.Next(15) + 20);
+                if (this.To.Loyal <= 0)
                 {
-                    
-                    village.Owner = this.From.Owner;
-                    village.Loyal = 25;
-                    foreach (Stationed station in village.TroopsOutside)
+
+                    this.To.Owner = this.From.Owner;
+                    this.To.Loyal = 25;
+                    foreach (Stationed station in this.To.TroopsOutside)
                         session.Delete(station);
-                    village.TroopsOutside.Clear();
+                    this.To.TroopsOutside.Clear();
 
 
-                    foreach (Stationed station in village.StationedTroops)
+                    foreach (Stationed station in this.To.StationedTroops)
                     {
                         #region tạo report
                         if (station.FromVillage.Owner != this.To.Owner)
@@ -216,7 +216,7 @@ namespace beans
                     }
 
                     Stationed newStation = new Stationed();
-                    newStation.AtVillage = village;
+                    newStation.AtVillage = this.To;
                     newStation.FromVillage = this.From;
                     newStation.Spear = this.Spear;
                     newStation.Sword = this.Sword;
@@ -247,25 +247,25 @@ namespace beans
                     returnTroop.Noble = this.Noble;
 
                     int intCanHaul = this.Spear * 25 + this.Sword * 15 + this.Axe * 10 + this.Light * 80 + this.Heavy;
-                    int intTotalResource = village.Iron + village.Clay + village.Wood;
+                    int intTotalResource = this.To.Iron + this.To.Clay + this.To.Wood;
 
                     if (intTotalResource <= intCanHaul)
                     {
-                        returnTroop.Clay = village.Clay;
-                        returnTroop.Wood = village.Wood;
-                        returnTroop.Iron = village.Iron;
+                        returnTroop.Clay = this.To.Clay;
+                        returnTroop.Wood = this.To.Wood;
+                        returnTroop.Iron = this.To.Iron;
 
-                        village.Clay = village.Iron = village.Wood = 0;
+                        this.To.Clay = this.To.Iron = this.To.Wood = 0;
                     }
                     else
                     {
-                        returnTroop.Clay = (int)((double)village.Clay * (double)intCanHaul / (double)intTotalResource);
-                        returnTroop.Wood = (int)((double)village.Wood * (double)intCanHaul / (double)intTotalResource);
-                        returnTroop.Iron = (int)((double)village.Iron * (double)intCanHaul / (double)intTotalResource);
+                        returnTroop.Clay = (int)((double)this.To.Clay * (double)intCanHaul / (double)intTotalResource);
+                        returnTroop.Wood = (int)((double)this.To.Wood * (double)intCanHaul / (double)intTotalResource);
+                        returnTroop.Iron = (int)((double)this.To.Iron * (double)intCanHaul / (double)intTotalResource);
 
-                        village.Clay -= returnTroop.Clay;
-                        village.Wood -= returnTroop.Wood;
-                        village.Iron -= returnTroop.Iron;
+                        this.To.Clay -= returnTroop.Clay;
+                        this.To.Wood -= returnTroop.Wood;
+                        this.To.Iron -= returnTroop.Iron;
                     }
 
                     session.Save(returnTroop);

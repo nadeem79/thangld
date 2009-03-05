@@ -54,6 +54,7 @@
     <Compile Include="Entities\Build.cs" />
     <Compile Include="Entities\BuildingType.cs" />
     <Compile Include="Entities\InviteToTribeReport.cs" />
+    <Compile Include="Entities\Price.cs" />
     <Compile Include="Entities\SupportWithdawalReport.cs" />
     <Compile Include="Entities\SupportReport.cs" />
     <Compile Include="Entities\OfferAcceptedReport.cs" />

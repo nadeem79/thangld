@@ -104,11 +104,11 @@ namespace beans
 
         #endregion
 
-        public override void effect(Village village, ISession session)
+        public override void effect(ISession session)
         {
             ICriteria criteria = session.CreateCriteria(typeof(Stationed));
 
-            criteria.Add(Expression.Eq("AtVillage", village));
+            criteria.Add(Expression.Eq("AtVillage", this.To));
             criteria.Add(Expression.Eq("FromVillage", this.From));
             IList<Stationed> lstStations = criteria.List<Stationed>();
 
@@ -116,7 +116,7 @@ namespace beans
             {
                 Stationed newStation = new Stationed();
                 newStation.FromVillage = this.From;
-                newStation.AtVillage = village;
+                newStation.AtVillage = this.To;
                 newStation.Spear = this.Spear;
                 newStation.Sword = this.Sword;
                 newStation.Axe = this.Axe;
@@ -146,7 +146,7 @@ namespace beans
             }
 
             SupportReport supportReport = new SupportReport();
-            supportReport.Owner = village.Owner;
+            supportReport.Owner = this.To.Owner;
             supportReport.Time = this.LandingTime;
             supportReport.Title = this.From.Owner + " gửi quân hỗ trợ " + this.To.Name + "(" + this.To.X.ToString("0:000") + "|" + this.To.Y.ToString("0:000") + ")";
 

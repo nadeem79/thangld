@@ -26,7 +26,6 @@ public class Recruit
 
         int result = (sumClay < sumWood) ? sumClay : sumWood;
         return ((result < sumIron) ? result : sumIron);
-            
     }
 
     public static int recruit_unit_time(int level, int troop)

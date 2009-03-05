@@ -42,7 +42,7 @@ namespace beans
             get;
         }
 
-        public abstract void effect(Village village, ISession session);
+        public abstract void effect(ISession session);
 
     }
 }

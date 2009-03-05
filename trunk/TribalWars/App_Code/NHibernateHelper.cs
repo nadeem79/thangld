@@ -12,35 +12,26 @@ using NHibernate.Engine;
         private static Configuration mWConfig = null;
         private static ISessionFactory sessionFactory = null;
 
-        public static ISessionFactory SessionFactory
+        public static ISessionFactory CreateSessionFactory()
         {
-            get
-            {
-                if (object.Equals(NHibernateHelper.sessionFactory, null))
-                    NHibernateHelper.sessionFactory = NHibernateHelper.MWConfig.BuildSessionFactory();
-                
-                return NHibernateHelper.sessionFactory;
-            }
+            if (object.Equals(NHibernateHelper.sessionFactory, null))
+                NHibernateHelper.sessionFactory = NHibernateHelper.MWConfig().BuildSessionFactory();
+            
+            return NHibernateHelper.sessionFactory;
         }
 
-        public static Configuration MWConfig
+        public static Configuration MWConfig()
         {
-            get 
+            if (object.Equals(NHibernateHelper.mWConfig, null))
             {
-                if (object.Equals(NHibernateHelper.mWConfig, null))
-                {
-                    NHibernateHelper.mWConfig = new Configuration();
-                    NHibernateHelper.mWConfig.AddAssembly("beans");
-                }
-                return NHibernateHelper.mWConfig;
+                NHibernateHelper.mWConfig = new Configuration();
+                NHibernateHelper.mWConfig.AddAssembly("beans");
             }
+            return NHibernateHelper.mWConfig;
         }
 
-        public static ISession CreateSession
+        public static ISession CreateSession()
         {
-            get
-            {
-                return SessionFactory.OpenSession();
-            }
+            return NHibernateHelper.CreateSessionFactory().OpenSession();
         }
     }

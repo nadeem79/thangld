@@ -11,12 +11,21 @@ using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using System.Xml.Linq;
 using System.Data.SqlClient;
+using NHibernate;
 
 public partial class inPage : System.Web.UI.MasterPage
 {
 
     public SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["tw"].ConnectionString);
-    public DataRow village;
+    public DataRow village1;
+    private Village village = null;
+    public Village CurrentVillage
+    {
+        get
+        {
+            return this.village;
+        }
+    }
 
     public inPage()
     {
@@ -29,9 +38,35 @@ public partial class inPage : System.Web.UI.MasterPage
         DateTime start = DateTime.Now;
         int count = 0;
 
-        if (object.Equals(Session["username"], null))
+        if (object.Equals(Session["user"], null))
         {
             Response.Redirect("index.aspx", true);
+            return;
+        }
+
+
+        int id;
+        ISession session = NHibernateHelper.CreateSession();
+        
+
+        beans.User user = session.Load<beans.User>((int)Session["user"]);
+        if (user == null)
+        {
+            session.Close();
+            Response.Redirect("index.aspx", true);
+        }
+
+        if (object.Equals(Request["id"], null) || (!int.TryParse(Request["id"], out id)))
+        {
+            
+            
+
+            SqlCommand cmdGetFirstVillage = conn.CreateCommand();
+            cmdGetFirstVillage.CommandText = "select top 1 id from villages where userid=@userid";
+            cmdGetFirstVillage.Parameters.Add("@userid", SqlDbType.NVarChar, 200).Value = (string)Session["username"];
+            id = (int)cmdGetFirstVillage.ExecuteScalar();
+            conn.Close();
+            Response.Redirect("village.aspx?id=" + id, true);
             return;
         }
 
@@ -80,7 +115,7 @@ public partial class inPage : System.Web.UI.MasterPage
             return;
         }
 
-        this.village = Village.refresh(id, start);
+        this.village1 = Village.refresh(id, start);
 
         SqlCommand cmdGetAttackCount = conn.CreateCommand();
         cmdGetAttackCount.CommandText = "select count(*) from movement where landing_time>=@landing_time and [to]=@id and type=2";
@@ -91,21 +126,21 @@ public partial class inPage : System.Web.UI.MasterPage
 
         conn.Close();
 
-        this.lblCoord.Text = this.village["x"].ToString() + "|" + this.village["y"].ToString();
-        this.currentVillage.Text = (string)this.village["name"];
+        this.lblCoord.Text = this.village1["x"].ToString() + "|" + this.village1["y"].ToString();
+        this.currentVillage.Text = (string)this.village1["name"];
         this.currentVillage.NavigateUrl = "village.aspx?id=" + id.ToString();
 
-        this.wood.Text = this.village["wood"].ToString();
-        this.clay.Text = this.village["clay"].ToString();
-        this.iron.Text = this.village["iron"].ToString();
+        this.wood.Text = this.village1["wood"].ToString();
+        this.clay.Text = this.village1["clay"].ToString();
+        this.iron.Text = this.village1["iron"].ToString();
         this.iron_url.NavigateUrl = "iron.aspx?id=" + id.ToString();
         this.clay_url.NavigateUrl = "clay.aspx?id=" + id.ToString();
         this.wood_url.NavigateUrl = "wood.aspx?id=" + id.ToString();
         this.lblReport.NavigateUrl = "list_report.aspx?id=" + id.ToString();
         this.map.NavigateUrl = "map.aspx?id=" + id.ToString();
 
-        this.resource.Text = Village.getMaxResource((int)this.village["storage"]).ToString();
-        this.pop.Text = Village.getMaxPopulation((int)this.village["farm"]).ToString();
+        this.resource.Text = Village.getMaxResource((int)this.village1["storage"]).ToString();
+        this.pop.Text = Village.getMaxPopulation((int)this.village1["farm"]).ToString();
         this.res_url.NavigateUrl = "resource.aspx?id=" + id.ToString();
         this.pop_url.NavigateUrl = "population.aspx?id=" + id.ToString();
 
