@@ -7,6 +7,6 @@ namespace beans
 {
     public interface IVillageEffector
     {
-        void effect(Village village, NHibernate.ISession session);
+        void effect(NHibernate.ISession session);
     }
 }

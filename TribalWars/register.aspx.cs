@@ -41,7 +41,8 @@ public partial class Default2 : System.Web.UI.Page
             ITransaction trans = session.BeginTransaction();
             session.Save(user);
             trans.Commit();
-            Session.Add("user", user.Username);
+            Session.RemoveAll();
+            Session.Add("username", user.Username);
             Response.Redirect("overview.aspx", true);
         }
         catch (Exception exc)

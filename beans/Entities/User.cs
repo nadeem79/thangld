@@ -145,7 +145,7 @@ namespace beans
         #endregion
 
         #region Methods
-        public static bool Authentication(string username, string password, ISession session)
+        public static int Authentication(string username, string password, ISession session)
         {
             
 
@@ -160,12 +160,22 @@ namespace beans
             //writer.Flush();
             //password = Convert.ToBase64String(memoryStream.GetBuffer(), 0, (int)memoryStream.Length);
 
-            IQuery query = session.CreateQuery("select count(*) from User as user where user.Username=:username and user.Password=:password");
+            IQuery query = session.CreateQuery("select ID from User as user where user.Username=:username and user.Password=:password");
             query.SetString("username", username);
             query.SetString("password", password);
-            return ((int)query.List()[0] > 0);
+            return ((int)query.List()[0]);
 
         }
+        #endregion
+
+        #region Methods
+
+        public void Update(DateTime time, ISession session)
+        {
+            foreach (Village village in this.Villages)
+                village.Update(time, session);
+        }
+
         #endregion
     }
 }

@@ -8,7 +8,6 @@ namespace beans
 {
     
 
-
     public class Village:IdentityObject
     {
         #region Variables
@@ -47,12 +46,6 @@ namespace beans
         private int heavy;
         private int noble;
         private int loyal;
-
-        public int Loyal
-        {
-            get { return loyal; }
-            set { loyal = value; }
-        }
         private IList<Attack> attacks;
         private IList<Offer> offers;
         private IList<SendResource> sendings;
@@ -65,6 +58,13 @@ namespace beans
         #endregion
 
         #region Properties
+
+        public int Loyal
+        {
+            get { return loyal; }
+            set { loyal = value; }
+        }
+
         public virtual DateTime LastUpdate
         {
             get { return lastUpdate; }
@@ -546,6 +546,24 @@ namespace beans
             }
         }
 
+        public int MaxResources
+        {
+            get
+            {
+                if (this[BuildingType.Warehouse] == 1)
+                    return 1000;
+                else if (this[BuildingType.Warehouse] == 0)
+                    return 0;
+
+                int result = 1000;
+
+                for (int i = 1; i < this[BuildingType.Warehouse]; i++)
+                    result += (int)(result * 0.3);
+
+                return result;
+            }
+        }
+
         #endregion
 
         #region Constructors
@@ -556,6 +574,40 @@ namespace beans
             this.sendings = new List<SendResource>();
             this.returnings = new List<SendResource>();
             this.offers = new List<Offer>();
+        }
+
+        #endregion
+
+        #region Static Members
+        public static Village CreateVillage(ISession session)
+        {
+            int expand = beans.Properties.Settings.Default.Expand;
+            int number = beans.Properties.Settings.Default.Number;
+
+            if (number > (expand * 2 + 1))
+            {
+                expand++;
+                number = 0;
+            }
+            IList<Village> lst;
+            Random r = new Random();
+            int X, Y;
+
+            do
+            {
+                X = 50 + expand * (r.Next(3) - 1);
+                Y = 50 + expand * (r.Next(3) - 1);
+
+                ICriteria criteria = session.CreateCriteria(typeof(Village));
+                criteria.Add(Expression.Eq("X", X));
+                criteria.Add(Expression.Eq("Y", Y));
+                lst = criteria.List<Village>();
+            } while (lst.Count > 0);
+
+            Village village = new Village();
+            village.X = X;
+            village.Y = Y;
+            return village;
         }
 
         #endregion
@@ -593,7 +645,7 @@ namespace beans
             return result;
         }
 
-        public double SecondPerUnit(ResourcesType type)
+        public double SecondPerResourceUnit(ResourcesType type)
         {
 
             int level = 0;
@@ -628,75 +680,90 @@ namespace beans
 
         }
 
-        public int MaxResources
+        protected IList<MovingCommand> GetDependingCommands(DateTime to, ISession session)
         {
-            get
-            {
-                if (this[BuildingType.Warehouse] == 1)
-                    return 1000;
-                else if (this[BuildingType.Warehouse]==0)
-                    return 0;
-
-                int result = 1000;
-
-                for (int i = 1; i < this[BuildingType.Warehouse]; i++)
-                    result += (int)(result * 0.3);
-
-                return result;
-            }
-        }
-
-        public string Update(DateTime to, ISession session)
-        {
-            string str = "";
             ICriteria criteria = session.CreateCriteria(typeof(MovingCommand));
+            criteria.Add(Expression.Eq("To", this));
             criteria.Add(Expression.Lt("LandingTime", to));
-            criteria.Add(Expression.Ge("LandingTime", this.LastUpdate));
-            criteria.Add(Expression.Or(Expression.Eq("From", this), Expression.Eq("To", this)));
-            //criteria.Add(Expression.Eq("Type", MoveType.Attack));
-            criteria.AddOrder(Order.Desc("LandingTime"));
-            IList<MovingCommand> commands = criteria.List<MovingCommand>();
-            //session.Load(typeof(Attack), 67);
-            foreach (MovingCommand command in commands)
-                str += command.Type.ToString() + " - ";
-            return str;
+            criteria.Add(Expression.Ge("StartTime", this.LastUpdate));
+            criteria.AddOrder(new Order("LandingTime", true));
+            return criteria.List<MovingCommand>();
         }
 
-        
-        #endregion
-
-        #region Static Members
-        public static Village CreateVillage(ISession session)
+        protected IList<Recruit> GetDependingInfantryRecruit(DateTime to, ISession session)
         {
-            int expand = beans.Properties.Settings.Default.Expand;
-            int number = beans.Properties.Settings.Default.Number;
-
-            if (number > (expand * 2 + 1))
-            {
-                expand++;
-                number = 0;
-            }
-            IList<Village> lst;
-            Random r = new Random();
-            int X, Y;
-
-            do
-            {
-                X = 50 + expand * (r.Next(3) - 1);
-                Y = 50 + expand * (r.Next(3) - 1);
-
-                ICriteria criteria = session.CreateCriteria(typeof(Village));
-                criteria.Add(Expression.Eq("X", X));
-                criteria.Add(Expression.Eq("Y", Y));
-                lst = criteria.List<Village>();
-            } while (lst.Count > 0);
-
-            Village village = new Village();
-            village.X = X;
-            village.Y = Y;
-            return village;
+            ICriteria criteria = session.CreateCriteria(typeof(Recruit));
+            criteria.Add(Expression.Eq("InVillage", this));
+            criteria.Add(Expression.Le("Start", this.LastUpdate));
+            criteria.Add(Expression.Ge("End", to));
+            criteria.Add(Expression.Or(Expression.Eq("Troop", TroopType.Axe), Expression.Or(Expression.Eq("Troop", TroopType.Spear), Expression.Eq("Troop", TroopType.Sword))));
+            criteria.AddOrder(new Order("ID", false));
+            return criteria.List<Recruit>();
         }
 
-        #endregion
+        protected IList<Recruit> GetDependingCavalryRecruit(DateTime to, ISession session)
+        {
+            ICriteria criteria = session.CreateCriteria(typeof(Recruit));
+            criteria.Add(Expression.Eq("InVillage", this));
+            criteria.Add(Expression.Le("Start", this.LastUpdate));
+            criteria.Add(Expression.Ge("End", to));
+            criteria.Add(Expression.Or(Expression.Eq("Troop", TroopType.Scout), Expression.Or(Expression.Eq("Troop", TroopType.Light), Expression.Eq("Troop", TroopType.Heavy))));
+            criteria.AddOrder(new Order("ID", false));
+            return criteria.List<Recruit>();
+        }
+
+        //Chưa xét trường hợp xây nhà, xây noble và xe
+        public void Update(DateTime to, ISession session)
+        {
+            IList<MovingCommand> lstMovingCommands = this.GetDependingCommands(to, session);
+            IList<Recruit> lstInfantryRecruits = this.GetDependingInfantryRecruit(to, session);
+            IList<Recruit> lstCavalryRecruits = this.GetDependingCavalryRecruit(to, session);
+            
+            foreach (MovingCommand command in lstMovingCommands)
+            {
+                this.UpdateResources(this.LastUpdate, command.LandingTime);
+                if (lstInfantryRecruits.Count > 0)
+                    while (lstInfantryRecruits[0].Expense(command.LandingTime))
+                    {
+                        session.Delete(lstInfantryRecruits[0]);
+                        lstInfantryRecruits.RemoveAt(0);
+                    }
+
+                if (lstCavalryRecruits.Count > 0)
+                    while (lstCavalryRecruits[0].Expense(command.LandingTime))
+                    {
+                        session.Delete(lstCavalryRecruits[0]);
+                        lstCavalryRecruits.RemoveAt(0);
+                    }
+                
+                command.effect(session);
+            }
+            session.Save(this);
+        }
+
+        public Recruit BeginRecruit(TroopType troop, int quantity, ISession session)
+        {
+            if (!Recruit.CanRecruit(troop, quantity, this.Wood, this.Clay, this.Iron))
+                return null;
+
+            int level = 0;
+            if ((troop == TroopType.Axe) || (troop == TroopType.Spear) || (troop == TroopType.Sword))
+                level = this[BuildingType.Barracks];
+            if ((troop == TroopType.Light) || (troop == TroopType.Scout) || (troop == TroopType.Heavy))
+                level = this[BuildingType.Stable];
+
+            Recruit recruit = new Recruit();
+            recruit.InVillage = this;
+            recruit.Quantity = quantity;
+            recruit.Troop = troop;
+            recruit.Start = DateTime.Now;
+
+            recruit.End = recruit.Start.AddSeconds(Recruit.RecruitTime(quantity, level));
+
+            session.Save(recruit);
+            return recruit;
+        }
+        
+        #endregion       
     }
 }
