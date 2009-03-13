@@ -46,11 +46,10 @@ namespace beans
         private int heavy;
         private int noble;
         private int loyal;
-        private IList<Attack> attacks;
+        private IList<MovingCommand> incomings;
+        private IList<MovingCommand> outgoings;
         private IList<Offer> offers;
         private IList<SendResource> sendings;
-        private IList<Support> supports;
-        private IList<SendResource> returnings;
         private IList<MovingCommand> commands;
         private IList<Stationed> stationedTroops = new List<Stationed>();        
         private IList<Stationed> troopsOutside = new List<Stationed>();
@@ -280,16 +279,16 @@ namespace beans
             set { catapult = value; }
         }
 
-        public virtual IList<Attack> Attacks
+        public virtual IList<MovingCommand> Incomings
         {
-            get { return attacks; }
-            set { attacks = value; }
+            get { return this.incomings; }
+            set { this.incomings = value; }
         }
 
-        public virtual IList<SendResource> Returnings
+        public virtual IList<MovingCommand> Outgoings
         {
-            get { return returnings; }
-            set { returnings = value; }
+            get { return this.outgoings; }
+            set { this.outgoings = value; }
         }
 
         public virtual IList<Offer> Offers
@@ -302,12 +301,6 @@ namespace beans
         {
             get { return sendings; }
             set { sendings = value; }
-        }
-
-        public virtual IList<Support> Supports
-        {
-            get { return supports; }
-            set { supports = value; }
         }
 
         public virtual IList<Stationed> StationedTroops
@@ -564,6 +557,24 @@ namespace beans
             }
         }
 
+        public int MaxPopulation
+        {
+            get
+            {
+                if (this[BuildingType.Warehouse] == 1)
+                    return 240;
+                else if (this[BuildingType.Warehouse] == 0)
+                    return 0;
+
+                int result = 240;
+
+                for (int i = 1; i < this[BuildingType.Warehouse]; i++)
+                    result += (int)(result * 0.2);
+
+                return result;
+            }
+        }
+
         #endregion
 
         #region Constructors
@@ -763,7 +774,28 @@ namespace beans
             session.Save(recruit);
             return recruit;
         }
-        
+
+        public int GetIncomingAttackCount(ISession session)
+        {
+            return 0;
+        }
+
+        public int GetIncomingSupportCount(ISession session)
+        {
+            return 0;
+        }
+
+        public IList<MovingCommand> GetIncomingTroop(ISession session)
+        {
+            ICriteria criteria = session.CreateCriteria(typeof(MovingCommand));
+
+            criteria.Add(Expression.Eq("To", this));
+            criteria.Add(Expression.Gt("LandingTime", DateTime.Now));
+            criteria.AddOrder(Order.Desc("LandingTime"));
+
+            return criteria.List<MovingCommand>();
+        }
+
         #endregion       
     }
 }

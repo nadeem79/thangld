@@ -22,6 +22,7 @@ namespace beans
         private int wood;
         private int clay;
         private int iron;
+        private MoveType type;
         
         #endregion
 
@@ -105,6 +106,11 @@ namespace beans
             {
                 return MoveType.Return;
             }
+            set
+            {
+                if (value != MoveType.Return)
+                    throw new ArgumentException("Đây là lệnh rút quân");
+            }
         }
         #endregion
 
@@ -118,20 +124,20 @@ namespace beans
 
         #region Methods
 
-        public override void effect(Village village, ISession session)
+        public override void effect(ISession session)
         {
-            village.Spear += this.Spear;
-            village.Sword += this.Sword;
-            village.Axe += this.Axe;
-            village.Scout += this.Scout;
-            village.Light += this.Light;
-            village.Heavy += this.Heavy;
-            village.Ram += this.Ram;
-            village.Catapult += this.Catapult;
-            village.Noble += this.Noble;
-            village.Clay += this.Clay;
-            village.Wood += this.Wood;
-            village.Iron += this.Iron;
+            this.To.Spear += this.Spear;
+            this.To.Sword += this.Sword;
+            this.To.Axe += this.Axe;
+            this.To.Scout += this.Scout;
+            this.To.Light += this.Light;
+            this.To.Heavy += this.Heavy;
+            this.To.Ram += this.Ram;
+            this.To.Catapult += this.Catapult;
+            this.To.Noble += this.Noble;
+            this.To.Clay += this.Clay;
+            this.To.Wood += this.Wood;
+            this.To.Iron += this.Iron;
         }
 
         #endregion

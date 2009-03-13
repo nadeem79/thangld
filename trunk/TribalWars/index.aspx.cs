@@ -61,7 +61,7 @@ public partial class index : System.Web.UI.Page
 
     protected void login_Click(object sender, ImageClickEventArgs e)
     {
-        ISession session = NHibernateHelper.SessionFactory.OpenSession();
+        ISession session = NHibernateHelper.CreateSession();
         try
         {
             int id = beans.User.Authentication(this.username.Text, this.password.Text, session);
@@ -72,7 +72,7 @@ public partial class index : System.Web.UI.Page
             }
             else
             {
-                Session.Add("username", this.username.Text);
+                Session.Add("user", id);
                 Response.Redirect("overview.aspx", true);
             }
         }

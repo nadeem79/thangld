@@ -226,6 +226,7 @@ namespace beans
                     price = Recruit.Noble;
                     break;
                 default:
+                    break;
                     
             }
 

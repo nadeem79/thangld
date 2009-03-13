@@ -172,8 +172,24 @@ namespace beans
 
         public void Update(DateTime time, ISession session)
         {
+            if (this.Villages.Count == 0)
+            {
+                Village village = Village.CreateVillage(session);
+                village.Owner = this;
+                this.Villages.Add(village);
+                village.LastUpdate = time;
+                session.Save(village);
+            }
             foreach (Village village in this.Villages)
                 village.Update(time, session);
+        }
+
+        public virtual Village GetVillage(int ID)
+        {
+            foreach (Village village in this.Villages)
+                if (village.ID == ID)
+                    return village;
+            return null;
         }
 
         #endregion

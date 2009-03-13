@@ -198,12 +198,7 @@
     </form>
     
     <script language="javascript" type="text/javascript">
-        var woodProduction  = <% Response.Write(Resource.SecondPerUnit((int)village["timbercamp"])); %>*1000;
-        var woodID = '<% Response.Write(this.wood.ClientID); %>';
-        var clayProduction  = <% Response.Write(Resource.SecondPerUnit((int)village["claypit"])); %>*1000;
-        var clayID = '<% Response.Write(this.clay.ClientID); %>';
-        var ironProduction  = <% Response.Write(Resource.SecondPerUnit((int)village["ironmine"])); %>*1000;
-        var ironID = '<% Response.Write(this.iron.ClientID); %>';
+        
         
         setTimeout("production('" + clayID + "', " + clayProduction + ");", clayProduction);
         setTimeout("production('" + woodID + "', " + woodProduction + ");", woodProduction);

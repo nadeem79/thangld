@@ -20,6 +20,7 @@ namespace beans
         private int ramSent;
         private int catapultSent;
         private int nobleSent;
+        private MoveType type;
         #endregion
 
         #region Properties
@@ -83,6 +84,11 @@ namespace beans
             get
             {
                 return MoveType.Support;
+            }
+            set
+            {
+                if (value != MoveType.Support)
+                    throw new ArgumentException("Đây là lệnh support");
             }
         }
         #endregion
