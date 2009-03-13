@@ -12,6 +12,7 @@
     <many-to-one name="To" class="beans.Village, beans" column="[to]" not-null="true" />
     <property name="StartTime" column="starting_time" type="timestamp"/>
     <property name="LandingTime" column="landing_time" type="timestamp"/>
+    <property name="Type" column="type" type="beans.MoveType, beans" />
 
     <subclass discriminator-value="2" name="beans.Attack, beans" lazy="false">
       <property name="Building" column="building" type="beans.BuildingType, beans" />

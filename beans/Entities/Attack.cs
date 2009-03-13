@@ -21,6 +21,7 @@ namespace beans
         private int ramSent;
         private int catapultSent;
         private int nobleSent;
+        private MoveType type;
         
         #endregion
 
@@ -91,6 +92,11 @@ namespace beans
             get
             {
                 return MoveType.Attack;
+            }
+            set
+            {
+                if (value != MoveType.Attack)
+                    throw new ArgumentException("Đây là lệnh tấn công");
             }
         }
 
@@ -289,7 +295,7 @@ namespace beans
                 this.To.Catapult = (int)Math.Round(this.To.Catapult * ratio);
                 this.To.Noble = (int)Math.Round(this.To.Noble * ratio);
 
-                foreach (Stationed station in village.StationedTroops)
+                foreach (Stationed station in this.To.StationedTroops)
                 {
 
                     station.Spear = (int)Math.Round(station.Spear * ratio);

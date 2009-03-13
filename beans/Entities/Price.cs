@@ -5,7 +5,7 @@ using System.Text;
 
 namespace beans
 {
-    protected class Price
+    public class Price
     {
         int wood, iron, clay;
         int time;

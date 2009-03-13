@@ -11,98 +11,63 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using System.Data.SqlClient;
+using NHibernate;
+using beans;
+using NHibernate.Criterion;
 
 public partial class rally : System.Web.UI.Page
 {
-    SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["tw"].ConnectionString);
-    DataRow village;
+    
+    beans.Village village;
     
     protected void Page_Load(object sender, EventArgs e)
     {
         inPage p = (inPage)this.Master;
-        string sID = Request["id"];
-        int id = int.Parse(sID);
-        village = p.village;
-        this.lblSpear.Text = village["spear"].ToString();
-        this.lblSword.Text = village["sword"].ToString();
-        this.lblAxe.Text = village["axe"].ToString();
-        this.lblScout.Text = village["scout"].ToString();
-        this.lblLight.Text = village["light"].ToString();
-        this.lblHeavy.Text = village["heavy"].ToString();
-        this.lblRam.Text = village["ram"].ToString();
-        this.lblCatapult.Text = village["catapult"].ToString();
-        this.lblNoble.Text = village["noble"].ToString();
-
-        DataSet ds = new DataSet();
-
-        SqlCommand cmdGetOutwardCommand = conn.CreateCommand();
-        cmdGetOutwardCommand.CommandText = "select m.id as mid, m.type, m.landing_time, m.[to], v.name, v.x, v.y, v.id as vid from movement m inner join villages v on (m.[to]=v.id) where m.landing_time>getdate() and m.[from]=@id order by landing_time asc";
-        cmdGetOutwardCommand.Parameters.Add("@id", SqlDbType.Int).Value = id;
-        SqlDataAdapter daOutward = new SqlDataAdapter(cmdGetOutwardCommand);
+        village = p.CurrentVillage;
         
-        SqlCommand cmdGetInwardCommand = conn.CreateCommand();
-        cmdGetInwardCommand.CommandText = "select m.id as mid, m.type, m.landing_time, m.[from], v.name, v.x, v.y, v.id as vid from movement m inner join villages v on (m.[from]=v.id) where m.landing_time>getdate() and m.[to]=@id order by landing_time asc";
-        cmdGetInwardCommand.Parameters.Add("@id", SqlDbType.Int).Value = id;
-        SqlDataAdapter daInward = new SqlDataAdapter(cmdGetInwardCommand);
+        this.lblSpear.Text = village.TotalSpear.ToString();
+        this.lblSword.Text = village.TotalSword.ToString();
+        this.lblAxe.Text = village.TotalAxe.ToString();
+        this.lblScout.Text = village.TotalScout.ToString();
+        this.lblLight.Text = village.TotalLight.ToString();
+        this.lblHeavy.Text = village.TotalHeavy.ToString();
+        this.lblRam.Text = village.TotalRam.ToString();
+        this.lblCatapult.Text = village.TotalCatapult.ToString();
+        this.lblNoble.Text = village.TotalNoble.ToString();
 
-        daInward.Fill(ds, "inwards");
-        daOutward.Fill(ds, "outwards");
+        ISession session = NHibernateHelper.CreateSession();
 
         string sOutwardsCommand = "";
-        string sInwardsCommand = "";
-
-        foreach (DataRow row in ds.Tables["outwards"].Rows)
+        foreach (MovingCommand outgoing in this.village.Outgoings)
         {
-            int command_type = (int)row["type"];
-            if (command_type == 2)
-            {
-                sOutwardsCommand += "<tr><td><a href='command.aspx?id=" + sID + "&command=" + row["mid"].ToString() + "'>";
+            sOutwardsCommand += "<tr><td><a href='command.aspx?id=" + this.village.ID.ToString() + "&command=" + outgoing.ID.ToString() + "'>";
+            if (outgoing.Type==MoveType.Attack)
                 sOutwardsCommand += "<img src='images/attack.png'/>Tấn công làng ";
-                sOutwardsCommand += row["name"].ToString() + " (" + row["x"].ToString() + "|" + row["y"].ToString() + ")</td>";
-                sOutwardsCommand += "<td>" + row["landing_time"] + "</td>";
-                sOutwardsCommand += "<td><span class='timer'>" + Functions.FormatTime((DateTime)row["landing_time"] - DateTime.Now) + "</span></td></tr>";
-            }
-            else if (command_type == 3)
-            {
-                sOutwardsCommand += "<tr><td><a href='command.aspx?id=" + sID + "&command=" + row["mid"].ToString() + "'>";
+            else if (outgoing.Type==MoveType.Support)
                 sOutwardsCommand += "<img src='images/support.png'/>Hỗ trợ làng ";
-                sOutwardsCommand += row["name"].ToString() + " (" + row["x"].ToString() + "|" + row["y"].ToString() + ")</td>";
-                sOutwardsCommand += "<td>" + row["landing_time"] + "</td>";
-                sOutwardsCommand += "<td><span class='timer'>" + Functions.FormatTime((DateTime)row["landing_time"] - DateTime.Now) + "</span></td></tr>";
-            }
+            sOutwardsCommand += outgoing.To.Name + " (" + outgoing.To.X.ToString() + "|" + outgoing.To.Y.ToString() + ")</td>";
+            sOutwardsCommand += "<td>" + outgoing.LandingTime.ToString() + "</td>";
+            sOutwardsCommand += "<td><span class='timer'>" + Functions.FormatTime(outgoing.LandingTime - DateTime.Now) + "</span></td></tr>";
         }
-        foreach (DataRow row in ds.Tables["inwards"].Rows)
+
+        string sInwardsCommand = "";
+        foreach (MovingCommand incoming in this.village.Incomings)
         {
-            int command_type = (int)row["type"];
-            if (command_type == 2)
-            {
-                sInwardsCommand += "<tr><td><a href='command.aspx?id=" + sID + "&command=" + row["mid"].ToString() + "'>";
+            sInwardsCommand += "<tr><td><a href='command.aspx?id=" + this.village.ID.ToString() + "&command=" + outgoing.ID.ToString() + "'>";
+            if (incoming.Type == MoveType.Attack)
                 sInwardsCommand += "<img src='images/attack.png'/>Tấn công từ ";
-                sInwardsCommand += row["name"].ToString() + " (" + row["x"].ToString() + "|" + row["y"].ToString() + ")</td>";
-                sInwardsCommand += "<td>" + row["landing_time"] + "</td>";
-                sInwardsCommand += "<td><span class='timer'>" + Functions.FormatTime((DateTime)row["landing_time"] - DateTime.Now) + "</span></td></tr>";
-            }
-            else if (command_type == 3)
-            {
-                sInwardsCommand += "<tr><td><a href='command.aspx?id=" + sID + "&command=" + row["mid"].ToString() + "'>";
+            else if (incoming.Type == MoveType.Support)
                 sInwardsCommand += "<img src='images/support.png'/>Hỗ trợ từ ";
-                sInwardsCommand += row["name"].ToString() + " (" + row["x"].ToString() + "|" + row["y"].ToString() + ")</td>";
-                sInwardsCommand += "<td>" + row["landing_time"] + "</td>";
-                sInwardsCommand += "<td><span class='timer'>" + Functions.FormatTime((DateTime)row["landing_time"] - DateTime.Now) + "</span></td></tr>";
-            }
-            else if (command_type == 4)
-            {
-                sInwardsCommand += "<tr><td><a href='command.aspx?id=" + sID + "&command=" + row["mid"].ToString() + "'>";
+            else if (incoming.Type == MoveType.Return)
                 sInwardsCommand += "<img src='images/back.png'/>Quay về từ ";
-                sInwardsCommand += row["name"].ToString() + " (" + row["x"].ToString() + "|" + row["y"].ToString() + ")</td>";
-                sInwardsCommand += "<td>" + row["landing_time"] + "</td>";
-                sInwardsCommand += "<td><span class='timer'>" + Functions.FormatTime((DateTime)row["landing_time"] - DateTime.Now) + "</span></td></tr>";
-            }
+            sInwardsCommand += incoming.To.Name + " (" + incoming.From.X.ToString() + "|" + incoming.From.Y.ToString() + ")</td>";
+            sInwardsCommand += "<td>" + incoming.LandingTime.ToString() + "</td>";
+            sInwardsCommand += "<td><span class='timer'>" + Functions.FormatTime(incoming.LandingTime - DateTime.Now) + "</span></td></tr>";
         }
 
         this.lblOutwardsCommand.Text = sOutwardsCommand;
         this.lblInwardsCommand.Text = sInwardsCommand;
-        this.rally_link.NavigateUrl = "rally.aspx?id=" + sID;
+        this.rally_link.NavigateUrl = "rally.aspx?id=" + this.village.ID;
 
         if (IsPostBack)
             return;
@@ -116,26 +81,15 @@ public partial class rally : System.Web.UI.Page
         }
         else
         {
-            SqlCommand cmdGetVillageCoord = conn.CreateCommand();
-            cmdGetVillageCoord.CommandText = "select x, y from villages where id=@id";
-            cmdGetVillageCoord.Parameters.Add("@id", SqlDbType.Int).Value = target;
-            this.conn.Open();
-            SqlDataReader rdr = cmdGetVillageCoord.ExecuteReader();
-            if (rdr.Read())
+            beans.Village targetVillage = session.Load<beans.Village>(target);
+            if (target != null)
             {
-                this.x.Text = rdr["x"].ToString();
-                this.y.Text = rdr["y"].ToString();
+                this.x.Text = targetVillage.X.ToString();
+                this.y.Text = targetVillage.Y.ToString();
             }
-            else
-            {
-                this.x.Text = "";
-                this.y.Text = "";
-            }
-            rdr.Close();
-            this.conn.Close();
         }
-        
 
+        session.Close();
         
     }
     

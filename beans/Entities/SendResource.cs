@@ -11,6 +11,7 @@ namespace beans
         #region Variables
         
         private int iron, clay, wood;
+        private MoveType type;
         
         #endregion
 
@@ -40,6 +41,11 @@ namespace beans
             get
             {
                 return MoveType.SendResources;
+            }
+            set
+            {
+                if (value != MoveType.SendResources)
+                    throw new ArgumentException("Đây là lệnh gửi tài nguyên");
             }
         }
         #endregion

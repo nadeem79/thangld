@@ -33,7 +33,7 @@ namespace beans
         public override int GetHashCode()
         {
             return this.ID;
-        }
+        } 
 
         public override bool Equals(object obj)
         {

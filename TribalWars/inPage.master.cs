@@ -12,14 +12,16 @@ using System.Web.UI.HtmlControls;
 using System.Xml.Linq;
 using System.Data.SqlClient;
 using NHibernate;
+using beans;
+using System.Collections.Generic;
 
 public partial class inPage : System.Web.UI.MasterPage
 {
 
     public SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["tw"].ConnectionString);
     public DataRow village1;
-    private Village village = null;
-    public Village CurrentVillage
+    private beans.Village village = null;
+    public beans.Village CurrentVillage
     {
         get
         {
@@ -36,122 +38,69 @@ public partial class inPage : System.Web.UI.MasterPage
     {
 
         DateTime start = DateTime.Now;
-        int count = 0;
-
+        int id;
+        ISession session;
+        ITransaction trans;
         if (object.Equals(Session["user"], null))
         {
             Response.Redirect("index.aspx", true);
             return;
         }
 
+        session = NHibernateHelper.CreateSession();
 
-        int id;
-        ISession session = NHibernateHelper.CreateSession();
-        
 
-        beans.User user = session.Load<beans.User>((int)Session["user"]);
-        if (user == null)
+        beans.User currentUser = session.Load<beans.User>((int)Session["user"]);
+        if (currentUser == null)
         {
             session.Close();
             Response.Redirect("index.aspx", true);
         }
 
+        trans = session.BeginTransaction();
+        currentUser.Update(DateTime.Now, session);
+        
+        
+        
         if (object.Equals(Request["id"], null) || (!int.TryParse(Request["id"], out id)))
+            this.village = currentUser.Villages[0];
+        else
+            this.village = currentUser.GetVillage(id);
+
+        if (this.village == null)
+            this.village = currentUser.Villages[0];
+
+        this.lblCoord.Text = this.village.X.ToString() + "|" + this.village.Y.ToString();
+        this.currentVillage.Text = this.village.Name;
+        this.currentVillage.NavigateUrl = "village.aspx?id=" + this.village.ID.ToString();
+
+        this.wood.Text = this.village.Wood.ToString();
+        this.clay.Text = this.village.Clay.ToString();
+        this.iron.Text = this.village.Iron.ToString();
+        this.iron_url.NavigateUrl = "iron.aspx?id=" + this.village.ID.ToString();
+        this.clay_url.NavigateUrl = "clay.aspx?id=" + this.village.ID.ToString();
+        this.wood_url.NavigateUrl = "wood.aspx?id=" + this.village.ID.ToString();
+        this.lblReport.NavigateUrl = "list_report.aspx?id=" + this.village.ID.ToString();
+        this.map.NavigateUrl = "map.aspx?id=" + this.village.ID.ToString();
+
+        this.resource.Text = this.village.MaxResources.ToString();
+        this.pop.Text = this.village.MaxPopulation.ToString();
+        this.res_url.NavigateUrl = "resource.aspx?id=" + this.village.ID.ToString();
+        this.pop_url.NavigateUrl = "population.aspx?id=" + this.village.ID.ToString();
+
+        int incomingAttackCount = village.GetIncomingAttackCount(session);
+        int incomingSupportCount = village.GetIncomingSupportCount(session);
+
+        if (incomingAttackCount > 0)
         {
-            
-            
-
-            SqlCommand cmdGetFirstVillage = conn.CreateCommand();
-            cmdGetFirstVillage.CommandText = "select top 1 id from villages where userid=@userid";
-            cmdGetFirstVillage.Parameters.Add("@userid", SqlDbType.NVarChar, 200).Value = (string)Session["username"];
-            id = (int)cmdGetFirstVillage.ExecuteScalar();
-            conn.Close();
-            Response.Redirect("village.aspx?id=" + id, true);
-            return;
-        }
-
-        conn.Open();
-
-        SqlCommand cmdCheckVillage = conn.CreateCommand();
-        cmdCheckVillage.CommandText = "select count(id) from villages where userid=@userid";
-        cmdCheckVillage.Parameters.Add("@userid", SqlDbType.NVarChar, 200).Value = (string)Session["username"];
-
-        count = (int)cmdCheckVillage.ExecuteScalar();
-
-        if (count == 0)
-        {
-            Decimal dVillageID = Map.CreateVillage((string)Session["username"]);
-            conn.Close();
-            Response.Redirect("village.aspx?id=" + dVillageID.ToString(), true);
-            return;
-        }
-
-        int id;
-        if (object.Equals(Request["id"], null) || (!int.TryParse(Request["id"], out id)))
-        {
-            SqlCommand cmdGetFirstVillage = conn.CreateCommand();
-            cmdGetFirstVillage.CommandText = "select top 1 id from villages where userid=@userid";
-            cmdGetFirstVillage.Parameters.Add("@userid", SqlDbType.NVarChar, 200).Value = (string)Session["username"];
-            id = (int)cmdGetFirstVillage.ExecuteScalar();
-            conn.Close();
-            Response.Redirect("village.aspx?id=" + id, true);
-            return;
-        }
-
-        SqlCommand cmdCheckOwner = conn.CreateCommand();
-        cmdCheckOwner.CommandText = "select count(*) from villages where userid=@userid and id=@id";
-        cmdCheckOwner.Parameters.Add("@userid", SqlDbType.NVarChar, 200).Value = (string)Session["username"];
-        cmdCheckOwner.Parameters.Add("@id", SqlDbType.Int).Value = id;
-
-        count = (int)cmdCheckOwner.ExecuteScalar();
-        if (count == 0)
-        {
-            SqlCommand cmdGetFirstVillage = conn.CreateCommand();
-            cmdGetFirstVillage.CommandText = "select top 1 id from villages where userid=@userid";
-            cmdGetFirstVillage.Parameters.Add("@userid", SqlDbType.NVarChar, 200).Value = (string)Session["username"];
-            id = (int)cmdGetFirstVillage.ExecuteScalar();
-            conn.Close();
-            Response.Redirect("village.aspx?id=" + id, true);
-            return;
-        }
-
-        this.village1 = Village.refresh(id, start);
-
-        SqlCommand cmdGetAttackCount = conn.CreateCommand();
-        cmdGetAttackCount.CommandText = "select count(*) from movement where landing_time>=@landing_time and [to]=@id and type=2";
-        cmdGetAttackCount.Parameters.Add("@id", SqlDbType.Int).Value = id;
-        cmdGetAttackCount.Parameters.Add("@landing_time", SqlDbType.DateTime).Value = start;
-
-        int attack_count = (int)cmdGetAttackCount.ExecuteScalar();
-
-        conn.Close();
-
-        this.lblCoord.Text = this.village1["x"].ToString() + "|" + this.village1["y"].ToString();
-        this.currentVillage.Text = (string)this.village1["name"];
-        this.currentVillage.NavigateUrl = "village.aspx?id=" + id.ToString();
-
-        this.wood.Text = this.village1["wood"].ToString();
-        this.clay.Text = this.village1["clay"].ToString();
-        this.iron.Text = this.village1["iron"].ToString();
-        this.iron_url.NavigateUrl = "iron.aspx?id=" + id.ToString();
-        this.clay_url.NavigateUrl = "clay.aspx?id=" + id.ToString();
-        this.wood_url.NavigateUrl = "wood.aspx?id=" + id.ToString();
-        this.lblReport.NavigateUrl = "list_report.aspx?id=" + id.ToString();
-        this.map.NavigateUrl = "map.aspx?id=" + id.ToString();
-
-        this.resource.Text = Village.getMaxResource((int)this.village1["storage"]).ToString();
-        this.pop.Text = Village.getMaxPopulation((int)this.village1["farm"]).ToString();
-        this.res_url.NavigateUrl = "resource.aspx?id=" + id.ToString();
-        this.pop_url.NavigateUrl = "population.aspx?id=" + id.ToString();
-
-        if (attack_count > 0)
-        {
-            this.incoming.Text = "<td><table class='navi-border' style='margin: auto; border-collapse: collapse;'><tbody><tr><td><table class='box' cellspacing='0'><tbody><tr><td align='center' height='20' width='60'><img src='images/att.png' alt=''/> (" + attack_count.ToString() + ")</td></tr></tbody></table></td></tr></tbody></table></td>";
+            this.incoming.Text = "<td><table class='navi-border' style='margin: auto; border-collapse: collapse;'><tbody><tr><td><table class='box' cellspacing='0'><tbody><tr><td align='center' height='20' width='60'><img src='images/att.png' alt=''/> (" + incoming.Count.ToString() + ")</td></tr></tbody></table></td></tr></tbody></table></td>";
         }
 
         DateTime stop = DateTime.Now;
         this.delay.Text = (stop - start).Milliseconds.ToString();
         this.time.Text = start.ToString("dd/MM/yyyy hh:mm:ss");
+        trans.Commit();
+        session.Close();
     }
 
     protected void Page_Load(object sender, EventArgs e)

@@ -37,12 +37,12 @@ public partial class Default2 : System.Web.UI.Page
         NHibernate.ISession session = null;
         try
         {
-            session = NHibernateHelper.CreateSession;
+            session = NHibernateHelper.CreateSession();
             ITransaction trans = session.BeginTransaction();
             session.Save(user);
             trans.Commit();
             Session.RemoveAll();
-            Session.Add("username", user.Username);
+            Session.Add("user", user.ID);
             Response.Redirect("overview.aspx", true);
         }
         catch (Exception exc)

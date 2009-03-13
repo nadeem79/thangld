@@ -40,6 +40,7 @@ namespace beans
         public abstract MoveType Type
         {
             get;
+            set;
         }
 
         public abstract void effect(ISession session);
