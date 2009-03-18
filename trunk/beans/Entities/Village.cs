@@ -580,10 +580,7 @@ namespace beans
         #region Constructors
         public Village() 
         {
-            this.attacks = new List<Attack>();
-            this.supports = new List<Support>();
             this.sendings = new List<SendResource>();
-            this.returnings = new List<SendResource>();
             this.offers = new List<Offer>();
         }
 

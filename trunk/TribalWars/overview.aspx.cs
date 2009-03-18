@@ -11,13 +11,15 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using System.Data.SqlClient;
+using beans;
 
 public partial class overview : System.Web.UI.Page
 {
-    //SqlConnection conn = ((inPage)(Master)).conn;
-    
+    Village village;
+
+
     protected void Page_Load(object sender, EventArgs e)
     {
-        //SqlCommand cmdCheckVillageCount = 
+        
     }
 }
