@@ -12,14 +12,23 @@ using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using System.Data.SqlClient;
 using beans;
+using NHibernate;
 
 public partial class overview : System.Web.UI.Page
 {
-    Village village;
-
+    protected Village village;
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        
+        village = ((inPage)this.Master).CurrentVillage;
+        ISession session = NHibernateHelper.CreateSession();
+        beans.User user = session.Load<beans.User>(Session["user"]);
+        if (user.GetVillageCount(session) <= 1)
+        {
+            session.Close();
+            Response.Redirect("village.aspx", true);
+        }
+        System.Collections.Generic.IList<Village> v = user.Villages;
+        session.Close();
     }
 }

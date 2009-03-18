@@ -11,7 +11,7 @@ namespace beans
         #region Variables
         
         private BuildingType building;
-
+        
         private int scoutSent;
         private int spearSent;
         private int swordSent;

@@ -18,12 +18,12 @@ namespace beans
 
         public static bool operator ==(IdentityObject lhs, IdentityObject rhs)
         {
+            if (object.Equals(null, lhs) && !object.Equals(null, rhs))
+                return false;
+            if (object.Equals(null, rhs) && !object.Equals(null, lhs))
+                return false;
             if (object.Equals(lhs, rhs))
                 return true;
-            if (object.Equals(lhs, null) && !object.Equals(rhs, null))
-                return false;
-            if (object.Equals(rhs, null) && !object.Equals(lhs, null))
-                return false;
             return (lhs.ID == rhs.ID);
         }
 

@@ -184,12 +184,26 @@ namespace beans
                 village.Update(time, session);
         }
 
-        public virtual Village GetVillage(int ID)
+        public virtual Village GetVillage(int ID, ISession session)
         {
-            foreach (Village village in this.Villages)
-                if (village.ID == ID)
-                    return village;
-            return null;
+            ICriteria criteria = session.CreateCriteria(typeof(Village));
+            criteria.Add(Expression.Eq("Owner", this));
+            criteria.Add(Expression.Eq("ID", ID));
+            IList<Village> list = criteria.List<Village>();
+            if (list.Count == 0)
+                return null;
+            return list[0];
+        }
+
+        public virtual int GetVillageCount(ISession session)
+        {
+            IQuery query = session.CreateQuery("select count(v.ID) from Village v where v.Owner.ID=:userID");
+            query.SetInt32("userID", this.ID);
+            IList lst = query.List();
+            if (lst.Count == 0)
+                return 0;
+            Int64 i = (long)lst[0];
+            return (Int32)i;
         }
 
         #endregion
