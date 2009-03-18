@@ -111,19 +111,22 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mapping\MovingCommand.hbm.xml" />
     <EmbeddedResource Include="Mapping\Build.hbm.xml" />
     <EmbeddedResource Include="Mapping\Group.hbm.xml" />
+    <EmbeddedResource Include="Mapping\MovingCommand.hbm.xml" />
     <EmbeddedResource Include="Mapping\Offer.hbm.xml" />
     <EmbeddedResource Include="Mapping\Recruit.hbm.xml" />
-    <EmbeddedResource Include="Mapping\Stationed.hbm.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Mapping\Report.hbm.xml" />
+    <EmbeddedResource Include="Mapping\Stationed.hbm.xml" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Mapping\SendResource.hbm.xml" />
+    <Content Include="Mapping\Support.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

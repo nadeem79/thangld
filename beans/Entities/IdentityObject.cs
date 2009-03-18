@@ -20,6 +20,10 @@ namespace beans
         {
             if (object.Equals(lhs, rhs))
                 return true;
+            if (object.Equals(lhs, null) && !object.Equals(rhs, null))
+                return false;
+            if (object.Equals(rhs, null) && !object.Equals(lhs, null))
+                return false;
             return (lhs.ID == rhs.ID);
         }
 

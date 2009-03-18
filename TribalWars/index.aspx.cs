@@ -22,40 +22,6 @@ public partial class index : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         
-        //ISession session = NHibernateHelper.SessionFactory.OpenSession();
-        //ITransaction trans = session.BeginTransaction();
-        //User u = session.Load<User>(1);
-        //u.Villages[0].LastUpdate = DateTime.Now.AddDays(-1);
-        //this.error.Text = u.Villages[0].LastUpdate.Millisecond.ToString();
-        //session.Save(u.Villages[0]);
-        //session.Save(u);
-        //trans.Commit();
-        //ISession session = NHibernateHelper.SessionFactory.OpenSession();
-
-        //IQuery query = session.CreateQuery("select count(*) from Village as v where v.Owner = (from User where Username=:username)");
-        //query.SetString("username", "drea");
-        //IList result = query.List();
-        //this.error.Text = result[0].ToString();
-        //this.error.Text = session.CacheMode.ToString();
-        //session.Close();
-
-        //ISession session = NHibernateHelper.SessionFactory.OpenSession();
-        //beans.User user = session.Load<beans.User>(2);
-
-        //ICriteria criteria = session.CreateCriteria(typeof(beans.Village));
-        //criteria.Add(Expression.Eq("Owner", user));
-        //IList<beans.Village> lst = criteria.List<beans.Village>();
-        //beans.Village v = lst[0];
-        //v.Owner.Username = "hahahahaa";
-
-        //this.error.Text = user.Username;
-        ISession session = NHibernateHelper.CreateSession();
-
-        IQuery query = session.CreateQuery("select ID from User as user where user.Username=:username");
-        query.SetString("username", "drea");
-        this.error.Text = ((int)query.List()[0]).ToString();
-        
-        
         
     }
 

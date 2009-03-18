@@ -49,8 +49,9 @@ public partial class inPage : System.Web.UI.MasterPage
 
         session = NHibernateHelper.CreateSession();
 
-
+        
         beans.User currentUser = session.Load<beans.User>((int)Session["user"]);
+        
         if (currentUser == null)
         {
             session.Close();
@@ -91,10 +92,7 @@ public partial class inPage : System.Web.UI.MasterPage
         int incomingAttackCount = village.GetIncomingAttackCount(session);
         int incomingSupportCount = village.GetIncomingSupportCount(session);
 
-        if (incomingAttackCount > 0)
-        {
-            this.incoming.Text = "<td><table class='navi-border' style='margin: auto; border-collapse: collapse;'><tbody><tr><td><table class='box' cellspacing='0'><tbody><tr><td align='center' height='20' width='60'><img src='images/att.png' alt=''/> (" + incoming.Count.ToString() + ")</td></tr></tbody></table></td></tr></tbody></table></td>";
-        }
+        
 
         DateTime stop = DateTime.Now;
         this.delay.Text = (stop - start).Milliseconds.ToString();

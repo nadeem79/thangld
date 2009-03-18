@@ -160,7 +160,7 @@ namespace beans
             //writer.Flush();
             //password = Convert.ToBase64String(memoryStream.GetBuffer(), 0, (int)memoryStream.Length);
 
-            IQuery query = session.CreateQuery("select ID from User as user where user.Username=:username and user.Password=:password");
+            IQuery query = session.CreateQuery("select user.ID from User as user where user.Username=:username and user.Password=:password");
             query.SetString("username", username);
             query.SetString("password", password);
             return ((int)query.List()[0]);

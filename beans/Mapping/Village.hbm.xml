@@ -40,24 +40,6 @@
     <property name="Clay" column="clay" type="Int32" />
     <property name="Wood" column="wood" type="Int32" />
     <property name="Iron" column="iron" type="Int32" />
-    <bag name="StationedTroops" table="stationed" cascade="all" fetch="join" inverse="true" lazy="false">
-      <key column="at_village" />
-      <one-to-many class="beans.Stationed, beans"/>
-    </bag>
-    <bag name="TroopsOutside" table="stationed" cascade="all" fetch="join" inverse="true" lazy="true">
-      <key column="from_village" />
-      <one-to-many class="beans.Stationed, beans"/>
-    </bag>
-    <bag name="Incomings" table="movement" cascade="all" fetch="join" inverse="true" lazy="true">
-      <key column="[to]" />
-      <one-to-many class="MovingCommand"/>
-      <filter condition="landing_time &gt getdate() and (type=2 or type=3 or type=4)" name="DependingIncome"></filter>
-    </bag>
-    <bag name="Outgoings" table="movement" cascade="all" fetch="join" inverse="true" lazy="true">
-      <key column="[from]" />
-      <one-to-many class="MovingCommand"/>
-      <filter condition="landing_time &gt getdate() and (type=2 or type=3)" name="DependingIncome"></filter>
-    </bag>
     
   </class>
 
