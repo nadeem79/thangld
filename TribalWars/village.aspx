@@ -4,6 +4,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <span id="test"></span>
     <h2>
         Village overview <asp:Label ID="name" runat="server"></asp:Label></h2>
     <table>
