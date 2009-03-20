@@ -17,6 +17,7 @@
 
 </head>
 <body>
+    <span id="test" name="test"></span>
     <form id="form1" runat="server">
     <div class="top_background">
     </div>
@@ -50,7 +51,7 @@
                                 <a href="/game.php?village=51549&amp;screen=ally">Tribe</a>
                             </td>
                             <td>
-                                <asp:HyperLink ID="lblReport" runat="server">Thông báo</asp:HyperLink>
+                                <a href="report.aspx?id=<% Response.Write(this.CurrentVillage.ID.ToString()); %>">Thông báo</a>
                             </td>
                             <td>
                                 <a href="/game.php?village=51549&amp;screen=mail">Mail</a>
@@ -101,19 +102,19 @@
                                         <a href="wood.aspx?id=<% Response.Write(this.CurrentVillage.ID.ToString()); %>"><img src="images/holz.png" /></a>
                                     </td>
                                     <td>
-                                        <span id="wood" name="wood></span><% Response.Write(this.CurrentVillage.Wood.ToString()); %></span>
+                                        <span id="wood" name="wood"></span><% Response.Write(this.CurrentVillage.Wood.ToString()); %></span>
                                     </td>
                                     <td>
                                         <a href="clay.aspx?id=<% Response.Write(this.CurrentVillage.ID.ToString()); %>"><img src="images/lehm.png" /></a>
                                     </td>
                                     <td>
-                                        <span id="clay" name="clay><% Response.Write(this.CurrentVillage.Clay.ToString()); %></span>
+                                        <span id="clay" name="clay"><% Response.Write(this.CurrentVillage.Clay.ToString()); %></span>
                                     </td>
                                     <td>
                                         <a href="clay.aspx?id=<% Response.Write(this.CurrentVillage.ID.ToString()); %>"><img src="images/eisen.png" /></a>
                                     </td>
                                     <td>
-                                        <span id="iron" name="iron><% Response.Write(this.CurrentVillage.Iron.ToString()); %></span>
+                                        <span id="iron" name="iron"><% Response.Write(this.CurrentVillage.Iron.ToString()); %></span>
                                     </td>
                                     <td style="border-left: dotted 1px;">
                                         <a href="resources.aspx?id=<% Response.Write(this.CurrentVillage.ID.ToString()); %>"><img src="images/res.png" /></a>
@@ -192,10 +193,10 @@
     </form>
     <script language="javascript" type="text/javascript">
         production("clay", <% Response.Write(this.CurrentVillage.SecondPerResourceUnit(beans.ResourcesType.Clay)); %>);
-        production("wood", <% Response.Write(this.CurrentVillage.SecondPerResourceUnit(beans.ResourcesType.Wood)); %>);
-        production("iron", <% Response.Write(this.CurrentVillage.SecondPerResourceUnit(beans.ResourcesType.Iron)); %>);
+        //production("wood", <% Response.Write(this.CurrentVillage.SecondPerResourceUnit(beans.ResourcesType.Wood)); %>);
+        //production("iron", <% Response.Write(this.CurrentVillage.SecondPerResourceUnit(beans.ResourcesType.Iron)); %>);
 
-        attackTimer();
+        //attackTimer();
     </script>
 </body>
 </html>

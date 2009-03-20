@@ -1,9 +1,11 @@
-function production(element, timeout)
+function production(element, timeout) 
 {
     var quantity = $("#" + element).html();
     quantity++;
     $("#" + element).html(quantity);
-    setTimeout("production('" + element + "', " + timeout + ")", timeout);
+    var str = "production('" + element + "', " + timeout + ")";
+    $("#test").html(str);
+    setTimeout(str, timeout);
 }
 
 function attackTimer()
