@@ -1,11 +1,10 @@
-function production(element, timeout) 
+function production(element, timeout)
 {
     var quantity = $("#" + element).html();
     quantity++;
+    
     $("#" + element).html(quantity);
-    var str = "production('" + element + "', " + timeout + ")";
-    $("#test").html(str);
-    setTimeout(str, timeout);
+    setTimeout("production('" + element + "', " + timeout + ")", timeout);
 }
 
 function attackTimer()
@@ -32,7 +31,20 @@ function attackTimer()
             {
                 history.go(0);
             }
+            if (second==0&&minute==0&&hour==0)
+                history.go(0);
             $(this).html(hour + ":" + minute + ":" + second);
         });
         setTimeout("attackTimer()", 1000);
+}
+
+function insertUnit(element, value)
+{
+    var quantity = $("#" + element).val();
+    quantity += 0;
+    
+    if (quantity==0)
+        $("#" + element).val(value);
+    else
+        $("#" + element).val("0");
 }
