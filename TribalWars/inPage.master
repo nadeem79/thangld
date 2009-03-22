@@ -17,7 +17,6 @@
 
 </head>
 <body>
-    <span id="test" name="test"></span>
     <form id="form1" runat="server">
     <div class="top_background">
     </div>
@@ -51,13 +50,13 @@
                                 <a href="/game.php?village=51549&amp;screen=ally">Tribe</a>
                             </td>
                             <td>
-                                <a href="report.aspx?id=<% Response.Write(this.CurrentVillage.ID.ToString()); %>">Thông báo</a>
+                                <a href="list_report.aspx?id=<% Response.Write(this.CurrentVillage.ID.ToString()); %>">Thông báo</a>
                             </td>
                             <td>
-                                <a href="/game.php?village=51549&amp;screen=mail">Mail</a>
+                                <a href="mail.aspx?id=<% Response.Write(this.CurrentVillage.ID.ToString()); %>">Mail</a>
                             </td>
                             <td>
-                                <a href="/game.php?village=51549&amp;screen=buddies">Friends</a>
+                                <a href="friends.aspx?id=<% Response.Write(this.CurrentVillage.ID.ToString()); %>">Friends</a>
                             </td>
                         </tr>
                     </table>
@@ -102,7 +101,7 @@
                                         <a href="wood.aspx?id=<% Response.Write(this.CurrentVillage.ID.ToString()); %>"><img src="images/holz.png" /></a>
                                     </td>
                                     <td>
-                                        <span id="wood" name="wood"></span><% Response.Write(this.CurrentVillage.Wood.ToString()); %></span>
+                                        <span id="wood" name="wood"><% Response.Write(this.CurrentVillage.Wood.ToString()); %></span>
                                     </td>
                                     <td>
                                         <a href="clay.aspx?id=<% Response.Write(this.CurrentVillage.ID.ToString()); %>"><img src="images/lehm.png" /></a>
@@ -179,6 +178,7 @@
                                                         <asp:Label ID="time" runat="server"></asp:Label>
                                                     </td>
                                                 </tr>
+                                                <tr><td colspan="2"><span id="test"></span></td></tr>
                                             </table>
                                         </td>
                                     </tr>
@@ -192,11 +192,11 @@
     </div>
     </form>
     <script language="javascript" type="text/javascript">
-        production("clay", <% Response.Write(this.CurrentVillage.SecondPerResourceUnit(beans.ResourcesType.Clay)); %>);
-        //production("wood", <% Response.Write(this.CurrentVillage.SecondPerResourceUnit(beans.ResourcesType.Wood)); %>);
-        //production("iron", <% Response.Write(this.CurrentVillage.SecondPerResourceUnit(beans.ResourcesType.Iron)); %>);
+        production("clay", <% Response.Write(this.CurrentVillage.SecondPerResourceUnit(beans.ResourcesType.Clay)); %>*1000);
+        production("wood", <% Response.Write(this.CurrentVillage.SecondPerResourceUnit(beans.ResourcesType.Wood)); %>*1000);
+        production("iron", <% Response.Write(this.CurrentVillage.SecondPerResourceUnit(beans.ResourcesType.Iron)); %>*1000);
 
-        //attackTimer();
+        attackTimer();
     </script>
 </body>
 </html>
