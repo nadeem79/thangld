@@ -6,11 +6,11 @@
     <id name="ID" column="id" type="Int32">
       <generator class="identity"/>
     </id>
-    <many-to-one name="InVillage" class="beans.Village, beans" column="village_id" not-null="true" fetch="join" cascade="save-update" />
+    
+    <many-to-one name="InVillage" class="beans.Village, beans" column="village_id" not-null="true" cascade="none" />
     <property name="Troop" column="troop" type="beans.TroopType, beans" />
     <property name="Quantity" column="quantity" type="Int32" />
-    <property name="Start" column="start_time" type="timestamp" />
-    <property name="End" column="end_time" type="timestamp" />
+    <property name="LastUpdate" column="start_time" type="timestamp" />
   </class>
 
 </hibernate-mapping>
