@@ -12,7 +12,7 @@
                 </td>
                 <td>
                     <h2>
-                        Stable Level 20</h2>
+                        Trại ngựa cấp <% Response.Write(this.village.Stable); %></h2>
                     In the stables you can recruit cavalry. The higher its level the faster the recruitment
                     of the troops will be finished.
                 </td>
@@ -86,11 +86,11 @@
                     0:03:08
                 </td>
                 <td>
-                    <asp:Label ID="lblScout" runat="server"></asp:Label>
+                    <% Response.Write(this.village.Scout.ToString()); %>/<%Response.Write(this.village.InVillageScout.ToString()); %>
                 </td>
                 <td>
                     <asp:TextBox ID="txtScout" runat="server" Width="33px"></asp:TextBox>
-                    &nbsp;(<asp:Label ID="lblMaxScout" runat="server"></asp:Label>)
+                    &nbsp;(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.txtScout.ClientID); %>', <% Response.Write(this.village.MaxRecruit(beans.TroopType.Scout)); %>)"><%Response.Write(this.village.MaxRecruit(beans.TroopType.Scout)); %></a>)
                 </td>
             </tr>
             <tr class="row_a">
@@ -119,11 +119,11 @@
                     0:06:15
                 </td>
                 <td>
-                    <asp:Label ID="lblLight" runat="server"></asp:Label>
+                    <% Response.Write(this.village.Light.ToString()); %>/<%Response.Write(this.village.InVillageLight.ToString()); %>
                 </td>
                 <td>
                     <asp:TextBox ID="txtLight" runat="server" Width="33px"></asp:TextBox>
-                    &nbsp;(<asp:Label ID="lblMaxLight" runat="server"></asp:Label>)
+                    &nbsp;(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.txtLight.ClientID); %>', <% Response.Write(this.village.MaxRecruit(beans.TroopType.Light)); %>)"><%Response.Write(this.village.MaxRecruit(beans.TroopType.Light)); %></a>)
                 </td>
             </tr>
             <tr class="row_a">
@@ -152,11 +152,11 @@
                     0:12:29
                 </td>
                 <td>
-                    <asp:Label ID="lblHeavy" runat="server"></asp:Label>
+                    <% Response.Write(this.village.Heavy.ToString()); %>/<%Response.Write(this.village.InVillageHeavy.ToString()); %>
                 </td>
                 <td>
                     <asp:TextBox ID="txtHeavy" runat="server" Width="33px"></asp:TextBox>
-                    &nbsp;(<asp:Label ID="lblMaxHeavy" runat="server"></asp:Label>)
+                    &nbsp;(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.txtHeavy.ClientID); %>', <% Response.Write(this.village.MaxRecruit(beans.TroopType.Heavy)); %>)"><%Response.Write(this.village.MaxRecruit(beans.TroopType.Heavy)); %></a>)
                 </td>
             </tr>
             <tr>

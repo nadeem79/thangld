@@ -31,7 +31,7 @@
                 </td>
                 <td>
                     Tăng <b>
-                        <asp:Label ID="lblUnitPerHour" runat="server"></asp:Label></b>&nbsp;đơn vị 
+                        <% Response.Write(current.ProductPerHour(beans.ResourcesType.Iron).ToString()); %></b>&nbsp;đơn vị 
                     kim loại
                     mỗi giờ
                 </td>

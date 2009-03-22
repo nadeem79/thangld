@@ -22,7 +22,7 @@ public partial class overview : System.Web.UI.Page
     {
         village = ((inPage)this.Master).CurrentVillage;
         ISession session = NHibernateHelper.CreateSession();
-        beans.User user = session.Load<beans.User>(Session["user"]);
+        beans.Player user = session.Load<beans.Player>(Session["user"]);
         if (user.GetVillageCount(session) <= 1)
         {
             session.Close();

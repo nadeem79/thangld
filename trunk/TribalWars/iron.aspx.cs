@@ -10,14 +10,15 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
+using beans;
 
 public partial class iron : System.Web.UI.Page
 {
+
+    protected Village current;
+
     protected void Page_Load(object sender, EventArgs e)
     {
-        inPage p = (inPage)this.Master;
-        int level = (int)p.village["ironmine"];
-        this.lblLevel.Text = level.ToString();
-        this.lblUnitPerHour.Text = Resource.production(level).ToString();
+        current = ((inPage)(this.Master)).CurrentVillage;
     }
 }
