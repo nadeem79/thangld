@@ -48,7 +48,7 @@ public partial class inPage : System.Web.UI.MasterPage
         session = NHibernateHelper.CreateSession();
 
         
-        beans.User currentUser = session.Load<beans.User>((int)Session["user"]);
+        beans.Player currentUser = session.Load<beans.Player>((int)Session["user"]);
         
         if (currentUser == null)
         {

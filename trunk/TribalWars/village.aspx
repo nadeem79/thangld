@@ -26,16 +26,16 @@
                     <tr>
                         <td width="240">
                             <img src="images/barracks.png" alt="" />
-                            <asp:HyperLink ID="barrack_url" runat="server" NavigateUrl="~/index.aspx">Bộ binh</asp:HyperLink>
+                            <a href="barrack.aspx?id=<% Response.Write(this.current.ID.ToString()); %>">Bộ binh</a>
                             &nbsp;(Cấp <% Response.Write(this.current.Barracks.ToString()); %>)
                         </td>
                     </tr>
                     <tr>
                         <td width="240">
                             <img src="images/stable.png" alt="" />
-                            <asp:HyperLink ID="stable_url" runat="server" NavigateUrl="~/index.aspx">Kỵ binh</asp:HyperLink>
+                            <a href="stable.aspx?id=<% Response.Write(this.current.ID.ToString()); %>">Kỵ binh</a>
                             &nbsp;(Cấp
-                            <asp:Label ID="stable" runat="server" Text=""></asp:Label>)
+                            <% Response.Write(this.current.Stable.ToString()); %>)
                         </td>
                     </tr>
                     <tr>
@@ -62,7 +62,7 @@
                     <tr>
                         <td width="240">
                             <img src="images/place.png" alt="" />
-                            <asp:HyperLink ID="rally_url" runat="server" NavigateUrl="~/index.aspx">Trại lính</asp:HyperLink>
+                            <a href="rally.aspx?id=<% Response.Write(this.current.ID.ToString()); %>">Trại lính</a></asp:HyperLink>
                             &nbsp;(Cấp <% Response.Write(this.current.Rally.ToString()); %>)
                         </td>
                     </tr>
@@ -76,21 +76,21 @@
                     <tr>
                         <td width="240">
                             <img src="images/wood.png" alt="" />
-                            <asp:HyperLink ID="timbercamp_url" runat="server" NavigateUrl="~/index.aspx">Trại gỗ</asp:HyperLink>
+                            <a href="wood.aspx?id=<% Response.Write(this.current.ID.ToString()); %>">Trại gỗ</a>
                             &nbsp;(Cấp <% Response.Write(this.current.TimberCamp.ToString()); %>)
                         </td>
                     </tr>
                     <tr>
                         <td width="240">
                             <img src="images/stone.png" alt="" />
-                            <asp:HyperLink ID="claypit_url" runat="server" NavigateUrl="~/index.aspx">Trại đất</asp:HyperLink>
+                            <a href="clay.aspx?id=<% Response.Write(this.current.ID.ToString()); %>">Trại đất sét</a>
                             &nbsp;(Cấp <% Response.Write(this.current.ClayPit.ToString()); %>)
                         </td>
                     </tr>
                     <tr>
                         <td width="240">
                             <img src="images/iron.png" alt="" />
-                            <asp:HyperLink ID="ironmine_url" runat="server" NavigateUrl="~/index.aspx">Mỏ kim loại</asp:HyperLink>
+                            <a href="iron.aspx?id=<% Response.Write(this.current.ID.ToString()); %>">Mỏ kim loại</a>
                             &nbsp;(Cấp <% Response.Write(this.current.IronMine.ToString()); %>)
                         </td>
                     </tr>
