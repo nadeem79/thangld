@@ -100,18 +100,7 @@ namespace beans
             set { wood = value; }
         }
 
-        public override MoveType Type
-        {
-            get
-            {
-                return MoveType.Return;
-            }
-            set
-            {
-                if (value != MoveType.Return)
-                    throw new ArgumentException("Đây là lệnh rút quân");
-            }
-        }
+
         #endregion
 
         #region Constructors
