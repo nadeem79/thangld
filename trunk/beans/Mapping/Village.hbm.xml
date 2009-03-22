@@ -10,7 +10,7 @@
     <property name="Name" column="name" length="100" type="String"/>
     <property name="X" column="x" type="Int32" />
     <property name="Y" column="y" type="Int32" />
-    <many-to-one name="Owner" class="beans.User, beans" column="userid" not-null="false" fetch="join" cascade="save-update" />
+    <many-to-one name="Owner" class="beans.Player, beans" column="userid" not-null="false" fetch="join" cascade="save-update" />
     <property name="Headquarter" column="headquarter" type="Int32" />
     <property name="Barracks" column="barracks" type="Int32" />
     <property name="Stable" column="stable" type="Int32" />
@@ -35,6 +35,15 @@
     <property name="Catapult" column="catapult" type="Int32" />
     <property name="Ram" column="ram" type="Int32" />
     <property name="Noble" column="noble" type="Int32" />
+    <property name="InVillageSpear" column="in_spear" type="Int32" />
+    <property name="InVillageSword" column="in_sword" type="Int32" />
+    <property name="InVillageAxe" column="in_axe" type="Int32" />
+    <property name="InVillageScout" column="in_scout" type="Int32" />
+    <property name="InVillageLight" column="in_light" type="Int32" />
+    <property name="InVillageHeavy" column="in_heavy" type="Int32" />
+    <property name="InVillageCatapult" column="in_catapult" type="Int32" />
+    <property name="InVillageRam" column="in_ram" type="Int32" />
+    <property name="InVillageNoble" column="in_noble" type="Int32" />
     <property name="Loyal" column="loyal" type="Int32" />
     <property name="LastUpdate" column="last_update" type="timestamp" not-null="true" />
     <property name="Clay" column="clay" type="Int32" />

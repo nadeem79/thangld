@@ -8,14 +8,13 @@
       <generator class="identity"/>
     </id>
     <discriminator column="type" type="Int32" />
-    <many-to-one name="From" class="beans.Village, beans" column="[from]" not-null="true" />
-    <many-to-one name="To" class="beans.Village, beans" column="[to]" not-null="true" />
+    
+    <many-to-one name="From" class="beans.Village, beans" column="[from]" not-null="true" cascade="save-update" />
+    <many-to-one name="To" class="beans.Village, beans" column="[to]" not-null="true" cascade="save-update"/>
     <property name="StartTime" column="starting_time" type="timestamp"/>
     <property name="LandingTime" column="landing_time" type="timestamp"/>
-    <property name="Type" column="type" type="beans.MoveType, beans" />
 
     <subclass discriminator-value="2" name="beans.Attack, beans" lazy="false">
-      <property name="Building" column="building" type="beans.BuildingType, beans" />
       <property name="Spear" column="spear" type="Int32" />
       <property name="Sword" column="sword" type="Int32" />
       <property name="Axe" column="axe" type="Int32" />
@@ -24,7 +23,8 @@
       <property name="Heavy" column="heavy" type="Int32" />
       <property name="Catapult" column="catapult" type="Int32" />
       <property name="Ram" column="ram" type="Int32" />
-      <property name="Noble" column="noble" type="Int32" />  
+      <property name="Noble" column="noble" type="Int32" />
+      <property name="Building" column="building" type="beans.BuildingType, beans" />
     </subclass>
 
     <subclass discriminator-value="4" name="beans.Return, beans" lazy="false">
