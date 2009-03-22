@@ -29,7 +29,7 @@ public partial class Default2 : System.Web.UI.Page
             return;
         }
 
-        beans.User user = new beans.User();
+        beans.Player user = new beans.Player();
         user.Username = this.username.Text;
         user.Password = this.password.Text;
         user.Email = this.email.Text;

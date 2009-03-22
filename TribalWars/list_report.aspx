@@ -43,11 +43,13 @@
                     <asp:GridView ID="gvReports" runat="server" AutoGenerateColumns="False" 
                         Width="100%" BorderColor="Black" BorderStyle="Solid" BorderWidth="1px">
                         <Columns>
-                            <asp:HyperLinkField DataNavigateUrlFields="current_village,id" DataNavigateUrlFormatString="report_details.aspx?id={0}&amp;report={1}"
-                                DataTextField="title" HeaderText="Tiêu đề">
+                            <asp:HyperLinkField
+                                DataTextField="Title" HeaderText="Tiêu đề" 
+                                DataNavigateUrlFormatString="report_details.aspx?id={0}" 
+                                DataNavigateUrlFields="ID">
                                 <ItemStyle Width="75%" />
                             </asp:HyperLinkField>
-                            <asp:BoundField DataField="create_time" HeaderText="Thời gian" />
+                            <asp:BoundField DataField="Time" HeaderText="Thời gian" />
                         </Columns>
                     </asp:GridView>
                 </td>
