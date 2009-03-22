@@ -79,18 +79,6 @@ namespace beans
             set { nobleSent = value; }
         }
 
-        public override MoveType Type
-        {
-            get
-            {
-                return MoveType.Support;
-            }
-            set
-            {
-                if (value != MoveType.Support)
-                    throw new ArgumentException("Đây là lệnh support");
-            }
-        }
         #endregion
 
         #region Constructors
@@ -106,10 +94,93 @@ namespace beans
         }
         #endregion
 
-        #region Methods
+        #region Static Members
+        public static Support CreateSupport(ISession session,
+                                            Village from,
+                                            int x,
+                                            int y,
+                                            int spear,
+                                            int sword,
+                                            int axe,
+                                            int scout,
+                                            int light,
+                                            int heavy,
+                                            int ram,
+                                            int catapult,
+                                            int noble)
+        {
+            int intTo = Village.CheckVillage(x, y, session);
 
+            if (intTo < 0)
+                throw new Exception("Toạ độ không tồn tại");
+
+            if ((spear + sword + axe + scout + light + heavy + ram + catapult + noble) == 0)
+                throw new Exception("Nhập một loại quân");
+
+            from.Update(DateTime.Now, session);
+            if ((spear > from.Spear) ||
+            (sword > from.Sword) ||
+            (axe > from.Axe) ||
+            (scout > from.Scout) ||
+            (light > from.Light) ||
+            (heavy > from.Heavy) ||
+            (ram > from.Ram) ||
+            (catapult > from.Catapult) ||
+            (noble > from.Noble))
+                throw new Exception("Không đủ quân");
+
+            Support support = new Support();
+            support.From = from;
+            support.StartTime = DateTime.Now;
+            support.To = session.Load<Village>(intTo);
+            support.Spear = spear;
+            support.Sword = sword;
+            support.Axe = axe;
+            support.Scout = scout;
+            support.Light = light;
+            support.Heavy = heavy;
+            support.Ram = ram;
+            support.Catapult = catapult;
+            support.Noble = noble;
+
+            TroopType type = TroopType.Spear;
+            if (scout > 0)
+                type = TroopType.Scout;
+            if (light > 0)
+                type = TroopType.Light;
+            if (heavy > 0)
+                type = TroopType.Heavy;
+            if (spear > 0)
+                type = TroopType.Spear;
+            if (axe > 0)
+                type = TroopType.Axe;
+            if (sword > 0)
+                type = TroopType.Sword;
+            if (ram > 0)
+                type = TroopType.Ram;
+            if (catapult > 0)
+                type = TroopType.Catapult;
+            if (noble > 0)
+                type = TroopType.Nobleman;
+            support.LandingTime = Map.LandingTime(type, support.From.X, support.From.Y, support.To.X, support.To.Y, support.StartTime);
+
+            from.Spear -= spear;
+            from.Sword -= sword;
+            from.Axe -= axe;
+            from.Scout -= scout;
+            from.Light -= light;
+            from.Heavy -= heavy;
+            from.Ram -= ram;
+            from.Catapult -= catapult;
+            from.Noble -= noble;
+
+            session.Save(support);
+            session.Update(from);
+            return support;
+        }
         #endregion
 
+        #region Methods
         public override void effect(ISession session)
         {
             ICriteria criteria = session.CreateCriteria(typeof(Stationed));
@@ -163,6 +234,9 @@ namespace beans
             session.Save(supportReport);
 
 
-        }
+        }    
+        #endregion
+
+        
     }
 }

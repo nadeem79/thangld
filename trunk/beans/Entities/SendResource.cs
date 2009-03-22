@@ -35,19 +35,6 @@ namespace beans
           get { return iron; }
           set { iron = value; }
         }
-
-        public override MoveType Type
-        {
-            get
-            {
-                return MoveType.SendResources;
-            }
-            set
-            {
-                if (value != MoveType.SendResources)
-                    throw new ArgumentException("Đây là lệnh gửi tài nguyên");
-            }
-        }
         #endregion
 
         #region Constructors
