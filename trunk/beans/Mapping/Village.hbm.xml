@@ -10,7 +10,7 @@
     <property name="Name" column="name" length="100" type="String"/>
     <property name="X" column="x" type="Int32" />
     <property name="Y" column="y" type="Int32" />
-    <many-to-one name="Owner" class="beans.Player, beans" column="userid" not-null="false" fetch="join" cascade="save-update" />
+    <many-to-one name="Owner" class="beans.Player, beans" column="userid" not-null="false" fetch="join" cascade="none" />
     <property name="Headquarter" column="headquarter" type="Int32" />
     <property name="Barracks" column="barracks" type="Int32" />
     <property name="Stable" column="stable" type="Int32" />

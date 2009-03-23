@@ -23,8 +23,13 @@ public partial class report_details : System.Web.UI.Page
     {
         base.OnInit(e);
         village = ((inPage)this.Master).CurrentVillage;
-        int report_id;
         
+    }
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        int report_id;
+
         ISession session = NHibernateHelper.CreateSession();
 
         int.TryParse(Request["report"], out report_id);
@@ -32,28 +37,20 @@ public partial class report_details : System.Web.UI.Page
         report = user.GetReport(report_id, session);
 
         session.Close();
-        this.AttackReportPanel1.CurrentReport = report;
-        this.AttackReportPanel1.CurrentVillage = village;
-        Response.RedirectLocation = "index.aspx";
-    }
-
-    protected void Page_Load(object sender, EventArgs e)
-    {
-
-        
-        
-        //string id = Request["id"];
-        //this.urlAllReports.NavigateUrl += "&id=" + id;
-        //this.urlAttackReports.NavigateUrl += "&id=" + id;
-        //this.urlDefenseReports.NavigateUrl += "&id=" + id;
-        //this.urlMarketReports.NavigateUrl += "&id=" + id;
-        //this.urlSupportReports.NavigateUrl += "&id=" + id;
-        //this.navigator.Rows[(int)report_info["type"]].Cells[0].Attributes["class"] = "selected";
+        if (report != null)
+        {
+            pNoReport.Visible = false;
+            switch (report.Type)
+            {
+                case ReportType.Attack:
+                    AttackReportPanel c = (AttackReportPanel)Page.LoadControl("AttackReportPanel.ascx");
+                    c.CurrentReport = report;
+                    c.CurrentVillage = village;
+                    this.pReport.Controls.Add(c);
+                    return;
+            }
+        }
 
         
-    }
-    protected void Button1_Click(object sender, EventArgs e)
-    {
-
     }
 }

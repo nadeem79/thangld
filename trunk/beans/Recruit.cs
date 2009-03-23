@@ -123,8 +123,8 @@ namespace beans
                     this.InVillage.InVillageSpear += total_troop;
                     break;
                 case TroopType.Sword:
-                    this.InVillage.Spear += total_troop;
-                    this.InVillage.InVillageSpear += total_troop;
+                    this.InVillage.Sword += total_troop;
+                    this.InVillage.InVillageSword += total_troop;
                     break;
                 case TroopType.Axe:
                     this.InVillage.Axe += total_troop;

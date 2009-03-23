@@ -227,15 +227,12 @@ namespace beans
                 village.Update(time, session);
         }
 
-        public virtual Village GetVillage(int ID, ISession session)
+        public virtual Village GetVillage(int ID)
         {
-            ICriteria criteria = session.CreateCriteria(typeof(Village));
-            criteria.Add(Expression.Eq("Owner", this));
-            criteria.Add(Expression.Eq("ID", ID));
-            IList<Village> list = criteria.List<Village>();
-            if (list.Count == 0)
-                return null;
-            return list[0];
+            foreach (Village village in this.Villages)
+                if (village.ID == ID)
+                    return village;
+            return null;
         }
 
         public virtual int GetVillageCount(ISession session)

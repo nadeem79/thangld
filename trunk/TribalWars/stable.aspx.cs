@@ -53,6 +53,7 @@ public partial class stable : System.Web.UI.Page
             sRecruitCommands += "<td>" + recruits[i].LastUpdate.AddSeconds(Recruit.RecruitTime(recruits[i].Troop, recruits[i].Quantity, this.village.Barracks)) + "</td>";
         }
         this.lblRecruiting.Text = sRecruitCommands;
+        session.Close();
     }
 
     protected void bttnRecruit_Click(object sender, EventArgs e)
@@ -78,5 +79,7 @@ public partial class stable : System.Web.UI.Page
                 lblError.Text = "Không đủ tài nguyên";
         
         session.Close();
+        if (lblError.Text.Equals(string.Empty))
+            Response.Redirect("stable.aspx?id=" + this.village.ID.ToString(), true);
     }
 }
