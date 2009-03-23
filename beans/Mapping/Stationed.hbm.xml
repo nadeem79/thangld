@@ -7,8 +7,8 @@
       <generator class="identity"/>
     </id>
 
-    <many-to-one name="FromVillage" class="beans.Village, beans" column="from_village" not-null="false" fetch="join" cascade="save-update" />
-    <many-to-one name="AtVillage" class="beans.Village, beans" column="at_village" not-null="false" fetch="join" cascade="save-update" />
+    <many-to-one name="FromVillage" class="beans.Village, beans" column="from_village" not-null="false" fetch="join" cascade="none" />
+    <many-to-one name="AtVillage" class="beans.Village, beans" column="at_village" not-null="false" fetch="join" cascade="none" />
     <property name="Spear" column="spear" type="Int32" />
     <property name="Sword" column="sword" type="Int32" />
     <property name="Axe" column="axe" type="Int32" />

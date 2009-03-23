@@ -6,7 +6,7 @@
     <id name="ID" column="id" type="Int32">
       <generator class="identity"/>
     </id>
-    <many-to-one name="AtVillage" class="beans.Village, beans" column="village_id" not-null="true" fetch="join" cascade="save-update" />
+    <many-to-one name="AtVillage" class="beans.Village, beans" column="village_id" not-null="true" fetch="join" cascade="none" />
     <property name="OfferType" column="offertype" type="beans.ResourcesType, beans" />
     <property name="OfferQuantity" column="offerquantity" type="beans.ResourcesType, beans" />
     <property name="ForType" column="fortype" type="Int32" />

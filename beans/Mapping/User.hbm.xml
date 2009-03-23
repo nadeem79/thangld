@@ -19,7 +19,7 @@
     <property name="Avatar" column="avatar" type="string" length="100" not-null="false" />
     <property name="Address" column="address" type="string" length="500" not-null="false" />
 
-    <bag name="Villages" table="villages" cascade="all" fetch="join" inverse="true" lazy="false">
+    <bag name="Villages" table="villages" cascade="none" fetch="join" inverse="true"  lazy="true">
       <key column="userid" />
       <one-to-many class="beans.Village, beans"/>
     </bag>

@@ -12,7 +12,7 @@
     <property name="Description" column="description" type="string" length="10000" not-null="true" />
     <property name="Introduction" column="introduction" type="string" length="10000" not-null="true" />
 
-    <bag name="Members" table="users" cascade="all" fetch="join" inverse="true">
+    <bag name="Members" table="users" cascade="none" fetch="join" inverse="true">
       <key column="userid" />
       <one-to-many class="beans.Player, beans" not-found="ignore"/>
     </bag>

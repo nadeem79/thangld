@@ -77,5 +77,8 @@ public partial class barrack : System.Web.UI.Page
             if (this.village.BeginRecruit(TroopType.Axe, axe, session) == null)
                 lblError.Text = "Không đủ tài nguyên";
         session.Close();
+
+        if (lblError.Text.Equals(string.Empty))
+            Response.Redirect("barrack.aspx?id=" + this.village.ID.ToString(), true);
     }
 }

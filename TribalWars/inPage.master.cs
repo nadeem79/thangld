@@ -18,7 +18,7 @@ using System.Collections.Generic;
 public partial class inPage : System.Web.UI.MasterPage
 {
 
-    private beans.Village village = null;
+    private beans.Village village;
     public beans.Village CurrentVillage
     {
         get
@@ -34,7 +34,6 @@ public partial class inPage : System.Web.UI.MasterPage
 
     void inPage_Init(object sender, EventArgs e)
     {
-
         DateTime start = DateTime.Now;
         int id;
         ISession session;
@@ -47,42 +46,46 @@ public partial class inPage : System.Web.UI.MasterPage
 
         session = NHibernateHelper.CreateSession();
 
-        
+
         beans.Player currentUser = session.Load<beans.Player>((int)Session["user"]);
-        
+
         if (currentUser == null)
         {
             session.Close();
             Response.Redirect("index.aspx", true);
         }
+        
 
         trans = session.BeginTransaction();
         currentUser.Update(DateTime.Now, session);
-        
-        
-        
+        trans.Commit();
+
         if (object.Equals(Request["id"], null) || (!int.TryParse(Request["id"], out id)))
             this.village = currentUser.Villages[0];
         else
-            this.village = currentUser.GetVillage(id, session);
+            this.village = currentUser.GetVillage(id);
 
         if (this.village == null)
             this.village = currentUser.Villages[0];
+        ViewState["village"] = village;
+        this.time.Text = currentUser.Villages.Count.ToString();
 
         int incomingAttackCount = village.GetIncomingAttackCount(session);
         int incomingSupportCount = village.GetIncomingSupportCount(session);
 
-        
+
 
         DateTime stop = DateTime.Now;
         this.delay.Text = (stop - start).Milliseconds.ToString();
-        this.time.Text = start.ToString("dd/MM/yyyy hh:mm:ss");
-        trans.Commit();
+        //this.time.Text = start.ToString("dd/MM/yyyy hh:mm:ss");
+        session.Evict(currentUser);
+        session.Evict(village);
         session.Close();
+        
     }
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        
     }
 }

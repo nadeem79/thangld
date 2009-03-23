@@ -31,7 +31,7 @@ namespace beans
         {
             if (!object.Equals(lhs, rhs))
                 return true;
-            return (lhs.ID != rhs.ID);
+            return !(lhs == rhs);
         }
 
         public override int GetHashCode()
