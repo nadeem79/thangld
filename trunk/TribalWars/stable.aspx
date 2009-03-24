@@ -12,6 +12,7 @@
                 </td>
                 <td>
                     <h2>
+                        
                         Trại ngựa cấp <% Response.Write(this.village.Stable); %></h2>
                     In the stables you can recruit cavalry. The higher its level the faster the recruitment
                     of the troops will be finished.

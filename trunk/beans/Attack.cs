@@ -99,7 +99,6 @@ namespace beans
             if ((spear + sword + axe + scout + light + heavy + ram + catapult + noble) == 0)
                 throw new Exception("Nhập một loại quân");
 
-            from.Update(DateTime.Now, session);
             if ((spear > from.Spear) ||
             (sword > from.Sword) ||
             (axe > from.Axe) ||

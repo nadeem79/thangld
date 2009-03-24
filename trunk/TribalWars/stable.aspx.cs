@@ -59,7 +59,7 @@ public partial class stable : System.Web.UI.Page
     protected void bttnRecruit_Click(object sender, EventArgs e)
     {
         ISession session = NHibernateHelper.CreateSession();
-        this.village.Update(DateTime.Now, session);
+        //this.village.Update(DateTime.Now, session);
 
         int scout = 0, light = 0, heavy = 0;
 

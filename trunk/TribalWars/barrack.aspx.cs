@@ -58,7 +58,6 @@ public partial class barrack : System.Web.UI.Page
     protected void bttnRecruit_Click(object sender, EventArgs e)
     {
         ISession session = NHibernateHelper.CreateSession();
-        this.village.Update(DateTime.Now, session);
         
         int spear = 0, sword = 0, axe = 0;
 
