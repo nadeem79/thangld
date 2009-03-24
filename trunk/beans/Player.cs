@@ -13,95 +13,34 @@ namespace beans
     public class Player:IdentityObject
     {
         #region Variable
-        private byte[] KEY = ASCIIEncoding.ASCII.GetBytes("Thu Hương dễ thương");
         private string username;
-        private IList<Village> villages;
-        private Group tribe;
-        private Sex gender;
-        private DateTime birthdate;
-        private string yahoo;
-        private string skype;
-        private string avatar;
-        private string address;
         private string password;
-
-        public virtual string Address
-        {
-            get { return address; }
-            set { address = value; }
-        }
-
-        public virtual string Skype
-        {
-            get { return skype; }
-            set { skype = value; }
-        }
-        private string msn;
-
-        public virtual string Msn
-        {
-            get { return msn; }
-            set { msn = value; }
-        }
         private string email;
-
-        public virtual string Email
-        {
-            get { return email; }
-            set 
-            {
-                if (String.IsNullOrEmpty(value))
-                    throw new ArgumentException("Email không được rỗng");
-                int nFirstAT = value.IndexOf('@');
-                int nLastAT = value.LastIndexOf('@');
-
-                if ((nFirstAT > 0) && (nLastAT == nFirstAT) && (nFirstAT < (value.Length - 1)))
-                {
-                    if (Regex.IsMatch(value, @"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"))
-                        email = value;
-                }
-                else
-                    throw new ArgumentException("Email phải đúng định dạng xxx@xxx.xxx");
-            }
-        }
-        private string description;
-
-        public virtual string Description
-        {
-            get { return description; }
-            set { description = value; }
-        }
-
-        public virtual string Avatar
-        {
-            get { return avatar; }
-            set { avatar = value; }
-        }
         #endregion
 
         #region Properties
         public virtual DateTime Birthdate
         {
-            get { return birthdate; }
-            set { birthdate = value; }
+            get;
+            set;
         }
 
         public virtual Sex Gender
         {
-            get { return gender; }
-            set { gender = value; }
+            get;
+            set;
         }
 
         public virtual Group Tribe
         {
-            get { return tribe;}
-            set { tribe = value; }
+            get;
+            set;
         }
 
         public virtual IList<Village> Villages
         {
-            get { return villages; }
-            set { villages = value; }
+            get;
+            set;
         }
 
         public virtual string Username
@@ -130,17 +69,65 @@ namespace beans
 
         public virtual string Yahoo
         {
-            get { return this.yahoo; }
-            set { this.yahoo = value; }
+            get;
+            set;
         }
 
+        public virtual string Address
+        {
+            get;
+            set;
+        }
+
+        public virtual string Skype
+        {
+            get;
+            set;
+        }
+
+        public virtual string Msn
+        {
+            get;
+            set;
+        }
+
+        public virtual string Email
+        {
+            get
+            {
+                return this.email;
+            }
+            set
+            {
+                if (String.IsNullOrEmpty(value))
+                    throw new ArgumentException("Email không được rỗng");
+                int nFirstAT = value.IndexOf('@');
+                int nLastAT = value.LastIndexOf('@');
+
+                if ((nFirstAT > 0) && (nLastAT == nFirstAT) && (nFirstAT < (value.Length - 1)))
+                {
+                    if (Regex.IsMatch(value, @"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"))
+                        email = value;
+                }
+                else
+                    throw new ArgumentException("Email phải đúng định dạng xxx@xxx.xxx");
+            }
+        }
+
+        public virtual string Description
+        {
+            get;
+            set;
+        }
+
+        public virtual string Avatar
+        {
+            get;
+            set;
+        }
         #endregion
 
         #region Constructors
-        public Player()
-        {
-            this.villages = new List<Village>();
-        }
         #endregion
 
         #region Methods
@@ -158,6 +145,19 @@ namespace beans
         #endregion
 
         #region Methods
+
+        public MovingCommand GetCommand(int command_id, ISession session)
+        {
+            MovingCommand m;
+            m.
+            ICriteria criteria = session.CreateCriteria(typeof(MovingCommand));
+            criteria.Add(Expression.Eq("Owner", this));
+            criteria.Add(Expression.Eq("ID", command_id));
+            IList<MovingCommand> lstCommand = criteria.List<MovingCommand>();
+            if (lstCommand.Count == 0)
+                return null;
+            return lstCommand[0];
+        }
 
         public Report GetReport(int report_id, ISession session)
         {

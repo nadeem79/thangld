@@ -111,6 +111,7 @@ namespace beans
                 throw new Exception("Không đủ quân");
 
             Attack attack = new Attack();
+            attack.Owner = from.Owner;
 
             TroopType type = TroopType.Spear;
             if (scout > 0)
@@ -290,6 +291,7 @@ namespace beans
                     #region Quân thắng trận trở về
 
                     Return returnTroop = new Return();
+                    returnTroop.Owner = this.From.Owner;
                     returnTroop.From = this.To;
                     returnTroop.To = this.From;
                     returnTroop.Spear = this.Spear;

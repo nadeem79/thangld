@@ -8,6 +8,11 @@ namespace beans
 {
     public abstract class MovingCommand : IdentityObject
     {
+        public Player Owner
+        {
+            get;
+            set;
+        }
         public Village From
         {
             get;
@@ -18,7 +23,6 @@ namespace beans
             get;
             set;
         }
-
         public DateTime StartTime
         {
             get;
