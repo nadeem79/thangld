@@ -7,7 +7,7 @@ namespace beans
 {
     public enum Sex
     {
-        Female = 0,
-        Male = 1,
+        Nữ = 0,
+        Nam = 1,
     }
 }

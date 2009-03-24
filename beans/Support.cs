@@ -133,6 +133,7 @@ namespace beans
                 throw new Exception("Không đủ quân");
 
             Support support = new Support();
+            support.Owner = from.Owner;
             support.From = from;
             support.StartTime = DateTime.Now;
             support.To = session.Load<Village>(intTo);

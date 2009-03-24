@@ -38,7 +38,7 @@
                                 Tấn công:
                             </th>
                             <th>
-                                <a href='user_info.aspx?id=<% Response.Write(this.village.ID); %>&user=<% Response.Write(this.report.From.Owner.ID); %>'>
+                                <a href='user_info.aspx?id=<% Response.Write(this.village.ID); %>&player=<% Response.Write(this.report.From.Owner.ID); %>'>
                                     <% Response.Write(this.report.From.Owner.Username); %></a>
                             </th>
                         </tr>
@@ -169,7 +169,7 @@
                                 Phòng thủ:
                             </th>
                             <th>
-                                <a href='user_info.aspx?id=<% Response.Write(this.village.ID); %>&user=<% Response.Write(this.report.To.Owner.ID); %>'>
+                                <a href='user_info.aspx?id=<% Response.Write(this.village.ID); %>&player=<% Response.Write(this.report.To.Owner.ID); %>'>
                                     <% Response.Write(this.report.To.Owner.Username); %></a>
                             </th>
                         </tr>
