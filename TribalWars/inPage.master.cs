@@ -54,8 +54,7 @@ public partial class inPage : System.Web.UI.MasterPage
             session.Close();
             Response.Redirect("index.aspx", true);
         }
-        
-
+        this.time.Text = (this.CurrentVillage == null).ToString();
         trans = session.BeginTransaction();
         currentUser.Update(DateTime.Now, session);
         trans.Commit();
@@ -64,7 +63,7 @@ public partial class inPage : System.Web.UI.MasterPage
             this.village = currentUser.Villages[0];
         else
             this.village = currentUser.GetVillage(id);
-
+        
         if (this.village == null)
             this.village = currentUser.Villages[0];
         ViewState["village"] = village;
@@ -78,8 +77,6 @@ public partial class inPage : System.Web.UI.MasterPage
         DateTime stop = DateTime.Now;
         this.delay.Text = (stop - start).Milliseconds.ToString();
         //this.time.Text = start.ToString("dd/MM/yyyy hh:mm:ss");
-        session.Evict(currentUser);
-        session.Evict(village);
         session.Close();
         
     }

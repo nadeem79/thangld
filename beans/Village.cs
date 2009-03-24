@@ -917,6 +917,7 @@ namespace beans
                 case BuildingType.Barracks:
                 case BuildingType.Academy:
                 case BuildingType.Stable:
+                case BuildingType.Workshop:
                     break;
                 default:
                     throw new Exception("Hack hả ku :))");
@@ -927,7 +928,7 @@ namespace beans
 
             ICriteria criteria = session.CreateCriteria(typeof(Recruit));
             criteria.Add(Expression.Eq("InVillage", this));
-            criteria.AddOrder(new Order("ID", false));
+            criteria.AddOrder(new Order("ID", true));
 
             switch (building)
             {

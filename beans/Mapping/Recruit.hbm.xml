@@ -7,7 +7,7 @@
       <generator class="identity"/>
     </id>
     
-    <many-to-one name="InVillage" class="beans.Village, beans" column="village_id" not-null="true" cascade="none" fetch="join"/>
+    <many-to-one name="InVillage" class="beans.Village, beans" column="village_id" not-null="true" cascade="none" fetch="join" lazy="proxy"/>
     <property name="Troop" column="troop" type="beans.TroopType, beans" />
     <property name="Quantity" column="quantity" type="Int32" />
     <property name="LastUpdate" column="start_time" type="timestamp" />

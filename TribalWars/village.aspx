@@ -41,7 +41,7 @@
                     <tr>
                         <td width="240">
                             <img src="images/garage.png" alt="" />
-                            <asp:HyperLink ID="workshop_url" runat="server" NavigateUrl="~/index.aspx">Nhà xe</asp:HyperLink>
+                            <a href="workshop.aspx?id=<% Response.Write(this.current.ID.ToString()); %>">Nhà xe</a>
                             &nbsp;(Cấp <% Response.Write(this.current.Workshop.ToString()); %>)
                         </td>
                     </tr>

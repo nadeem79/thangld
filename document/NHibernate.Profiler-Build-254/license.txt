@@ -1,0 +1,13 @@
+Beta License for the NHibernate Profiler
+
+Copyright (c) Oren Eini - 2008
+
+I am currently not happy with any of the standard software licenses, as such, I decided to put this place holder at the moment, until I have the time & inclination to actually deal with this silly but important thing.
+
+NHibernate Profiler is licensed per user, you may use it on multiple machines, including simultanously, as long as there is only a single user doing the work. By user I meant any person or agent that is using NHibernate Profiler. 
+
+The evaluation version is limited to 30 days, after which you must purchase the full version or stop using NHibernate Profiler. 
+
+The current version is not even a beta, and as such, it may decide to do anything it feel likes, including things you probably wish that it wouldn't do. Please take that into account when evaluating the software, the main purpose of pushing this out is to get as much feedback, as early as possible. Feel free to mail me at ayende@ayende.com with issues or comments.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
