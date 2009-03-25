@@ -15,10 +15,10 @@ using System.Xml.Linq;
 /// </summary>
 public enum PlayerSettingType
 {
-    Profile = 1,
-    Email = 2,
-    LoginLog = 3,
-    ChangePassword = 4
+    Profile = 0,
+    Email = 1,
+    ChangePassword = 2,
+    LoginLog = 3
 }
 
 public class PlayerSettingFactory
@@ -27,12 +27,12 @@ public class PlayerSettingFactory
     {
         switch (type)
         {
-            case 2:
+            case 1:
                 return PlayerSettingType.Email;
+            case 2:
+                return PlayerSettingType.ChangePassword;
             case 3:
                 return PlayerSettingType.LoginLog;
-            case 4:
-                return PlayerSettingType.ChangePassword;
             default:
                 return PlayerSettingType.Profile;
         }

@@ -21,11 +21,7 @@ public partial class index : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        ISession session = NHibernateHelper.CreateSession();
-        Report r = session.Load<Report>(2);
-        AttackReport r1 = (AttackReport)r;
-        this.error.Text = r.Title;
-        session.Close();
+        
         
     }
 

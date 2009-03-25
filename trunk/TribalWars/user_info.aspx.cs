@@ -46,9 +46,11 @@ public partial class user_info : System.Web.UI.Page
 
         this.pUserNotFound.Visible = false;
         this.pUserExists.Visible = true;
+        this.gvVillages.DataSource = this.player.Villages;
+        System.Web.UI.WebControls.HyperLinkField field = (HyperLinkField)this.gvVillages.Columns[0];
+        field.DataNavigateUrlFormatString = "village_info.aspx?id=" + this.village.ID.ToString() + "&village={0}";
+        this.gvVillages.DataBind();
 
-        //this.imgAvatar.ImageUrl = "data/user/" + player["avatar"].ToString() + ".jpg";
-        //this.imgSkype.ImageUrl = "http://opi.yahoo.com/online?m=g&t=2&u=" + player["skype"].ToString();
-        //this.imgYahoo.ImageUrl = "http://opi.yahoo.com/online?m=g&t=2&u=" + player["yahoo"].ToString();
+        this.pSelf.Visible = (this.player.ID == (int)Session["user"]);
     }
 }

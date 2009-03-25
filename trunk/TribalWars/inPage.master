@@ -37,7 +37,7 @@
                                 <a href="help2.php" target="_blank">Help</a>
                             </td>
                             <td>
-                                <a href="/game.php?village=51549&amp;screen=settings">Settings</a>
+                                <a href="user_profile.aspx?id=<%Response.Write(this.CurrentVillage.ID); %>">Tài khoản</a>
                             </td>
                             <td>
                                 <a href="/game.php?village=51549&amp;screen=premium">Premium</a>
