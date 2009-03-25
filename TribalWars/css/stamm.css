@@ -210,7 +210,9 @@ table.box {
 
 table.box tr td { white-space:nowrap; }
 
-input, select { font-size: 8pt; /*background-color:#FDFBF3;*/ }
+input, select { font-size: 8pt;
+    width: 42px;
+}
 
 input.attack { background-color: rgb(250, 210, 210) }
 input.support { background-color: rgb(210, 250, 210) }

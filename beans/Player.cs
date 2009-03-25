@@ -120,7 +120,7 @@ namespace beans
             set;
         }
 
-        public virtual string Avatar
+        public virtual bool Avatar
         {
             get;
             set;
@@ -149,7 +149,6 @@ namespace beans
         public MovingCommand GetCommand(int command_id, ISession session)
         {
             MovingCommand m;
-            m.
             ICriteria criteria = session.CreateCriteria(typeof(MovingCommand));
             criteria.Add(Expression.Eq("Owner", this));
             criteria.Add(Expression.Eq("ID", command_id));

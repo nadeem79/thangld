@@ -30,16 +30,22 @@
                                             » Gửi tin nhắn</a>
                                     </td>
                                 </tr>
+                                <asp:Panel ID="pSelf" runat="server">
+                                    <tr>
+                                        <td>
+                                            <a href='user_profile.aspx?id=<% Response.Write(this.village.ID); %>'>
+                                                » Sửa thông tin tài khoản</a>
+                                        </td>
+                                    </tr>
+                                </asp:Panel>
                             </tbody>
                         </table>
                         <br />
                         <asp:GridView ID="gvVillages" runat="server" AutoGenerateColumns="False" Width="100%">
                             <Columns>
-                                <asp:HyperLinkField DataNavigateUrlFields="current_village,id" DataNavigateUrlFormatString="village_info.aspx?id={0}&amp;village={1}"
-                                    DataTextField="name" HeaderText="Thành phố" />
-                                <asp:BoundField DataField="coord" HeaderText="Toạ độ">
-                                    <ItemStyle Width="15%" />
-                                </asp:BoundField>
+                                <asp:HyperLinkField DataNavigateUrlFields="ID" DataNavigateUrlFormatString="village_info.aspx?village={0}"
+                                    DataTextField="Name" HeaderText="Thành phố" />
+                                    <asp:TemplateField HeaderText="Toạ độ">  <EditItemTemplate>  <asp:TextBox ID="TextBox1" runat="server" Text='<%# Bind("FirstName") %>'></asp:TextBox>  </EditItemTemplate>  <ItemTemplate>  <asp:Label ID="Label1" runat="server" Text='<%# Bind("X") %>'></asp:Label>|<asp:Label ID="Label2" runat="server" Text='<%# Bind("Y") %>'></asp:Label>  </ItemTemplate> </asp:TemplateField>
                             </Columns>
                         </asp:GridView>
                     </td>
@@ -94,7 +100,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <% if (!this.player.Avatar.Trim().Equals(string.Empty)) Response.Write("<img src='data/images/" + this.player.Avatar + "'"); %>
+                                        <% if (this.player.Avatar) Response.Write("<img src='data/images/" + this.player.ID.ToString() + ".jpg'"); %>
                                     </td>
                                 </tr>
                             </tbody>
