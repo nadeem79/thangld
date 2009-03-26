@@ -1,6 +1,8 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/inPage.master" AutoEventWireup="true" CodeFile="command.aspx.cs"
     Inherits="command" Title="Tấn công" %>
 <%@ Reference Control="AttackCommand.ascx" %>
+<%@ Reference Control="SupportCommand.ascx" %>
+<%@ Reference Control="ReturnCommand.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>

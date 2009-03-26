@@ -50,10 +50,22 @@ public partial class command : System.Web.UI.Page
         {
             case MoveType.Attack:
 
-                AttackCommand command = (AttackCommand)Page.LoadControl("AttackCommand.ascx");
-                command.Command = current;
-                command.CurrentVillage = village;
-                this.pCommand.Controls.Add(command);
+                AttackCommand attackCommand = (AttackCommand)Page.LoadControl("AttackCommand.ascx");
+                attackCommand.Command = current;
+                attackCommand.CurrentVillage = village;
+                this.pCommand.Controls.Add(attackCommand);
+                break;
+            case MoveType.Support:
+                SupportCommand supportCommand = (SupportCommand)Page.LoadControl("SupportCommand.ascx");
+                supportCommand.Command = current;
+                supportCommand.CurrentVillage = village;
+                this.pCommand.Controls.Add(supportCommand);
+                break;
+            case MoveType.Return:
+                ReturnCommand returnCommand = (ReturnCommand)Page.LoadControl("ReturnCommand.ascx");
+                returnCommand.Command = current;
+                returnCommand.CurrentVillage = village;
+                this.pCommand.Controls.Add(returnCommand);
                 break;
             default:
                 throw new Exception("Hack hả ku :))");
