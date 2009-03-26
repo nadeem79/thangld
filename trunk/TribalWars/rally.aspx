@@ -181,10 +181,10 @@
 
                     <h3>
                         Troop movements</h3>
-                    <table class="vis">
+                    <table class="vis" width="100%">
                         <tbody>
                             <tr>
-                                <th width="250">
+                                <th width="60%">
                                     Lệnh đến: 
                                 </th>
                                 <th width="160">
@@ -197,10 +197,10 @@
                             <asp:Label ID="lblInwardsCommand" runat="server"></asp:Label>
                         </tbody>
                     </table>
-                    <table class="vis">
+                    <table class="vis" width="100%">
                         <tbody>
                             <tr>
-                                <th width="250">
+                                <th width="60%">
                                     Lệnh đi: 
                                 </th>
                                 <th width="160">

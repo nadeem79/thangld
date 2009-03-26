@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections;
-using System.Configuration;
-using System.Data;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.Security;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Xml.Linq;
 using beans;
 
-public partial class AttackCommand : System.Web.UI.UserControl
+public partial class SupportCommand : System.Web.UI.UserControl
 {
     protected Attack current;
     protected Village village;
@@ -20,11 +14,11 @@ public partial class AttackCommand : System.Web.UI.UserControl
     public MovingCommand Command
     {
         get { return this.current; }
-        set 
+        set
         {
-            if (value.Type != MoveType.Attack)
+            if (value.Type != MoveType.Support)
                 throw new Exception("Hack hả ku :))");
-            this.current = (Attack)value; 
+            this.current = (Attack)value;
         }
     }
     public Village CurrentVillage

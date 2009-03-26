@@ -10,73 +10,53 @@ namespace beans
     public class Support:MovingCommand
     {
         #region Variables
-
-        private int scoutSent;
-        private int spearSent;
-        private int swordSent;
-        private int axeSent;
-        private int lightSent;
-        private int heavySent;
-        private int ramSent;
-        private int catapultSent;
-        private int nobleSent;
-        private MoveType type;
         #endregion
 
         #region Properties
-
-        public virtual int Spear
+        public int Spear
         {
-            get { return spearSent; }
-            set { spearSent = value; }
+            get;
+            set;
         }
-
-        public virtual int Sword
+        public int Sword
         {
-            get { return swordSent; }
-            set { swordSent = value; }
+            get;
+            set;
         }
-
-        public virtual int Axe
+        public int Axe
         {
-            get { return axeSent; }
-            set { axeSent = value; }
+            get;
+            set;
         }
-
-        public virtual int Scout
+        public int Scout
         {
-            get { return scoutSent; }
-            set { scoutSent = value; }
+            get;
+            set;
         }
-
-        public virtual int Light
+        public int Light
         {
-            get { return lightSent; }
-            set { lightSent = value; }
+            get;
+            set;
         }
-
-        public virtual int Heavy
+        public int Heavy
         {
-            get { return heavySent; }
-            set { heavySent = value; }
+            get;
+            set;
         }
-
-        public virtual int Ram
+        public int Ram
         {
-            get { return ramSent; }
-            set { ramSent = value; }
+            get;
+            set;
         }
-
-        public virtual int Catapult
+        public int Catapult
         {
-            get { return catapultSent; }
-            set { catapultSent = value; }
+            get;
+            set;
         }
-
-        public virtual int Noble
+        public int Noble
         {
-            get { return nobleSent; }
-            set { nobleSent = value; }
+            get;
+            set;
         }
         public override MoveType Type
         {
@@ -113,6 +93,9 @@ namespace beans
                                             int catapult,
                                             int noble)
         {
+            if (x == from.X && y == from.Y)
+                throw new Exception("Nhập toạ độ");
+
             int intTo = Village.CheckVillage(x, y, session);
 
             if (intTo < 0)
@@ -229,6 +212,17 @@ namespace beans
             supportReport.Owner = this.To.Owner;
             supportReport.Time = this.LandingTime;
             supportReport.Title = this.From.Owner + " gửi quân hỗ trợ " + this.To.Name + "(" + this.To.X.ToString("000") + "|" + this.To.Y.ToString("000") + ")";
+            supportReport.From = this.From;
+            supportReport.To = this.To;
+            supportReport.Spear = this.Spear;
+            supportReport.Sword = this.Sword;
+            supportReport.Axe = this.Axe;
+            supportReport.Scout = this.Scout;
+            supportReport.Light = this.Light;
+            supportReport.Heavy = this.Heavy;
+            supportReport.Ram = this.Ram;
+            supportReport.Catapult = this.Catapult;
+            supportReport.Noble = this.Noble;
 
             session.Save(supportReport);
             supportReport.Owner = this.From.Owner;

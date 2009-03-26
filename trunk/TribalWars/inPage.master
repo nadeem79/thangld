@@ -176,6 +176,7 @@
                                                         trang web được tạo trong
                                                         <asp:Label ID="delay" runat="server" Text="Label"></asp:Label>ms Thời gian:
                                                         <asp:Label ID="time" runat="server"></asp:Label>
+                                                        <% Response.Write(DateTime.Now.ToString("dd/MM/yyyy")); %> <span class="increaseTimer"><% Response.Write(DateTime.Now.ToString("hh:mm:ss")); %></span>
                                                     </td>
                                                 </tr>
                                                 <tr><td colspan="2"><span id="test"></span></td></tr>
@@ -195,8 +196,8 @@
         production("clay", <% Response.Write(this.CurrentVillage.SecondPerResourceUnit(beans.ResourcesType.Clay)); %>*1000);
         production("wood", <% Response.Write(this.CurrentVillage.SecondPerResourceUnit(beans.ResourcesType.Wood)); %>*1000);
         production("iron", <% Response.Write(this.CurrentVillage.SecondPerResourceUnit(beans.ResourcesType.Iron)); %>*1000);
-
         attackTimer();
+        increaseTime();
     </script>
 </body>
 </html>

@@ -9,24 +9,22 @@ namespace beans
     public class Attack:MovingCommand
     {
         #region Properties
+
         public int Spear
         {
             get;
             set;
         }
-
         public int Sword
         {
             get;
             set;
         }
-
         public int Axe
         {
             get;
             set;
         }
-
         public int Scout
         {
             get;
@@ -57,13 +55,11 @@ namespace beans
             get;
             set;
         }
-
         public BuildingType Building
         {
             get;
             set;
         }
-
         public override MoveType Type
         {
             get
@@ -91,6 +87,9 @@ namespace beans
                                            int noble,
                                            BuildingType building)
         {
+            if (x == from.X && y == from.Y)
+                throw new Exception("Nhập toạ độ");
+
             int intTo = Village.CheckVillage(x, y, session);
 
             if (intTo < 0)
@@ -170,6 +169,8 @@ namespace beans
             AttackReport report = new AttackReport();
             report.Time = this.LandingTime;
             report.Title = this.From.Owner.Username + " tấn công " + this.To.Name + "(" + this.To.X.ToString() + "|" + this.To.Y.ToString() + ")";
+            this.From.Update(this.LandingTime, session);
+            this.To.Update(this.LandingTime, session);
             report.From = this.From;
             report.To = this.To;
 
@@ -219,6 +220,16 @@ namespace beans
             {
                 ratio = 1 - ((double)totalDefense / (double)totalAttack);
 
+                this.From.InVillageSpear -= (int)Math.Round(this.Spear * (1 - ratio));
+                this.From.InVillageSword -= (int)Math.Round(this.Sword * (1 - ratio));
+                this.From.InVillageAxe -= (int)Math.Round(this.Axe * (1 - ratio));
+                this.From.InVillageLight -= (int)Math.Round(this.Light * (1 - ratio));
+                this.From.InVillageScout -= (int)Math.Round(this.Scout * (1 - ratio));
+                this.From.InVillageHeavy -= (int)Math.Round(this.Heavy * (1 - ratio));
+                this.From.InVillageRam -= (int)Math.Round(this.Ram * (1 - ratio));
+                this.From.InVillageCatapult -= (int)Math.Round(this.Catapult * (1 - ratio));
+                this.From.InVillageNoble -= (int)Math.Round(this.Noble * (1 - ratio));
+
                 this.Spear = (int)Math.Round(this.Spear * ratio);
                 this.Sword = (int)Math.Round(this.Sword * ratio);
                 this.Axe = (int)Math.Round(this.Axe * ratio);
@@ -264,8 +275,6 @@ namespace beans
                             session.Save(defenseOtherReport);
                         }
                         #endregion
-
-
                         session.Delete(station);
                     }
 
@@ -356,6 +365,26 @@ namespace beans
                     totalAttack = 1;
                 ratio = 1 - ((double)totalAttack / (double)totalDefense);
 
+                this.From.InVillageSpear -= this.Spear;
+                this.From.InVillageSword -= this.Sword;
+                this.From.InVillageAxe -= this.Axe;
+                this.From.InVillageLight -= this.Light ;
+                this.From.InVillageScout -= this.Scout;
+                this.From.InVillageHeavy -= this.Heavy;
+                this.From.InVillageRam -= this.Ram;
+                this.From.InVillageCatapult -= this.Catapult;
+                this.From.InVillageNoble -= this.Noble;
+
+                this.To.InVillageSpear -= (int)Math.Round(this.To.Spear * (1 - ratio));
+                this.To.InVillageSword -= (int)Math.Round(this.To.Sword * (1 - ratio));
+                this.To.InVillageAxe -= (int)Math.Round(this.To.Axe * (1 - ratio));
+                this.To.InVillageLight -= (int)Math.Round(this.To.Light * (1 - ratio));
+                this.To.InVillageScout -= (int)Math.Round(this.To.Scout * (1 - ratio));
+                this.To.InVillageHeavy -= (int)Math.Round(this.To.Heavy * (1 - ratio));
+                this.To.InVillageRam -= (int)Math.Round(this.To.Ram * (1 - ratio));
+                this.To.InVillageCatapult -= (int)Math.Round(this.To.Catapult * (1 - ratio));
+                this.To.InVillageNoble -= (int)Math.Round(this.To.Noble * (1 - ratio));
+
                 this.To.Spear = (int)Math.Round(this.To.Spear * ratio);
                 this.To.Sword = (int)Math.Round(this.To.Sword * ratio);
                 this.To.Axe = (int)Math.Round(this.To.Axe * ratio);
@@ -400,7 +429,8 @@ namespace beans
             }
 
 
-
+            session.Update(this.To);
+            session.Update(this.From);
 
             report.Owner = this.From.Owner;
             session.Save(report);

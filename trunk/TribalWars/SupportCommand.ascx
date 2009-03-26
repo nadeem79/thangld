@@ -1,7 +1,6 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="AttackCommand.ascx.cs"
-    Inherits="AttackCommand" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="SupportCommand.ascx.cs" Inherits="SupportCommand" %>
 <h2>
-    Tấn công <% if (this.current.To.Owner.ID==(int)Session["user"]) Response.Write("tới "); %>thành phố
+    Hỗ trợ <% if (this.current.To.Owner.ID==(int)Session["user"]) Response.Write("tới "); %>thành phố
     <% Response.Write(this.current.To.Name); %></h2>
 <table class="vis" width="400">
     <tbody>

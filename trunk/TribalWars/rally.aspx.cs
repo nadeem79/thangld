@@ -39,7 +39,7 @@ public partial class rally : System.Web.UI.Page
                 if (command.To == this.village)
                 {
                     sInwardsCommand += "<tr><td><a href='command.aspx?id=" + this.village.ID.ToString() + "&command=" + command.ID.ToString() + "'>";
-                    sInwardsCommand += "<img src='images/back.png'/>Tấn công từ ";
+                    sInwardsCommand += "<img src='images/attack.png'/> Tấn công từ ";
                     sInwardsCommand += command.To.Name + " (" + command.From.X.ToString("000") + "|" + command.From.Y.ToString("000") + ")</td>";
                     sInwardsCommand += "<td>" + command.LandingTime.ToString() + "</td>";
                     sInwardsCommand += "<td><span class='timer'>" + Functions.FormatTime(command.LandingTime - DateTime.Now) + "</span></td></tr>";
@@ -47,7 +47,7 @@ public partial class rally : System.Web.UI.Page
                 else if (command.From==this.village)
                 {
                     sOutwardsCommand += "<tr><td><a href='command.aspx?id=" + this.village.ID.ToString() + "&command=" + command.ID.ToString() + "'>";
-                    sOutwardsCommand += "<img src='images/support.png'/>Tấn công thành phố ";
+                    sOutwardsCommand += "<img src='images/attack.png'/> Tấn công thành phố ";
                     sOutwardsCommand += command.To.Name + " (" + command.To.X.ToString("000") + "|" + command.To.Y.ToString("000") + ")</td>";
                     sOutwardsCommand += "<td>" + command.LandingTime.ToString() + "</td>";
                     sOutwardsCommand += "<td><span class='timer'>" + Functions.FormatTime(command.LandingTime - DateTime.Now) + "</span></td></tr>";
@@ -58,7 +58,7 @@ public partial class rally : System.Web.UI.Page
                 if (command.To == this.village)
                 {
                     sInwardsCommand += "<tr><td><a href='command.aspx?id=" + this.village.ID.ToString() + "&command=" + command.ID.ToString() + "'>";
-                    sInwardsCommand += "<img src='images/back.png'/>Hỗ trợ từ ";
+                    sInwardsCommand += "<img src='images/support.png'/> Hỗ trợ từ ";
                     sInwardsCommand += command.To.Name + " (" + command.From.X.ToString("000") + "|" + command.From.Y.ToString("000") + ")</td>";
                     sInwardsCommand += "<td>" + command.LandingTime.ToString() + "</td>";
                     sInwardsCommand += "<td><span class='timer'>" + Functions.FormatTime(command.LandingTime - DateTime.Now) + "</span></td></tr>";
@@ -66,7 +66,7 @@ public partial class rally : System.Web.UI.Page
                 else if (command.From == this.village)
                 {
                     sOutwardsCommand += "<tr><td><a href='command.aspx?id=" + this.village.ID.ToString() + "&command=" + command.ID.ToString() + "'>";
-                    sOutwardsCommand += "<img src='images/support.png'/>Hỗ trợ thành phố ";
+                    sOutwardsCommand += "<img src='images/support.png'/> Hỗ trợ thành phố ";
                     sOutwardsCommand += command.To.Name + " (" + command.To.X.ToString("000") + "|" + command.To.Y.ToString("000") + ")</td>";
                     sOutwardsCommand += "<td>" + command.LandingTime.ToString() + "</td>";
                     sOutwardsCommand += "<td><span class='timer'>" + Functions.FormatTime(command.LandingTime - DateTime.Now) + "</span></td></tr>";
@@ -75,7 +75,7 @@ public partial class rally : System.Web.UI.Page
             else if (command.Type == MoveType.Return)
             {
                 sInwardsCommand += "<tr><td><a href='command.aspx?id=" + this.village.ID.ToString() + "&command=" + command.ID.ToString() + "'>";
-                sInwardsCommand += "<img src='images/back.png'/>Quay về từ ";
+                sInwardsCommand += "<img src='images/return.png'/> Quay về từ ";
                 sInwardsCommand += command.To.Name + " (" + command.From.X.ToString("000") + "|" + command.From.Y.ToString("000") + ")</td>";
                 sInwardsCommand += "<td>" + command.LandingTime.ToString() + "</td>";
                 sInwardsCommand += "<td><span class='timer'>" + Functions.FormatTime(command.LandingTime - DateTime.Now) + "</span></td></tr>";
