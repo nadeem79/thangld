@@ -921,7 +921,6 @@ namespace beans
                     break;
                 default:
                     throw new Exception("Hack hả ku :))");
-                    break;
             }
             
                 

@@ -21,7 +21,12 @@ public partial class index : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        
+        //ISession session = NHibernateHelper.CreateSession();
+        //MovingCommand command = session.Get<MovingCommand>(142);
+        //ITransaction trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
+        //command.effect(session);
+        //trans.Commit();
+        //session.Close();
         
     }
 

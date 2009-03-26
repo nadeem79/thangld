@@ -8,6 +8,15 @@ table.main { background-color:#F1EBDD; background-image:url(../images/content.jp
 table.news { background-color:#F1EBDD; }
 .in_border { background-color:#F1EBDD; text-align:left;}
 
+.small
+{
+    font-size:xx-small;   
+}
+
+.hiddent
+{
+    color:#DED3B9;   
+}
 
 span.timer_replace span { display:none; }
 

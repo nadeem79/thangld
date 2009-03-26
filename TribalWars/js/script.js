@@ -33,10 +33,34 @@ function attackTimer()
             }
             if (second==0&&minute==0&&hour==0)
                 history.go(0);
-            $(this).html(hour + ":" + minute + ":" + second);
+            $(this).html(hour + ":" + ((minute < 10) ? ("0" + minute) : minute) + ":" + ((second < 10) ? ("0" + second) : second));
         });
-        setTimeout("attackTimer()", 1000);
+        
+        if ($('span.timer').size()>0)
+            setTimeout("attackTimer()", 1000);
 }
+
+function increaseTime() {
+    $('span.increaseTimer').each(function() {
+        var arr = $(this).html().split(":");
+        var hour = eval(arr[0]);
+        var minute = eval(arr[1]);
+        var second = eval(arr[2]);
+
+        second++;
+        if (second > 59) {
+            minute++;
+            second = 00;
+        }
+        if (minute >59) {
+            hour++;
+            minute = 00;
+        }
+        $(this).html(hour + ":" + ((minute < 10) ? ("0" + minute) : minute) + ":" + ((second < 10) ? ("0" + second) : second));
+    });
+    setTimeout("increaseTime()", 1000);
+}   
+
 
 function insertUnit(element, value)
 {

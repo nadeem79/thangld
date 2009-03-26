@@ -8,8 +8,7 @@ namespace beans
     public class SupportReport:Report
     {
         #region Variables
-        private Village from, to;
-        private int spearSent, swordSent, axeSent, scoutSent, lightSent, heavySent, ramSent, catapultSent, nobleSent;
+
         #endregion
 
         #region Properties
@@ -18,71 +17,60 @@ namespace beans
         {
             get { return ReportType.Support; }
         }
-
         public virtual Village From
         {
-            get { return this.from; }
-            set { this.from = value; }
+            get;
+            set;
         }
-
         public virtual Village To
         {
-            get { return this.to; }
-            set { this.to = value; }
+            get;
+            set;
         }
-
         public virtual int Spear
         {
-            get { return spearSent; }
-            set { spearSent = value; }
+            get;
+            set;
         }
-
         public virtual int Sword
         {
-            get { return swordSent; }
-            set { swordSent = value; }
+            get;
+            set;
         }
-
         public virtual int Axe
         {
-            get { return axeSent; }
-            set { axeSent = value; }
+            get;
+            set;
         }
-
         public virtual int Scout
         {
-            get { return scoutSent; }
-            set { scoutSent = value; }
+            get;
+            set;
         }
-
         public virtual int Light
         {
-            get { return lightSent; }
-            set { lightSent = value; }
+            get;
+            set;
         }
-
         public virtual int Heavy
         {
-            get { return heavySent; }
-            set { heavySent = value; }
+            get;
+            set;
         }
-
         public virtual int Ram
         {
-            get { return ramSent; }
-            set { ramSent = value; }
+            get;
+            set;
         }
-
         public virtual int Catapult
         {
-            get { return catapultSent; }
-            set { catapultSent = value; }
+            get;
+            set;
         }
-
         public virtual int Noble
         {
-            get { return nobleSent; }
-            set { nobleSent = value; }
+            get;
+            set;
         }
 
         #endregion

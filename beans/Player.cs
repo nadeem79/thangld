@@ -148,14 +148,18 @@ namespace beans
 
         public MovingCommand GetCommand(int command_id, ISession session)
         {
-            MovingCommand m;
             ICriteria criteria = session.CreateCriteria(typeof(MovingCommand));
-            criteria.Add(Expression.Eq("Owner", this));
             criteria.Add(Expression.Eq("ID", command_id));
             IList<MovingCommand> lstCommand = criteria.List<MovingCommand>();
             if (lstCommand.Count == 0)
                 return null;
-            return lstCommand[0];
+
+            MovingCommand command = lstCommand[0];
+            if (command.From.Owner != this && command.To.Owner != this)
+                return null;
+
+
+            return command;
         }
 
         public Report GetReport(int report_id, ISession session)

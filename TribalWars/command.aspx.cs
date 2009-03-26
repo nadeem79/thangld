@@ -46,17 +46,18 @@ public partial class command : System.Web.UI.Page
 
         this.pCommandFound.Visible = true;
         this.pCommandNotFound.Visible = false;
+        switch (current.Type)
+        {
+            case MoveType.Attack:
 
-        if (this.current.From.Owner.ID == (int)Session["user"] && this.current.Type == MoveType.Attack)
-            this.lblAttackType.Text = "Tấn công";
-        else if (this.current.Type == MoveType.Attack)
-            this.lblAttackType.Text = "Tấn công từ";
-        else if (this.current.From.Owner.ID == (int)Session["user"] && this.current.Type == MoveType.Support)
-            this.lblAttackType.Text = "Hỗ trợ";
-        else if (this.current.Type == MoveType.Support)
-            this.lblAttackType.Text = "Hỗ trợ từ";
-        else if (this.current.Type == MoveType.Return)
-            this.lblAttackType.Text = "Quay về từ";
+                AttackCommand command = (AttackCommand)Page.LoadControl("AttackCommand.ascx");
+                command.Command = current;
+                command.CurrentVillage = village;
+                this.pCommand.Controls.Add(command);
+                break;
+            default:
+                throw new Exception("Hack hả ku :))");
+        }
 
         //SqlCommand cmdGetCommandInfo = conn.CreateCommand();
         //cmdGetCommandInfo.CommandText = "select m.*, v1.id as id1, v1.x as x1, v1.y as y1, v1.name as name1, v1.userid as userid1, v2.id as id2, v2.x as x2, v2.y as y2, v2.name as name2, v2.userid as userid2 from movement m inner join villages v1 on (v1.id=m.[from]) inner join villages v2 on (v2.id=m.[to]) where m.landing_time>getdate() and (m.[from]=@village_id1 or m.[to]=@village_id2) and m.id=@id";

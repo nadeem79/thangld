@@ -8,11 +8,6 @@ namespace beans
 {
     public abstract class MovingCommand : IdentityObject
     {
-        public Player Owner
-        {
-            get;
-            set;
-        }
         public Village From
         {
             get;

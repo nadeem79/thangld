@@ -75,6 +75,23 @@
       <property name="Building" column="building" type="beans.BuildingType, beans" />
       
     </subclass>
+
+    <subclass discriminator-value="6" name="beans.SupportReport, beans" lazy="false">
+      <property name="Spear" column="aspear" type="Int32" />
+      <property name="Sword" column="asword" type="Int32" />
+      <property name="Axe" column="aaxe" type="Int32" />
+      <property name="Scout" column="ascout" type="Int32" />
+      <property name="Light" column="alight" type="Int32" />
+      <property name="Heavy" column="aheavy" type="Int32" />
+      <property name="Catapult" column="acatapult" type="Int32" />
+      <property name="Ram" column="aram" type="Int32" />
+      <property name="Noble" column="anoble" type="Int32" />
+
+      <many-to-one name="From" class="beans.Village, beans" column="village_1" not-null="true" lazy="proxy" />
+      <many-to-one name="To" class="beans.Village, beans" column="village_2" not-null="true" lazy="proxy" />
+
+    </subclass>
+    
     
   </class>
 
