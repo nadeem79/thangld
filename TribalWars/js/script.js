@@ -72,3 +72,53 @@ function insertUnit(element, value)
     else
         $("#" + element).val("0");
 }
+
+function overviewShowLevel() {
+	labels = overviewGetLabels();
+	for(var i=0, len=labels.length; i < len; i++) {
+		var label = labels[i];
+		if(!label) continue;
+		label.style.display = 'inline';
+	}
+}
+
+function overviewHideLevel() 
+{
+	labels = overviewGetLabels();
+	for(var i=0, len=labels.length; i < len; i++) {
+		var label = labels[i];
+		if(!label) continue;
+		label.style.display = 'none';
+	}
+}
+
+function gid(id) 
+{
+	return document.getElementById(id);
+}
+
+function overviewGetLabels() {
+	labels = Array();
+	labels.push(gid("l_main"));
+	labels.push(gid("l_place"));
+	labels.push(gid("l_wood"));
+	labels.push(gid("l_stone"));
+	labels.push(gid("l_iron"));
+	labels.push(gid("l_statue"));
+	labels.push(gid("l_wall"));
+	labels.push(gid("l_farm"));
+	labels.push(gid("l_hide"));
+
+	labels.push(gid("l_storage"));
+	labels.push(gid("l_market"));
+
+	labels.push(gid("l_barracks"));
+	labels.push(gid("l_stable"));
+	labels.push(gid("l_garage"));
+	labels.push(gid("l_church"));
+	labels.push(gid("l_church_f"));
+	labels.push(gid("l_snob"));
+	labels.push(gid("l_smith"));
+
+	return labels;
+}

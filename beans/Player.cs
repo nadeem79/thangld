@@ -24,25 +24,21 @@ namespace beans
             get;
             set;
         }
-
         public virtual Sex Gender
         {
             get;
             set;
         }
-
         public virtual Group Tribe
         {
             get;
             set;
         }
-
         public virtual IList<Village> Villages
         {
             get;
             set;
         }
-
         public virtual string Username
         {
             get { return username; }
@@ -54,7 +50,6 @@ namespace beans
                     throw new ArgumentException("Tên đăng nhập không được rỗng");
             }
         }
-
         public virtual string Password
         {
             get { return this.password; }
@@ -66,31 +61,26 @@ namespace beans
                     throw new ArgumentException("Mật khẩu không được rỗng");
             }
         }
-
         public virtual string Yahoo
         {
             get;
             set;
         }
-
         public virtual string Address
         {
             get;
             set;
         }
-
         public virtual string Skype
         {
             get;
             set;
         }
-
         public virtual string Msn
         {
             get;
             set;
         }
-
         public virtual string Email
         {
             get
@@ -113,14 +103,22 @@ namespace beans
                     throw new ArgumentException("Email phải đúng định dạng xxx@xxx.xxx");
             }
         }
-
         public virtual string Description
         {
             get;
             set;
         }
-
         public virtual bool Avatar
+        {
+            get;
+            set;
+        }
+        public bool GraphicalVillage
+        {
+            get;
+            set;
+        }
+        public bool ShowBuildingLevel
         {
             get;
             set;

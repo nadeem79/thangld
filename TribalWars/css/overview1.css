@@ -54,3 +54,13 @@ div.label_night a:active { color:#CCCCCC}
 div.label_night a:hover { color:white}
 div.label img { display:none; }
 div.label_night img { display:none; }
+
+.npc_conversation{ position:absolute; z-index:2; left:222px; top:245px; }
+.npc_guard{ position:absolute; z-index:2; left:177px; top:192px;}
+.npc_juggler{ position:absolute; z-index:2; left:210px; top:225px;}
+.npc_farmer{ position:absolute; z-index:2; left:558px; top:66px;}
+.smith_anim{ position:absolute; z-index:3; left:174px; top:322
+.p_main_flag{ position:absolute; z-index:2; left:291px; top:67px; 
+.p_farm_field{ position:absolute; z-index:2; right:0; top:106px; }
+}
+px;}

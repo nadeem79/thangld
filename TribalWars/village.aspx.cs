@@ -12,6 +12,7 @@ using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using System.Data.SqlClient;
 using beans;
+using NHibernate;
 
 public partial class village : System.Web.UI.Page
 {
@@ -22,10 +23,25 @@ public partial class village : System.Web.UI.Page
     {
         current = ((inPage)(this.Master)).CurrentVillage;
         
-    }
+        ISession session =  NHibernateHelper.CreateSession();
 
-    private string CreateTroopLabel(string image, int number, string name)
-    {
-        return "";
+        Player currentPlayer = session.Load<Player>(Session["user"]);
+        session.Close();
+        if (currentPlayer.GraphicalVillage)
+        {
+            GraphicVillageInfo pGraphicVillageInfo = (GraphicVillageInfo)Page.LoadControl("GraphicVillageInfo.ascx");
+            pGraphicVillageInfo.CurrentVillage = current;
+            pGraphicVillageInfo.DisplayBuildingLevel = currentPlayer.ShowBuildingLevel;
+            this.pVillageInfo.Controls.Add(pGraphicVillageInfo);
+            return;
+        }
+        else
+        {
+            TextVillageInfo pTextVillageInfo = (TextVillageInfo)Page.LoadControl("TextVillageInfo.ascx");
+            pTextVillageInfo.CurrentVillage = current;
+            this.pVillageInfo.Controls.Add(pTextVillageInfo);
+            return;
+        }
+
     }
 }

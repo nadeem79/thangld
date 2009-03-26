@@ -18,6 +18,8 @@
     <property name="Description" column="description" type="string" not-null="false" />
     <property name="Avatar" column="avatar" type="Boolean" not-null="false" />
     <property name="Address" column="address" type="string" length="500" not-null="false" />
+    <property name="GraphicalVillage" column="graphics_village" type="Boolean" not-null="false" />
+    <property name="ShowBuildingLevel" column="building_level" type="Boolean" not-null="false" />
 
     <bag name="Villages" table="villages" cascade="none" fetch="join" inverse="true"  lazy="true">
       <key column="userid" />

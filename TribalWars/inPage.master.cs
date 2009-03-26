@@ -34,6 +34,7 @@ public partial class inPage : System.Web.UI.MasterPage
 
     void inPage_Init(object sender, EventArgs e)
     {
+        
         DateTime start = DateTime.Now;
         int id;
         ISession session;
@@ -54,6 +55,7 @@ public partial class inPage : System.Web.UI.MasterPage
             session.Close();
             Response.Redirect("index.aspx", true);
         }
+        test.Text = currentUser.ShowBuildingLevel.ToString();
         this.time.Text = (this.CurrentVillage == null).ToString();
         trans = session.BeginTransaction();
         currentUser.Update(DateTime.Now, session);

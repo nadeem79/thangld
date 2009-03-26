@@ -18,6 +18,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
+    <asp:Label ID="test" runat="server" Text="Label"></asp:Label>
     <div class="top_background">
     </div>
     <div style="text-align: center;">
