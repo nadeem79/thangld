@@ -12,8 +12,7 @@
                 </td>
                 <td>
                     <h2>
-                        Mỏ sắt cấp
-                        <asp:Label ID="lblLevel" runat="server"></asp:Label></h2>
+                        Mỏ sắt cấp <% Response.Write(this.current.IronMine); %></h2>
                     Không như dầu mỏ Arập hay kim cương Châu Phi, các mỏ sắt trong Medieval Wars 
                     không bao giờ cạn kiệt. Cứ yên tâm khai thác, lấy nhiều được nhiều, lấy ít được 
                     ít. Nhưng cẩn thận đấy: Sắt chuyên dùng cho đào tạo quân đội, nên cũng dễ bị 

@@ -11,7 +11,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 
-public partial class village_graphic : System.Web.UI.UserControl
+public partial class village2 : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
