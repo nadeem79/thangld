@@ -40,7 +40,7 @@ public partial class inPage : System.Web.UI.MasterPage
         ITransaction trans;
         if (object.Equals(Session["user"], null))
         {
-            Response.Redirect("index.aspx", true);
+            Response.Redirect("session_expired.aspx", true);
             return;
         }
 
