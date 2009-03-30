@@ -33,7 +33,8 @@ public partial class GraphicVillageInfo : System.Web.UI.UserControl
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if (!DisplayBuildingLevel)
+            this.bttnHideBuildingLevel.Text = "Hiển thị nâng cấp công trình";
     }
 
     protected void bttnSwitchTextVillageOverview_Click(object sender, EventArgs e)
@@ -71,7 +72,7 @@ public partial class GraphicVillageInfo : System.Web.UI.UserControl
         {
             session = NHibernateHelper.CreateSession();
             Player player = session.Load<Player>(Session["user"]);
-            player.ShowBuildingLevel = false;
+            player.ShowBuildingLevel = !player.ShowBuildingLevel;
             trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
             session.Update(player);
             trans.Commit();

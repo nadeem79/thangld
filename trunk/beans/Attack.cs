@@ -166,56 +166,91 @@ namespace beans
 
         public override void effect(ISession session)
         {
-            AttackReport report = new AttackReport();
-            report.Time = this.LandingTime;
-            report.Title = this.From.Owner.Username + " tấn công " + this.To.Name + "(" + this.To.X.ToString() + "|" + this.To.Y.ToString() + ")";
-            this.From.Update(this.LandingTime, session);
             this.To.Update(this.LandingTime, session);
-            report.From = this.From;
-            report.To = this.To;
+            //this.From.Update(this.LandingTime, session);
 
-            report.SpearSent = this.Spear;
-            report.SwordSent = this.Sword;
-            report.AxeSent = this.Axe;
-            report.ScoutSent = this.Scout;
-            report.LightSent = this.Light;
-            report.HeavySent = this.Heavy;
-            report.RamSent = this.Ram;
-            report.CatapultSent = this.Catapult;
-            report.NobleSent = this.Noble;
+            AttackReport defenseSideReport = new AttackReport();
+            AttackReport attackSideReport = new AttackReport();
+            
+            attackSideReport.Time = this.LandingTime;
+            attackSideReport.Title = this.From.Owner.Username + " tấn công " + this.To.Name + "(" + this.To.X.ToString("000") + "|" + this.To.Y.ToString("000") + ")";
+            attackSideReport.From = this.From;
+            attackSideReport.To = this.To;
 
-            report.SpearDefense = this.To.TotalSpear;
-            report.SwordDefense = this.To.TotalSword;
-            report.AxeDefense = this.To.TotalAxe;
-            report.ScoutDefense = this.To.TotalScout;
-            report.LightDefense = this.To.TotalLight;
-            report.HeavyDefense = this.To.TotalHeavy;
-            report.RamDefense = this.To.TotalRam;
-            report.CatapultDefense = this.To.TotalCatapult;
-            report.NobleDefense = this.To.TotalNoble;
+            defenseSideReport.Time = this.LandingTime;
+            defenseSideReport.Title = this.From.Owner.Username + " tấn công " + this.To.Name + "(" + this.To.X.ToString("000") + "|" + this.To.Y.ToString("000") + ")";
+            defenseSideReport.From = this.From;
+            defenseSideReport.To = this.To;
 
-            report.LoyalAfter = this.To.Loyal;
-            report.Building = this.Building;
-            report.BuildingAfter = this.To[this.Building];
+            attackSideReport.SpearSent = this.Spear;
+            attackSideReport.SwordSent = this.Sword;
+            attackSideReport.AxeSent = this.Axe;
+            attackSideReport.ScoutSent = this.Scout;
+            attackSideReport.LightSent = this.Light;
+            attackSideReport.HeavySent = this.Heavy;
+            attackSideReport.RamSent = this.Ram;
+            attackSideReport.CatapultSent = this.Catapult;
+            attackSideReport.NobleSent = this.Noble;
+
+            defenseSideReport.SpearSent = this.Spear;
+            defenseSideReport.SwordSent = this.Sword;
+            defenseSideReport.AxeSent = this.Axe;
+            defenseSideReport.ScoutSent = this.Scout;
+            defenseSideReport.LightSent = this.Light;
+            defenseSideReport.HeavySent = this.Heavy;
+            defenseSideReport.RamSent = this.Ram;
+            defenseSideReport.CatapultSent = this.Catapult;
+            defenseSideReport.NobleSent = this.Noble;
+
+            attackSideReport.SpearDefense = this.To.TotalSpear;
+            attackSideReport.SwordDefense = this.To.TotalSword;
+            attackSideReport.AxeDefense = this.To.TotalAxe;
+            attackSideReport.ScoutDefense = this.To.TotalScout;
+            attackSideReport.LightDefense = this.To.TotalLight;
+            attackSideReport.HeavyDefense = this.To.TotalHeavy;
+            attackSideReport.RamDefense = this.To.TotalRam;
+            attackSideReport.CatapultDefense = this.To.TotalCatapult;
+            attackSideReport.NobleDefense = this.To.TotalNoble;
+
+            defenseSideReport.SpearDefense = this.To.TotalSpear;
+            defenseSideReport.SwordDefense = this.To.TotalSword;
+            defenseSideReport.AxeDefense = this.To.TotalAxe;
+            defenseSideReport.ScoutDefense = this.To.TotalScout;
+            defenseSideReport.LightDefense = this.To.TotalLight;
+            defenseSideReport.HeavyDefense = this.To.TotalHeavy;
+            defenseSideReport.RamDefense = this.To.TotalRam;
+            defenseSideReport.CatapultDefense = this.To.TotalCatapult;
+            defenseSideReport.NobleDefense = this.To.TotalNoble;
+
+            attackSideReport.LoyalAfter = this.To.Loyal;
+            attackSideReport.Building = this.Building;
+            attackSideReport.BuildingAfter = this.To[this.Building];
+
+            defenseSideReport.LoyalAfter = this.To.Loyal;
+            defenseSideReport.Building = this.Building;
+            defenseSideReport.BuildingAfter = this.To[this.Building];
 
             Random r = new Random();
-            double luck = r.NextDouble();
-            int infantryAttack = this.Spear * 10 + this.Sword * 25 + this.Axe * 40 + this.Noble * 30;
-            int cavalryAttack = this.Light * 130 + this.Heavy * 150;
-            int totalAttack = infantryAttack + cavalryAttack;
+            double luck = 0.3 * (2 * r.NextDouble() - 1);
+            attackSideReport.Luck = luck;
+            defenseSideReport.Luck = luck;
+            long infantryAttack = this.Spear * 10 + this.Sword * 25 + this.Axe * 40 + this.Noble * 30;
+            long cavalryAttack = this.Light * 130 + this.Heavy * 150;
+            long totalAttack = infantryAttack + cavalryAttack;
 
             double pInfantry = (double)infantryAttack / (double)totalAttack;
             double pCavalry = (double)cavalryAttack / (double)totalAttack;
 
-            int infantryDefense = this.To.TotalSpear * 15 + this.To.TotalSword * 50 + this.To.TotalAxe * 10 + this.To.TotalLight * 30 + this.To.TotalHeavy * 200 + this.To.TotalNoble * 100;
-            int cavalryDefense = this.To.TotalSpear * 45 + this.To.TotalSword * 15 + this.To.TotalAxe * 5 + this.To.TotalLight * 40 + this.To.TotalHeavy * 80 + this.To.TotalNoble * 50;
-            int totalDefense = (int)(infantryDefense * pInfantry + cavalryDefense * pCavalry) + 100;
+            long infantryDefense = this.To.TotalSpear * 15 + this.To.TotalSword * 50 + this.To.TotalAxe * 10 + this.To.TotalLight * 30 + this.To.TotalHeavy * 200 + this.To.TotalNoble * 100;
+            long cavalryDefense = this.To.TotalSpear * 45 + this.To.TotalSword * 15 + this.To.TotalAxe * 5 + this.To.TotalLight * 40 + this.To.TotalHeavy * 80 + this.To.TotalNoble * 50;
+            long totalDefense = (long)(infantryDefense * pInfantry + cavalryDefense * pCavalry) + 100;
 
             totalAttack = (totalAttack / totalDefense) * totalAttack;
-            totalAttack += (int)(totalAttack * luck);
+            totalAttack += (long)(totalAttack * luck);
 
-            double ratio;
+            double ratio;   
             Player owner = this.To.Owner;
+            attackSideReport.SuccessAttack = defenseSideReport.SuccessAttack = (totalAttack > totalDefense);
             if (totalAttack > totalDefense)
             {
                 ratio = 1 - ((double)totalDefense / (double)totalAttack);
@@ -230,26 +265,25 @@ namespace beans
                 this.From.InVillageCatapult -= (int)Math.Round(this.Catapult * (1 - ratio));
                 this.From.InVillageNoble -= (int)Math.Round(this.Noble * (1 - ratio));
 
-                this.Spear = (int)Math.Round(this.Spear * ratio);
-                this.Sword = (int)Math.Round(this.Sword * ratio);
-                this.Axe = (int)Math.Round(this.Axe * ratio);
-                this.Light = (int)Math.Round(this.Light * ratio);
-                this.Scout = (int)Math.Round(this.Scout * ratio);
-                this.Heavy = (int)Math.Round(this.Heavy * ratio);
-                this.Ram = (int)Math.Round(this.Ram * ratio);
-                this.Catapult = (int)Math.Round(this.Catapult * ratio);
-                this.Noble = (int)Math.Round(this.Noble * ratio);
-                this.To.StationedTroops.Clear();
+                defenseSideReport.SpearReturnt = attackSideReport.SpearReturnt = this.Spear = (int)Math.Round(this.Spear * ratio);
+                defenseSideReport.SwordReturnt = attackSideReport.SwordReturnt = this.Sword = (int)Math.Round(this.Sword * ratio);
+                defenseSideReport.AxeReturnt = attackSideReport.AxeReturnt = this.Axe = (int)Math.Round(this.Axe * ratio);
+                defenseSideReport.LightReturnt = attackSideReport.LightReturnt = this.Light = (int)Math.Round(this.Light * ratio);
+                defenseSideReport.ScoutReturnt = attackSideReport.ScoutReturnt = this.Scout = (int)Math.Round(this.Scout * ratio);
+                defenseSideReport.HeavyReturnt = attackSideReport.HeavyReturnt = this.Heavy = (int)Math.Round(this.Heavy * ratio);
+                defenseSideReport.RamReturnt = attackSideReport.RamReturnt = this.Ram = (int)Math.Round(this.Ram * ratio);
+                defenseSideReport.CatapultReturnt = attackSideReport.CatapultReturnt = this.Catapult = (int)Math.Round(this.Catapult * ratio);
+                defenseSideReport.NobleReturnt = attackSideReport.NobleReturnt = this.Noble = (int)Math.Round(this.Noble * ratio);
 
-                this.To.Spear = 0;
-                this.To.Sword = 0;
-                this.To.Axe = 0;
-                this.To.Scout = 0;
-                this.To.Light = 0;
-                this.To.Heavy = 0;
-                this.To.Ram = 0;
-                this.To.Catapult = 0;
-                this.To.Noble = 0;
+                this.To.InVillageSpear = defenseSideReport.SpearSurvived = attackSideReport.SpearSurvived = this.To.Spear = 0;
+                this.To.InVillageSword = defenseSideReport.SwordSurvived = attackSideReport.SwordSurvived = this.To.Sword = 0;
+                this.To.InVillageAxe = defenseSideReport.AxeSurvived = attackSideReport.AxeSurvived = this.To.Axe = 0;
+                this.To.InVillageScout = defenseSideReport.ScoutSurvived = attackSideReport.ScoutSurvived = this.To.Scout = 0;
+                this.To.InVillageLight = defenseSideReport.LightSurvived = attackSideReport.LightSurvived = this.To.Light = 0;
+                this.To.InVillageHeavy = defenseSideReport.HeavySurvived = attackSideReport.HeavySurvived = this.To.Heavy = 0;
+                this.To.InVillageRam = defenseSideReport.RamSurvived = attackSideReport.RamSurvived = this.To.Ram = 0;
+                this.To.InVillageCatapult = defenseSideReport.CatapultSurvived = attackSideReport.CatapultSurvived = this.To.Catapult = 0;
+                this.To.InVillageNoble = defenseSideReport.NobleSurvived = attackSideReport.NobleSurvived = this.To.Noble = 0;
 
                 if (this.Noble > 0)
                     this.To.Loyal -= (r.Next(15) + 20);
@@ -428,14 +462,14 @@ namespace beans
 
             }
 
-
+            this.From.LastUpdate = this.To.LastUpdate = this.LandingTime;
             session.Update(this.To);
             session.Update(this.From);
 
-            report.Owner = this.From.Owner;
-            session.Save(report);
-            report.Owner = owner;
-            session.Save(report);
+            attackSideReport.Owner = this.From.Owner;
+            session.Save(attackSideReport);
+            defenseSideReport.Owner = owner;
+            session.Save(defenseSideReport);
         }
         #endregion
     }

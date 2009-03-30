@@ -17,7 +17,7 @@ using System.Collections.Generic;
 
 public partial class inPage : System.Web.UI.MasterPage
 {
-
+    private Player player;
     private beans.Village village;
     public beans.Village CurrentVillage
     {
@@ -25,6 +25,10 @@ public partial class inPage : System.Web.UI.MasterPage
         {
             return this.village;
         }
+    }
+    public Player Player
+    {
+        get { return this.player; }
     }
 
     public inPage()
@@ -48,28 +52,26 @@ public partial class inPage : System.Web.UI.MasterPage
         session = NHibernateHelper.CreateSession();
 
 
-        beans.Player currentUser = session.Load<beans.Player>((int)Session["user"]);
+        this.player = session.Load<beans.Player>((int)Session["user"]);
 
-        if (currentUser == null)
+        if (this.player == null)
         {
             session.Close();
             Response.Redirect("index.aspx", true);
         }
-        test.Text = currentUser.ShowBuildingLevel.ToString();
         this.time.Text = (this.CurrentVillage == null).ToString();
         trans = session.BeginTransaction();
-        currentUser.Update(DateTime.Now, session);
+        this.player.Update(DateTime.Now, session);
         trans.Commit();
 
         if (object.Equals(Request["id"], null) || (!int.TryParse(Request["id"], out id)))
-            this.village = currentUser.Villages[0];
+            this.village = this.player.Villages[0];
         else
-            this.village = currentUser.GetVillage(id);
+            this.village = this.player.GetVillage(id);
         
         if (this.village == null)
-            this.village = currentUser.Villages[0];
+            this.village = this.player.Villages[0];
         ViewState["village"] = village;
-        this.time.Text = currentUser.Villages.Count.ToString();
 
         int incomingAttackCount = village.GetIncomingAttackCount(session);
         int incomingSupportCount = village.GetIncomingSupportCount(session);

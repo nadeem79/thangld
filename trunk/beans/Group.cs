@@ -2,97 +2,99 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NHibernate;
 
 namespace beans
 {
     public class Group
     {
         #region Variables
-        private int id;
-        private string tag;
-        private string name;
-        private string description;
-        private string introduction;
-        private List<Player> inviteList;
-        private List<Player> members;
-        private List<Group> allies;
-        private List<Group> naps;
-        private List<Group> enemies;
 
         #endregion
 
         #region Properties
-        public virtual List<Group> Enemies
+        public IList<Group> Enemies
         {
-            get { return enemies; }
-            set { enemies = value; }
+            get;
+            set;
         }
-
-        public virtual List<Group> Naps
+        public IList<Group> Naps
         {
-            get { return naps; }
-            set { naps = value; }
+            get;
+            set;
         }
-
-        public virtual List<Group> Allies
+        public IList<Group> Allies
         {
-            get { return allies; }
-            private set { allies = value; }
+            get;
+            set;
         }
-
-        public virtual List<Player> Members
+        public IList<Player> Members
         {
-            get { return members; }
-            private set { members = value; }
+            get;
+            set;
         }
-        
-
         public string Name
         {
-            get { return name; }
-            set { name = value; }
+            get;
+            set;
         }
-
-        public virtual int ID
+        public int ID
         {
-            get { return id; }
-            set { id = value; }
+            get;
+            set;
         }
-
-        public virtual string Tag
+        public string Tag
         {
-            get { return this.tag; }
-            set { this.tag = value; }
+            get;
+            set;
         }
-
-        public virtual string Description
+        public string Description
         {
-            get { return this.description; }
-            set { this.description = value; }
+            get;
+            set;
         }
-
-        public virtual string Introduction
+        public string Introduction
         {
-            get { return this.introduction; }
-            set { this.introduction = value; }
+            get;
+            set;
+        }
+        public IList<TribeInvite> Invites
+        {
+            get;
+            set;
+        }
+        public bool Avatar
+        {
+            get;
+            set;
         }
 
         #endregion
 
         #region Constructors
-        public Group()
-        {
-            this.allies = new List<Group>();
-            this.enemies = new List<Group>();
-            this.naps = new List<Group>();
-            this.members = new List<Player>();
-            this.inviteList = new List<Player>();
-        }
-
         #endregion
 
         #region Methods
+        public override string ToString()
+        {
+            return this.Tag;
+        }
 
+        public void Disband(ISession session)
+        {
+            foreach (Player member in this.Members)
+            {
+                member.Group = null;
+                session.Update(member);
+            }
+            this.Members.Clear();
+        }
+        public void DismissMember(Player member, ISession session)
+        {
+            this.Members.Remove(member);
+            member.Group = null;
+            session.Update(member);
+        }
         #endregion
     }
 }
