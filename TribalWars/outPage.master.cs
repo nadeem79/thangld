@@ -18,4 +18,10 @@ public partial class outPage : System.Web.UI.MasterPage
     {
         
     }
+    
+    
+    protected void Timer1_Tick(object sender, EventArgs e)
+    {
+
+    }
 }

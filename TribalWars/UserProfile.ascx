@@ -148,7 +148,7 @@
                 Ảnh đại diện:
             </td>
             <td>
-                <% if (this.player.Avatar) Response.Write("<img src='data/images/" + this.player.ID.ToString() + ".jpg' alt='" + this.player.Username + "' /><br />"); %>
+                <% if (this.player.Avatar) Response.Write("<img src='data/images/member/" + this.player.ID.ToString() + ".jpg' alt='" + this.player.Username + "' /><br />"); %>
                 <asp:LinkButton ID="aDeleteAvatar" runat="server" OnClick="aDeleteAvatar_Click">Xoá ảnh đại diện</asp:LinkButton>
                 <asp:FileUpload ID="fileAvatar" runat="server" Width="500px" /><br />
                 <span style="font-size: xx-small;">Kích thước tối đa 240x180, dung lượng tối đa 120kByte,

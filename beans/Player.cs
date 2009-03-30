@@ -123,6 +123,21 @@ namespace beans
             get;
             set;
         }
+        public Group Group
+        {
+            get;
+            set;
+        }
+        public TribePermission TribePermission
+        {
+            get;
+            set;
+        }
+        public IList<TribeInvite> Invites
+        {
+            get;
+            set;
+        }
         #endregion
 
         #region Constructors
@@ -143,6 +158,62 @@ namespace beans
         #endregion
 
         #region Methods
+
+        public override string ToString()
+        {
+            return this.Username;
+        }
+
+        #region TribeMethod
+        public void CreateTribe(string tag, string name, ISession session)
+        {
+            beans.Group group = new Group();
+            group.Tag = tag;
+            group.Name = name;
+            this.Group = group;
+            this.TribePermission = TribePermission.Duke;
+            session.Save(group);
+            session.Update(this);
+        }
+
+        public void DisbandTribe(ISession session)
+        {
+            if (this.Group == null && this.TribePermission != beans.TribePermission.Duke)
+                return;
+            foreach (TribeInvite invite in this.Group.Invites)
+                session.Delete(invite);
+            foreach (Player member in this.Group.Members)
+            {
+                member.Group = null;
+                session.Update(member);
+            }
+            session.Delete(this.Group);
+        }
+
+        public void DismissPlayer(Player player, ISession session)
+        {
+            if (player.Group == this.Group || ((this.TribePermission & TribePermission.DismissPlayer) == TribePermission.DismissPlayer))
+                return;
+
+            player.Group = null;
+            session.Update(player);
+        }
+
+        public void ChangeDescription(string description, ISession session)
+        {
+            if ((this.TribePermission & TribePermission.DiplomateOfficer) == 0)
+                return;
+            this.Group.Description = description;
+            session.Update(this.Group);
+        }
+
+        public void SetDiplomacy(Group group, TribeDiplomate diplomacy, ISession session)
+        {
+            if ((this.TribePermission & TribePermission.DiplomateOfficer) == 0)
+                return; 
+        }
+        #endregion
+
 
         public MovingCommand GetCommand(int command_id, ISession session)
         {

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NHibernate;
+using NHibernate.Criterion;
 
 namespace beans
 {
@@ -50,6 +52,33 @@ namespace beans
             }
             return start.AddMilliseconds(RangeCalculator(sourceX, sourceY, desX, desY) * intMoveTime);
         }
+
+        public static IList<Village> GetMap(Village center, ISession session)
+        {
+            ICriteria criteria = session.CreateCriteria(typeof(Village));
+
+            criteria.Add(Expression.Le("X", center.X + 7));
+            criteria.Add(Expression.Ge("X", center.X - 7));
+            criteria.Add(Expression.Le("Y", center.Y + 7));
+            criteria.Add(Expression.Ge("Y", center.Y - 7));
+            criteria.AddOrder(Order.Desc("X"));
+            criteria.AddOrder(Order.Desc("Y"));
+
+            return criteria.List<Village>();
+        }
+
+        public static IList<Village> GetMap(int x, int y, ISession session)
+        {
+            ICriteria criteria = session.CreateCriteria(typeof(Village));
+            criteria.Add(Expression.Le("X", x + 7));
+            criteria.Add(Expression.Ge("X", x - 7));
+            criteria.Add(Expression.Le("Y", y + 7));
+            criteria.Add(Expression.Ge("Y", y - 7));
+            criteria.AddOrder(Order.Desc("X"));
+            criteria.AddOrder(Order.Desc("Y"));
+
+            return criteria.List<Village>();
+        } 
 
     }
 }

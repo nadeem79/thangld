@@ -107,7 +107,12 @@ namespace beans
         public int Loyal
         {
             get { return loyal; }
-            set { loyal = value; }
+            set 
+            {
+                loyal = value;
+                if (loyal > 100)
+                    loyal = 100;
+            }
         }
 
         public virtual DateTime LastUpdate
@@ -791,6 +796,7 @@ namespace beans
         //Chưa xét trường hợp xây nhà, xây noble và xe
         public void Update(DateTime to, ISession session)
         {
+            this.Loyal += (to - this.LastUpdate).Hours;
             IList<MovingCommand> lstMovingCommands = this.GetDependingCommands(to, session);
             IList<Recruit> lstInfantryRecruits = this.GetDependingInfantryRecruit(session);
             IList<Recruit> lstCavalryRecruits = this.GetDependingCavalryRecruit(session);
@@ -955,7 +961,6 @@ namespace beans
                     break;
                 default:
                     throw new Exception("Hack hả ku :))");
-                    break;
             }
             return criteria.List<Recruit>();
         }

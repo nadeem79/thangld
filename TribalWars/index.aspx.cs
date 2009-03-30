@@ -21,39 +21,46 @@ public partial class index : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        //ISession session = NHibernateHelper.CreateSession();
-        //MovingCommand command = session.Get<MovingCommand>(142);
-        //ITransaction trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
-        //command.effect(session);
-        //trans.Commit();
-        //session.Close();
-        
-    }
 
-    protected void login_Click(object sender, ImageClickEventArgs e)
-    {
-        ISession session = NHibernateHelper.CreateSession();
-        try
+
+
+
+        if (Request.Cookies["username"] != null)
         {
-            int id = beans.Player.Authentication(this.username.Text, this.password.Text, session);
-            if (id<0)
+            ISession session = NHibernateHelper.CreateSession();
+            try
             {
-                this.error.Text = "Tên đăng nhập hoặc mật khẩu không đúng";
-                Session.Remove("username");
+                int id = beans.Player.Authentication(Request.Cookies["username"].Value, (string)Request.Cookies["password"].Value, session);
+                if (id < 0)
+                {
+                    Request.Cookies.Clear();
+                    Session.Remove("user");
+                }
+                else
+                {
+                    Session.Add("user", id);
+                }
             }
-            else
+            catch (Exception exc)
             {
-                Session.Add("user", id);
-                Response.Redirect("overview.aspx", true);
+            }
+            finally
+            {
+                session.Close();
             }
         }
-        catch (Exception exc)
+
+        switch (Session["user"]==null)
         {
-            this.error.Text = exc.Message;
+            case true:
+                LoginBox login = (LoginBox)Page.LoadControl("LoginBox.ascx");
+                this.pBox.Controls.Add(login);
+                break;
+            default:
+                PlayerBox player = (PlayerBox)Page.LoadControl("PlayerBox.ascx");
+                this.pBox.Controls.Add(player);
+                break;
         }
-        finally
-        {
-            session.Close();
-        }
+        
     }
 }

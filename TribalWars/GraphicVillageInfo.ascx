@@ -116,8 +116,7 @@
                         <div class="label">
                             <a href="market.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>">
                                 <img src="images/market.png" class="middle" alt="Market" />
-                                <% Response.Write(this.CurrentVillage.Market); %></a><br>
-                            <span style="font-size: 7px; font-weight: bold;">110/110</span></div>
+                                <% Response.Write(this.CurrentVillage.Market); %></a></div>
                     </div>
                     <div style="display: inline;" id="l_wood" class="l_wood" title="Timber camp">
                         <div class="label">
@@ -147,8 +146,7 @@
                         <div class="label">
                             <a href="warehouse.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>">
                                 <img src="images/storage.png" class="middle" alt="Warehouse">
-                                <% Response.Write(this.CurrentVillage.Warehouse); %></a><br>
-                            <span style="font-size: 7px; font-weight: bold;"><span class="timer">13:20:24</span></span></div>
+                                <% Response.Write(this.CurrentVillage.Warehouse); %></a></div>
                     </div>
                     <div style="display: inline;" id="l_wall" class="l_wall" title="Wall">
                         <div class="label">
@@ -159,7 +157,7 @@
                     <img class="npc_conversation" src="images/conversation.gif" />
                     <img class="npc_guard" src="images/guard.gif" /></div>
 
-                <script type="text/javascript">overviewShowLevel();</script>
+                <% if (!this.DisplayBuildingLevel) Response.Write("<script type='text/javascript'>overviewHideLevel();</script>"); %>
 
             </td>
         </tr>

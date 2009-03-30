@@ -18,7 +18,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <asp:Label ID="test" runat="server" Text="Label"></asp:Label>
+    <asp:Label ID="test" runat="server"></asp:Label>
     <div class="top_background">
     </div>
     <div style="text-align: center;">
@@ -48,7 +48,7 @@
                                 P)
                             </td>
                             <td>
-                                <a href="/game.php?village=51549&amp;screen=ally">Tribe</a>
+                                <a href="<% if (this.Player.Group == null) Response.Write("untribe"); else Response.Write("tribe"); %>.aspx?id=<%Response.Write(this.CurrentVillage.ID); %>">Bang hội</a>
                             </td>
                             <td>
                                 <a href="list_report.aspx?id=<% Response.Write(this.CurrentVillage.ID.ToString()); %>">Thông báo</a>
@@ -75,15 +75,15 @@
                             <table class="menu nowrap" style="width: 100%;">
                                 <tr id="menu_row2">
                                     <td>
-                                        <asp:HyperLink ID="overview" runat="server" NavigateUrl="~/captcha.aspx">Overview</asp:HyperLink>
+                                        <a href="overview.aspx?id=<%Response.Write(this.CurrentVillage.ID); %>">Overview</a>
                                     </td>
                                     <td>
-                                        <asp:HyperLink ID="map" runat="server" NavigateUrl="~/captcha.aspx">Map</asp:HyperLink>
+                                        <a href="map.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>">Bản đồ</a>
                                     </td>
                                     <td class="no_hover">
                                     </td>
                                     <td style="white-space: normal;">
-                                        <a href='village.aspx?id=<% Response.Write(this.CurrentVillage.ID.ToString()); %>'><% Response.Write(this.CurrentVillage.Name); %></a>
+                                        <a href='village.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>'><% Response.Write(this.CurrentVillage.Name); %></a>
                                         (<% Response.Write(this.CurrentVillage.X.ToString("000")); %>|<% Response.Write(this.CurrentVillage.Y.ToString("000")); %>)
                                     </td>
                                 </tr>
