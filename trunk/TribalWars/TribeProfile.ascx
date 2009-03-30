@@ -102,13 +102,7 @@ input, select { font-size: 8pt;
                                                     Ảnh đại diện:<br />(png, gif, jpg)
                                                 </td>
                                                 <td>
-                                                    <% if (this.Tribe.Avatar) Response.Write("<img src='data/images/tribe/" + this.tribe.ID.ToString() + ".jpg' alt='" + this.player.Username + "' /><br />"); %>
-                                        <asp:LinkButton ID="aDeleteAvatar" runat="server" OnClick="aDeleteAvatar_Click">Xoá ảnh đại diện</asp:LinkButton>
-                                        <asp:FileUpload ID="fileAvatar" runat="server" Width="500px" /><br />
-                                        <span style="font-size: xx-small;">Kích thước tối đa 240x180, dung lượng tối đa 120kByte,
-                                            (jpg, jpeg, png, gif)</span>
-                                        <br />
-                                        <asp:Label ID="lblAvatarError" runat="server" ForeColor="#FF3300"></asp:Label>
+                                                   
                                                 </td>
                                             </tr>
                                             <tr>
