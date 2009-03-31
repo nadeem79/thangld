@@ -100,7 +100,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <% if (this.player.Avatar) Response.Write("<img src='data/images/" + this.player.ID.ToString() + ".jpg'"); %>
+                                        <% if (this.player.Avatar) Response.Write("<center><img src='data/images/members/" + this.player.ID.ToString() + ".jpg' /></center>"); %>
                                     </td>
                                 </tr>
                             </tbody>

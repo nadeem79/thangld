@@ -2,14 +2,14 @@
 using System.Collections;
 using System.Configuration;
 using System.Data;
-using System.Linq;
+
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
-using System.Xml.Linq;
+
 using System.Drawing;
 using System.Data.SqlClient;
 using NHibernate;
@@ -77,9 +77,7 @@ public partial class map : System.Web.UI.Page
             HyperLink link = new HyperLink();
             link.Style.Add("margin", "0px");
             link.Style.Add("padding", "0px");
-            link.ImageUrl = @"images/v5.png";
-            link.Width = 26;
-            link.Height = 19;
+            link.ImageUrl = @"images/v6.png";
             
             link.NavigateUrl = "village_info.aspx?id=" + this.village.ID.ToString() + "&village=" + v.ID.ToString();
             link.ToolTip = "Thành phố: " + v.Name + "(" + v.X.ToString("000") + "|" + v.Y.ToString("000") + ")" + Environment.NewLine;

@@ -11,6 +11,7 @@
     <property name="Tag" column="tag" type="string" length="10" not-null="true" unique="true" />
     <property name="Description" column="description" type="string" length="10000" not-null="false" />
     <property name="Introduction" column="introduction" type="string" length="10000" not-null="false" />
+    <property name="Avatar" column="avatar" type="Boolean" not-null="false" />
 
     <bag name="Members" table="users" cascade="none" fetch="join" inverse="true" lazy="true">
       <key column="[group]" />

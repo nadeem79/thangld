@@ -101,7 +101,7 @@
                         Vào game: 
                     </td>
                     <td>
-                        <asp:CheckBox ID="chkPlayGame" runat="server" />
+                        <asp:CheckBox ID="chkPlayGame" runat="server" Checked="true" />
                     </td>
                 </tr>
                 <tr>
