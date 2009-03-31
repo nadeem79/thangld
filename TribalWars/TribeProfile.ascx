@@ -1,35 +1,22 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="TribeProfile.ascx.cs"
     Inherits="TribeProfile" %>
-<%@ Register assembly="Telerik.Web.UI" namespace="Telerik.Web.UI" tagprefix="telerik" %>
-<style type="text/css">
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<link rel="stylesheet" type="text/css" href="css/facebox.css" />
 
-body	{ background-color: #d2c09e; background-image:url('images/bg-tile.jpg'); 
-font-size:9pt; font-family: Verdana, Arial; width:100%; margin: 0; }
+<script src="js/facebox.js" type="text/javascript"></script>
 
-.RadInput_Default
-{
-	vertical-align:middle;
-	font:12px "segoe ui",arial,sans-serif;
-}
+<script type="text/javascript">
+    $(function() {
+        $('a[rel*=facebox]').facebox({
+            loading_image: 'css/loading.gif',
+            close_image: 'css/closelabel.gif'
+        });
+    });
+</script>
 
-.RadInput_Default
-{
-	vertical-align:middle;
-	font:12px "segoe ui",arial,sans-serif;
-}
-
-input, select { font-size: 8pt;
-    width: 83px;
-}
-
-    .style1
-    {
-        border-collapse: separate;
-    }
-</style>
-<table>
+<table width="100%">
     <tr>
-        <td valign="top">
+        <td valign="top" width="30%">
             <table class="vis" width="100%">
                 <tbody>
                     <tr>
@@ -55,18 +42,33 @@ input, select { font-size: 8pt;
                     </tr>
                     <tr>
                         <td colspan="2" align="center">
-                            <a href="tribe.aspx?id=<%Response.Write(this.village.ID); %>&page=2">Danh sách thành viên</a>
+                            <a href="tribe.aspx?id=<%Response.Write(this.village.ID); %>&page=1">Danh sách thành
+                                viên</a>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </td>
         <td valign="top">
-            <table class="vis" width="300">
+            <table class="vis" width="100%">
+                <tr>
+                    <td>
+                        <% if (this.tribe.Avatar) Response.Write("<center><img src='data/images/tribe/" + this.tribe.ID.ToString() + ".jpg' /></center>"); %>
+                    </td>
+                </tr>
+            </table>
+            <table class="vis" width="100%">
                 <tbody>
                     <tr>
                         <th>
-                            Mô tả
+                            <div style="float: left;">
+                                Mô tả</div>
+                            <div style="float: right;">
+                                <asp:Panel ID="pChangeDescription" runat="server">
+                                    <a href="javascript:void(0);" onclick="javascript:$('#<% Response.Write(this.pChangeInfo.ClientID); %>').toggle('slow');">
+                                        Đổi thông tin bang hội</a>
+                                </asp:Panel>
+                            </div>
                         </th>
                     </tr>
                     <tr>
@@ -74,69 +76,62 @@ input, select { font-size: 8pt;
                             <% Response.Write(this.Tribe.Description); %>
                         </td>
                     </tr>
-                    <tr>
-                        <td align="right">
-                            <asp:Panel ID="pChangeDescription" runat="server">
-                                <asp:ScriptManager ID="ScriptManager1" runat="server">
-                                </asp:ScriptManager>
-                                <a href="#pChangeDescription">Đổi thông tin bang hội</a>
-                                <div id="pChangeDescription">
-                                    <table class="style1">
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    Ký hiệu:<br />(tối đa 6 ký tự)
-   
-                                                </td>
-                                                <td>
-                                                    <telerik:RadTextBox ID="txtTribeTagName" runat="server" CausesValidation="true"  Skin="Office2007"
-                                                        MaxLength="6"></telerik:RadTextBox>
-                                                    <div>
-                                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" 
-                                                            ControlToValidate="txtTribeTagName" ErrorMessage="Nhập tag name"></asp:RequiredFieldValidator>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    Ảnh đại diện:<br />(png, gif, jpg)
-                                                </td>
-                                                <td>
-                                                   
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    Tên:</td>
-                                                <td>
-                                                    <telerik:RadTextBox ID="txtTribeName" Runat="server" MaxLength="50" Width="300" Skin="Office2007"></telerik:RadTextBox>
-                                                    <div>
-                                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" 
-                                                            ControlToValidate="txtTribeName" ErrorMessage="Nhập tên tribe"></asp:RequiredFieldValidator>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    Thông tin mô tả:</td>
-                                                <td>
-                                                    <telerik:RadEditor ID="txtChangeDescription" Runat="server">
-                                                    </telerik:RadEditor>
-                                                </td>
-                                            </tr>
-                                            <tr><td colspan="2"><asp:Button ID="bttnChangeDescription" runat="server" Text="Cập nhật" /></td></tr>
-                                        </tbody>
-                                        
-                                    </table>
-                                    
-                                    <br>
-                                
-                                </div>
-                            </asp:Panel>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
+            <asp:Panel ID="pChangeInfo" runat="server" CssClass="hidden_panel" Width="500">
+                <asp:ScriptManager ID="ScriptManager1" runat="server">
+                </asp:ScriptManager>
+                <div>
+                    <asp:Label ID="error" runat="server" ForeColor="Red"></asp:Label></div>
+                <div>
+                    <div>
+                        Ký hiệu (tối đa 6 ký tự):<br />
+
+                    </div>
+                    <div>
+                        <asp:TextBox ID="txtTag" runat="server" MaxLength="6" Width="260px"></asp:TextBox>
+                        <div>
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" ControlToValidate="txtTag"
+                                runat="server" ErrorMessage="Nhập tag name"></asp:RequiredFieldValidator>
+                        </div>
+                        <div>
+                            Tên:
+                        </div>
+                        <div>
+                            <asp:TextBox ID="txtName" runat="server" Width="355px"></asp:TextBox>
+                            <div>
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator3" ControlToValidate="txtName"
+                                    runat="server" ErrorMessage="Nhập tên"></asp:RequiredFieldValidator>
+                            </div>
+                        </div>
+                        <div>
+                            Ảnh đại diện:
+                        </div>
+                        <div>
+                            <asp:Image ID="imgAvatar" runat="server" />
+                            <div>
+                                <asp:LinkButton ID="aDeleteAvatar" runat="server" OnClick="aDeleteAvatar_Click">Xoá ảnh đại diện</asp:LinkButton><br />
+                            </div>
+                            <asp:FileUpload ID="fileAvatar" runat="server" Width="500px" /><br />
+                            <span style="font-size: xx-small;">Kích thước tối đa 240x180, dung lượng tối đa 120kByte,
+                                (jpg, jpeg, png, gif)</span>
+                            <br />
+                            <asp:Label ID="lblAvatarError" runat="server" ForeColor="#FF3300"></asp:Label>
+                        </div>
+                        <div>
+                            Thông tin bang hội:
+                        </div>
+                        <div>
+                            <telerik:RadEditor ID="txtDescription" runat="server" Width="550" Height="500">
+                            </telerik:RadEditor>
+                        </div>
+                        <div style="margin-top:5px;">
+                            <asp:Button ID="bttnChangeTribeInfo" runat="server" Text="Thay đổi thông tin" Width="150"
+                                OnClick="bttnChangeTribeInfo_Click" />
+                        </div>
+                    </div>
+                </div>
+            </asp:Panel>
         </td>
     </tr>
 </table>

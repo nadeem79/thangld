@@ -364,3 +364,10 @@ a.sel { color:#0082BE; text-decoration:underline;}
 		height: 30px;
 	}
 	
+	.hidden_panel
+	{
+	    display:none;
+	}
+	
+	
+	
