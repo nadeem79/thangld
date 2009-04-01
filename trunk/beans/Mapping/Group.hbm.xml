@@ -48,7 +48,7 @@
 
     <many-to-one name="CurrentTribe" class="beans.Group, beans" column="group_1" not-null="false" fetch="join" cascade="none" />
     <many-to-one name="DiplomaticTribe" class="beans.Group, beans" column="group_2" not-null="false" fetch="join" cascade="none" />
-    <property name="Gender" column="type" type="beans.TribeDiplomate, beans" not-null="false" />
+    <property name="Diplomacy" column="type" type="beans.TribeDiplomate, beans" not-null="false" />
   </class>
 
 </hibernate-mapping>
