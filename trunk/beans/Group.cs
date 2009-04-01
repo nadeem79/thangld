@@ -23,6 +23,7 @@ namespace beans
             get;
             set;
         }
+
         public IList<Group> Allies
         {
             get;
@@ -78,22 +79,6 @@ namespace beans
         public override string ToString()
         {
             return this.Tag;
-        }
-
-        public void Disband(ISession session)
-        {
-            foreach (Player member in this.Members)
-            {
-                member.Group = null;
-                session.Update(member);
-            }
-            this.Members.Clear();
-        }
-        public void DismissMember(Player member, ISession session)
-        {
-            this.Members.Remove(member);
-            member.Group = null;
-            session.Update(member);
         }
         #endregion
     }

@@ -31,6 +31,10 @@ using NHibernate.Engine;
 
         public static ISession CreateSession()
         {
-            return NHibernateHelper.CreateSessionFactory().OpenSession();
+            ISession session = NHibernateHelper.CreateSessionFactory().OpenSession();
+            session.EnableFilter("NapFilter");
+            session.EnableFilter("EnemyFilter");
+            session.EnableFilter("AllyFilter");
+            return session;
         }
     }

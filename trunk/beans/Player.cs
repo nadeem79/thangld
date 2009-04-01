@@ -170,12 +170,12 @@ namespace beans
             beans.Group group = new Group();
             group.Tag = tag;
             group.Name = name;
+            group.Description = "";
             this.Group = group;
             this.TribePermission = TribePermission.Duke;
             session.Save(group);
             session.Update(this);
         }
-
         public void DisbandTribe(ISession session)
         {
             if (this.Group == null && this.TribePermission != beans.TribePermission.Duke)
@@ -189,7 +189,6 @@ namespace beans
             }
             session.Delete(this.Group);
         }
-
         public void DismissPlayer(Player player, ISession session)
         {
             if (player.Group == this.Group || ((this.TribePermission & TribePermission.DismissPlayer) == TribePermission.DismissPlayer))
@@ -198,7 +197,6 @@ namespace beans
             player.Group = null;
             session.Update(player);
         }
-
         public void ChangeDescription(string description, ISession session)
         {
             if ((this.TribePermission & TribePermission.DiplomateOfficer) == 0)
@@ -206,15 +204,22 @@ namespace beans
             this.Group.Description = description;
             session.Update(this.Group);
         }
-
         public void SetDiplomacy(Group group, TribeDiplomate diplomacy, ISession session)
         {
-            if ((this.TribePermission & TribePermission.DiplomateOfficer) == 0)
-                return; 
+            if ((this.TribePermission & TribePermission.DiplomateOfficer) != TribePermission.DiplomateOfficer)
+                return;
+            if (this.Group == group)
+                return;
+
+            TribeRelation relation = new TribeRelation();
+            relation.CurrentTribe = this.Group;
+            relation.DiplomaticTribe = group;
+            relation.Diplomacy = diplomacy;
+            session.Save(relation);
         }
         #endregion
 
-
+        #region Village Methods
         public MovingCommand GetCommand(int command_id, ISession session)
         {
             ICriteria criteria = session.CreateCriteria(typeof(MovingCommand));
@@ -317,6 +322,7 @@ namespace beans
             Int64 i = (long)lst[0];
             return (Int32)i;
         }
+        #endregion
 
         #endregion
     }

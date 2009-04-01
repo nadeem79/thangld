@@ -34,13 +34,18 @@ public partial class tribe : System.Web.UI.Page
             session.Close();
             Response.Redirect("untribe.aspx?id=" + this.village.ID.ToString(), true);
         }
-        session.Close();
+        
         
         int page = 0;
         int.TryParse(Request["page"], out page);
         this.navigator.Rows[0].Cells[page].Attributes.Add("class", "selected");
         switch (TribePageTypeFactory.GetTribePage(page))
         {
+            case TribePageType.MembersPage:
+                TribeMembers ucTribeMembers = (TribeMembers)Page.LoadControl("TribeMembers.ascx");
+                ucTribeMembers.Village = village;
+                this.pTribePage.Controls.Add(ucTribeMembers);
+                break;
             default:
                 TribeProfile ucProfilePage = (TribeProfile)Page.LoadControl("TribeProfile.ascx");
                 ucProfilePage.Tribe = player.Group;
@@ -48,5 +53,6 @@ public partial class tribe : System.Web.UI.Page
                 this.pTribePage.Controls.Add(ucProfilePage);
                 break;
         }
+        session.Close();
     }
 }

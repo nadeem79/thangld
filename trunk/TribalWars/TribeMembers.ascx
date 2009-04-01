@@ -3,6 +3,6 @@
 
 <asp:GridView ID="gvTribeMembers" runat="server" AutoGenerateColumns="False">
     <Columns>
-        <asp:HyperLinkField DataNavigateUrlFields="Username" Text="Thành viên" />
+        <asp:HyperLinkField DataNavigateUrlFields="ID" DataTextField="Username"/>
     </Columns>
 </asp:GridView>

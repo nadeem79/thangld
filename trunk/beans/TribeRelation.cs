@@ -5,7 +5,7 @@ using System.Text;
 
 namespace beans
 {
-    public class TribeRelation:IdentityObject
+    internal class TribeRelation:IdentityObject
     {
         public Group CurrentTribe 
         {

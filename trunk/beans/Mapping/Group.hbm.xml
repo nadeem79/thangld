@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
-
+  
   <class name="beans.Group, beans" table="groups" lazy="false">
 
     <id name="ID" column="id" type="Int32">
@@ -23,6 +23,32 @@
       <one-to-many class="beans.TribeInvite, beans" not-found="ignore"/>
     </bag>
 
+    <bag name="Naps" table="diplomates" lazy="true" cascade="save-update">
+      <key column="group_1" />
+      <many-to-many class="beans.Group, beans" column="group_2" />
+      <filter name="NapFilter" condition="type=1"></filter>
+    </bag>
+    <bag name="Allies" table="diplomates" lazy="true" cascade="save-update">
+      <key column="group_1" />
+      <many-to-many class="beans.Group, beans" column="group_2" />
+      <filter name="AllyFilter" condition="type=2"></filter>
+    </bag>
+    <bag name="Enemies" table="diplomates" lazy="true" cascade="save-update">
+      <key column="group_1" />
+      <many-to-many class="beans.Group, beans" column="group_2" />
+      <filter name="EnemyFilter" condition="type=3"></filter>
+    </bag>
+
+  </class>
+
+  <class name="beans.TribeRelation, beans" table="groups" lazy="false">
+    <id name="ID" column="id" type="Int32">
+      <generator class="identity"/>
+    </id>
+
+    <many-to-one name="CurrentTribe" class="beans.Group, beans" column="group_1" not-null="false" fetch="join" cascade="none" />
+    <many-to-one name="DiplomaticTribe" class="beans.Group, beans" column="group_2" not-null="false" fetch="join" cascade="none" />
+    <property name="Gender" column="type" type="beans.TribeDiplomate, beans" not-null="false" />
   </class>
 
 </hibernate-mapping>

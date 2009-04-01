@@ -32,25 +32,15 @@ public partial class UserProfile : System.Web.UI.UserControl
         this.aDeleteAvatar.Visible = this.player.Avatar;
         if (!Page.IsPostBack)
         {
-
-            for (int i = 1; i <= 30; i++)
-                this.cbDay.Items.Add(new ListItem(i.ToString("00"), i.ToString()));
-            for (int i = 2005; i >= 1950; i--)
-                this.cbYear.Items.Add(new ListItem(i.ToString(), i.ToString()));
-
-
-
+            //this.txtBirthdate = this.player.Birthdate;
             this.txtAddress.Text = this.player.Address;
             this.txtPersonalText.Content = this.player.Description;
             if (this.player.Gender == Sex.Nam)
                 this.rdoMale.Checked = true;
             else
                 this.rdoMale.Checked = false;
-
-
-            this.cbDay.SelectedIndex = this.player.Birthdate.Day - 1;
-            this.cbMonth.SelectedIndex = this.player.Birthdate.Month - 1;
-            this.cbYear.SelectedIndex = 2005 - this.player.Birthdate.Year;
+            
+           
             this.txtSkype.Text = this.player.Skype;
             this.txtYahoo.Text = this.player.Yahoo;
         }
@@ -67,6 +57,7 @@ public partial class UserProfile : System.Web.UI.UserControl
         session.Update(this.player);
         trans.Commit();
         session.Close();
+        this.aDeleteAvatar.Visible = false;
     }
 
     protected void bttnChangePlayerProfile_Click(object sender, EventArgs e)
@@ -78,7 +69,12 @@ public partial class UserProfile : System.Web.UI.UserControl
         this.player.Skype = this.txtSkype.Text;
         this.player.Address = this.txtAddress.Text;
         this.player.Description = this.txtPersonalText.Content;
-        this.player.Birthdate = new DateTime(int.Parse(this.cbYear.SelectedValue), int.Parse(this.cbMonth.SelectedValue), int.Parse(this.cbDay.SelectedValue));
+        //if (this.txtBirthdate.IsEmpty)
+            //this.player.Birthdate = DateTime.;
+        //else
+        //    this.player.Birthdate = (DateTime)this.txtBirthdate.SelectedDate;
+        //this.player.Birthdate = new DateTime(int.Parse(this.cbYear.SelectedValue), int.Parse(this.cbMonth.SelectedValue), int.Parse(this.cbDay.SelectedValue));
+        //this.player.Birthdate = this.txtBirthdate
         if (this.rdoMale.Checked)
             this.player.Gender = Sex.Nam;
         else
@@ -100,7 +96,10 @@ public partial class UserProfile : System.Web.UI.UserControl
                 if (!Functions.UploadImage(fileAvatar.FileContent, Server.MapPath("~/data/images/members/") + this.player.ID.ToString() + ".jpg"))
                     this.lblAvatarError.Text = "Có lỗi khi upload ảnh. Vui lòng thử lại sau vài phút";
                 else
+                {
                     this.player.Avatar = true;
+                    this.aDeleteAvatar.Visible = true;
+                }
             }
         }
 

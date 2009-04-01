@@ -74,6 +74,7 @@ public partial class untribe : System.Web.UI.Page
         Group group = new Group();
         group.Tag = this.txtTribeTagName.Text;
         group.Name = this.txtTribeName.Text;
+        group.Description = "";
 
         ISession session = NHibernateHelper.CreateSession();
         Player player = session.Get<Player>(Session["user"]);
