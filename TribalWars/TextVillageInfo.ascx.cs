@@ -39,7 +39,7 @@ public partial class TextVillageInfo : System.Web.UI.UserControl
             trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
             session.Update(player);
             trans.Commit();
-            Response.Redirect("village.aspx?id=" + this.CurrentVillage.ID.ToString(), true);
+            //Response.Redirect("village.aspx?id=" + this.CurrentVillage.ID.ToString(), true);
         }
         catch (Exception exc)
         {

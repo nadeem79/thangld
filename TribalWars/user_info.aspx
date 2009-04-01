@@ -94,8 +94,8 @@
                                         IM:
                                     </td>
                                     <td>
-                                        <% if (!this.player.Yahoo.Trim().Equals(string.Empty)) Response.Write(@"<a href='ymsgr:sendIM?" + this.player.Yahoo + "' title='Gửi tin nhắn Yahoo tới " + this.player.Username + "'><img src='http://opi.yahoo.com/online?m=g&t=2&u=" + this.player.Yahoo + "' /><a>"); %>
-                                        <% if (!this.player.Skype.Trim().Equals(string.Empty)) Response.Write(@"<a href='skype:" + this.player.Skype + "?call' title='Gọi điện thoại skype tới " + this.player.Username + "'><img src='http://mystatus.skype.com/smallicon/" + this.player.Skype + "' /><a>"); %>
+                                        <% if (!this.player.Yahoo.Trim().Equals(string.Empty)) Response.Write(@" <a href='ymsgr:sendIM?" + this.player.Yahoo + "' title='Gửi tin nhắn Yahoo tới " + this.player.Username + "'><img src='http://opi.yahoo.com/online?m=g&t=1&u=" + this.player.Yahoo + "' /><a>"); %>
+                                        <% if (!this.player.Skype.Trim().Equals(string.Empty)) Response.Write(@" <a href='skype:" + this.player.Skype + "?call' title='Gọi điện thoại skype tới " + this.player.Username + "'><img src='http://mystatus.skype.com/smallicon/" + this.player.Skype + "' /><a>"); %>
                                     </td>
                                 </tr>
                                 <tr>

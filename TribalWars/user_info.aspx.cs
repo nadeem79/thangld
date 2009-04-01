@@ -35,12 +35,13 @@ public partial class user_info : System.Web.UI.Page
 
         ISession session = NHibernateHelper.CreateSession();
         this.player = session.Get<Player>(player_id);
-        session.Close();
+        
 
         if (this.player == null)
         {
             this.pUserExists.Visible = false;
             this.pUserNotFound.Visible = true;
+            session.Close();
             return;
         }
 
@@ -52,5 +53,6 @@ public partial class user_info : System.Web.UI.Page
         this.gvVillages.DataBind();
 
         this.pSelf.Visible = (this.player.ID == (int)Session["user"]);
+        session.Close();
     }
 }

@@ -81,7 +81,7 @@ public partial class GraphicVillageInfo : System.Web.UI.UserControl
         catch (Exception exc)
         {
             this.lblError.Text = exc.Message;
-            if (trans != null)
+            if (trans.WasRolledBack || trans != null)
                 trans.Rollback();
         }
         finally

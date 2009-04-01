@@ -11,11 +11,6 @@
 <body>
     <form id="form1" runat="server">
     <div>
-        <asp:ScriptManager ID="ScriptManager1" runat="server">
-        </asp:ScriptManager>
-        <telerik:RadFormDecorator ID="RadFormDecorator1" runat="server" />
-        <telerik:RadEditor ID="RadEditor1" runat="server">
-    </telerik:RadEditor>
         <asp:Button ID="Button1" runat="server" Text="Button" />
     </div>
     </form>

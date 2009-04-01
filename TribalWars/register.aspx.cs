@@ -28,11 +28,27 @@ public partial class Default2 : System.Web.UI.Page
             this.lblError.Text = "Bạn phải chấp nhận các điều khoản thoả thuận trước để có thể đăng ký";
             return;
         }
+        DateTime dt;
+        try
+        {
+            dt = (DateTime)this.txtBirthdate.SelectedDate;
+        }
+        catch
+        {
+            this.lblError.Text = "Nhập sai định dạng ngày tháng";
+            return;
+        }
 
         beans.Player user = new beans.Player();
         user.Username = this.username.Text;
         user.Password = this.password.Text;
+        user.Birthdate = dt;
         user.Email = this.email.Text;
+        user.Description = "";
+        user.Email = "";
+        user.Yahoo = "";
+        user.Skype = "";
+        user.Msn = "";
 
         NHibernate.ISession session = null;
         try

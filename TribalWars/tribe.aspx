@@ -1,6 +1,7 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/inPage.master" AutoEventWireup="true" CodeFile="tribe.aspx.cs"
     Inherits="tribe" Title="Bang hội" %>
 <%@ Reference Control="TribeProfile.ascx" %>
+<%@ Reference Control="TribeMembers.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>

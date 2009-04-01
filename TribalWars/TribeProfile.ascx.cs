@@ -52,6 +52,8 @@ public partial class TribeProfile : System.Web.UI.UserControl
             this.txtTag.Text = this.tribe.Tag;
             if (this.tribe.Avatar)
                 imgAvatar.ImageUrl = @"data/images/tribe/" + this.tribe.ID.ToString() + ".jpg";
+            else
+                this.aDeleteAvatar.Visible = false;
         }
     }
 
@@ -100,4 +102,5 @@ public partial class TribeProfile : System.Web.UI.UserControl
         session.Close();
         Response.Redirect("tribe.aspx?id=" + this.village.ID.ToString(), true);
     }
+
 }

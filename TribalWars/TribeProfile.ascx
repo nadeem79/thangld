@@ -1,18 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="TribeProfile.ascx.cs"
     Inherits="TribeProfile" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<link rel="stylesheet" type="text/css" href="css/facebox.css" />
-
-<script src="js/facebox.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-    $(function() {
-        $('a[rel*=facebox]').facebox({
-            loading_image: 'css/loading.gif',
-            close_image: 'css/closelabel.gif'
-        });
-    });
-</script>
+<telerik:RadFormDecorator ID="RadFormDecorator1" runat="server" Skin="Office2007" />
 
 <table width="100%">
     <tr>
@@ -44,6 +33,7 @@
                         <td colspan="2" align="center">
                             <a href="tribe.aspx?id=<%Response.Write(this.village.ID); %>&page=1">Danh sách thành
                                 viên</a>
+                            <br />
                         </td>
                     </tr>
                 </tbody>
@@ -85,11 +75,10 @@
                     <asp:Label ID="error" runat="server" ForeColor="Red"></asp:Label></div>
                 <div>
                     <div>
-                        Ký hiệu (tối đa 6 ký tự):<br />
-
+                        Ký hiệu (tối đa 6 ký tự):
                     </div>
                     <div>
-                        <asp:TextBox ID="txtTag" runat="server" MaxLength="6" Width="260px"></asp:TextBox>
+                        <telerik:RadTextBox ID="txtTag" runat="server" MaxLength="6" Width="260px"></telerik:RadTextBox>
                         <div>
                             <asp:RequiredFieldValidator ID="RequiredFieldValidator1" ControlToValidate="txtTag"
                                 runat="server" ErrorMessage="Nhập tag name"></asp:RequiredFieldValidator>
@@ -98,7 +87,7 @@
                             Tên:
                         </div>
                         <div>
-                            <asp:TextBox ID="txtName" runat="server" Width="355px"></asp:TextBox>
+                            <telerik:RadTextBox ID="txtName" runat="server" Width="355px"></telerik:RadTextBox>
                             <div>
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator3" ControlToValidate="txtName"
                                     runat="server" ErrorMessage="Nhập tên"></asp:RequiredFieldValidator>

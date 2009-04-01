@@ -1,11 +1,19 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="UserProfile.ascx.cs" Inherits="UserProfile" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<asp:ScriptManager ID="ScriptManager1" runat="server">
-</asp:ScriptManager>
+<style type="text/css">
+    .style1
+    {
+        height: 23px;
+    }
+</style>
+<telerik:RadScriptManager ID="RadScriptManager1" runat="server">
+</telerik:RadScriptManager>
+<telerik:RadFormDecorator ID="RadFormDecorator1" runat="server" Skin="Office2007" />
 <table class="vis" width="100%">
     <tbody>
         <tr>
-            <th colspan="2">
+            <th colspan="2" class="style1">
+                
                 Thông tin cá nhân
             </th>
         </tr>
@@ -14,24 +22,10 @@
                 Ngày sinh:
             </td>
             <td>
-                <asp:DropDownList ID="cbDay" runat="server">
-                </asp:DropDownList>
-                <asp:DropDownList ID="cbMonth" runat="server" Height="16px" Width="86px">
-                    <asp:ListItem Text="Tháng một" Value="01"></asp:ListItem>
-                    <asp:ListItem Text="Tháng hai" Value="02"></asp:ListItem>
-                    <asp:ListItem Text="Tháng ba" Value="03"></asp:ListItem>
-                    <asp:ListItem Text="Tháng bốn" Value="04"></asp:ListItem>
-                    <asp:ListItem Text="Tháng năm" Value="05"></asp:ListItem>
-                    <asp:ListItem Text="Tháng sáu" Value="06"></asp:ListItem>
-                    <asp:ListItem Text="Tháng bảy" Value="07"></asp:ListItem>
-                    <asp:ListItem Text="Tháng tám" Value="08"></asp:ListItem>
-                    <asp:ListItem Text="Tháng chín" Value="09"></asp:ListItem>
-                    <asp:ListItem Text="Tháng mười" Value="10"></asp:ListItem>
-                    <asp:ListItem Text="Tháng mười một" Value="11"></asp:ListItem>
-                    <asp:ListItem Text="Tháng mười hai" Value="12"></asp:ListItem>
-                </asp:DropDownList>
-                <asp:DropDownList ID="cbYear" runat="server" Width="50px">
-                </asp:DropDownList>
+                <telerik:RadDateInput ID="txtBirthdate" Runat="server"
+                    DisplayDateFormat="d/M/yyyy" Width="192px"
+                    MinDate="1950-01-01" DateFormat="d/M/yyyy">
+                </telerik:RadDateInput>
             </td>
         </tr>
         <tr>
@@ -39,8 +33,8 @@
                 Giới tính:
             </td>
             <td>
-                <asp:RadioButton ID="rdoMale" runat="server" Text="Nam" />
-                <asp:RadioButton ID="rdoFemale" runat="server" Text="Nữ" />
+                <asp:RadioButton ID="rdoMale" GroupName="gender" runat="server" Text="Nam" />
+                <asp:RadioButton ID="rdoFemale" GroupName="gender" runat="server" Text="Nữ" />
             </td>
         </tr>
         <tr>
@@ -48,7 +42,8 @@
                 Địa chỉ:
             </td>
             <td>
-                <asp:TextBox ID="txtAddress" runat="server" Width="500px"></asp:TextBox>
+                <telerik:RadTextBox ID="txtAddress" Runat="server" Width="500px">
+                </telerik:RadTextBox>
             </td>
         </tr>
         <tr>
@@ -56,7 +51,7 @@
                 Yahoo:
             </td>
             <td>
-                <asp:TextBox ID="txtYahoo" runat="server" Width="250px"></asp:TextBox>
+                <telerik:RadTextBox ID="txtYahoo" runat="server" Width="250px"></telerik:RadTextBox>
             </td>
         </tr>
         <tr>
@@ -64,7 +59,7 @@
                 Skype:
             </td>
             <td>
-                <asp:TextBox ID="txtSkype" runat="server" Width="250px"></asp:TextBox>
+                <telerik:RadTextBox ID="txtSkype" runat="server" Width="250px"></telerik:RadTextBox>
             </td>
         </tr>
         <tr>
@@ -97,7 +92,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                <telerik:RadEditor ID="txtPersonalText" runat="server">
+                <telerik:RadEditor ID="txtPersonalText" runat="server" Skin="Office2007" BackColor="White">
                 </telerik:RadEditor> 
                 
             </td>
