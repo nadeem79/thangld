@@ -82,7 +82,7 @@
                 <div class="info-block">
                     <img src="images/bg-raven.gif" alt="" />
                     <h2>
-                        Tribal Wars</h2>
+                        <a href="">Tribal Wars</a></h2>
                     <p>
                         Tribal Wars là game mô phỏng chiến tranh trung cổ chơi trên trình duyệt web.</p>
                     <a class="btn-kostenlos-anmelden" href="register.aspx">Đăng ký</a> <strong>
