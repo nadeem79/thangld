@@ -2,7 +2,8 @@
     Inherits="TribeProfile" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <telerik:RadFormDecorator ID="RadFormDecorator1" runat="server" Skin="Office2007" />
-
+<telerik:RadToolTipManager ID="pChangeTribeInformation" runat="server">
+</telerik:RadToolTipManager>
 <table width="100%">
     <tr>
         <td valign="top" width="30%">

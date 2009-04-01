@@ -6,7 +6,14 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <h2>Bản đồ</h2>
+    <telerik:RadScriptManager ID="RadScriptManager1" runat="server">
+    </telerik:RadScriptManager>
+
+    <telerik:RadToolTip ID="RadToolTip1" runat="server">
+    </telerik:RadToolTip>
+
+    <h2>Bản đồ
+    </h2>
     <table>
         <tbody>
             <tr>
@@ -40,8 +47,6 @@
             </tr>
         </tbody>
     </table>
-    <br />
-    <br />
-    <asp:HyperLink ID="HyperLink1" runat="server">HyperLink</asp:HyperLink>
+
     
 </asp:Content>

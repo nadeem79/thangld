@@ -12,22 +12,28 @@ using System.Web.UI.WebControls.WebParts;
 
 using NHibernate;
 using beans;
+using Telerik.Web.UI;
 
 public partial class test : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        ISession session = NHibernateHelper.CreateSession();
+        //ISession session = NHibernateHelper.CreateSession();
         
-        ITransaction trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
-        Group g = session.Get<Group>(1);
-        Group g2 = session.Get<Group>(4);
-        this.Button1.Text = g.Allies.Count.ToString();
-        session.DisableFilter("AllyFilter");
-        g.Allies.Add(g2);
-        trans.Commit();
-        session.Close();
+        //ITransaction trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
+        //Group g = session.Get<Group>(1);
+        //Group g2 = session.Get<Group>(4);
+        //this.Button1.Text = g.Allies.Count.ToString();
+        //session.DisableFilter("AllyFilter");
+        //g.Allies.Add(g2);
+        //trans.Commit();
+        //session.Close();
 
 
+    }
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        this.abc.Text += this.RadTextBox1.Text;
+        RadScriptManager.RegisterStartupScript(this, GetType(), "shutdown", "HideLoginToolTip();", true);
     }
 }
