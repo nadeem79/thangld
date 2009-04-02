@@ -7,6 +7,7 @@ using NHibernate;
 using NHibernate.Criterion;
 using System.Text.RegularExpressions;
 using System.Collections;
+using System.Linq;
 
 namespace beans
 {
@@ -306,10 +307,11 @@ namespace beans
 
         public virtual Village GetVillage(int ID)
         {
-            foreach (Village village in this.Villages)
-                if (village.ID == ID)
-                    return village;
-            return null;
+            var village = new List<Village>(this.Villages).FindAll(delegate(Village v) { return v.ID == ID; });
+            if (village.Count == 0)
+                return null;
+            return village[0];
+
         }
 
         public virtual int GetVillageCount(ISession session)

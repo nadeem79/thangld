@@ -11,68 +11,121 @@ namespace beans
         #region Constant
         protected static Price pAxe = null, pSpear = null, pSword = null, pScout = null, pLight = null, pHeavy = null, pRam = null, pCatapult = null, pNoble = null;
 
-        public static Price Axe
+        public static Price GetPrice(TroopType troop)
         {
-            get
+            switch (troop)
             {
-                return new Price(900, 60, 30, 10);
+                case TroopType.Spear:
+                    return Recruit.Spear;
+                    break;
+                case TroopType.Sword:
+                    return Recruit.Sword;
+                    break;
+                case TroopType.Axe:
+                    return Recruit.Axe;
+                    break;
+                case TroopType.Scout:
+                    return Recruit.Scout;
+                    break;
+                case TroopType.Light:
+                    return Recruit.Light;
+                    break;
+                case TroopType.Heavy:
+                    return Recruit.Heavy;
+                    break;
+                case TroopType.Ram:
+                    return Recruit.Ram;
+                    break;
+                case TroopType.Catapult:
+                    return Recruit.Catapult;
+                    break;
+                case TroopType.Nobleman:
+                    return Recruit.Noble;
+                    break;
+                default:
+                    throw new Exception("Báo động: HACK!!!");
+                    break;
             }
         }
         public static Price Spear
         {
             get
             {
-                return new Price(900, 50, 30, 10);
+                if (pSpear == null)
+                    pSpear = new Price(900, 50, 30, 10);
+                return pSpear;
             }
         }
         public static Price Sword
         {
             get
             {
-                return new Price(900, 30, 30, 70);
+                if (pSword == null)
+                    pSword = new Price(900, 30, 30, 70);
+                return pSword;
+            }
+        }
+        public static Price Axe
+        {
+            get
+            {
+                if (pAxe == null)
+                    pAxe = new Price(900, 60, 30, 10);
+                return pAxe;
             }
         }
         public static Price Scout
         {
             get
             {
-                return new Price(900, 50, 50, 20);
+                if (pScout == null)
+                    pScout = new Price(900, 50, 50, 20);
+                return pScout;
             }
         }
         public static Price Light
         {
             get
             {
-                return new Price(200, 125, 100, 250);
+                if (pLight == null)
+                    pLight = new Price(200, 125, 100, 250);
+                return pLight;
             }
         }
         public static Price Heavy
         {
             get
             {
-
-                return new Price(900, 200, 150, 600);
+                if (pHeavy == null)
+                    pHeavy = new Price(900, 200, 150, 600);
+                return pHeavy;
             }
         }
         public static Price Ram
         {
             get
             {
-                return new Price(900, 300, 200, 200);
+                if (pRam == null)
+                    pRam = new Price(900, 300, 200, 200);
+                return pRam;
             }
         }
         public static Price Catapult
         {
             get
             {
-                return new Price(900, 320, 400, 100);
+                if (pCatapult == null)
+                    pCatapult = new Price(900, 320, 400, 100);
+                return pCatapult;
             }
         }
         public static Price Noble
         {
             get
             {
-                return new Price(900, 28000, 30000, 25000);
+                if (pNoble == null)
+                    pNoble = new Price(900, 28000, 30000, 25000);
+                return pNoble;
             }
         }
 
@@ -85,19 +138,16 @@ namespace beans
             get;
             set;
         }
-
         public virtual TroopType Troop
         {
             get;
             set;
         }
-
         public virtual DateTime LastUpdate
         {
             get;
             set;
         }
-
         public virtual int Quantity
         {
             get;
@@ -113,7 +163,7 @@ namespace beans
         {
             TimeSpan t = to - this.LastUpdate;
             
-            int total_troop = (int)(t.TotalSeconds / 900);
+            int total_troop = (int)(t.TotalSeconds / Recruit.GetPrice(this.Troop).BuildTime);
             int totalRecruit = (total_troop < this.Quantity) ? total_troop : this.Quantity;
 
             switch (this.Troop)
@@ -159,9 +209,13 @@ namespace beans
             }
 
             if (totalRecruit == this.Quantity)
+            {
+                this.LastUpdate = this.LastUpdate.AddSeconds(totalRecruit * Recruit.GetPrice(this.Troop).BuildTime);
+                this.Quantity = 0;
                 return true;
+            }
 
-            this.LastUpdate = this.LastUpdate.AddSeconds(totalRecruit * 900);
+            this.LastUpdate = this.LastUpdate.AddSeconds(totalRecruit * Recruit.GetPrice(this.Troop).BuildTime);
             this.Quantity -= totalRecruit;
 
             return false;
@@ -269,7 +323,7 @@ namespace beans
             if (quantity == 0)
                 return 0;
 
-            return 900 * quantity;
+            return Recruit.GetPrice(troop).BuildTime * quantity;
         }
     }
 }

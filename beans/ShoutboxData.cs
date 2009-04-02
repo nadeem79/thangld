@@ -32,15 +32,22 @@ namespace beans
 
         public static IList<ShoutboxData> GetShoutbox(Group group, int size, bool ascending, ISession session)
         {
-
-
-            
-            ICriteria criteria = session.CreateCriteria(typeof(ShoutboxData));
-            //criteria.Add(Expression.Eq("Group", group));
-            criteria.AddOrder(new Order("Time", ascending));
-            criteria.SetFirstResult(0);
-            criteria.SetMaxResults(size);
-            return criteria.List<ShoutboxData>();
+            if (group == null)
+            {
+                IQuery query = session.CreateQuery("from ShoutboxData sd where sd.Group is null order by ID " + ((ascending) ? "asc" : "desc"));
+                query.SetMaxResults(size);
+                query.SetFirstResult(0);
+                return query.List<ShoutboxData>();
+            }
+            else
+            {
+                ICriteria criteria = session.CreateCriteria(typeof(ShoutboxData));
+                criteria.Add(Expression.Eq("Group", group));
+                criteria.AddOrder(new Order("ID", ascending));
+                criteria.SetFirstResult(0);
+                criteria.SetMaxResults(size);
+                return criteria.List<ShoutboxData>();
+            }
         }
 
     }

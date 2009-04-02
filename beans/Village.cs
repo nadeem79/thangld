@@ -12,40 +12,7 @@ namespace beans
     {
         #region Variables
 
-        private int x;
-        private int y;
-        private string name;
-        private Player owner;
-        private int wood;
-        private int iron;
-        private int clay;
-        private int headquarter;
-        private int barracks;
-        private int stable;
-        private int workshop;
-        private int academy;
-        private int smithy;
-        private int rally;
-        private int market;
-        private int timberCamp;
-        private int clayPit;
-        private int ironMine;
-        private int farm;
-        private int warehouse;
-        private int hidingPlace;
-        private int wall;
-        private int points;
-        private DateTime lastUpdate;
-        private int spear;
-        private int sword;
-        private int axe;
-        private int catapult;
-        private int scout;
-        private int light;
-        private int ram;
-        private int heavy;
-        private int noble;
-        private int loyal;
+        private int _loyal;
         private IList<MovingCommand> incomings;
         private IList<MovingCommand> outgoings;
         private IList<Offer> offers;
@@ -106,246 +73,227 @@ namespace beans
 
         public int Loyal
         {
-            get { return loyal; }
+            get { return _loyal; }
             set 
             {
-                loyal = value;
-                if (loyal > 100)
-                    loyal = 100;
+                if (value > 100)
+                    _loyal = 100;
+                else
+                    _loyal = value;
             }
         }
 
         public virtual DateTime LastUpdate
         {
-            get { return lastUpdate; }
-            set { lastUpdate = value; }
+            get;
+            set;
         }
         public virtual int Points
         {
-            get { return points; }
-            set { points = value; }
+            get;
+            set;
         }
         public virtual int Wall
         {
-            get { return wall; }
-            set { wall = value; }
+            get;
+            set;
         }
 
         public virtual int HidingPlace
         {
-            get { return hidingPlace; }
-            set { hidingPlace = value; }
+            get;
+            set;
         }
 
         public int Warehouse
         {
-            get { return warehouse; }
-            set { warehouse = value; }
+            get;
+            set;
         }
 
         public virtual int Farm
         {
-            get { return farm; }
-            set { farm = value; }
+            get;
+            set;
         }
 
         public virtual int IronMine
         {
-            get { return ironMine; }
-            set { ironMine = value; }
+            get;
+            set;
         }
 
         public virtual int ClayPit
         {
-            get { return clayPit; }
-            set { clayPit = value; }
+            get;
+            set;
         }
 
         public virtual int TimberCamp
         {
-            get { return timberCamp; }
-            set { timberCamp = value; }
+            get;
+            set;
         }
 
         public virtual int Market
         {
-            get { return market; }
-            set { market = value; }
+            get;
+            set;
         }
 
         public virtual int Rally
         {
-            get { return rally; }
-            set { rally = value; }
+            get;
+            set;
         }
 
         public virtual int Smithy
         {
-            get { return smithy; }
-            set { smithy = value; }
+            get;
+            set;
         }
 
         public virtual int Academy
         {
-            get { return academy; }
-            set { academy = value; }
+            get;
+            set;
         }
 
         public virtual int Workshop
         {
-            get { return workshop; }
-            set { workshop = value; }
+            get;
+            set;
         }
 
         public virtual int Stable
         {
-            get { return stable; }
-            set { stable = value; }
+            get;
+            set;
         }
 
         public virtual int Barracks
         {
-            get { return barracks; }
-            set { barracks = value; }
+            get;
+            set;
         }
 
         public virtual int Headquarter
         {
-            get { return headquarter; }
-            set { headquarter = value; }
+            get;
+            set;
         }
 
         public virtual int X
         {
-            get { return x; }
-            set { x = value; }
+            get;
+            set;
         }
         public virtual int Y
         {
-            get { return y; }
-            set { y = value; }
+            get;
+            set;
         }
 
         public virtual string Name
         {
-            get { return name; }
-            set { name = value; }
+            get;
+            set;
         }
 
         public virtual Player Owner
         {
-            get { return owner; }
-            set { owner = value; }
+            get;
+            set;
         }
 
-        public virtual int Wood 
-        { 
-            get 
-            {
-                return this.wood;
-            } 
-
-            set
-            {
-                this.wood = value;
-            } 
-        
+        public virtual int Wood
+        {
+            get;
+            set;
         }
 
-        public virtual int Clay 
-        { 
-            get
-            {
-                return this.clay;
-            }
-            set
-            {
-                this.clay = value;
-            }
+        public virtual int Clay
+        {
+            get;
+            set;
         }
 
         public virtual int Iron
         {
-            get
-            {
-                return this.iron;
-            }
-            set
-            {
-                this.iron = value;
-            }
+            get;
+            set;
         }
 
         public virtual int Noble
         {
-            get { return noble; }
-            set { noble = value; }
+            get;
+            set;
         }
 
         public virtual int Spear
         {
-            get { return spear; }
-            set { spear = value; }
+            get;
+            set;
         }
 
         public virtual int Sword
         {
-            get { return sword; }
-            set { sword = value; }
+            get;
+            set;
         }
 
         public virtual int Axe
         {
-            get { return axe; }
-            set { axe = value; }
+            get;
+            set;
         }
 
         public virtual int Scout
         {
-            get { return scout; }
-            set { scout = value; }
+            get;
+            set;
         }
 
         public virtual int Light
         {
-            get { return light; }
-            set { light = value; }
+            get;
+            set;
         }
 
         public virtual int Heavy
         {
-            get { return heavy; }
-            set { heavy = value; }
+            get;
+            set;
         }
 
         public virtual int Ram
         {
-            get { return ram; }
-            set { ram = value; }
+            get;
+            set;
         }
 
         public virtual int Catapult
         {
-            get { return catapult; }
-            set { catapult = value; }
+            get;
+            set;
         }
 
         public virtual IList<MovingCommand> Incomings
         {
-            get { return this.incomings; }
-            set { this.incomings = value; }
+            get;
+            set;
         }
 
         public virtual IList<MovingCommand> Outgoings
         {
-            get { return this.outgoings; }
-            set { this.outgoings = value; }
+            get;
+            set;
         }
 
         public virtual IList<Offer> Offers
         {
-            get { return offers; }
-            set { offers = value; }
+            get;
+            set;
         }
 
         //public virtual IList<SendResource> Sendings
@@ -356,14 +304,14 @@ namespace beans
 
         public virtual IList<Stationed> StationedTroops
         {
-            get { return stationedTroops; }
-            set { stationedTroops = value; }
+            get;
+            set;
         }
 
         public virtual IList<Stationed> TroopsOutside
         {
-            get { return troopsOutside; }
-            set { troopsOutside = value; }
+            get;
+            set;
         }
 
         public int TotalSpear
@@ -682,7 +630,7 @@ namespace beans
             village.Y = Y;
             village.Headquarter = 1;
             village.Rally = 1;
-            village.farm = 5;
+            village.Farm = 5;
             village.ClayPit = 5;
             village.IronMine = 5;
             village.TimberCamp = 5;
@@ -780,7 +728,7 @@ namespace beans
             ICriteria criteria = session.CreateCriteria(typeof(Recruit));
             criteria.Add(Expression.Eq("InVillage", this));
             criteria.Add(Expression.Or(Expression.Eq("Troop", TroopType.Axe), Expression.Or(Expression.Eq("Troop", TroopType.Spear), Expression.Eq("Troop", TroopType.Sword))));
-            criteria.AddOrder(new Order("ID", false));
+            criteria.AddOrder(new Order("ID", true));
             return criteria.List<Recruit>();
         }
 
@@ -789,7 +737,7 @@ namespace beans
             ICriteria criteria = session.CreateCriteria(typeof(Recruit));
             criteria.Add(Expression.Eq("InVillage", this));
             criteria.Add(Expression.Or(Expression.Eq("Troop", TroopType.Scout), Expression.Or(Expression.Eq("Troop", TroopType.Light), Expression.Eq("Troop", TroopType.Heavy))));
-            criteria.AddOrder(new Order("ID", false));
+            criteria.AddOrder(new Order("ID", true));
             return criteria.List<Recruit>();
         }
 
@@ -797,6 +745,7 @@ namespace beans
         public void Update(DateTime to, ISession session)
         {
             this.Loyal += (to - this.LastUpdate).Hours;
+
             IList<MovingCommand> lstMovingCommands = this.GetDependingCommands(to, session);
             IList<Recruit> lstInfantryRecruits = this.GetDependingInfantryRecruit(session);
             IList<Recruit> lstCavalryRecruits = this.GetDependingCavalryRecruit(session);
@@ -807,19 +756,25 @@ namespace beans
                 if (lstInfantryRecruits.Count > 0)
                     while (lstInfantryRecruits[0].Expense(command.LandingTime))
                     {
+                        DateTime start = lstInfantryRecruits[0].LastUpdate;
                         session.Delete(lstInfantryRecruits[0]);
                         lstInfantryRecruits.RemoveAt(0);
                         if (lstInfantryRecruits.Count == 0)
                             break;
+                        else
+                            lstInfantryRecruits[0].LastUpdate = start;
                     }
 
                 if (lstCavalryRecruits.Count > 0)
                     while (lstCavalryRecruits[0].Expense(command.LandingTime))
                     {
+                        DateTime start = lstCavalryRecruits[0].LastUpdate;
                         session.Delete(lstCavalryRecruits[0]);
                         lstCavalryRecruits.RemoveAt(0);
                         if (lstCavalryRecruits.Count == 0)
                             break;
+                        else
+                            lstCavalryRecruits[0].LastUpdate = start;
                     }
                 
                 command.effect(session);
@@ -827,10 +782,13 @@ namespace beans
             if (lstInfantryRecruits.Count > 0)
                 while (lstInfantryRecruits[0].Expense(to))
                 {
+                    DateTime start = lstInfantryRecruits[0].LastUpdate;
                     session.Delete(lstInfantryRecruits[0]);
                     lstInfantryRecruits.RemoveAt(0);
                     if (lstInfantryRecruits.Count == 0)
                         break;
+                    else
+                        lstInfantryRecruits[0].LastUpdate = start;
                 }
             if (lstInfantryRecruits.Count > 0)
                 session.Update(lstInfantryRecruits[0]);
@@ -838,23 +796,26 @@ namespace beans
             if (lstCavalryRecruits.Count > 0)
                 while (lstCavalryRecruits[0].Expense(to))
                 {
+                    DateTime start = lstCavalryRecruits[0].LastUpdate;
                     session.Delete(lstCavalryRecruits[0]);
                     lstCavalryRecruits.RemoveAt(0);
                     if (lstCavalryRecruits.Count == 0)
                         break;
+                    else
+                        lstCavalryRecruits[0].LastUpdate = start;
                 }
             if (lstCavalryRecruits.Count > 0)
                 session.Update(lstCavalryRecruits[0]);
 
             this.UpdateResources(this.LastUpdate, to);
-            this.lastUpdate = to;
+            this.LastUpdate = to;
             
             session.Update(this);
         }
 
         public int MaxRecruit(TroopType troop)
         {
-            return Recruit.MaxRecruit(troop, this.wood, this.clay, this.iron);
+            return Recruit.MaxRecruit(troop, this.Wood, this.Clay, this.Iron);
         }
 
         public Recruit BeginRecruit(TroopType troop, int quantity, ISession session)
@@ -874,7 +835,13 @@ namespace beans
             recruit.Troop = troop;
             recruit.LastUpdate = DateTime.Now;
 
+            Price p = Recruit.GetPrice(troop);
+            this.Clay -= p.Clay * quantity;
+            this.Wood -= p.Wood * quantity;
+            this.Iron -= p.Iron * quantity;
+
             session.Save(recruit);
+            session.Update(this);
             
             return recruit;
         }
@@ -933,6 +900,7 @@ namespace beans
 
             ICriteria criteria = session.CreateCriteria(typeof(Recruit));
             criteria.Add(Expression.Eq("InVillage", this));
+            criteria.Add(Expression.Gt("Quantity", 0));
             criteria.AddOrder(new Order("ID", true));
 
             switch (building)
