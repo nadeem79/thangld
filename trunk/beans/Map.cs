@@ -15,7 +15,7 @@ namespace beans
             return Math.Sqrt(Math.Pow(sourceX - desX, 2) + Math.Pow(sourceY - desY, 2));
         }
 
-        public static DateTime LandingTime(TroopType troop, int sourceX, int sourceY, int desX, int desY, DateTime start)
+        public static DateTime LandingTime (TroopType troop, int sourceX, int sourceY, int desX, int desY, DateTime start)
         {
             int intMoveTime = 360000;
             switch (troop)
@@ -52,7 +52,11 @@ namespace beans
             }
             return start.AddMilliseconds(RangeCalculator(sourceX, sourceY, desX, desY) * intMoveTime);
         }
-
+        public static DateTime LandingTime(TroopType troop, Village from, Village to, DateTime start)
+        {
+            return Map.LandingTime(troop, from.X, from.Y, to.X, to.Y, start);
+        }
+        
         public static IList<Village> GetMap(Village center, ISession session)
         {
             ICriteria criteria = session.CreateCriteria(typeof(Village));

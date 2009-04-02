@@ -25,7 +25,7 @@
                     <label for="name">
                         Tên đăng nhập:</label><br />
                     <br />
-                    <telerik:RadTextBox ID="username" runat="server">
+                    <telerik:RadTextBox ID="username" runat="server" EmptyMessage="Tên đăng nhập">
                     </telerik:RadTextBox>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Phải chọn tên đăng nhập"
                         ControlToValidate="username"></asp:RequiredFieldValidator>
@@ -33,7 +33,7 @@
                     <label for="password">
                         Mật khẩu:</label><br />
                     <br />
-                    <telerik:RadTextBox ID="password" runat="server" TextMode="Password">
+                    <telerik:RadTextBox ID="password" runat="server" TextMode="Password" EmptyMessage="Mật khẩu">
                     </telerik:RadTextBox>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Phải nhập mật khẩu"
                         ControlToValidate="password"></asp:RequiredFieldValidator>
@@ -41,7 +41,7 @@
                     <label for="password_confirm">
                         Nhập lại mật khẩu:</label><br />
                     <br />
-                    <telerik:RadTextBox ID="retype_password" runat="server" TextMode="Password">
+                    <telerik:RadTextBox ID="retype_password" runat="server" TextMode="Password" EmptyMessage="Mật khẩu">
                     </telerik:RadTextBox>
                     <asp:CompareValidator ID="CompareValidator1" runat="server" ErrorMessage="Nhập sai mật khẩu"
                         ControlToCompare="password" ControlToValidate="retype_password"></asp:CompareValidator>
@@ -49,7 +49,7 @@
                     <label for="email">
                         E-Mail:</label><br />
                     <br />
-                    <telerik:RadTextBox ID="email" runat="server">
+                    <telerik:RadTextBox ID="email" runat="server" EmptyMessage="Email">
                     </telerik:RadTextBox>
                     <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ErrorMessage="Email phải đúng định dạng"
                         ControlToValidate="email" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"></asp:RegularExpressionValidator>

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NHibernate;
+using uNhAddIns;
+using NHibernate.UserTypes;
 
 namespace beans
 {
@@ -143,27 +145,69 @@ namespace beans
             attack.Ram = ram;
             attack.Catapult = catapult;
             attack.Noble = noble;
-            attack.LandingTime = Map.LandingTime(type, attack.From.X, attack.From.Y, attack.To.X, attack.To.Y, attack.StartTime);
+            attack.StartTime = DateTime.Now;
+            attack.LandingTime = Map.LandingTime(type, attack.From, attack.To, attack.StartTime);
+            
             attack.Building = building;
 
-            from.Spear -= spear;
-            from.Sword -= sword;
-            from.Axe -= axe;
-            from.Scout -= scout;
-            from.Light -= light;
-            from.Heavy -= heavy;
-            from.Ram -= ram;
-            from.Catapult -= catapult;
-            from.Noble -= noble;
+            
 
-            session.Save(attack);
-            session.Update(from);
+            
             return attack;
         }
         #endregion
 
         #region Methods
 
+        public override void save(ISession session)
+        {
+            if ((this.Spear > this.From.Spear) ||
+            (this.Sword > this.From.Sword) ||
+            (this.Axe > this.From.Axe) ||
+            (this.Scout > this.From.Scout) ||
+            (this.Light > this.From.Light) ||
+            (this.Heavy > this.From.Heavy) ||
+            (this.Ram > this.From.Ram) ||
+            (this.Catapult > this.From.Catapult) ||
+            (this.Noble > this.From.Noble))
+                throw new Exception("Không đủ quân");
+
+            TroopType type = TroopType.Spear;
+            if (this.Scout > 0)
+                type = TroopType.Scout;
+            if (this.Light > 0)
+                type = TroopType.Light;
+            if (this.Heavy > 0)
+                type = TroopType.Heavy;
+            if (this.Spear > 0)
+                type = TroopType.Spear;
+            if (this.Axe > 0)
+                type = TroopType.Axe;
+            if (this.Sword > 0)
+                type = TroopType.Sword;
+            if (this.Ram > 0)
+                type = TroopType.Ram;
+            if (this.Catapult > 0)
+                type = TroopType.Catapult;
+            if (this.Noble > 0)
+                type = TroopType.Nobleman;
+
+            this.StartTime = DateTime.Now;
+            this.LandingTime = Map.LandingTime(type, this.From, this.To, this.StartTime);
+
+            this.From.Spear -= this.Spear;
+            this.From.Sword -= this.Sword;
+            this.From.Axe -= this.Axe;
+            this.From.Scout -= this.Scout;
+            this.From.Light -= this.Light;
+            this.From.Heavy -= this.Heavy;
+            this.From.Ram -= this.Ram;
+            this.From.Catapult -= this.Catapult;
+            this.From.Noble -= this.Noble;
+
+            session.Save(this);
+            session.Update(this.From);
+        }
         public override void effect(ISession session)
         {
             this.To.Update(this.LandingTime, session);
@@ -388,7 +432,7 @@ namespace beans
                         this.To.Iron -= returnTroop.Iron;
                     }
 
-                    session.Save(returnTroop);
+                    returnTroop.save(session);
                     #endregion
                 }
 

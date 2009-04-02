@@ -8,9 +8,10 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <telerik:RadScriptManager ID="RadScriptManager1" runat="server">
     </telerik:RadScriptManager>
-
-    <telerik:RadToolTip ID="RadToolTip1" runat="server">
-    </telerik:RadToolTip>
+    <telerik:RadToolTipManager ID="RadToolTipManager1" runat="server" RelativeTo="Element"
+            Position="BottomCenter" AutoTooltipify="true" ContentScrolling="Default">
+    </telerik:RadToolTipManager>
+    
 
     <h2>Bản đồ
     </h2>

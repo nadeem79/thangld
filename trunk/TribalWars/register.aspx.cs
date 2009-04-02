@@ -43,9 +43,8 @@ public partial class Default2 : System.Web.UI.Page
         user.Username = this.username.Text;
         user.Password = this.password.Text;
         user.Birthdate = dt;
-        user.Email = this.email.Text;
+        user.Email = this.email.Text; ;
         user.Description = "";
-        user.Email = "";
         user.Yahoo = "";
         user.Skype = "";
         user.Msn = "";

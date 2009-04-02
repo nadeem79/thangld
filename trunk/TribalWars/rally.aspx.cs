@@ -131,7 +131,7 @@ public partial class rally : System.Web.UI.Page
             y = (int.TryParse(this.y.Text, out i)) ? i : 0;
             session = NHibernateHelper.CreateSession();
             ITransaction trans = session.BeginTransaction();
-            Attack.CreateAttack(session, this.village, x, y, spear, sword, axe, scout, light, heavy, ram, catapult, noble, BuildingType.NoBuiding);
+            Attack.CreateAttack(session, this.village, x, y, spear, sword, axe, scout, light, heavy, ram, catapult, noble, BuildingType.NoBuiding).save(session);
             trans.Commit();
             Response.Redirect("rally.aspx?id=" + this.village.ID.ToString(), true);
         }
@@ -169,7 +169,7 @@ public partial class rally : System.Web.UI.Page
 
             session = NHibernateHelper.CreateSession();
             ITransaction trans = session.BeginTransaction();
-            Support.CreateSupport(session, this.village, x, y, spear, sword, axe, scout, light, heavy, ram, catapult, noble);
+            Support.CreateSupport(session, this.village, x, y, spear, sword, axe, scout, light, heavy, ram, catapult, noble).save(session);
             trans.Commit();
             Response.Redirect("rally.aspx?id=" + this.village.ID.ToString(), true);
         }

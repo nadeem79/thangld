@@ -10,33 +10,29 @@ namespace beans
     {
         #region Variables
         
-        private int iron, clay, wood;
-        private MoveType type;
+
         
         #endregion
 
         #region Properties
-
         public override MoveType Type
         {
             get { return MoveType.SendResources; }
         }
         public virtual int Wood
         {
-          get { return wood; }
-          set { wood = value; }
+            get;
+            set;
         }
-
         public virtual int Clay
         {
-          get { return clay; }
-          set { clay = value; }
+            get;
+            set;
         }
-
         public virtual int Iron
         {
-          get { return iron; }
-          set { iron = value; }
+            get;
+            set;
         }
         #endregion
 
@@ -49,6 +45,18 @@ namespace beans
         #endregion
 
         #region Methods
+
+        public override void save(ISession session)
+        {
+            if ((this.Clay > this.From.Clay) || (this.Wood > this.From.Wood) || (this.Iron > this.From.Iron))
+                throw new Exception("Không đủ tài nguyên");
+
+            this.From.Clay -= this.Clay;
+            this.From.Wood -= this.Wood;
+            this.From.Iron -= this.Iron;
+            session.Save(this);
+            session.Update(this.From);
+        }
 
         public override void effect(ISession session)
         {

@@ -47,6 +47,14 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="uNhAddIns, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\document\uNHAddIns\uNhAddIns.dll</HintPath>
+    </Reference>
+    <Reference Include="uNhAddIns.ActiveRecord, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\document\uNHAddIns\uNhAddIns.ActiveRecord.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attack.cs" />
@@ -157,6 +165,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mapping\filters.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mapping\typedef.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\" />

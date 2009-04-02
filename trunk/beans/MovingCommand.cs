@@ -8,6 +8,7 @@ namespace beans
 {
     public abstract class MovingCommand : IdentityObject
     {
+        #region Properties
         public Village From
         {
             get;
@@ -32,7 +33,9 @@ namespace beans
         {
             get;
         }
+        #endregion
 
+        public abstract void save(ISession session);
         public abstract void effect(ISession session);
     }
 }

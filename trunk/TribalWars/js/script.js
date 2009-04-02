@@ -83,3 +83,6 @@ function overviewHideLevel()
 	$("div.label").hide();
 }
 
+function Test(str) {
+    alert(str);
+}

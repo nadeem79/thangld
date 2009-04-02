@@ -1,6 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="TribeProfile.ascx.cs"
     Inherits="TribeProfile" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+
 <telerik:RadFormDecorator ID="RadFormDecorator1" runat="server" Skin="Office2007" />
 <telerik:RadToolTipManager ID="pChangeTribeInformation" runat="server">
 </telerik:RadToolTipManager>
@@ -70,8 +71,6 @@
                 </tbody>
             </table>
             <asp:Panel ID="pChangeInfo" runat="server" CssClass="hidden_panel" Width="500">
-                <asp:ScriptManager ID="ScriptManager1" runat="server">
-                </asp:ScriptManager>
                 <div>
                     <asp:Label ID="error" runat="server" ForeColor="Red"></asp:Label></div>
                 <div>
