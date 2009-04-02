@@ -1,4 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="LoginBox.ascx.cs" Inherits="LoginBox" %>
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <style type="text/css">
     .login-block
     {
@@ -74,6 +75,7 @@
     <asp:Label ID="error" runat="server" CssClass="error" ForeColor="#FF3300"></asp:Label>
     <br />
     <div>
+    <telerik:RadInputManager
         <label for="user" title="Trang chủ">
             <table border="0" width="100%">
                 <tr>
@@ -81,7 +83,8 @@
                         Tên đăng nhập:
                     </td>
                     <td>
-                        <asp:TextBox ID="username" runat="server"></asp:TextBox>
+                        <telerik:RadTextBox ID="username" runat="server" EmptyMessage="Tên đăng nhập">
+                        </telerik:RadTextBox>
                         <br /><asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="username"
                             ErrorMessage="RequiredFieldValidator">Phải nhập username</asp:RequiredFieldValidator>
                     </td>
@@ -91,7 +94,8 @@
                         Mật khẩu: 
                     </td>
                     <td>
-                        <asp:TextBox ID="password" runat="server" TextMode="Password"></asp:TextBox>
+                    <telerik:RadTextBox ID="password" runat="server" EmptyMessage="Mật khẩu">
+                        </telerik:RadTextBox>
                         <br /><asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="password"
                             ErrorMessage="RequiredFieldValidator">Phải nhập mật khẩu</asp:RequiredFieldValidator>
                     </td>

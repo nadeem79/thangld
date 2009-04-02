@@ -49,6 +49,15 @@
     <property name="Clay" column="clay" type="Int32" />
     <property name="Wood" column="wood" type="Int32" />
     <property name="Iron" column="iron" type="Int32" />
+
+    <bag name="StationedTroops" table="stationed" cascade="none" fetch="join" inverse="true"  lazy="true">
+      <key column="at_village" />
+      <one-to-many class="beans.Stationed, beans"/>
+    </bag>
+    <bag name="TroopsOutside" table="stationed" cascade="none" fetch="join" inverse="true"  lazy="true">
+      <key column="from_village" />
+      <one-to-many class="beans.Stationed, beans"/>
+    </bag>
     
   </class>
 

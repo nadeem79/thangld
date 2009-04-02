@@ -1,5 +1,7 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="outPage.master.cs" Inherits="outPage" %>
 
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+
 <%@ Register src="Shoutbox.ascx" tagname="Shoutbox" tagprefix="uc1" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -53,6 +55,12 @@
 </head>
 <body>
         <form id="form1" runat="server">
+        
+                <telerik:RadScriptManager ID="RadScriptManager1" runat="server">
+                </telerik:RadScriptManager>
+                <telerik:RadWindow ID="RadWindow1" runat="server" Width="500" Height="500" Title="Test" ShowContentDuringLoad="true" VisibleOnPageLoad="true" VisibleTitlebar="true" NavigateUrl="shoutbox.aspx?group_chat=0" >
+    
+                    </telerik:RadWindow>
     <div id="main">
         <div id="header">
             <h1>
@@ -85,7 +93,6 @@
     </div>
     <!-- main -->
             
-        <uc1:Shoutbox ID="Shoutbox1" runat="server" />
             
         </form>
     </body>

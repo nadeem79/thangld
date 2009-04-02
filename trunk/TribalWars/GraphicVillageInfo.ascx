@@ -1,11 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="GraphicVillageInfo.ascx.cs"
     Inherits="GraphicVillageInfo" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<telerik:RadScriptManager ID="RadScriptManager1" runat="server" EnableScriptCombine="true">
-<Scripts>
-<asp:ScriptReference Path="~/js/script.js" />
-</Scripts>
-</telerik:RadScriptManager>
+
 <asp:Label ID="lblError" runat="server" ForeColor="#FF3300"></asp:Label>
 <table width="100%">
     <tbody>

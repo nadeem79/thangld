@@ -632,6 +632,7 @@ table.vis td.selected { background-color:#DFCCA6; }
 	.shoutbox_content .username
     {
         background-color:#E6E6E6;
+        height:80%;
     }
     .shoutbox_content .username a
     {
