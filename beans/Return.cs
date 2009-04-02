@@ -89,6 +89,11 @@ namespace beans
 
         #region Methods
 
+        public override void save(ISession session)
+        {
+            session.Save(this);
+        }
+
         public override void effect(ISession session)
         {
             this.To.Spear += this.Spear;

@@ -78,18 +78,9 @@ public partial class map : System.Web.UI.Page
             link.ImageUrl = @"images/v6.png";
             
             link.NavigateUrl = "village_info.aspx?id=" + this.village.ID.ToString() + "&village=" + v.ID.ToString();
-            
-            RadToolTip tooltip = new RadToolTip();
-            tooltip.Text = "Thành phố: " + v.Name + "(" + v.X.ToString("000") + "|" + v.Y.ToString("000") + ")" + Environment.NewLine;
-            tooltip.Text += "Chủ thành: " + v.Owner.Username;
-            tooltip.ShowEvent = ToolTipShowEvent.OnMouseOver;
-            tooltip.Position = ToolTipPosition.BottomRight;
-            tooltip.RelativeTo = ToolTipRelativeDisplay.Element;
-            tooltip.Enabled = true;
-            tooltip.Controls.Add(link);
-            //link.Controls.Add(tooltip);
-            //tooltip.Controls.Add(link);
-            //this.RadToolTipManager1.TargetControls.Add(link.ClientID);
+
+            link.ToolTip = "Thành phố: " + v.Name + " (" + v.X.ToString("000") + "|" + v.Y.ToString("000") + ")<br />" + Environment.NewLine;
+            link.ToolTip += "Chủ thành: " + v.Owner.Username;
             cell.Controls.Add(link);
         }
         

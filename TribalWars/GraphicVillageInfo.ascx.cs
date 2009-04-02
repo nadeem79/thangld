@@ -9,7 +9,7 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
-
+using Telerik.Web.UI;
 using beans;
 using NHibernate;
 
@@ -76,7 +76,18 @@ public partial class GraphicVillageInfo : System.Web.UI.UserControl
             trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
             session.Update(player);
             trans.Commit();
-            Response.Redirect("village.aspx?id=" + this.CurrentVillage.ID.ToString(), true);
+
+            if (player.ShowBuildingLevel)
+            {
+                RadScriptManager.RegisterStartupScript(bttnHideBuildingLevel, bttnHideBuildingLevel.GetType(), "ShowBuildingLevel", "$('div.label').show();", true);
+                this.bttnHideBuildingLevel.Text = "Bỏ hiển thị nâng cấp công trình";
+                
+            }
+            else
+            {
+                RadScriptManager.RegisterStartupScript(bttnHideBuildingLevel, bttnHideBuildingLevel.GetType(), "HideBuildingLevel", "$('div.label').hide();", true);
+                this.bttnHideBuildingLevel.Text = "Hiển thị nâng cấp công trình";
+            }
         }
         catch (Exception exc)
         {
@@ -86,7 +97,6 @@ public partial class GraphicVillageInfo : System.Web.UI.UserControl
         }
         finally
         {
-            
             if (session != null)
                 session.Close();
         }

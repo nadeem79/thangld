@@ -1,16 +1,27 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="GraphicVillageInfo.ascx.cs"
     Inherits="GraphicVillageInfo" %>
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<telerik:RadScriptManager ID="RadScriptManager1" runat="server" EnableScriptCombine="true">
+<Scripts>
+<asp:ScriptReference Path="~/js/script.js" />
+</Scripts>
+</telerik:RadScriptManager>
 <asp:Label ID="lblError" runat="server" ForeColor="#FF3300"></asp:Label>
 <table width="100%">
     <tbody>
         <tr>
             <td>
-                <asp:LinkButton ID="bttnHideBuildingLevel" runat="server" 
-                    onclick="bttnHideBuildingLevel_Click">Xoá hiển thị nâng cấp công trình</asp:LinkButton>
+                <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                    <ContentTemplate>
+                        <asp:LinkButton ID="bttnHideBuildingLevel" runat="server" OnClick="bttnHideBuildingLevel_Click">Xoá hiển thị nâng cấp công trình</asp:LinkButton>
+                    </ContentTemplate>
+                    <Triggers>
+                        <asp:AsyncPostBackTrigger ControlID="bttnHideBuildingLevel" EventName="Click" />
+                    </Triggers>
+                </asp:UpdatePanel>
             </td>
             <td align="right">
-                <asp:LinkButton ID="bttnSwitchTextVillageOverview" runat="server" 
-                    onclick="bttnSwitchTextVillageOverview_Click">Hiển thị dạng văn bản</asp:LinkButton>
+                <asp:LinkButton ID="bttnSwitchTextVillageOverview" runat="server" OnClick="bttnSwitchTextVillageOverview_Click">Hiển thị dạng văn bản</asp:LinkButton>
             </td>
         </tr>
     </tbody>
@@ -156,9 +167,7 @@
                     </div>
                     <img class="npc_conversation" src="images/conversation.gif" />
                     <img class="npc_guard" src="images/guard.gif" /></div>
-
                 <% if (!this.DisplayBuildingLevel) Response.Write("<script type='text/javascript'>overviewHideLevel();</script>"); %>
-
             </td>
         </tr>
     </tbody>

@@ -656,7 +656,7 @@ namespace beans
 
             Configuration config = session.Load<Configuration>(1);
 
-            if (config.Index > (config.Expand * 2 + 1))
+            if (config.Index >= (config.Expand * 2 + 1))
             {
                 config.Expand++;
                 config.Index = 0;

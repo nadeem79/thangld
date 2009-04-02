@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
 
-  <class name="beans.Village, beans" table="villages" lazy="false">
+  <class name ="beans.Village, beans" table="villages" lazy="false">
 
     <id name="ID" column="id" type="Int32">
       <generator class="identity"/>
