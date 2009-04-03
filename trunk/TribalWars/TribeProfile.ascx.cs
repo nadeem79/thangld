@@ -14,6 +14,7 @@ using beans;
 using NHibernate;
 using System.IO;
 using System.Drawing;
+using Telerik.Web.UI;
 
 public partial class TribeProfile : System.Web.UI.UserControl
 {
@@ -31,8 +32,11 @@ public partial class TribeProfile : System.Web.UI.UserControl
         set { this.village = value; }
     }
 
+
+
     protected void Page_Load(object sender, EventArgs e)
     {
+
         ISession session = NHibernateHelper.CreateSession();
         Player player = session.Get<Player>(Session["user"]);
         if ((player.TribePermission & TribePermission.ChangeTribeDescription) != TribePermission.ChangeTribeDescription)

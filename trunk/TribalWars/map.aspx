@@ -6,8 +6,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <telerik:RadScriptManager ID="RadScriptManager1" runat="server">
-    </telerik:RadScriptManager>
+
     <telerik:RadToolTipManager ID="RadToolTipManager1" runat="server" RelativeTo="Element"
             Position="BottomCenter" AutoTooltipify="true" ContentScrolling="Default">
     </telerik:RadToolTipManager>

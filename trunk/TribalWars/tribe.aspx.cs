@@ -46,6 +46,11 @@ public partial class tribe : System.Web.UI.Page
                 ucTribeMembers.Village = village;
                 this.pTribePage.Controls.Add(ucTribeMembers);
                 break;
+            case TribePageType.DiplomacyPage:
+                TribeDiplomacy ucDiplomacyPage = (TribeDiplomacy)Page.LoadControl("TribeDiplomacy.ascx");
+                ucDiplomacyPage.Village = village;
+                this.pTribePage.Controls.Add(ucDiplomacyPage);
+                break;
             default:
                 TribeProfile ucProfilePage = (TribeProfile)Page.LoadControl("TribeProfile.ascx");
                 ucProfilePage.Tribe = player.Group;

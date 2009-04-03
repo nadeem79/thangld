@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="TribeProfile.ascx.cs"
     Inherits="TribeProfile" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-
+<%@ Register Assembly="FreeTextBox" Namespace="FreeTextBoxControls" TagPrefix="FTB" %>
 <telerik:RadFormDecorator ID="RadFormDecorator1" runat="server" Skin="Office2007" />
 <telerik:RadToolTipManager ID="pChangeTribeInformation" runat="server">
 </telerik:RadToolTipManager>
@@ -70,7 +70,11 @@
                     </tr>
                 </tbody>
             </table>
-            <asp:Panel ID="pChangeInfo" runat="server" CssClass="hidden_panel" Width="500">
+            <table>
+                <tr>
+                    <td>
+                    <asp:Panel ID="pChangeInfo" runat="server" CssClass="hidden_panel" Width="500px"
+                Height="763px">
                 <div>
                     <asp:Label ID="error" runat="server" ForeColor="Red"></asp:Label></div>
                 <div>
@@ -78,7 +82,8 @@
                         Ký hiệu (tối đa 6 ký tự):
                     </div>
                     <div>
-                        <telerik:RadTextBox ID="txtTag" runat="server" MaxLength="6" Width="260px"></telerik:RadTextBox>
+                        <telerik:RadTextBox ID="txtTag" runat="server" MaxLength="6" Width="260px">
+                        </telerik:RadTextBox>
                         <div>
                             <asp:RequiredFieldValidator ID="RequiredFieldValidator1" ControlToValidate="txtTag"
                                 runat="server" ErrorMessage="Nhập tag name"></asp:RequiredFieldValidator>
@@ -87,7 +92,8 @@
                             Tên:
                         </div>
                         <div>
-                            <telerik:RadTextBox ID="txtName" runat="server" Width="355px"></telerik:RadTextBox>
+                            <telerik:RadTextBox ID="txtName" runat="server" Width="355px">
+                            </telerik:RadTextBox>
                             <div>
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator3" ControlToValidate="txtName"
                                     runat="server" ErrorMessage="Nhập tên"></asp:RequiredFieldValidator>
@@ -111,16 +117,23 @@
                             Thông tin bang hội:
                         </div>
                         <div>
-                            <telerik:RadEditor ID="txtDescription" runat="server" Width="550" Height="500">
+                            <telerik:RadEditor ID="txtDescription" runat="server" 
+                                ToolsFile="~/ToolsFile.xml">
+                                <Content>
+</Content>
                             </telerik:RadEditor>
                         </div>
-                        <div style="margin-top:5px;">
+                        <div style="margin-top: 5px;">
                             <asp:Button ID="bttnChangeTribeInfo" runat="server" Text="Thay đổi thông tin" Width="150"
                                 OnClick="bttnChangeTribeInfo_Click" />
                         </div>
                     </div>
                 </div>
             </asp:Panel>
+                    </td>
+                </tr>
+            </table>
+            
         </td>
     </tr>
 </table>

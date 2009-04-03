@@ -7,6 +7,7 @@ namespace beans
 {
     public enum TribeDiplomate
     {
+        NoRelation = 0,
         NAP = 1,
         Ally = 2,
         Enemy = 3

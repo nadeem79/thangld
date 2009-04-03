@@ -16,6 +16,7 @@
     <div>
         <telerik:RadScriptManager ID="RadScriptManager1" Runat="server">
         </telerik:RadScriptManager>
+        <telerik:RadFormDecorator ID="RadFormDecorator1" runat="server" />
         <uc1:Shoutbox ID="Shoutbox" runat="server"/>
     
     </div>

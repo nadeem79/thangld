@@ -12,11 +12,11 @@ using System.Web.UI.WebControls.WebParts;
 using beans;
 using NHibernate;
 using System.Collections.Generic;
+using Telerik.Web.UI;
 
 public partial class Shoutbox : System.Web.UI.UserControl
 {
-    protected DateTime dtLastSend = DateTime.Now.AddSeconds(-5);
-    protected DateTime dtLastUpdate;
+    protected DateTime dtLastSend;
     protected Group _group = null;
     public Group Group
     {
@@ -25,8 +25,8 @@ public partial class Shoutbox : System.Web.UI.UserControl
     }
     public DateTime LastUpdate
     {
-        get { return this.dtLastUpdate; }
-        set { this.dtLastUpdate = value; }
+        get { return this.dtLastSend; }
+        set { this.dtLastSend = value; }
     }
     
 
@@ -38,7 +38,6 @@ public partial class Shoutbox : System.Web.UI.UserControl
             string strData = "";
             List<ShoutboxData> lst = (List<ShoutboxData>)ShoutboxData.GetShoutbox(null, 15, false, session);
             lst.Reverse();
-            
             foreach (ShoutboxData data in lst)
             {
                 strData += "<div><img src='images/chat_icon.gif'> [" + data.Time.ToString("hh:mm") + "] ";
@@ -52,7 +51,7 @@ public partial class Shoutbox : System.Web.UI.UserControl
             }
             session.Close();
             this.lblShoutboxData.Text = strData;
-            Timer1.Enabled = true;
+            this.pForm.Visible = (Session["user"] != null);
         }
         catch (Exception ex)
         {
@@ -61,18 +60,29 @@ public partial class Shoutbox : System.Web.UI.UserControl
     }
     protected void bttnShout_Click(object sender, EventArgs e)
     {
-        
+
         if (Session["user"] == null)
             return;
-
-        if ((DateTime.Now - this.dtLastSend).Seconds < 5)
+        ScriptManager.RegisterStartupScript(bttnShout, bttnShout.GetType(), "EmptyText", "alert('Text trắng');", true);
+        double i = (DateTime.Now - this.LastUpdate).TotalSeconds;
+        
+        this.error.Text = i.ToString() + " - " + DateTime.Now.ToString() + " - " + this.LastUpdate.ToString();
+        if ((DateTime.Now - this.LastUpdate).TotalSeconds < 5)
         {
+            return;
+        }
+        if (this.txtShoutboxInput.Text.Trim().Equals(string.Empty))
+        {
+            System.Web.HttpContext.Current.Response.Write("<SCRIPT LANGUAGE='JavaScript'>");
+            System.Web.HttpContext.Current.Response.Write("alert('Text trắng');");
+            System.Web.HttpContext.Current.Response.Write("</SCRIPT>");
             return;
         }
         try
         {
+            this.LastUpdate = DateTime.Now;
             ISession session = NHibernateHelper.CreateSession();
-            Timer1.Enabled = false;
+            
             Player player = session.Get<Player>(Session["user"]);
             ShoutboxData data = new ShoutboxData();
             data.Text = this.txtShoutboxInput.Text;
@@ -87,7 +97,7 @@ public partial class Shoutbox : System.Web.UI.UserControl
             strData += "</div>";
             this.lblShoutboxData.Text += strData;
             this.txtShoutboxInput.Text = "";
-            this.dtLastSend = data.Time;
+            
         }
         catch (Exception ex)
         {
@@ -95,7 +105,7 @@ public partial class Shoutbox : System.Web.UI.UserControl
         }
         finally
         {
-            Timer1.Enabled = true;
+            
         }
     }
 
