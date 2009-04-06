@@ -91,7 +91,7 @@
                                     <td class="no_hover">
                                     </td>
                                     <td style="white-space: normal;">
-                                        <a href='village.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>'><% Response.Write(this.CurrentVillage.Name); %></a>
+                                        <a href='village.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>'><span id="city_name"><% Response.Write(this.CurrentVillage.Name); %></span></a>
                                         (<% Response.Write(this.CurrentVillage.X.ToString("000")); %>|<% Response.Write(this.CurrentVillage.Y.ToString("000")); %>)
                                     </td>
                                 </tr>

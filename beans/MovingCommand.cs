@@ -19,6 +19,11 @@ namespace beans
             get;
             set;
         }
+        public bool Pending
+        {
+            get;
+            set;
+        }
         public DateTime StartTime
         {
             get;

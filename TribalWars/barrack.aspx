@@ -1,9 +1,12 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/inPage.master" AutoEventWireup="true" CodeFile="barrack.aspx.cs"
     Inherits="barrack"  %>
 
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <telerik:RadFormDecorator ID="RadFormDecorator1" runat="server" DecoratedControls="All" Skin="Vista" />
     <table>
         <tbody>
             <tr>
@@ -12,9 +15,8 @@
                 </td>
                 <td>
                     <h2>
-                        Barracks Level <%Response.Write(this.village.Barracks); %></h2>
-                    In the barracks you can recruit infantry. The higher its level the faster the recruitment
-                    of troops will be finished.
+                        <asp:Literal runat="server" Text="<%$ Resources:text, barrack %>" /> <asp:Literal runat="server" Text="<%$ Resources:text, level %>" /> <%Response.Write(this.village.Barracks); %></h2>
+                    <asp:Literal ID="Literal1" runat="server" Text="<%$ Resources:text, barrack_description %>" />
                 </td>
             </tr>
         </tbody>
@@ -28,13 +30,13 @@
         <tbody>
             <tr>
                 <th width="150">
-                    Training
+                    <asp:Literal ID="Literal2" runat="server" Text="<%$ Resources:text, training %>" />
                 </th>
                 <th width="120">
-                    Duration
+                    <asp:Literal ID="Literal3" runat="server" Text="<%$ Resources:text, duration %>" />
                 </th>
                 <th width="500">
-                    Completion
+                    <asp:Literal ID="Literal4" runat="server" Text="<%$ Resources:text, completion %>" />
                 </th>
             </tr>
             <asp:Label ID="lblRecruiting" runat="server"></asp:Label>
@@ -67,19 +69,19 @@
                         Lính giáo</a>
                 </td>
                 <td class="nowrap">
-                    <img src="images/holz.png" title="Wood" alt="">
+                    <img src="images/holz.png" title="Wood" alt="" />
                     50
                 </td>
                 <td class="nowrap">
-                    <img src="images/lehm.png" title="Clay" alt="">
+                    <img src="images/lehm.png" title="Clay" alt="" />
                     30
                 </td>
                 <td class="nowrap">
-                    <img src="images/eisen.png" title="Iron" alt="">
+                    <img src="images/eisen.png" title="Iron" alt="" />
                     10
                 </td>
                 <td class="nowrap">
-                    <img src="images/face.png" title="Villagers" alt="">
+                    <img src="images/face.png" title="Villagers" alt="" />
                     1
                 </td>
                 <td>

@@ -9,10 +9,11 @@
     </id>
     <discriminator column="type" type="Int32" />
     
-    <many-to-one name="From" class="beans.Village, beans" column="[from]" not-null="true" cascade="save-update" lazy="proxy" />
-    <many-to-one name="To" class="beans.Village, beans" column="[to]" not-null="true" cascade="save-update" lazy="proxy"/>
+    <many-to-one name="From" class="beans.Village, beans" column="[from]" not-null="false" fetch="join" cascade="none" />
+    <many-to-one name="To" class="beans.Village, beans" column="[to]" not-null="false" fetch="join" cascade="none" />
     <property name="StartTime" column="starting_time" type="timestamp"/>
     <property name="LandingTime" column="landing_time" type="timestamp"/>
+    <property name="Pending" column="pending" type="Boolean"/>
 
     <subclass discriminator-value="2" name="beans.Attack, beans" lazy="false">
       <property name="Spear" column="spear" type="Int32" />

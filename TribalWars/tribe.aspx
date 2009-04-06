@@ -5,6 +5,7 @@
 <%@ Reference Control="TribeProfile.ascx" %>
 <%@ Reference Control="TribeMembers.ascx" %>
 <%@ Reference Control="TribeDiplomacy.ascx" %>
+<%@ Reference Control="CustomControls/TribeShoutbox.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>

@@ -18,6 +18,20 @@ public partial class Shoutbox : System.Web.UI.UserControl
 {
     protected DateTime dtLastSend;
     protected Group _group = null;
+    private int size = 15;
+
+    public int Size
+    {
+        get { return this.size; }
+        set 
+        {
+            if (value < 15)
+                this.size = 15;
+            else
+                this.size = value; 
+        }
+    }
+
     public Group Group
     {
         get { return this._group; }
@@ -36,7 +50,7 @@ public partial class Shoutbox : System.Web.UI.UserControl
         {
             ISession session = NHibernateHelper.CreateSession();
             string strData = "";
-            List<ShoutboxData> lst = (List<ShoutboxData>)ShoutboxData.GetShoutbox(null, 15, false, session);
+            List<ShoutboxData> lst = (List<ShoutboxData>)ShoutboxData.GetShoutbox(this.Group, 15, false, session);
             lst.Reverse();
             foreach (ShoutboxData data in lst)
             {
@@ -63,21 +77,12 @@ public partial class Shoutbox : System.Web.UI.UserControl
 
         if (Session["user"] == null)
             return;
-        ScriptManager.RegisterStartupScript(bttnShout, bttnShout.GetType(), "EmptyText", "alert('Text trắng');", true);
-        double i = (DateTime.Now - this.LastUpdate).TotalSeconds;
-        
-        this.error.Text = i.ToString() + " - " + DateTime.Now.ToString() + " - " + this.LastUpdate.ToString();
-        if ((DateTime.Now - this.LastUpdate).TotalSeconds < 5)
-        {
-            return;
-        }
+
         if (this.txtShoutboxInput.Text.Trim().Equals(string.Empty))
         {
-            System.Web.HttpContext.Current.Response.Write("<SCRIPT LANGUAGE='JavaScript'>");
-            System.Web.HttpContext.Current.Response.Write("alert('Text trắng');");
-            System.Web.HttpContext.Current.Response.Write("</SCRIPT>");
             return;
         }
+
         try
         {
             this.LastUpdate = DateTime.Now;
@@ -116,7 +121,10 @@ public partial class Shoutbox : System.Web.UI.UserControl
             this.txtShoutboxInput.AutoCompleteType = AutoCompleteType.None;
             ISession session = NHibernateHelper.CreateSession();
             string strData = "";
-            foreach (ShoutboxData data in ShoutboxData.GetShoutbox(null, 15, false, session))
+            List<ShoutboxData> lst = (List<ShoutboxData>)ShoutboxData.GetShoutbox(this.Group, 15, false, session);
+            lst.Reverse();
+
+            foreach (ShoutboxData data in lst)
             {
                 strData += "<div><img src='images/chat_icon.gif'> [" + data.Time.ToString("hh:mm") + "] ";
                 if (Session["user"] == null)
@@ -134,8 +142,5 @@ public partial class Shoutbox : System.Web.UI.UserControl
             this.error.Text = ex.Message;
         }
     }
-    protected void Timer1_Tick1(object sender, EventArgs e)
-    {
 
-    }
 }

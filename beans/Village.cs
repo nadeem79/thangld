@@ -70,7 +70,6 @@ namespace beans
             get;
             set;
         }
-
         public int Loyal
         {
             get { return _loyal; }
@@ -82,7 +81,6 @@ namespace beans
                     _loyal = value;
             }
         }
-
         public virtual DateTime LastUpdate
         {
             get;
@@ -98,91 +96,76 @@ namespace beans
             get;
             set;
         }
-
         public virtual int HidingPlace
         {
             get;
             set;
         }
-
         public int Warehouse
         {
             get;
             set;
         }
-
         public virtual int Farm
         {
             get;
             set;
         }
-
         public virtual int IronMine
         {
             get;
             set;
         }
-
         public virtual int ClayPit
         {
             get;
             set;
         }
-
         public virtual int TimberCamp
         {
             get;
             set;
         }
-
         public virtual int Market
         {
             get;
             set;
         }
-
         public virtual int Rally
         {
             get;
             set;
         }
-
         public virtual int Smithy
         {
             get;
             set;
         }
-
         public virtual int Academy
         {
             get;
             set;
         }
-
         public virtual int Workshop
         {
             get;
             set;
         }
-
         public virtual int Stable
         {
             get;
             set;
         }
-
         public virtual int Barracks
         {
             get;
             set;
         }
-
         public virtual int Headquarter
         {
             get;
             set;
         }
-
         public virtual int X
         {
             get;
@@ -193,103 +176,91 @@ namespace beans
             get;
             set;
         }
-
         public virtual string Name
         {
             get;
             set;
         }
-
         public virtual Player Owner
         {
             get;
             set;
         }
-
         public virtual int Wood
         {
             get;
             set;
         }
-
         public virtual int Clay
         {
             get;
             set;
         }
-
         public virtual int Iron
         {
             get;
             set;
         }
-
         public virtual int Noble
         {
             get;
             set;
         }
-
         public virtual int Spear
         {
             get;
             set;
         }
-
         public virtual int Sword
         {
             get;
             set;
         }
-
         public virtual int Axe
         {
             get;
             set;
         }
-
         public virtual int Scout
         {
             get;
             set;
         }
-
         public virtual int Light
         {
             get;
             set;
         }
-
         public virtual int Heavy
         {
             get;
             set;
         }
-
         public virtual int Ram
         {
             get;
             set;
         }
-
         public virtual int Catapult
         {
             get;
             set;
         }
-
+        public int Population 
+        {
+            get;
+            set;
+        }
         public virtual IList<MovingCommand> Incomings
         {
             get;
             set;
         }
-
         public virtual IList<MovingCommand> Outgoings
         {
             get;
             set;
         }
-
         public virtual IList<Offer> Offers
         {
             get;
@@ -301,13 +272,11 @@ namespace beans
         //    get { return sendings; }
         //    set { sendings = value; }
         //}
-
         public virtual IList<Stationed> StationedTroops
         {
             get;
             set;
         }
-
         public virtual IList<Stationed> TroopsOutside
         {
             get;
@@ -744,7 +713,7 @@ namespace beans
         //Chưa xét trường hợp xây nhà, xây noble và xe
         public void Update(DateTime to, ISession session)
         {
-            this.Loyal += (to - this.LastUpdate).Hours;
+            this.Loyal += (int)(to - this.LastUpdate).TotalHours;
 
             IList<MovingCommand> lstMovingCommands = this.GetDependingCommands(to, session);
             IList<Recruit> lstInfantryRecruits = this.GetDependingInfantryRecruit(session);
@@ -865,6 +834,7 @@ namespace beans
                     Expression.Eq("To", this),
                     Expression.Eq("From", this))                
                 );
+            criteria.Add(Expression.Eq("Pending", false));
             criteria.Add(Expression.Gt("LandingTime", DateTime.Now));
             criteria.AddOrder(Order.Asc("LandingTime"));
             IList<MovingCommand> lst = criteria.List<MovingCommand>();
@@ -874,7 +844,7 @@ namespace beans
         public IList<MovingCommand> GetIncomingTroop(ISession session)
         {
             ICriteria criteria = session.CreateCriteria(typeof(MovingCommand));
-
+            criteria.Add(Expression.Eq("Pending", false));
             criteria.Add(Expression.Eq("To", this));
             criteria.Add(Expression.Gt("LandingTime", DateTime.Now));
             criteria.AddOrder(Order.Desc("LandingTime"));
@@ -931,6 +901,16 @@ namespace beans
                     throw new Exception("Hack hả ku :))");
             }
             return criteria.List<Recruit>();
+        }
+
+        public void CancelRecruit(Recruit recruit, ISession session)
+        {
+            Price price = Recruit.GetPrice(recruit.Troop);
+            this.Wood += price.Wood * recruit.Quantity;
+            this.Clay += price.Clay * recruit.Quantity;
+            this.Iron += price.Iron * recruit.Quantity;
+            session.Update(this);
+            session.Delete(recruit);
         }
 
         #endregion       

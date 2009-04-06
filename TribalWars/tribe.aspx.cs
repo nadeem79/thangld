@@ -48,8 +48,15 @@ public partial class tribe : System.Web.UI.Page
                 break;
             case TribePageType.DiplomacyPage:
                 TribeDiplomacy ucDiplomacyPage = (TribeDiplomacy)Page.LoadControl("TribeDiplomacy.ascx");
+                ucDiplomacyPage.DiplomacyPermission = player.TribePermission;
                 ucDiplomacyPage.Village = village;
                 this.pTribePage.Controls.Add(ucDiplomacyPage);
+                break;
+            case TribePageType.ForumPage:
+                CustomControls_TribeShoutbox shoutbox = (CustomControls_TribeShoutbox)Page.LoadControl("CustomControls/TribeShoutbox.ascx");
+                shoutbox.Group = player.Group;
+                shoutbox.Size = 30;
+                this.pTribePage.Controls.Add(shoutbox);
                 break;
             default:
                 TribeProfile ucProfilePage = (TribeProfile)Page.LoadControl("TribeProfile.ascx");

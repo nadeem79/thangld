@@ -116,18 +116,9 @@ namespace beans
                 throw new Exception("Không đủ quân");
 
             Support support = new Support();
-            support.From = from;
-            support.StartTime = DateTime.Now;
             support.To = session.Load<Village>(intTo);
-            support.Spear = spear;
-            support.Sword = sword;
-            support.Axe = axe;
-            support.Scout = scout;
-            support.Light = light;
-            support.Heavy = heavy;
-            support.Ram = ram;
-            support.Catapult = catapult;
-            support.Noble = noble;
+            support.From = from;
+            
 
             TroopType type = TroopType.Spear;
             if (scout > 0)
@@ -148,13 +139,59 @@ namespace beans
                 type = TroopType.Catapult;
             if (noble > 0)
                 type = TroopType.Nobleman;
+
+            support.Spear = spear;
+            support.Sword = sword;
+            support.Axe = axe;
+            support.Scout = scout;
+            support.Light = light;
+            support.Heavy = heavy;
+            support.Ram = ram;
+            support.Catapult = catapult;
+            support.Noble = noble;
+            support.StartTime = DateTime.Now;
             support.LandingTime = Map.LandingTime(type, support.From.X, support.From.Y, support.To.X, support.To.Y, support.StartTime);
+            support.Pending = true;
+
+            session.Save(support);
 
             return support;
         }
         #endregion
 
         #region Methods
+
+        public void execute(ISession session)
+        {
+            if ((this.Spear > this.From.Spear) ||
+            (this.Sword > this.From.Sword) ||
+            (this.Axe > this.From.Axe) ||
+            (this.Scout > this.From.Scout) ||
+            (this.Light > this.From.Light) ||
+            (this.Heavy > this.From.Heavy) ||
+            (this.Ram > this.From.Ram) ||
+            (this.Catapult > this.From.Catapult) ||
+            (this.Noble > this.From.Noble))
+                throw new Exception("Không đủ quân");
+
+            TimeSpan transitTime = this.LandingTime - this.StartTime;
+            this.StartTime = DateTime.Now;
+            this.LandingTime = this.StartTime + transitTime;
+            this.Pending = false;
+
+            this.From.Spear -= this.Spear;
+            this.From.Sword -= this.Sword;
+            this.From.Axe -= this.Axe;
+            this.From.Scout -= this.Scout;
+            this.From.Light -= this.Light;
+            this.From.Heavy -= this.Heavy;
+            this.From.Ram -= this.Ram;
+            this.From.Catapult -= this.Catapult;
+            this.From.Noble -= this.Noble;
+
+            session.Update(this);
+            session.Update(this.From);
+        }
 
         public override void save(ISession session)
         {
