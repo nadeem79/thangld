@@ -1,57 +1,114 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="TribeDiplomacy.ascx.cs"
     Inherits="TribeDiplomacy" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+
+<telerik:RadFormDecorator ID="RadFormDecorator1" runat="server" Skin="Vista" DecoratedControls="All" />
 <p>
-    On this page your relations with other tribes are administered. The settings are
-    <strong>non-binding within the game</strong>, but villages will be coloured accordingly
-    on the map. The status is visible only to tribe members and may be changed by tribal
-    diplomats only.</p>
+    <asp:Literal ID="Literal1" runat="server" Text="<%$ Resources:text, diplomatic_description %>" /></p>
 <table class="vis" width="300">
-    <tr>
-        <th colspan="2">
-            Đồng minh
-        </th>
-    </tr>
-    <tr>
-        <td>
-            <asp:GridView ID="gvAllies" runat="server">
-            </asp:GridView>
-        </td>
-    </tr>
+    <tbody>
+        <tr>
+            <th colspan="2">
+                Đồng minh
+            </th>
+        </tr>
+        <asp:Repeater ID="gvAllies" runat="server">
+            <ItemTemplate>
+                <tr>
+                    <td>
+                        <a href="tribe_info.aspx?id=<% =this.Village.ID %>&tribe=<%# DataBinder.Eval(Container.DataItem, "ID") %>">
+                            <%# DataBinder.Eval(Container.DataItem, "Tag") %></a> (<%# DataBinder.Eval(Container.DataItem, "Name") %>)
+                    </td>
+                    <% if ((DiplomacyPermission & beans.TribePermission.DiplomateOfficer) == beans.TribePermission.DiplomateOfficer)
+                       { %>
+                    <td>
+                        <a href="tribe.aspx?id=<% =this.Village.ID %>&page=2&action=diplomacy&tribe=<%# DataBinder.Eval(Container.DataItem, "ID") %>">
+                            Bỏ </a>
+                    </td>
+                    <% } %>
+                </tr>
+            </ItemTemplate>
+        </asp:Repeater>
+        <div id="pTest">
+        </div>
+    </tbody>
 </table>
 <br />
 <table class="vis" width="300">
-    <tr>
-        <th colspan="2">
-            Trung lập
-        </th>
-    </tr>
-    <tr>
-        <td>
-            <asp:GridView ID="gvNaps" runat="server" Width="100%">
-            </asp:GridView>
-        </td>
-    </tr>
+    <tbody>
+        <tr>
+            <th colspan="2">
+                Trung lập
+            </th>
+        </tr>
+        <asp:Repeater ID="gvNaps" runat="server">
+            <ItemTemplate>
+                <tr>
+                    <td>
+                        <a href="tribe_info.aspx?id=<% =this.Village.ID %>&tribe=<%# DataBinder.Eval(Container.DataItem, "ID") %>"><%# DataBinder.Eval(Container.DataItem, "Tag") %></a> (<%# DataBinder.Eval(Container.DataItem, "Name") %>)
+                    </td>
+                    <% if ((DiplomacyPermission & beans.TribePermission.DiplomateOfficer) == beans.TribePermission.DiplomateOfficer)
+                       { %>
+                    <td>
+                        <a href="tribe.aspx?id=<% =this.Village.ID %>&page=2&action=diplomacy&tribe=<%# DataBinder.Eval(Container.DataItem, "ID") %>">
+                            Bỏ </a>
+                    </td>
+                    <% } %>
+                </tr>
+            </ItemTemplate>
+        </asp:Repeater>
+    </tbody>
 </table>
 <br />
 <table class="vis" width="300">
-    <tr>
-        <th colspan="2">
-            Thù địch
-        </th>
-    </tr>
-    <tr>
-        <td>
-            <asp:GridView ID="gvEnemies" runat="server">
-            </asp:GridView>
-        </td>
-    </tr>
+    <tbody>
+        <tr>
+            <th colspan="2">
+                Enemy
+            </th>
+        </tr>
+        <asp:Repeater ID="gvEnemies" runat="server">
+            <ItemTemplate>
+                <tr>
+                    <td>
+                        <a href="tribe_info.aspx?id=<% =this.Village.ID %>&tribe=<%# DataBinder.Eval(Container.DataItem, "ID") %>">
+                            <%# DataBinder.Eval(Container.DataItem, "Tag") %></a> (<%# DataBinder.Eval(Container.DataItem, "Name") %>)
+                    </td>
+                    <% if ((DiplomacyPermission & beans.TribePermission.DiplomateOfficer) == beans.TribePermission.DiplomateOfficer)
+                       { %>
+                    <td>
+                        <a href="tribe.aspx?id=<% =this.Village.ID %>&page=2&action=diplomacy&tribe=<%# DataBinder.Eval(Container.DataItem, "ID") %>">
+                            Bỏ </a>
+                    </td>
+                    <% } %>
+                </tr>
+            </ItemTemplate>
+        </asp:Repeater>
+    </tbody>
 </table>
 <h3>
     Add relationship</h3>
-Tribe tag:&nbsp;
-<telerik:RadTextBox ID="txtTag" runat="server">
-</telerik:RadTextBox>
-<telerik:RadComboBox ID="cbRelation" runat="server">
-</telerik:RadComboBox>
-<asp:Button ID="bttnAddRelation" runat="server" Text="OK" />
+<div style="float: left;">
+    Tribe tag:
+</div>
+<asp:UpdatePanel ID="AJAX" runat="server">
+    <ContentTemplate>
+        <div style="float: left; margin-left: 5px;">
+            <asp:TextBox ID="txtTag" runat="server">
+            </asp:TextBox></div>
+        <div style="float: left; margin-left: 5px;">
+            <telerik:RadComboBox ID="cbRelation" runat="server">
+                <Items>
+                    <telerik:RadComboBoxItem Text="Ally" Value="2" />
+                    <telerik:RadComboBoxItem Text="Nap" Value="1" />
+                    <telerik:RadComboBoxItem Text="Enemy" Value="3" />
+                </Items>
+            </telerik:RadComboBox>
+        </div>
+        <div style="float: left; margin-left: 5px;">
+            <asp:Button ID="bttnAddRelation" runat="server" Text="OK" OnClick="bttnAddRelation_Click" /></div>
+    </ContentTemplate>
+    <Triggers>
+        <asp:AsyncPostBackTrigger ControlID="bttnAddRelation" EventName="Click" />
+    </Triggers>
+</asp:UpdatePanel>

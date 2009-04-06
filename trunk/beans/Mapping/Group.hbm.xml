@@ -41,7 +41,7 @@
 
   </class>
 
-  <class name="beans.TribeRelation, beans" table="groups" lazy="false">
+  <class name="beans.TribeRelation, beans" table="diplomates" lazy="false">
     <id name="ID" column="id" type="Int32">
       <generator class="identity"/>
     </id>

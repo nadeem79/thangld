@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NHibernate;
+using NHibernate.Criterion;
 
 namespace beans
 {
@@ -73,6 +74,19 @@ namespace beans
         #endregion
 
         #region Constructors
+        #endregion
+
+        #region Static Methods
+        public static Group GetGroupByTagName(string tag, ISession session)
+        {
+            ICriteria criteria = session.CreateCriteria(typeof(Group));
+            criteria.Add(Expression.Eq("Tag", tag));
+            IList<Group> lst = criteria.List<Group>();
+            if (lst.Count > 0)
+                return lst[0];
+
+            return null;
+        }
         #endregion
 
         #region Methods

@@ -20,6 +20,11 @@ public class Functions
     {
         return (time.Days * 24 + time.Hours).ToString() + ":" + time.Minutes.ToString() + ":" + time.Seconds.ToString();
     }
+    public static string FormatTime(long seconds)
+    {
+        TimeSpan t = new TimeSpan(TimeSpan.TicksPerSecond * seconds);
+        return FormatTime(t);
+    }
 
     private static bool ThumbnailCallback()
     {

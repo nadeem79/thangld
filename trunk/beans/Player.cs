@@ -8,6 +8,7 @@ using NHibernate.Criterion;
 using System.Text.RegularExpressions;
 using System.Collections;
 using System.Linq;
+using NHibernate.Type;
 
 namespace beans
 {
@@ -165,7 +166,7 @@ namespace beans
             return this.Username;
         }
 
-        #region TribeMethod
+        #region Tribe Methods
         public void CreateTribe(string tag, string name, ISession session)
         {
             beans.Group group = new Group();
@@ -211,6 +212,14 @@ namespace beans
                 return;
             if (this.Group == group)
                 return;
+
+            if (diplomacy == TribeDiplomate.NoRelation)
+            {
+                object[] objects = {this.Group, group};
+                NHibernate.Type.IType[] types = {NHibernate.NHibernateUtil.GuessType(typeof(Group)),  NHibernate.NHibernateUtil.GuessType(typeof(Group))};
+                session.Delete(" from TribeRelation r where r.CurrentTribe=:current and r.DiplomaticTribe=:tribe", objects, types);
+                return;
+            }
 
             TribeRelation relation = new TribeRelation();
             relation.CurrentTribe = this.Group;

@@ -25,7 +25,7 @@ public partial class stable : System.Web.UI.Page
         village = ((inPage)this.Master).CurrentVillage;
         ISession session = NHibernateHelper.CreateSession();
         IList<Recruit> recruits = village.GetRecruit(session, BuildingType.Stable);
-
+        DateTime last_complete = DateTime.Now;
         string sRecruitCommands = "";
         for (int i = 0; i < recruits.Count; i++)
         {
@@ -47,10 +47,17 @@ public partial class stable : System.Web.UI.Page
             }
             sRecruitCommands += "<td>";
             if (i == 0)
+            {
                 sRecruitCommands += "<span class='timer'>";
+                last_complete = recruits[i].LastUpdate;
+            }
+            else
+            {
+                last_complete = last_complete.AddSeconds(Recruit.RecruitTime(recruits[i - 1].Troop, recruits[i - 1].Quantity, this.village.Stable));
+            }
 
-            sRecruitCommands += (Functions.FormatTime(recruits[i].LastUpdate.AddSeconds(Recruit.RecruitTime(recruits[i].Troop, recruits[i].Quantity, this.village.Barracks)) - DateTime.Now)).ToString() + "</span></td>";
-            sRecruitCommands += "<td>" + recruits[i].LastUpdate.AddSeconds(Recruit.RecruitTime(recruits[i].Troop, recruits[i].Quantity, this.village.Barracks)) + "</td>";
+            sRecruitCommands += Functions.FormatTime(Recruit.RecruitTime(recruits[i].Troop, recruits[i].Quantity, this.village.Stable)) + "</span></td>";
+            sRecruitCommands += "<td>" + last_complete.AddSeconds(Recruit.RecruitTime(recruits[i].Troop, recruits[i].Quantity, this.village.Stable)).ToString("dd/MM/yyyy hh:mm:ss") + "</td>";
         }
         this.lblRecruiting.Text = sRecruitCommands;
         session.Close();

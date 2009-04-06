@@ -9,34 +9,21 @@
 <body>
     <form id="form1" runat="server">
     <div>
-
-        <script type="text/javascript">
-    function HideLoginToolTip() {
-            var tooltip = $find("<%=RadToolTip1.ClientID%>");
-            if (tooltip)
-              tooltip.hide();
-        }
-        </script>
-
         <telerik:RadScriptManager ID="RadScriptManager1" runat="server">
         </telerik:RadScriptManager>
-        <asp:LinkButton ID="LinkButton1" runat="server">LinkButton</asp:LinkButton>
-         <asp:UpdatePanel ID="UpdatePanel2" runat="server">
-                <ContentTemplate><asp:Label ID="abc" runat="server"></asp:Label></ContentTemplate></asp:UpdatePanel>
-        <telerik:RadToolTip ID="RadToolTip1" runat="server" ShowEvent="OnClick" Skin="Office2007"
-            TargetControlID="LinkButton1" Position="Center" RelativeTo="BrowserWindow" Title="Enter Name and Password"
-            Modal="True" ShowDelay="100" ShowCallout="False" Width="250px" ManualClose="true" >
-            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-                <ContentTemplate>
-                    <telerik:RadTextBox ID="RadTextBox1" runat="server">
-                    </telerik:RadTextBox><asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
-                    <asp:Button ID="Button1" runat="server" Text="Button" OnClick="Button1_Click" />
-                </ContentTemplate>
-                <Triggers>
-                    <asp:AsyncPostBackTrigger ControlID="Button1" EventName="Click" />
-                </Triggers>
-            </asp:UpdatePanel>
-        </telerik:RadToolTip>
+        <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server">
+            <AjaxSettings>
+                <telerik:AjaxSetting AjaxControlID="Button1">
+                    <UpdatedControls>
+                        <telerik:AjaxUpdatedControl ControlID="RadWindowManager1" />
+                    </UpdatedControls>
+                </telerik:AjaxSetting>
+            </AjaxSettings>
+        </telerik:RadAjaxManager>
+        <telerik:RadWindowManager ID="RadWindowManager1" runat="server" Modal="true" KeepInScreenBounds="true" InitialBehavior="Pin" >
+        </telerik:RadWindowManager>
+        <br />
+        <a href="#" onclick="window.radopen('http://www.google.com', 'xyz');return false;">abvc</a>
     </div>
     </form>
 </body>

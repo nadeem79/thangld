@@ -5,6 +5,7 @@ using System.Text;
 
 namespace beans
 {
+    [Serializable]
     public abstract class IdentityObject
     {
 

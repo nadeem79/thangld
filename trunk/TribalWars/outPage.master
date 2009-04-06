@@ -58,9 +58,8 @@
         
                 <telerik:RadScriptManager ID="RadScriptManager1" runat="server">
                 </telerik:RadScriptManager>
-                <telerik:RadWindow ID="RadWindow1" runat="server" Width="500" Height="500" Title="Test" ShowContentDuringLoad="true" VisibleOnPageLoad="true" VisibleTitlebar="true" NavigateUrl="shoutbox.aspx?group_chat=0" >
-    
-                    </telerik:RadWindow>
+                <telerik:RadWindow ID="BoxChat" runat="server" NavigateUrl="shoutbox.aspx?group_chat=0" VisibleOnPageLoad="true" Top="0" Left="0"></telerik:RadWindow>
+
     <div id="main">
         <div id="header">
             <h1>

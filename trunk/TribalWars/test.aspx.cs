@@ -16,6 +16,7 @@ using Telerik.Web.UI;
 
 public partial class test : System.Web.UI.Page
 {
+    int i = 0;
     protected void Page_Load(object sender, EventArgs e)
     {
         //ISession session = NHibernateHelper.CreateSession();
@@ -31,9 +32,15 @@ public partial class test : System.Web.UI.Page
 
 
     }
-    protected void Button1_Click(object sender, EventArgs e)
+
+    protected void Button1_Click1(object sender, EventArgs e)
     {
-        this.abc.Text += this.RadTextBox1.Text;
-        RadScriptManager.RegisterStartupScript(this, GetType(), "shutdown", "HideLoginToolTip();", true);
+        i++;
+        RadWindow window = new RadWindow();
+        window.ID = "window" + i.ToString();
+        window.NavigateUrl = "http://www.google.com";
+        window.VisibleOnPageLoad = true;
+        window.Modal = true;
+        this.RadWindowManager1.Windows.Add(window);
     }
 }

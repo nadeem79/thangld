@@ -146,18 +146,48 @@ namespace beans
             attack.Catapult = catapult;
             attack.Noble = noble;
             attack.StartTime = DateTime.Now;
-            attack.LandingTime = Map.LandingTime(type, attack.From, attack.To, attack.StartTime);
-            
+            attack.LandingTime = Map.LandingTime(type, attack.From, attack.To, attack.StartTime); 
             attack.Building = building;
-
-            
-
+            attack.Pending = true;
+            session.Save(attack);
             
             return attack;
         }
         #endregion
 
         #region Methods
+
+        public void execute(ISession session)
+        {
+            if ((this.Spear > this.From.Spear) ||
+            (this.Sword > this.From.Sword) ||
+            (this.Axe > this.From.Axe) ||
+            (this.Scout > this.From.Scout) ||
+            (this.Light > this.From.Light) ||
+            (this.Heavy > this.From.Heavy) ||
+            (this.Ram > this.From.Ram) ||
+            (this.Catapult > this.From.Catapult) ||
+            (this.Noble > this.From.Noble))
+                throw new Exception("Không đủ quân");
+
+            TimeSpan transitTime = this.LandingTime - this.StartTime;
+            this.StartTime = DateTime.Now;
+            this.LandingTime = this.StartTime + transitTime;
+            this.Pending = false;
+
+            this.From.Spear -= this.Spear;
+            this.From.Sword -= this.Sword;
+            this.From.Axe -= this.Axe;
+            this.From.Scout -= this.Scout;
+            this.From.Light -= this.Light;
+            this.From.Heavy -= this.Heavy;
+            this.From.Ram -= this.Ram;
+            this.From.Catapult -= this.Catapult;
+            this.From.Noble -= this.Noble;
+
+            session.Update(this);
+            session.Update(this.From);
+        }
 
         public override void save(ISession session)
         {
@@ -208,6 +238,7 @@ namespace beans
             session.Save(this);
             session.Update(this.From);
         }
+
         public override void effect(ISession session)
         {
             this.To.Update(this.LandingTime, session);
@@ -514,6 +545,7 @@ namespace beans
             session.Save(attackSideReport);
             defenseSideReport.Owner = owner;
             session.Save(defenseSideReport);
+            session.Delete(this);
         }
         #endregion
     }

@@ -3,21 +3,29 @@
 
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-    <style>
-        .radtooltip_Default
-        {
-            filter: alpha(opacity=80);
-            -moz-opacity: .8;
-            opacity: .8;
-        }
-    </style>
+<style type="text/css">
+#<% = this.pAttackConfirm.ClientID %>
+{
+    float:left;
+    margin-left:5px;
+}
+#<% = this.pSupportConfirm.ClientID %>
+{
+    float:left;
+    margin-left:5px;
+}
+</style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <telerik:RadWindowManager ID="RadWindowManager1" runat="server" Modal="true" InitialBehavior="Pin"
+        Width="500">
+    </telerik:RadWindowManager>
+    <telerik:RadFormDecorator ID="RadFormDecorator1" runat="server" Skin="Vista" DecoratedControls="All" />
     <table>
         <tbody>
             <tr>
                 <td>
-                    <img src="images/place1.png" title="Rally point" alt="">
+                    <img src="images/place1.png" title="Rally point" alt="" />
                 </td>
                 <td>
                     <h2>
@@ -60,6 +68,8 @@
                 <td valign="top" width="*">
                     <h3>
                         Give commands</h3>
+                    <p>
+                        <asp:Label ID="lblError" runat="server" ForeColor="Red"></asp:Label></p>
                     <table>
                         <tbody>
                             <tr>
@@ -68,23 +78,26 @@
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <img src="images/unit_spear.png" title="Spear fighter" alt="">
+                                                    <img src="images/unit_spear.png" title="Spear fighter" alt="" />
                                                     <asp:TextBox ID="spear" runat="server" Width="50px">
-                                                    </asp:TextBox> <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.spear.ClientID); %>', <% Response.Write(this.village.Spear.ToString()); %>)"><% Response.Write(this.village.Spear.ToString()); %></a>)</span>
+                                                    </asp:TextBox>
+                                                    <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.spear.ClientID); %>', <% Response.Write(this.village.Spear.ToString()); %>)"><% Response.Write(this.village.Spear.ToString()); %></a>)</span>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <img src="images/unit_sword.png" title="Swordsman" alt="">
+                                                    <img src="images/unit_sword.png" title="Swordsman" alt="" />
                                                     <asp:TextBox ID="sword" runat="server" Width="50px">
-                                                    </asp:TextBox> <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.sword.ClientID); %>', <% Response.Write(this.village.Sword.ToString()); %>)"><% Response.Write(this.village.Sword.ToString()); %></a>)</span>
+                                                    </asp:TextBox>
+                                                    <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.sword.ClientID); %>', <% Response.Write(this.village.Sword.ToString()); %>)"><% Response.Write(this.village.Sword.ToString()); %></a>)</span>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>
                                                     <img src="images/unit_axe.png" title="Axeman" alt="" />
                                                     <asp:TextBox ID="axe" runat="server" Width="50px">
-                                                    </asp:TextBox> <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.axe.ClientID); %>', <% Response.Write(this.village.Axe.ToString()); %>)"><% Response.Write(this.village.Axe.ToString()); %></a>)</span>
+                                                    </asp:TextBox>
+                                                    <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.axe.ClientID); %>', <% Response.Write(this.village.Axe.ToString()); %>)"><% Response.Write(this.village.Axe.ToString()); %></a>)</span>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -95,43 +108,26 @@
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <img src="images/unit_spy.png" title="Scout" alt="">
+                                                    <img src="images/unit_spy.png" title="Scout" alt="" />
                                                     <asp:TextBox ID="scout" runat="server" Width="50px">
-                                                    </asp:TextBox> <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.scout.ClientID); %>', <% Response.Write(this.village.Scout.ToString()); %>)"><% Response.Write(this.village.Scout.ToString()); %></a>)</span>
+                                                    </asp:TextBox>
+                                                    <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.scout.ClientID); %>', <% Response.Write(this.village.Scout.ToString()); %>)"><% Response.Write(this.village.Scout.ToString()); %></a>)</span>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <img src="images/unit_light.png" title="Light cavalry" alt="">
+                                                    <img src="images/unit_light.png" title="Light cavalry" alt="" />
                                                     <asp:TextBox ID="light" runat="server" Width="50px">
-                                                    </asp:TextBox> <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.scout.ClientID); %>', <% Response.Write(this.village.Scout.ToString()); %>)"><% Response.Write(this.village.Scout.ToString()); %></a>)</span>
+                                                    </asp:TextBox>
+                                                    <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.light.ClientID); %>', <% Response.Write(this.village.Light.ToString()); %>)"><% Response.Write(this.village.Light.ToString()); %></a>)</span>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <img src="images/unit_heavy.png" title="Heavy cavalry" alt="">
-                                                    <telerik:RadTextBox ID="heavy" runat="server" Width="50px">
-                                                    </telerik:RadTextBox>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                                <td valign="top" width="150">
-                                    <table class="vis" width="100%">
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <img src="images/unit_ram.png" title="Ram" alt="">
-                                                    <telerik:RadTextBox ID="ram" runat="server" Width="50px">
-                                                    </telerik:RadTextBox>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <img src="images/unit_catapult.png" title="Catapult" alt="">
-                                                    <telerik:RadTextBox ID="catapult" runat="server" Width="50px">
-                                                    </telerik:RadTextBox>
+                                                    <img src="images/unit_heavy.png" title="Heavy cavalry" alt="" />
+                                                    <asp:TextBox ID="heavy" runat="server" Width="50px">
+                                                    </asp:TextBox>
+                                                    <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.heavy.ClientID); %>', <% Response.Write(this.village.Heavy.ToString()); %>)"><% Response.Write(this.village.Heavy.ToString()); %></a>)</span>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -142,9 +138,32 @@
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <img src="images/unit_snob.png" title="Nobleman" alt="">
-                                                    <telerik:RadTextBox ID="noble" runat="server" Width="50px">
-                                                    </telerik:RadTextBox>
+                                                    <img src="images/unit_ram.png" title="Ram" alt="" />
+                                                    <asp:TextBox ID="ram" runat="server" Width="50px">
+                                                    </asp:TextBox>
+                                                    <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.ram.ClientID); %>', <% Response.Write(this.village.Ram.ToString()); %>)"><% Response.Write(this.village.Ram.ToString()); %></a>)</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <img src="images/unit_catapult.png" title="Catapult" alt="" />
+                                                    <asp:TextBox ID="catapult" runat="server" Width="50px">
+                                                    </asp:TextBox>
+                                                    <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.catapult.ClientID); %>', <% Response.Write(this.village.Catapult.ToString()); %>)"><% Response.Write(this.village.Catapult.ToString()); %></a>)</span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td valign="top" width="150">
+                                    <table class="vis" width="100%">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <img src="images/unit_snob.png" title="Nobleman" alt="" />
+                                                    <asp:TextBox ID="noble" runat="server" Width="50px">
+                                                    </asp:TextBox>
+                                                    <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.noble.ClientID); %>', <% Response.Write(this.village.Noble.ToString()); %>)"><% Response.Write(this.village.Noble.ToString()); %></a>)</span>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -153,39 +172,75 @@
                             </tr>
                         </tbody>
                     </table>
-                    <asp:UpdatePanel ID="UpdatePanel2" runat="server">
-                        <ContentTemplate>
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td rowspan="2">
-                                            x: &nbsp;y: &nbsp;
-                                        </td>
-                                        <td valign="top">
-                                        </td>
-                                        <td valign="top">
-                                        </td>
-                                        <td rowspan="2">
-                                            <asp:Button ID="bttnAttack" runat="server" CssClass="attack" Font-Size="10pt" Text="Attack"
-                                                OnClick="bttnAttack_Click" />
-                                            &nbsp;
-                                        </td>
-                                        <td rowspan="2">
-                                            <asp:Button ID="bttnSupport" runat="server" CssClass="support" Font-Size="10pt" Text="Support"
-                                                OnClick="bttnSupport_Click" />
-                                            &nbsp;
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <telerik:RadTextBox ID="RadTextBox1" runat="server">
-                            </telerik:RadTextBox>
-                            <asp:Button ID="Button1" runat="server" Text="Button" OnClick="Button1_Click"></asp:Button>
-                        </ContentTemplate>
-                        <Triggers>
-                            <asp:AsyncPostBackTrigger ControlID="Button1" EventName="Click" />
-                        </Triggers>
-                    </asp:UpdatePanel>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td rowspan="2">
+                                    X:<asp:TextBox ID="x" runat="server" MaxLength="3" Width="50"></asp:TextBox>
+                                    Y:
+                                    <asp:TextBox ID="y" runat="server" MaxLength="3" Width="50"></asp:TextBox>
+                                </td>
+                                <td valign="top">
+                                </td>
+                                <td valign="top">
+                                </td>
+                                <td rowspan="2">
+                                </td>
+                                <td rowspan="2">
+                                    <asp:UpdatePanel ID="pAttackConfirm" runat="server">
+                                        <ContentTemplate>
+                                            <asp:Button ID="bttnAttack" runat="server" Font-Size="10pt" Text="Attack" OnClick="bttnAttack_Click" />
+                                        </ContentTemplate>
+                                        <Triggers>
+                                            <asp:AsyncPostBackTrigger ControlID="bttnAttack" EventName="Click" />
+                                        </Triggers>
+                                    </asp:UpdatePanel> 
+                                    <asp:UpdatePanel ID="pSupportConfirm" runat="server">
+                                        <ContentTemplate>
+                                            <asp:Button ID="bttnSupport" runat="server" Font-Size="10pt" Text="Support" OnClick="bttnSupport_Click" />
+                                        </ContentTemplate>
+                                        <Triggers>
+                                            <asp:AsyncPostBackTrigger ControlID="bttnSupport" EventName="Click" />
+                                        </Triggers>
+                                    </asp:UpdatePanel>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h3>
+                        Troop movements</h3>
+                    <table class="vis">
+                        <tbody>
+                            <tr>
+                                <th width="250">
+                                    Lệnh đến:
+                                </th>
+                                <th width="160">
+                                    Thời gian
+                                </th>
+                                <th width="100">
+                                    Cập nhật trong
+                                </th>
+                            </tr>
+                            <asp:Label ID="lblInwardsCommand" runat="server"></asp:Label>
+                        </tbody>
+                    </table>
+                    <table class="vis">
+                        <tbody>
+                            <tr>
+                                <th width="250">
+                                    Lệnh đi:
+                                </th>
+                                <th width="160">
+                                    Thời gian
+                                </th>
+                                <th width="100">
+                                    Cập nhật trong
+                                </th>
+                            </tr>
+                            <asp:Label ID="lblOutwardsCommand" runat="server"></asp:Label>
+                        </tbody>
+                    </table>
                 </td>
             </tr>
         </tbody>
