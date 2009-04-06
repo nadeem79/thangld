@@ -7,6 +7,7 @@ using NHibernate.Criterion;
 
 namespace beans
 {
+    [Serializable]
     public class Group
     {
         #region Variables

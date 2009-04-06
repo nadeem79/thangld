@@ -16,7 +16,7 @@
 }
 </style>
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+<asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
     <telerik:RadWindowManager ID="RadWindowManager1" runat="server" Modal="true" InitialBehavior="Pin"
         Width="500">
     </telerik:RadWindowManager>
@@ -81,6 +81,7 @@
                                                     <img src="images/unit_spear.png" title="Spear fighter" alt="" />
                                                     <asp:TextBox ID="spear" runat="server" Width="50px">
                                                     </asp:TextBox>
+                                                    <span>(<a href="javascript:void(0);" onclick="insert('<% Response.Write(this.spear.ClientID); %>', 'spear')"><span id="spear"><% = this.village.Spear %></span></a></span>
                                                     <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.spear.ClientID); %>', <% Response.Write(this.village.Spear.ToString()); %>)"><% Response.Write(this.village.Spear.ToString()); %></a>)</span>
                                                 </td>
                                             </tr>

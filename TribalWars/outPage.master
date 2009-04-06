@@ -1,9 +1,7 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="outPage.master.cs" Inherits="outPage" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-
-<%@ Register src="Shoutbox.ascx" tagname="Shoutbox" tagprefix="uc1" %>
-
+<%@ Register Src="Shoutbox.ascx" TagName="Shoutbox" TagPrefix="uc1" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
@@ -16,50 +14,34 @@
 		<link rel="stylesheet" type="text/css" href="css/index_ie6.css" media="screen"/>
 		<![endif]-->
 
-
-    <style type="text/css">
-        #login-btn-input
-        {
-            display: block;
-            line-height: 22px;
-            height: 26px;
-            width: 106px;
-            padding: 0;
-            margin: 0;
-            border: 0;
-            overflow: hidden;
-            background: url(images/login.png) no-repeat 0 0;
-            float: right;
-        }
-        #login-btn-input.login-btn-input-hover
-        {
-            width: 106px;
-            background: url(images/login.png) no-repeat -106px 0;
-        }
-    </style>
-    
-
-    
     <script language="javascript" type="text/javascript" src="js/jquery.js"></script>
+
     <script language="javascript" type="text/javascript" src="js/jquery.lightbox.js"></script>
+
     <link rel="stylesheet" href="css/lightbox.css" type="text/css" media="screen" />
-    
+
     <script language="javascript" type="text/javascript">
-        $(document).ready(function(){
-			        $(".lightbox").lightbox();
-		        });
+        $(document).ready(function() {
+            $(".lightbox").lightbox();
+        });
+
+
+        function ShowHideShoutbox(shoutbox) {
+            var dock = $find(shoutbox);
+            var isClosed = dock.get_closed();
+            dock.set_closed(!isClosed);
+        }
+        
     </script>
-    
+
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
-        <form id="form1" runat="server">
-        
-                <telerik:RadScriptManager ID="RadScriptManager1" runat="server">
-                </telerik:RadScriptManager>
-                <telerik:RadWindow ID="BoxChat" runat="server" NavigateUrl="shoutbox.aspx?group_chat=0" VisibleOnPageLoad="true" Top="0" Left="0"></telerik:RadWindow>
-
+    <form id="form1" runat="server">
+    <telerik:RadScriptManager ID="RadScriptManager1" runat="server">
+    </telerik:RadScriptManager>
+    <telerik:RadFormDecorator ID="RadFormDecorator1" runat="server" DecoratedControls="All" />
     <div id="main">
         <div id="header">
             <h1>
@@ -69,30 +51,28 @@
                 <div class="navigation-holder">
                     <div class="navigation-wrapper">
                         <div id="navigation_span">
-                            <a href="help2.php">Help</a> - <a href="rules.php">Rules</a> - <a href="http://irc2go.com/pjirc/?net=QuakeNet&room=tribalwars">
-                                Chat</a> - <a href="http://wiki.tribalwars.net/wiki/Welcome">Wiki</a> - <a href="sds_rounds.php?mode=present">
-                                    Speed Rounds</a> - <a href="ticket.php">Support</a> - <a href="http://www.twstats.com">
-                                        TW Stats</a> - <a href="stat.php">Statistics</a> - <a href="http://forum.tribalwars.net/">
-                                            Forum</a> - <a href="team.php">Team</a>
+                            <asp:Label ID="lblToogleShoutbox" runat="server"></asp:Label>
                         </div>
                     </div>
                 </div>
             </div>
-            <span class="paladin">
-                <img src="images/bg-paladin.png" alt="" /></span>
+            <div class="paladin">
+                <img src="images/bg-paladin.png" alt="" /></div>
         </div>
         <div>
-            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            <asp:ContentPlaceHolder ID="body" runat="server">
             </asp:ContentPlaceHolder>
-        </div>
-        <div class="closure">
-            
-            
         </div>
     </div>
     <!-- main -->
-            
-            
-        </form>
-    </body>
+    <telerik:RadDockZone ID="rBottom" runat="server" Width="98%" BorderColor="Transparent">
+        <telerik:RadDock ID="RadDock1" runat="server" Width="500px" Height="300px" Resizable="true"
+            CssClass="shoutbox" Style="z-index: 3; border: 1px solid black;" Title="Shoutbox">
+            <ContentTemplate>
+                <uc1:Shoutbox ID="Shoutbox1" runat="server" />
+            </ContentTemplate>
+        </telerik:RadDock>
+    </telerik:RadDockZone>
+    </form>
+</body>
 </html>

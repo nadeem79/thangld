@@ -16,7 +16,6 @@ using Telerik.Web.UI;
 
 public partial class Shoutbox : System.Web.UI.UserControl
 {
-    protected DateTime dtLastSend;
     protected Group _group = null;
     private int size = 15;
 
@@ -37,17 +36,12 @@ public partial class Shoutbox : System.Web.UI.UserControl
         get { return this._group; }
         set { this._group = value; }
     }
-    public DateTime LastUpdate
-    {
-        get { return this.dtLastSend; }
-        set { this.dtLastSend = value; }
-    }
     
-
     protected void Page_Load(object sender, EventArgs e)
     {
         try
         {
+            ViewState["last_send"] = DateTime.Now.AddSeconds(-10);
             ISession session = NHibernateHelper.CreateSession();
             string strData = "";
             List<ShoutboxData> lst = (List<ShoutboxData>)ShoutboxData.GetShoutbox(this.Group, 15, false, session);
@@ -65,7 +59,6 @@ public partial class Shoutbox : System.Web.UI.UserControl
             }
             session.Close();
             this.lblShoutboxData.Text = strData;
-            this.pForm.Visible = (Session["user"] != null);
         }
         catch (Exception ex)
         {
@@ -74,7 +67,8 @@ public partial class Shoutbox : System.Web.UI.UserControl
     }
     protected void bttnShout_Click(object sender, EventArgs e)
     {
-
+        if ((DateTime.Now - (DateTime)ViewState["last_send"]).TotalSeconds < 5)
+            return;
         if (Session["user"] == null)
             return;
 
@@ -85,7 +79,7 @@ public partial class Shoutbox : System.Web.UI.UserControl
 
         try
         {
-            this.LastUpdate = DateTime.Now;
+            ViewState["last_send"] = DateTime.Now;
             ISession session = NHibernateHelper.CreateSession();
             
             Player player = session.Get<Player>(Session["user"]);

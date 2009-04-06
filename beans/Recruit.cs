@@ -222,7 +222,7 @@ namespace beans
             return false;
         }
 
-        public static bool CanRecruit(TroopType troop, int quantity, int wood, int clay, int iron)
+        public static bool CanRecruit(TroopType troop, int quantity, int wood, int clay, int iron) 
         {
             Price price = null;
             switch (troop)

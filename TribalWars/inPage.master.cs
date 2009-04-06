@@ -23,7 +23,9 @@ public partial class inPage : System.Web.UI.MasterPage
     {
         get
         {
-            return this.village;
+            if (ViewState["village"] == null)
+                return this.village;
+            return (Village)ViewState["village"];
         }
     }
     public Player Player
@@ -38,16 +40,23 @@ public partial class inPage : System.Web.UI.MasterPage
 
     void inPage_Init(object sender, EventArgs e)
     {
-        
-        DateTime start = DateTime.Now;
-        int id;
-        ISession session;
-        ITransaction trans;
+
         if (object.Equals(Session["user"], null))
         {
             Response.Redirect("session_expired.aspx", true);
             return;
         }
+
+        if (IsPostBack)
+        {
+            this.village = (Village)ViewState["village"];
+            return;
+        }
+        DateTime start = DateTime.Now;
+        int id;
+        ISession session;
+        ITransaction trans;
+        
 
         session = NHibernateHelper.CreateSession();
 
@@ -59,7 +68,6 @@ public partial class inPage : System.Web.UI.MasterPage
             session.Close();
             Response.Redirect("index.aspx", true);
         }
-        this.time.Text = (this.CurrentVillage == null).ToString();
         trans = session.BeginTransaction();
         this.player.Update(DateTime.Now, session);
         trans.Commit();
@@ -71,7 +79,7 @@ public partial class inPage : System.Web.UI.MasterPage
         
         if (this.village == null)
             this.village = this.player.Villages[0];
-        ViewState["village"] = village;
+        
 
         int incomingAttackCount = village.GetIncomingAttackCount(session);
         int incomingSupportCount = village.GetIncomingSupportCount(session);
@@ -81,12 +89,23 @@ public partial class inPage : System.Web.UI.MasterPage
         DateTime stop = DateTime.Now;
         this.delay.Text = (stop - start).Milliseconds.ToString();
         //this.time.Text = start.ToString("dd/MM/yyyy hh:mm:ss");
+
+        if (player.Group == null)
+            lTribe.NavigateUrl = "un_tribe.aspx?id=" + this.CurrentVillage.ID.ToString();
+        else
+            lTribe.NavigateUrl = "tribe.aspx?id=" + this.CurrentVillage.ID.ToString();
+
         session.Close();
         
     }
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        
+
+        if (!IsPostBack)
+        {
+            ViewState["village"] = village;
+            this.lblToogleShoutbox.Text = "<a href=\"javascript:void(0);\" onclick=\"ShowHideShoutbox('" + this.radShoutbox.ClientID + "')\">Shoutbox</a>";
+        }
     }
 }

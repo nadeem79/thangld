@@ -5,7 +5,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+<asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
     <table width="100%">
         <tbody>
             <tr>
@@ -72,19 +72,19 @@
                                             <% = this.village.Headquarter %>) </span>
                                 </td>
                                 <td>
-                                    <img src="images/holz.png" title="Wood" alt="">9155
+                                    <img src="images/holz.png" title="Wood" alt="" /><asp:Label ID="lblHeadquarterWood" runat="server"></asp:Label>
                                 </td>
                                 <td>
-                                    <img src="images/lehm.png" title="Clay" alt="">10311
+                                    <img src="images/lehm.png" title="Clay" alt="" /><asp:Label ID="lblHeadquarterClay" runat="server"></asp:Label>
                                 </td>
                                 <td>
-                                    <img src="images/eisen.png" title="Iron" alt="">7120
+                                    <img src="images/eisen.png" title="Iron" alt="" /><asp:Label ID="lblHeadquarterIron" runat="server"></asp:Label>
                                 </td>
                                 <td>
-                                    <img src="images/face.png" title="Villagers" alt="">17
+                                    <img src="images/face.png" title="Villagers" alt=""><asp:Label ID="lblHeadquarterPopulation" runat="server"></asp:Label>
                                 </td>
                                 <td>
-                                    3:36:44
+                                    <asp:Label ID="Label1" runat="server"></asp:Label>
                                 </td>
                                 <td class="inactive" style="width: 200px;">
                                     The farm is too small

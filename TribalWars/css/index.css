@@ -27,7 +27,7 @@ form{
 	padding:0;
 }
 #main{
-	width:960px;
+	width:920px;
 	margin:0 auto;
 	padding:0 0 0px;
 	overflow:hidden;
@@ -36,7 +36,6 @@ form{
 	width:960px;
 	height:154px;
 	margin:0px 0 0;
-	z-index: 2;
 	position:relative;
 }
 #header h1{
@@ -47,7 +46,6 @@ form{
 	width:800px;
 	height:115px;
 	overflow:hidden;
-	z-index:2;
 }
 #header h1 a{
 	display:block;
@@ -56,7 +54,6 @@ form{
 	text-indent:-9999px;
 	width:800px;
 	height:115px;
-	z-index:2;
 }
 
 #header .logo-fz{
@@ -65,7 +62,6 @@ form{
 	right:6px;
 	width:65px;
 	height:74px;
-	z-index:1;
 }
 #header .logo-fz a{
 	float:left;
@@ -82,7 +78,6 @@ form{
 	width:960px;
 	position:relative;
 	text-align:center;
-	z-index:999;
 }
 .navigation-holder{
 	left:50%;
@@ -125,7 +120,7 @@ form{
 	left:13px;
 	width:195px;
 	height:377px;
-	z-index:100;
+	z-index:1;
 }
 #content{
 	width:960px;
@@ -259,7 +254,6 @@ h3{
 	left:0;
 	width:100%;
 	text-align:center;
-	z-index:999;
 }
 
 #screenshot_image {
@@ -268,7 +262,6 @@ h3{
 	top:60px;
 	left:0px;
 	width:640px;
-	z-index:999;
 }
 
 .screenshots{
@@ -305,7 +298,6 @@ h3{
 .login-block div{
 	overflow:hidden;
 	margin:0 0 25px;
-	z-index:-999;
 }
 .login-block label{
 	display:block;
@@ -313,7 +305,6 @@ h3{
 	padding:0 0 6px;
 	width:249px;
 	overflow:hidden;
-	z-index:-999;
 }
 .login-block label strong{
 	float:left;
@@ -324,7 +315,6 @@ h3{
 	font-size:11px;
 	line-height:22px;
 	color:#000;
-	z-index:-999;
 }
 .login-block label span{
 	float:right;
@@ -332,7 +322,6 @@ h3{
 	height:18px;
 	padding:3px;
 	background:url(../images/bg-input-text.jpg) no-repeat;
-	z-index:-999;
 }
 .login-block .text{
 	float:left;
@@ -560,7 +549,6 @@ th {
 	position:relative; left: 2px; top:8px;
 	width: 800px; 
 	margin: auto;
-	z-index: 10;
 }
 
 #flag1_dropdown {
@@ -571,7 +559,6 @@ th {
 	border: 0;
 	position: relative;
 	top: 2px;
-	z-index: 10;
 }
 
 #flags {
@@ -583,7 +570,6 @@ th {
 	background-color: #F2E4BF;
 	border: 1px solid #88462C;
 	display: none;
-	z-index: 10;
 }
 
 #flags li a { line-height: 10px; }
@@ -600,10 +586,8 @@ table.vis td.selected { background-color:#DFCCA6; }
 
     .shoutbox
     {
-        width:63%;
-        background-color:White;
-        background-color:White;
-        border:1px solid Red;
+        background-image:url(../images/content.jpg);
+	    background-repeat:repeat;
     }
     .head_shoutbox
 	{
@@ -629,6 +613,8 @@ table.vis td.selected { background-color:#DFCCA6; }
 	    background-color:white;
 	}
 	.box_component_gt { margin: 5px 2px 0 3px; }
+
+	
 	.shoutbox_content .username
     {
         background-color:#E6E6E6;
@@ -679,3 +665,92 @@ table.vis td.selected { background-color:#DFCCA6; }
     {
         height:200px;
     }
+    
+    .left_panel
+    {
+        float:left;
+        
+    }
+    .login-block
+    {
+        float: right;
+        width: 250px;
+        margin: 0 49px 0 0;
+        padding: 15px 0 0;
+        display: inline;
+    }
+    
+    
+    .login-block h2
+    {
+        text-align: center;
+    }
+    h2
+    {
+        margin: 0;
+        font-size: 18px;
+        line-height: 20px;
+        color: #000;
+    }
+    .error
+    {
+        color: rgb(180, 0, 0);
+        font-weight: bold;
+        font-size: 14px;
+    }
+    .login-block div
+    {
+        overflow: hidden;
+        margin: 0 0 25px;
+        z-index: -999;
+    }
+    .login-block label
+    {
+        font-size:11px;
+        display: block;
+        margin: 0;
+        padding: 0 0 6px;
+        width: 249px;
+        overflow: hidden;
+        z-index: -999;
+    }
+    td
+    {
+        font-size: 7pt;
+    }
+    .login-block label span
+    {
+        float: right;
+        width: 120px;
+        height: 18px;
+        padding: 3px;
+        background: url( 'images/bg-input-text.jpg' ) no-repeat;
+        z-index: -999;
+    }
+    html
+    {
+        height: 100%;
+        background: url( 'images/background.jpg' );
+    }
+    body
+    {
+        margin: 0;
+    }
+    #login-btn-input
+        {
+            display: block;
+            line-height: 22px;
+            height: 26px;
+            width: 106px;
+            padding: 0;
+            margin: 0;
+            border: 0;
+            overflow: hidden;
+            background: url(images/login.png) no-repeat 0 0;
+            float: right;
+        }
+        #login-btn-input.login-btn-input-hover
+        {
+            width: 106px;
+            background: url(images/login.png) no-repeat -106px 0;
+        }

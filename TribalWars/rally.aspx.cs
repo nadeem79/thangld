@@ -130,7 +130,6 @@ public partial class rally : System.Web.UI.Page
             ram = (int.TryParse(this.ram.Text, out i)) ? i : 0;
             catapult = (int.TryParse(this.catapult.Text, out i)) ? i : 0;
             noble = (int.TryParse(this.noble.Text, out i)) ? i : 0;
-
             x = (int.TryParse(this.x.Text, out i)) ? i : 0;
             y = (int.TryParse(this.y.Text, out i)) ? i : 0;
             session = NHibernateHelper.CreateSession();
@@ -146,7 +145,7 @@ public partial class rally : System.Web.UI.Page
         {
             if (trans != null || !trans.WasCommitted)
                 trans.Rollback();
-            RadScriptManager.RegisterStartupScript(bttnAttack, bttnAttack.GetType(), "ShowException", "alert('" + exc.Message + "');", true);
+            RadScriptManager.RegisterStartupScript(bttnAttack, bttnAttack.GetType(), "ShowException", "jQuery.facebox('" + exc.Message + "');", true);
             return;
         }
         finally

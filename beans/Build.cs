@@ -187,14 +187,15 @@ namespace beans
                 return Build.PriceDictionary[key];
 
             BuildPrice basePrice = Build.GetPrice(type);
-            int wood = basePrice.Wood, clay = basePrice.Clay, iron = basePrice.Iron, time = basePrice.BuildTime, population = basePrice.Population;
+            int wood = basePrice.Wood, clay = basePrice.Clay, iron = basePrice.Iron, time = basePrice.BuildTime;
+            double population = basePrice.Population;
             for (int i = 1; i < level; i++)
             {
                 clay += (int)(clay * 0.28);
                 wood += (int)(wood * 0.25);
                 iron += (int)(iron * 0.25);
                 time += (int)(time * 0.2);
-                population += (int)(population * 0.1);
+                population += population * 0.1;
             }
             for (int i = 1; i < headquarter; i++)
                 time -= (int)(time * 0.05);
@@ -276,7 +277,8 @@ namespace beans
 
     public class BuildPrice:Price
     {
-        private int _point, _max, _pop;
+        private int _point, _max;
+        double _pop;
         
         public int Point
         {
@@ -286,14 +288,14 @@ namespace beans
         {
             get { return this._max; }
         }
-        public int Population
+        public double Population
         {
             get { return this._pop; }
         }
 
-        public BuildPrice(int time, int wood, int clay, int iron, int population, int max):base(time, wood, clay, iron)
+        public BuildPrice(int time, int wood, int clay, int iron, double population, int max):base(time, wood, clay, iron)
         {
-            this._population = population;
+            this._pop = population;
             this._max = max;
         }
 

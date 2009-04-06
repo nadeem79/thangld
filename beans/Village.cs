@@ -7,20 +7,32 @@ using NHibernate.Criterion;
 namespace beans
 {
     
-
+    [Serializable]
     public class Village:IdentityObject
     {
         #region Variables
 
         private int _loyal;
+        [NonSerialized]
         private IList<MovingCommand> incomings;
+        [NonSerialized]
         private IList<MovingCommand> outgoings;
+        [NonSerialized]
         private IList<Offer> offers;
         //private IList<SendResource> sendings;
+        [NonSerialized]
         private IList<MovingCommand> commands;
-        private IList<Stationed> stationedTroops = new List<Stationed>();        
+        [NonSerialized]
+        private IList<Stationed> stationedTroops = new List<Stationed>();
+        [NonSerialized]
         private IList<Stationed> troopsOutside = new List<Stationed>();
-
+        [NonSerialized]
+        private Player _owner;
+        public Player Owner
+        {
+            get { return this._owner; }
+            set { this._owner = value; }
+        }
         #endregion
 
         #region Properties
@@ -181,11 +193,7 @@ namespace beans
             get;
             set;
         }
-        public virtual Player Owner
-        {
-            get;
-            set;
-        }
+        
         public virtual int Wood
         {
             get;
@@ -251,17 +259,49 @@ namespace beans
             get;
             set;
         }
-        public virtual IList<MovingCommand> Incomings
+        
+
+        public int ResearchSpear
         {
             get;
             set;
         }
-        public virtual IList<MovingCommand> Outgoings
+        public int ResearchSword
         {
             get;
             set;
         }
-        public virtual IList<Offer> Offers
+        public int ResearchAxe
+        {
+            get;
+            set;
+        }
+        public int ResearchScout
+        {
+            get;
+            set;
+        }
+        public int ResearchLight
+        {
+            get;
+            set;
+        }
+        public int ResearchHeavy
+        {
+            get;
+            set;
+        }
+        public int ResearchRam
+        {
+            get;
+            set;
+        }
+        public int ResearchCatapult
+        {
+            get;
+            set;
+        }
+        public int ResearchNoble
         {
             get;
             set;
