@@ -12,6 +12,7 @@ using NHibernate.Type;
 
 namespace beans
 {
+    [Serializable]
     public class Player:IdentityObject
     {
         #region Variable

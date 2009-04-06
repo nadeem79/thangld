@@ -8,23 +8,32 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <div>
-        <telerik:RadScriptManager ID="RadScriptManager1" runat="server">
-        </telerik:RadScriptManager>
-        <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server">
-            <AjaxSettings>
-                <telerik:AjaxSetting AjaxControlID="Button1">
-                    <UpdatedControls>
-                        <telerik:AjaxUpdatedControl ControlID="RadWindowManager1" />
-                    </UpdatedControls>
-                </telerik:AjaxSetting>
-            </AjaxSettings>
-        </telerik:RadAjaxManager>
-        <telerik:RadWindowManager ID="RadWindowManager1" runat="server" Modal="true" KeepInScreenBounds="true" InitialBehavior="Pin" >
-        </telerik:RadWindowManager>
-        <br />
-        <a href="#" onclick="window.radopen('http://www.google.com', 'xyz');return false;">abvc</a>
-    </div>
+    <asp:ScriptManager ID="RadScriptManager1" runat="server">  
+        </asp:ScriptManager> 
+        <telerik:RadTextBox ID="txtInput" runat="server">  
+                </telerik:RadTextBox> 
+        <asp:UpdatePanel ID="UpdatePanel2" runat="server">  
+            <ContentTemplate> 
+                
+                <br /> 
+                <asp:Button ID="bttnSend" runat="server" OnClick="bttnSend_Click" Text="sdfgh"></asp:Button><br /> 
+                <telerik:RadToolTip ID="pAttack" runat="server" ShowEvent="FromCode" Skin="Office2007" 
+                    TargetControlID="bttnSend" Position="Center" RelativeTo="BrowserWindow" Width="200" 
+                    Height="200" Title="Tấn công" Modal="True" ShowDelay="100" ShowCallout="False" 
+                    ManualClose="true">  
+                    <asp:UpdatePanel ID="UpdatePanel1" runat="server">  
+                        <ContentTemplate> 
+                            <asp:Label ID="lblConfirm" runat="server"></asp:Label>
+                            <asp:Button ID="Confirm" runat="server" Text="abc" OnClick="Confirm_Click"></asp:Button>
+                        </ContentTemplate> 
+                    </asp:UpdatePanel> 
+                </telerik:RadToolTip> 
+            </ContentTemplate> 
+            <Triggers> 
+                <asp:AsyncPostBackTrigger ControlID="bttnSend" EventName="Click" /> 
+                <asp:AsyncPostBackTrigger ControlID="Confirm" EventName="Click" /> 
+            </Triggers> 
+        </asp:UpdatePanel> 
     </form>
 </body>
 </html>

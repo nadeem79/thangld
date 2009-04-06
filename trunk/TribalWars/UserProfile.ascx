@@ -1,14 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="UserProfile.ascx.cs" Inherits="UserProfile" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<style type="text/css">
-    .style1
-    {
-        height: 23px;
-    }
-</style>
-<telerik:RadScriptManager ID="RadScriptManager1" runat="server">
-</telerik:RadScriptManager>
-<telerik:RadFormDecorator ID="RadFormDecorator1" runat="server" Skin="Office2007" />
 <table class="vis" width="100%">
     <tbody>
         <tr>

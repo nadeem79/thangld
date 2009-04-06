@@ -5,10 +5,11 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+<asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
 
     <telerik:RadToolTipManager ID="RadToolTipManager1" runat="server" RelativeTo="Element"
-            Position="BottomCenter" AutoTooltipify="true" ContentScrolling="Default">
+            Position="BottomCenter" AutoTooltipify="true" 
+        ContentScrolling="Default" Skin="Web20" >
     </telerik:RadToolTipManager>
     
 

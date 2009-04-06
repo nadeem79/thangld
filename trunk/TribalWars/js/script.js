@@ -86,3 +86,9 @@ function overviewHideLevel()
 function Test(str) {
     alert(str);
 }
+
+function ShowHideShoutbox(shoutbox) {
+    var dock = $find(shoutbox);
+    var isClosed = dock.get_closed();
+    dock.set_closed(!isClosed);
+}

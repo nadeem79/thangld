@@ -1,6 +1,8 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="inPage.master.cs" Inherits="inPage"%>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="inPage.master.cs" Inherits="inPage" EnableViewState="true" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+
+<%@ Register src="Shoutbox.ascx" tagname="Shoutbox" tagprefix="uc1" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -23,9 +25,9 @@
     <form id="form1" runat="server">
     <telerik:RadScriptManager ID="RadScriptManager1" runat="server">
     </telerik:RadScriptManager>
+    <telerik:RadFormDecorator ID="RadFormDecorator1" runat="server" DecoratedControls="All" Skin="Vista" />
     
 
-    <asp:Label ID="test" runat="server"></asp:Label>
     <div class="top_background">
     </div>
     <div style="text-align: center;">
@@ -40,7 +42,7 @@
                                 <a href="logout.aspx">Log out</a>
                             </td>
                             <td>
-                                <a href="http://forum.tribalwars.net/index.php" target="_blank">Forum</a>
+                                <asp:Label ID="lblToogleShoutbox" runat="server"></asp:Label>
                             </td>
                             <td>
                                 <a href="help2.php" target="_blank">Help</a>
@@ -56,7 +58,7 @@
                                 P)
                             </td>
                             <td>
-                                <a href="<% if (this.Player.Group == null) Response.Write("untribe"); else Response.Write("tribe"); %>.aspx?id=<%Response.Write(this.CurrentVillage.ID); %>">Bang hội</a>
+                                <asp:HyperLink ID="lTribe" runat="server">Bang hội</asp:HyperLink>
                             </td>
                             <td>
                                 <a href="list_report.aspx?id=<% Response.Write(this.CurrentVillage.ID.ToString()); %>">Thông báo</a>
@@ -176,19 +178,17 @@
                                             <table width="100%">
                                                 <tr>
                                                     <td>
-                                                        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                                                        <asp:ContentPlaceHolder ID="body" runat="server">
                                                         </asp:ContentPlaceHolder>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td align="right" style="font-size:11px;">
                                                         trang web được tạo trong
-                                                        <asp:Label ID="delay" runat="server" Text="Label"></asp:Label>ms Thời gian:
-                                                        <asp:Label ID="time" runat="server"></asp:Label>
+                                                        <asp:Label ID="delay" runat="server"></asp:Label>ms Thời gian: 
                                                         <% Response.Write(DateTime.Now.ToString("dd/MM/yyyy")); %> <span class="increaseTimer"><% Response.Write(DateTime.Now.ToString("hh:mm:ss")); %></span>
                                                     </td>
                                                 </tr>
-                                                <tr><td colspan="2"><span id="test"></span></td></tr>
                                             </table>
                                         </td>
                                     </tr>
@@ -200,7 +200,7 @@
             </tr>
         </table>
     </div>
-    </form>
+    
     <script language="javascript" type="text/javascript">
         production("clay", <% Response.Write(this.CurrentVillage.SecondPerResourceUnit(beans.ResourcesType.Clay)); %>*1000);
         production("wood", <% Response.Write(this.CurrentVillage.SecondPerResourceUnit(beans.ResourcesType.Wood)); %>*1000);
@@ -208,5 +208,14 @@
         attackTimer();
         increaseTime();
     </script>
-</body>
+    <telerik:RadDockZone ID="rBottom" runat="server" Width="98%" BorderColor="Transparent">
+        <telerik:RadDock ID="radShoutbox" runat="server" Width="500px" Height="300px" Resizable="true"
+            CssClass="shoutbox" Style="z-index: 3; border: 1px solid black;" Title="Shoutbox">
+            <ContentTemplate>
+                <uc1:Shoutbox ID="shoutboxGlobal" runat="server" />
+            </ContentTemplate>
+        </telerik:RadDock>
+    </telerik:RadDockZone>
+    </form>
+    </body>
 </html>

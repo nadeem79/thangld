@@ -52,7 +52,7 @@ public partial class headquarters : System.Web.UI.Page
             this.village.Name = this.txtName.Text;
             session.Update(this.village);
             trans.Commit();
-            RadScriptManager.RegisterStartupScript(bttnChangeVillageName, bttnChangeVillageName.GetType(), "ChangeVillageName", "$(\"#city_name\").html(\"" + this.village.Name + "\")", true);
+            RadScriptManager.RegisterStartupScript(bttnChangeVillageName, bttnChangeVillageName.GetType(), "ChangeVillageName", "$(\"#city_name\").html(\"" + this.village.Name + "\");jQuery.facebox('Đổi tên thành phố: " + this.txtName.Text + "');", true);
         }
         catch(Exception ex)
         {

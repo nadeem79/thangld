@@ -16,7 +16,7 @@ using Telerik.Web.UI;
 
 public partial class test : System.Web.UI.Page
 {
-    int i = 0;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         //ISession session = NHibernateHelper.CreateSession();
@@ -33,14 +33,19 @@ public partial class test : System.Web.UI.Page
 
     }
 
-    protected void Button1_Click1(object sender, EventArgs e)
+    protected void bttnSend_Click(object sender, EventArgs e)
     {
-        i++;
-        RadWindow window = new RadWindow();
-        window.ID = "window" + i.ToString();
-        window.NavigateUrl = "http://www.google.com";
-        window.VisibleOnPageLoad = true;
-        window.Modal = true;
-        this.RadWindowManager1.Windows.Add(window);
+        this.lblConfirm.Text = this.txtInput.Text;
+        pAttack.Show();  
+    }
+
+    protected void Confirm_Click(object sender, EventArgs e)
+    {
+        if (this.txtInput.Text == "111")
+        {
+            this.txtInput.Text = "abc";
+        }
+        else
+            this.txtInput.Text = "xys";
     }
 }

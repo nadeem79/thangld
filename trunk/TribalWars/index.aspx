@@ -73,7 +73,7 @@
     }
 </style>
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+<asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
     <div id="content">
         <div class="container-block">
             <div class="container-top">

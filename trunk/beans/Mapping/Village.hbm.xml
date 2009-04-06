@@ -50,14 +50,16 @@
     <property name="Wood" column="wood" type="Int32" />
     <property name="Iron" column="iron" type="Int32" />
 
-    <bag name="StationedTroops" table="stationed" cascade="none" fetch="join" inverse="true"  lazy="true">
-      <key column="at_village" />
-      <one-to-many class="beans.Stationed, beans"/>
-    </bag>
-    <bag name="TroopsOutside" table="stationed" cascade="none" fetch="join" inverse="true"  lazy="true">
-      <key column="from_village" />
-      <one-to-many class="beans.Stationed, beans"/>
-    </bag>
+    <property name="ResearchSpear" column="unit_spear_tec_level" type="Int32" />
+    <property name="ResearchSword" column="unit_sword_tec_level" type="Int32" />
+    <property name="ResearchAxe" column="unit_axe_tec_level" type="Int32" />
+    <property name="ResearchScout" column="unit_spy_tec_level" type="Int32" />
+    <property name="ResearchLight" column="unit_light_tec_level" type="Int32" />
+    <property name="ResearchHeavy" column="unit_heavy_tec_level" type="Int32" />
+    <property name="ResearchRam" column="unit_ram_tec_level" type="Int32" />
+    <property name="ResearchCatapult" column="unit_catapult_tec_level" type="Int32" />
+
+    
     
   </class>
 
