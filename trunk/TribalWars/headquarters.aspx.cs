@@ -19,26 +19,22 @@ public partial class headquarters : System.Web.UI.Page
     {
         
         village = ((inPage)this.Master).CurrentVillage;
-        if (!IsPostBack)
-        {
-            this.headquarter = Build.GetPrice(BuildingType.Headquarter, village[BuildingType.Headquarter], village[BuildingType.Headquarter]);
-            this.barrack = Build.GetPrice(BuildingType.Barracks, village[BuildingType.Barracks], village[BuildingType.Barracks]);
-            this.stable = Build.GetPrice(BuildingType.Stable, village[BuildingType.Stable], village[BuildingType.Stable]);
-            this.workshop = Build.GetPrice(BuildingType.Workshop, village[BuildingType.Workshop], village[BuildingType.Workshop]);
-            this.academy = Build.GetPrice(BuildingType.Academy, village[BuildingType.Academy], village[BuildingType.Academy]);
-            this.smithy = Build.GetPrice(BuildingType.Smithy, village[BuildingType.Smithy], village[BuildingType.Smithy]);
-            this.rally = Build.GetPrice(BuildingType.Rally, village[BuildingType.Rally], village[BuildingType.Rally]);
-            this.market = Build.GetPrice(BuildingType.Market, village[BuildingType.Market], village[BuildingType.Market]);
-            this.timber = Build.GetPrice(BuildingType.TimberCamp, village[BuildingType.TimberCamp], village[BuildingType.TimberCamp]);
-            this.clay = Build.GetPrice(BuildingType.ClayPit, village[BuildingType.ClayPit], village[BuildingType.ClayPit]);
-            this.iron = Build.GetPrice(BuildingType.IronMine, village[BuildingType.IronMine], village[BuildingType.IronMine]);
-            this.farm = Build.GetPrice(BuildingType.Farm, village[BuildingType.Farm], village[BuildingType.Farm]);
-            this.warehouse = Build.GetPrice(BuildingType.Warehouse, village[BuildingType.Warehouse], village[BuildingType.Warehouse]);
-            this.hiding = Build.GetPrice(BuildingType.HidingPlace, village[BuildingType.HidingPlace], village[BuildingType.HidingPlace]);
-            this.wall = Build.GetPrice(BuildingType.Wall, village[BuildingType.Wall], village[BuildingType.Wall]);
-            this.txtName.Text = this.village.Name;
-
-        }
+        this.headquarter = Build.GetPrice(BuildingType.Headquarter, village[BuildingType.Headquarter], village[BuildingType.Headquarter]);
+        this.barrack = Build.GetPrice(BuildingType.Barracks, village[BuildingType.Barracks], village[BuildingType.Barracks]);
+        this.stable = Build.GetPrice(BuildingType.Stable, village[BuildingType.Stable], village[BuildingType.Stable]);
+        this.workshop = Build.GetPrice(BuildingType.Workshop, village[BuildingType.Workshop], village[BuildingType.Workshop]);
+        this.academy = Build.GetPrice(BuildingType.Academy, village[BuildingType.Academy], village[BuildingType.Academy]);
+        this.smithy = Build.GetPrice(BuildingType.Smithy, village[BuildingType.Smithy], village[BuildingType.Smithy]);
+        this.rally = Build.GetPrice(BuildingType.Rally, village[BuildingType.Rally], village[BuildingType.Rally]);
+        this.market = Build.GetPrice(BuildingType.Market, village[BuildingType.Market], village[BuildingType.Market]);
+        this.timber = Build.GetPrice(BuildingType.TimberCamp, village[BuildingType.TimberCamp], village[BuildingType.TimberCamp]);
+        this.clay = Build.GetPrice(BuildingType.ClayPit, village[BuildingType.ClayPit], village[BuildingType.ClayPit]);
+        this.iron = Build.GetPrice(BuildingType.IronMine, village[BuildingType.IronMine], village[BuildingType.IronMine]);
+        this.farm = Build.GetPrice(BuildingType.Farm, village[BuildingType.Farm], village[BuildingType.Farm]);
+        this.warehouse = Build.GetPrice(BuildingType.Warehouse, village[BuildingType.Warehouse], village[BuildingType.Warehouse]);
+        this.hiding = Build.GetPrice(BuildingType.HidingPlace, village[BuildingType.HidingPlace], village[BuildingType.HidingPlace]);
+        this.wall = Build.GetPrice(BuildingType.Wall, village[BuildingType.Wall], village[BuildingType.Wall]);
+        this.txtName.Text = this.village.Name;
     }
 
     protected void bttnChangeVillageName_Click(object sender, EventArgs e)
