@@ -88,7 +88,6 @@ public partial class inPage : System.Web.UI.MasterPage
 
         DateTime stop = DateTime.Now;
         this.delay.Text = (stop - start).Milliseconds.ToString();
-        //this.time.Text = start.ToString("dd/MM/yyyy hh:mm:ss");
 
         if (player.Group == null)
             lTribe.NavigateUrl = "un_tribe.aspx?id=" + this.CurrentVillage.ID.ToString();
