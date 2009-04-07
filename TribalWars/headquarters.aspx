@@ -2,7 +2,6 @@
     CodeFile="headquarters.aspx.cs" Inherits="headquarters" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
@@ -14,7 +13,7 @@
                 </td>
                 <td width="100%">
                     <h2>
-                        Village Headquarters (<asp:Literal ID="Literal1" runat="server" Text="<%$ Resources:text, barrack %>" />
+                        Village Headquarters (<asp:Literal ID="Literal1" runat="server" Text="<%$ Resources:text, level %>" />
                         <% = this.village.Headquarter %>)</h2>
                     In the village headquarters you can construct new buildings or upgrade existing
                     ones. The higher the level of your headquarters, the faster the constructions will
@@ -68,23 +67,24 @@
                                 <td>
                                     <a href="/game.php?village=51549&amp;screen=main">
                                         <img src="images/main.png" alt="">
-                                        Village Headquarters</a> <span class="nowrap">(Level
-                                            <% = this.village.Headquarter %>) </span>
+                                        <asp:Literal runat="server" Text="<%$ Resources:text, village_headquarter %>"></asp:Literal></a>
+                                    <span class="nowrap">(Level
+                                        <% = this.village.Headquarter %>) </span>
                                 </td>
                                 <td>
-                                    <img src="images/holz.png" title="Wood" alt="" /><asp:Label ID="lblHeadquarterWood" runat="server"></asp:Label>
+                                    <img src="images/holz.png" title="Wood" alt="" /><% = this.headquarter.Wood %>
                                 </td>
                                 <td>
-                                    <img src="images/lehm.png" title="Clay" alt="" /><asp:Label ID="lblHeadquarterClay" runat="server"></asp:Label>
+                                    <img src="images/lehm.png" title="Clay" alt="" /><% = this.headquarter.Clay %>
                                 </td>
                                 <td>
-                                    <img src="images/eisen.png" title="Iron" alt="" /><asp:Label ID="lblHeadquarterIron" runat="server"></asp:Label>
+                                    <img src="images/eisen.png" title="Iron" alt="" /><% = this.headquarter.Iron %>
                                 </td>
                                 <td>
-                                    <img src="images/face.png" title="Villagers" alt=""><asp:Label ID="lblHeadquarterPopulation" runat="server"></asp:Label>
+                                    <img src="images/face.png" title="Villagers" alt=""><% = (int)this.headquarter.Population %>
                                 </td>
                                 <td>
-                                    <asp:Label ID="Label1" runat="server"></asp:Label>
+                                    <% = Functions.FormatTime(this.headquarter.BuildTime) %>
                                 </td>
                                 <td class="inactive" style="width: 200px;">
                                     The farm is too small
@@ -97,8 +97,23 @@
                                         Barracks</a> <span class="nowrap">(Level
                                             <% = this.village.Barracks %>) </span>
                                 </td>
-                                <td colspan="6" class="inactive" align="center">
-                                    Building fully constructed
+                                <td>
+                                    <img src="images/holz.png" title="Wood" alt="" /><% = this.barrack.Wood %>
+                                </td>
+                                <td>
+                                    <img src="images/lehm.png" title="Clay" alt="" /><% = this.barrack.Clay%>
+                                </td>
+                                <td>
+                                    <img src="images/eisen.png" title="Iron" alt="" /><% = this.barrack.Iron%>
+                                </td>
+                                <td>
+                                    <img src="images/face.png" title="Villagers" alt=""><% = (int)this.barrack.Population%>
+                                </td>
+                                <td>
+                                    <% = Functions.FormatTime(this.barrack.BuildTime)%>
+                                </td>
+                                <td class="inactive" style="width: 200px;">
+                                    The farm is too small
                                 </td>
                             </tr>
                             <tr>
@@ -108,8 +123,23 @@
                                         Stable</a> <span class="nowrap">(Level
                                             <% = this.village.Stable %>) </span>
                                 </td>
-                                <td colspan="6" class="inactive" align="center">
-                                    Building fully constructed
+                                <td>
+                                    <img src="images/holz.png" title="Wood" alt="" /><% = this.stable.Wood %>
+                                </td>
+                                <td>
+                                    <img src="images/lehm.png" title="Clay" alt="" /><% = this.stable.Clay%>
+                                </td>
+                                <td>
+                                    <img src="images/eisen.png" title="Iron" alt="" /><% = this.stable.Iron%>
+                                </td>
+                                <td>
+                                    <img src="images/face.png" title="Villagers" alt=""><% = (int)this.stable.Population%>
+                                </td>
+                                <td>
+                                    <% = Functions.FormatTime(this.stable.BuildTime)%>
+                                </td>
+                                <td class="inactive" style="width: 200px;">
+                                    The farm is too small
                                 </td>
                             </tr>
                             <tr>
@@ -120,19 +150,19 @@
                                             <% = this.village.Workshop %>) </span>
                                 </td>
                                 <td>
-                                    <img src="images/holz.png" title="Wood" alt="">953
+                                    <img src="images/holz.png" title="Wood" alt="" /><% = this.workshop.Wood %>
                                 </td>
                                 <td>
-                                    <img src="images/lehm.png" title="Clay" alt="">825
+                                    <img src="images/lehm.png" title="Clay" alt="" /><% = this.workshop.Clay%>
                                 </td>
                                 <td>
-                                    <img src="images/eisen.png" title="Iron" alt="">826
+                                    <img src="images/eisen.png" title="Iron" alt="" /><% = this.workshop.Iron%>
                                 </td>
                                 <td>
-                                    <img src="images/face.png" title="Villagers" alt="">3
+                                    <img src="images/face.png" title="Villagers" alt=""><% = (int)this.workshop.Population%>
                                 </td>
                                 <td>
-                                    1:33:47
+                                    <% = Functions.FormatTime(this.workshop.BuildTime)%>
                                 </td>
                                 <td class="inactive" style="width: 200px;">
                                     The farm is too small
@@ -146,19 +176,19 @@
                                             <% =this.village.Academy %>) </span>
                                 </td>
                                 <td>
-                                    <img src="images/holz.png" title="Wood" alt="">60000
+                                    <img src="images/holz.png" title="Wood" alt="" /><% = this.academy.Wood %>
                                 </td>
                                 <td>
-                                    <img src="images/lehm.png" title="Clay" alt="">100000
+                                    <img src="images/lehm.png" title="Clay" alt="" /><% = this.academy.Clay%>
                                 </td>
                                 <td>
-                                    <img src="images/eisen.png" title="Iron" alt="">40000
+                                    <img src="images/eisen.png" title="Iron" alt="" /><% = this.academy.Iron%>
                                 </td>
                                 <td>
-                                    <img src="images/face.png" title="Villagers" alt="">16
+                                    <img src="images/face.png" title="Villagers" alt=""><% = (int)this.academy.Population%>
                                 </td>
                                 <td>
-                                    9:46:08
+                                    <% = Functions.FormatTime(this.academy.BuildTime)%>
                                 </td>
                                 <td class="inactive" style="width: 200px;">
                                     The farm is too small
@@ -171,8 +201,23 @@
                                         Smithy</a> <span class="nowrap">(Level
                                             <% = this.village.Smithy %>) </span>
                                 </td>
-                                <td colspan="6" class="inactive" align="center">
-                                    Building fully constructed
+                                <td>
+                                    <img src="images/holz.png" title="Wood" alt="" /><% = this.smithy.Wood %>
+                                </td>
+                                <td>
+                                    <img src="images/lehm.png" title="Clay" alt="" /><% = this.smithy.Clay%>
+                                </td>
+                                <td>
+                                    <img src="images/eisen.png" title="Iron" alt="" /><% = this.smithy.Iron%>
+                                </td>
+                                <td>
+                                    <img src="images/face.png" title="Villagers" alt=""><% = (int)this.smithy.Population%>
+                                </td>
+                                <td>
+                                    <% = Functions.FormatTime(this.smithy.BuildTime)%>
+                                </td>
+                                <td class="inactive" style="width: 200px;">
+                                    The farm is too small
                                 </td>
                             </tr>
                             <tr>
@@ -181,8 +226,23 @@
                                         <img src="images/place.png" alt="">
                                         Rally point</a> <span class="nowrap">(Level 1) </span>
                                 </td>
-                                <td colspan="6" class="inactive" align="center">
-                                    Building fully constructed
+                                <td>
+                                    <img src="images/holz.png" title="Wood" alt="" /><% = this.rally.Wood %>
+                                </td>
+                                <td>
+                                    <img src="images/lehm.png" title="Clay" alt="" /><% = this.rally.Clay%>
+                                </td>
+                                <td>
+                                    <img src="images/eisen.png" title="Iron" alt="" /><% = this.rally.Iron%>
+                                </td>
+                                <td>
+                                    <img src="images/face.png" title="Villagers" alt=""><% = (int)this.rally.Population%>
+                                </td>
+                                <td>
+                                    <% = Functions.FormatTime(this.rally.BuildTime)%>
+                                </td>
+                                <td class="inactive" style="width: 200px;">
+                                    The farm is too small
                                 </td>
                             </tr>
                             <tr>
@@ -193,19 +253,19 @@
                                             <% = this.village.Market %>) </span>
                                 </td>
                                 <td>
-                                    <img src="images/holz.png" title="Wood" alt="">10172
+                                    <img src="images/holz.png" title="Wood" alt="" /><% = this.market.Wood %>
                                 </td>
                                 <td>
-                                    <img src="images/lehm.png" title="Clay" alt="">12889
+                                    <img src="images/lehm.png" title="Clay" alt="" /><% = this.market.Clay%>
                                 </td>
                                 <td>
-                                    <img src="images/eisen.png" title="Iron" alt="">10172
+                                    <img src="images/eisen.png" title="Iron" alt="" /><% = this.market.Iron%>
                                 </td>
                                 <td>
-                                    <img src="images/face.png" title="Villagers" alt="">67
+                                    <img src="images/face.png" title="Villagers" alt=""><% = (int)this.market.Population%>
                                 </td>
                                 <td>
-                                    10:50:12
+                                    <% = Functions.FormatTime(this.market.BuildTime)%>
                                 </td>
                                 <td class="inactive" style="width: 200px;">
                                     The farm is too small
@@ -216,10 +276,25 @@
                                     <a href="/game.php?village=51549&amp;screen=wood">
                                         <img src="images/wood.png" alt="">
                                         Timber camp</a> <span class="nowrap">(Level
-                                            <% = this.village.TimberCamp %>) </span>
+                                            <% = this.village.Workshop %>) </span>
                                 </td>
-                                <td colspan="6" class="inactive" align="center">
-                                    Building fully constructed
+                                <td>
+                                    <img src="images/holz.png" title="Wood" alt="" /><% = this.timber.Wood %>
+                                </td>
+                                <td>
+                                    <img src="images/lehm.png" title="Clay" alt="" /><% = this.timber.Clay%>
+                                </td>
+                                <td>
+                                    <img src="images/eisen.png" title="Iron" alt="" /><% = this.timber.Iron%>
+                                </td>
+                                <td>
+                                    <img src="images/face.png" title="Villagers" alt=""><% = (int)this.timber.Population%>
+                                </td>
+                                <td>
+                                    <% = Functions.FormatTime(this.timber.BuildTime)%>
+                                </td>
+                                <td class="inactive" style="width: 200px;">
+                                    The farm is too small
                                 </td>
                             </tr>
                             <tr>
@@ -229,8 +304,23 @@
                                         Clay pit</a> <span class="nowrap">(Level
                                             <% = this.village.ClayPit %>) </span>
                                 </td>
-                                <td colspan="6" class="inactive" align="center">
-                                    Building fully constructed
+                                <td>
+                                    <img src="images/holz.png" title="Wood" alt="" /><% = this.clay.Wood %>
+                                </td>
+                                <td>
+                                    <img src="images/lehm.png" title="Clay" alt="" /><% = this.clay.Clay%>
+                                </td>
+                                <td>
+                                    <img src="images/eisen.png" title="Iron" alt="" /><% = this.clay.Iron%>
+                                </td>
+                                <td>
+                                    <img src="images/face.png" title="Villagers" alt=""><% = (int)this.clay.Population%>
+                                </td>
+                                <td>
+                                    <% = Functions.FormatTime(this.clay.BuildTime)%>
+                                </td>
+                                <td class="inactive" style="width: 200px;">
+                                    The farm is too small
                                 </td>
                             </tr>
                             <tr>
@@ -240,8 +330,23 @@
                                         Iron mine</a> <span class="nowrap">(Level
                                             <% = this.village.IronMine %>) </span>
                                 </td>
-                                <td colspan="6" class="inactive" align="center">
-                                    Building fully constructed
+                                <td>
+                                    <img src="images/holz.png" title="Wood" alt="" /><% = this.iron.Wood %>
+                                </td>
+                                <td>
+                                    <img src="images/lehm.png" title="Clay" alt="" /><% = this.iron.Clay%>
+                                </td>
+                                <td>
+                                    <img src="images/eisen.png" title="Iron" alt="" /><% = this.iron.Iron%>
+                                </td>
+                                <td>
+                                    <img src="images/face.png" title="Villagers" alt=""><% = (int)this.iron.Population%>
+                                </td>
+                                <td>
+                                    <% = Functions.FormatTime(this.iron.BuildTime)%>
+                                </td>
+                                <td class="inactive" style="width: 200px;">
+                                    The farm is too small
                                 </td>
                             </tr>
                             <tr>
@@ -251,8 +356,23 @@
                                         Farm</a> <span class="nowrap">(Level
                                             <% = this.village.Farm %>) </span>
                                 </td>
-                                <td colspan="6" class="inactive" align="center">
-                                    Building fully constructed
+                                <td>
+                                    <img src="images/holz.png" title="Wood" alt="" /><% = this.farm.Wood %>
+                                </td>
+                                <td>
+                                    <img src="images/lehm.png" title="Clay" alt="" /><% = this.farm.Clay%>
+                                </td>
+                                <td>
+                                    <img src="images/eisen.png" title="Iron" alt="" /><% = this.farm.Iron%>
+                                </td>
+                                <td>
+                                    <img src="images/face.png" title="Villagers" alt=""><% = (int)this.farm.Population%>
+                                </td>
+                                <td>
+                                    <% = Functions.FormatTime(this.farm.BuildTime)%>
+                                </td>
+                                <td class="inactive" style="width: 200px;">
+                                    The farm is too small
                                 </td>
                             </tr>
                             <tr>
@@ -263,18 +383,19 @@
                                             <% = this.village.Warehouse %>) </span>
                                 </td>
                                 <td>
-                                    <img src="images/holz.png" title="Wood" alt="">43320
+                                    <img src="images/holz.png" title="Wood" alt="" /><% = this.warehouse.Wood %>
                                 </td>
                                 <td>
-                                    <img src="images/lehm.png" title="Clay" alt="">40316
+                                    <img src="images/lehm.png" title="Clay" alt="" /><% = this.warehouse.Clay%>
                                 </td>
                                 <td>
-                                    <img src="images/eisen.png" title="Iron" alt="">18484
+                                    <img src="images/eisen.png" title="Iron" alt="" /><% = this.warehouse.Iron%>
                                 </td>
                                 <td>
+                                    <img src="images/face.png" title="Villagers" alt=""><% = (int)this.warehouse.Population%>
                                 </td>
                                 <td>
-                                    17:36:11
+                                    <% = Functions.FormatTime(this.warehouse.BuildTime)%>
                                 </td>
                                 <td>
                                     <a href="/game.php?village=51549&amp;screen=main&amp;action=build&amp;id=storage&amp;h=b56c">
@@ -288,22 +409,19 @@
                                         Hiding place</a> <span class="nowrap">(not constructed) </span>
                                 </td>
                                 <td>
-                                    <img src="images/holz.png" title="Wood" alt="">50
+                                    <img src="images/holz.png" title="Wood" alt="" /><% = this.hiding.Wood %>
                                 </td>
                                 <td>
-                                    <img src="images/lehm.png" title="Clay" alt="">60
+                                    <img src="images/lehm.png" title="Clay" alt="" /><% = this.hiding.Clay%>
                                 </td>
                                 <td>
-                                    <img src="images/eisen.png" title="Iron" alt="">50
+                                    <img src="images/eisen.png" title="Iron" alt="" /><% = this.hiding.Iron%>
                                 </td>
                                 <td>
-                                    <img src="images/face.png" title="Villagers" alt="">2
+                                    <img src="images/face.png" title="Villagers" alt=""><% = (int)this.hiding.Population%>
                                 </td>
                                 <td>
-                                    0:11:18
-                                </td>
-                                <td class="inactive" style="width: 200px;">
-                                    The farm is too small
+                                    <% = Functions.FormatTime(this.hiding.BuildTime)%>
                                 </td>
                             </tr>
                             <tr>
@@ -313,8 +431,23 @@
                                         Wall</a> <span class="nowrap">(Level
                                             <% = this.village.Wall %>) </span>
                                 </td>
-                                <td colspan="6" class="inactive" align="center">
-                                    Building fully constructed
+                                <td>
+                                    <img src="images/holz.png" title="Wood" alt="" /><% = this.wall.Wood %>
+                                </td>
+                                <td>
+                                    <img src="images/lehm.png" title="Clay" alt="" /><% = this.wall.Clay%>
+                                </td>
+                                <td>
+                                    <img src="images/eisen.png" title="Iron" alt="" /><% = this.wall.Iron%>
+                                </td>
+                                <td>
+                                    <img src="images/face.png" title="Villagers" alt=""><% = (int)this.wall.Population%>
+                                </td>
+                                <td>
+                                    <% = Functions.FormatTime(this.wall.BuildTime)%>
+                                </td>
+                                <td class="inactive" style="width: 200px;">
+                                    The farm is too small
                                 </td>
                             </tr>
                         </tbody>
@@ -325,7 +458,6 @@
     </table>
     <telerik:RadFormDecorator ID="RadFormDecorator1" runat="server" Skin="Vista" DecoratedControls="All" />
     <table>
-        
         <tbody>
             <tr>
                 <th colspan="3">
@@ -334,14 +466,12 @@
             </tr>
             <tr>
                 <td>
-                    <asp:TextBox ID="txtName" runat="server" Text=<%# this.village.Name %> 
-                        Width="170px"></asp:TextBox>
+                    <asp:TextBox ID="txtName" runat="server" Text="<%# this.village.Name %>" Width="170px"></asp:TextBox>
                 </td>
                 <td>
                     <asp:UpdatePanel ID="pChangeName" runat="server">
                         <ContentTemplate>
-                            <asp:Button ID="bttnChangeVillageName" runat="server" Text="Đổi tên" 
-                                onclick="bttnChangeVillageName_Click" />
+                            <asp:Button ID="bttnChangeVillageName" runat="server" Text="Đổi tên" OnClick="bttnChangeVillageName_Click" />
                         </ContentTemplate>
                         <Triggers>
                             <asp:AsyncPostBackTrigger ControlID="bttnChangeVillageName" EventName="Click" />

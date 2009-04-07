@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="barrack" xml:space="preserve">
-    <value>Trường đào tạo lính</value>
+    <value>Bộ binh</value>
   </data>
   <data name="barrack_description" xml:space="preserve">
     <value>In the barracks you can recruit infantry. The higher its level the faster the recruitment of troops will be finished.</value>
@@ -152,5 +152,68 @@
   </data>
   <data name="headquarter" xml:space="preserve">
     <value>Nhà chính</value>
+  </data>
+  <data name="capital_level" xml:space="preserve">
+    <value>Cấp</value>
+  </data>
+  <data name="academy" xml:space="preserve">
+    <value>Trường đại học</value>
+  </data>
+  <data name="capital_clay" xml:space="preserve">
+    <value>Đất sét</value>
+  </data>
+  <data name="capital_iron" xml:space="preserve">
+    <value>Kim loại</value>
+  </data>
+  <data name="capital_wood" xml:space="preserve">
+    <value>Gỗ</value>
+  </data>
+  <data name="clay" xml:space="preserve">
+    <value>đất sét</value>
+  </data>
+  <data name="clay_pit" xml:space="preserve">
+    <value>Trại đất sét</value>
+  </data>
+  <data name="farm" xml:space="preserve">
+    <value>Dân cư</value>
+  </data>
+  <data name="hidden_place" xml:space="preserve">
+    <value>Kho tàng</value>
+  </data>
+  <data name="iron" xml:space="preserve">
+    <value>kim loại</value>
+  </data>
+  <data name="iron_mine" xml:space="preserve">
+    <value>Mỏ kim loại</value>
+  </data>
+  <data name="market" xml:space="preserve">
+    <value>Chợ</value>
+  </data>
+  <data name="rally" xml:space="preserve">
+    <value>Trại lính</value>
+  </data>
+  <data name="smithy" xml:space="preserve">
+    <value>Xưởng nghiên cứu</value>
+  </data>
+  <data name="stable" xml:space="preserve">
+    <value>Kị binh</value>
+  </data>
+  <data name="timber_camp" xml:space="preserve">
+    <value>Trại gỗ</value>
+  </data>
+  <data name="village_headquarter" xml:space="preserve">
+    <value>Nhà chính</value>
+  </data>
+  <data name="wall" xml:space="preserve">
+    <value>Tường thành</value>
+  </data>
+  <data name="warehouse" xml:space="preserve">
+    <value>Nhà kho</value>
+  </data>
+  <data name="wood" xml:space="preserve">
+    <value>gỗ</value>
+  </data>
+  <data name="workshop" xml:space="preserve">
+    <value>Nhà xe</value>
   </data>
 </root>
