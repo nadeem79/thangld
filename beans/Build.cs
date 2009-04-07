@@ -10,21 +10,21 @@ namespace beans
 
     public class Build
     {
-        private static BuildPrice _headquarter = new BuildPrice(900, 90, 80, 70, 5, 30);
-        private static BuildPrice _barrack = new BuildPrice(900, 200, 170, 90, 7, 25);
-        private static BuildPrice _stable = new BuildPrice(900, 270, 240, 260, 8, 20);
-        private static BuildPrice _workshop = new BuildPrice(900, 300, 240, 260, 8, 15);
-        private static BuildPrice _academy = new BuildPrice(900, 20000, 25000, 15000, 80, 3);
-        private static BuildPrice _smithy = new BuildPrice(900, 220, 180, 240, 20, 20);
-        private static BuildPrice _rally = new BuildPrice(900, 10, 40, 30, 0, 1);
-        private static BuildPrice _market = new BuildPrice(900, 100, 100, 100, 20, 25);
-        private static BuildPrice _timber = new BuildPrice(900, 50, 60, 40, 5, 30);
-        private static BuildPrice _clay = new BuildPrice(900, 65, 50, 40, 10, 30);
-        private static BuildPrice _iron = new BuildPrice(900, 75, 65, 70, 10, 30);
-        private static BuildPrice _farm = new BuildPrice(900, 45, 40, 30, 0, 30);
-        private static BuildPrice _warehouse = new BuildPrice(900, 60, 50, 40, 0, 30);
-        private static BuildPrice  _hiding = new BuildPrice(900, 50, 60, 50, 2, 10);
-        private static BuildPrice _wall = new BuildPrice(900, 50, 100, 20, 5, 20);
+        private static BuildPrice _headquarter = new BuildPrice(948, 90, 80, 70, 5, 30);
+        private static BuildPrice _barrack = new BuildPrice(1897, 200, 170, 90, 7, 25);
+        private static BuildPrice _stable = new BuildPrice(6333, 270, 240, 260, 8, 20);
+        private static BuildPrice _workshop = new BuildPrice(6328, 300, 240, 260, 8, 15);
+        private static BuildPrice _academy = new BuildPrice(68112, 20000, 25000, 15000, 80, 3);
+        private static BuildPrice _smithy = new BuildPrice(6300, 220, 180, 240, 20, 20);
+        private static BuildPrice _rally = new BuildPrice(1658, 10, 40, 30, 0, 1);
+        private static BuildPrice _market = new BuildPrice(2848, 100, 100, 100, 20, 25);
+        private static BuildPrice _timber = new BuildPrice(949, 50, 60, 40, 5, 30);
+        private static BuildPrice _clay = new BuildPrice(949, 65, 50, 40, 10, 30);
+        private static BuildPrice _iron = new BuildPrice(1139, 75, 65, 70, 10, 30);
+        private static BuildPrice _farm = new BuildPrice(1054, 45, 40, 30, 0, 30);
+        private static BuildPrice _warehouse = new BuildPrice(1075, 60, 50, 40, 0, 30);
+        private static BuildPrice _hiding = new BuildPrice(1561, 50, 60, 50, 2, 10);
+        private static BuildPrice _wall = new BuildPrice(3801, 50, 100, 20, 5, 20);
         private static Dictionary<int, BuildPrice> _dictionary = new Dictionary<int, BuildPrice>();
 
         public static Dictionary<int, BuildPrice> PriceDictionary
@@ -203,7 +203,6 @@ namespace beans
             Build.PriceDictionary.Add(key, price);
             return price;
         }
-
         public static BuildPrice GetPrice(BuildingType type)
         {
             switch (type)
@@ -258,6 +257,78 @@ namespace beans
                     break;
             }
         }
+
+        public static bool CanBuild(BuildingType building, int level, Village village)
+        {
+            switch (building)
+            {
+                case BuildingType.Headquarter:
+                    if (village.Headquarter < 1)
+                        return false;
+                    break;
+                case BuildingType.Barracks:
+                    if (village.Headquarter < 3)
+                        return false;
+                    break;
+                case BuildingType.Stable:
+                    if (village.Barracks < 5 || village.Smithy < 5 || village.Headquarter < 10)
+                        return false;
+                    break;
+                case BuildingType.Workshop:
+                    if (village.Headquarter < 10 || village.Smithy < 10)
+                        return false;
+                    break;
+                case BuildingType.Academy:
+                    if (village.Headquarter < 20 || village.Smithy < 20 || village.Market < 10)
+                        return false;
+                    break;
+                case BuildingType.Smithy:
+                    if (village.Headquarter < 5 || village.Barracks < 1)
+                        return false;
+                    break;
+                case BuildingType.Rally:
+                    if (village.Headquarter < 1)
+                        return false;
+                    break;
+                case BuildingType.Market:
+                    if (village.Headquarter < 3 || village.Warehouse < 2)
+                        return false;
+                    break;
+                case BuildingType.TimberCamp:
+                    if (village.Headquarter < 1)
+                        return false;
+                    break;
+                case BuildingType.ClayPit:
+                    if (village.Headquarter < 1)
+                        return false;
+                    break;
+                case BuildingType.IronMine:
+                    if (village.Headquarter < 1)
+                        return false;
+                    break;
+                case BuildingType.Farm:
+                    if (village.Headquarter < 1)
+                        return false;
+                    break;
+                case BuildingType.Warehouse:
+                    if (village.Headquarter < 1)
+                        return false;
+                    break;
+                case BuildingType.HidingPlace:
+                    if (village.Headquarter < 1)
+                        return false;
+                    break;
+                case BuildingType.Wall:
+                    if (village.Headquarter < 1 || village.Barracks < 1)
+                        return false;
+                    break;
+                default:
+                    return false;
+            }
+
+            BuildPrice price = Build.GetPrice(building, level, village.Headquarter);
+            return (price.Wood < village.Wood && price.Clay < village.Clay && price.Iron < village.Iron);
+        }
         #endregion
 
         #region Constructors
@@ -278,7 +349,6 @@ namespace beans
     public class BuildPrice:Price
     {
         private int _point, _max;
-        double _pop;
         
         public int Point
         {
@@ -288,14 +358,9 @@ namespace beans
         {
             get { return this._max; }
         }
-        public double Population
-        {
-            get { return this._pop; }
-        }
 
-        public BuildPrice(int time, int wood, int clay, int iron, double population, int max):base(time, wood, clay, iron)
+        public BuildPrice(int time, int wood, int clay, int iron, double population, int max):base(time, wood, clay, iron, population)
         {
-            this._pop = population;
             this._max = max;
         }
 

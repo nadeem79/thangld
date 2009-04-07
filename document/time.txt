@@ -1,0 +1,29 @@
+Building:
+=========================
+head: 948
+barrack: 1897
+stable: 6333
+workshop: 6328
+academy: 68112
+smithy: 6300
+rally: 1658
+market: 2848
+timber: 949
+clay: 949
+iron: 1139
+farm: 1054
+warehouse: 1075
+hiding: 1561
+wall: 3801
+
+Troop
+=========================
+spear: 458
+sword: 680
+axe: 595
+scout: 421
+light: 860
+heavy: 1726
+ram: 2573
+catapult: 3860
+noble: 9860
