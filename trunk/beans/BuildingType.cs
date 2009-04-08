@@ -25,4 +25,21 @@ namespace beans
         HidingPlace,
         Wall,
     }
+
+    public class BuildingTypeFactory
+    {
+        public static BuildingType GetType(string code)
+        {
+            int key = 0;
+            int.TryParse(code, out key);
+            try
+            {
+                return (BuildingType)key;
+            }
+            catch
+            {
+                return BuildingType.NoBuiding;
+            }
+        }
+    }
 }

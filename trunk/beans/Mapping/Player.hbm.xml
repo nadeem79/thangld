@@ -3,7 +3,7 @@
 
   <class name="beans.Player, beans" table="users" lazy="false">
     <id name="ID" column="id" type="Int32">
-      <generator class="identity"/>
+      <generator class="increment"/>
     </id>
     
     <property name="Username" column="username" length="200" type="String" not-null="true" unique="true"/>
@@ -28,7 +28,7 @@
       <one-to-many class="beans.Village, beans"/>
     </bag>
     <bag name="Invites" table="invite" cascade="none" fetch="join" inverse="true"  lazy="true">
-      <key column="[user]" />
+      <key column="user" />
       <one-to-many class="beans.TribeInvite, beans"/>
     </bag>
           

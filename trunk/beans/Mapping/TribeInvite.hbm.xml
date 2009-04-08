@@ -7,7 +7,7 @@
       <generator class="identity"/>
     </id>
     
-    <many-to-one name="Player" class="beans.Player, beans" column="[user]" not-null="true" fetch="join" cascade="none" />
+    <many-to-one name="Player" class="beans.Player, beans" column="user" not-null="true" fetch="join" cascade="none" />
     <many-to-one name="Group" class="beans.Group, beans" column="[group]" not-null="true" fetch="join" cascade="none" />
     <property name="Time" column="time" type="timestamp" />
   </class>

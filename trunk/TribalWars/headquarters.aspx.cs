@@ -17,7 +17,6 @@ public partial class headquarters : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        
         village = ((inPage)this.Master).CurrentVillage;
         this.headquarter = Build.GetPrice(BuildingType.Headquarter, village[BuildingType.Headquarter], village[BuildingType.Headquarter]);
         this.barrack = Build.GetPrice(BuildingType.Barracks, village[BuildingType.Barracks], village[BuildingType.Barracks]);
@@ -39,6 +38,7 @@ public partial class headquarters : System.Web.UI.Page
 
     protected void bttnChangeVillageName_Click(object sender, EventArgs e)
     {
+        
         ISession session = null;
         ITransaction trans = null;
         try
@@ -62,4 +62,5 @@ public partial class headquarters : System.Web.UI.Page
                 session.Close();
         }
     }
+
 }
