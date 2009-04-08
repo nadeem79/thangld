@@ -949,8 +949,28 @@ namespace beans
             this.Wood += price.Wood * recruit.Quantity;
             this.Clay += price.Clay * recruit.Quantity;
             this.Iron += price.Iron * recruit.Quantity;
+            this.Population -= (int)(price.Population * recruit.Quantity);
             session.Update(this);
             session.Delete(recruit);
+        }
+
+        public Build PrepareBuild(BuildingType building)
+        {
+            BuildPrice price = Build.GetPrice(building, this[building] + 1, this.Headquarter);
+
+            if (this[building] >= price.MaxLevel)
+                throw new Exception("Số lần nâng cấp tối đa");
+            if ((this.MaxPopulation - this.Population) < price.Population)
+                throw new Exception("Số lượng dân không đủ");
+            if (this.Iron < price.Iron || this.Wood < price.Wood || this.Clay < price.Clay)
+                throw new Exception("Không đủ tài nguyên");
+
+            Build build = new Build();
+            build.Building = building;
+            build.InVillage = this;
+            build.Start = DateTime.Now;
+
+            return build;
         }
 
         #endregion       

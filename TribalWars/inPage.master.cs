@@ -40,6 +40,8 @@ public partial class inPage : System.Web.UI.MasterPage
 
     void inPage_Init(object sender, EventArgs e)
     {
+        Session["user"] = 1;
+
 
         if (object.Equals(Session["user"], null))
         {

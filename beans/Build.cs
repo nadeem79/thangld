@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections;
+using NHibernate;
 
 namespace beans
 {
     
 
-    public class Build
+    public class Build:IdentityObject
     {
+
+        #region Static Members
         private static BuildPrice _headquarter = new BuildPrice(948, 90, 80, 70, 5, 30);
         private static BuildPrice _barrack = new BuildPrice(1897, 200, 170, 90, 7, 25);
         private static BuildPrice _stable = new BuildPrice(6333, 270, 240, 260, 8, 20);
@@ -135,44 +138,54 @@ namespace beans
                 return _wall;
             }
         }
+        #endregion
 
         #region Variable
-        private int id;
-        private Village inVillage;
-        private DateTime start, end;
-        private BuildingType building;
         #endregion
 
         #region Properties
         public virtual int ID
         {
-            get { return id; }
-            set { id = value; }
+            get;
+            set;
         }
-
         public virtual Village InVillage
         {
-            get { return inVillage; }
-            set { inVillage = value; }
+            get;
+            set;
         }
-
-
         public virtual BuildingType Building
         {
-            get { return building; }
-            set { building = value; }
+            get;
+            set;
         }
-
         public virtual DateTime Start
         {
-            get { return start; }
-            set { start = value; }
+            get;
+            set;
         }
-
         public virtual DateTime End
         {
-            get { return this.end; }
-            set { this.end = value; }
+            get;
+            set;
+        }
+        #endregion
+
+        #region Methods
+        public void execute(ISession session)
+        {
+            BuildPrice price = Build.GetPrice(this.Building, this.InVillage[this.Building] + 1, this.InVillage.Headquarter);
+
+            if (this.InVillage[this.Building] >= price.MaxLevel)
+                throw new Exception("Số lần nâng cấp tối đa");
+            if ((this.InVillage.MaxPopulation - this.InVillage.Population) < price.Population)
+                throw new Exception("Số lượng dân không đủ");
+            if (this.InVillage.Iron < price.Iron || this.InVillage.Wood < price.Wood || this.InVillage.Clay < price.Clay)
+                throw new Exception("Không đủ tài nguyên");
+
+            this.Start = DateTime.Now;
+            this.End = DateTime.Now.AddSeconds(price.BuildTime);
+            session.Save(this);
         }
         #endregion
 
@@ -332,16 +345,6 @@ namespace beans
         #endregion
 
         #region Constructors
-        public Build()
-        {
-
-        }
-
-        public Build(int ID)
-            : this()
-        {
-
-        }
         #endregion
 
     }
