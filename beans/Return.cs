@@ -110,6 +110,10 @@ namespace beans
             this.To.Iron += this.Iron;
         }
 
+        public override void cancel(ISession session)
+        {
+            throw new Exception("HACK!!!");
+        }
         #endregion
     }
 }

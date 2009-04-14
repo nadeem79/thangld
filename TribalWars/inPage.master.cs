@@ -23,15 +23,28 @@ public partial class inPage : System.Web.UI.MasterPage
     {
         get
         {
-            if (ViewState["village"] == null)
-                return this.village;
-            return (Village)ViewState["village"];
+            return this.village;
         }
     }
     public Player Player
     {
         get { return this.player; }
     }
+    public Label WoodLabel
+    {
+        get { return this.lblWood; }
+    }
+    public Label ClayLabel 
+    { 
+        get { return this.lblClay; }
+    }
+    public Label IronLabel 
+    {
+        get { return this.lblIron; }
+    }
+    
+
+
 
     public inPage()
     {
@@ -49,11 +62,6 @@ public partial class inPage : System.Web.UI.MasterPage
             return;
         }
 
-        if (IsPostBack)
-        {
-            this.village = (Village)ViewState["village"];
-            return;
-        }
         DateTime start = DateTime.Now;
         int id;
         ISession session;
@@ -70,7 +78,7 @@ public partial class inPage : System.Web.UI.MasterPage
             session.Close();
             Response.Redirect("index.aspx", true);
         }
-        trans = session.BeginTransaction();
+        trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
         this.player.Update(DateTime.Now, session);
         trans.Commit();
 
@@ -86,8 +94,6 @@ public partial class inPage : System.Web.UI.MasterPage
         int incomingAttackCount = village.GetIncomingAttackCount(session);
         int incomingSupportCount = village.GetIncomingSupportCount(session);
 
-
-
         DateTime stop = DateTime.Now;
         this.delay.Text = (stop - start).Milliseconds.ToString();
 
@@ -97,16 +103,57 @@ public partial class inPage : System.Web.UI.MasterPage
             lTribe.NavigateUrl = "tribe.aspx?id=" + this.CurrentVillage.ID.ToString();
 
         session.Close();
-        
+
+        this.lblClay.Text = this.CurrentVillage.Clay.ToString();
+        this.lblWood.Text = this.CurrentVillage.Wood.ToString();
+        this.lblIron.Text = this.CurrentVillage.Iron.ToString();
+
+        if (this.CurrentVillage.Wood == this.CurrentVillage.MaxResources)
+            this.lblWood.ForeColor = System.Drawing.Color.Red;
+        if (this.CurrentVillage.Clay == this.CurrentVillage.MaxResources)
+            this.lblClay.ForeColor = System.Drawing.Color.Red;
+        if (this.CurrentVillage.Iron == this.CurrentVillage.MaxResources)
+            this.lblIron.ForeColor = System.Drawing.Color.Red;
+
     }
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        //if (this.village == null)
+        //{
+        //    ISession session;
+        //    ITransaction trans;
 
-        if (!IsPostBack)
-        {
-            ViewState["village"] = village;
-            this.lblToogleShoutbox.Text = "<a href=\"javascript:void(0);\" onclick=\"ShowHideShoutbox('" + this.radShoutbox.ClientID + "')\">Shoutbox</a>";
-        }
+
+        //    session = NHibernateHelper.CreateSession();
+        //    trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
+
+        //    this.player = session.Load<beans.Player>((int)Session["user"]);
+
+        //    if (this.player == null)
+        //    {
+        //        session.Close();
+        //        Response.Redirect("index.aspx", true);
+        //    }
+        //    trans = session.BeginTransaction();
+        //    this.player.Update(DateTime.Now, session);
+        //    trans.Commit();
+        //    int id = 0;
+        //    if (object.Equals(Request["id"], null) || (!int.TryParse(Request["id"], out id)))
+        //        this.village = this.player.Villages[0];
+        //    else
+        //        this.village = this.player.GetVillage(id);
+
+        //    if (this.village == null)
+        //        this.village = this.player.Villages[0];
+
+        //    trans.Commit();
+        //    session.Close();
+        //}
+
+        //if (!IsPostBack)
+        //{
+        //    //this.lblToogleShoutbox.Text = "<a href=\"javascript:void(0);\" onclick=\"ShowHideShoutbox('" + this.radShoutbox.ClientID + "')\">Shoutbox</a>";
+        //}
     }
 }

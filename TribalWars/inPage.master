@@ -112,19 +112,19 @@
                                         <a href="wood.aspx?id=<% Response.Write(this.CurrentVillage.ID.ToString()); %>"><img src="images/holz.png" /></a>
                                     </td>
                                     <td>
-                                        <span id="wood" name="wood"><% Response.Write(this.CurrentVillage.Wood.ToString()); %></span>
+                                        <asp:Label ID="lblWood" runat="server"></asp:Label>
                                     </td>
                                     <td>
                                         <a href="clay.aspx?id=<% Response.Write(this.CurrentVillage.ID.ToString()); %>"><img src="images/lehm.png" /></a>
                                     </td>
                                     <td>
-                                        <span id="clay" name="clay"><% Response.Write(this.CurrentVillage.Clay.ToString()); %></span>
+                                        <asp:Label ID="lblClay" runat="server"></asp:Label>
                                     </td>
                                     <td>
                                         <a href="clay.aspx?id=<% Response.Write(this.CurrentVillage.ID.ToString()); %>"><img src="images/eisen.png" /></a>
                                     </td>
                                     <td>
-                                        <span id="iron" name="iron"><% Response.Write(this.CurrentVillage.Iron.ToString()); %></span>
+                                        <asp:Label ID="lblIron" runat="server"></asp:Label>
                                     </td>
                                     <td style="border-left: dotted 1px;">
                                         <a href="resources.aspx?id=<% Response.Write(this.CurrentVillage.ID.ToString()); %>"><img src="images/res.png" /></a>
@@ -202,20 +202,18 @@
     </div>
     
     <script language="javascript" type="text/javascript">
-        production("clay", <% Response.Write(this.CurrentVillage.SecondPerResourceUnit(beans.ResourcesType.Clay)); %>*1000);
-        production("wood", <% Response.Write(this.CurrentVillage.SecondPerResourceUnit(beans.ResourcesType.Wood)); %>*1000);
-        production("iron", <% Response.Write(this.CurrentVillage.SecondPerResourceUnit(beans.ResourcesType.Iron)); %>*1000);
+        <% if (this.CurrentVillage.Clay < this.CurrentVillage.MaxResources)
+       { %>
+        production("<% = this.lblClay.ClientID %>", <% Response.Write(this.CurrentVillage.SecondPerResourceUnit(beans.ResourcesType.Clay)); %>*1000);
+        <%}  if (this.CurrentVillage.Wood < this.CurrentVillage.MaxResources) { %>
+        production("<% = this.lblWood.ClientID %>", <% Response.Write(this.CurrentVillage.SecondPerResourceUnit(beans.ResourcesType.Wood)); %>*1000);
+        <%}  if (this.CurrentVillage.Iron < this.CurrentVillage.MaxResources) { %>
+        production("<% = this.lblIron.ClientID %>", <% Response.Write(this.CurrentVillage.SecondPerResourceUnit(beans.ResourcesType.Iron)); %>*1000);
+        <%} %>
         attackTimer();
         increaseTime();
     </script>
-    <telerik:RadDockZone ID="rBottom" runat="server" Width="98%" BorderColor="Transparent">
-        <telerik:RadDock ID="radShoutbox" runat="server" Width="500px" Height="300px" Resizable="true"
-            CssClass="shoutbox" Style="z-index: 3; border: 1px solid black;" Title="Shoutbox">
-            <ContentTemplate>
-                <uc1:Shoutbox ID="shoutboxGlobal" runat="server" />
-            </ContentTemplate>
-        </telerik:RadDock>
-    </telerik:RadDockZone>
+
     </form>
     </body>
 </html>

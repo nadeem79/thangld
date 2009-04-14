@@ -10,7 +10,7 @@
     <property name="Text" column="text" length="500" type="String"/>
     <property name="Time" column="time" type="timestamp"/>
     <many-to-one name="Player" class="beans.Player, beans" column="userid" not-null="false" fetch="join" cascade="none" />
-    <many-to-one name="Group" class="beans.Group, beans" column="[group]" not-null="false" fetch="join" cascade="none" />
+    <many-to-one name="Group" class="beans.Group, beans" column="group_id" not-null="false" fetch="join" cascade="none" />
   </class>
 
 </hibernate-mapping>

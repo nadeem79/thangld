@@ -65,6 +65,17 @@ namespace beans
             this.To.Iron += this.Iron;
         }
 
+        public override void cancel(ISession session)
+        {
+            Return r = new Return();
+            r.Wood = this.Wood;
+            r.Clay = this.Clay;
+            r.Iron = this.Iron;
+
+            session.Save(r);
+            session.Delete(this);
+        }
+
         #endregion
     }
 }

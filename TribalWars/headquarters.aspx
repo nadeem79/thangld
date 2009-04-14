@@ -3,19 +3,24 @@
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    <style type="text/css">
+        .style1
+        {
+            width: 118px;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
     <table width="100%">
         <tbody>
-            
             <tr>
-                <td>
+                <td class="style1">
                     <img src="images/main_big.png" alt="Village Headquarters">
                 </td>
                 <td width="100%">
                     <h2>
                         Village Headquarters (<asp:Literal ID="Literal1" runat="server" Text="<%$ Resources:text, level %>" />
-                        <% = (int)this.wall.Population%>)</h2>
+                        <% = this.village.Headquarter %>)</h2>
                     In the village headquarters you can construct new buildings or upgrade existing
                     ones. The higher the level of your headquarters, the faster the constructions will
                     be finished. As soon as your village headquarters are upgraded to level 15, you
@@ -28,6 +33,7 @@
         </tbody>
     </table>
     <br>
+    <asp:Label ID="lblError" runat="server" Font-Size="Large" ForeColor="#FF3300"></asp:Label>
     <br />
     <table cellpadding="0" cellspacing="0">
         <tbody>
@@ -45,6 +51,46 @@
                             </tr>
                         </tbody>
                     </table>
+                    <asp:Repeater ID="rConstructing" runat="server">
+                        <HeaderTemplate>
+                            <table width="100%">
+                                <tbody>
+                                    <tr>
+                                        <th width="220">
+                                            Construction assignment
+                                        </th>
+                                        <th width="100">
+                                            Duration
+                                        </th>
+                                        <th>
+                                            Completion
+                                        </th>
+                                        <th width="202">
+                                            Cancellation
+                                        </th>
+                                    </tr>
+                        </HeaderTemplate>
+                        <ItemTemplate>
+                        <tr class="lit">
+                        <td>
+                            <%# beans.BuildingTypeFactory.ToString((beans.BuildingType)DataBinder.Eval(Container.DataItem, "Building")) %>
+                        </td>
+                        <td>
+                            <span <%# this.FirstRow(Container.ItemIndex)%>><%# Functions.FormatTime((DateTime)DataBinder.Eval(Container.DataItem, "End") - (DateTime)DataBinder.Eval(Container.DataItem, "Start"))%></span>
+                        </td>
+                        <td>
+                            <%# ((DateTime)DataBinder.Eval(Container.DataItem, "End")).ToString("hh:mm:ss dd/MM/yyyy") %>
+                        </td>
+                        <td>
+                            <a href="headquarters.aspx?id=<% = this.village.ID %>&action=cancel_build&command=<%# DataBinder.Eval(Container.DataItem, "ID") %>" >Huỷ</a>
+                        </td>
+                        </tr>
+                        
+                        </ItemTemplate>
+                        <FooterTemplate>
+                            </tbody> </table>
+                        </FooterTemplate>
+                    </asp:Repeater>
                 </td>
             </tr>
             <tr>
@@ -54,6 +100,7 @@
                             <tr>
                                 <th width="220">
                                     Buildings
+                                    <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
                                 </th>
                                 <th colspan="4">
                                     Requirements
@@ -69,352 +116,128 @@
                                 <td>
                                     <a href="/game.php?village=51549&amp;screen=main">
                                         <img src="images/main.png" alt="" />
-                                        <asp:Literal runat="server" Text="<%$ Resources:text, village_headquarter %>"></asp:Literal></a>
-                                    <span class="nowrap"> (Level
-                                        <% = Functions.FormatTime(this.wall.BuildTime)%>) </span>
+                                        <asp:Literal runat="server" Text="<%$ Resources:text, village_headquarter %>"></asp:Literal>
+                                    </a><span class="nowrap">&nbsp;(Level
+                                        <% = this.village.Headquarter %>)</span>
                                 </td>
-                                <td>
-                                    <img src="images/holz.png" title="Wood" alt="" /><% = (int)this.hiding.Population%>
-                                </td>
-                                <td>
-                                    <img src="images/lehm.png" title="Clay" alt="" /><% = Functions.FormatTime(this.hiding.BuildTime)%>
-                                </td>
-                                <td>
-                                    <img src="images/eisen.png" title="Iron" alt="" /><% = this.village.Wall %>
-                                </td>
-                                <td>
-                                    <img src="images/face.png" title="Villagers" alt=""><% = this.wall.Wood %>
-                                </td>
-                                <td>
-                                    <% = this.wall.Clay%>
-                                </td>
-                                <td  style="width: 200px;">
-                                   <asp:LinkButton ID="bttnUpgradeHeadquarter" runat="server">Nâng cấp</asp:LinkButton></td>
+                                <asp:Label ID="lblBuildHeadquarters" runat="server"></asp:Label>
                             </tr>
                             <tr>
                                 <td>
                                     <a href="/game.php?village=51549&amp;screen=barracks">
                                         <img src="images/barracks.png" alt="">
                                         Barracks</a> <span class="nowrap">(Level
-                                            <% = this.wall.Iron%>) </span>
+                                            <% = this.village.Barracks %>) </span>
                                 </td>
-                                <td>
-                                    <img src="images/holz.png" title="Wood" alt="" /><% = (int)this.wall.Population%>
-                                </td>
-                                <td>
-                                    <img src="images/lehm.png" title="Clay" alt="" /><% = Functions.FormatTime(this.wall.BuildTime)%>
-                                </td>
-                                <td>
-                                    <img src="images/eisen.png" title="Iron" alt="" /><% = (int)this.hiding.Population%>
-                                </td>
-                                <td>
-                                    <img src="images/face.png" title="Villagers" alt=""><% = Functions.FormatTime(this.hiding.BuildTime)%>
-                                </td>
-                                <td>
-                                    <% = this.village.Wall %>
-                                </td>
-                                <td  style="width: 200px;">
-                                   <asp:LinkButton ID="bttnUpgradeBarrack" runat="server">Nâng cấp</asp:LinkButton></td>
+                                <asp:Label ID="lblBuildBarracks" runat="server"></asp:Label>
                             </tr>
                             <tr>
                                 <td>
                                     <a href="/game.php?village=51549&amp;screen=stable">
                                         <img src="images/stable.png" alt="" />
                                         Stable</a> <span class="nowrap">(Level
-                                            <% = this.wall.Wood %>) </span>
+                                            <% = this.village.Stable %>) </span>
                                 </td>
-                                <td>
-                                    <img src="images/holz.png" title="Wood" alt="" /><% = this.wall.Clay%>
-                                </td>
-                                <td>
-                                    <img src="images/lehm.png" title="Clay" alt="" /><% = this.wall.Iron%>
-                                </td>
-                                <td>
-                                    <img src="images/eisen.png" title="Iron" alt="" /><% = (int)this.wall.Population%>
-                                </td>
-                                <td>
-                                    <img src="images/face.png" title="Villagers" alt=""><% = Functions.FormatTime(this.wall.BuildTime)%>
-                                </td>
-                                <td>
-                                    <% = (int)this.hiding.Population%>
-                                </td>
-                                <td  style="width: 200px;">
-                                   <asp:LinkButton ID="bttnUpgradeStable" runat="server">Nâng cấp</asp:LinkButton></td>
+                                <asp:Label ID="lblBuildStable" runat="server"></asp:Label>
                             </tr>
                             <tr>
                                 <td>
                                     <a href="/game.php?village=51549&amp;screen=garage">
                                         <img src="images/garage.png" alt="" />
                                         Workshop</a> <span class="nowrap">(Level
-                                            <% = Functions.FormatTime(this.hiding.BuildTime)%>) </span>
+                                            <% = this.village.Workshop %>) </span>
                                 </td>
-                                <td>
-                                    <img src="images/holz.png" title="Wood" alt="" /><% = this.village.Wall %>
-                                </td>
-                                <td>
-                                    <img src="images/lehm.png" title="Clay" alt="" /><% = this.wall.Wood %>
-                                </td>
-                                <td>
-                                    <img src="images/eisen.png" title="Iron" alt="" /><% = this.wall.Clay%>
-                                </td>
-                                <td>
-                                    <img src="images/face.png" title="Villagers" alt=""><% = this.wall.Iron%>
-                                </td>
-                                <td>
-                                    <% = (int)this.wall.Population%>
-                                </td>
-                                <td  style="width: 200px;">
-                                   <asp:LinkButton ID="bttnUpgradeWorkshop" runat="server">Nâng cấp</asp:LinkButton></td>
+                                <asp:Label ID="lblBuildWorkshop" runat="server"></asp:Label>
                             </tr>
                             <tr>
                                 <td>
                                     <a href="/game.php?village=51549&amp;screen=snob">
                                         <img src="images/snob.png" alt="">
                                         Academy</a> <span class="nowrap">(Level
-                                            <% = Functions.FormatTime(this.wall.BuildTime)%>) </span>
+                                            <% = this.village.Academy %>) </span>
                                 </td>
-                                <td>
-                                    <img src="images/holz.png" title="Wood" alt="" /><% = (int)this.hiding.Population%>
-                                </td>
-                                <td>
-                                    <img src="images/lehm.png" title="Clay" alt="" /><% = Functions.FormatTime(this.hiding.BuildTime)%>
-                                </td>
-                                <td>
-                                    <img src="images/eisen.png" title="Iron" alt="" /><% = this.village.Wall %>
-                                </td>
-                                <td>
-                                    <img src="images/face.png" title="Villagers" alt=""><% = this.wall.Wood %>
-                                </td>
-                                <td>
-                                    <% = this.wall.Clay%>
-                                </td>
-                                <td  style="width: 200px;">
-                                   <asp:LinkButton ID="bttnUpgradeAcademy" runat="server">Nâng cấp</asp:LinkButton></td>
+                                <asp:Label ID="lblBuildAcademy" runat="server"></asp:Label>
                             </tr>
                             <tr>
                                 <td>
                                     <a href="/game.php?village=51549&amp;screen=smith">
                                         <img src="images/smith.png" alt="">
                                         Smithy</a> <span class="nowrap">(Level
-                                            <% = this.wall.Iron%>) </span>
+                                            <% = this.village.Smithy %>) </span>
                                 </td>
-                                <td>
-                                    <img src="images/holz.png" title="Wood" alt="" /><% = (int)this.wall.Population%>
-                                </td>
-                                <td>
-                                    <img src="images/lehm.png" title="Clay" alt="" /><% = Functions.FormatTime(this.wall.BuildTime)%>
-                                </td>
-                                <td>
-                                    <img src="images/eisen.png" title="Iron" alt="" /><% = (int)this.hiding.Population%>
-                                </td>
-                                <td>
-                                    <img src="images/face.png" title="Villagers" alt=""><% = Functions.FormatTime(this.hiding.BuildTime)%>
-                                </td>
-                                <td>
-                                    <% = this.village.Wall %>
-                                </td>
-                                <td  style="width: 200px;">
-                                   <asp:LinkButton ID="bttnUpgradeSmithy" runat="server">Nâng cấp</asp:LinkButton></td>
+                                <asp:Label ID="lblBuildSmithy" runat="server"></asp:Label>
                             </tr>
                             <tr>
                                 <td>
                                     <a href="/game.php?village=51549&amp;screen=place">
                                         <img src="images/place.png" alt="">
-                                        Rally point</a> <span class="nowrap">(Level 1) </span>
+                                        Rally point</a> <span class="nowrap">(Level
+                                            <% = this.village.Rally %>) </span>
                                 </td>
-                                <td>
-                                    <img src="images/holz.png" title="Wood" alt="" /><% = this.wall.Wood %>
-                                </td>
-                                <td>
-                                    <img src="images/lehm.png" title="Clay" alt="" /><% = this.wall.Clay%>
-                                </td>
-                                <td>
-                                    <img src="images/eisen.png" title="Iron" alt="" /><% = this.wall.Iron%>
-                                </td>
-                                <td>
-                                    <img src="images/face.png" title="Villagers" alt=""><% = (int)this.wall.Population%>
-                                </td>
-                                <td>
-                                    <% = Functions.FormatTime(this.wall.BuildTime)%>
-                                </td>
-                                <td  style="width: 200px;">
-                                   <asp:LinkButton ID="bttnUpgradeRally" runat="server">Nâng cấp</asp:LinkButton></td>
+                                <asp:Label ID="lblBuildRally" runat="server"></asp:Label>
                             </tr>
                             <tr>
                                 <td>
                                     <a href="/game.php?village=51549&amp;screen=market">
                                         <img src="images/market.png" alt="">
                                         Market</a> <span class="nowrap">(Level
-                                            <% = (int)this.hiding.Population%>) </span>
+                                            <% = this.village.Market %>) </span>
                                 </td>
-                                <td>
-                                    <img src="images/holz.png" title="Wood" alt="" /><% = Functions.FormatTime(this.hiding.BuildTime)%>
-                                </td>
-                                <td>
-                                    <img src="images/lehm.png" title="Clay" alt="" /><% = this.village.Wall %>
-                                </td>
-                                <td>
-                                    <img src="images/eisen.png" title="Iron" alt="" /><% = this.wall.Wood %>
-                                </td>
-                                <td>
-                                    <img src="images/face.png" title="Villagers" alt=""><% = this.wall.Clay%>
-                                </td>
-                                <td>
-                                    <% = this.wall.Iron%>
-                                </td>
-                                <td  style="width: 200px;">
-                                   <asp:LinkButton ID="bttnUpgradeMarket" runat="server">Nâng cấp</asp:LinkButton></td>
+                                <asp:Label ID="lblBuildMarket" runat="server"></asp:Label>
                             </tr>
                             <tr>
                                 <td>
                                     <a href="/game.php?village=51549&amp;screen=wood">
                                         <img src="images/wood.png" alt="">
                                         Timber camp</a> <span class="nowrap">(Level
-                                            <% = (int)this.wall.Population%>) </span>
+                                            <% = this.village.TimberCamp %>) </span>
                                 </td>
-                                <td>
-                                    <img src="images/holz.png" title="Wood" alt="" /><% = Functions.FormatTime(this.wall.BuildTime)%>
-                                </td>
-                                <td>
-                                    <img src="images/lehm.png" title="Clay" alt="" /><% = (int)this.hiding.Population%>
-                                </td>
-                                <td>
-                                    <img src="images/eisen.png" title="Iron" alt="" /><% = Functions.FormatTime(this.hiding.BuildTime)%>
-                                </td>
-                                <td>
-                                    <img src="images/face.png" title="Villagers" alt=""><% = this.village.Wall %>
-                                </td>
-                                <td>
-                                    <% = this.wall.Wood %>
-                                </td>
-                                <td  style="width: 200px;">
-                                   <asp:LinkButton ID="bttnUpgradeTimbercamp" runat="server">Nâng cấp</asp:LinkButton></td>
+                                <asp:Label ID="lblBuildTimberCamp" runat="server"></asp:Label>
                             </tr>
                             <tr>
                                 <td>
                                     <a href="/game.php?village=51549&amp;screen=stone">
                                         <img src="images/stone.png" alt="">
                                         Clay pit</a> <span class="nowrap">(Level
-                                            <% = this.wall.Clay%>) </span>
+                                            <% = this.village.ClayPit %>) </span>
                                 </td>
-                                <td>
-                                    <img src="images/holz.png" title="Wood" alt="" /><% = this.wall.Iron%>
-                                </td>
-                                <td>
-                                    <img src="images/lehm.png" title="Clay" alt="" /><% = (int)this.wall.Population%>
-                                </td>
-                                <td>
-                                    <img src="images/eisen.png" title="Iron" alt="" /><% = Functions.FormatTime(this.wall.BuildTime)%>
-                                </td>
-                                <td>
-                                    <img src="images/face.png" title="Villagers" alt=""><% = (int)this.hiding.Population%>
-                                </td>
-                                <td>
-                                    <% = Functions.FormatTime(this.hiding.BuildTime)%>
-                                </td>
-                                <td  style="width: 200px;">
-                                   <asp:LinkButton ID="bttnUpgradeClaypit" runat="server">Nâng cấp</asp:LinkButton></td>
+                                <asp:Label ID="lblBuildClayPit" runat="server"></asp:Label>
                             </tr>
                             <tr>
                                 <td>
                                     <a href="/game.php?village=51549&amp;screen=iron">
                                         <img src="images/iron.png" alt="">
                                         Iron mine</a> <span class="nowrap">(Level
-                                            <% = this.village.Wall %>) </span>
+                                            <% = this.village.IronMine %>) </span>
                                 </td>
-                                <td>
-                                    <img src="images/holz.png" title="Wood" alt="" /><% = this.wall.Wood %>
-                                </td>
-                                <td>
-                                    <img src="images/lehm.png" title="Clay" alt="" /><% = this.wall.Clay%>
-                                </td>
-                                <td>
-                                    <img src="images/eisen.png" title="Iron" alt="" /><% = this.wall.Iron%>
-                                </td>
-                                <td>
-                                    <img src="images/face.png" title="Villagers" alt=""><% = (int)this.wall.Population%>
-                                </td>
-                                <td>
-                                    <% = Functions.FormatTime(this.wall.BuildTime)%>
-                                </td>
-                                <td  style="width: 200px;">
-                                   <asp:LinkButton ID="bttnUpgradeIronmine" runat="server" 
-                                        >Nâng cấp</asp:LinkButton></td>
+                                <asp:Label ID="lblBuildIronMine" runat="server"></asp:Label>
                             </tr>
                             <tr>
                                 <td>
                                     <a href="/game.php?village=51549&amp;screen=farm">
                                         <img src="images/farm.png" alt="">
                                         Farm</a> <span class="nowrap">(Level
-                                            <% = (int)this.hiding.Population%>) </span>
+                                            <% = (int)this.village.Farm %>) </span>
                                 </td>
-                                <td>
-                                    <img src="images/holz.png" title="Wood" alt="" /><% = Functions.FormatTime(this.hiding.BuildTime)%>
-                                </td>
-                                <td>
-                                    <img src="images/lehm.png" title="Clay" alt="" /><% = this.village.Wall %>
-                                </td>
-                                <td>
-                                    <img src="images/eisen.png" title="Iron" alt="" /><% = this.wall.Wood %>
-                                </td>
-                                <td>
-                                    <img src="images/face.png" title="Villagers" alt=""><% = this.wall.Clay%>
-                                </td>
-                                <td>
-                                    <% = this.wall.Iron%>
-                                </td>
-                                <td  style="width: 200px;">
-                                   <asp:LinkButton ID="bttnUpgradeFarm" runat="server">Nâng cấp</asp:LinkButton></td>
+                                <asp:Label ID="lblBuildFarm" runat="server"></asp:Label>
                             </tr>
                             <tr>
                                 <td>
                                     <a href="/game.php?village=51549&amp;screen=storage">
                                         <img src="images/storage.png" alt="">
                                         Warehouse</a> <span class="nowrap">(Level
-                                            <% = (int)this.wall.Population%>) </span>
+                                            <% = this.village.Warehouse %>) </span>
                                 </td>
-                                <td>
-                                    <img src="images/holz.png" title="Wood" alt="" /><% = Functions.FormatTime(this.wall.BuildTime)%>
-                                </td>
-                                <td>
-                                    <img src="images/lehm.png" title="Clay" alt="" /><% = (int)this.hiding.Population%>
-                                </td>
-                                <td>
-                                    <img src="images/eisen.png" title="Iron" alt="" /><% = Functions.FormatTime(this.hiding.BuildTime)%>
-                                </td>
-                                <td>
-                                    <img src="images/face.png" title="Villagers" alt=""><% = this.village.Wall %>
-                                </td>
-                                <td>
-                                    <% = this.wall.Wood %>
-                                </td>
-                                <td  style="width: 200px;">
-                                   <asp:LinkButton ID="bttnUpgradeWarehouse" runat="server">Nâng cấp</asp:LinkButton></td>
+                                <asp:Label ID="lblBuildWarehouse" runat="server"></asp:Label>
                             </tr>
                             <tr>
                                 <td>
                                     <a href="/game.php?village=51549&amp;screen=hide">
                                         <img src="images/hide.png" alt="">
-                                        Hiding place</a> <span class="nowrap">(Level <% = this.wall.Clay%>) </span>
+                                        Hiding place</a> <span class="nowrap">(Level
+                                            <% = this.village.HidingPlace %>) </span>
                                 </td>
-                                <td>
-                                    <img src="images/holz.png" title="Wood" alt="" /><% = this.wall.Iron%>
-                                </td>
-                                <td>
-                                    <img src="images/lehm.png" title="Clay" alt="" /><% = (int)this.wall.Population%>
-                                </td>
-                                <td>
-                                    <img src="images/eisen.png" title="Iron" alt="" /><% = Functions.FormatTime(this.wall.BuildTime)%>
-                                </td>
-                                <td>
-                                    <img src="images/face.png" title="Villagers" alt=""><% = (int)this.hiding.Population%>
-                                </td>
-                                <td>
-                                    <% = Functions.FormatTime(this.hiding.BuildTime)%>
-                                </td>
-                                <td  style="width: 200px;">
-                                   <asp:LinkButton ID="bttnUpgradeHidingplace" runat="server" 
-                                        >Nâng cấp</asp:LinkButton></td>
+                                <asp:Label ID="lblBuildHidingPlace" runat="server"></asp:Label>
                             </tr>
                             <tr>
                                 <td>
@@ -423,24 +246,7 @@
                                         Wall</a> <span class="nowrap">(Level
                                             <% = this.village.Wall %>) </span>
                                 </td>
-                                <td>
-                                    <img src="images/holz.png" title="Wood" alt="" /><% = this.wall.Wood %>
-                                </td>
-                                <td>
-                                    <img src="images/lehm.png" title="Clay" alt="" /><% = this.wall.Clay%>
-                                </td>
-                                <td>
-                                    <img src="images/eisen.png" title="Iron" alt="" /><% = this.wall.Iron%>
-                                </td>
-                                <td>
-                                    <img src="images/face.png" title="Villagers" alt=""><% = (int)this.wall.Population%>
-                                </td>
-                                <td>
-                                    <% = Functions.FormatTime(this.wall.BuildTime)%>
-                                </td>
-                                <td style="width: 200px;">
-                                   <asp:LinkButton ID="bttnUpgradeHeadquarter13" runat="server" 
-                                        >Nâng cấp</asp:LinkButton></td>
+                                <asp:Label ID="lblBuildWall" runat="server"></asp:Label>
                             </tr>
                         </tbody>
                     </table>
@@ -458,17 +264,10 @@
             </tr>
             <tr>
                 <td>
-                    <asp:TextBox ID="txtName" runat="server" Text="<%# this.village.Name %>" Width="170px"></asp:TextBox>
+                    <asp:TextBox ID="txtName" runat="server" Width="170px"></asp:TextBox>
                 </td>
                 <td>
-                    <asp:UpdatePanel ID="pChangeName" runat="server">
-                        <ContentTemplate>
-                            <asp:Button ID="bttnChangeVillageName" runat="server" Text="Đổi tên" OnClick="bttnChangeVillageName_Click" />
-                        </ContentTemplate>
-                        <Triggers>
-                            <asp:AsyncPostBackTrigger ControlID="bttnChangeVillageName" EventName="Click" />
-                        </Triggers>
-                    </asp:UpdatePanel>
+                    <asp:Button ID="bttnChangeVillageName" runat="server" Text="Đổi tên" OnClick="bttnChangeVillageName_Click" />
                 </td>
             </tr>
         </tbody>

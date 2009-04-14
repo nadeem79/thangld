@@ -13,21 +13,21 @@ namespace beans
     {
 
         #region Static Members
-        private static BuildPrice _headquarter = new BuildPrice(948, 90, 80, 70, 5, 30);
-        private static BuildPrice _barrack = new BuildPrice(1897, 200, 170, 90, 7, 25);
-        private static BuildPrice _stable = new BuildPrice(6333, 270, 240, 260, 8, 20);
-        private static BuildPrice _workshop = new BuildPrice(6328, 300, 240, 260, 8, 15);
-        private static BuildPrice _academy = new BuildPrice(68112, 20000, 25000, 15000, 80, 3);
-        private static BuildPrice _smithy = new BuildPrice(6300, 220, 180, 240, 20, 20);
-        private static BuildPrice _rally = new BuildPrice(1658, 10, 40, 30, 0, 1);
-        private static BuildPrice _market = new BuildPrice(2848, 100, 100, 100, 20, 25);
-        private static BuildPrice _timber = new BuildPrice(949, 50, 60, 40, 5, 30);
-        private static BuildPrice _clay = new BuildPrice(949, 65, 50, 40, 10, 30);
-        private static BuildPrice _iron = new BuildPrice(1139, 75, 65, 70, 10, 30);
-        private static BuildPrice _farm = new BuildPrice(1054, 45, 40, 30, 0, 30);
-        private static BuildPrice _warehouse = new BuildPrice(1075, 60, 50, 40, 0, 30);
-        private static BuildPrice _hiding = new BuildPrice(1561, 50, 60, 50, 2, 10);
-        private static BuildPrice _wall = new BuildPrice(3801, 50, 100, 20, 5, 20);
+        private static BuildPrice _headquarter = new BuildPrice("Headquarter", 948, 90, 80, 70, 5, 30);
+        private static BuildPrice _barrack = new BuildPrice("Barrack", 1897, 200, 170, 90, 7, 25);
+        private static BuildPrice _stable = new BuildPrice("Stable", 6333, 270, 240, 260, 8, 20);
+        private static BuildPrice _workshop = new BuildPrice("Workshop", 6328, 300, 240, 260, 8, 15);
+        private static BuildPrice _academy = new BuildPrice("Academy", 68112, 25000, 30000, 20000, 80, 3);
+        private static BuildPrice _smithy = new BuildPrice("Smithy", 6300, 220, 180, 240, 20, 20);
+        private static BuildPrice _rally = new BuildPrice("Rally", 1658, 10, 40, 30, 0, 1);
+        private static BuildPrice _market = new BuildPrice("Market", 2848, 100, 100, 100, 20, 25);
+        private static BuildPrice _timber = new BuildPrice("Timber camp", 949, 50, 60, 40, 10, 30);
+        private static BuildPrice _clay = new BuildPrice("Clay pit", 949, 65, 50, 40, 10, 30);
+        private static BuildPrice _iron = new BuildPrice("Iron mine", 1139, 75, 65, 70, 10, 30);
+        private static BuildPrice _farm = new BuildPrice("Farm", 1054, 45, 40, 30, 0, 30);
+        private static BuildPrice _warehouse = new BuildPrice("Warehouse", 1075, 60, 50, 40, 0, 30);
+        private static BuildPrice _hiding = new BuildPrice("Hiding place", 1561, 50, 60, 50, 2, 10);
+        private static BuildPrice _wall = new BuildPrice("Wall", 3801, 50, 100, 20, 5, 20);
         private static Dictionary<int, BuildPrice> _dictionary = new Dictionary<int, BuildPrice>();
 
         public static Dictionary<int, BuildPrice> PriceDictionary
@@ -101,8 +101,6 @@ namespace beans
         {
             get
             {
-                if (_clay == null)
-                    _clay = new BuildPrice(900, 65, 50, 40, 10, 30);
                 return _clay;
             }
         }
@@ -144,11 +142,6 @@ namespace beans
         #endregion
 
         #region Properties
-        public virtual int ID
-        {
-            get;
-            set;
-        }
         public virtual Village InVillage
         {
             get;
@@ -174,18 +167,36 @@ namespace beans
         #region Methods
         public void execute(ISession session)
         {
-            BuildPrice price = Build.GetPrice(this.Building, this.InVillage[this.Building] + 1, this.InVillage.Headquarter);
+            BuildPrice price = Build.GetPrice(this.Building, this.InVillage.GetTotalBuildingLevel(this.Building, session) + 1, this.InVillage.Headquarter);
 
-            if (this.InVillage[this.Building] >= price.MaxLevel)
-                throw new Exception("Số lần nâng cấp tối đa");
-            if ((this.InVillage.MaxPopulation - this.InVillage.Population) < price.Population)
-                throw new Exception("Số lượng dân không đủ");
-            if (this.InVillage.Iron < price.Iron || this.InVillage.Wood < price.Wood || this.InVillage.Clay < price.Clay)
-                throw new Exception("Không đủ tài nguyên");
+            if (this.InVillage.CanBuild(this.Building, session) != BuildableStatus.JustDoIt)
+                return;
 
             this.Start = DateTime.Now;
             this.End = DateTime.Now.AddSeconds(price.BuildTime);
+            this.InVillage.Wood -= price.Wood;
+            this.InVillage.Clay -= price.Clay;
+            this.InVillage.Iron -= price.Iron;
+            session.Update(this.InVillage);
             session.Save(this);
+        }
+        public bool expense(DateTime time)
+        {
+            if (this.End > time)
+                return false;
+            this.InVillage[this.Building]++;
+            return true;
+        }
+        public void cancel(ISession session)
+        {
+            BuildPrice price = Build.GetPrice(this.Building, this.InVillage[this.Building], this.InVillage[BuildingType.Headquarter]);
+
+            this.InVillage.Wood += price.Wood;
+            this.InVillage.Clay += price.Clay;
+            this.InVillage.Iron += price.Iron;
+
+            session.Update(this.InVillage);
+            session.Delete(this);
         }
         #endregion
 
@@ -195,7 +206,8 @@ namespace beans
             if (headquarter <= 1)
                 return Build.GetPrice(type);
 
-            int key = (int)type | headquarter | level;
+            //int key = (int)type + (headquarter * 100) + level;
+            int key = ((int)type * 10000) + (headquarter * 100) + level;
             if (Build.PriceDictionary.ContainsKey(key))
                 return Build.PriceDictionary[key];
 
@@ -207,12 +219,12 @@ namespace beans
                 clay += (int)(clay * 0.28);
                 wood += (int)(wood * 0.25);
                 iron += (int)(iron * 0.25);
-                time += (int)(time * 0.2);
+                time += (int)(time * 0.22);
                 population += population * 0.1;
             }
             for (int i = 1; i < headquarter; i++)
                 time -= (int)(time * 0.05);
-            BuildPrice price = new BuildPrice(time, wood, clay, iron, population, basePrice.MaxLevel);
+            BuildPrice price = new BuildPrice(basePrice.Name, time, wood, clay, iron, population, basePrice.MaxLevel);
             Build.PriceDictionary.Add(key, price);
             return price;
         }
@@ -362,11 +374,48 @@ namespace beans
             get { return this._max; }
         }
 
-        public BuildPrice(int time, int wood, int clay, int iron, double population, int max):base(time, wood, clay, iron, population)
+        public BuildPrice(string name, int time, int wood, int clay, int iron, double population, int max):base(name, time, wood, clay, iron, population)
         {
             this._max = max;
         }
 
     }
 
+    public enum BuildableStatus
+    {
+        NotEnoughFarm,
+        NotEnoughIron,
+        NotEnoughWood,
+        NotEnoughClay,
+        BuildNumberExceed,
+        BuildingLevelExceed,
+        JustDoIt
+    }
+
+    public class BuildableStatusFactory
+    {
+        public static string ToString(BuildableStatus status)
+        {
+            switch (status)
+            {
+                case BuildableStatus.NotEnoughFarm:
+                    return "Không đủ farm";
+                case BuildableStatus.NotEnoughWood:
+                    return "Không đủ gỗ";
+                case BuildableStatus.NotEnoughClay:
+                    return "Không đủ gạch";
+                case BuildableStatus.NotEnoughIron:
+                    return "Không đủ kim loại";
+                case BuildableStatus.BuildNumberExceed:
+                    return "Chỉ xây được 5 công trình";
+                case BuildableStatus.BuildingLevelExceed:
+                    return "Vượt quá level";
+                case BuildableStatus.JustDoIt:
+                    return "Có thể xây dựng";
+                default:
+                    return "";
+            }
+        }
+        
+    }
 }

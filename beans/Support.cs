@@ -305,7 +305,30 @@ namespace beans
             session.Save(supportReport);
 
 
-        }    
+        }
+
+        public override void cancel(ISession session)
+        {
+            Return r = new Return();
+            r.Spear = this.Spear;
+            r.Sword = this.Sword;
+            r.Axe = this.Axe;
+            r.Scout = this.Scout;
+            r.Light = this.Light;
+            r.Heavy = this.Heavy;
+            r.Ram = this.Ram;
+            r.Catapult = this.Catapult;
+            r.Noble = this.Noble;
+            r.From = this.To;
+            r.To = this.From;
+            r.Pending = false;
+            r.StartTime = DateTime.Now;
+            r.LandingTime = r.StartTime.Add(this.LandingTime - this.StartTime);
+
+
+            session.Save(r);
+            session.Delete(this);
+        }
         
         #endregion
 

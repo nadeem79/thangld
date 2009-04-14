@@ -62,6 +62,7 @@
     <Compile Include="Build.cs" />
     <Compile Include="BuildingType.cs" />
     <Compile Include="Configuration.cs" />
+    <Compile Include="DatetimeHelper.cs" />
     <Compile Include="DefenseOtherReport.cs" />
     <Compile Include="DefenseReport.cs" />
     <Compile Include="InviteToTribeReport.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Sex.cs" />
     <Compile Include="SupportReport.cs" />
     <Compile Include="SupportWithdawalReport.cs" />
+    <Compile Include="Test.cs" />
     <Compile Include="TribeDiplomate.cs" />
     <Compile Include="TribeInvite.cs" />
     <Compile Include="TribePermission.cs" />
@@ -166,6 +168,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mapping\typedef.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mapping\Test.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\" />

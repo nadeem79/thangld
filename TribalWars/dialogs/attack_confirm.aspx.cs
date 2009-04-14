@@ -18,7 +18,7 @@ public partial class dialogs_attack_confirm : System.Web.UI.Page
     {
         int command_id = 0;
         int village_id = 0;
-
+        
         int.TryParse(Request["id"], out village_id);
         if (!int.TryParse(Request["command"], out command_id))
         {
@@ -38,6 +38,7 @@ public partial class dialogs_attack_confirm : System.Web.UI.Page
             this.pNotFound.Visible = false;
             DateTime landing = DateTime.Now + (command.LandingTime - command.StartTime);
             this.lblLandingTime.Text = landing.ToString("dd/MM/yyyy hh:mm:ss") + ":<span class='small hidden'>" + landing.Millisecond.ToString("000") + "</span>";
+            this.Label1.Text = this.command.LandingTimestamp.ToString();
         }
         catch (Exception ex)
         {
