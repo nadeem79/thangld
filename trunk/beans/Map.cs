@@ -74,6 +74,7 @@ namespace beans
         public static IList<Village> GetMap(int x, int y, ISession session)
         {
             ICriteria criteria = session.CreateCriteria(typeof(Village));
+
             criteria.Add(Expression.Le("X", x + 7));
             criteria.Add(Expression.Ge("X", x - 7));
             criteria.Add(Expression.Le("Y", y + 7));
@@ -82,7 +83,8 @@ namespace beans
             criteria.AddOrder(Order.Desc("Y"));
 
             return criteria.List<Village>();
-        } 
+        }
+
 
     }
 }

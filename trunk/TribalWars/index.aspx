@@ -85,7 +85,7 @@
                         <a href="">Tribal Wars</a></h2>
                     <p>
                         Tribal Wars là game mô phỏng chiến tranh trung cổ chơi trên trình duyệt web.</p>
-                    <a class="btn-kostenlos-anmelden" href="register.aspx">Đăng ký</a> <strong>
+                    <strong>
                     Screenshots:</strong>
                     <ul class="screenshots">
                         <li><a href="images/screenshot-1.jpg" class="lightbox">
@@ -94,6 +94,10 @@
                             <img src="images/bg-screenshots-thumb-2.jpg" alt="" /></a></li>
                         <li class="last"><a href="images/screenshot-3.jpg" class="lightbox">
                             <img src="images/bg-screenshots-thumb-3.jpg" alt="" /></a></li>
+                        <li> <strong>
+                            <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+                            </strong>
+                        </li>
                     </ul>
                 </div>
                 <asp:PlaceHolder ID="pBox" runat="server"></asp:PlaceHolder>

@@ -65,14 +65,7 @@
         </div>
     </div>
     <!-- main -->
-    <telerik:RadDockZone ID="rBottom" runat="server" Width="98%" BorderColor="Transparent">
-        <telerik:RadDock ID="RadDock1" runat="server" Width="500px" Height="300px" Resizable="true"
-            CssClass="shoutbox" Style="z-index: 3; border: 1px solid black;" Title="Shoutbox">
-            <ContentTemplate>
-                <uc1:Shoutbox ID="Shoutbox1" runat="server" />
-            </ContentTemplate>
-        </telerik:RadDock>
-    </telerik:RadDockZone>
+
     </form>
 </body>
 </html>

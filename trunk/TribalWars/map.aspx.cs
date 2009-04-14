@@ -21,6 +21,7 @@ using Telerik.Web.UI;
 public partial class map : System.Web.UI.Page
 {
 
+    private int x, y;
     protected Village village;
     protected Village targetVillage;
 
@@ -38,24 +39,30 @@ public partial class map : System.Web.UI.Page
 
         if (target == 0 || targetVillage == null)
             targetVillage = this.village;
-
+        this.x = targetVillage.X;
+        this.y = targetVillage.Y;
         IList<Village> villages = beans.Map.GetMap(targetVillage, session);
-        //ICriteria criteria = session.CreateCriteria(typeof(Village));
-
-        //criteria.Add(Expression.Le("X", targetVillage.X + 7));
-        //criteria.Add(Expression.Ge("X", targetVillage.X - 7));
-        //criteria.Add(Expression.Le("Y", targetVillage.Y + 7));
-        //criteria.Add(Expression.Ge("Y", targetVillage.Y - 7));
-        //criteria.AddOrder(Order.Desc("X"));
-        //criteria.AddOrder(Order.Desc("Y"));
-
-        //IList<Village> villages = criteria.List<Village>();
-
+        
         session.Close();
         Random r = new Random();
         this.tbVillages.Style.Add("border", "1px solid black");
+        TableRow cRow = new TableRow();
         for (int i = 0; i < 15; i++)
         {
+            TableCell rCell = new TableCell();
+            rCell.Text = (this.x - 7 + i).ToString();
+            //height="38" width="20"
+            rCell.Width = 20;
+            rCell.Height = 38;
+            TableRow rRow = new TableRow();
+            rRow.Cells.Add(rCell);
+            this.tbRows.Rows.Add(rRow);
+
+            TableCell cCell = new TableCell();
+            cCell.Text = (this.y - 7 + i).ToString();
+            cCell.Width = 49;
+            cRow.Cells.Add(cCell);
+
             TableRow row = new TableRow();
             for (int j = 0; j < 15; j++)
             {
@@ -65,6 +72,8 @@ public partial class map : System.Web.UI.Page
             }
             this.tbVillages.Rows.Add(row);
         }
+        this.tbColumns.Rows.Add(cRow);
+
         foreach (Village v in villages)
         {
             TableCell cell = this.tbVillages.Rows[7 + v.X - targetVillage.X].Cells[7 + v.Y - targetVillage.Y];

@@ -45,7 +45,7 @@
     <property name="InVillageRam" column="in_ram" type="Int32" />
     <property name="InVillageNoble" column="in_noble" type="Int32" />
     <property name="Loyal" column="loyal" type="Int32" />
-    <property name="LastUpdate" column="last_update" type="timestamp" not-null="true" />
+    <property name="LastUpdateTimestamp" column="last_update" type="Int64" not-null="true" />
     <property name="Clay" column="clay" type="Int32" />
     <property name="Wood" column="wood" type="Int32" />
     <property name="Iron" column="iron" type="Int32" />
@@ -59,7 +59,14 @@
     <property name="ResearchRam" column="unit_ram_tec_level" type="Int32" />
     <property name="ResearchCatapult" column="unit_catapult_tec_level" type="Int32" />
 
-    
+    <bag name="StationedTroops" table="stationed" cascade="none" fetch="join" inverse="true"  lazy="true">
+      <key column="at_village" />
+      <one-to-many class="beans.Stationed, beans"/>
+    </bag>
+    <bag name="TroopsOutside" table="stationed" cascade="none" fetch="join" inverse="true"  lazy="true">
+      <key column="from_village" />
+      <one-to-many class="beans.Stationed, beans"/>
+    </bag>
     
   </class>
 

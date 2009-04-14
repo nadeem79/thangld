@@ -22,7 +22,10 @@ public partial class index : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
 
-
+        ISession session2 = NHibernateHelper.CreateSession();
+        //Attack a = session2.Load<Attack>(368);
+        //this.Label1.Text = a.StartTimestamp.ToString() + " - " + DatetimeHelper.DatetimeToInt64(DateTime.Now).ToString();
+        session2.Close();
 
 
         if (Request.Cookies["username"] != null)

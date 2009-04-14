@@ -355,7 +355,8 @@ a.sel { color:#0082BE; text-decoration:underline;}
 .table_map
 {
     border: 1px solid rgb(241, 235, 221); 
-    background-color: rgb(241, 235, 221);   
+    background-color: rgb(241, 235, 221);  
+    text-align:center; 
 }
 
 .head_shoutbox
@@ -524,3 +525,5 @@ a.sel { color:#0082BE; text-decoration:underline;}
 	    border: 1px solid #e8d88d;
 	    margin: 15px 5px 5px 5px;
     }
+    
+    

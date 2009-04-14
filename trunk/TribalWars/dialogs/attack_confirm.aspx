@@ -24,7 +24,8 @@
                         Tấn công:
                     </td>
                     <td>
-                        <a href="../village_info.aspx?player=<% = command.To.ID %><% = (object.Equals(Request["id"], null) ? "&id=" + Request["id"] : "") %>" target="_blank">
+                        <a href="../village_info.aspx?player=<% = command.To.ID %><% = (object.Equals(Request["id"], null) ? "&id=" + Request["id"] : "") %>"
+                            target="_blank">
                             <% = command.To.Name %></a>
                     </td>
                 </tr>
@@ -59,6 +60,8 @@
                     </td>
                     <td>
                         <asp:Label ID="lblNote" runat="server"></asp:Label>
+                        <br />
+                        <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
                     </td>
                 </tr>
             </tbody>
@@ -97,51 +100,68 @@
                 </tr>
                 <tr>
                     <td>
-                        <span <% if (command.Spear == 0) Response.Write(" class='hidden'"); %>><% = command.Spear %></span>
+                        <span <% if (command.Spear == 0) Response.Write(" class='hidden'"); %>>
+                            <% = command.Spear %></span>
                     </td>
                     <td>
-                        <span <% if (command.Sword == 0) Response.Write(" class='hidden'"); %>><% = command.Sword %></span>
+                        <span <% if (command.Sword == 0) Response.Write(" class='hidden'"); %>>
+                            <% = command.Sword %></span>
                     </td>
                     <td>
-                        <span <% if (command.Axe == 0) Response.Write(" class='hidden'"); %>><% = command.Axe %></span>
+                        <span <% if (command.Axe == 0) Response.Write(" class='hidden'"); %>>
+                            <% = command.Axe %></span>
                     </td>
                     <td>
-                        <span <% if (command.Scout == 0) Response.Write(" class='hidden'"); %>><% = command.Scout %></span>
+                        <span <% if (command.Scout == 0) Response.Write(" class='hidden'"); %>>
+                            <% = command.Scout %></span>
                     </td>
                     <td>
-                        <span <% if (command.Light == 0) Response.Write(" class='hidden'"); %>><% = command.Light %></span>
+                        <span <% if (command.Light == 0) Response.Write(" class='hidden'"); %>>
+                            <% = command.Light %></span>
                     </td>
                     <td>
-                        <span <% if (command.Heavy == 0) Response.Write(" class='hidden'"); %>><% = command.Heavy %></span>
+                        <span <% if (command.Heavy == 0) Response.Write(" class='hidden'"); %>>
+                            <% = command.Heavy %></span>
                     </td>
                     <td>
-                        <span <% if (command.Ram == 0) Response.Write(" class='hidden'"); %>><% = command.Ram %></span>
+                        <span <% if (command.Ram == 0) Response.Write(" class='hidden'"); %>>
+                            <% = command.Ram %></span>
                     </td>
                     <td>
-                        <span <% if (command.Catapult == 0) Response.Write(" class='hidden'"); %>><% = command.Catapult %></span>
+                        <span <% if (command.Catapult == 0) Response.Write(" class='hidden'"); %>>
+                            <% = command.Catapult %></span>
                     </td>
                     <td>
-                        <span <% if (command.Noble == 0) Response.Write(" class='hidden'"); %>><% = command.Noble %></span>
+                        <span <% if (command.Noble == 0) Response.Write(" class='hidden'"); %>>
+                            <% = command.Noble %></span>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="9">
-                        <asp:UpdatePanel ID="pButtons" runat="server">
-                            <ContentTemplate>
-                                <asp:Button ID="bttnSendAttack" runat="server" Text="OK" OnClick="bttnSendAttack_Click" />
-                            </ContentTemplate>
-                            <Triggers>
-                                <asp:AsyncPostBackTrigger ControlID="bttnSendAttack" EventName="Click" />
-                            </Triggers>
-                        </asp:UpdatePanel>
-                        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-                            <ContentTemplate>
-                                <asp:Button ID="bttnCancelAttack" runat="server" Text="Huỷ" OnClick="bttnCancelAttack_Click" />
-                            </ContentTemplate>
-                            <Triggers>
-                                <asp:AsyncPostBackTrigger ControlID="bttnCancelAttack" EventName="Click" />
-                            </Triggers>
-                        </asp:UpdatePanel>
+                        <table>
+                            <tr>
+                                <td>
+                                    <asp:UpdatePanel ID="pButtons" runat="server">
+                                        <ContentTemplate>
+                                            <asp:Button ID="bttnSendAttack" runat="server" Text="OK" OnClick="bttnSendAttack_Click" />
+                                        </ContentTemplate>
+                                        <Triggers>
+                                            <asp:AsyncPostBackTrigger ControlID="bttnSendAttack" EventName="Click" />
+                                        </Triggers>
+                                    </asp:UpdatePanel>
+                                </td>
+                                <td>
+                                    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                                        <ContentTemplate>
+                                            <asp:Button ID="bttnCancelAttack" runat="server" Text="Huỷ" OnClick="bttnCancelAttack_Click" />
+                                        </ContentTemplate>
+                                        <Triggers>
+                                            <asp:AsyncPostBackTrigger ControlID="bttnCancelAttack" EventName="Click" />
+                                        </Triggers>
+                                    </asp:UpdatePanel>
+                                </td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
             </tbody>
