@@ -216,4 +216,31 @@
   <data name="workshop" xml:space="preserve">
     <value>Nhà xe</value>
   </data>
+  <data name="axe" xml:space="preserve">
+    <value>lính rìu</value>
+  </data>
+  <data name="catapult" xml:space="preserve">
+    <value>máy ném đá</value>
+  </data>
+  <data name="heavy" xml:space="preserve">
+    <value>hiệp sỹ</value>
+  </data>
+  <data name="light" xml:space="preserve">
+    <value>khinh kị binh</value>
+  </data>
+  <data name="noble" xml:space="preserve">
+    <value>quý tộc</value>
+  </data>
+  <data name="ram" xml:space="preserve">
+    <value>xe phá tường</value>
+  </data>
+  <data name="scout" xml:space="preserve">
+    <value>quân do thám</value>
+  </data>
+  <data name="spear" xml:space="preserve">
+    <value>lính giáo</value>
+  </data>
+  <data name="sword" xml:space="preserve">
+    <value>lính kiếm</value>
+  </data>
 </root>

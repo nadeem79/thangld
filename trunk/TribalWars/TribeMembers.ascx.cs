@@ -22,14 +22,18 @@ public partial class TribeMembers : System.Web.UI.UserControl
         get { return this.tribe; }
         set { this.tribe = value; }
     }
-
+    public Player Member
+    {
+        get;
+        set;
+    }
 
     protected void Page_Load(object sender, EventArgs e)
     {
         NHibernate.ISession session = NHibernateHelper.CreateSession();
-        Player player = session.Get<Player>(Session["user"]);
-        this.tribe = player.Group;
-        this.drTribeMembers.DataSource = player.Group.Members;
+        this.Member = session.Get<Player>(Session["user"]);
+        this.tribe = this.Member.Group;
+        this.drTribeMembers.DataSource = this.Member.Group.Members;
         this.drTribeMembers.DataBind();
         session.Close();
     }

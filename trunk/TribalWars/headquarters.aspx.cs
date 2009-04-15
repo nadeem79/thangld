@@ -71,62 +71,32 @@ public partial class headquarters : System.Web.UI.Page
             lstBuild[i].Start = lstBuild[i - 1].End;
             lstBuild[i].End = lstBuild[i].Start + time;
         }
-        this.rConstructing.DataSource = lstBuild;
-        this.rConstructing.DataBind();
-
-        if (!IsPostBack)
+        if (lstBuild.Count > 0)
         {
-            this.lblBuildHeadquarters.Text = this.BuildableStatusToString(BuildingType.Headquarter, session);
-            this.lblBuildBarracks.Text = this.BuildableStatusToString(BuildingType.Barracks, session);
-            this.lblBuildStable.Text = this.BuildableStatusToString(BuildingType.Stable, session);
-            this.lblBuildWorkshop.Text = this.BuildableStatusToString(BuildingType.Workshop, session);
-            this.lblBuildAcademy.Text = this.BuildableStatusToString(BuildingType.Academy, session);
-            this.lblBuildMarket.Text = this.BuildableStatusToString(BuildingType.Market, session);
-            this.lblBuildTimberCamp.Text = this.BuildableStatusToString(BuildingType.TimberCamp, session);
-            this.lblBuildClayPit.Text = this.BuildableStatusToString(BuildingType.ClayPit, session);
-            this.lblBuildIronMine.Text = this.BuildableStatusToString(BuildingType.IronMine, session);
-            this.lblBuildFarm.Text = this.BuildableStatusToString(BuildingType.Farm, session);
-            this.lblBuildWarehouse.Text = this.BuildableStatusToString(BuildingType.Warehouse, session);
-            this.lblBuildHidingPlace.Text = this.BuildableStatusToString(BuildingType.HidingPlace, session);
-            this.lblBuildWall.Text = this.BuildableStatusToString(BuildingType.Wall, session);
-            this.lblBuildRally.Text = this.BuildableStatusToString(BuildingType.Rally, session);
-            this.lblBuildSmithy.Text = this.BuildableStatusToString(BuildingType.Smithy, session);
+            this.rConstructing.DataSource = lstBuild;
+            this.rConstructing.DataBind();
         }
+        if (!IsPostBack)
+            this.txtName.Text = this.village.Name;
+
+        switch (Request["page"])
+        {
+            case "destroy":
+                CustomControls_DemolishBuilding pDemolishing = (CustomControls_DemolishBuilding)Page.LoadControl("CustomControls/DemolishBuilding.ascx");
+                this.phConstructing.Controls.Add(pDemolishing);
+                break;
+            default:
+                CustomControls_ConstructBuilding pConstructing = (CustomControls_ConstructBuilding)Page.LoadControl("CustomControls/ConstructBuilding.ascx");
+                pConstructing.Village = this.village;
+                this.phConstructing.Controls.Add(pConstructing);
+                break;
+        } 
 
         session.Close();
         
     }
 
-    private string BuildableStatusToString(beans.BuildingType type, ISession session)
-    {
-        BuildableStatus enumCanBuild = this.village.CanBuild(type, session);
-        string strResult = "";
-        if (enumCanBuild == BuildableStatus.JustDoIt)
-        {
-            BuildPrice price = beans.Build.GetPrice(type, this.village.GetTotalBuildingLevel(type, session), this.village[beans.BuildingType.Headquarter]);
-            strResult += "<td><img src=\"images/holz.png\" title=\"Wood\" alt=\"\" />" + price.Wood + "</td>";
-            strResult += "<td><img src=\"images/lehm.png\" title=\"Clay\" alt=\"\" />" + price.Clay + "</td>";
-            strResult += "<td><img src=\"images/eisen.png\" title=\"Iron\" alt=\"\" />" + price.Iron + "</td>";
-            strResult += "<td><img src=\"images/face.png\" title=\"Villagers\" alt=\"\" />" + Math.Round(price.Population, MidpointRounding.AwayFromZero) + "</td>";
-            strResult += "<td>" + Functions.FormatTime(price.BuildTime) + "</td>";
-            strResult += "<td align=\"center\"><a href=\"headquarters.aspx?id=" + this.village.ID + "&action=build&building=" + (int)type + "\">Nâng cấp</td>";
-        }
-        else if (enumCanBuild == BuildableStatus.BuildingLevelExceed)
-        {
-            strResult += "<td colspan=\"6\" align=\"center\"><span class=\"inactive\">" + beans.BuildableStatusFactory.ToString(BuildableStatus.BuildingLevelExceed) + "</span></td>";
-        }
-        else
-        {
-            BuildPrice price = beans.Build.GetPrice(type, this.village.GetTotalBuildingLevel(type, session), this.village[beans.BuildingType.Headquarter]);
-            strResult += "<td><img src=\"images/holz.png\" title=\"Wood\" alt=\"\" />" + price.Wood + "</td>";
-            strResult += "<td><img src=\"images/lehm.png\" title=\"Clay\" alt=\"\" />" + price.Clay + "</td>";
-            strResult += "<td><img src=\"images/eisen.png\" title=\"Iron\" alt=\"\" />" + price.Iron + "</td>";
-            strResult += "<td><img src=\"images/face.png\" title=\"Villagers\" alt=\"\" />" + Math.Round(price.Population, MidpointRounding.AwayFromZero) + "</td>";
-            strResult += "<td>" + Functions.FormatTime(price.BuildTime) + "</td>";
-            strResult += "<td align=\"center\"><span class=\"inactive\">" + beans.BuildableStatusFactory.ToString(enumCanBuild) + "</span></td>";
-        }
-        return strResult;
-    }
+    
 
     protected void bttnChangeVillageName_Click(object sender, EventArgs e)
     {
@@ -140,12 +110,13 @@ public partial class headquarters : System.Web.UI.Page
             this.village.Name = this.txtName.Text;
             session.Update(this.village);
             trans.Commit();
+            RadScriptManager.RegisterStartupScript(bttnChangeVillageName, bttnChangeVillageName.GetType(), "ChangeVillageName", "$('#city_name').html('" + this.village.Name + "');jQuery.facebox('Đổi tên thành phố: " + this.village.Name + "')", true);
         }
         catch(Exception ex)
         {
             if (trans != null && !trans.WasCommitted)
                 trans.Rollback();
-            RadScriptManager.RegisterStartupScript(bttnChangeVillageName, bttnChangeVillageName.GetType(), "ShowException", "jQuery.facebox('" + ex.Message + "')", true);
+            ScriptManager.RegisterStartupScript(bttnChangeVillageName, bttnChangeVillageName.GetType(), "ShowException", "jQuery.facebox('" + ex.Message + "')", true);
         }
         finally
         {

@@ -12,7 +12,7 @@ using NHibernate.Type;
 
 namespace beans
 {
-    [Serializable]
+   
     public class Player:IdentityObject
     {
         #region Variable
@@ -28,11 +28,6 @@ namespace beans
             set;
         }
         public virtual Sex Gender
-        {
-            get;
-            set;
-        }
-        public virtual Group Tribe
         {
             get;
             set;
@@ -126,7 +121,17 @@ namespace beans
             get;
             set;
         }
+        public int Point
+        {
+            get;
+            set;
+        }
         public Group Group
+        {
+            get;
+            set;
+        }
+        public string TribeTitle
         {
             get;
             set;

@@ -80,7 +80,7 @@ namespace beans
             get;
             set;
         }
-        public int Population
+        public double Population
         {
             get;
             set;
@@ -399,6 +399,8 @@ namespace beans
                 int max = this.MaxResources;
                 if (value > max)
                     this._wood = max;
+                else if (value < 0)
+                    this._wood = 0;
                 else
                     this._wood = value;
             }
@@ -411,6 +413,8 @@ namespace beans
                 int max = this.MaxResources;
                 if (value > max)
                     this._clay = max;
+                else if (value < 0)
+                    this._clay = 0;
                 else
                     this._clay = value;
             }
@@ -423,6 +427,8 @@ namespace beans
                 int max = this.MaxResources;
                 if (value > max)
                     this._iron = max;
+                else if (value < 0)
+                    this._iron = 0;
                 else
                     this._iron = value;
             }
@@ -904,8 +910,15 @@ namespace beans
             }
             return criteria.List<Recruit>();
         }
-        public void CancelRecruit(Recruit recruit, ISession session)
+        public void CancelRecruit(int recruit_id, ISession session)
         {
+            ICriteria criteria = session.CreateCriteria(typeof(Recruit));
+            criteria.Add(Expression.Eq("ID", recruit_id));
+            criteria.Add(Expression.Eq("InVillage", this));
+            Recruit recruit = criteria.UniqueResult<Recruit>();
+            if (recruit == null)
+                return;
+
             Price price = Recruit.GetPrice(recruit.Troop);
             this.Wood += price.Wood * recruit.Quantity;
             this.Clay += price.Clay * recruit.Quantity;
@@ -927,9 +940,6 @@ namespace beans
 
             if (status != BuildableStatus.JustDoIt)
                 return status;
-
-            
-
             Build build = new Build();
             build.Building = building;
             build.InVillage = this;
@@ -961,7 +971,7 @@ namespace beans
         {
             int iTotalLevel = this.GetTotalBuildingLevel(type, session);
 
-            BuildPrice price = Build.GetPrice(type, iTotalLevel, this[BuildingType.Headquarter]);
+            BuildPrice price = Build.GetPrice(type, iTotalLevel + 1, this[BuildingType.Headquarter]);
             if (iTotalLevel >= price.MaxLevel)
                 return BuildableStatus.BuildingLevelExceed;
 
@@ -970,9 +980,9 @@ namespace beans
 
             if (this.Wood < price.Wood)
                 return BuildableStatus.NotEnoughWood;
-            if (this.Wood < price.Clay)
+            if (this.Clay < price.Clay)
                 return BuildableStatus.NotEnoughClay;
-            if (this.Wood < price.Iron)
+            if (this.Iron < price.Iron)
                 return BuildableStatus.NotEnoughIron;
 
             if (this.GetTotalBuild(session) >= 5)
@@ -1125,6 +1135,7 @@ namespace beans
             this.LastUpdate = to;
 
             session.Update(this);
+            session.Update(this.Owner);
         }
 
         #endregion       
