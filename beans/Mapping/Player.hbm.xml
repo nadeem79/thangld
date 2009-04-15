@@ -20,6 +20,8 @@
     <property name="GraphicalVillage" column="graphics_village" type="Boolean" not-null="false" />
     <property name="ShowBuildingLevel" column="building_level" type="Boolean" not-null="false" />
     <property name="TribePermission" column="tribe_permission" type="beans.TribePermission, beans" not-null="false" />
+    <property name="Point" column="point" type="Int32" />
+    <property name="TribeTitle" column="tribe_title" type="String" not-null="false" />
 
     <many-to-one name="Group" class="beans.Group, beans" column="group_id" not-null="false" fetch="join" cascade="none" lazy="false" not-found="ignore" />
     

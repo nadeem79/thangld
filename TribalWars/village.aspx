@@ -1,7 +1,8 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/inPage.master" AutoEventWireup="true" CodeFile="village.aspx.cs"
     Inherits="village" Title="Medieval War - Thành phố" %>
-    <%@ Reference Control="GraphicVillageInfo.ascx" %>
-    <%@ Reference Control="TextVillageInfo.ascx" %>
+
+<%@ Reference Control="GraphicVillageInfo.ascx" %>
+<%@ Reference Control="TextVillageInfo.ascx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
@@ -60,10 +61,40 @@
                 <table class="vis" width="100%">
                     <tr>
                         <th>
-                            Units
+                            Quân trong thành
                         </th>
                     </tr>
-                    <asp:Label ID="lblTroops" runat="server"></asp:Label>
+                    <tr>
+                        <td>
+                            <asp:Panel ID="pSpears" runat="server">
+                                <img src="images/unit_spear.png" alt="" />
+                                <% = this.current.TotalSpear %> <asp:Literal ID="Literal4" runat="server" Text="<%$ Resources:text, spear %>" /></asp:Panel>
+                            <asp:Panel ID="pSword" runat="server">
+                                <img src="images/unit_sword.png" alt="" />
+                                <% = this.current.TotalSword %> <asp:Literal ID="Literal1" runat="server" Text="<%$ Resources:text, sword %>" /></asp:Panel>
+                            <asp:Panel ID="pAxe" runat="server">
+                                <img src="images/unit_axe.png" alt="" />
+                                <% = this.current.TotalAxe %> <asp:Literal ID="Literal2" runat="server" Text="<%$ Resources:text, axe %>" /></asp:Panel>
+                            <asp:Panel ID="pScout" runat="server">
+                                <img src="images/unit_spy.png" alt="" />
+                                <% = this.current.TotalScout %> <asp:Literal ID="Literal3" runat="server" Text="<%$ Resources:text, scout %>" /></asp:Panel>
+                            <asp:Panel ID="pLight" runat="server">
+                                <img src="images/unit_light.png" alt="" />
+                                <% = this.current.TotalLight %> <asp:Literal ID="Literal5" runat="server" Text="<%$ Resources:text, light %>" /></asp:Panel>
+                            <asp:Panel ID="pHeavy" runat="server">
+                                <img src="images/unit_heavy.png" alt="" />
+                                <% = this.current.TotalHeavy %> <asp:Literal ID="Literal6" runat="server" Text="<%$ Resources:text, heavy %>" /></asp:Panel>
+                            <asp:Panel ID="pRam" runat="server">
+                                <img src="images/unit_ram.png" alt="" />
+                                <% = this.current.TotalRam %> <asp:Literal ID="Literal7" runat="server" Text="<%$ Resources:text, ram %>" /></asp:Panel>
+                            <asp:Panel ID="pCatapult" runat="server">
+                                <img src="images/unit_catapult.png" alt="" />
+                                <% = this.current.TotalCatapult %> <asp:Literal ID="Literal8" runat="server" Text="<%$ Resources:text, catapult %>" /></asp:Panel>
+                            <asp:Panel ID="pNoble" runat="server">
+                                <img src="images/unit_snob.png" alt="" />
+                                <% = this.current.TotalNoble %> <asp:Literal ID="Literal9" runat="server" Text="<%$ Resources:text, noble %>" /></asp:Panel>
+                        </td>
+                    </tr>
                 </table>
                 <br />
             </td>

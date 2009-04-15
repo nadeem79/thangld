@@ -18,32 +18,26 @@ namespace beans
         {
             get { return this.wood; }
         }
-
         public int Iron
         {
             get { return this.iron; }
         }
-
         public int Clay
         {
             get { return this.clay; }
         }
-
         public int BuildTime
         {
             get { return this.time; }
         }
-
         public double Population
         {
             get { return this._pop; }
         }
-
         public string Name
         {
             get { return this._name; }
         }
-
         public Price(string name, int time, int wood, int clay, int iron, double population)
         {
             this._name = name;
@@ -53,7 +47,6 @@ namespace beans
             this.time = time;
             this._pop = population;
         }
-
         public override string ToString()
         {
             return this._name;
@@ -232,8 +225,10 @@ namespace beans
         public bool Expense(DateTime to)
         {
             TimeSpan t = to - this.LastUpdate;
-            
-            int total_troop = (int)(t.TotalSeconds / Recruit.GetPrice(this.Troop).BuildTime);
+            Price p = Recruit.GetPrice(this.Troop);
+
+
+            int total_troop = (int)(t.TotalSeconds / p.BuildTime);
             int totalRecruit = (total_troop < this.Quantity) ? total_troop : this.Quantity;
 
             switch (this.Troop)
@@ -278,6 +273,8 @@ namespace beans
                     break;
             }
 
+            this.InVillage.Population += (totalRecruit * p.Population);
+
             if (totalRecruit == this.Quantity)
             {
                 this.LastUpdate = this.LastUpdate.AddSeconds(totalRecruit * Recruit.GetPrice(this.Troop).BuildTime);
@@ -290,7 +287,15 @@ namespace beans
 
             return false;
         }
-
+        public void cancel(ISession session)
+        {
+            Price p = Recruit.GetPrice(this.Troop);
+            this.InVillage.Wood += (int)(this.Quantity * p.Wood * 0.9);
+            this.InVillage.Clay += (int)(this.Quantity * p.Clay * 0.9);
+            this.InVillage.Iron += (int)(this.Quantity * p.Iron * 0.9);
+            session.Delete(this);
+            session.Update(this.InVillage);
+        }
         public static bool CanRecruit(TroopType troop, int quantity, Village village)
         {
             switch (troop)
@@ -387,7 +392,6 @@ namespace beans
                 return false;
             return true;
         }
-
         public static int MaxRecruit(TroopType troop, int wood, int clay, int iron)
         {
             Price price = null;
@@ -433,7 +437,6 @@ namespace beans
 
             return maxRecruit;
         }
-
         public static long RecruitTime(TroopType troop, int quantity, int level)
         {
             if (level==0)

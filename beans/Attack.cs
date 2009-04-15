@@ -364,6 +364,8 @@ namespace beans
                     this.To.Loyal -= (r.Next(15) + 20);
                 if (this.To.Loyal <= 0)
                 {
+                    this.To.Owner.Point -= this.To.Points;
+                    this.From.Owner.Point += this.To.Points;
                     this.To.Owner = this.From.Owner;
                     this.To.Loyal = 25;
                     foreach (Stationed station in this.To.TroopsOutside)
@@ -540,6 +542,8 @@ namespace beans
             this.From.LastUpdate = this.To.LastUpdate = this.LandingTime;
             session.Update(this.To);
             session.Update(this.From);
+            session.Update(this.To.Owner);
+            session.Update(this.From.Owner);
 
             attackSideReport.Owner = this.From.Owner;
             session.Save(attackSideReport);

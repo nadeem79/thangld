@@ -33,6 +33,12 @@ public partial class barrack : System.Web.UI.Page
         }
         return "";
     }
+    protected string GetFirstRecruit(int index)
+    {
+        if (index == 0)
+            return "class='timer'";
+        return "";
+    }
 
 
     protected void Page_Load(object sender, EventArgs e)
@@ -73,6 +79,7 @@ public partial class barrack : System.Web.UI.Page
 
             sRecruitCommands += Functions.FormatTime(Recruit.RecruitTime(recruits[i].Troop, recruits[i].Quantity, this.village.Barracks)) + "</span></td>";
             sRecruitCommands += "<td>" + last_complete.AddSeconds(Recruit.RecruitTime(recruits[i].Troop, recruits[i].Quantity, this.village.Barracks)).ToString("dd/MM/yyyy hh:mm:ss") +"</td>";
+            sRecruitCommands += "<td><a href=\"barracks.aspx?id=" + this.village.ID.ToString() + "&mode=cancel_recruit&recruit_id=" + recruits[i].ID.ToString() + "\">Huỷ</a></td>";
         }
         this.lblRecruiting.Text = sRecruitCommands;
         session.Close();

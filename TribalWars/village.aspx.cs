@@ -26,6 +26,17 @@ public partial class village : System.Web.UI.Page
         ISession session =  NHibernateHelper.CreateSession();
 
         Player currentPlayer = session.Load<Player>(Session["user"]);
+
+        this.pSpears.Visible = (this.current.TotalSpear != 0);
+        this.pAxe.Visible = (this.current.TotalAxe != 0);
+        this.pSword.Visible = (this.current.TotalSword != 0);
+        this.pScout.Visible = (this.current.TotalScout != 0);
+        this.pLight.Visible = (this.current.TotalLight != 0);
+        this.pHeavy.Visible = (this.current.TotalHeavy != 0);
+        this.pRam.Visible = (this.current.TotalRam != 0);
+        this.pCatapult.Visible = (this.current.TotalCatapult != 0);
+        this.pNoble.Visible = (this.current.TotalNoble != 0);
+
         session.Close();
         if (currentPlayer.GraphicalVillage)
         {

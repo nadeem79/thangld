@@ -185,6 +185,10 @@ namespace beans
             if (this.End > time)
                 return false;
             this.InVillage[this.Building]++;
+            BuildPrice p = Build.GetPrice(this.Building, this.InVillage[this.Building], this.InVillage[beans.BuildingType.Headquarter]);
+            this.InVillage.Points += p.Point;
+            this.InVillage.Population += p.Population;
+            this.InVillage.Owner.Point += p.Point;
             return true;
         }
         public void cancel(ISession session)
