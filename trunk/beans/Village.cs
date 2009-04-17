@@ -7,18 +7,12 @@ using NHibernate.Criterion;
 namespace beans
 {
     
-    [Serializable]
     public class Village:IdentityObject
     {
         #region Variables
 
-        private int _loyal;
-        private int _wood, _clay, _iron;
-        private IList<MovingCommand> incomings;
-        private IList<MovingCommand> outgoings;
-        private IList<Offer> offers;
-        //private IList<SendResource> sendings;
-        private IList<MovingCommand> commands;
+        private int _loyal, _maxResources = -1;
+        
         private IList<Stationed> stationedTroops = new List<Stationed>();
         private IList<Stationed> troopsOutside = new List<Stationed>();
         private Player _owner;
@@ -89,17 +83,19 @@ namespace beans
         {
             get
             {
+                if (this._maxResources > -1)
+                    return this._maxResources;
                 if (this[BuildingType.Warehouse] == 1)
-                    return 1000;
+                    this._maxResources = 1000;
                 else if (this[BuildingType.Warehouse] == 0)
                     return 0;
 
-                int result = 1000;
+                this._maxResources = 1000;
 
                 for (int i = 1; i < this[BuildingType.Warehouse]; i++)
-                    result += (int)(result * 0.3);
+                    this._maxResources += (int)(this._maxResources * 0.3);
 
-                return result;
+                return this._maxResources;
             }
         }
         public int MaxPopulation
@@ -120,365 +116,22 @@ namespace beans
             }
         }
 
-        #endregion
-
-        #region Properties.Troop
-
-        public virtual int Noble
+        public VillageBuildingData Buildings
         {
             get;
             set;
         }
-        public virtual int Spear
+        public VillageResourcesData Resources
         {
             get;
             set;
         }
-        public virtual int Sword
+        public VillageReseachData Research
         {
             get;
             set;
         }
-        public virtual int Axe
-        {
-            get;
-            set;
-        }
-        public virtual int Scout
-        {
-            get;
-            set;
-        }
-        public virtual int Light
-        {
-            get;
-            set;
-        }
-        public virtual int Heavy
-        {
-            get;
-            set;
-        }
-        public virtual int Ram
-        {
-            get;
-            set;
-        }
-        public virtual int Catapult
-        {
-            get;
-            set;
-        }
-
-        public int InVillageSpear
-        {
-            get;
-            set;
-        }
-        public int InVillageSword
-        {
-            get;
-            set;
-        }
-        public int InVillageAxe
-        {
-            get;
-            set;
-        }
-        public int InVillageScout
-        {
-            get;
-            set;
-        }
-        public int InVillageLight
-        {
-            get;
-            set;
-        }
-        public int InVillageHeavy
-        {
-            get;
-            set;
-        }
-        public int InVillageRam
-        {
-            get;
-            set;
-        }
-        public int InVillageCatapult
-        {
-            get;
-            set;
-        }
-        public int InVillageNoble
-        {
-            get;
-            set;
-        }
-
-        public int TotalSpear
-        {
-            get
-            {
-                int supportSpear = this.Spear;
-                foreach (Stationed stationed in this.StationedTroops)
-                    supportSpear += stationed.Spear;
-                return supportSpear;
-            }
-        }
-        public int TotalSword
-        {
-            get
-            {
-                int result = this.Sword;
-                foreach (Stationed stationed in this.StationedTroops)
-                    result += stationed.Sword;
-                return result;
-            }
-        }
-        public int TotalAxe
-        {
-            get
-            {
-                int result = this.Axe;
-                foreach (Stationed stationed in this.StationedTroops)
-                    result += stationed.Axe;
-                return result;
-            }
-        }
-        public int TotalLight
-        {
-            get
-            {
-                int result = this.Light;
-                foreach (Stationed stationed in this.StationedTroops)
-                    result += stationed.Light;
-                return result;
-            }
-        }
-        public int TotalScout
-        {
-            get
-            {
-                int result = this.Scout;
-                foreach (Stationed stationed in this.StationedTroops)
-                    result += stationed.Scout;
-                return result;
-            }
-        }
-        public int TotalHeavy
-        {
-            get
-            {
-                int result = this.Heavy;
-                foreach (Stationed stationed in this.StationedTroops)
-                    result += stationed.Heavy;
-                return result;
-            }
-        }
-        public int TotalRam
-        {
-            get
-            {
-                int result = this.Ram;
-                foreach (Stationed stationed in this.StationedTroops)
-                    result += stationed.Ram;
-                return result;
-            }
-        }
-        public int TotalCatapult
-        {
-            get
-            {
-                int result = this.Catapult;
-                foreach (Stationed stationed in this.StationedTroops)
-                    result += stationed.Catapult;
-                return result;
-            }
-        }
-        public int TotalNoble
-        {
-            get
-            {
-                int result = this.Noble;
-                foreach (Stationed stationed in this.StationedTroops)
-                    result += stationed.Noble;
-                return result;
-            }
-        }
-
-        #endregion
-
-        #region Properties.Building
-
-        public virtual int Headquarter
-        {
-            get;
-            set;
-        }
-        public virtual int Barracks
-        {
-            get;
-            set;
-        }
-        public virtual int Stable
-        {
-            get;
-            set;
-        }
-        public virtual int Wall
-        {
-            get;
-            set;
-        }
-        public virtual int HidingPlace
-        {
-            get;
-            set;
-        }
-        public int Warehouse
-        {
-            get;
-            set;
-        }
-        public virtual int Farm
-        {
-            get;
-            set;
-        }
-        public virtual int IronMine
-        {
-            get;
-            set;
-        }
-        public virtual int ClayPit
-        {
-            get;
-            set;
-        }
-        public virtual int TimberCamp
-        {
-            get;
-            set;
-        }
-        public virtual int Market
-        {
-            get;
-            set;
-        }
-        public virtual int Rally
-        {
-            get;
-            set;
-        }
-        public virtual int Smithy
-        {
-            get;
-            set;
-        }
-        public virtual int Academy
-        {
-            get;
-            set;
-        }
-        public virtual int Workshop
-        {
-            get;
-            set;
-        }
-        
-        #endregion
-
-        #region Properties.Resources
-
-        public virtual int Wood
-        {
-            get { return this._wood; }
-            set
-            {
-                int max = this.MaxResources;
-                if (value > max)
-                    this._wood = max;
-                else if (value < 0)
-                    this._wood = 0;
-                else
-                    this._wood = value;
-            }
-        }
-        public virtual int Clay
-        {
-            get { return this._clay; }
-            set
-            {
-                int max = this.MaxResources;
-                if (value > max)
-                    this._clay = max;
-                else if (value < 0)
-                    this._clay = 0;
-                else
-                    this._clay = value;
-            }
-        }
-        public virtual int Iron
-        {
-            get { return this._iron; }
-            set
-            {
-                int max = this.MaxResources;
-                if (value > max)
-                    this._iron = max;
-                else if (value < 0)
-                    this._iron = 0;
-                else
-                    this._iron = value;
-            }
-        }
-
-        #endregion
-
-        #region Properties.Research
-
-        public int ResearchSpear
-        {
-            get;
-            set;
-        }
-        public int ResearchSword
-        {
-            get;
-            set;
-        }
-        public int ResearchAxe
-        {
-            get;
-            set;
-        }
-        public int ResearchScout
-        {
-            get;
-            set;
-        }
-        public int ResearchLight
-        {
-            get;
-            set;
-        }
-        public int ResearchHeavy
-        {
-            get;
-            set;
-        }
-        public int ResearchRam
-        {
-            get;
-            set;
-        }
-        public int ResearchCatapult
-        {
-            get;
-            set;
-        }
-        public int ResearchNoble
+        public VillageTroopData Troop
         {
             get;
             set;
@@ -486,16 +139,6 @@ namespace beans
 
         #endregion
 
-        public virtual IList<Stationed> StationedTroops
-        {
-            get;
-            set;
-        }
-        public virtual IList<Stationed> TroopsOutside
-        {
-            get;
-            set;
-        }
         public int this[BuildingType buildType]
         {
             get 
@@ -503,35 +146,35 @@ namespace beans
                 switch (buildType)
                 {
                     case BuildingType.Headquarter:
-                        return this.Headquarter;
+                        return this.Buildings.Headquarter;
                     case BuildingType.Academy:
-                        return this.Academy;
+                        return this.Buildings.Academy;
                     case BuildingType.Barracks:
-                        return this.Barracks;
+                        return this.Buildings.Barracks;
                     case BuildingType.ClayPit:
-                        return this.ClayPit;
+                        return this.Buildings.ClayPit;
                     case BuildingType.Farm:
-                        return this.Farm;
+                        return this.Buildings.Farm;
                     case BuildingType.HidingPlace:
-                        return this.HidingPlace;
+                        return this.Buildings.HidingPlace;
                     case BuildingType.IronMine:
-                        return this.IronMine;
+                        return this.Buildings.IronMine;
                     case BuildingType.Market:
-                        return this.Market;
+                        return this.Buildings.Market;
                     case BuildingType.Rally:
-                        return this.Rally;
+                        return this.Buildings.Rally;
                     case BuildingType.Smithy:
-                        return this.Smithy;
+                        return this.Buildings.Smithy;
                     case BuildingType.Stable:
-                        return this.Stable;
+                        return this.Buildings.Stable;
                     case BuildingType.TimberCamp:
-                        return this.TimberCamp;
+                        return this.Buildings.TimberCamp;
                     case BuildingType.Wall:
-                        return this.Wall;
+                        return this.Buildings.Wall;
                     case BuildingType.Warehouse:
-                        return this.Warehouse;
+                        return this.Buildings.Warehouse;
                     case BuildingType.Workshop:
-                        return this.Workshop;
+                        return this.Buildings.Workshop;
                     default:
                         return -1;
                 }
@@ -541,49 +184,49 @@ namespace beans
                 switch (buildType)
                 {
                     case BuildingType.Headquarter:
-                        this.Headquarter = value;
+                        this.Buildings.Headquarter = value;
                         break;
                     case BuildingType.Academy:
-                        this.Academy = value;
+                        this.Buildings.Academy = value;
                         break;
                     case BuildingType.Barracks:
-                        this.Barracks = value;
+                        this.Buildings.Barracks = value;
                         break;
                     case BuildingType.ClayPit:
-                        this.ClayPit = value;
+                        this.Buildings.ClayPit = value;
                         break;
                     case BuildingType.Farm:
-                        this.Farm = value;
+                        this.Buildings.Farm = value;
                         break;
                     case BuildingType.HidingPlace:
-                        this.HidingPlace = value;
+                        this.Buildings.HidingPlace = value;
                         break;
                     case BuildingType.IronMine:
-                        this.IronMine = value;
+                        this.Buildings.IronMine = value;
                         break;
                     case BuildingType.Market:
-                        this.Market = value;
+                        this.Buildings.Market = value;
                         break;
                     case BuildingType.Rally:
-                        this.Rally = value;
+                        this.Buildings.Rally = value;
                         break;
                     case BuildingType.Smithy:
-                        this.Smithy = value;
+                        this.Buildings.Smithy = value;
                         break;
                     case BuildingType.Stable:
-                        this.Stable = value;
+                        this.Buildings.Stable = value;
                         break;
                     case BuildingType.TimberCamp:
-                        this.TimberCamp = value;
+                        this.Buildings.TimberCamp = value;
                         break;
                     case BuildingType.Wall:
-                        this.Wall = value;
+                        this.Buildings.Wall = value;
                         break;
                     case BuildingType.Warehouse:
-                        this.Warehouse = value;
+                        this.Buildings.Warehouse = value;
                         break;
                     case BuildingType.Workshop:
-                        this.Workshop = value;
+                        this.Buildings.Workshop = value;
                         break;
                     default:
                         break;
@@ -597,37 +240,35 @@ namespace beans
                 switch (troopType)
                 {
                     case TroopType.Axe:
-                        return this.TotalAxe;
+                        return this.Troop.TotalAxe;
                     case TroopType.Catapult:
-                        return this.TotalCatapult;
+                        return this.Troop.TotalCatapult;
                     case TroopType.Heavy:
-                        return this.TotalHeavy;
+                        return this.Troop.TotalHeavy;
                     case TroopType.Light:
-                        return this.TotalLight;
+                        return this.Troop.TotalLight;
                     case TroopType.Nobleman:
-                        return this.TotalNoble;
+                        return this.Troop.TotalNoble;
                     case TroopType.Ram:
-                        return this.TotalRam;
+                        return this.Troop.TotalRam;
                     case TroopType.Scout:
-                        return this.TotalScout;
+                        return this.Troop.TotalScout;
                     case TroopType.Spear:
-                        return this.TotalSpear;
+                        return this.Troop.TotalSpear;
                     case TroopType.Sword:
-                        return this.TotalSword;
+                        return this.Troop.TotalSword;
                     default:
                         return -1;
                 }
             }
         }
         
-
         #endregion
 
         #region Constructors
         public Village() 
         {
-            //this.sendings = new List<SendResource>();
-            this.offers = new List<Offer>();
+            
         }
 
         #endregion
@@ -673,21 +314,52 @@ namespace beans
             } while (lst.Count > 0);
 
             Village village = new Village();
+            village.Buildings = new VillageBuildingData();
+            village.Troop = new VillageTroopData();
+            village.Resources = new VillageResourcesData();
+            village.Research = new VillageReseachData();
+
+            village.Buildings.Village = village;
+            village.Troop.Village = village;
+            village.Resources.Village = village;
+            village.Research.Village = village;
+
             village.X = X;
             village.Y = Y;
-            village.Headquarter = 1;
-            village.Rally = 1;
-            village.Farm = 5;
-            village.ClayPit = 5;
-            village.IronMine = 5;
-            village.TimberCamp = 5;
-            village.Warehouse = 5;
+            village.Buildings.Headquarter = 1;
+            village.Buildings.Rally = 1;
+            village.Buildings.Farm = 5;
+            village.Buildings.ClayPit = 5;
+            village.Buildings.IronMine = 5;
+            village.Buildings.TimberCamp = 5;
+            village.Buildings.Warehouse = 5;
+            village.Loyal = 100;
 
-            village.Iron = 2000;
-            village.Clay = 2000;
-            village.Wood = 2000;
+            village.Points += Build.GetPrice(BuildingType.Headquarter).Point;
+            village.Points += Build.GetPrice(BuildingType.Rally).Point;
+            for (int i = 1; i <= 5; i++)
+            {
+                village.Points += Build.GetPrice(BuildingType.Farm, i, 1).Point;
+                village.Points += Build.GetPrice(BuildingType.Warehouse, i, 1).Point;
+                village.Points += Build.GetPrice(BuildingType.ClayPit, i, 1).Point;
+                village.Points += Build.GetPrice(BuildingType.IronMine, i, 1).Point;
+                village.Points += Build.GetPrice(BuildingType.TimberCamp, i, 1).Point;
+            }
+
+            village.Resources.Iron = 2000;
+            village.Resources.Clay = 2000;
+            village.Resources.Wood = 2000;
             session.Update(config);
             return village;
+        }
+
+        public void Save(ISession session)
+        {
+            session.Save(this);
+            session.Save(this.Buildings);
+            session.Save(this.Resources);
+            session.Save(this.Research);
+            session.Save(this.Troop);
         }
 
         #endregion
@@ -707,13 +379,13 @@ namespace beans
             switch (type)
             {
                 case ResourcesType.Clay:
-                    level = this.ClayPit;
+                    level = this.Buildings.ClayPit;
                     break;
                 case ResourcesType.Wood:
-                    level = this.TimberCamp;
+                    level = this.Buildings.TimberCamp;
                     break;
                 case ResourcesType.Iron:
-                    level = this.IronMine;
+                    level = this.Buildings.IronMine;
                     break;
                 default:
                     break;
@@ -733,13 +405,13 @@ namespace beans
             switch (type)
             {
                 case ResourcesType.Clay:
-                    level = this.ClayPit;
+                    level = this.Buildings.ClayPit;
                     break;
                 case ResourcesType.Wood:
-                    level = this.TimberCamp;
+                    level = this.Buildings.TimberCamp;
                     break;
                 case ResourcesType.Iron:
-                    level = this.IronMine;
+                    level = this.Buildings.IronMine;
                     break;
                 default:
                     break;
@@ -754,10 +426,16 @@ namespace beans
         {
             TimeSpan span = to - from;
             double time = span.TotalHours;
-            this.Clay += (int)(time * this.ProductPerHour(ResourcesType.Clay));
-            this.Wood += (int)(time * this.ProductPerHour(ResourcesType.Wood));
-            this.Iron += (int)(time * this.ProductPerHour(ResourcesType.Iron));
+            this.Resources.Clay += (int)(time * this.ProductPerHour(ResourcesType.Clay));
+            this.Resources.Wood += (int)(time * this.ProductPerHour(ResourcesType.Wood));
+            this.Resources.Iron += (int)(time * this.ProductPerHour(ResourcesType.Iron));
 
+            if (this.Resources.Clay > this.MaxResources)
+                this.Resources.Clay = this.MaxResources;
+            if (this.Resources.Wood > this.MaxResources)
+                this.Resources.Wood = this.MaxResources;
+            if (this.Resources.Iron > this.MaxResources)
+                this.Resources.Iron = this.MaxResources;
         }
         
         #endregion
@@ -833,11 +511,11 @@ namespace beans
 
         public int MaxRecruit(TroopType troop)
         {
-            return Recruit.MaxRecruit(troop, this.Wood, this.Clay, this.Iron);
+            return Recruit.MaxRecruit(troop, this.Resources.Wood, this.Resources.Clay, this.Resources.Iron);
         }
         public Recruit BeginRecruit(TroopType troop, int quantity, ISession session)
         {
-            if (!Recruit.CanRecruit(troop, quantity, this.Wood, this.Clay, this.Iron))
+            if (!Recruit.CanRecruit(troop, quantity, this.Resources.Wood, this.Resources.Clay, this.Resources.Iron))
                 return null;
 
             int level = 0;
@@ -853,9 +531,9 @@ namespace beans
             recruit.LastUpdate = DateTime.Now;
 
             Price p = Recruit.GetPrice(troop);
-            this.Clay -= p.Clay * quantity;
-            this.Wood -= p.Wood * quantity;
-            this.Iron -= p.Iron * quantity;
+            this.Resources.Clay -= p.Clay * quantity;
+            this.Resources.Wood -= p.Wood * quantity;
+            this.Resources.Iron -= p.Iron * quantity;
 
             session.Save(recruit);
             session.Update(this);
@@ -920,9 +598,9 @@ namespace beans
                 return;
 
             Price price = Recruit.GetPrice(recruit.Troop);
-            this.Wood += price.Wood * recruit.Quantity;
-            this.Clay += price.Clay * recruit.Quantity;
-            this.Iron += price.Iron * recruit.Quantity;
+            this.Resources.Wood += price.Wood * recruit.Quantity;
+            this.Resources.Clay += price.Clay * recruit.Quantity;
+            this.Resources.Iron += price.Iron * recruit.Quantity;
             this.Population -= (int)(price.Population * recruit.Quantity);
             session.Update(this);
             session.Delete(recruit);
@@ -934,7 +612,7 @@ namespace beans
 
         public BuildableStatus PrepareBuild(BuildingType building, ISession session)
         {
-            BuildPrice price = Build.GetPrice(building, this.GetTotalBuildingLevel(building, session) + 1, this.Headquarter);
+            BuildPrice price = Build.GetPrice(building, this.GetTotalBuildingLevel(building, session) + 1, this.Buildings.Headquarter);
 
             BuildableStatus status = this.CanBuild(building, session);
 
@@ -945,9 +623,9 @@ namespace beans
             build.InVillage = this;
             build.Start = DateTime.Now;
             build.End = DateTime.Now.AddSeconds(price.BuildTime);
-            this.Wood -= price.Wood;
-            this.Clay -= price.Clay;
-            this.Iron -= price.Iron;
+            this.Resources.Wood -= price.Wood;
+            this.Resources.Clay -= price.Clay;
+            this.Resources.Iron -= price.Iron;
             session.Save(build);
             session.Update(this);
             
@@ -969,6 +647,76 @@ namespace beans
         }
         public BuildableStatus CanBuild(BuildingType type, ISession session)
         {
+            if (this[type] == 0)
+            {
+                switch (type)
+                {
+                    case BuildingType.Headquarter:
+                        if (this[BuildingType.Headquarter] == 0)
+                            return BuildableStatus.RequirementNotMet;
+                        break;
+                    case BuildingType.Barracks:
+                        if (this[BuildingType.Headquarter] < 3)
+                            return BuildableStatus.RequirementNotMet;
+                        break;
+                    case BuildingType.Stable:
+                        if (this[BuildingType.Headquarter] < 10 && this[BuildingType.Smithy] < 5 && this[BuildingType.Barracks] < 5)
+                            return BuildableStatus.RequirementNotMet;
+                        break;
+                    case BuildingType.Workshop:
+                        if (this[BuildingType.Headquarter] < 10 && this[BuildingType.Smithy] < 10)
+                            return BuildableStatus.RequirementNotMet;
+                        break;
+                    case BuildingType.Academy:
+                        if (this[BuildingType.Headquarter] < 20 && this[BuildingType.Smithy] < 20 && this[BuildingType.Market] < 10)
+                            return BuildableStatus.RequirementNotMet;
+                        break;
+                    case BuildingType.Smithy:
+                        if (this[BuildingType.Headquarter] < 5 && this[BuildingType.Barracks] < 1)
+                            return BuildableStatus.RequirementNotMet;
+                        break;
+                    case BuildingType.Rally:
+                        if (this[BuildingType.Headquarter] < 1)
+                            return BuildableStatus.RequirementNotMet;
+                        break;
+                    case BuildingType.Market:
+                        if (this[BuildingType.Headquarter] < 2 && this[BuildingType.Warehouse] < 2)
+                            return BuildableStatus.RequirementNotMet;
+                        break;
+                    case BuildingType.TimberCamp:
+                        if (this[BuildingType.Headquarter] < 1)
+                            return BuildableStatus.RequirementNotMet;
+                        break;
+                    case BuildingType.ClayPit:
+                        if (this[BuildingType.Headquarter] < 1)
+                            return BuildableStatus.RequirementNotMet;
+                        break;
+                    case BuildingType.IronMine:
+                        if (this[BuildingType.Headquarter] < 1)
+                            return BuildableStatus.RequirementNotMet;
+                        break;
+                    case BuildingType.Farm:
+                        if (this[BuildingType.Headquarter] < 1)
+                            return BuildableStatus.RequirementNotMet;
+                        break;
+                    case BuildingType.Warehouse:
+                        if (this[BuildingType.Headquarter] < 1)
+                            return BuildableStatus.RequirementNotMet;
+                        break;
+                    case BuildingType.HidingPlace:
+                        if (this[BuildingType.Headquarter] < 1)
+                            return BuildableStatus.RequirementNotMet;
+                        break;
+                    case BuildingType.Wall:
+                        if (this[BuildingType.Headquarter] < 1 && this[BuildingType.Barracks] < 1)
+                            return BuildableStatus.RequirementNotMet;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+
             int iTotalLevel = this.GetTotalBuildingLevel(type, session);
 
             BuildPrice price = Build.GetPrice(type, iTotalLevel + 1, this[BuildingType.Headquarter]);
@@ -978,11 +726,11 @@ namespace beans
             if ((this.MaxPopulation - this.Population) < price.Population)
                 return BuildableStatus.NotEnoughFarm;
 
-            if (this.Wood < price.Wood)
+            if (this.Resources.Wood < price.Wood)
                 return BuildableStatus.NotEnoughWood;
-            if (this.Clay < price.Clay)
+            if (this.Resources.Clay < price.Clay)
                 return BuildableStatus.NotEnoughClay;
-            if (this.Iron < price.Iron)
+            if (this.Resources.Iron < price.Iron)
                 return BuildableStatus.NotEnoughIron;
 
             if (this.GetTotalBuild(session) >= 5)
@@ -1015,9 +763,9 @@ namespace beans
             session.Evict(build.InVillage);
             build.InVillage = this;
 
-            build.InVillage.Wood += price.Wood;
-            build.InVillage.Clay += price.Clay;
-            build.InVillage.Iron += price.Iron;
+            build.InVillage.Resources.Wood += price.Wood;
+            build.InVillage.Resources.Clay += price.Clay;
+            build.InVillage.Resources.Iron += price.Iron;
 
             session.Delete(build);
             session.Update(build.InVillage);

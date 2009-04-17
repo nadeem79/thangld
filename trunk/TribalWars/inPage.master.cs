@@ -14,6 +14,7 @@ using System.Data.SqlClient;
 using NHibernate;
 using beans;
 using System.Collections.Generic;
+using Telerik.Web.UI;
 
 public partial class inPage : System.Web.UI.MasterPage
 {
@@ -55,7 +56,6 @@ public partial class inPage : System.Web.UI.MasterPage
     {
         Session["user"] = 1;
 
-
         if (object.Equals(Session["user"], null))
         {
             Response.Redirect("session_expired.aspx", true);
@@ -66,7 +66,7 @@ public partial class inPage : System.Web.UI.MasterPage
         int id;
         ISession session;
         ITransaction trans;
-        
+
 
         session = NHibernateHelper.CreateSession();
 
@@ -86,10 +86,10 @@ public partial class inPage : System.Web.UI.MasterPage
             this.village = this.player.Villages[0];
         else
             this.village = this.player.GetVillage(id);
-        
+
         if (this.village == null)
             this.village = this.player.Villages[0];
-        
+
 
         int incomingAttackCount = village.GetIncomingAttackCount(session);
         int incomingSupportCount = village.GetIncomingSupportCount(session);
@@ -97,28 +97,33 @@ public partial class inPage : System.Web.UI.MasterPage
         DateTime stop = DateTime.Now;
         this.delay.Text = (stop - start).Milliseconds.ToString();
 
-        if (player.Group == null)
-            lTribe.NavigateUrl = "un_tribe.aspx?id=" + this.CurrentVillage.ID.ToString();
-        else
-            lTribe.NavigateUrl = "tribe.aspx?id=" + this.CurrentVillage.ID.ToString();
-
         session.Close();
 
-        this.lblClay.Text = this.CurrentVillage.Clay.ToString();
-        this.lblWood.Text = this.CurrentVillage.Wood.ToString();
-        this.lblIron.Text = this.CurrentVillage.Iron.ToString();
 
-        if (this.CurrentVillage.Wood == this.CurrentVillage.MaxResources)
+        this.lblClay.Text = this.CurrentVillage.Resources.Clay.ToString();
+        this.lblWood.Text = this.CurrentVillage.Resources.Wood.ToString();
+        this.lblIron.Text = this.CurrentVillage.Resources.Iron.ToString();
+
+        if (this.CurrentVillage.Resources.Wood == this.CurrentVillage.MaxResources)
             this.lblWood.ForeColor = System.Drawing.Color.Red;
-        if (this.CurrentVillage.Clay == this.CurrentVillage.MaxResources)
+        if (this.CurrentVillage.Resources.Clay == this.CurrentVillage.MaxResources)
             this.lblClay.ForeColor = System.Drawing.Color.Red;
-        if (this.CurrentVillage.Iron == this.CurrentVillage.MaxResources)
+        if (this.CurrentVillage.Resources.Iron == this.CurrentVillage.MaxResources)
             this.lblIron.ForeColor = System.Drawing.Color.Red;
-
+        this.RadToolBar1.DataBind();
+        foreach (RadToolBarButton menuItem in this.menu.Items)
+            menuItem.NavigateUrl += string.Format("?id={0}", this.village.ID);
+        foreach (RadMenuItem item in this.RadToolBar1.Items)
+        {
+            item.NavigateUrl += string.Format("?id={0}", this.village.ID);
+            foreach (RadMenuItem subItem in item.Items)
+                subItem.NavigateUrl += string.Format("&id={0}", this.village.ID);
+        }
     }
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        ViewState["village"] = village.ID;
         //if (this.village == null)
         //{
         //    ISession session;

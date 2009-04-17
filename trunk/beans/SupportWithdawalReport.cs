@@ -13,7 +13,7 @@ namespace beans
         #region Properties
 
 
-        public override ReportType Type
+        public ReportType Type
         {
             get { return ReportType.SupportWithdawal; }
         }

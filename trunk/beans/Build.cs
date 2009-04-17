@@ -167,16 +167,16 @@ namespace beans
         #region Methods
         public void execute(ISession session)
         {
-            BuildPrice price = Build.GetPrice(this.Building, this.InVillage.GetTotalBuildingLevel(this.Building, session) + 1, this.InVillage.Headquarter);
+            BuildPrice price = Build.GetPrice(this.Building, this.InVillage.GetTotalBuildingLevel(this.Building, session) + 1, this.InVillage.Buildings.Headquarter);
 
             if (this.InVillage.CanBuild(this.Building, session) != BuildableStatus.JustDoIt)
                 return;
 
             this.Start = DateTime.Now;
             this.End = DateTime.Now.AddSeconds(price.BuildTime);
-            this.InVillage.Wood -= price.Wood;
-            this.InVillage.Clay -= price.Clay;
-            this.InVillage.Iron -= price.Iron;
+            this.InVillage.Resources.Wood -= price.Wood;
+            this.InVillage.Resources.Clay -= price.Clay;
+            this.InVillage.Resources.Iron -= price.Iron;
             session.Update(this.InVillage);
             session.Save(this);
         }
@@ -195,9 +195,9 @@ namespace beans
         {
             BuildPrice price = Build.GetPrice(this.Building, this.InVillage[this.Building], this.InVillage[BuildingType.Headquarter]);
 
-            this.InVillage.Wood += price.Wood;
-            this.InVillage.Clay += price.Clay;
-            this.InVillage.Iron += price.Iron;
+            this.InVillage.Resources.Wood += price.Wood;
+            this.InVillage.Resources.Clay += price.Clay;
+            this.InVillage.Resources.Iron += price.Iron;
 
             session.Update(this.InVillage);
             session.Delete(this);
@@ -292,71 +292,71 @@ namespace beans
             switch (building)
             {
                 case BuildingType.Headquarter:
-                    if (village.Headquarter < 1)
+                    if (village.Buildings.Headquarter < 1)
                         return false;
                     break;
                 case BuildingType.Barracks:
-                    if (village.Headquarter < 3)
+                    if (village.Buildings.Headquarter < 3)
                         return false;
                     break;
                 case BuildingType.Stable:
-                    if (village.Barracks < 5 || village.Smithy < 5 || village.Headquarter < 10)
+                    if (village.Buildings.Barracks < 5 || village.Buildings.Smithy < 5 || village.Buildings.Headquarter < 10)
                         return false;
                     break;
                 case BuildingType.Workshop:
-                    if (village.Headquarter < 10 || village.Smithy < 10)
+                    if (village.Buildings.Headquarter < 10 || village.Buildings.Smithy < 10)
                         return false;
                     break;
                 case BuildingType.Academy:
-                    if (village.Headquarter < 20 || village.Smithy < 20 || village.Market < 10)
+                    if (village.Buildings.Headquarter < 20 || village.Buildings.Smithy < 20 || village.Buildings.Market < 10)
                         return false;
                     break;
                 case BuildingType.Smithy:
-                    if (village.Headquarter < 5 || village.Barracks < 1)
+                    if (village.Buildings.Headquarter < 5 || village.Buildings.Barracks < 1)
                         return false;
                     break;
                 case BuildingType.Rally:
-                    if (village.Headquarter < 1)
+                    if (village.Buildings.Headquarter < 1)
                         return false;
                     break;
                 case BuildingType.Market:
-                    if (village.Headquarter < 3 || village.Warehouse < 2)
+                    if (village.Buildings.Headquarter < 3 || village.Buildings.Warehouse < 2)
                         return false;
                     break;
                 case BuildingType.TimberCamp:
-                    if (village.Headquarter < 1)
+                    if (village.Buildings.Headquarter < 1)
                         return false;
                     break;
                 case BuildingType.ClayPit:
-                    if (village.Headquarter < 1)
+                    if (village.Buildings.Headquarter < 1)
                         return false;
                     break;
                 case BuildingType.IronMine:
-                    if (village.Headquarter < 1)
+                    if (village.Buildings.Headquarter < 1)
                         return false;
                     break;
                 case BuildingType.Farm:
-                    if (village.Headquarter < 1)
+                    if (village.Buildings.Headquarter < 1)
                         return false;
                     break;
                 case BuildingType.Warehouse:
-                    if (village.Headquarter < 1)
+                    if (village.Buildings.Headquarter < 1)
                         return false;
                     break;
                 case BuildingType.HidingPlace:
-                    if (village.Headquarter < 1)
+                    if (village.Buildings.Headquarter < 1)
                         return false;
                     break;
                 case BuildingType.Wall:
-                    if (village.Headquarter < 1 || village.Barracks < 1)
+                    if (village.Buildings.Headquarter < 1 || village.Buildings.Barracks < 1)
                         return false;
                     break;
                 default:
                     return false;
             }
 
-            BuildPrice price = Build.GetPrice(building, level, village.Headquarter);
-            return (price.Wood < village.Wood && price.Clay < village.Clay && price.Iron < village.Iron);
+            BuildPrice price = Build.GetPrice(building, level, village.Buildings.Headquarter);
+            return (price.Wood < village.Resources.Wood && price.Clay < village.Resources.Clay && price.Iron < village.Resources.Iron);
         }
         #endregion
 
@@ -393,6 +393,7 @@ namespace beans
         NotEnoughClay,
         BuildNumberExceed,
         BuildingLevelExceed,
+        RequirementNotMet,
         JustDoIt
     }
 
@@ -416,6 +417,8 @@ namespace beans
                     return "Vượt quá level";
                 case BuildableStatus.JustDoIt:
                     return "Có thể xây dựng";
+                case BuildableStatus.RequirementNotMet:
+                    return "Chưa đủ điều kiện xây dựng";
                 default:
                     return "";
             }

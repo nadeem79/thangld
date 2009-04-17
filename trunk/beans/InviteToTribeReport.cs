@@ -5,13 +5,13 @@ using System.Text;
 
 namespace beans
 {
-    public class InviteToTribeReport : Report
+    public class InviteToTribeReport:Report
     {
 
         #region Properties
 
 
-        public override ReportType Type
+        public ReportType Type
         {
             get { return ReportType.InviteToTribe; }
         }

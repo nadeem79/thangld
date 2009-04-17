@@ -44,7 +44,7 @@ namespace beans
             set { this.clay = value; }
         }
 
-        public override ReportType Type
+        public ReportType Type
         {
             get { return ReportType.ResourceReceive; }
         }

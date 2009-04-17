@@ -48,118 +48,118 @@
                     <img class="p_wall" src="images/wall3.png" alt="Wall" />
                     <img class="empty" src="images/empty.png" alt="" usemap="#map" />
                     <map name="map" id="map">
-                        <area shape="poly" coords="373,187,417,129,407,72,329,65,306,99,311,150" href="headquarters.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>"
+                        <area shape="poly" coords="373,187,417,129,407,72,329,65,306,99,311,150" href="headquarters.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>" <% if (this.CurrentVillage[beans.BuildingType.Headquarter] == 0){ %> onclick="jQuery.facebox('Chưa xây dựng công trình này');return false;"<%} %>
                             alt="Village Headquarters" title="Village Headquarters" />
-                        <area shape="poly" coords="392,289,444,313,506,283,481,235,442,216,392,252" href="barrack.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>"
+                        <area shape="poly" coords="392,289,444,313,506,283,481,235,442,216,392,252" href="barrack.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>" <% if (this.CurrentVillage[beans.BuildingType.Barracks] == 0){ %> onclick="jQuery.facebox('Chưa xây dựng công trình này');return false;"<%} %>
                             alt="Barracks" title="Barracks" />
-                        <area shape="poly" coords="64,241,70,265,150,307,189,289,184,232,99,202" href="stable.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>"
+                        <area shape="poly" coords="64,241,70,265,150,307,189,289,184,232,99,202" href="stable.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>" <% if (this.CurrentVillage[beans.BuildingType.Stable] == 0){ %> onclick="jQuery.facebox('Chưa xây dựng công trình này');return false;"<%} %>
                             alt="Stable" title="Stable" />
-                        <area shape="poly" coords="284,358,362,361,402,321,369,283,346,278,291,320" href="workshop.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>"
+                        <area shape="poly" coords="284,358,362,361,402,321,369,283,346,278,291,320" href="workshop.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>" <% if (this.CurrentVillage[beans.BuildingType.Workshop] == 0){ %> onclick="jQuery.facebox('Chưa xây dựng công trình này');return false;"<%} %>
                             alt="Workshop" title="Workshop" />
-                        <area shape="poly" coords="206,149,257,125,229,60,185,80,156,111" href="academy.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>"
+                        <area shape="poly" coords="206,149,257,125,229,60,185,80,156,111" href="academy.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>" <% if (this.CurrentVillage[beans.BuildingType.Academy] == 0){ %> onclick="jQuery.facebox('Chưa xây dựng công trình này');return false;"<%} %>
                             alt="Academy" title="Academy" />
-                        <area shape="poly" coords="174,335,222,361,271,342,283,301,216,262" href="smithy.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>"
+                        <area shape="poly" coords="174,335,222,361,271,342,283,301,216,262" href="smithy.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>" <% if (this.CurrentVillage[beans.BuildingType.Smithy] == 0){ %> onclick="jQuery.facebox('Chưa xây dựng công trình này');return false;"<%} %>
                             alt="Smithy" title="Smithy" />
-                        <area shape="poly" coords="315,271,379,275,401,229,375,206,343,207" href="rally.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>"
+                        <area shape="poly" coords="315,271,379,275,401,229,375,206,343,207" href="rally.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>" <% if (this.CurrentVillage[beans.BuildingType.Rally] == 0){ %> onclick="jQuery.facebox('Chưa xây dựng công trình này');return false;"<%} %>
                             alt="Rally point" title="Rally point" />
-                        <area shape="poly" coords="214,149,234,228,313,230,330,169,273,122" href="market.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>"
+                        <area shape="poly" coords="214,149,234,228,313,230,330,169,273,122" href="market.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>" <% if (this.CurrentVillage[beans.BuildingType.Market] == 0){ %> onclick="jQuery.facebox('Chưa xây dựng công trình này');return false;"<%} %>
                             alt="Market" title="Market" />
-                        <area shape="poly" coords="472,379,523,417,583,373,528,330" href="wood.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>"
+                        <area shape="poly" coords="472,379,523,417,583,373,528,330" href="wood.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>" <% if (this.CurrentVillage[beans.BuildingType.TimberCamp] == 0){ %> onclick="jQuery.facebox('Chưa xây dựng công trình này');return false;"<%} %>
                             alt="Timber camp" title="Timber camp" />
-                        <area shape="poly" coords="34,300,0,349,15,399,67,417,91,402,92,341" href="clay.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>"
+                        <area shape="poly" coords="34,300,0,349,15,399,67,417,91,402,92,341" href="clay.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>" <% if (this.CurrentVillage[beans.BuildingType.ClayPit] == 0){ %> onclick="jQuery.facebox('Chưa xây dựng công trình này');return false;"<%} %>
                             alt="Clay pit" title="Clay pit" />
-                        <area shape="poly" coords="0,55,45,90,93,58,89,6,39,9" href="iron.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>"
+                        <area shape="poly" coords="0,55,45,90,93,58,89,6,39,9" href="iron.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>" <% if (this.CurrentVillage[beans.BuildingType.IronMine] == 0){ %> onclick="jQuery.facebox('Chưa xây dựng công trình này');return false;"<%} %>
                             alt="Iron mine" title="Iron mine" />
-                        <area shape="poly" coords="456,0,477,41,526,75,583,88,597,18,597,0" href="farm.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>"
+                        <area shape="poly" coords="456,0,477,41,526,75,583,88,597,18,597,0" href="farm.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>" <% if (this.CurrentVillage[beans.BuildingType.Farm] == 0){ %> onclick="jQuery.facebox('Chưa xây dựng công trình này');return false;"<%} %>
                             alt="Farm" title="Farm" />
-                        <area shape="poly" coords="96,192,153,218,195,215,193,148,133,121" href="warehouse.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>"
+                        <area shape="poly" coords="96,192,153,218,195,215,193,148,133,121" href="warehouse.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>" <% if (this.CurrentVillage[beans.BuildingType.Warehouse] == 0){ %> onclick="jQuery.facebox('Chưa xây dựng công trình này');return false;"<%} %>
                             alt="Warehouse" title="Warehouse" />
-                        <area shape="poly" coords="428,333,430,382,472,363,470,318" href="wall.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>"
+                        <area shape="poly" coords="428,333,430,382,472,363,470,318" href="wall.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>" <% if (this.CurrentVillage[beans.BuildingType.Wall] == 0){ %> onclick="jQuery.facebox('Chưa xây dựng công trình này');return false;"<%} %>
                             alt="Wall" title="Wall" />
                     </map>
                     <div style="display: inline;" id="l_main" class="l_main" title="Village Headquarters">
                         <div class="label">
                             <a href="headquarters.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>">
                                 <img src="images/main.png" class="middle" alt="Village Headquarters" />
-                                <% Response.Write(this.CurrentVillage.Headquarter); %></a></div>
+                                <% Response.Write(this.CurrentVillage[beans.BuildingType.Headquarter]); %></a></div>
                     </div>
                     <div style="display: inline;" id="l_barracks" class="l_barracks" title="Barracks">
                         <div class="label">
                             <a href="barrack.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>">
                                 <img src="images/barracks.png" class="middle" alt="Barracks">
-                                <% Response.Write(this.CurrentVillage.Barracks); %></a></div>
+                                <% Response.Write(this.CurrentVillage[beans.BuildingType.Barracks]); %></a></div>
                     </div>
                     <div style="display: inline;" id="l_stable" class="l_stable" title="Stable">
                         <div class="label">
                             <a href="stable.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>">
                                 <img src="images/stable.png" class="middle" alt="Stable">
-                                <% Response.Write(this.CurrentVillage.Stable); %></a></div>
+                                <% Response.Write(this.CurrentVillage[beans.BuildingType.Stable]); %></a></div>
                     </div>
                     <div style="display: inline;" id="l_garage" class="l_garage" title="Workshop">
                         <div class="label">
                             <a href="workshop.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>">
                                 <img src="images/garage.png" class="middle" alt="Workshop" />
-                                <% Response.Write(this.CurrentVillage.Workshop); %></a></div>
+                                <% Response.Write(this.CurrentVillage[beans.BuildingType.Workshop]); %></a></div>
                     </div>
                     <div style="display: inline;" id="l_snob" class="l_snob" title="Academy">
                         <div class="label">
                             <a href="academy.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>">
                                 <img src="images/snob.png" class="middle" alt="Academy">
-                                <% Response.Write(this.CurrentVillage.Academy); %></a></div>
+                                <% Response.Write(this.CurrentVillage[beans.BuildingType.Academy]); %></a></div>
                     </div>
                     <div style="display: inline;" id="l_smith" class="l_smith" title="Smithy">
                         <div class="label">
                             <a href="smithy.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>">
                                 <img src="images/smith.png" class="middle" alt="Smithy" />
-                                <% Response.Write(this.CurrentVillage.Smithy); %></a></div>
+                                <% Response.Write(this.CurrentVillage[beans.BuildingType.Smithy]); %></a></div>
                     </div>
                     <div style="display: inline;" id="l_place" class="l_place" title="Rally point">
                         <div class="label">
                             <a href="rally.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>">
                                 <img src="images/place.png" class="middle" alt="Rally point" />
-                                <% Response.Write(this.CurrentVillage.Rally); %></a></div>
+                                <% Response.Write(this.CurrentVillage[beans.BuildingType.Rally]); %></a></div>
                     </div>
                     <div style="display: inline;" id="l_market" class="l_market" title="Market">
                         <div class="label">
                             <a href="market.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>">
                                 <img src="images/market.png" class="middle" alt="Market" />
-                                <% Response.Write(this.CurrentVillage.Market); %></a></div>
+                                <% Response.Write(this.CurrentVillage[beans.BuildingType.Market]); %></a></div>
                     </div>
                     <div style="display: inline;" id="l_wood" class="l_wood" title="Timber camp">
                         <div class="label">
                             <a href="wood.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>">
                                 <img src="images/wood.png" class="middle" alt="Timber camp" />
-                                <% Response.Write(this.CurrentVillage.TimberCamp); %></a></div>
+                                <% Response.Write(this.CurrentVillage[beans.BuildingType.TimberCamp]); %></a></div>
                     </div>
                     <div style="display: inline;" id="l_stone" class="l_stone" title="Clay pit">
                         <div class="label">
                             <a href="clay.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>">
                                 <img src="images/stone.png" class="middle" alt="Clay pit" />
-                                <% Response.Write(this.CurrentVillage.ClayPit); %></a></div>
+                                <% Response.Write(this.CurrentVillage[beans.BuildingType.ClayPit]); %></a></div>
                     </div>
                     <div style="display: inline;" id="l_iron" class="l_iron" title="Iron mine">
                         <div class="label">
                             <a href="iron.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>">
                                 <img src="images/iron.png" class="middle" alt="Iron mine" />
-                                <% Response.Write(this.CurrentVillage.IronMine); %></a></div>
+                                <% Response.Write(this.CurrentVillage[beans.BuildingType.IronMine]); %></a></div>
                     </div>
                     <div style="display: inline;" id="l_farm" class="l_farm" title="Farm">
                         <div class="label">
                             <a href="farm.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>">
                                 <img src="images/farm.png" class="middle" alt="Farm" />
-                                <% Response.Write(this.CurrentVillage.Farm); %></a></div>
+                                <% Response.Write(this.CurrentVillage[beans.BuildingType.Farm]); %></a></div>
                     </div>
                     <div style="display: inline;" id="l_storage" class="l_storage" title="Warehouse">
                         <div class="label">
                             <a href="warehouse.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>">
                                 <img src="images/storage.png" class="middle" alt="Warehouse">
-                                <% Response.Write(this.CurrentVillage.Warehouse); %></a></div>
+                                <% Response.Write(this.CurrentVillage[beans.BuildingType.Warehouse]); %></a></div>
                     </div>
                     <div style="display: inline;" id="l_wall" class="l_wall" title="Wall">
                         <div class="label">
                             <a href="wall.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>">
                                 <img src="images/wall.png" class="middle" alt="Wall" />
-                                <% Response.Write(this.CurrentVillage.Wall); %></a></div>
+                                <% Response.Write(this.CurrentVillage[beans.BuildingType.Wall]); %></a></div>
                     </div>
                     <img class="npc_conversation" src="images/conversation.gif" />
                     <img class="npc_guard" src="images/guard.gif" /></div>

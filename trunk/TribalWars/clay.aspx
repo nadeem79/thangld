@@ -12,7 +12,7 @@
                 </td>
                 <td>
                     <h2>
-                        Lò gạch cấp <% Response.Write(this.current.ClayPit); %></h2>
+                        Lò gạch cấp <% Response.Write(this.current.Buildings.ClayPit); %></h2>
                     Cung cấp vật liệu xây dựng dùng cho phát triển thành phố to - đẹp - hiện đại. Nghe
                     giang hồ đồn đại rằng vào những đêm trăng sáng hoặc lễ hội Valentine, 8/3, hai vợ
                     chồng nhà Thị Nở - Chí Phèo chuyên môn ra đây tâm sự.

@@ -11,7 +11,7 @@ namespace beans
 
         private int id;
 
-        public int ID
+        public virtual int ID
         {
             get { return this.id; }
             set { this.id = value; }

@@ -1,0 +1,309 @@
+﻿<table class="vis">
+    <tbody>
+        <tr>
+            <th width="140">
+                Subject
+            </th>
+            <th width="400">
+                &nbsp;<span id="label"><span id="labelText">$report.Title
+                </span></span>
+            </th>
+        </tr>
+        <tr>
+            <td>
+                Sent
+            </td>
+            <td>
+                $report.Time.ToString("'lúc' HH:mm:ss 'ngày' dd/MM/yyyy")
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="border: 1px solid black; padding: 4px;" height="160" valign="top">
+                <h3>#if ($attack.SuccessAttack) Bên tấn công #else Bên phòng thủ #end thắng trận</h3>
+                May mắn (phía tấn công): $attack.Luck.ToString("0.00")
+                <br />
+                <br />
+                <table style="border: 1px solid rgb(222, 211, 185);" width="100%">
+                    <tbody>
+                        <tr>
+                            <th width="100">
+                                Tấn công:
+                            </th>
+                            <th>
+                                <a href='user_info.aspx?player=$attack.From.Owner.ID'>
+                                    $attack.From.Owner.Username)
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                Thành phố:
+                            </td>
+                            <td>
+                                <a href='village_info.aspx?village=$attack.From.ID'>
+                                    $attack.From.Name ($attack.From.X.ToString("000")|$attack.From.Y.ToString("000"))</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <table class="vis">
+                                    <tbody>
+                                        <tr class="center">
+                                            <td>
+                                            </td>
+                                            <td width="35">
+                                                <img src="images/unit_spear.png" title="Spear fighter" alt="">
+                                            </td>
+                                            <td width="35">
+                                                <img src="images/unit_sword.png" title="Swordsman" alt="">
+                                            </td>
+                                            <td width="35">
+                                                <img src="images/unit_axe.png" title="Axeman" alt="">
+                                            </td>
+                                            <td width="35">
+                                                <img src="images/unit_spy.png" title="Scout" alt="">
+                                            </td>
+                                            <td width="35">
+                                                <img src="images/unit_light.png" title="Light cavalry" alt="">
+                                            </td>
+                                            <td width="35">
+                                                <img src="images/unit_heavy.png" title="Heavy cavalry" alt="">
+                                            </td>
+                                            <td width="35">
+                                                <img src="images/unit_ram.png" title="Ram" alt="">
+                                            </td>
+                                            <td width="35">
+                                                <img src="images/unit_catapult.png" title="Catapult" alt="">
+                                            </td>
+                                            <td width="35">
+                                                <img src="images/unit_snob.png" title="Nobleman" alt="">
+                                            </td>
+                                        </tr>
+                                        <tr class="center">
+                                            <td>
+                                                Số lượng:
+                                            </td>
+                                            <td>
+                                                $attack.SpearSent
+                                            </td>
+                                            <td>
+                                                $attack.SwordSent
+                                            </td>
+                                            <td>
+                                                $attack.AxeSent
+                                            </td>
+                                            <td>
+                                                $attack.ScoutSent
+                                            </td>
+                                            <td>
+                                                $attack.LightSent
+                                            </td>
+                                            <td>
+                                                $attack.HeavySent
+                                            </td>
+                                            <td>
+                                                $attack.RamSent
+                                            </td>
+                                            <td>
+                                                $attack.CatapultSent
+                                            </td>
+                                            <td>
+                                                $attack.NobleSent
+                                            </td>
+                                        </tr>
+                                        <tr class="center">
+                                            <td>
+                                                Còn lại:
+                                            </td>
+                                            <td>
+                                                #set( $remaining = $attack.SpearSent - $attack.SpearReturnt )
+                                                $remaining
+                                            </td>
+                                            <td>
+                                                #set( $remaining = $attack.SwordSent - $attack.SwordReturnt )
+                                                $remaining
+                                            </td>
+                                            <td>
+                                                #set( $remaining = $attack.AxeSent - $attack.AxeReturnt )
+                                                $remaining
+                                            </td>
+                                            <td>
+                                                #set( $remaining = $attack.ScoutSent - $attack.ScoutReturnt )
+                                                $remaining
+                                            </td>
+                                            <td>
+                                                #set( $remaining = $attack.LightSent - $attack.LightReturnt )
+                                                $remaining
+                                            </td>
+                                            <td>
+                                                #set( $remaining = $attack.HeavySent - $attack.HeavyReturnt )
+                                                $remaining
+                                            </td>
+                                            <td>
+                                                #set( $remaining = $attack.RamSent - $attack.RamReturnt )
+                                                $remaining
+                                            </td>
+                                            <td>
+                                                #set( $remaining = $attack.CatapultSent - $attack.CatapultReturnt )
+                                                $remaining
+                                            </td>
+                                            <td>
+                                                #set( $remaining = $attack.NobleSent - $attack.NobleReturnt )
+                                                $remaining
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <table style="border: 1px solid rgb(222, 211, 185);" width="100%">
+                    <tbody>
+                        <tr>
+                            <th width="100">
+                                Phòng thủ:
+                            </th>
+                            <th>
+                                <a href='user_info.aspx?player=$attack.To.Owner.ID'>
+                                    $attack.To.Owner.Username</a>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                Thành phố:
+                            </td>
+                            <td>
+                                <a href='village_info.aspx?village=$attack.To.ID'>
+                                    $attack.To.Name ($attack.To.X.ToString("000")|$attack.To.Y.ToString("000"))</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <table class="vis">
+                                    <tbody>
+                                        <tr class="center">
+                                            <td>
+                                            </td>
+                                            <td width="35">
+                                                <img src="images/unit_spear.png" title="Spear fighter" alt="">
+                                            </td>
+                                            <td width="35">
+                                                <img src="images/unit_sword.png" title="Swordsman" alt="">
+                                            </td>
+                                            <td width="35">
+                                                <img src="images/unit_axe.png" title="Axeman" alt="">
+                                            </td>
+                                            <td width="35">
+                                                <img src="images/unit_spy.png" title="Scout" alt="">
+                                            </td>
+                                            <td width="35">
+                                                <img src="images/unit_light.png" title="Light cavalry" alt="">
+                                            </td>
+                                            <td width="35">
+                                                <img src="images/unit_heavy.png" title="Heavy cavalry" alt="">
+                                            </td>
+                                            <td width="35">
+                                                <img src="images/unit_ram.png" title="Ram" alt="">
+                                            </td>
+                                            <td width="35">
+                                                <img src="images/unit_catapult.png" title="Catapult" alt="">
+                                            </td>
+                                            <td width="35">
+                                                <img src="images/unit_snob.png" title="Nobleman" alt="">
+                                            </td>
+                                        </tr>
+                                        <tr class="center">
+                                            <td>
+                                                Số lượng:
+                                            </td>
+                                            <td>
+                                                $attack.SpearDefense
+                                            </td>
+                                            <td>
+                                                $attack.SwordDefense
+                                            </td>
+                                            <td>
+                                                $attack.AxeDefense
+                                            </td>
+                                            <td>
+                                                $attack.ScoutDefense
+                                            </td>
+                                            <td>
+                                                $attack.LightDefense
+                                            </td>
+                                            <td>
+                                                $attack.HeavyDefense
+                                            </td>
+                                            <td>
+                                                $attack.RamDefense
+                                            </td>
+                                            <td>
+                                                $attack.CatapultDefense
+                                            </td>
+                                            <td>
+                                                $attack.NobleDefense
+                                            </td>
+                                        </tr>
+                                        <tr class="center">
+                                            <td>
+                                                Thiệt hại:
+                                            </td>
+                                            <td>
+                                                #set( $remaining = $attack.SpearDefense - $attack.SpearSurvived )
+                                                $remaining
+                                            </td>
+                                            <td>
+                                                #set( $remaining = $attack.SwordDefense - $attack.SwordSurvived )
+                                                $remaining
+                                            </td>
+                                            <td>
+                                                #set( $remaining = $attack.AxeDefense - $attack.AxeSurvived )
+                                                $remaining
+                                            </td>
+                                            <td>
+                                                #set( $remaining = $attack.ScoutDefense - $attack.ScoutSurvived )
+                                                $remaining
+                                            </td>
+                                            <td>
+                                                #set( $remaining = $attack.LightDefense - $attack.LightSurvived )
+                                                $remaining
+                                            </td>
+                                            <td>
+                                                #set( $remaining = $attack.HeavyDefense - $attack.HeavySurvived )
+                                                $remaining
+                                            </td>
+                                            <td>
+                                                #set( $remaining = $attack.RamDefense - $attack.RamSurvived )
+                                                $remaining
+                                            </td>
+                                            <td>
+                                                #set( $remaining = $attack.CatapultDefense - $attack.CatapultSurvived )
+                                                $remaining
+                                            </td>
+                                            <td>
+                                                #set( $remaining = $attack.NobleDefense - $attack.NobleSurvived )
+                                                $remaining
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br />
+                <asp:Panel ID="pResources" runat="server">
+                    <h5>
+                        Cướp bóc:</h5>
+                    <img src="images/lehm.png" />$attack.Clay
+                    <img src="images/holz.png" />$attack.Wood
+                    <img src="images/eisen.png" />$attack.Iron
+            </td>
+        </tr>
+    </tbody>
+</table>

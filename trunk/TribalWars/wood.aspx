@@ -12,7 +12,7 @@
                 </td>
                 <td>
                     <h2>
-                        Trại đốn gỗ cấp <% Response.Write(this.current.TimberCamp); %></h2>
+                        Trại đốn gỗ cấp <% Response.Write(this.current.Buildings.TimberCamp); %></h2>
                     Mỗi thành phố đều được hệ thống sinh thái rừng rậm bảo vệ khỏi nạn ô nhiễm môi 
                     trường từ khói thuốc, xe cộ và khí thải CO2. Từ rừng, chúng ta mới có những 
                     chuyện cổ tích như Thạch Sanh - Lý Thông hay Cây tre trăm đốt. Hi vọng các bác 

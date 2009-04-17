@@ -104,15 +104,15 @@ namespace beans
             if ((spear + sword + axe + scout + light + heavy + ram + catapult + noble) == 0)
                 throw new Exception("Nhập một loại quân");
 
-            if ((spear > from.Spear) ||
-            (sword > from.Sword) ||
-            (axe > from.Axe) ||
-            (scout > from.Scout) ||
-            (light > from.Light) ||
-            (heavy > from.Heavy) ||
-            (ram > from.Ram) ||
-            (catapult > from.Catapult) ||
-            (noble > from.Noble))
+            if ((spear > from.Troop.Spear) ||
+            (sword > from.Troop.Sword) ||
+            (axe > from.Troop.Axe) ||
+            (scout > from.Troop.Scout) ||
+            (light > from.Troop.Light) ||
+            (heavy > from.Troop.Heavy) ||
+            (ram > from.Troop.Ram) ||
+            (catapult > from.Troop.Catapult) ||
+            (noble > from.Troop.Noble))
                 throw new Exception("Không đủ quân");
 
             Support support = new Support();
@@ -163,15 +163,15 @@ namespace beans
 
         public void execute(ISession session)
         {
-            if ((this.Spear > this.From.Spear) ||
-            (this.Sword > this.From.Sword) ||
-            (this.Axe > this.From.Axe) ||
-            (this.Scout > this.From.Scout) ||
-            (this.Light > this.From.Light) ||
-            (this.Heavy > this.From.Heavy) ||
-            (this.Ram > this.From.Ram) ||
-            (this.Catapult > this.From.Catapult) ||
-            (this.Noble > this.From.Noble))
+            if ((this.Spear > this.From.Troop.Spear) ||
+            (this.Sword > this.From.Troop.Sword) ||
+            (this.Axe > this.From.Troop.Axe) ||
+            (this.Scout > this.From.Troop.Scout) ||
+            (this.Light > this.From.Troop.Light) ||
+            (this.Heavy > this.From.Troop.Heavy) ||
+            (this.Ram > this.From.Troop.Ram) ||
+            (this.Catapult > this.From.Troop.Catapult) ||
+            (this.Noble > this.From.Troop.Noble))
                 throw new Exception("Không đủ quân");
 
             TimeSpan transitTime = this.LandingTime - this.StartTime;
@@ -179,15 +179,25 @@ namespace beans
             this.LandingTime = this.StartTime + transitTime;
             this.Pending = false;
 
-            this.From.Spear -= this.Spear;
-            this.From.Sword -= this.Sword;
-            this.From.Axe -= this.Axe;
-            this.From.Scout -= this.Scout;
-            this.From.Light -= this.Light;
-            this.From.Heavy -= this.Heavy;
-            this.From.Ram -= this.Ram;
-            this.From.Catapult -= this.Catapult;
-            this.From.Noble -= this.Noble;
+            this.From.Troop.Spear -= this.Spear;
+            this.From.Troop.Sword -= this.Sword;
+            this.From.Troop.Axe -= this.Axe;
+            this.From.Troop.Scout -= this.Scout;
+            this.From.Troop.Light -= this.Light;
+            this.From.Troop.Heavy -= this.Heavy;
+            this.From.Troop.Ram -= this.Ram;
+            this.From.Troop.Catapult -= this.Catapult;
+            this.From.Troop.Noble -= this.Noble;
+
+            this.From.Troop.TotalSpear -= this.Spear;
+            this.From.Troop.TotalSword -= this.Sword;
+            this.From.Troop.TotalAxe -= this.Axe;
+            this.From.Troop.TotalScout -= this.Scout;
+            this.From.Troop.TotalLight -= this.Light;
+            this.From.Troop.TotalHeavy -= this.Heavy;
+            this.From.Troop.TotalRam -= this.Ram;
+            this.From.Troop.TotalCatapult -= this.Catapult;
+            this.From.Troop.TotalNoble -= this.Noble;
 
             session.Update(this);
             session.Update(this.From);
@@ -195,15 +205,15 @@ namespace beans
 
         public override void save(ISession session)
         {
-            if ((this.Spear > this.From.Spear) ||
-            (this.Sword > this.From.Sword) ||
-            (this.Axe > this.From.Axe) ||
-            (this.Scout > this.From.Scout) ||
-            (this.Light > this.From.Light) ||
-            (this.Heavy > this.From.Heavy) ||
-            (this.Ram > this.From.Ram) ||
-            (this.Catapult > this.From.Catapult) ||
-            (this.Noble > this.From.Noble))
+            if ((this.Spear > this.From.Troop.Spear) ||
+            (this.Sword > this.From.Troop.Sword) ||
+            (this.Axe > this.From.Troop.Axe) ||
+            (this.Scout > this.From.Troop.Scout) ||
+            (this.Light > this.From.Troop.Light) ||
+            (this.Heavy > this.From.Troop.Heavy) ||
+            (this.Ram > this.From.Troop.Ram) ||
+            (this.Catapult > this.From.Troop.Catapult) ||
+            (this.Noble > this.From.Troop.Noble))
                 throw new Exception("Không đủ quân");
 
             TroopType type = TroopType.Spear;
@@ -229,15 +239,25 @@ namespace beans
             this.StartTime = DateTime.Now;
             this.LandingTime = Map.LandingTime(type, this.From, this.To, this.StartTime);
 
-            this.From.Spear -= this.Spear;
-            this.From.Sword -= this.Sword;
-            this.From.Axe -= this.Axe;
-            this.From.Scout -= this.Scout;
-            this.From.Light -= this.Light;
-            this.From.Heavy -= this.Heavy;
-            this.From.Ram -= this.Ram;
-            this.From.Catapult -= this.Catapult;
-            this.From.Noble -= this.Noble;
+            this.From.Troop.Spear -= this.Spear;
+            this.From.Troop.Sword -= this.Sword;
+            this.From.Troop.Axe -= this.Axe;
+            this.From.Troop.Scout -= this.Scout;
+            this.From.Troop.Light -= this.Light;
+            this.From.Troop.Heavy -= this.Heavy;
+            this.From.Troop.Ram -= this.Ram;
+            this.From.Troop.Catapult -= this.Catapult;
+            this.From.Troop.Noble -= this.Noble;
+
+            this.From.Troop.TotalSpear -= this.Spear;
+            this.From.Troop.TotalSword -= this.Sword;
+            this.From.Troop.TotalAxe -= this.Axe;
+            this.From.Troop.TotalScout -= this.Scout;
+            this.From.Troop.TotalLight -= this.Light;
+            this.From.Troop.TotalHeavy -= this.Heavy;
+            this.From.Troop.TotalRam -= this.Ram;
+            this.From.Troop.TotalCatapult -= this.Catapult;
+            this.From.Troop.TotalNoble -= this.Noble;
 
             session.Save(this);
             session.Update(this.From);
@@ -266,6 +286,17 @@ namespace beans
                 newStation.Catapult = this.Catapult;
                 newStation.Noble = this.Noble;
 
+                this.To.Troop.TotalSpear += this.Spear;
+                this.To.Troop.TotalSword += this.Sword;
+                this.To.Troop.TotalAxe += this.Axe;
+                this.To.Troop.TotalLight += this.Light;
+                this.To.Troop.TotalHeavy += this.Heavy;
+                this.To.Troop.TotalScout += this.Scout;
+                this.To.Troop.TotalRam += this.Ram;
+                this.To.Troop.TotalCatapult += this.Catapult;
+                this.To.Troop.TotalNoble += this.Noble;
+
+                session.Update(this.To);
                 session.Save(newStation);
             }
             else
@@ -280,6 +311,18 @@ namespace beans
                 station.Ram += this.Ram;
                 station.Catapult += this.Catapult;
                 station.Noble += this.Noble;
+
+                this.To.Troop.TotalSpear += this.Spear;
+                this.To.Troop.TotalSword += this.Sword;
+                this.To.Troop.TotalAxe += this.Axe;
+                this.To.Troop.TotalLight += this.Light;
+                this.To.Troop.TotalHeavy += this.Heavy;
+                this.To.Troop.TotalScout += this.Scout;
+                this.To.Troop.TotalRam += this.Ram;
+                this.To.Troop.TotalCatapult += this.Catapult;
+                this.To.Troop.TotalNoble += this.Noble;
+
+                session.Update(this.To);
                 session.Save(station);
                 return;
             }

@@ -81,8 +81,8 @@
                                                     <img src="images/unit_spear.png" title="Spear fighter" alt="" />
                                                     <asp:TextBox ID="spear" runat="server" Width="50px">
                                                     </asp:TextBox>
-                                                    <span>(<a href="javascript:void(0);" onclick="insert('<% Response.Write(this.spear.ClientID); %>', 'spear')"><span id="spear"><% = this.village.Spear %></span></a></span>
-                                                    <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.spear.ClientID); %>', <% Response.Write(this.village.Spear.ToString()); %>)"><% Response.Write(this.village.Spear.ToString()); %></a>)</span>
+                                                    <span>(<a href="javascript:void(0);" onclick="insert('<% Response.Write(this.spear.ClientID); %>', 'spear')"><span id="spear"><% = this.village.Troop.Spear %></span></a></span>
+                                                    <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.spear.ClientID); %>', <% Response.Write(this.village.Troop.Spear.ToString()); %>)"><% Response.Write(this.village.Troop.Spear.ToString()); %></a>)</span>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -90,7 +90,7 @@
                                                     <img src="images/unit_sword.png" title="Swordsman" alt="" />
                                                     <asp:TextBox ID="sword" runat="server" Width="50px">
                                                     </asp:TextBox>
-                                                    <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.sword.ClientID); %>', <% Response.Write(this.village.Sword.ToString()); %>)"><% Response.Write(this.village.Sword.ToString()); %></a>)</span>
+                                                    <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.sword.ClientID); %>', <% Response.Write(this.village.Troop.Sword.ToString()); %>)"><% Response.Write(this.village.Troop.Sword.ToString()); %></a>)</span>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -98,7 +98,7 @@
                                                     <img src="images/unit_axe.png" title="Axeman" alt="" />
                                                     <asp:TextBox ID="axe" runat="server" Width="50px">
                                                     </asp:TextBox>
-                                                    <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.axe.ClientID); %>', <% Response.Write(this.village.Axe.ToString()); %>)"><% Response.Write(this.village.Axe.ToString()); %></a>)</span>
+                                                    <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.axe.ClientID); %>', <% Response.Write(this.village.Troop.Axe.ToString()); %>)"><% Response.Write(this.village.Troop.Axe.ToString()); %></a>)</span>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -112,7 +112,7 @@
                                                     <img src="images/unit_spy.png" title="Scout" alt="" />
                                                     <asp:TextBox ID="scout" runat="server" Width="50px">
                                                     </asp:TextBox>
-                                                    <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.scout.ClientID); %>', <% Response.Write(this.village.Scout.ToString()); %>)"><% Response.Write(this.village.Scout.ToString()); %></a>)</span>
+                                                    <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.scout.ClientID); %>', <% Response.Write(this.village.Troop.Scout.ToString()); %>)"><% Response.Write(this.village.Troop.Scout.ToString()); %></a>)</span>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -120,7 +120,7 @@
                                                     <img src="images/unit_light.png" title="Light cavalry" alt="" />
                                                     <asp:TextBox ID="light" runat="server" Width="50px">
                                                     </asp:TextBox>
-                                                    <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.light.ClientID); %>', <% Response.Write(this.village.Light.ToString()); %>)"><% Response.Write(this.village.Light.ToString()); %></a>)</span>
+                                                    <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.light.ClientID); %>', <% Response.Write(this.village.Troop.Light.ToString()); %>)"><% Response.Write(this.village.Troop.Light.ToString()); %></a>)</span>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -128,7 +128,7 @@
                                                     <img src="images/unit_heavy.png" title="Heavy cavalry" alt="" />
                                                     <asp:TextBox ID="heavy" runat="server" Width="50px">
                                                     </asp:TextBox>
-                                                    <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.heavy.ClientID); %>', <% Response.Write(this.village.Heavy.ToString()); %>)"><% Response.Write(this.village.Heavy.ToString()); %></a>)</span>
+                                                    <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.heavy.ClientID); %>', <% Response.Write(this.village.Troop.Heavy.ToString()); %>)"><% Response.Write(this.village.Troop.Heavy.ToString()); %></a>)</span>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -142,7 +142,7 @@
                                                     <img src="images/unit_ram.png" title="Ram" alt="" />
                                                     <asp:TextBox ID="ram" runat="server" Width="50px">
                                                     </asp:TextBox>
-                                                    <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.ram.ClientID); %>', <% Response.Write(this.village.Ram.ToString()); %>)"><% Response.Write(this.village.Ram.ToString()); %></a>)</span>
+                                                    <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.ram.ClientID); %>', <% Response.Write(this.village.Troop.Ram.ToString()); %>)"><% Response.Write(this.village.Troop.Ram.ToString()); %></a>)</span>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -150,7 +150,7 @@
                                                     <img src="images/unit_catapult.png" title="Catapult" alt="" />
                                                     <asp:TextBox ID="catapult" runat="server" Width="50px">
                                                     </asp:TextBox>
-                                                    <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.catapult.ClientID); %>', <% Response.Write(this.village.Catapult.ToString()); %>)"><% Response.Write(this.village.Catapult.ToString()); %></a>)</span>
+                                                    <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.catapult.ClientID); %>', <% Response.Write(this.village.Troop.Catapult.ToString()); %>)"><% Response.Write(this.village.Troop.Catapult.ToString()); %></a>)</span>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -164,7 +164,7 @@
                                                     <img src="images/unit_snob.png" title="Nobleman" alt="" />
                                                     <asp:TextBox ID="noble" runat="server" Width="50px">
                                                     </asp:TextBox>
-                                                    <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.noble.ClientID); %>', <% Response.Write(this.village.Noble.ToString()); %>)"><% Response.Write(this.village.Noble.ToString()); %></a>)</span>
+                                                    <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.noble.ClientID); %>', <% Response.Write(this.village.Troop.Noble.ToString()); %>)"><% Response.Write(this.village.Troop.Noble.ToString()); %></a>)</span>
                                                 </td>
                                             </tr>
                                         </tbody>

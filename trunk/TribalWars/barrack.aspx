@@ -15,7 +15,7 @@
                 </td>
                 <td>
                     <h2>
-                        <asp:Literal runat="server" Text="<%$ Resources:text, barrack %>" /> <asp:Literal runat="server" Text="<%$ Resources:text, level %>" /> <%Response.Write(this.village.Barracks); %></h2>
+                        <asp:Literal runat="server" Text="<%$ Resources:text, barrack %>" /> <asp:Literal runat="server" Text="<%$ Resources:text, level %>" /> <%Response.Write(this.village.Buildings.Barracks); %></h2>
                     <asp:Literal ID="Literal1" runat="server" Text="<%$ Resources:text, barrack_description %>" />
                 </td>
             </tr>
@@ -35,8 +35,11 @@
                 <th width="120">
                     <asp:Literal ID="Literal3" runat="server" Text="<%$ Resources:text, duration %>" />
                 </th>
-                <th width="500">
+                <th width="300">
                     <asp:Literal ID="Literal4" runat="server" Text="<%$ Resources:text, completion %>" />
+                </th>
+                <th width="120">
+                    <asp:Literal ID="Literal5" runat="server" Text="<%$ Resources:text, cancel %>" />
                 </th>
             </tr>
             <asp:Label ID="lblRecruiting" runat="server"></asp:Label>
@@ -85,10 +88,10 @@
                     1
                 </td>
                 <td>
-                    0:02:39
+                    <% = Functions.FormatTime(beans.Recruit.GetPrice(beans.TroopType.Spear, this.village[beans.BuildingType.Barracks]).BuildTime) %>
                 </td>
                 <td>
-                    <% Response.Write(this.village.Spear.ToString()); %>/<%Response.Write(this.village.InVillageSpear.ToString()); %>
+                    <% Response.Write(this.village.Troop.Spear.ToString()); %>/<%Response.Write(this.village.Troop.InVillageSpear.ToString()); %>
                 </td>
                 <td>
                     <asp:TextBox ID="txtSpear" runat="server" Width="33px"></asp:TextBox>
@@ -118,10 +121,10 @@
                     1
                 </td>
                 <td>
-                    0:03:53
+                    <% = Functions.FormatTime(beans.Recruit.GetPrice(beans.TroopType.Sword, this.village[beans.BuildingType.Barracks]).BuildTime) %>
                 </td>
                 <td>
-                    <% Response.Write(this.village.Sword.ToString()); %>/<%Response.Write(this.village.InVillageSword.ToString()); %>
+                    <% Response.Write(this.village.Troop.Sword.ToString()); %>/<%Response.Write(this.village.Troop.InVillageSword.ToString()); %>
                 </td>
                 <td>
                     <asp:TextBox ID="txtSword" runat="server" Width="33px"></asp:TextBox>
@@ -151,10 +154,10 @@
                     1
                 </td>
                 <td>
-                    0:03:26
+                    <% = Functions.FormatTime(beans.Recruit.GetPrice(beans.TroopType.Axe, this.village[beans.BuildingType.Barracks]).BuildTime) %>
                 </td>
                 <td>
-                    <% Response.Write(this.village.Axe.ToString()); %>/<%Response.Write(this.village.InVillageAxe.ToString()); %>
+                    <% Response.Write(this.village.Troop.Axe.ToString()); %>/<%Response.Write(this.village.Troop.InVillageAxe.ToString()); %>
                 </td>
                 <td>
                     <asp:TextBox ID="txtAxe" runat="server" Width="33px"></asp:TextBox>
