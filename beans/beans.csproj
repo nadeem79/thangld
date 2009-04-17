@@ -31,9 +31,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Commons, Version=0.4.2.8580, Culture=neutral, PublicKeyToken=44382d1b57473eda">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\document\NVelocity-0.4.2.8580\build\Commons.dll</HintPath>
+    </Reference>
     <Reference Include="NHibernate, Version=2.0.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Documents and Settings\DF.thangld\Desktop\bin\net-2.0\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NVelocity, Version=0.4.2.8580, Culture=neutral, PublicKeyToken=44382d1b57473eda">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\document\NVelocity-0.4.2.8580\build\NVelocity.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -91,6 +99,7 @@
     <Compile Include="SupportReport.cs" />
     <Compile Include="SupportWithdawalReport.cs" />
     <Compile Include="Test.cs" />
+    <Compile Include="Text.cs" />
     <Compile Include="TribeDiplomate.cs" />
     <Compile Include="TribeInvite.cs" />
     <Compile Include="TribePermission.cs" />
@@ -108,6 +117,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="VillageBuildingData.cs" />
+    <Compile Include="VillageReseachData.cs" />
+    <Compile Include="VillageResourcesData.cs" />
+    <Compile Include="VillageTroopData.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mapping\App.config">
@@ -171,6 +184,16 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mapping\Test.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mapping\Text.hbm.xml">
+      <Generator>nhibernate-mapping.xsd</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Templates\AttackReport.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\" />

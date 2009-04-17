@@ -243,4 +243,7 @@
   <data name="sword" xml:space="preserve">
     <value>lính kiếm</value>
   </data>
+  <data name="cancel" xml:space="preserve">
+    <value>Huỷ</value>
+  </data>
 </root>

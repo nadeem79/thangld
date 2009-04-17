@@ -13,7 +13,7 @@
                 <td>
                     <h2>
                         
-                        Trại ngựa cấp <% Response.Write(this.village.Stable); %></h2>
+                        Trại ngựa cấp <% Response.Write(this.village.Buildings.Stable); %></h2>
                     In the stables you can recruit cavalry. The higher its level the faster the recruitment
                     of the troops will be finished.
                 </td>
@@ -87,7 +87,7 @@
                     0:03:08
                 </td>
                 <td>
-                    <% Response.Write(this.village.Scout.ToString()); %>/<%Response.Write(this.village.InVillageScout.ToString()); %>
+                    <% Response.Write(this.village.Troop.Scout.ToString()); %>/<%Response.Write(this.village.Troop.InVillageScout.ToString()); %>
                 </td>
                 <td>
                     <asp:TextBox ID="txtScout" runat="server" Width="33px"></asp:TextBox>
@@ -120,7 +120,7 @@
                     0:06:15
                 </td>
                 <td>
-                    <% Response.Write(this.village.Light.ToString()); %>/<%Response.Write(this.village.InVillageLight.ToString()); %>
+                    <% Response.Write(this.village.Troop.Light.ToString()); %>/<%Response.Write(this.village.Troop.InVillageLight.ToString()); %>
                 </td>
                 <td>
                     <asp:TextBox ID="txtLight" runat="server" Width="33px"></asp:TextBox>
@@ -153,7 +153,7 @@
                     0:12:29
                 </td>
                 <td>
-                    <% Response.Write(this.village.Heavy.ToString()); %>/<%Response.Write(this.village.InVillageHeavy.ToString()); %>
+                    <% Response.Write(this.village.Troop.Heavy.ToString()); %>/<%Response.Write(this.village.Troop.InVillageHeavy.ToString()); %>
                 </td>
                 <td>
                     <asp:TextBox ID="txtHeavy" runat="server" Width="33px"></asp:TextBox>

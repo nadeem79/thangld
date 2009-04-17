@@ -12,86 +12,9 @@
     <many-to-one name="Owner" class="beans.Player, beans" lazy="proxy" column="owner" not-null="true" cascade="none" />
     <property name="Time" column="create_time" type="timestamp"/>
     <property name="Title" column="title" type="String" />
-    <property name="Description" column="description" type="String" />
     <property name="Unread" column="unread" type="Boolean" />
-
-    <subclass discriminator-value="1" name="beans.AttackReport, beans" lazy="false">
-      <property name="SpearSent" column="aspear" type="Int32" />
-      <property name="SwordSent" column="asword" type="Int32" />
-      <property name="AxeSent" column="aaxe" type="Int32" />
-      <property name="ScoutSent" column="ascout" type="Int32" />
-      <property name="LightSent" column="alight" type="Int32" />
-      <property name="HeavySent" column="aheavy" type="Int32" />
-      <property name="CatapultSent" column="acatapult" type="Int32" />
-      <property name="RamSent" column="aram" type="Int32" />
-      <property name="NobleSent" column="anoble" type="Int32" />
-
-      <property name="SpearReturnt" column="saspear" type="Int32" />
-      <property name="SwordReturnt" column="sasword" type="Int32" />
-      <property name="AxeReturnt" column="saaxe" type="Int32" />
-      <property name="ScoutReturnt" column="sascout" type="Int32" />
-      <property name="LightReturnt" column="salight" type="Int32" />
-      <property name="HeavyReturnt" column="saheavy" type="Int32" />
-      <property name="CatapultReturnt" column="sacatapult" type="Int32" />
-      <property name="RamReturnt" column="saram" type="Int32" />
-      <property name="NobleReturnt" column="sanoble" type="Int32" />
-
-      <property name="SpearDefense" column="dspear" type="Int32" />
-      <property name="SwordDefense" column="dsword" type="Int32" />
-      <property name="AxeDefense" column="daxe" type="Int32" />
-      <property name="ScoutDefense" column="dscout" type="Int32" />
-      <property name="LightDefense" column="dlight" type="Int32" />
-      <property name="HeavyDefense" column="dheavy" type="Int32" />
-      <property name="CatapultDefense" column="dcatapult" type="Int32" />
-      <property name="RamDefense" column="dram" type="Int32" />
-      <property name="NobleDefense" column="dnoble" type="Int32" />
-
-      <property name="SpearSurvived" column="sdspear" type="Int32" />
-      <property name="SwordSurvived" column="sdsword" type="Int32" />
-      <property name="AxeSurvived" column="sdaxe" type="Int32" />
-      <property name="ScoutSurvived" column="sdscout" type="Int32" />
-      <property name="LightSurvived" column="sdlight" type="Int32" />
-      <property name="HeavySurvived" column="sdheavy" type="Int32" />
-      <property name="CatapultSurvived" column="sdcatapult" type="Int32" />
-      <property name="RamSurvived" column="sdram" type="Int32" />
-      <property name="NobleSurvived" column="sdnoble" type="Int32" />
-
-      <property name="Iron" column="iron" type="Int32" />
-      <property name="Clay" column="clay" type="Int32" />
-      <property name="Wood" column="wood" type="Int32" />
-      <property name="LoyalBefore" column="loyalBefore" type="Int32" />
-      <property name="WallBefore" column="wallBefore" type="Int32" />
-      <property name="BuildingBefore" column="buildingBefore" type="Int32" />
-      <property name="LoyalAfter" column="loyalAfter" type="Int32" />
-      <property name="WallAfter" column="wallAfter" type="Int32" />
-      <property name="BuildingAfter" column="buildingAfter" type="Int32" />
-
-      <property name="SuccessAttack" column="winningside" type="Boolean" />
-      <property name="Luck" column="luck" type="Double" />
-      <property name="Morale" column="morale" type="Double" />
-
-      <many-to-one name="From" class="beans.Village, beans" column="village_1" not-null="true" lazy="proxy" />
-      <many-to-one name="To" class="beans.Village, beans" column="village_2" not-null="true" lazy="proxy" />
-      <property name="Building" column="building" type="beans.BuildingType, beans" />
-      
-    </subclass>
-
-    <subclass discriminator-value="6" name="beans.SupportReport, beans" lazy="false">
-      <property name="Spear" column="aspear" type="Int32" />
-      <property name="Sword" column="asword" type="Int32" />
-      <property name="Axe" column="aaxe" type="Int32" />
-      <property name="Scout" column="ascout" type="Int32" />
-      <property name="Light" column="alight" type="Int32" />
-      <property name="Heavy" column="aheavy" type="Int32" />
-      <property name="Catapult" column="acatapult" type="Int32" />
-      <property name="Ram" column="aram" type="Int32" />
-      <property name="Noble" column="anoble" type="Int32" />
-
-      <many-to-one name="From" class="beans.Village, beans" column="village_1" not-null="true" lazy="proxy" />
-      <many-to-one name="To" class="beans.Village, beans" column="village_2" not-null="true" lazy="proxy" />
-
-    </subclass>
-    
+    <property name="Type" column="type" type="beans.ReportType, beans" />
+    <many-to-one cascade="all" class="beans.Text, beans" column="text_id" lazy="proxy" fetch="join" name="Description" />
     
   </class>
 

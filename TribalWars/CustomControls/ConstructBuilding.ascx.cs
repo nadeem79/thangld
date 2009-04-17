@@ -62,7 +62,7 @@ public partial class CustomControls_ConstructBuilding : System.Web.UI.UserContro
         string strResult = "";
         if (enumCanBuild == BuildableStatus.JustDoIt)
         {
-            BuildPrice price = beans.Build.GetPrice(type, this.Village.GetTotalBuildingLevel(type, session), this.Village[beans.BuildingType.Headquarter]);
+            BuildPrice price = beans.Build.GetPrice(type, this.Village.GetTotalBuildingLevel(type, session) + 1, this.Village[beans.BuildingType.Headquarter]);
             strResult += "<td><img src=\"images/holz.png\" title=\"Wood\" alt=\"\" />" + price.Wood + "</td>";
             strResult += "<td><img src=\"images/lehm.png\" title=\"Clay\" alt=\"\" />" + price.Clay + "</td>";
             strResult += "<td><img src=\"images/eisen.png\" title=\"Iron\" alt=\"\" />" + price.Iron + "</td>";

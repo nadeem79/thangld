@@ -234,40 +234,49 @@ namespace beans
             switch (this.Troop)
             {
                 case TroopType.Spear:
-                    this.InVillage.Spear += total_troop;
-                    this.InVillage.InVillageSpear += total_troop;
+                    this.InVillage.Troop.Spear += total_troop;
+                    this.InVillage.Troop.InVillageSpear += total_troop;
+                    this.InVillage.Troop.TotalSpear += total_troop;
                     break;
                 case TroopType.Sword:
-                    this.InVillage.Sword += total_troop;
-                    this.InVillage.InVillageSword += total_troop;
+                    this.InVillage.Troop.Sword += total_troop;
+                    this.InVillage.Troop.InVillageSword += total_troop;
+                    this.InVillage.Troop.TotalSword += total_troop;
                     break;
                 case TroopType.Axe:
-                    this.InVillage.Axe += total_troop;
-                    this.InVillage.InVillageAxe += total_troop;
+                    this.InVillage.Troop.Axe += total_troop;
+                    this.InVillage.Troop.InVillageAxe += total_troop; 
+                    this.InVillage.Troop.TotalAxe += total_troop;
                     break;
                 case TroopType.Scout:
-                    this.InVillage.Scout += total_troop;
-                    this.InVillage.InVillageScout += total_troop;
+                    this.InVillage.Troop.Scout += total_troop;
+                    this.InVillage.Troop.InVillageScout += total_troop;
+                    this.InVillage.Troop.TotalScout += total_troop;
                     break;
                 case TroopType.Light:
-                    this.InVillage.Light += total_troop;
-                    this.InVillage.InVillageLight += total_troop;
+                    this.InVillage.Troop.Light += total_troop;
+                    this.InVillage.Troop.InVillageLight += total_troop;
+                    this.InVillage.Troop.TotalLight += total_troop;
                     break;
                 case TroopType.Heavy:
-                    this.InVillage.Heavy += total_troop;
-                    this.InVillage.InVillageHeavy += total_troop;
+                    this.InVillage.Troop.Heavy += total_troop;
+                    this.InVillage.Troop.InVillageHeavy += total_troop;
+                    this.InVillage.Troop.TotalHeavy += total_troop;
                     break;
                 case TroopType.Ram:
-                    this.InVillage.Ram += total_troop;
-                    this.InVillage.InVillageRam += total_troop;
+                    this.InVillage.Troop.Ram += total_troop;
+                    this.InVillage.Troop.InVillageRam += total_troop;
+                    this.InVillage.Troop.TotalRam += total_troop;
                     break;
                 case TroopType.Catapult:
-                    this.InVillage.Catapult += total_troop;
-                    this.InVillage.InVillageCatapult += total_troop;
+                    this.InVillage.Troop.Catapult += total_troop;
+                    this.InVillage.Troop.InVillageCatapult += total_troop;
+                    this.InVillage.Troop.TotalCatapult += total_troop;
                     break;
                 case TroopType.Nobleman:
-                    this.InVillage.Noble += total_troop;
-                    this.InVillage.InVillageNoble += total_troop;
+                    this.InVillage.Troop.Noble += total_troop;
+                    this.InVillage.Troop.InVillageNoble += total_troop;
+                    this.InVillage.Troop.TotalNoble += total_troop;
                     break;
                 default:
                     break;
@@ -290,9 +299,9 @@ namespace beans
         public void cancel(ISession session)
         {
             Price p = Recruit.GetPrice(this.Troop);
-            this.InVillage.Wood += (int)(this.Quantity * p.Wood * 0.9);
-            this.InVillage.Clay += (int)(this.Quantity * p.Clay * 0.9);
-            this.InVillage.Iron += (int)(this.Quantity * p.Iron * 0.9);
+            this.InVillage.Resources.Wood += (int)(this.Quantity * p.Wood * 0.9);
+            this.InVillage.Resources.Clay += (int)(this.Quantity * p.Clay * 0.9);
+            this.InVillage.Resources.Iron += (int)(this.Quantity * p.Iron * 0.9);
             session.Delete(this);
             session.Update(this.InVillage);
         }
@@ -301,39 +310,39 @@ namespace beans
             switch (troop)
             {
                 case TroopType.Spear:
-                    if (village.Barracks == 0 || village.ResearchSpear == 0)
+                    if (village.Buildings.Barracks == 0 || village.Research.ResearchSpear == 0)
                         return false;
                     break;
                 case TroopType.Sword:
-                    if (village.Barracks == 0 || village.ResearchSword == 0 || village.Smithy < 1)
+                    if (village.Buildings.Barracks == 0 || village.Research.ResearchSword == 0 || village.Buildings.Smithy < 1)
                         return false;
                     break;
                 case TroopType.Axe:
-                    if (village.Barracks == 0 || village.ResearchAxe == 0 || village.Smithy < 2)
+                    if (village.Buildings.Barracks == 0 || village.Research.ResearchAxe == 0 || village.Buildings.Smithy < 2)
                         return false;
                     break;
                 case TroopType.Scout:
-                    if (village.Stable == 0 || village.ResearchScout == 0)
+                    if (village.Buildings.Stable == 0 || village.Research.ResearchScout == 0)
                         return false;
                     break;
                 case TroopType.Light:
-                    if (village.Stable < 3 || village.ResearchLight == 0 || village.Stable < 3)
+                    if (village.Buildings.Stable < 3 || village.Research.ResearchLight == 0 || village.Buildings.Stable < 3)
                         return false;
                     break;
                 case TroopType.Heavy:
-                    if (village.Stable < 10 || village.Smithy < 15 || village.ResearchHeavy == 0)
+                    if (village.Buildings.Stable < 10 || village.Buildings.Smithy < 15 || village.Research.ResearchHeavy == 0)
                         return false;
                     break;
                 case TroopType.Ram:
-                    if (village.Workshop == 0 || village.ResearchRam == 0)
+                    if (village.Buildings.Workshop == 0 || village.Research.ResearchRam == 0)
                         return false;
                     break;
                 case TroopType.Catapult:
-                    if (village.Workshop < 2 || village.Smithy < 12 || village.ResearchCatapult == 0)
+                    if (village.Buildings.Workshop < 2 || village.Buildings.Smithy < 12 || village.Research.ResearchCatapult == 0)
                         return false;
                     break;
                 case TroopType.Nobleman:
-                    if (village.Academy == 0 || village.Smithy < 20)
+                    if (village.Buildings.Academy == 0 || village.Buildings.Smithy < 20)
                         return false;
                     break;
                 default:
@@ -341,7 +350,7 @@ namespace beans
                     break;
             }
 
-            return Recruit.CanRecruit(troop, quantity, village.Wood, village.Clay, village.Iron);
+            return Recruit.CanRecruit(troop, quantity, village.Resources.Wood, village.Resources.Clay, village.Resources.Iron);
 
         }
         public static bool CanRecruit(TroopType troop, int quantity, int wood, int clay, int iron) 

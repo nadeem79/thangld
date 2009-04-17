@@ -151,7 +151,7 @@ namespace beans
         #region Constructors
         #endregion
 
-        #region Methods
+        #region Static Member
         public static int Authentication(string username, string password, ISession session)
         {
             IQuery query = session.CreateQuery("select user.ID from Player as user where user.Username=:username and user.Password=:password");
@@ -163,6 +163,18 @@ namespace beans
             return lst[0];
 
         }
+
+        public static Village CheckVillage(int user, int village, ISession session)
+        {
+            IQuery query = session.CreateQuery("from Village v left join fetch v.Owner u where v.ID=:village_id and u.ID=:user_id");
+            query.SetInt32("village_id", village);
+            query.SetInt32("user_id", user);
+
+            return query.UniqueResult<Village>();
+
+        }
+
+
         #endregion
 
         #region Methods
@@ -314,7 +326,9 @@ namespace beans
                 this.Villages.Add(village);
                 village.LastUpdate = time;
                 village.Name = "Thành phố " + this.Username;
-                session.Save(village);
+                //session.Save(village);
+                village.Save(session);
+                return;
             }
             foreach (Village village in this.Villages)
                 village.Update(time, session);

@@ -53,11 +53,11 @@ public partial class stable : System.Web.UI.Page
             }
             else
             {
-                last_complete = last_complete.AddSeconds(Recruit.RecruitTime(recruits[i - 1].Troop, recruits[i - 1].Quantity, this.village.Stable));
+                last_complete = last_complete.AddSeconds(Recruit.RecruitTime(recruits[i - 1].Troop, recruits[i - 1].Quantity, this.village.Buildings.Stable));
             }
 
-            sRecruitCommands += Functions.FormatTime(Recruit.RecruitTime(recruits[i].Troop, recruits[i].Quantity, this.village.Stable)) + "</span></td>";
-            sRecruitCommands += "<td>" + last_complete.AddSeconds(Recruit.RecruitTime(recruits[i].Troop, recruits[i].Quantity, this.village.Stable)).ToString("dd/MM/yyyy hh:mm:ss") + "</td>";
+            sRecruitCommands += Functions.FormatTime(Recruit.RecruitTime(recruits[i].Troop, recruits[i].Quantity, this.village.Buildings.Stable)) + "</span></td>";
+            sRecruitCommands += "<td>" + last_complete.AddSeconds(Recruit.RecruitTime(recruits[i].Troop, recruits[i].Quantity, this.village.Buildings.Stable)).ToString("dd/MM/yyyy hh:mm:ss") + "</td>";
         }
         this.lblRecruiting.Text = sRecruitCommands;
         session.Close();

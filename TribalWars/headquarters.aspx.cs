@@ -17,6 +17,7 @@ public partial class headquarters : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        
         inPage master = (inPage)this.Master;
         village = master.CurrentVillage;
         ISession session = null;
@@ -52,9 +53,9 @@ public partial class headquarters : System.Web.UI.Page
                     trans.Commit();
                 }
             }
-            master.ClayLabel.Text = this.village.Clay.ToString();
-            master.WoodLabel.Text = this.village.Wood.ToString();
-            master.IronLabel.Text = this.village.Iron.ToString();
+            master.ClayLabel.Text = this.village.Resources.Clay.ToString();
+            master.WoodLabel.Text = this.village.Resources.Wood.ToString();
+            master.IronLabel.Text = this.village.Resources.Iron.ToString();
         }
         catch (Exception ex)
         {
@@ -114,6 +115,7 @@ public partial class headquarters : System.Web.UI.Page
         }
         catch(Exception ex)
         {
+            
             if (trans != null && !trans.WasCommitted)
                 trans.Rollback();
             ScriptManager.RegisterStartupScript(bttnChangeVillageName, bttnChangeVillageName.GetType(), "ShowException", "jQuery.facebox('" + ex.Message + "')", true);

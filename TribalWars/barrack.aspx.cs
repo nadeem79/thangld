@@ -74,11 +74,11 @@ public partial class barrack : System.Web.UI.Page
             }
             else
             {
-                last_complete = last_complete.AddSeconds(Recruit.RecruitTime(recruits[i - 1].Troop, recruits[i - 1].Quantity, this.village.Barracks));
+                last_complete = last_complete.AddSeconds(Recruit.RecruitTime(recruits[i - 1].Troop, recruits[i - 1].Quantity, this.village.Buildings.Barracks));
             }
 
-            sRecruitCommands += Functions.FormatTime(Recruit.RecruitTime(recruits[i].Troop, recruits[i].Quantity, this.village.Barracks)) + "</span></td>";
-            sRecruitCommands += "<td>" + last_complete.AddSeconds(Recruit.RecruitTime(recruits[i].Troop, recruits[i].Quantity, this.village.Barracks)).ToString("dd/MM/yyyy hh:mm:ss") +"</td>";
+            sRecruitCommands += Functions.FormatTime(Recruit.RecruitTime(recruits[i].Troop, recruits[i].Quantity, this.village.Buildings.Barracks)) + "</span></td>";
+            sRecruitCommands += "<td>" + last_complete.AddSeconds(Recruit.RecruitTime(recruits[i].Troop, recruits[i].Quantity, this.village.Buildings.Barracks)).ToString("dd/MM/yyyy hh:mm:ss") + "</td>";
             sRecruitCommands += "<td><a href=\"barracks.aspx?id=" + this.village.ID.ToString() + "&mode=cancel_recruit&recruit_id=" + recruits[i].ID.ToString() + "\">Huỷ</a></td>";
         }
         this.lblRecruiting.Text = sRecruitCommands;

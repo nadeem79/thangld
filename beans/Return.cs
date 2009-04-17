@@ -96,18 +96,18 @@ namespace beans
 
         public override void effect(ISession session)
         {
-            this.To.Spear += this.Spear;
-            this.To.Sword += this.Sword;
-            this.To.Axe += this.Axe;
-            this.To.Scout += this.Scout;
-            this.To.Light += this.Light;
-            this.To.Heavy += this.Heavy;
-            this.To.Ram += this.Ram;
-            this.To.Catapult += this.Catapult;
-            this.To.Noble += this.Noble;
-            this.To.Clay += this.Clay;
-            this.To.Wood += this.Wood;
-            this.To.Iron += this.Iron;
+            this.To.Troop.Spear += this.Spear;
+            this.To.Troop.Sword += this.Sword;
+            this.To.Troop.Axe += this.Axe;
+            this.To.Troop.Scout += this.Scout;
+            this.To.Troop.Light += this.Light;
+            this.To.Troop.Heavy += this.Heavy;
+            this.To.Troop.Ram += this.Ram;
+            this.To.Troop.Catapult += this.Catapult;
+            this.To.Troop.Noble += this.Noble;
+            this.To.Resources.Clay += this.Clay;
+            this.To.Resources.Wood += this.Wood;
+            this.To.Resources.Iron += this.Iron;
         }
 
         public override void cancel(ISession session)

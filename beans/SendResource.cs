@@ -48,21 +48,21 @@ namespace beans
 
         public override void save(ISession session)
         {
-            if ((this.Clay > this.From.Clay) || (this.Wood > this.From.Wood) || (this.Iron > this.From.Iron))
+            if ((this.Clay > this.From.Resources.Clay) || (this.Wood > this.From.Resources.Wood) || (this.Iron > this.From.Resources.Iron))
                 throw new Exception("Không đủ tài nguyên");
 
-            this.From.Clay -= this.Clay;
-            this.From.Wood -= this.Wood;
-            this.From.Iron -= this.Iron;
+            this.From.Resources.Clay -= this.Clay;
+            this.From.Resources.Wood -= this.Wood;
+            this.From.Resources.Iron -= this.Iron;
             session.Save(this);
             session.Update(this.From);
         }
 
         public override void effect(ISession session)
         {
-            this.To.Clay += this.Clay;
-            this.To.Wood += this.Wood;
-            this.To.Iron += this.Iron;
+            this.To.Resources.Clay += this.Clay;
+            this.To.Resources.Wood += this.Wood;
+            this.To.Resources.Iron += this.Iron;
         }
 
         public override void cancel(ISession session)

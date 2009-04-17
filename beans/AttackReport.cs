@@ -9,10 +9,7 @@ namespace beans
     {
         public AttackReport() { }
 
-        public override ReportType Type
-        {
-            get { return ReportType.Attack; }
-        }
+        
 
         
 

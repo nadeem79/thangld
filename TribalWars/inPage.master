@@ -1,9 +1,8 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="inPage.master.cs" Inherits="inPage" EnableViewState="true" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="inPage.master.cs" Inherits="inPage"
+    EnableViewState="true" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-
-<%@ Register src="Shoutbox.ascx" tagname="Shoutbox" tagprefix="uc1" %>
-
+<%@ Register Src="Shoutbox.ascx" TagName="Shoutbox" TagPrefix="uc1" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
@@ -17,7 +16,9 @@
     <link rel="stylesheet" type="text/css" href="css/facebox.css" />
 
     <script src="js/jquery.js" type="text/javascript"></script>
+
     <script src="js/facebox.js" type="text/javascript"></script>
+
     <script src="js/script.js" type="text/javascript"></script>
 
 </head>
@@ -25,9 +26,8 @@
     <form id="form1" runat="server">
     <telerik:RadScriptManager ID="RadScriptManager1" runat="server">
     </telerik:RadScriptManager>
-    <telerik:RadFormDecorator ID="RadFormDecorator1" runat="server" DecoratedControls="All" Skin="Vista" />
-    
-
+    <telerik:RadFormDecorator ID="RadFormDecorator1" runat="server" DecoratedControls="All"
+        Skin="Vista" />
     <div class="top_background">
     </div>
     <div style="text-align: center;">
@@ -35,136 +35,222 @@
             text-align: left;">
             <tr>
                 <td>
-                    
-                    <table class="menu nowrap" width="840">
-                        <tr id="menu_row">
+                    <telerik:RadMenu ID="RadToolBar1" runat="server" 
+                        DataMember="this.CurrentVillage">
+                        <Items>
+                            <telerik:RadMenuItem runat="server" NavigateUrl="~/logout.aspx" Text="Thoát game">
+                            </telerik:RadMenuItem>
+                            <telerik:RadMenuItem runat="server" Text="Shoutbox">
+                            </telerik:RadMenuItem>
+                            <telerik:RadMenuItem runat="server" Text="Tài khoản" NavigateUrl="user_profile.aspx">
+                                <Items>
+                                    <telerik:RadMenuItem runat="server" Text="Tài khoản" NavigateUrl="user_profile.aspx?type=0"
+                                        ValidationGroup="menu">
+                                    </telerik:RadMenuItem>
+                                    <telerik:RadMenuItem runat="server" Text="Email" NavigateUrl="user_profile.aspx?type=1"
+                                        ValidationGroup="menu">
+                                    </telerik:RadMenuItem>
+                                    <telerik:RadMenuItem runat="server" Text="Mật khẩu" NavigateUrl="user_profile.aspx?type=2"
+                                        ValidationGroup="menu">
+                                    </telerik:RadMenuItem>
+                                </Items>
+                            </telerik:RadMenuItem>
+                            <telerik:RadMenuItem runat="server" Text="Bang hội" NavigateUrl="tribe.aspx">
+                                <Items>
+                                    <telerik:RadMenuItem runat="server" Text="Thông tin" NavigateUrl="tribe.aspx?page=0"
+                                        ValidationGroup="menu">
+                                    </telerik:RadMenuItem>
+                                    <telerik:RadMenuItem runat="server" Text="Thành viên" NavigateUrl="tribe.aspx?page=1"
+                                        ValidationGroup="menu">
+                                    </telerik:RadMenuItem>
+                                    <telerik:RadMenuItem runat="server" Text="Ngoại giao" NavigateUrl="tribe.aspx?page=2"
+                                        ValidationGroup="menu">
+                                    </telerik:RadMenuItem>
+                                    <telerik:RadMenuItem runat="server" Text="Diễn đàn bang" NavigateUrl="tribe.aspx?page=3"
+                                        ValidationGroup="menu">
+                                    </telerik:RadMenuItem>
+                                </Items>
+                            </telerik:RadMenuItem>
+                            <telerik:RadMenuItem runat="server" Text="Báo cáo" NavigateUrl="list_report.aspx">
+                                <Items>
+                                    <telerik:RadMenuItem runat="server" Text="Tất cả" NavigateUrl="list_report.aspx?type=0"
+                                        ValidationGroup="menu">
+                                    </telerik:RadMenuItem>
+                                    <telerik:RadMenuItem runat="server" Text="Tấn công" NavigateUrl="list_report.aspx?type=1"
+                                        ValidationGroup="menu">
+                                    </telerik:RadMenuItem>
+                                    <telerik:RadMenuItem runat="server" Text="Phòng thủ" NavigateUrl="list_report.aspx?type=2"
+                                        ValidationGroup="menu">
+                                    </telerik:RadMenuItem>
+                                    <telerik:RadMenuItem runat="server" Text="Hỗ trợ" NavigateUrl="list_report.aspx?type=3"
+                                        ValidationGroup="menu">
+                                    </telerik:RadMenuItem>
+                                    <telerik:RadMenuItem runat="server" Text="Buôn bán" NavigateUrl="list_report.aspx?type=4"
+                                        ValidationGroup="menu">
+                                    </telerik:RadMenuItem>
+                                </Items>
+                            </telerik:RadMenuItem>
+                        </Items>
+                    </telerik:RadMenu>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div style="text-align: center;">
+        <center>
+            <table width="855">
+                <tr>
+                    <td>
+                        <telerik:RadToolBar ID="menu" runat="server">
+                            <Items>
+                                <telerik:RadToolBarButton runat="server" ImageUrl="~/images/main.png" NavigateUrl="~/headquarters.aspx"
+                                    Text="Nhà chính">
+                                </telerik:RadToolBarButton>
+                                <telerik:RadToolBarButton runat="server" ImageUrl="~/images/barracks.png" NavigateUrl="~/barrack.aspx"
+                                    Text="Bộ binh">
+                                </telerik:RadToolBarButton>
+                                <telerik:RadToolBarButton runat="server" ImageUrl="~/images/stable.png" NavigateUrl="~/stable.aspx"
+                                    Text="Kị binh">
+                                </telerik:RadToolBarButton>
+                                <telerik:RadToolBarButton runat="server" ImageUrl="~/images/garage.png" NavigateUrl="~/workshop.aspx"
+                                    Text="Nhà xe">
+                                </telerik:RadToolBarButton>
+                                <telerik:RadToolBarButton runat="server" ImageUrl="~/images/snob.png" NavigateUrl="~/academy.aspx"
+                                    Text="Trường đại học">
+                                </telerik:RadToolBarButton>
+                                <telerik:RadToolBarButton runat="server" ImageUrl="~/images/smith.png" NavigateUrl="~/smithy.aspx"
+                                    Text="Viện nghiên cứu">
+                                </telerik:RadToolBarButton>
+                                <telerik:RadToolBarButton runat="server" ImageUrl="~/images/place.png" NavigateUrl="~/rally.aspx"
+                                    Text="Trại lính">
+                                </telerik:RadToolBarButton>
+                                <telerik:RadToolBarButton runat="server" ImageUrl="~/images/market.png" NavigateUrl="~/market.aspx"
+                                    Text="Chợ">
+                                </telerik:RadToolBarButton>
+                                <telerik:RadToolBarButton runat="server" ImageUrl="~/images/wood.png" NavigateUrl="~/wood.aspx"
+                                    Text="Trại gỗ">
+                                </telerik:RadToolBarButton>
+                                <telerik:RadToolBarButton runat="server" ImageUrl="~/images/stone.png" NavigateUrl="~/clay.aspx"
+                                    Text="Lò gạch">
+                                </telerik:RadToolBarButton>
+                                <telerik:RadToolBarButton runat="server" ImageUrl="~/images/iron.png" NavigateUrl="~/iron.aspx"
+                                    Text="Mỏ kim loại">
+                                </telerik:RadToolBarButton>
+                                <telerik:RadToolBarButton runat="server" ImageUrl="~/images/farm.png" NavigateUrl="~/farm.aspx"
+                                    Text="Khu dân cư">
+                                </telerik:RadToolBarButton>
+                                <telerik:RadToolBarButton runat="server" ImageUrl="~/images/storage.png" NavigateUrl="~/warehouse.aspx"
+                                    Text="Nhà kho">
+                                </telerik:RadToolBarButton>
+                                <telerik:RadToolBarButton runat="server" ImageUrl="~/images/hide.png" NavigateUrl="~/hidden.aspx"
+                                    Text="Kho tàng">
+                                </telerik:RadToolBarButton>
+                                <telerik:RadToolBarButton runat="server" ImageUrl="~/images/wall.png" NavigateUrl="~/wall.aspx"
+                                    Text="Tường thành">
+                                </telerik:RadToolBarButton>
+                            </Items>
+                        </telerik:RadToolBar>
+                        </ContentTemplate></telerik:RadDock> </telerik:RadDockZone>
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </div>
+    <div style="text-align: center;">
+        <table align="center" width="840" cellspacing="0" style="padding: 0; margin-bottom: 4px">
+            <tr>
+                <td>
+                    <table class="navi-border" style="border-collapse: collapse;">
+                        <tr>
                             <td>
-                                <a href="logout.aspx">Log out</a>
+                                <table class="menu nowrap" style="width: 100%;">
+                                    <tr id="menu_row2">
+                                        <td>
+                                            <a href="overview.aspx?id=<%Response.Write(this.CurrentVillage.ID); %>">Overview</a>
+                                        </td>
+                                        <td>
+                                            <a href="map.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>">Bản đồ</a>
+                                        </td>
+                                        <td class="no_hover">
+                                        </td>
+                                        <td style="white-space: normal;">
+                                            <a href='village.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>'><span id="city_name">
+                                                <% Response.Write(this.CurrentVillage.Name); %></span></a> (<% Response.Write(this.CurrentVillage.X.ToString("000")); %>|<% Response.Write(this.CurrentVillage.Y.ToString("000")); %>)
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
+                        </tr>
+                    </table>
+                </td>
+                <td align="right">
+                    <table align="right" class="navi-border" style="border-collapse: collapse;">
+                        <tr>
                             <td>
-                                <asp:Label ID="lblToogleShoutbox" runat="server"></asp:Label>
+                                <table class="box" cellspacing="0">
+                                    <tr style="height: 20px;">
+                                        <td>
+                                            <a href="wood.aspx?id=<% Response.Write(this.CurrentVillage.ID.ToString()); %>">
+                                                <img src="images/holz.png" /></a>
+                                        </td>
+                                        <td>
+                                            <asp:Label ID="lblWood" runat="server"></asp:Label>
+                                        </td>
+                                        <td>
+                                            <a href="clay.aspx?id=<% Response.Write(this.CurrentVillage.ID.ToString()); %>">
+                                                <img src="images/lehm.png" /></a>
+                                        </td>
+                                        <td>
+                                            <asp:Label ID="lblClay" runat="server"></asp:Label>
+                                        </td>
+                                        <td>
+                                            <a href="clay.aspx?id=<% Response.Write(this.CurrentVillage.ID.ToString()); %>">
+                                                <img src="images/eisen.png" /></a>
+                                        </td>
+                                        <td>
+                                            <asp:Label ID="lblIron" runat="server"></asp:Label>
+                                        </td>
+                                        <td style="border-left: dotted 1px;">
+                                            <a href="resources.aspx?id=<% Response.Write(this.CurrentVillage.ID.ToString()); %>">
+                                                <img src="images/res.png" /></a>
+                                        </td>
+                                        <td>
+                                            <% Response.Write(this.CurrentVillage.MaxResources.ToString()); %>
+                                            <asp:Label ID="resource" runat="server"></asp:Label>
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
-                            <td>
-                                <a href="help2.php" target="_blank">Help</a>
-                            </td>
-                            <td>
-                                <a href="user_profile.aspx?id=<%Response.Write(this.CurrentVillage.ID); %>">Tài khoản</a>
-                            </td>
-                            <td>
-                                <a href="/game.php?village=51549&amp;screen=premium">Premium</a>
-                            </td>
-                            <td>
-                                <a href="/game.php?village=51549&amp;screen=ranking">Ranking</a> (119.|498<span class="grey">.</span>943
-                                P)
-                            </td>
-                            <td>
-                                <asp:HyperLink ID="lTribe" runat="server">Bang hội</asp:HyperLink>
-                            </td>
-                            <td>
-                                <a href="list_report.aspx?id=<% Response.Write(this.CurrentVillage.ID.ToString()); %>">Thông báo</a>
-                            </td>
-                            <td>
-                                <a href="mail.aspx?id=<% Response.Write(this.CurrentVillage.ID.ToString()); %>">Mail</a>
-                            </td>
-                            <td>
-                                <a href="friends.aspx?id=<% Response.Write(this.CurrentVillage.ID.ToString()); %>">Friends</a>
+                        </tr>
+                    </table>
+                </td>
+                <td align="center">
+                    <table class="navi-border" style="border-collapse: collapse;">
+                        <tr>
+                            <td style="margin: 0; padding: 0;">
+                                <table class="box" cellspacing="0" style="margin: 0; padding: 0;">
+                                    <tr style="margin: 0; padding: 0;">
+                                        <td width="18" height="20" align="center" style="margin: 0; padding: 0;">
+                                            <a href="farm.aspx?id=<% Response.Write(this.CurrentVillage.ID.ToString()); %>">
+                                                <img src="images/face.png" /></a>
+                                        </td>
+                                        <td align="center" style="margin: 0; padding: 0;">
+                                            <% Response.Write(this.CurrentVillage.MaxPopulation.ToString()); %>
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
                         </tr>
                     </table>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <asp:Label ID="incoming" runat="server"></asp:Label>
+                </td>
+            </tr>
         </table>
     </div>
-    <hr width="840" size="2" />
-    <table align="center" width="840" cellspacing="0" style="padding: 0; margin-bottom: 4px">
-        <tr>
-            <td>
-                <table class="navi-border" style="border-collapse: collapse;">
-                    <tr>
-                        <td>
-                            <table class="menu nowrap" style="width: 100%;">
-                                <tr id="menu_row2">
-                                    <td>
-                                        <a href="overview.aspx?id=<%Response.Write(this.CurrentVillage.ID); %>">Overview</a>
-                                    </td>
-                                    <td>
-                                        <a href="map.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>">Bản đồ</a>
-                                    </td>
-                                    <td class="no_hover">
-                                    </td>
-                                    <td style="white-space: normal;">
-                                        <a href='village.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>'><span id="city_name"><% Response.Write(this.CurrentVillage.Name); %></span></a>
-                                        (<% Response.Write(this.CurrentVillage.X.ToString("000")); %>|<% Response.Write(this.CurrentVillage.Y.ToString("000")); %>)
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-            <td align="right">
-                <table align="right" class="navi-border" style="border-collapse: collapse;">
-                    <tr>
-                        <td>
-                            <table class="box" cellspacing="0">
-                                <tr style="height: 20px;">
-                                    <td>
-                                        <a href="wood.aspx?id=<% Response.Write(this.CurrentVillage.ID.ToString()); %>"><img src="images/holz.png" /></a>
-                                    </td>
-                                    <td>
-                                        <asp:Label ID="lblWood" runat="server"></asp:Label>
-                                    </td>
-                                    <td>
-                                        <a href="clay.aspx?id=<% Response.Write(this.CurrentVillage.ID.ToString()); %>"><img src="images/lehm.png" /></a>
-                                    </td>
-                                    <td>
-                                        <asp:Label ID="lblClay" runat="server"></asp:Label>
-                                    </td>
-                                    <td>
-                                        <a href="clay.aspx?id=<% Response.Write(this.CurrentVillage.ID.ToString()); %>"><img src="images/eisen.png" /></a>
-                                    </td>
-                                    <td>
-                                        <asp:Label ID="lblIron" runat="server"></asp:Label>
-                                    </td>
-                                    <td style="border-left: dotted 1px;">
-                                        <a href="resources.aspx?id=<% Response.Write(this.CurrentVillage.ID.ToString()); %>"><img src="images/res.png" /></a>
-                                    </td>
-                                    <td>
-                                        <% Response.Write(this.CurrentVillage.MaxResources.ToString()); %>
-                                        <asp:Label ID="resource" runat="server"></asp:Label>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-            <td align="center">
-                <table class="navi-border" style="border-collapse: collapse;">
-                    <tr>
-                        <td style="margin: 0; padding: 0;">
-                            <table class="box" cellspacing="0" style="margin: 0; padding: 0;">
-                                <tr style="margin: 0; padding: 0;">
-                                    <td width="18" height="20" align="center" style="margin: 0; padding: 0;">
-                                        <a href="farm.aspx?id=<% Response.Write(this.CurrentVillage.ID.ToString()); %>"><img src="images/face.png" /></a>
-                                    </td>
-                                    <td align="center" style="margin: 0; padding: 0;">
-                                        <% Response.Write(this.CurrentVillage.MaxPopulation.ToString()); %>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-            
-        </tr>
-        <tr>
-            <td>
-                <asp:Label ID="incoming" runat="server"></asp:Label>
-            </td>
-        </tr>
-    </table>
     <div>
         <table align="center">
             <tr>
@@ -183,10 +269,12 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td align="right" style="font-size:11px;">
+                                                    <td align="right" style="font-size: 11px;">
                                                         trang web được tạo trong
-                                                        <asp:Label ID="delay" runat="server"></asp:Label>ms Thời gian: 
-                                                        <% Response.Write(DateTime.Now.ToString("dd/MM/yyyy")); %> <span class="increaseTimer"><% Response.Write(DateTime.Now.ToString("hh:mm:ss")); %></span>
+                                                        <asp:Label ID="delay" runat="server"></asp:Label>ms Thời gian:
+                                                        <% Response.Write(DateTime.Now.ToString("dd/MM/yyyy")); %>
+                                                        <span class="increaseTimer">
+                                                            <% Response.Write(DateTime.Now.ToString("hh:mm:ss")); %></span>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -200,14 +288,14 @@
             </tr>
         </table>
     </div>
-    
+
     <script language="javascript" type="text/javascript">
-        <% if (this.CurrentVillage.Clay < this.CurrentVillage.MaxResources)
+        <% if (this.CurrentVillage.Resources.Clay < this.CurrentVillage.MaxResources)
        { %>
         production("<% = this.lblClay.ClientID %>", <% Response.Write(this.CurrentVillage.SecondPerResourceUnit(beans.ResourcesType.Clay)); %>*1000);
-        <%}  if (this.CurrentVillage.Wood < this.CurrentVillage.MaxResources) { %>
+        <%}  if (this.CurrentVillage.Resources.Wood < this.CurrentVillage.MaxResources) { %>
         production("<% = this.lblWood.ClientID %>", <% Response.Write(this.CurrentVillage.SecondPerResourceUnit(beans.ResourcesType.Wood)); %>*1000);
-        <%}  if (this.CurrentVillage.Iron < this.CurrentVillage.MaxResources) { %>
+        <%}  if (this.CurrentVillage.Resources.Iron < this.CurrentVillage.MaxResources) { %>
         production("<% = this.lblIron.ClientID %>", <% Response.Write(this.CurrentVillage.SecondPerResourceUnit(beans.ResourcesType.Iron)); %>*1000);
         <%} %>
         attackTimer();
@@ -215,5 +303,5 @@
     </script>
 
     </form>
-    </body>
+</body>
 </html>

@@ -2,23 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NHibernate;
 
 namespace beans
 {
     public class Stationed : IdentityObject
     {
         #region Variables
-        private Village atVillage, fromVillage;
-
-        private int scoutSent;
-        private int spearSent;
-        private int swordSent;
-        private int axeSent;
-        private int lightSent;
-        private int heavySent;
-        private int ramSent;
-        private int catapultSent;
-        private int nobleSent;
         
         #endregion
 
@@ -26,68 +16,59 @@ namespace beans
 
         public virtual Village FromVillage
         {
-            get { return fromVillage; }
-            set { fromVillage = value; }
+            get;
+            set;
         }
-
         public virtual Village AtVillage
         {
-            get { return atVillage; }
-            set { atVillage = value; }
+            get;
+            set;
         }
 
         public virtual int Spear
         {
-            get { return spearSent; }
-            set { spearSent = value; }
+            get;
+            set;
         }
-
         public virtual int Sword
         {
-            get { return swordSent; }
-            set { swordSent = value; }
+            get;
+            set;
         }
-
         public virtual int Axe
         {
-            get { return axeSent; }
-            set { axeSent = value; }
+            get;
+            set;
         }
-
         public virtual int Scout
         {
-            get { return scoutSent; }
-            set { scoutSent = value; }
+            get;
+            set;
         }
-
         public virtual int Light
         {
-            get { return lightSent; }
-            set { lightSent = value; }
+            get;
+            set;
         }
-
         public virtual int Heavy
         {
-            get { return heavySent; }
-            set { heavySent = value; }
+            get;
+            set;
         }
-
         public virtual int Ram
         {
-            get { return ramSent; }
-            set { ramSent = value; }
+            get;
+            set;
         }
-
         public virtual int Catapult
         {
-            get { return catapultSent; }
-            set { catapultSent = value; }
+            get;
+            set;
         }
-
         public virtual int Noble
         {
-            get { return nobleSent; }
-            set { nobleSent = value; }
+            get;
+            set;
         }
 
         #endregion
@@ -98,6 +79,25 @@ namespace beans
 
         }
 
+        #endregion
+
+        #region Methods
+        public void Delete(ISession session)
+        {
+            this.AtVillage.Troop.TotalSpear -= this.Spear;
+            this.AtVillage.Troop.TotalSword -= this.Sword;
+            this.AtVillage.Troop.TotalAxe -= this.Axe;
+            this.AtVillage.Troop.TotalScout -= this.Scout;
+            this.AtVillage.Troop.TotalLight -= this.Light;
+            this.AtVillage.Troop.TotalHeavy -= this.Heavy;
+            this.AtVillage.Troop.TotalRam -= this.Ram;
+            this.AtVillage.Troop.TotalCatapult -= this.Catapult;
+            this.AtVillage.Troop.TotalNoble -= this.Noble;
+
+            session.Update(this.AtVillage);
+            session.Delete(this);
+            
+        }
         #endregion
     }
 }

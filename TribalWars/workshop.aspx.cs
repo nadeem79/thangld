@@ -38,8 +38,8 @@ public partial class workshop : System.Web.UI.Page
             if (i == 0)
                 sRecruitCommands += "<span class='timer'>";
 
-            sRecruitCommands += (Functions.FormatTime(recruits[i].LastUpdate.AddSeconds(Recruit.RecruitTime(recruits[i].Troop, recruits[i].Quantity, this.village.Barracks)) - DateTime.Now)).ToString() + "</span></td>";
-            sRecruitCommands += "<td>" + recruits[i].LastUpdate.AddSeconds(Recruit.RecruitTime(recruits[i].Troop, recruits[i].Quantity, this.village.Barracks)) + "</td>";
+            sRecruitCommands += (Functions.FormatTime(recruits[i].LastUpdate.AddSeconds(Recruit.RecruitTime(recruits[i].Troop, recruits[i].Quantity, this.village.Buildings.Barracks)) - DateTime.Now)).ToString() + "</span></td>";
+            sRecruitCommands += "<td>" + recruits[i].LastUpdate.AddSeconds(Recruit.RecruitTime(recruits[i].Troop, recruits[i].Quantity, this.village.Buildings.Barracks)) + "</td>";
         }
         this.lblRecruiting.Text = sRecruitCommands;
         session.Close();

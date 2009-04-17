@@ -297,7 +297,7 @@ namespace beans
             set { this.luck = value; }
         }
 
-        public override ReportType Type
+        public ReportType Type
         {
             get { return ReportType.Attack; }
         }

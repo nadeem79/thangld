@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
 
-  <class name ="beans.Village, beans" table="villages" lazy="false">
+  <class name ="beans.Village, beans" table="villages_common" lazy="false">
 
     <id name="ID" column="id" type="Int32">
       <generator class="identity"/>
@@ -11,6 +11,22 @@
     <property name="X" column="x" type="Int32" />
     <property name="Y" column="y" type="Int32" />
     <many-to-one name="Owner" class="beans.Player, beans" column="userid" not-null="false" fetch="join" cascade="none" />
+    <property name="Points" column="points" type="Int32" />
+    <property name="Loyal" column="loyal" type="Int32" />
+    <property name="LastUpdateTimestamp" column="last_update" type="Int64" not-null="true" />
+    <one-to-one name="Buildings" class="beans.VillageBuildingData, beans" cascade="all" />
+    <one-to-one name="Resources" class="beans.VillageResourcesData, beans" cascade="all" />
+    <one-to-one name="Research" class="beans.VillageReseachData, beans" cascade="all" />
+    <one-to-one name="Troop" class="beans.VillageTroopData, beans" cascade="all" />
+    
+  </class>
+
+  <class name ="beans.VillageBuildingData, beans" table="villages_building" lazy="true">
+    <id name="ID" column="id">
+      <generator class="foreign">
+        <param name="property">Village</param>
+      </generator>
+    </id>
     <property name="Headquarter" column="headquarter" type="Int32" />
     <property name="Barracks" column="barracks" type="Int32" />
     <property name="Stable" column="stable" type="Int32" />
@@ -25,31 +41,17 @@
     <property name="Warehouse" column="storage" type="Int32" />
     <property name="Farm" column="farm" type="Int32" />
     <property name="HidingPlace" column="hide" type="Int32" />
-    <property name="Points" column="points" type="Int32" />
-    <property name="Spear" column="spear" type="Int32" />
-    <property name="Sword" column="sword" type="Int32" />
-    <property name="Axe" column="axe" type="Int32" />
-    <property name="Scout" column="scout" type="Int32" />
-    <property name="Light" column="light" type="Int32" />
-    <property name="Heavy" column="heavy" type="Int32" />
-    <property name="Catapult" column="catapult" type="Int32" />
-    <property name="Ram" column="ram" type="Int32" />
-    <property name="Noble" column="noble" type="Int32" />
-    <property name="InVillageSpear" column="in_spear" type="Int32" />
-    <property name="InVillageSword" column="in_sword" type="Int32" />
-    <property name="InVillageAxe" column="in_axe" type="Int32" />
-    <property name="InVillageScout" column="in_scout" type="Int32" />
-    <property name="InVillageLight" column="in_light" type="Int32" />
-    <property name="InVillageHeavy" column="in_heavy" type="Int32" />
-    <property name="InVillageCatapult" column="in_catapult" type="Int32" />
-    <property name="InVillageRam" column="in_ram" type="Int32" />
-    <property name="InVillageNoble" column="in_noble" type="Int32" />
-    <property name="Loyal" column="loyal" type="Int32" />
-    <property name="LastUpdateTimestamp" column="last_update" type="Int64" not-null="true" />
-    <property name="Clay" column="clay" type="Int32" />
-    <property name="Wood" column="wood" type="Int32" />
-    <property name="Iron" column="iron" type="Int32" />
+    <property name="Wall" column="wall" type="Int32" />
 
+    <one-to-one name="Village" class="beans.Village, beans" constrained="true" property-ref="Buildings" foreign-key="id" />
+  </class>
+
+  <class name ="beans.VillageReseachData, beans" table="villages_research" lazy="true">
+    <id name="ID" column="id" type="Int32">
+      <generator class="foreign">
+        <param name="property">Village</param>
+      </generator>
+    </id>
     <property name="ResearchSpear" column="unit_spear_tec_level" type="Int32" />
     <property name="ResearchSword" column="unit_sword_tec_level" type="Int32" />
     <property name="ResearchAxe" column="unit_axe_tec_level" type="Int32" />
@@ -59,6 +61,59 @@
     <property name="ResearchRam" column="unit_ram_tec_level" type="Int32" />
     <property name="ResearchCatapult" column="unit_catapult_tec_level" type="Int32" />
 
+    <one-to-one name="Village" class="beans.Village, beans" constrained="true" property-ref="Research" />
+  </class>
+
+  <class name ="beans.VillageResourcesData, beans" table="villages_resources" lazy="true">
+    <id name="ID" column="id" type="Int32">
+      <generator class="foreign">
+        <param name="property">Village</param>
+      </generator>
+    </id>
+    <property name="Clay" column="clay" type="Int32" />
+    <property name="Wood" column="wood" type="Int32" />
+    <property name="Iron" column="iron" type="Int32" />
+
+    <one-to-one name="Village" class="beans.Village, beans" foreign-key="id" constrained="true"/>
+    
+  </class>
+
+  <class name ="beans.VillageTroopData, beans" table="villages_troop" lazy="true">
+    <id name="ID" column="id" type="Int32">
+      <generator class="foreign">
+        <param name="property">Village</param>
+      </generator>
+    </id>
+    <property name="Spear" column="spear" type="Int32" />
+    <property name="Sword" column="sword" type="Int32" />
+    <property name="Axe" column="axe" type="Int32" />
+    <property name="Scout" column="scout" type="Int32" />
+    <property name="Light" column="light" type="Int32" />
+    <property name="Heavy" column="heavy" type="Int32" />
+    <property name="Catapult" column="catapult" type="Int32" />
+    <property name="Ram" column="ram" type="Int32" />
+    <property name="Noble" column="noble" type="Int32" />
+    
+    <property name="InVillageSpear" column="in_spear" type="Int32" />
+    <property name="InVillageSword" column="in_sword" type="Int32" />
+    <property name="InVillageAxe" column="in_axe" type="Int32" />
+    <property name="InVillageScout" column="in_scout" type="Int32" />
+    <property name="InVillageLight" column="in_light" type="Int32" />
+    <property name="InVillageHeavy" column="in_heavy" type="Int32" />
+    <property name="InVillageCatapult" column="in_catapult" type="Int32" />
+    <property name="InVillageRam" column="in_ram" type="Int32" />
+    <property name="InVillageNoble" column="in_noble" type="Int32" />
+
+    <property name="TotalSpear" column="total_spear" type="Int32" />
+    <property name="TotalSword" column="total_sword" type="Int32" />
+    <property name="TotalAxe" column="total_axe" type="Int32" />
+    <property name="TotalScout" column="total_scout" type="Int32" />
+    <property name="TotalLight" column="total_light" type="Int32" />
+    <property name="TotalHeavy" column="total_heavy" type="Int32" />
+    <property name="TotalCatapult" column="total_catapult" type="Int32" />
+    <property name="TotalRam" column="total_ram" type="Int32" />
+    <property name="TotalNoble" column="total_noble" type="Int32" />
+
     <bag name="StationedTroops" table="stationed" cascade="none" fetch="join" inverse="true"  lazy="true">
       <key column="at_village" />
       <one-to-many class="beans.Stationed, beans"/>
@@ -67,7 +122,9 @@
       <key column="from_village" />
       <one-to-many class="beans.Stationed, beans"/>
     </bag>
-    
+
+    <one-to-one name="Village" class="beans.Village, beans" constrained="true" property-ref="Troop" />
   </class>
+
 
 </hibernate-mapping>
