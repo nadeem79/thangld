@@ -24,7 +24,8 @@ public partial class CustomControls_TribeShoutbox : System.Web.UI.UserControl
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        this.Shoutbox1.Group = this.Group;
-        this.Shoutbox1.Size = this.Size;
+        //this.Shoutbox1.Group = this.Group;
+        //this.Shoutbox1.Size = this.Size;
+        this.Radwindow1.NavigateUrl = string.Format("shoutbox.aspx?group={0}", Group.ID);
     }
 }
