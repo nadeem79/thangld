@@ -131,6 +131,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="TW.cd" />
     <EmbeddedResource Include="Mapping\nhibernate-mapping.xsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>

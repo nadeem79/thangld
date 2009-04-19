@@ -13,128 +13,11 @@ namespace beans
     {
 
         #region Static Members
-        private static BuildPrice _headquarter = new BuildPrice("Headquarter", 948, 90, 80, 70, 5, 30);
-        private static BuildPrice _barrack = new BuildPrice("Barrack", 1897, 200, 170, 90, 7, 25);
-        private static BuildPrice _stable = new BuildPrice("Stable", 6333, 270, 240, 260, 8, 20);
-        private static BuildPrice _workshop = new BuildPrice("Workshop", 6328, 300, 240, 260, 8, 15);
-        private static BuildPrice _academy = new BuildPrice("Academy", 68112, 25000, 30000, 20000, 80, 3);
-        private static BuildPrice _smithy = new BuildPrice("Smithy", 6300, 220, 180, 240, 20, 20);
-        private static BuildPrice _rally = new BuildPrice("Rally", 1658, 10, 40, 30, 0, 1);
-        private static BuildPrice _market = new BuildPrice("Market", 2848, 100, 100, 100, 20, 25);
-        private static BuildPrice _timber = new BuildPrice("Timber camp", 949, 50, 60, 40, 10, 30);
-        private static BuildPrice _clay = new BuildPrice("Clay pit", 949, 65, 50, 40, 10, 30);
-        private static BuildPrice _iron = new BuildPrice("Iron mine", 1139, 75, 65, 70, 10, 30);
-        private static BuildPrice _farm = new BuildPrice("Farm", 1054, 45, 40, 30, 0, 30);
-        private static BuildPrice _warehouse = new BuildPrice("Warehouse", 1075, 60, 50, 40, 0, 30);
-        private static BuildPrice _hiding = new BuildPrice("Hiding place", 1561, 50, 60, 50, 2, 10);
-        private static BuildPrice _wall = new BuildPrice("Wall", 3801, 50, 100, 20, 5, 20);
-        private static Dictionary<int, BuildPrice> _dictionary = new Dictionary<int, BuildPrice>();
+
 
         public static Dictionary<int, BuildPrice> PriceDictionary
         {
             get { return Build._dictionary; }
-        }
-        public static BuildPrice Headquarter
-        {
-            get
-            {
-                return _headquarter;
-            }
-        }
-        public static BuildPrice Barrack
-        {
-            get
-            {
-                return _barrack;
-            }
-        }
-        public static BuildPrice Stable
-        {
-            get
-            {
-                return _stable;
-            }
-        }
-        public static BuildPrice Workshop
-        {
-            get
-            {
-                return _workshop;
-            }
-        }
-        public static BuildPrice Academy
-        {
-            get
-            {
-                return _academy;
-            }
-        }
-        public static BuildPrice Smithy
-        {
-            get
-            {
-                return _smithy;
-            }
-        }
-        public static BuildPrice Rally
-        {
-            get
-            {
-                return _rally;
-            }
-        }
-        public static BuildPrice Market
-        {
-            get
-            {
-                return _market;
-            }
-        }
-        public static BuildPrice TimberCamp
-        {
-            get
-            {
-                return _timber;
-            }
-        }
-        public static BuildPrice ClayPit
-        {
-            get
-            {
-                return _clay;
-            }
-        }
-        public static BuildPrice IronMine
-        {
-            get
-            {
-                return _iron;
-            }
-        }
-        public static BuildPrice Farm
-        {
-            get
-            {
-                return _farm;
-            }
-        }
-        public static BuildPrice Warehouse
-        {
-            get { return _warehouse; }
-        }
-        public static BuildPrice HidingPlace
-        {
-            get
-            {
-                return _hiding;
-            }
-        }
-        public static BuildPrice Wall
-        {
-            get
-            {
-                return _wall;
-            }
         }
         #endregion
 
@@ -143,11 +26,6 @@ namespace beans
 
         #region Properties
         public virtual Village InVillage
-        {
-            get;
-            set;
-        }
-        public virtual BuildingType Building
         {
             get;
             set;

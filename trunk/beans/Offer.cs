@@ -8,19 +8,13 @@ namespace beans
     public class Offer : IdentityObject
     {
         #region Variables
-        private Village atVillage;
-        private ResourcesType offerType;
-        private int offerQuantity;
-        private ResourcesType forType;
-        private int forQuantity;
-        private int offerNumber;
-        private int maxTransportTime;
 
-        
+
+
         #endregion
-        
 
-        
+
+
 
         #region Properties
 
