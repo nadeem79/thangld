@@ -58,16 +58,7 @@ namespace beans
     {
 
         #region Constant
-        protected static Price pSpear = new Price("Spear", 458, 50, 30, 10, 1);
-        protected static Price pSword = new Price("Sword", 680, 30, 30, 70, 1);
-        protected static Price pAxe = new Price("Axe", 595, 60, 30, 10, 1);
-        protected static Price pScout = new Price("Scout", 421, 50, 50, 20, 2);
-        protected static Price pLight = new Price("Light", 860, 125, 100, 250, 4);
-        protected static Price pHeavy = new Price("Heavy", 1726, 200, 150, 600, 6);
-        protected static Price pRam = new Price("Ram", 2573, 300, 200, 200, 4);
-        protected static Price pCatapult = new Price("Catapult", 3860, 320, 400, 100, 8);
-        protected static Price pNoble = new Price("Noble", 9860, 28000, 30000, 25000, 100);
-        private static Dictionary<int, Price> _dictionary = new Dictionary<int, Price>();
+
 
         public static Price Spear
         {

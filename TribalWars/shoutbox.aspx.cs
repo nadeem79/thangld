@@ -17,14 +17,12 @@ public partial class shoutbox : System.Web.UI.Page
     protected Player currentPlayer;
     protected void Page_Load(object sender, EventArgs e)
     {
-        int group_chat = 0;
-        int.TryParse(Request["group_chat"], out group_chat);
 
         NHibernate.ISession session = null;
         try
         {
-            
-            if (group_chat == 0)
+
+            if (Request["group_chat"] == null)
             {
                 this.Shoutbox.Group = null;
             }
