@@ -20,44 +20,44 @@ namespace beans
 
         public virtual int MaxTransportTime
         {
-            get { return this.maxTransportTime; }
-            set { this.maxTransportTime = value; }
+            get;
+            set;
         }
 
         public virtual ResourcesType OfferType
         {
-            get { return offerType; }
-            set { offerType = value; }
+            get;
+            set;
         }
 
         public virtual int OfferQuantity
         {
-            get { return offerQuantity; }
-            set { offerQuantity = value; }
+            get;
+            set;
         }
 
         public virtual ResourcesType ForType
         {
-            get { return forType; }
-            set { forType = value; }
+            get;
+            set;
         }
 
         public virtual int ForQuantity
         {
-            get { return forQuantity; }
-            set { forQuantity = value; }
+            get;
+            set;
         }
 
         public virtual int OfferNumber
         {
-            get { return offerNumber; }
-            set { offerNumber = value; }
+            get;
+            set;
         }
 
         public virtual Village AtVillage
         {
-            get { return atVillage; }
-            set { atVillage = value; }
+            get;
+            set;
         }
         #endregion
 
