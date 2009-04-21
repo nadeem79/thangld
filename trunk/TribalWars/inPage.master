@@ -235,7 +235,7 @@
                                                 <img src="images/face.png" /></a>
                                         </td>
                                         <td align="center" style="margin: 0; padding: 0;">
-                                            <% Response.Write(this.CurrentVillage.MaxPopulation.ToString()); %>
+                                            <% = this.CurrentVillage.Population %>/<% =this.CurrentVillage.MaxPopulation %>
                                         </td>
                                     </tr>
                                 </table>
