@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="beans.Player">
+    <Position X="5.25" Y="0.5" Width="1.5" />
+    <Members>
+      <Method Name="Authentication" Hidden="true" />
+      <Method Name="CheckVillage" Hidden="true" />
+      <Method Name="CreateTribe" Hidden="true" />
+      <Method Name="DisbandTribe" Hidden="true" />
+      <Method Name="DismissPlayer" Hidden="true" />
+      <Field Name="email" Hidden="true" />
+      <Method Name="GetCommand" Hidden="true" />
+      <Method Name="GetReport" Hidden="true" />
+      <Method Name="GetVillage" Hidden="true" />
+      <Method Name="GetVillageCount" Hidden="true" />
+      <Property Name="GraphicalVillage" Hidden="true" />
+      <Property Name="Group" Hidden="true" />
+      <Property Name="Invites" Hidden="true" />
+      <Field Name="password" Hidden="true" />
+      <Property Name="Point" Hidden="true" />
+      <Method Name="SetDiplomacy" Hidden="true" />
+      <Property Name="ShowBuildingLevel" Hidden="true" />
+      <Method Name="ToString" Hidden="true" />
+      <Property Name="TribePermission" Hidden="true" />
+      <Property Name="TribeTitle" Hidden="true" />
+      <Field Name="username" Hidden="true" />
+      <Property Name="Username" Hidden="true" />
+      <Property Name="Villages" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAQAAEhAACAggADlEQQFAA8BCAAQnAACAAAAAgBIAAA=</HashCode>
+      <FileName>Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

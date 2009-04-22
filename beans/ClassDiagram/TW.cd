@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="beans.Attack">
+    <Position X="8.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAFgCBAAAACACAQAQAAkAgAAAAAAAAAACQAAAAAABAA=</HashCode>
+      <FileName>Attack.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Building" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="beans.VillageTroopData">
+    <Position X="14.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEEgoAAQBCgACAQAQQCgAgCABAAAAQEACIEABDAAJAE=</HashCode>
+      <FileName>VillageTroopData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.Group">
+    <Position X="25.75" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgkAAEAAQAAAQQAAEAgIAAAAAEAAAEAAA=</HashCode>
+      <FileName>Group.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Enemies" />
+      <Property Name="Naps" />
+      <Property Name="Allies" />
+      <Property Name="Members" />
+      <Property Name="Invites" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="beans.MovingCommand">
+    <Position X="14.25" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgBACAAAAACAABAAAAAAAACAKAAIAAAAAQAAIAAAAAA=</HashCode>
+      <FileName>MovingCommand.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="From" />
+      <Property Name="To" />
+      <Property Name="Type" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="beans.Offer">
+    <Position X="11.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAgAAAAAAAAAAAAEAAEAARAAAAAACAAAAA=</HashCode>
+      <FileName>Offer.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="AtVillage" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="beans.Player">
+    <Position X="22.75" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAEhAACAggADlEQQFAA8BCAAQnAACAAAAAgBIAAA=</HashCode>
+      <FileName>Player.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="TribePermission" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Villages" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="beans.Recruit">
+    <Position X="11.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAFhIABAAAACCAQAUEgoBgEQAAAAAgAACAQAgCAAhJA=</HashCode>
+      <FileName>Recruit.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="InVillage" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="beans.Report">
+    <Position X="26.75" Y="18" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAIgAEAAAAAAAAAAAAAAAAAAAQAgAAAAAQA=</HashCode>
+      <FileName>Report.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Owner" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="beans.Return">
+    <Position X="15.5" Y="18" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAFgCAAAAACACAQAQAAgAgAAAAAAAAAACQAwAAAABAA=</HashCode>
+      <FileName>Return.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.SendResource">
+    <Position X="13.25" Y="18" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAFACAAAAACAAAAAAAAAAAAAAAAAAAAAAQAwAAAAAAA=</HashCode>
+      <FileName>SendResource.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.ShoutboxData">
+    <Position X="23.75" Y="18.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAIAAAAAAAAAAAAAAAAAAAAAAAAAACQAAAQA=</HashCode>
+      <FileName>ShoutboxData.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Player" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="beans.Stationed">
+    <Position X="20.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEgAAAAAAAACAwAQAAgAgAAAAEAAAQACAAAAAAABAA=</HashCode>
+      <FileName>Stationed.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="FromVillage" />
+      <Property Name="AtVillage" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="beans.Support">
+    <Position X="17.75" Y="18" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAFgCAAAAACACAwAQAAkAgAAAAAAAAAACQAAAAAABAA=</HashCode>
+      <FileName>Support.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.TribeInvite">
+    <Position X="25.25" Y="15.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAQA=</HashCode>
+      <FileName>TribeInvite.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Player" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="beans.TribeRelation">
+    <Position X="25.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABABAAAAAIAAA=</HashCode>
+      <FileName>TribeRelation.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="CurrentTribe" />
+      <Property Name="DiplomaticTribe" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="beans.Village">
+    <Position X="17" Y="8.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>DAQAgpC0IAAAgASMGAIUCAVZBABAQIAABkgCBEAJYoA=</HashCode>
+      <FileName>Village.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Buildings" />
+      <Property Name="Resources" />
+      <Property Name="Research" />
+      <Property Name="Troop" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="beans.VillageBuildingData">
+    <Position X="17.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAEAQAAAEAgAAAABAAAAAQQAAACEAAQAKAEAAAAAEAA=</HashCode>
+      <FileName>VillageBuildingData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.VillageReseachData">
+    <Position X="20.75" Y="18.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAgAAAQAAAAkABAAAhAhAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VillageReseachData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.VillageResourcesData">
+    <Position X="14.75" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAgAAAAAAAAAAAAAAAAAAACAAAAwAAgAQAA=</HashCode>
+      <FileName>VillageResourcesData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.Build">
+    <Position X="19.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CjNAQBRAECAQAAABEgAsAQQAAACEAASoKAGEAQAARhA=</HashCode>
+      <FileName>Build.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="InVillage" />
+    </ShowAsAssociation>
+  </Class>
+  <Enum Name="beans.TribePermission">
+    <Position X="25.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAgAABAAAAEAAQAAAISAACQQAgAABAAAA=</HashCode>
+      <FileName>TribePermission.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="beans.MoveType">
+    <Position X="9.25" Y="15.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAQAAAAAAIAAAAgAAAAAEAAAAAA=</HashCode>
+      <FileName>MoveType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="beans.BuildingType">
+    <Position X="8" Y="17.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAEAQAAAEAAAAAABAAAAAQQAAACEAAQAKAEAAQAAEAA=</HashCode>
+      <FileName>BuildingType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>
