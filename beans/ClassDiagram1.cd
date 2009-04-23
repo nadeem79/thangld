@@ -1,0 +1,366 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="beans.Attack" Collapsed="true">
+    <Position X="37.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAFgCBAAAACACAQAQAAkAgAAAAAAAAAACQAAAAAABAA=</HashCode>
+      <FileName>Attack.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.AttackReport" Collapsed="true">
+    <Position X="5.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AxFAQJJAUAAMABYAgAICEIBLREAoBiIKiABwKAAAJEA=</HashCode>
+      <FileName>AttackReport.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.Build" Collapsed="true">
+    <Position X="35" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CjNAQBRAECAQAAABEgAsAQQAAACEAASoKAGEAAAARhA=</HashCode>
+      <FileName>Build.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.BuildPrice" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAABAAAAAAEQ=</HashCode>
+      <FileName>Build.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.BuildableStatusFactory" Collapsed="true">
+    <Position X="66.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Build.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.BuildingTypeFactory" Collapsed="true">
+    <Position X="68.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>BuildingType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.Configuration" Collapsed="true">
+    <Position X="3.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Configuration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.DatetimeHelper" Collapsed="true">
+    <Position X="70.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>DatetimeHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.DefenseOtherReport" Collapsed="true">
+    <Position X="8" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEQAAAFAAEABQAAAJAIAAGYAIABmAKCQBgKAwAJEA=</HashCode>
+      <FileName>DefenseOtherReport.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.DefenseReport" Collapsed="true">
+    <Position X="10.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ExFUQJdBVACOQhYAgENGMKhPZlIoBnJKiQBwaIwYZEg=</HashCode>
+      <FileName>DefenseReport.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.Group" Collapsed="true">
+    <Position X="66.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgkAAEAAQAAAQQAAEAgIAAAAAEAAAEAAA=</HashCode>
+      <FileName>Group.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.IdentityObject" Collapsed="true">
+    <Position X="33.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAgAAAAAAAAAAAAIAAAAAAAAAAAiA=</HashCode>
+      <FileName>IdentityObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.InviteToTribeReport" Collapsed="true">
+    <Position X="21.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>InviteToTribeReport.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.Map" Collapsed="true">
+    <Position X="68.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Map.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.MovingCommand" Collapsed="true">
+    <Position X="40.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgBACAAAAACAABAAAAAAAACAKAAIAAAAAQAAIAAAAAA=</HashCode>
+      <FileName>MovingCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.Offer" Collapsed="true">
+    <Position X="46.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAgAAAAAAAAAAAAEAAEAARAAAAAACAAAAA=</HashCode>
+      <FileName>Offer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.OfferAcceptedReport" Collapsed="true">
+    <Position X="17" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>OfferAcceptedReport.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.Player" Collapsed="true">
+    <Position X="50.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAEhAACAggADlEQQFAA8BCAAQnAACAAAAAgBIAAA=</HashCode>
+      <FileName>Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.Price" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEBIAABAAAAAAgMAAAAAAYAAAAAABAAAAAwAAAAIAA=</HashCode>
+      <FileName>Recruit.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.Recruit" Collapsed="true">
+    <Position X="62" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAFhIABAAAACCAQAUEgoBgEQAAAAAgAACAQAgCAAhJA=</HashCode>
+      <FileName>Recruit.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.Report" Collapsed="true">
+    <Position X="13.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAIgAEAAAAAAAAAAAAAAAAAAAQAgAAAAAQA=</HashCode>
+      <FileName>Report.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.ReportTypeFactory" Collapsed="true">
+    <Position X="70.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ReportType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.ResourceReceiveReport" Collapsed="true">
+    <Position X="12.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgEAAAIBAAAAAAAAAAAAAAgAAAAIABAAAQAwAAAAIAA=</HashCode>
+      <FileName>ResourceReceiveReport.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.Return" Collapsed="true">
+    <Position X="41.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAFgCAAAAACACAQAQAAgAgAAAAAAAAAACQAwAAAABAA=</HashCode>
+      <FileName>Return.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.SendResource" Collapsed="true">
+    <Position X="44" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAFACAAAAACAAAAAAAAAAAAAAAAAAAAAAQAwAAAAAAA=</HashCode>
+      <FileName>SendResource.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.ShoutboxData" Collapsed="true">
+    <Position X="23.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAIAAAAAAAAAAAAAAAAAAAAAAAAAACQAAAQA=</HashCode>
+      <FileName>ShoutboxData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.Stationed" Collapsed="true">
+    <Position X="28.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEgAAAAAAAACAwAQAAgAgAAAAEAAAQACAAAAAAABAA=</HashCode>
+      <FileName>Stationed.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.Support" Collapsed="true">
+    <Position X="39.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAFgCAAAAACACAwAQAAkAgAAAAAAAAAACQAAAAAABAA=</HashCode>
+      <FileName>Support.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.SupportReport" Collapsed="true">
+    <Position X="14.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgEgAAAAAAAACAQAQAAgAgAAAAAIAAAACQAAAAAABAA=</HashCode>
+      <FileName>SupportReport.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.SupportWithdawalReport" Collapsed="true">
+    <Position X="19.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgEgAAIAAACCSAYAQAAkAggAAAAIAAAACQAAAAAYBAg=</HashCode>
+      <FileName>SupportWithdawalReport.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.Test" Collapsed="true">
+    <Position X="53" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Test.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.Text" Collapsed="true">
+    <Position X="57.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Text.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.TribeDiplomateFactory" Collapsed="true">
+    <Position X="70.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TribeDiplomate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.TribeInvite" Collapsed="true">
+    <Position X="30.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAQA=</HashCode>
+      <FileName>TribeInvite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.TribeRelation" Collapsed="true">
+    <Position X="48.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABABAAAAAIAAA=</HashCode>
+      <FileName>TribeRelation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.Village" Collapsed="true">
+    <Position X="55.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>DAQAgpC0IAAAgASMGAIUCAVZBABAQIAABkgCBEAJYoA=</HashCode>
+      <FileName>Village.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.VillageBuildingData" Collapsed="true">
+    <Position X="59.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAEAQAAAEAgAAAABAAAAAQQAAACEAAQAKAEAAAAAEAA=</HashCode>
+      <FileName>VillageBuildingData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.VillageReseachData" Collapsed="true">
+    <Position X="64.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAgAAAQAAAAkABAAAhAhAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VillageReseachData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.VillageResourcesData" Collapsed="true">
+    <Position X="26" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAgAAAAAAAAAAAAAAAAAAACAAAAwAAgAQAA=</HashCode>
+      <FileName>VillageResourcesData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.VillageTroopData" Collapsed="true">
+    <Position X="32.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEEgoAAQBCgACAQAQQCgAgCABAAAAQEACIEABDAAJAE=</HashCode>
+      <FileName>VillageTroopData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.Properties.Resources" Collapsed="true">
+    <Position X="66.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.Properties.Settings" Collapsed="true">
+    <Position X="68.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAEAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="beans.IVillageEffector" Collapsed="true">
+    <Position X="66.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IVillageEffector.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="beans.BuildableStatus" Collapsed="true">
+    <Position X="66.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAUEAAAgAAAAAAAAAAAAAwAAAAAAAAAEAAABAAAAA=</HashCode>
+      <FileName>Build.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="beans.BuildingType" Collapsed="true">
+    <Position X="68.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAEAQAAAEAAAAAABAAAAAQQAAACEAAQAKAEAAQAAEAA=</HashCode>
+      <FileName>BuildingType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="beans.MoveType" Collapsed="true">
+    <Position X="70.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAQAAAAAAIAAAAgAAAAAEAAAAAA=</HashCode>
+      <FileName>MoveType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="beans.ReportType" Collapsed="true">
+    <Position X="66.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAAAAAAAAAAAIAABAgAAIABIgAAACA=</HashCode>
+      <FileName>ReportType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="beans.ResourcesType" Collapsed="true">
+    <Position X="68.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAA=</HashCode>
+      <FileName>ResourcesType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="beans.Sex" Collapsed="true">
+    <Position X="70.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Sex.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="beans.TribeDiplomate" Collapsed="true">
+    <Position X="66.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgIAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TribeDiplomate.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="beans.TribePermission" Collapsed="true">
+    <Position X="68.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAgAABAAAAEAAQAAAISAACQQAgAABAAAA=</HashCode>
+      <FileName>TribePermission.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="beans.TroopType" Collapsed="true">
+    <Position X="70.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEggAABAAAACAQAQAggAgAAAAAAgAAACAAAAAAAAAA=</HashCode>
+      <FileName>TroopType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>
