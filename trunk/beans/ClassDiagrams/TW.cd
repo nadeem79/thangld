@@ -1,35 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="beans.Attack" Collapsed="true">
-    <Position X="17.25" Y="18" Width="1.5" />
+  <Class Name="beans.Attack">
+    <Position X="8.5" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAFgCBAAAACACAQAQAAkAgAAAAAAAAAACQAAAAAABAA=</HashCode>
       <FileName>Attack.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Building" />
+    </ShowAsAssociation>
   </Class>
-  <Class Name="beans.VillageTroopData" Collapsed="true">
-    <Position X="14.25" Y="14.5" Width="1.5" />
+  <Class Name="beans.VillageTroopData">
+    <Position X="14.75" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AEEgoAAQBCgACAQAQQCgAgCABAAAAQEACIEABDAAJAE=</HashCode>
       <FileName>VillageTroopData.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="beans.Group" Collapsed="true">
-    <Position X="12" Y="7" Width="1.5" />
+  <Class Name="beans.Group">
+    <Position X="25.75" Y="11.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAgkAAEAAQAAAQQAAEAgIAAAAAEAAAEAAA=</HashCode>
       <FileName>Group.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
-      <Property Name="Members" />
-      <Property Name="Allies" />
       <Property Name="Enemies" />
-      <Property Name="Invites" />
       <Property Name="Naps" />
+      <Property Name="Allies" />
+      <Property Name="Members" />
+      <Property Name="Invites" />
     </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="beans.MovingCommand" Collapsed="true">
-    <Position X="20.5" Y="16.5" Width="1.5" />
+  <Class Name="beans.MovingCommand">
+    <Position X="14.25" Y="14.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AgBACAAAAACAABAAAAAAAACAKAAIAAAAAQAAIAAAAAA=</HashCode>
       <FileName>MovingCommand.cs</FileName>
@@ -37,10 +40,11 @@
     <ShowAsAssociation>
       <Property Name="From" />
       <Property Name="To" />
+      <Property Name="Type" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="beans.Offer" Collapsed="true">
-    <Position X="20" Y="12" Width="1.5" />
+  <Class Name="beans.Offer">
+    <Position X="11.75" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AIAAAAAAAAAgAAAAAAAAAAAAEAAEAARAAAAAACAAAAA=</HashCode>
       <FileName>Offer.cs</FileName>
@@ -50,27 +54,30 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="beans.Player">
-    <Position X="15" Y="3.75" Width="1.5" />
+    <Position X="22.75" Y="9" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAEhAACAggADlEQQFAA8BCAAQnAACAAAAAgBIAAA=</HashCode>
       <FileName>Player.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="TribePermission" />
+    </ShowAsAssociation>
     <ShowAsCollectionAssociation>
       <Property Name="Villages" />
     </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="beans.Recruit" Collapsed="true">
-    <Position X="20" Y="14" Width="1.5" />
+  <Class Name="beans.Recruit">
+    <Position X="11.75" Y="9.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAFhAAAAAAACCAQAUAAoAgEQAAAAAAAACAQAgAAABJA=</HashCode>
+      <HashCode>AAFhIABAAAACCAQAUEgoBgEQAAAAAgAACAQAgCAAhJA=</HashCode>
       <FileName>Recruit.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="InVillage" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="beans.Report" Collapsed="true">
-    <Position X="18" Y="6.5" Width="1.5" />
+  <Class Name="beans.Report">
+    <Position X="26.75" Y="18" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAACAAAIgAEAAAAAAAAAAAAAAAAAAAQAgAAAAAQA=</HashCode>
       <FileName>Report.cs</FileName>
@@ -79,22 +86,22 @@
       <Property Name="Owner" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="beans.Return" Collapsed="true">
-    <Position X="19.5" Y="18" Width="1.5" />
+  <Class Name="beans.Return">
+    <Position X="15.5" Y="18" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAFgCAAAAACACAQAQAAgAgAAAAAAAAAACQAwAAAABAA=</HashCode>
       <FileName>Return.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="beans.SendResource" Collapsed="true">
-    <Position X="21.75" Y="18" Width="1.5" />
+  <Class Name="beans.SendResource">
+    <Position X="13.25" Y="18" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAFACAAAAACAAAAAAAAAAAAAAAAAAAAAAQAwAAAAAAA=</HashCode>
       <FileName>SendResource.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="beans.ShoutboxData" Collapsed="true">
-    <Position X="18" Y="4.5" Width="1.5" />
+  <Class Name="beans.ShoutboxData">
+    <Position X="23.75" Y="18.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAEAAAIAAAAAAAAAAAAAAAAAAAAAAAAAACQAAAQA=</HashCode>
       <FileName>ShoutboxData.cs</FileName>
@@ -103,38 +110,26 @@
       <Property Name="Player" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="beans.Stationed" Collapsed="true">
-    <Position X="14.25" Y="12.25" Width="1.5" />
-    <AssociationLine Name="AtVillage" Type="beans.Village" FixedFromPoint="true">
-      <Path>
-        <Point X="15.75" Y="12.75" />
-        <Point X="17.25" Y="12.75" />
-      </Path>
-    </AssociationLine>
-    <AssociationLine Name="FromVillage" Type="beans.Village" FixedFromPoint="true">
-      <Path>
-        <Point X="15.75" Y="12.5" />
-        <Point X="17.25" Y="12.5" />
-      </Path>
-    </AssociationLine>
+  <Class Name="beans.Stationed">
+    <Position X="20.75" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAEgAAAAAAAACAwAQAAgAgAAAAEAAAQACAAAAAAABAA=</HashCode>
       <FileName>Stationed.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="AtVillage" />
       <Property Name="FromVillage" />
+      <Property Name="AtVillage" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="beans.Support" Collapsed="true">
-    <Position X="24" Y="18" Width="1.5" />
+  <Class Name="beans.Support">
+    <Position X="17.75" Y="18" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAFgCAAAAACACAwAQAAkAgAAAAAAAAAACQAAAAAABAA=</HashCode>
       <FileName>Support.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="beans.TribeInvite" Collapsed="true">
-    <Position X="12.5" Y="9" Width="1.5" />
+  <Class Name="beans.TribeInvite">
+    <Position X="25.25" Y="15.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAQA=</HashCode>
       <FileName>TribeInvite.cs</FileName>
@@ -143,8 +138,8 @@
       <Property Name="Player" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="beans.TribeRelation" Collapsed="true">
-    <Position X="12" Y="5" Width="1.5" />
+  <Class Name="beans.TribeRelation">
+    <Position X="25.75" Y="9.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABABAAAAAIAAA=</HashCode>
       <FileName>TribeRelation.cs</FileName>
@@ -155,53 +150,69 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="beans.Village">
-    <Position X="17.25" Y="8.5" Width="2" />
-    <AssociationLine Name="Resources" Type="beans.VillageResourcesData">
-      <MemberNameLabel ManuallyPlaced="true">
-        <Position X="0.418" Y="0.15" />
-      </MemberNameLabel>
-    </AssociationLine>
+    <Position X="17" Y="8.75" Width="2" />
     <TypeIdentifier>
       <HashCode>DAQAgpC0IAAAgASMGAIUCAVZBABAQIAABkgCBEAJYoA=</HashCode>
       <FileName>Village.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
+      <Property Name="Buildings" />
       <Property Name="Resources" />
       <Property Name="Research" />
       <Property Name="Troop" />
-      <Property Name="Buildings" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="beans.VillageBuildingData" Collapsed="true">
-    <Position X="20" Y="10" Width="1.5" />
+  <Class Name="beans.VillageBuildingData">
+    <Position X="17.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>CAEAQAAAEAgAAAABAAAAAQQAAACEAAQAKAEAAAAAEAA=</HashCode>
       <FileName>VillageBuildingData.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="beans.VillageReseachData" Collapsed="true">
-    <Position X="20" Y="8" Width="1.5" />
+  <Class Name="beans.VillageReseachData">
+    <Position X="20.75" Y="18.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAEAAAAAgAAAQAAAAkABAAAhAhAAAAAAAAAAAAAAA=</HashCode>
       <FileName>VillageReseachData.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="beans.VillageResourcesData" Collapsed="true">
-    <Position X="14.25" Y="13" Width="1.5" />
+  <Class Name="beans.VillageResourcesData">
+    <Position X="14.75" Y="11.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAEAAAAAAAgAAAAAAAAAAAAAAAAAAACAAAAwAAgAQAA=</HashCode>
       <FileName>VillageResourcesData.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="beans.Build" Collapsed="true">
-    <Position X="14.25" Y="13.75" Width="1.5" />
+  <Class Name="beans.Build">
+    <Position X="19.75" Y="8.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAJAAAAAACAAAAAAEgAMAAAAAAAAAAAAAAAAAAAAAhA=</HashCode>
+      <HashCode>CjNAQBRAECAQAAABEgAsAQQAAACEAASoKAGEAQAARhA=</HashCode>
       <FileName>Build.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="InVillage" />
     </ShowAsAssociation>
   </Class>
+  <Enum Name="beans.TribePermission">
+    <Position X="25.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAgAABAAAAEAAQAAAISAACQQAgAABAAAA=</HashCode>
+      <FileName>TribePermission.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="beans.MoveType">
+    <Position X="9.25" Y="15.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAQAAAAAAIAAAAgAAAAAEAAAAAA=</HashCode>
+      <FileName>MoveType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="beans.BuildingType">
+    <Position X="8" Y="17.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAEAQAAAEAAAAAABAAAAAQQAAACEAAQAKAEAAQAAEAA=</HashCode>
+      <FileName>BuildingType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
   <Font Name="Tahoma" Size="8.25" />
 </ClassDiagram>

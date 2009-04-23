@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="beans.ShoutboxData">
+    <Position X="4.5" Y="1.5" Width="1.5" />
+    <AssociationLine Name="Group" Type="beans.Group" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4.5" Y="2.5" />
+        <Point X="3.062" Y="2.5" />
+        <Point X="3.062" Y="1.481" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Player" Type="beans.Player" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6" Y="2.5" />
+        <Point X="7.25" Y="2.5" />
+        <Point X="7.25" Y="1.601" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAIAAAAAAAAAAAAAAAAAAAAAAAAAACQAAAQA=</HashCode>
+      <FileName>ShoutboxData.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Group" />
+      <Property Name="Player" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="beans.Group">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <Members>
+      <Property Name="Allies" Hidden="true" />
+      <Property Name="Avatar" Hidden="true" />
+      <Property Name="Description" Hidden="true" />
+      <Property Name="Enemies" Hidden="true" />
+      <Method Name="GetGroupByTagName" Hidden="true" />
+      <Property Name="ID" Hidden="true" />
+      <Property Name="Introduction" Hidden="true" />
+      <Property Name="Invites" Hidden="true" />
+      <Property Name="Name" Hidden="true" />
+      <Property Name="Naps" Hidden="true" />
+      <Property Name="Tag" Hidden="true" />
+      <Method Name="ToString" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgkAAEAAQAAAQQAAEAgIAAAAAEAAAEAAA=</HashCode>
+      <FileName>Group.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.Player">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <Members>
+      <Property Name="Address" Hidden="true" />
+      <Method Name="Authentication" Hidden="true" />
+      <Property Name="Avatar" Hidden="true" />
+      <Property Name="Birthdate" Hidden="true" />
+      <Method Name="ChangeDescription" Hidden="true" />
+      <Method Name="CheckVillage" Hidden="true" />
+      <Method Name="CreateTribe" Hidden="true" />
+      <Property Name="Description" Hidden="true" />
+      <Method Name="DisbandTribe" Hidden="true" />
+      <Method Name="DismissPlayer" Hidden="true" />
+      <Field Name="email" Hidden="true" />
+      <Property Name="Email" Hidden="true" />
+      <Property Name="Gender" Hidden="true" />
+      <Method Name="GetCommand" Hidden="true" />
+      <Method Name="GetReport" Hidden="true" />
+      <Method Name="GetVillage" Hidden="true" />
+      <Method Name="GetVillageCount" Hidden="true" />
+      <Property Name="GraphicalVillage" Hidden="true" />
+      <Property Name="Invites" Hidden="true" />
+      <Property Name="Msn" Hidden="true" />
+      <Field Name="password" Hidden="true" />
+      <Property Name="Password" Hidden="true" />
+      <Property Name="Point" Hidden="true" />
+      <Method Name="SetDiplomacy" Hidden="true" />
+      <Property Name="ShowBuildingLevel" Hidden="true" />
+      <Property Name="Skype" Hidden="true" />
+      <Method Name="ToString" Hidden="true" />
+      <Property Name="TribePermission" Hidden="true" />
+      <Property Name="TribeTitle" Hidden="true" />
+      <Method Name="Update" Hidden="true" />
+      <Field Name="username" Hidden="true" />
+      <Property Name="Username" Hidden="true" />
+      <Property Name="Villages" Hidden="true" />
+      <Property Name="Yahoo" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAQAAEhAACAggADlEQQFAA8BCAAQnAACAAAAAgBIAAA=</HashCode>
+      <FileName>Player.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Group" />
+    </ShowAsAssociation>
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

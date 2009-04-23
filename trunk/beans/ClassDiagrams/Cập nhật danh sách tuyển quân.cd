@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="beans.Village">
+    <Position X="4.75" Y="3.5" Width="2" />
+    <Members>
+      <Field Name="_loyal" Hidden="true" />
+      <Field Name="_maxResources" Hidden="true" />
+      <Field Name="_owner" Hidden="true" />
+      <Method Name="BeginRecruit" Hidden="true" />
+      <Method Name="CanBuild" Hidden="true" />
+      <Method Name="CancelBuild" Hidden="true" />
+      <Method Name="CancelRecruit" Hidden="true" />
+      <Method Name="CheckVillage" Hidden="true" />
+      <Method Name="CreateVillage" Hidden="true" />
+      <Method Name="GetDependingCommands" Hidden="true" />
+      <Method Name="GetIncomingAttackCount" Hidden="true" />
+      <Method Name="GetIncomingSupportCount" Hidden="true" />
+      <Method Name="GetIncomingTroop" Hidden="true" />
+      <Method Name="GetPendingConstruction" Hidden="true" />
+      <Method Name="GetRecruit" Hidden="true" />
+      <Method Name="GetTotalBuild" Hidden="true" />
+      <Method Name="GetTotalBuildingLevel" Hidden="true" />
+      <Method Name="GetTroopMovement" Hidden="true" />
+      <Property Name="LastUpdate" Hidden="true" />
+      <Property Name="LastUpdateTimestamp" Hidden="true" />
+      <Property Name="Loyal" Hidden="true" />
+      <Method Name="MaxRecruit" Hidden="true" />
+      <Property Name="MaxResources" Hidden="true" />
+      <Property Name="Name" Hidden="true" />
+      <Property Name="Owner" Hidden="true" />
+      <Property Name="Points" Hidden="true" />
+      <Method Name="PrepareBuild" Hidden="true" />
+      <Method Name="ProductPerHour" Hidden="true" />
+      <Method Name="Save" Hidden="true" />
+      <Method Name="SecondPerResourceUnit" Hidden="true" />
+      <Field Name="stationedTroops" Hidden="true" />
+      <Property Name="this" Hidden="true" />
+      <Method Name="ToString" Hidden="true" />
+      <Property Name="Troop" Hidden="true" />
+      <Field Name="troopsOutside" Hidden="true" />
+      <Method Name="Update" Hidden="true" />
+      <Method Name="UpdateResources" Hidden="true" />
+      <Method Name="Village" Hidden="true" />
+      <Property Name="X" Hidden="true" />
+      <Property Name="Y" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>DAQAgpC0IAAAgASMGAIUCAVZBABAQIAABkgCBEAJYoA=</HashCode>
+      <FileName>Village.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.Recruit">
+    <Position X="7.75" Y="3.5" Width="2" />
+    <Members>
+      <Field Name="_dictionary" Hidden="true" />
+      <Method Name="cancel" Hidden="true" />
+      <Method Name="CanRecruit" Hidden="true" />
+      <Method Name="GetPrice" Hidden="true" />
+      <Method Name="MaxRecruit" Hidden="true" />
+      <Field Name="pAxe" Hidden="true" />
+      <Field Name="pCatapult" Hidden="true" />
+      <Field Name="pHeavy" Hidden="true" />
+      <Field Name="pLight" Hidden="true" />
+      <Field Name="pNoble" Hidden="true" />
+      <Field Name="pRam" Hidden="true" />
+      <Field Name="pScout" Hidden="true" />
+      <Field Name="pSpear" Hidden="true" />
+      <Field Name="pSword" Hidden="true" />
+      <Method Name="RecruitTime" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAFhIABAAAACCAQAUEgoBgEQAAAAAgAACAQAgCAAhJA=</HashCode>
+      <FileName>Recruit.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="InVillage" />
+    </ShowAsAssociation>
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

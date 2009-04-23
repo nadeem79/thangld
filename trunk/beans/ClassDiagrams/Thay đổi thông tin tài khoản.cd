@@ -1,20 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="beans.Player">
-    <Position X="74" Y="20.25" Width="1.5" />
+    <Position X="5.25" Y="0.5" Width="1.5" />
     <Members>
-      <Property Name="Address" Hidden="true" />
-      <Property Name="Avatar" Hidden="true" />
-      <Property Name="Birthdate" Hidden="true" />
-      <Method Name="ChangeDescription" Hidden="true" />
+      <Method Name="Authentication" Hidden="true" />
       <Method Name="CheckVillage" Hidden="true" />
       <Method Name="CreateTribe" Hidden="true" />
-      <Property Name="Description" Hidden="true" />
       <Method Name="DisbandTribe" Hidden="true" />
       <Method Name="DismissPlayer" Hidden="true" />
       <Field Name="email" Hidden="true" />
-      <Property Name="Email" Hidden="true" />
-      <Property Name="Gender" Hidden="true" />
       <Method Name="GetCommand" Hidden="true" />
       <Method Name="GetReport" Hidden="true" />
       <Method Name="GetVillage" Hidden="true" />
@@ -22,19 +16,16 @@
       <Property Name="GraphicalVillage" Hidden="true" />
       <Property Name="Group" Hidden="true" />
       <Property Name="Invites" Hidden="true" />
-      <Property Name="Msn" Hidden="true" />
       <Field Name="password" Hidden="true" />
       <Property Name="Point" Hidden="true" />
       <Method Name="SetDiplomacy" Hidden="true" />
       <Property Name="ShowBuildingLevel" Hidden="true" />
-      <Property Name="Skype" Hidden="true" />
       <Method Name="ToString" Hidden="true" />
       <Property Name="TribePermission" Hidden="true" />
       <Property Name="TribeTitle" Hidden="true" />
-      <Method Name="Update" Hidden="true" />
       <Field Name="username" Hidden="true" />
+      <Property Name="Username" Hidden="true" />
       <Property Name="Villages" Hidden="true" />
-      <Property Name="Yahoo" Hidden="true" />
     </Members>
     <TypeIdentifier>
       <HashCode>AAQAAEhAACAggADlEQQFAA8BCAAQnAACAAAAAgBIAAA=</HashCode>

@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="beans.Village">
+    <Position X="7.75" Y="0.5" Width="1.75" />
+    <Members>
+      <Field Name="_loyal" Hidden="true" />
+      <Field Name="_maxResources" Hidden="true" />
+      <Field Name="_owner" Hidden="true" />
+      <Method Name="BeginRecruit" Hidden="true" />
+      <Method Name="CanBuild" Hidden="true" />
+      <Method Name="CancelRecruit" Hidden="true" />
+      <Method Name="CheckVillage" Hidden="true" />
+      <Method Name="CreateVillage" Hidden="true" />
+      <Method Name="GetDependingCavalryRecruit" Hidden="true" />
+      <Method Name="GetDependingCommands" Hidden="true" />
+      <Method Name="GetDependingInfantryRecruit" Hidden="true" />
+      <Method Name="GetIncomingAttackCount" Hidden="true" />
+      <Method Name="GetIncomingSupportCount" Hidden="true" />
+      <Method Name="GetIncomingTroop" Hidden="true" />
+      <Method Name="GetPendingConstruction" Hidden="true" />
+      <Method Name="GetRecruit" Hidden="true" />
+      <Method Name="GetTotalBuild" Hidden="true" />
+      <Method Name="GetTotalBuildingLevel" Hidden="true" />
+      <Method Name="GetTroopMovement" Hidden="true" />
+      <Property Name="LastUpdate" Hidden="true" />
+      <Property Name="LastUpdateTimestamp" Hidden="true" />
+      <Property Name="Loyal" Hidden="true" />
+      <Property Name="MaxPopulation" Hidden="true" />
+      <Method Name="MaxRecruit" Hidden="true" />
+      <Property Name="MaxResources" Hidden="true" />
+      <Property Name="Name" Hidden="true" />
+      <Property Name="Owner" Hidden="true" />
+      <Property Name="Points" Hidden="true" />
+      <Method Name="PrepareBuild" Hidden="true" />
+      <Method Name="ProductPerHour" Hidden="true" />
+      <Property Name="Research" Hidden="true" />
+      <Method Name="Save" Hidden="true" />
+      <Method Name="SecondPerResourceUnit" Hidden="true" />
+      <Field Name="stationedTroops" Hidden="true" />
+      <Property Name="this" Hidden="true" />
+      <Method Name="ToString" Hidden="true" />
+      <Property Name="Troop" Hidden="true" />
+      <Field Name="troopsOutside" Hidden="true" />
+      <Method Name="Update" Hidden="true" />
+      <Method Name="UpdateResources" Hidden="true" />
+      <Method Name="Village" Hidden="true" />
+      <Property Name="X" Hidden="true" />
+      <Property Name="Y" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>DAQAgpC0IAAAgASMGAIUCAVZBABAQIAABkgCBEAJYoA=</HashCode>
+      <FileName>Village.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.Build">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <Members>
+      <Field Name="_academy" Hidden="true" />
+      <Field Name="_barrack" Hidden="true" />
+      <Field Name="_clay" Hidden="true" />
+      <Field Name="_dictionary" Hidden="true" />
+      <Field Name="_farm" Hidden="true" />
+      <Field Name="_headquarter" Hidden="true" />
+      <Field Name="_hiding" Hidden="true" />
+      <Field Name="_iron" Hidden="true" />
+      <Field Name="_market" Hidden="true" />
+      <Field Name="_rally" Hidden="true" />
+      <Field Name="_smithy" Hidden="true" />
+      <Field Name="_stable" Hidden="true" />
+      <Field Name="_timber" Hidden="true" />
+      <Field Name="_wall" Hidden="true" />
+      <Field Name="_warehouse" Hidden="true" />
+      <Field Name="_workshop" Hidden="true" />
+      <Property Name="Academy" Hidden="true" />
+      <Property Name="Barrack" Hidden="true" />
+      <Method Name="CanBuild" Hidden="true" />
+      <Method Name="cancel" Hidden="true" />
+      <Property Name="ClayPit" Hidden="true" />
+      <Method Name="execute" Hidden="true" />
+      <Property Name="Farm" Hidden="true" />
+      <Property Name="Headquarter" Hidden="true" />
+      <Property Name="HidingPlace" Hidden="true" />
+      <Property Name="IronMine" Hidden="true" />
+      <Property Name="Market" Hidden="true" />
+      <Property Name="PriceDictionary" Hidden="true" />
+      <Property Name="Rally" Hidden="true" />
+      <Property Name="Smithy" Hidden="true" />
+      <Property Name="Stable" Hidden="true" />
+      <Property Name="TimberCamp" Hidden="true" />
+      <Property Name="Wall" Hidden="true" />
+      <Property Name="Warehouse" Hidden="true" />
+      <Property Name="Workshop" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>CjNAQBRAECAQgAABEgAsAQQAAACEAASoKAGEAAAARhA=</HashCode>
+      <FileName>Build.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Workshop" />
+      <Property Name="TimberCamp" />
+      <Property Name="Warehouse" />
+      <Property Name="Wall" />
+      <Property Name="InVillage" />
+      <Property Name="Building" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="beans.VillageBuildingData">
+    <Position X="5.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAEAQAAAEAgAAAABAAAAAQQAAACEAAQAKAEAAAAAEAA=</HashCode>
+      <FileName>VillageBuildingData.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Village" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="beans.VillageResourcesData">
+    <Position X="5.5" Y="0.5" Width="1.5" />
+    <Members>
+      <Field Name="_clay" Hidden="true" />
+      <Field Name="_iron" Hidden="true" />
+      <Field Name="_wood" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAgAAAAAAAAAAAAAAAAAAACAAAAwAAgAQAA=</HashCode>
+      <FileName>VillageResourcesData.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Village" />
+    </ShowAsAssociation>
+  </Class>
+  <Enum Name="beans.BuildingType">
+    <Position X="13" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAEAQAAAEAAAAAABAAAAAQQAAACEAAQAKAEAAQAAEAA=</HashCode>
+      <FileName>BuildingType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>
