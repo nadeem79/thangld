@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="beans.MovingCommand">
+    <Position X="5.5" Y="1" Width="1.5" />
+    <Members>
+      <Method Name="cancel" Hidden="true" />
+      <Property Name="Type" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AgBACAAAAACAABAAAAAAAACAKAAIAAAAAQAAIAAAAAA=</HashCode>
+      <FileName>MovingCommand.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="From" />
+      <Property Name="To" />
+      <Property Name="Type" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="beans.Village">
+    <Position X="2.75" Y="1" Width="1.5" />
+    <Members>
+      <Field Name="_loyal" Hidden="true" />
+      <Field Name="_maxResources" Hidden="true" />
+      <Field Name="_owner" Hidden="true" />
+      <Method Name="BeginRecruit" Hidden="true" />
+      <Method Name="CanBuild" Hidden="true" />
+      <Method Name="CancelBuild" Hidden="true" />
+      <Method Name="CancelRecruit" Hidden="true" />
+      <Method Name="CheckVillage" Hidden="true" />
+      <Method Name="CreateVillage" Hidden="true" />
+      <Method Name="GetDependingCavalryRecruit" Hidden="true" />
+      <Method Name="GetDependingCommands" Hidden="true" />
+      <Method Name="GetDependingInfantryRecruit" Hidden="true" />
+      <Method Name="GetIncomingAttackCount" Hidden="true" />
+      <Method Name="GetIncomingSupportCount" Hidden="true" />
+      <Method Name="GetIncomingTroop" Hidden="true" />
+      <Method Name="GetPendingConstruction" Hidden="true" />
+      <Method Name="GetRecruit" Hidden="true" />
+      <Method Name="GetTotalBuild" Hidden="true" />
+      <Method Name="GetTotalBuildingLevel" Hidden="true" />
+      <Method Name="GetTroopMovement" Hidden="true" />
+      <Property Name="LastUpdate" Hidden="true" />
+      <Property Name="LastUpdateTimestamp" Hidden="true" />
+      <Property Name="MaxPopulation" Hidden="true" />
+      <Method Name="MaxRecruit" Hidden="true" />
+      <Property Name="MaxResources" Hidden="true" />
+      <Property Name="Name" Hidden="true" />
+      <Property Name="Points" Hidden="true" />
+      <Method Name="PrepareBuild" Hidden="true" />
+      <Method Name="ProductPerHour" Hidden="true" />
+      <Property Name="Research" Hidden="true" />
+      <Method Name="Save" Hidden="true" />
+      <Method Name="SecondPerResourceUnit" Hidden="true" />
+      <Field Name="stationedTroops" Hidden="true" />
+      <Property Name="this" Hidden="true" />
+      <Method Name="ToString" Hidden="true" />
+      <Property Name="Troop" Hidden="true" />
+      <Field Name="troopsOutside" Hidden="true" />
+      <Method Name="Update" Hidden="true" />
+      <Method Name="UpdateResources" Hidden="true" />
+      <Method Name="Village" Hidden="true" />
+      <Property Name="X" Hidden="true" />
+      <Property Name="Y" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>DAQAgpC0IAAAgASMGAIUCAVZBABAQIAABkgCBEAJYoA=</HashCode>
+      <FileName>Village.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beans.Return">
+    <Position X="7.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAFgCAAAAACACAQAQAAgAgAAAAAAAAAACQAwAAAABAA=</HashCode>
+      <FileName>Return.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Type" />
+    </ShowAsAssociation>
+  </Class>
+  <Enum Name="beans.MoveType">
+    <Position X="10.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAQAAAAAAIAAAAgAAAAAEAAAAAA=</HashCode>
+      <FileName>MoveType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>
