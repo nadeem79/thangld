@@ -127,6 +127,20 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagrams\Cập nhật danh sách tuyển quân.cd" />
+    <None Include="ClassDiagrams\Huỷ xây dựng công trình.cd" />
+    <None Include="ClassDiagrams\Hỗ trợ.cd" />
+    <None Include="ClassDiagrams\Liệt kê danh sách tuyển quân.cd" />
+    <None Include="ClassDiagrams\Liệt kê danh sách xây dựng.cd" />
+    <None Include="ClassDiagrams\Shoutbox.cd" />
+    <None Include="ClassDiagrams\Thay đổi thông tin tài khoản.cd" />
+    <None Include="ClassDiagrams\Tuyển quân.cd" />
+    <None Include="ClassDiagrams\TW.cd" />
+    <None Include="ClassDiagrams\Tấn công.cd" />
+    <None Include="ClassDiagrams\Xem khả năng tuyển quân.cd" />
+    <None Include="ClassDiagrams\Xem khả năng xây dựng công trình.cd" />
+    <None Include="ClassDiagrams\Xây dựng công trình.cd" />
+    <None Include="ClassDiagrams\Đăng nhập.cd" />
     <None Include="Mapping\nhibernate-configuration.xsd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -198,9 +212,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Diagram\" />
     <Folder Include="Entities\" />
-    <Folder Include="NewFolder1\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
