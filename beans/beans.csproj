@@ -127,6 +127,20 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagrams\Chuyển tài nguyên.cd" />
+    <None Include="ClassDiagrams\Xoá bang hội.cd" />
+    <None Include="ClassDiagrams\Quản lý ngoại giao.cd" />
+    <None Include="ClassDiagrams\Thay đổi quyền hạn thành viên.cd" />
+    <None Include="ClassDiagrams\Mời gia nhập bang hội.cd" />
+    <None Include="ClassDiagrams\Thay đổi thông tin bang hội.cd" />
+    <None Include="ClassDiagrams\Lập bang hội.cd" />
+    <None Include="ClassDiagrams\Mua tài nguyên.cd" />
+    <None Include="ClassDiagrams\Huỷ lệnh rao bán tài nguyên.cd" />
+    <None Include="ClassDiagrams\Rao bán tài nguyên.cd" />
+    <None Include="ClassDiagrams\Huỷ lệnh chuyển tài nguyên.cd" />
+    <None Include="ClassDiagrams\Huỷ lệnh.cd" />
+    <None Include="ClassDiagrams\Liệt kê danh sách lệnh.cd" />
+    <None Include="ClassDiagrams\Rút quân.cd" />
     <None Include="ClassDiagrams\Cập nhật danh sách tuyển quân.cd" />
     <None Include="ClassDiagrams\Huỷ xây dựng công trình.cd" />
     <None Include="ClassDiagrams\Hỗ trợ.cd" />

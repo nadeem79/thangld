@@ -56,11 +56,30 @@
       <FileName>Group.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="beans.TribeRelation">
+    <Position X="4.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABABAAAAAIAAA=</HashCode>
+      <FileName>TribeRelation.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="CurrentTribe" />
+      <Property Name="DiplomaticTribe" />
+      <Property Name="Diplomacy" />
+    </ShowAsAssociation>
+  </Class>
   <Enum Name="beans.TribePermission">
     <Position X="1.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAgAABAAAAEAAQAAAISAACQQAgAABAAAA=</HashCode>
       <FileName>TribePermission.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="beans.TribeDiplomate">
+    <Position X="4.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgIAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TribeDiplomate.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Font Name="Tahoma" Size="8.25" />
