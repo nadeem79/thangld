@@ -316,6 +316,43 @@ namespace beans
             criteria.SetFirstResult(page * 40);
             return criteria.List<Report>();
         }
+        public MailDetail GetMailDetail(int Mail_id, ISession session)
+        {
+            ICriteria criteria = session.CreateCriteria(typeof(MailDetail));
+            criteria.Add(Expression.Eq("ID", Mail_id));
+            IList<MailDetail> lstMail = criteria.List<MailDetail>();
+            if (lstMail.Count == 0)
+                return null;
+            return lstMail[0];
+        }
+        public IList<Mail> GetMailSend(int page, ISession session)
+        {
+            ICriteria criteria = session.CreateCriteria(typeof(Mail));
+            criteria.Add(Expression.Eq("From", this));
+            criteria.AddOrder(Order.Desc("ID"));
+            criteria.SetMaxResults(40);
+            criteria.SetFirstResult(page * 40);
+            return criteria.List<Mail>();
+        }
+        public IList<Mail> GetMailReviece(int page, ISession session)
+        {
+            ICriteria criteria = session.CreateCriteria(typeof(Mail));
+            criteria.Add(Expression.Eq("To", this));
+            criteria.AddOrder(Order.Desc("ID"));
+            criteria.SetMaxResults(40);
+            criteria.SetFirstResult(page * 40);
+            return criteria.List<Mail>();
+        }
+        public Mail GetRevieceDetail(int Mail_id, ISession session)
+        {
+            ICriteria criteria = session.CreateCriteria(typeof(MailDetail));
+            criteria.Add(Expression.Eq("To", this));
+            criteria.Add(Expression.Eq("ID", Mail_id));
+            IList<Mail> lstMail = criteria.List<Mail>();
+            if (lstMail.Count == 0)
+                return null;
+            return lstMail[0];
+        }
 
         public void Update(DateTime time, ISession session)
         {
