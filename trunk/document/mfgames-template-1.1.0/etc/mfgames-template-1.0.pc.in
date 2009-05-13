@@ -1,0 +1,8 @@
+prefix=/usr
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+
+Name: MfGames.Template
+Description: MfGames.Template - template creation library inspired by ASP.NET
+Version: 1.0.0
+Libs: -r:${libdir}/mono/mfgames-1/MfGames.Template.dll

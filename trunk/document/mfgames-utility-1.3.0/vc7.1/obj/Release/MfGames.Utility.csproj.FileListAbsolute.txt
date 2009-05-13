@@ -1,0 +1,3 @@
+C:\Documents and Settings\DF.thangld\Desktop\mfgames-utility-1.3.0\mfgames-utility-1.3.0\vc7.1\bin\Release\MfGames.Utility.dll
+C:\Documents and Settings\DF.thangld\Desktop\mfgames-utility-1.3.0\mfgames-utility-1.3.0\vc7.1\obj\Release\ResolveAssemblyReference.cache
+C:\Documents and Settings\DF.thangld\Desktop\mfgames-utility-1.3.0\mfgames-utility-1.3.0\vc7.1\obj\Release\MfGames.Utility.dll
