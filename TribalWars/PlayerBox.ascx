@@ -3,7 +3,7 @@
     <asp:Label ID="error" runat="server" CssClass="error" ForeColor="#FF3300"></asp:Label>
     <h2>
         Xin chào
-        <% Response.Write(this.player.Username); %></h2>
+        <% Response.Write(this.Player.Username); %></h2>
         <br />
         <br />
         <a href="village.aspx">Vào game</a><br />

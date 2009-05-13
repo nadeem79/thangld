@@ -11,9 +11,10 @@
     <property name="X" column="x" type="Int32" />
     <property name="Y" column="y" type="Int32" />
     <many-to-one name="Owner" class="beans.Player, beans" column="userid" not-null="false" fetch="join" cascade="none" />
-    <property name="Points" column="points" type="Int32" />
+    <property name="Points" column="points" type="float" />
     <property name="Loyal" column="loyal" type="Int32" />
     <property name="LastUpdateTimestamp" column="last_update" type="Int64" not-null="true" />
+    <property name="Population" column="population" type="float" />
     <one-to-one name="Buildings" class="beans.VillageBuildingData, beans" cascade="all" />
     <one-to-one name="Resources" class="beans.VillageResourcesData, beans" cascade="all" />
     <one-to-one name="Research" class="beans.VillageReseachData, beans" cascade="all" />

@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Collections;
 using System.Linq;
 using NHibernate.Type;
+using Antlr.StringTemplate;
 
 namespace beans
 {
@@ -121,7 +122,7 @@ namespace beans
             get;
             set;
         }
-        public int Point
+        public float Point
         {
             get;
             set;
@@ -245,11 +246,103 @@ namespace beans
             relation.Diplomacy = diplomacy;
             session.Save(relation);
         }
+        public IList<Error> SetMemberPrivilageAndTitle(Player player, TribePermission permission, string title, ISession session)
+        {
+            IList<Error> lstError = new List<Error>();
+            if (this.Group != player.Group)
+            {
+                lstError.Add(new Error("Không có quyền truy cập chức năng này"));
+                return lstError;
+            }
+            if ((this.TribePermission & TribePermission.Baron) != TribePermission.Baron)
+            {
+                lstError.Add(new Error("Không có quyền truy cập chức năng này"));
+                return lstError;
+            }
+                
+            if ((int)player.TribePermission>(int)this.TribePermission)
+            {
+                lstError.Add(new Error("Không có quyền thay đổi thông tin thành viên này"));
+                return lstError;
+            }
+            if (permission==beans.TribePermission.Duke&&this.TribePermission!=beans.TribePermission.Duke)
+            {
+                lstError.Add(new Error("Không có quyền truy cập chức năng này"));
+                return lstError;
+            }
+
+            player.TribePermission = permission;
+            player.TribeTitle = title;
+
+            return lstError;
+        }
+
+        public IList<Error> InvitePlayer(string name, ISession session)
+        {
+            IList<Error> lstError = new List<Error>();
+
+            ICriteria criteriaGetPlayer = session.CreateCriteria(typeof(Player));
+            criteriaGetPlayer.Add(Expression.Eq("Username", name));
+            Player player = criteriaGetPlayer.UniqueResult <Player>();
+            if (player==null)
+            {
+                lstError.Add(new Error("Người chơi không tồn tại"));
+                return lstError;
+            }
+            if ((this.TribePermission & TribePermission.Inviter) != TribePermission.Inviter)
+            {
+                lstError.Add(new Error("Không có quyền truy cập chức năng này"));
+                return lstError;
+            }
+            if (this.Group == player.Group)
+            {
+                lstError.Add(new Error("Người chơi đã là thành viên của nhóm"));
+                return lstError;
+            }
+
+            ICriteria criteriaGetInvited = session.CreateCriteria(typeof (TribeInvite));
+            criteriaGetInvited.Add(Expression.Eq("Player", player));
+            criteriaGetInvited.Add(Expression.Eq("Group", this.Group));
+            TribeInvite invited = criteriaGetInvited.UniqueResult<TribeInvite>(); 
+
+            if (invited!=null)
+            {
+                lstError.Add(new Error("Thành viên đã được mời tham gia nhóm"));
+                return lstError;
+            }
+
+            TribeInvite invite = new TribeInvite();
+            invite.Player = player;
+            invite.Group = this.Group;
+            invite.Inviter = this;
+            invite.Time = DateTime.Now;
+
+            Report inviteReport = new Report();
+            inviteReport.Type = ReportType.InviteToTribe;
+            inviteReport.Time = invite.Time;
+            inviteReport.Title = String.Format("{0} mời gia nhập bang hội {1}", this.Username, this.Group.Name);
+            inviteReport.Unread = true;
+            inviteReport.Owner = player;
+
+            StringTemplateGroup group = new StringTemplateGroup("invite");
+            StringTemplate temp = new StringTemplate(group, reports.Invite);
+            temp.SetAttribute("inviter_id", this.ID);
+            temp.SetAttribute("inviter_name", this.Username);
+            temp.SetAttribute("group_id", this.Group.ID);
+            temp.SetAttribute("group_name", this.Group.Name);
+            inviteReport.Description.Description = temp.ToString();
+
+            session.Save(invite);
+            session.Save(inviteReport);
+
+            return lstError;
+        }
         #endregion
 
         #region Village Methods
         public MovingCommand GetCommand(int command_id, ISession session)
         {
+            
             ICriteria criteria = session.CreateCriteria(typeof(MovingCommand));
             criteria.Add(Expression.Eq("ID", command_id));
             IList<MovingCommand> lstCommand = criteria.List<MovingCommand>();
@@ -279,37 +372,9 @@ namespace beans
         {
 
             ICriteria criteria;
-            switch (type)
-            {
-                case ReportType.Attack:
-                    criteria = session.CreateCriteria(typeof(AttackReport));
-                    break;
-                case ReportType.Defense:
-                    criteria = session.CreateCriteria(typeof(DefenseReport));
-                    break;
-                case ReportType.DefenseOther:
-                    criteria = session.CreateCriteria(typeof(DefenseOtherReport));
-                    break;
-                case ReportType.InviteToTribe:
-                    criteria = session.CreateCriteria(typeof(InviteToTribeReport));
-                    break;
-                case ReportType.OfferAccepted:
-                    criteria = session.CreateCriteria(typeof(OfferAcceptedReport));
-                    break;
-                case ReportType.ResourceReceive:
-                    criteria = session.CreateCriteria(typeof(ResourceReceiveReport));
-                    break;
-                case ReportType.Support:
-                    criteria = session.CreateCriteria(typeof(SupportReport));
-                    break;
-                case ReportType.SupportWithdawal:
-                    criteria = session.CreateCriteria(typeof(SupportWithdawalReport));
-                    break;
-                default:
-                    criteria = session.CreateCriteria(typeof(Report));
-                    break;
-            }
-            
+            criteria = session.CreateCriteria(typeof(Report));
+            if (type!=ReportType.All)
+                criteria.Add(Expression.Eq("Type", type));
             criteria.Add(Expression.Eq("Owner", this));
             criteria.AddOrder(Order.Desc("ID"));
             criteria.SetMaxResults(40);
@@ -329,6 +394,7 @@ namespace beans
         {
             ICriteria criteria = session.CreateCriteria(typeof(Mail));
             criteria.Add(Expression.Eq("From", this));
+            criteria.Add(Expression.Eq("SenderDelete", false));
             criteria.AddOrder(Order.Desc("ID"));
             criteria.SetMaxResults(40);
             criteria.SetFirstResult(page * 40);
@@ -338,6 +404,7 @@ namespace beans
         {
             ICriteria criteria = session.CreateCriteria(typeof(Mail));
             criteria.Add(Expression.Eq("To", this));
+            criteria.Add(Expression.Eq("ReceiverDelete", false));
             criteria.AddOrder(Order.Desc("ID"));
             criteria.SetMaxResults(40);
             criteria.SetFirstResult(page * 40);

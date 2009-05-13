@@ -7,10 +7,6 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
-    <asp:ScriptManager ID="ScriptManager1" runat="server">
-    </asp:ScriptManager>
-    <telerik:RadFormDecorator ID="RadFormDecorator1" runat="server" DecoratedControls="All"
-        Enabled="true" Skin="Office2007" />
     <h2>
         Bang hội</h2>
     <p>

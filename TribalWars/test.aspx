@@ -8,32 +8,33 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <asp:ScriptManager ID="RadScriptManager1" runat="server">  
-        </asp:ScriptManager> 
-        <telerik:RadTextBox ID="txtInput" runat="server">  
-                </telerik:RadTextBox> 
-        <asp:UpdatePanel ID="UpdatePanel2" runat="server">  
-            <ContentTemplate> 
-                
-                <br /> 
-                <asp:Button ID="bttnSend" runat="server" OnClick="bttnSend_Click" Text="sdfgh"></asp:Button><br /> 
-                <telerik:RadToolTip ID="pAttack" runat="server" ShowEvent="FromCode" Skin="Office2007" 
-                    TargetControlID="bttnSend" Position="Center" RelativeTo="BrowserWindow" Width="200" 
-                    Height="200" Title="Tấn công" Modal="True" ShowDelay="100" ShowCallout="False" 
-                    ManualClose="true">  
-                    <asp:UpdatePanel ID="UpdatePanel1" runat="server">  
-                        <ContentTemplate> 
-                            <asp:Label ID="lblConfirm" runat="server"></asp:Label>
-                            <asp:Button ID="Confirm" runat="server" Text="abc" OnClick="Confirm_Click"></asp:Button>
-                        </ContentTemplate> 
-                    </asp:UpdatePanel> 
-                </telerik:RadToolTip> 
-            </ContentTemplate> 
-            <Triggers> 
-                <asp:AsyncPostBackTrigger ControlID="bttnSend" EventName="Click" /> 
-                <asp:AsyncPostBackTrigger ControlID="Confirm" EventName="Click" /> 
-            </Triggers> 
-        </asp:UpdatePanel> 
+    <img src="http://en21.tribalwars.net/graphic/unit_big/spear.png" /><br />
+    <img src="http://en21.tribalwars.net/graphic/unit_big/sword.png" /><br />
+    <img src="http://en21.tribalwars.net/graphic/unit_big/axe.png" /><br />
+    <img src="http://en21.tribalwars.net/graphic/unit_big/spy.png" /><br />
+    <img src="http://en21.tribalwars.net/graphic/unit_big/light.png" /><br />
+    <img src="http://en21.tribalwars.net/graphic/unit_big/heavy.png" /><br />
+    <img src="http://en21.tribalwars.net/graphic/unit_big/ram.png" /><br />
+    <img src="http://en21.tribalwars.net/graphic/unit_big/catapult.png" /><br />
+    
+    <img src="http://en21.tribalwars.net/graphic/unit_big/spear_grey.png" /><br />
+    <img src="http://en21.tribalwars.net/graphic/unit_big/sword_grey.png" /><br />
+    <img src="http://en21.tribalwars.net/graphic/unit_big/axe_grey.png" /><br />
+    <img src="http://en21.tribalwars.net/graphic/unit_big/spy_grey.png" /><br />
+    <img src="http://en21.tribalwars.net/graphic/unit_big/light_grey.png" /><br />
+    <img src="http://en21.tribalwars.net/graphic/unit_big/heavy_grey.png" /><br />
+    <img src="http://en21.tribalwars.net/graphic/unit_big/ram_grey.png" /><br />
+    <img src="http://en21.tribalwars.net/graphic/unit_big/catapult_grey.png" /><br />
+    
+    <img src="http://en21.tribalwars.net/graphic/unit_big/spear_cross.png" /><br />
+    <img src="http://en21.tribalwars.net/graphic/unit_big/sword_cross.png" /><br />
+    <img src="http://en21.tribalwars.net/graphic/unit_big/axe_cross.png" /><br />
+    <img src="http://en21.tribalwars.net/graphic/unit_big/spy_cross.png" /><br />
+    <img src="http://en21.tribalwars.net/graphic/unit_big/light_cross.png" /><br />
+    <img src="http://en21.tribalwars.net/graphic/unit_big/heavy_cross.png" /><br />
+    <img src="http://en21.tribalwars.net/graphic/unit_big/ram_cross.png" /><br />
+    <img src="http://en21.tribalwars.net/graphic/unit_big/catapult_cross.png" /><br />
+    
     </form>
 </body>
 </html>

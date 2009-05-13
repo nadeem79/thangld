@@ -1,60 +1,88 @@
 ﻿<%@ Page Title="Phân quyền thành viên" Language="C#" MasterPageFile="~/dialogs/dialog_template.master"
     AutoEventWireup="true" CodeFile="tribe_member.aspx.cs" Inherits="dialogs_tribe_member" %>
 
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+<style>
+#<%=pAttackConfirm.ClientID%>
+{
+    float:left;
+}
+#<%=UpdatePanel1.ClientID%>
+{
+    float:left;
+}
+</style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="dialog" runat="Server">
     <asp:Panel ID="pNotEnoughPrivilage" runat="server">
         <h2>
             Bạn không có quyền truy cập trang này</h2>
     </asp:Panel>
+    <asp:Panel ID="pUserNotFound" runat="server">
+        <h2>
+            Người chơi không tồn tại, hoặc phải là thành viên bang hội</h2>
+    </asp:Panel>
     <asp:Panel ID="pCanChange" runat="server">
         <h3>
-            change privileges on Player DreamingFighter</h3>
+            Thay đổi quyền cho thành viên
+            <% = this.Member.Username %></h3>
         <p>
-            Here you can set the privileges for the players in your tribe. The duke privileges
-            should only be given to players you know VERY well and that you can fully trust.
+            Thay đổi quyền cá nhân của thành viên trong bang hội.
         </p>
-        <h5>
-            <asp:CheckBox ID="chkDuke" runat="server" />
-            <img src="../images/found.png" alt="Duke" title="Duke">
-            Chủ hội
-        </h5>
-        <p>
-            Sets status to duke. A duke possesses all tribal privileges, can disband or rename
-            the tribe, set the homepage and chat-channel, administer the tribal forum and name
-            other members dukes.</p>
+        <asp:Panel ID="pDukePrivilage" runat="server">
+            <h5>
+                <asp:CheckBox ID="chkDuke" runat="server" />
+                <img src="../images/found.png" alt="Duke" title="Duke">
+                Chủ hội
+            </h5>
+            <p>
+                Đặt quyền chủ hội. Chủ hội là thành viên có quyền cao nhất trong bang, có thể giải
+                tán hoặc đổi tên bang hội, hoặc cấp quyền chủ hội cho thành viên khác</p>
+        </asp:Panel>
         <h5>
             <asp:CheckBox ID="chkBaron" runat="server" />
             <img src="../images/lead.png" alt="Baron" title="Baron">
             Phó hội
         </h5>
         <p>
-            Barons can set privileges and titles of other members and disband members. They
-            can receive other privileges as well that can be given by the dukes.</p>
+            Phó hội có thể cấp quyền nickname cho các thành viên khác, hoặc đuổi thành viên
+            khỏi hội. Phó hội là người có quyền lực thứ nhì trong hội, chỉ không có quyền đặt
+            chủ hội</p>
         <h5>
             <asp:CheckBox ID="chkInviter" runat="server" />
             <img src="../images/invite.png" alt="Invite" title="Invite">
             Tuyển mộ
         </h5>
         <p>
-            The player has permission to invite other players into the tribe.</p>
+            Mời người chơi khác tham gia hội</p>
         <h5>
             <asp:CheckBox ID="chkDiplomate" runat="server" />
             <img src="../images/diplomacy.png" alt="Diplomacy" title="Diplomacy">
             Ngoại giao</h5>
         <p>
-            This privilege allows a member to change the tribal profile and set alliances and
-            NAPs.</p>
+            Đặt thông tin ngoại giao cho hội</p>
         <h3>
             Title</h3>
         <p>
             Tribal status:
             <asp:TextBox ID="txtTribeTitle" runat="server" Width="212px"></asp:TextBox>
         </p>
-        <h5>
-            &nbsp;<asp:Button ID="bttnChangeMemberPrivilage" runat="server" Text="OK" />
-            <asp:Button ID="bttnCancel" runat="server" Text="Bỏ" />
-        </h5>
+        <asp:UpdatePanel ID="pAttackConfirm" runat="server" >
+            <ContentTemplate>
+                <asp:Button ID="bttnChangeMemberPrivilage" runat="server" Text="OK" OnClick="bttnChangeMemberPrivilage_Click" />
+            </ContentTemplate>
+            <Triggers>
+                <asp:AsyncPostBackTrigger ControlID="bttnChangeMemberPrivilage" EventName="Click" />
+            </Triggers>
+        </asp:UpdatePanel>
+        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+            <ContentTemplate>
+                <asp:Button ID="bttnCancel" runat="server" Text="Bỏ" OnClick="bttnCancel_Click" />
+            </ContentTemplate>
+            <Triggers>
+                <asp:AsyncPostBackTrigger ControlID="bttnCancel" EventName="Click" />
+            </Triggers>
+        </asp:UpdatePanel>
     </asp:Panel>
 </asp:Content>

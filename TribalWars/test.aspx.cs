@@ -35,17 +35,11 @@ public partial class test : System.Web.UI.Page
 
     protected void bttnSend_Click(object sender, EventArgs e)
     {
-        this.lblConfirm.Text = this.txtInput.Text;
-        pAttack.Show();  
+        
     }
 
     protected void Confirm_Click(object sender, EventArgs e)
     {
-        if (this.txtInput.Text == "111")
-        {
-            this.txtInput.Text = "abc";
-        }
-        else
-            this.txtInput.Text = "xys";
+        
     }
 }

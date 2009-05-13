@@ -109,7 +109,7 @@ public partial class rally : System.Web.UI.Page
                 this.y.Text = targetVillage.Y.ToString("000");
             }
         }
-
+        
         session.Close();
     }
 

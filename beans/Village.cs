@@ -7,7 +7,7 @@ using NHibernate.Criterion;
 namespace beans
 {
     
-    public class Village:IdentityObject
+    public partial class Village:IdentityObject
     {
         #region Variables
 
@@ -69,12 +69,12 @@ namespace beans
                 this.LastUpdateTimestamp = DatetimeHelper.DatetimeToInt64(value);
             }
         }
-        public virtual int Points
+        public virtual float Points
         {
             get;
             set;
         }
-        public double Population
+        public float Population
         {
             get;
             set;
@@ -262,6 +262,44 @@ namespace beans
                 }
             }
         }
+        public int this[ResourcesType resource]
+        {
+            get
+            {
+                switch (resource)
+                {
+                    case ResourcesType.Clay:
+                        return this.Resources.Clay;
+                        break;
+                    case ResourcesType.Wood:
+                        return this.Resources.Wood;
+                        break;
+                    case ResourcesType.Iron:
+                        return this.Resources.Iron;
+                        break;
+                    default:
+                        return 0;
+                        break;
+                }
+            }
+            set
+            {
+                switch (resource)
+                {
+                    case ResourcesType.Clay:
+                        this.Resources.Clay = value;
+                        break;
+                    case ResourcesType.Wood:
+                        this.Resources.Clay = value;
+                        break;
+                    case ResourcesType.Iron:
+                        this.Resources.Clay = value;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
         
         #endregion
 
@@ -364,432 +402,30 @@ namespace beans
 
         #endregion
 
-        #region Methods
-
         public override string ToString()
         {
             return this.Name;
         }
-
-        #region Methods.Resources
-
-        public int ProductPerHour(ResourcesType type)
-        {
-            int level = 0;
-            switch (type)
-            {
-                case ResourcesType.Clay:
-                    level = this.Buildings.ClayPit;
-                    break;
-                case ResourcesType.Wood:
-                    level = this.Buildings.TimberCamp;
-                    break;
-                case ResourcesType.Iron:
-                    level = this.Buildings.IronMine;
-                    break;
-                default:
-                    break;
-            }
-
-            if (level == 0)
-                return 0;
-            int result = 20;
-            for (int i = 0; i < level; i++)
-                result += (int)(result * 0.2);
-            return result;
-        }
-        public double SecondPerResourceUnit(ResourcesType type)
-        {
-
-            int level = 0;
-            switch (type)
-            {
-                case ResourcesType.Clay:
-                    level = this.Buildings.ClayPit;
-                    break;
-                case ResourcesType.Wood:
-                    level = this.Buildings.TimberCamp;
-                    break;
-                case ResourcesType.Iron:
-                    level = this.Buildings.IronMine;
-                    break;
-                default:
-                    break;
-            }
-
-            double production = this.ProductPerHour(type);
-            if (production == 0)
-                return double.MaxValue;
-            return (double)3600 / production;
-        }
-        public void UpdateResources(DateTime from, DateTime to)
-        {
-            TimeSpan span = to - from;
-            double time = span.TotalHours;
-            this.Resources.Clay += (int)(time * this.ProductPerHour(ResourcesType.Clay));
-            this.Resources.Wood += (int)(time * this.ProductPerHour(ResourcesType.Wood));
-            this.Resources.Iron += (int)(time * this.ProductPerHour(ResourcesType.Iron));
-
-            if (this.Resources.Clay > this.MaxResources)
-                this.Resources.Clay = this.MaxResources;
-            if (this.Resources.Wood > this.MaxResources)
-                this.Resources.Wood = this.MaxResources;
-            if (this.Resources.Iron > this.MaxResources)
-                this.Resources.Iron = this.MaxResources;
-        }
-        
-        #endregion
-
-        #region Methods.Troops
-
-        public int GetIncomingAttackCount(ISession session)
-        {
-            IQuery query = session.CreateQuery("select count(a.ID) from Attack a where a.To=:village");
-            query.SetEntity("village", this);
-            return Convert.ToInt32(query.List()[0]);
-        }
-        public int GetIncomingSupportCount(ISession session)
-        {
-            IQuery query = session.CreateQuery("select count(s.ID) from Support s where s.To=:village");
-            query.SetEntity("village", this);
-            return Convert.ToInt32(query.List()[0]);
-        }
-        protected IList<MovingCommand> GetDependingCommands(DateTime to, ISession session)
-        {
-            ICriteria criteria = session.CreateCriteria(typeof(MovingCommand));
-            criteria.Add(Expression.Or(Expression.Eq("To", this), Expression.Eq("From", this)));
-            criteria.Add(Expression.Lt("LandingTimestamp", this.LastUpdateTimestamp));
-            criteria.Add(Expression.Ge("StartTimestamp", this.LastUpdateTimestamp));
-            criteria.AddOrder(new Order("LandingTimestamp", true));
-            return criteria.List<MovingCommand>();
-        }
-        protected IList<Recruit> GetDependingInfantryRecruit(ISession session)
-        {
-            ICriteria criteria = session.CreateCriteria(typeof(Recruit));
-            criteria.Add(Expression.Eq("InVillage", this));
-            criteria.Add(Expression.Or(Expression.Eq("Troop", TroopType.Axe), Expression.Or(Expression.Eq("Troop", TroopType.Spear), Expression.Eq("Troop", TroopType.Sword))));
-            criteria.AddOrder(new Order("ID", true));
-            return criteria.List<Recruit>();
-        }
-        protected IList<Recruit> GetDependingCavalryRecruit(ISession session)
-        {
-            ICriteria criteria = session.CreateCriteria(typeof(Recruit));
-            criteria.Add(Expression.Eq("InVillage", this));
-            criteria.Add(Expression.Or(Expression.Eq("Troop", TroopType.Scout), Expression.Or(Expression.Eq("Troop", TroopType.Light), Expression.Eq("Troop", TroopType.Heavy))));
-            criteria.AddOrder(new Order("ID", true));
-            return criteria.List<Recruit>();
-        }
-        public IList<MovingCommand> GetTroopMovement(ISession session)
-        {
-            ICriteria criteria = session.CreateCriteria(typeof(MovingCommand));
-
-            criteria.Add(
-                Expression.Or(
-                    Expression.Eq("To", this),
-                    Expression.Eq("From", this))                
-                );
-            criteria.Add(Expression.Eq("Pending", false));
-            criteria.Add(Expression.Gt("LandingTimestamp", DatetimeHelper.DatetimeToInt64(DateTime.Now)));
-            criteria.AddOrder(Order.Asc("LandingTimestamp"));
-            IList<MovingCommand> lst = criteria.List<MovingCommand>();
-            return lst;
-        } 
-        public IList<MovingCommand> GetIncomingTroop(ISession session)
-        {
-            ICriteria criteria = session.CreateCriteria(typeof(MovingCommand));
-            criteria.Add(Expression.Eq("Pending", false));
-            criteria.Add(Expression.Eq("To", this));
-            criteria.Add(Expression.Gt("LandingTimestamp", DatetimeHelper.DatetimeToInt64(DateTime.Now)));
-            criteria.AddOrder(Order.Desc("LandingTimestamp"));
-
-            return criteria.List<MovingCommand>();
-        }
-        
-        #endregion 
-        
-        #region Methods.Recruit
-
-        public int MaxRecruit(TroopType troop)
-        {
-            return Recruit.MaxRecruit(troop, this.Resources.Wood, this.Resources.Clay, this.Resources.Iron);
-        }
-        public Recruit BeginRecruit(TroopType troop, int quantity, ISession session)
-        {
-            if (!Recruit.CanRecruit(troop, quantity, this.Resources.Wood, this.Resources.Clay, this.Resources.Iron))
-                return null;
-
-            int level = 0;
-            if ((troop == TroopType.Axe) || (troop == TroopType.Spear) || (troop == TroopType.Sword))
-                level = this[BuildingType.Barracks];
-            if ((troop == TroopType.Light) || (troop == TroopType.Scout) || (troop == TroopType.Heavy))
-                level = this[BuildingType.Stable];
-            
-            Recruit recruit = new Recruit();
-            recruit.InVillage = this;
-            recruit.Quantity = quantity;
-            recruit.Troop = troop;
-            recruit.LastUpdate = DateTime.Now;
-
-            Price p = Recruit.GetPrice(troop);
-            this.Resources.Clay -= p.Clay * quantity;
-            this.Resources.Wood -= p.Wood * quantity;
-            this.Resources.Iron -= p.Iron * quantity;
-
-            session.Save(recruit);
-            session.Update(this);
-            
-            return recruit;
-        }
-        public IList<Recruit> GetRecruit(ISession session, BuildingType building)
-        {
-
-            switch (building)
-            {
-                case BuildingType.Barracks:
-                case BuildingType.Academy:
-                case BuildingType.Stable:
-                case BuildingType.Workshop:
-                    break;
-                default:
-                    throw new Exception("Hack hả ku :))");
-            }
-            
-            ICriteria criteria = session.CreateCriteria(typeof(Recruit));
-            criteria.Add(Expression.Eq("InVillage", this));
-            criteria.Add(Expression.Gt("Quantity", 0));
-            criteria.AddOrder(new Order("ID", true));
-
-            switch (building)
-            {
-                case BuildingType.Barracks:
-                    criteria.Add(Expression.Or(
-                        Expression.Or(
-                            Expression.Eq("Troop", TroopType.Axe), 
-                            Expression.Eq("Troop", TroopType.Spear)), 
-                        Expression.Eq("Troop", TroopType.Sword)));
-                    break;
-                case BuildingType.Stable:
-                    criteria.Add(Expression.Or(
-                        Expression.Or(
-                            Expression.Eq("Troop", TroopType.Scout), 
-                            Expression.Eq("Troop", TroopType.Light)), 
-                        Expression.Eq("Troop", TroopType.Heavy)));
-                    break;
-                case BuildingType.Workshop:
-                    criteria.Add(Expression.Or(
-                        Expression.Eq("Troop", TroopType.Ram),
-                        Expression.Eq("Troop", TroopType.Catapult)));
-                    break;
-                case BuildingType.Academy:
-                    criteria.Add(Expression.Eq("Troop", TroopType.Nobleman));
-                    break;
-                default:
-                    throw new Exception("Hack hả ku :))");
-            }
-            return criteria.List<Recruit>();
-        }
-        public void CancelRecruit(int recruit_id, ISession session)
-        {
-            ICriteria criteria = session.CreateCriteria(typeof(Recruit));
-            criteria.Add(Expression.Eq("ID", recruit_id));
-            criteria.Add(Expression.Eq("InVillage", this));
-            Recruit recruit = criteria.UniqueResult<Recruit>();
-            if (recruit == null)
-                return;
-
-            Price price = Recruit.GetPrice(recruit.Troop);
-            this.Resources.Wood += price.Wood * recruit.Quantity;
-            this.Resources.Clay += price.Clay * recruit.Quantity;
-            this.Resources.Iron += price.Iron * recruit.Quantity;
-            this.Population -= (int)(price.Population * recruit.Quantity);
-            session.Update(this);
-            session.Delete(recruit);
-        }
-
-        #endregion
-
-        #region Methods.Building
-
-        public BuildableStatus PrepareBuild(BuildingType building, ISession session)
-        {
-            BuildPrice price = Build.GetPrice(building, this.GetTotalBuildingLevel(building, session) + 1, this.Buildings.Headquarter);
-
-            BuildableStatus status = this.CanBuild(building, session);
-
-            if (status != BuildableStatus.JustDoIt)
-                return status;
-            Build build = new Build();
-            build.Building = building;
-            build.InVillage = this;
-            build.Start = DateTime.Now;
-            build.End = DateTime.Now.AddSeconds(price.BuildTime);
-            this.Resources.Wood -= price.Wood;
-            this.Resources.Clay -= price.Clay;
-            this.Resources.Iron -= price.Iron;
-            session.Save(build);
-            session.Update(this);
-            
-
-            return status;
-        }
-        public int GetTotalBuildingLevel(BuildingType type, ISession session)
-        {
-            IQuery query = session.CreateQuery("select count(b.ID) from Build b where b.InVillage=:village and b.Building=:type");
-            query.SetEntity("village", this);
-            query.SetEnum("type", type);
-            return Convert.ToInt32(query.List()[0]) + this[type];
-        }
-        public int GetTotalBuild(ISession session)
-        {
-            IQuery query = session.CreateQuery("select count(b.ID) from Build b where b.InVillage=:village");
-            query.SetEntity("village", this);
-            return Convert.ToInt32(query.List()[0]);
-        }
-        public BuildableStatus CanBuild(BuildingType type, ISession session)
-        {
-            if (this[type] == 0)
-            {
-                switch (type)
-                {
-                    case BuildingType.Headquarter:
-                        if (this[BuildingType.Headquarter] == 0)
-                            return BuildableStatus.RequirementNotMet;
-                        break;
-                    case BuildingType.Barracks:
-                        if (this[BuildingType.Headquarter] < 3)
-                            return BuildableStatus.RequirementNotMet;
-                        break;
-                    case BuildingType.Stable:
-                        if (this[BuildingType.Headquarter] < 10 && this[BuildingType.Smithy] < 5 && this[BuildingType.Barracks] < 5)
-                            return BuildableStatus.RequirementNotMet;
-                        break;
-                    case BuildingType.Workshop:
-                        if (this[BuildingType.Headquarter] < 10 && this[BuildingType.Smithy] < 10)
-                            return BuildableStatus.RequirementNotMet;
-                        break;
-                    case BuildingType.Academy:
-                        if (this[BuildingType.Headquarter] < 20 && this[BuildingType.Smithy] < 20 && this[BuildingType.Market] < 10)
-                            return BuildableStatus.RequirementNotMet;
-                        break;
-                    case BuildingType.Smithy:
-                        if (this[BuildingType.Headquarter] < 5 && this[BuildingType.Barracks] < 1)
-                            return BuildableStatus.RequirementNotMet;
-                        break;
-                    case BuildingType.Rally:
-                        if (this[BuildingType.Headquarter] < 1)
-                            return BuildableStatus.RequirementNotMet;
-                        break;
-                    case BuildingType.Market:
-                        if (this[BuildingType.Headquarter] < 2 && this[BuildingType.Warehouse] < 2)
-                            return BuildableStatus.RequirementNotMet;
-                        break;
-                    case BuildingType.TimberCamp:
-                        if (this[BuildingType.Headquarter] < 1)
-                            return BuildableStatus.RequirementNotMet;
-                        break;
-                    case BuildingType.ClayPit:
-                        if (this[BuildingType.Headquarter] < 1)
-                            return BuildableStatus.RequirementNotMet;
-                        break;
-                    case BuildingType.IronMine:
-                        if (this[BuildingType.Headquarter] < 1)
-                            return BuildableStatus.RequirementNotMet;
-                        break;
-                    case BuildingType.Farm:
-                        if (this[BuildingType.Headquarter] < 1)
-                            return BuildableStatus.RequirementNotMet;
-                        break;
-                    case BuildingType.Warehouse:
-                        if (this[BuildingType.Headquarter] < 1)
-                            return BuildableStatus.RequirementNotMet;
-                        break;
-                    case BuildingType.HidingPlace:
-                        if (this[BuildingType.Headquarter] < 1)
-                            return BuildableStatus.RequirementNotMet;
-                        break;
-                    case BuildingType.Wall:
-                        if (this[BuildingType.Headquarter] < 1 && this[BuildingType.Barracks] < 1)
-                            return BuildableStatus.RequirementNotMet;
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-
-            int iTotalLevel = this.GetTotalBuildingLevel(type, session);
-
-            BuildPrice price = Build.GetPrice(type, iTotalLevel + 1, this[BuildingType.Headquarter]);
-            if (iTotalLevel >= price.MaxLevel)
-                return BuildableStatus.BuildingLevelExceed;
-
-            if ((this.MaxPopulation - this.Population) < price.Population)
-                return BuildableStatus.NotEnoughFarm;
-
-            if (this.Resources.Wood < price.Wood)
-                return BuildableStatus.NotEnoughWood;
-            if (this.Resources.Clay < price.Clay)
-                return BuildableStatus.NotEnoughClay;
-            if (this.Resources.Iron < price.Iron)
-                return BuildableStatus.NotEnoughIron;
-
-            if (this.GetTotalBuild(session) >= 5)
-                return BuildableStatus.BuildNumberExceed;
-
-            return BuildableStatus.JustDoIt;
-            
-        }
-        public IList<Build> GetPendingConstruction(ISession session)
-        {
-            ICriteria criteria = session.CreateCriteria(typeof(Build));
-            criteria.Add(Expression.Eq("InVillage", this));
-            criteria.AddOrder(Order.Asc("ID"));
-
-            return criteria.List<Build>();
-        }
-        public void CancelBuild(int id, ISession session)
-        {
-
-            ICriteria criteria = session.CreateCriteria(typeof(Build));
-            criteria.Add(Expression.Eq("ID", id));
-            criteria.Add(Expression.Eq("InVillage", this));
-            IList<Build> lstBuild = criteria.List<Build>();
-            if (lstBuild.Count == 0)
-                return;
-
-            Build build = lstBuild[0];
-            BuildPrice price = Build.GetPrice(build.Building, this[build.Building], this[BuildingType.Headquarter]);
-
-            session.Evict(build.InVillage);
-            build.InVillage = this;
-
-            build.InVillage.Resources.Wood += price.Wood;
-            build.InVillage.Resources.Clay += price.Clay;
-            build.InVillage.Resources.Iron += price.Iron;
-
-            session.Delete(build);
-            session.Update(build.InVillage);
-        }
-
-        #endregion
 
         //Chưa xét trường hợp xây nhà, xây noble và xe
         public void Update(DateTime to, ISession session)
         {
             this.Loyal += (int)(to - this.LastUpdate).TotalHours;
 
-            IList<MovingCommand> lstMovingCommands = this.GetDependingCommands(to, session);
+            IList<Attack> incomings = this.GetDependingAttack(to, session);
             IList<Recruit> lstInfantryRecruits = this.GetDependingInfantryRecruit(session);
             IList<Recruit> lstCavalryRecruits = this.GetDependingCavalryRecruit(session);
+            IList<Recruit> lstCarRecruits = this.GetDependingCarRecruit(session);
+            IList<Recruit> lstNobleRecruits = this.GetDependingNobleRecruit(session);
             IList<Build> lstConstructing = this.GetPendingConstruction(session);
+            IList<Research> lstReseaching = this.GetPendingResearch(session);
 
-            
-
-            foreach (MovingCommand command in lstMovingCommands)
+            foreach (Attack incoming in incomings)
             {
-                this.UpdateResources(this.LastUpdate, command.LandingTime);
+                #region Tài nguyên
+                this.UpdateResources(this.LastUpdate, incoming.LandingTime);
                 if (lstInfantryRecruits.Count > 0)
-                    while (lstInfantryRecruits[0].Expense(command.LandingTime))
+                    while (lstInfantryRecruits[0].Expense(incoming.LandingTime))
                     {
                         DateTime start = lstInfantryRecruits[0].LastUpdate;
                         session.Delete(lstInfantryRecruits[0]);
@@ -800,10 +436,11 @@ namespace beans
                             lstInfantryRecruits[0].LastUpdate = start;
                     }
 
-                
+                #endregion 
 
+                #region Xây quân
                 if (lstCavalryRecruits.Count > 0)
-                    while (lstCavalryRecruits[0].Expense(command.LandingTime))
+                    while (lstCavalryRecruits[0].Expense(incoming.LandingTime))
                     {
                         DateTime start = lstCavalryRecruits[0].LastUpdate;
                         session.Delete(lstCavalryRecruits[0]);
@@ -814,8 +451,47 @@ namespace beans
                             lstCavalryRecruits[0].LastUpdate = start;
                     }
 
+                if (lstInfantryRecruits.Count > 0)
+                    while (lstInfantryRecruits[0].Expense(to))
+                    {
+                        DateTime start = lstInfantryRecruits[0].LastUpdate;
+                        session.Delete(lstInfantryRecruits[0]);
+                        lstInfantryRecruits.RemoveAt(0);
+                        if (lstInfantryRecruits.Count == 0)
+                            break;
+                        else
+                            lstInfantryRecruits[0].LastUpdate = start;
+                    }
+
+                if (lstCarRecruits.Count > 0)
+                    while (lstCarRecruits[0].Expense(to))
+                    {
+                        DateTime start = lstCarRecruits[0].LastUpdate;
+                        session.Delete(lstCarRecruits[0]);
+                        lstCarRecruits.RemoveAt(0);
+                        if (lstCarRecruits.Count == 0)
+                            break;
+                        else
+                            lstCarRecruits[0].LastUpdate = start;
+                    }
+
+                if (lstNobleRecruits.Count > 0)
+                    while (lstNobleRecruits[0].Expense(to))
+                    {
+                        DateTime start = lstNobleRecruits[0].LastUpdate;
+                        session.Delete(lstNobleRecruits[0]);
+                        lstNobleRecruits.RemoveAt(0);
+                        if (lstNobleRecruits.Count == 0)
+                            break;
+                        else
+                            lstNobleRecruits[0].LastUpdate = start;
+                    }
+
+                #endregion
+
+                #region Xây nhà
                 if (lstConstructing.Count > 0)
-                    while (lstConstructing[0].expense(command.LandingTime))
+                    while (lstConstructing[0].Expense(incoming.LandingTime))
                     {
                         DateTime end = lstConstructing[0].End;
                         session.Delete(lstConstructing[0]);
@@ -829,8 +505,38 @@ namespace beans
                             lstConstructing[0].End = lstConstructing[0].Start + t;
                         }
                     }
+                #endregion
 
-                command.effect(session);
+                #region Nâng cấp
+                if (lstReseaching.Count > 0)
+                    while (lstReseaching[0].Expense(incoming.LandingTime))
+                    {
+                        ResearchPrice price = beans.Research.GetPrice(lstReseaching[0].Type, lstReseaching[0].Level, this[BuildingType.Smithy]);
+                        DateTime end = lstReseaching[0].Start + new TimeSpan(price.Time);
+                        session.Delete(lstReseaching[0]);
+                        lstReseaching.RemoveAt(0);
+                        if (lstReseaching.Count == 0)
+                            break;
+                        else
+                            lstReseaching[0].Start = end;
+                    }
+                #endregion
+
+                #region Quân đi đánh làng khác
+                IList<Attack> attacks = this.getDependingAttacking(incoming.LandingTime, session);
+                foreach (Attack attack in attacks)
+                    attack.To.Update(to, session);
+                #endregion
+
+                #region Quân hỗ trợ hoặc quay về từ làng khác
+                IList<MovingCommand> friendlyIncomings = this.getFriendlyIncomings(to, session);
+                foreach(MovingCommand command in friendlyIncomings)
+                    command.effect(session);
+                #endregion
+
+                this.LastUpdate = incoming.LandingTime;
+                incoming.effect(session);
+                
             }
 
             if (lstInfantryRecruits.Count > 0)
@@ -861,8 +567,36 @@ namespace beans
             if (lstCavalryRecruits.Count > 0)
                 session.Update(lstCavalryRecruits[0]);
 
+            if (lstCarRecruits.Count > 0)
+                while (lstCarRecruits[0].Expense(to))
+                {
+                    DateTime start = lstCarRecruits[0].LastUpdate;
+                    session.Delete(lstCarRecruits[0]);
+                    lstCarRecruits.RemoveAt(0);
+                    if (lstCarRecruits.Count == 0)
+                        break;
+                    else
+                        lstCarRecruits[0].LastUpdate = start;
+                }
+            if (lstCarRecruits.Count > 0)
+                session.Update(lstCarRecruits[0]);
+
+            if (lstNobleRecruits.Count > 0)
+                while (lstNobleRecruits[0].Expense(to))
+                {
+                    DateTime start = lstNobleRecruits[0].LastUpdate;
+                    session.Delete(lstNobleRecruits[0]);
+                    lstNobleRecruits.RemoveAt(0);
+                    if (lstNobleRecruits.Count == 0)
+                        break;
+                    else
+                        lstNobleRecruits[0].LastUpdate = start;
+                }
+            if (lstNobleRecruits.Count > 0)
+                session.Update(lstNobleRecruits[0]);
+
             if (lstConstructing.Count > 0)
-                while (lstConstructing[0].expense(to))
+                while (lstConstructing[0].Expense(to))
                 {
                     DateTime end = lstConstructing[0].End;
                     session.Delete(lstConstructing[0]);
@@ -879,13 +613,39 @@ namespace beans
             if (lstConstructing.Count > 0)
                 session.Update(lstConstructing[0]);
 
+            #region Nâng cấp
+            if (lstReseaching.Count > 0)
+                while (lstReseaching[0].Expense(to))
+                {
+                    ResearchPrice price = beans.Research.GetPrice(lstReseaching[0].Type, lstReseaching[0].Level, this[BuildingType.Smithy]);
+                    DateTime end = lstReseaching[0].Start + new TimeSpan(price.Time);
+                    session.Delete(lstReseaching[0]);
+                    lstReseaching.RemoveAt(0);
+                    if (lstReseaching.Count == 0)
+                        break;
+                    else
+                        lstReseaching[0].Start = end;
+                }
+            #endregion
+
+            #region Quân đi đánh làng khác
+            IList<Attack> _attacks = this.getDependingAttacking(to, session);
+            foreach (Attack attack in _attacks)
+                attack.To.Update(to, session);
+            #endregion
+
+            #region Quân hỗ trợ hoặc quay về từ làng khác
+            IList<MovingCommand> _friendlyIncomings = this.getFriendlyIncomings(to, session);
+            foreach (MovingCommand command in _friendlyIncomings)
+                command.effect(session);
+            #endregion
+
             this.UpdateResources(this.LastUpdate, to);
             this.LastUpdate = to;
 
             session.Update(this);
             session.Update(this.Owner);
         }
-
-        #endregion       
+  
     }
 }

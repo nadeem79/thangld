@@ -256,12 +256,12 @@ namespace beans
             Report report = new Report();
             report.Time = this.LandingTime;
             report.Owner = this.From.Owner;
+            report.Type = ReportType.Attack;
 
             Report report2 = new Report();
             report2.Time = this.LandingTime;
             report2.Owner = this.To.Owner;
-
-            //this.From.Update(this.LandingTime, session);
+            report2.Type = ReportType.Attack;
 
             AttackReport attack = new AttackReport();
             
@@ -550,6 +550,8 @@ namespace beans
             this.From.LastUpdate = this.To.LastUpdate = this.LandingTime;
 
             report.SetAttackReport(attack);
+            report2.Title = report.Title;
+            
             report2.Description.Description = report.Description.Description;
 
             session.Update(this.To);
@@ -557,7 +559,6 @@ namespace beans
             session.Update(this.To.Owner);
             session.Update(this.From.Owner);
             
-            report.SetAttackReport(attack);
             session.Save(report);
             session.Save(report2);
             

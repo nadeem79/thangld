@@ -31,17 +31,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Commons, Version=0.4.2.8580, Culture=neutral, PublicKeyToken=44382d1b57473eda">
+    <Reference Include="antlr.runtime, Version=2.7.7.3, Culture=neutral, PublicKeyToken=d7701e059243744f">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\document\NVelocity-0.4.2.8580\build\Commons.dll</HintPath>
+      <HintPath>..\document\StringTemplate.Net.v3.1b1.net-2.0\net-2.0\antlr.runtime.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate, Version=2.0.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Documents and Settings\DF.thangld\Desktop\bin\net-2.0\NHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="NVelocity, Version=0.4.2.8580, Culture=neutral, PublicKeyToken=44382d1b57473eda">
+    <Reference Include="StringTemplate, Version=3.0.1.6846, Culture=neutral, PublicKeyToken=beee492b52c41e85, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\document\NVelocity-0.4.2.8580\build\NVelocity.dll</HintPath>
+      <HintPath>..\document\StringTemplate.Net.v3.1b1.net-2.0\net-2.0\StringTemplate.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -70,16 +70,30 @@
     <Compile Include="Build.cs" />
     <Compile Include="BuildingType.cs" />
     <Compile Include="Configuration.cs" />
+    <Compile Include="Village.Methods.Building.cs" />
+    <Compile Include="Village.Methods.Resources.cs" />
+    <Compile Include="Village.Methods.Troops.cs" />
+    <Compile Include="Village.Methods.Research.cs" />
+    <Compile Include="Village.Methods.Recruit.cs" />
     <Compile Include="DatetimeHelper.cs" />
     <Compile Include="DefenseOtherReport.cs" />
     <Compile Include="DefenseReport.cs" />
+    <Compile Include="Error.cs" />
     <Compile Include="InviteToTribeReport.cs" />
+    <Compile Include="Mail.cs" />
+    <Compile Include="MailDetail.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="MovingCommand.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="OfferAcceptedReport.cs" />
     <Compile Include="Report.cs" />
+    <Compile Include="reports.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>reports.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Research.cs" />
     <Compile Include="ResourceReceiveReport.cs" />
     <Compile Include="Return.cs" />
     <Compile Include="SendResource.cs" />
@@ -100,6 +114,7 @@
     <Compile Include="SupportWithdawalReport.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="Text.cs" />
+    <Compile Include="TimeComparer.cs" />
     <Compile Include="TribeDiplomate.cs" />
     <Compile Include="TribeInvite.cs" />
     <Compile Include="TribePermission.cs" />
@@ -118,6 +133,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="VillageBuildingData.cs" />
+    <Compile Include="Village.Methods.Market.cs" />
     <Compile Include="VillageReseachData.cs" />
     <Compile Include="VillageResourcesData.cs" />
     <Compile Include="VillageTroopData.cs" />
@@ -160,7 +176,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="TW.cd" />
     <EmbeddedResource Include="Mapping\nhibernate-mapping.xsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -219,14 +234,24 @@
     <EmbeddedResource Include="Mapping\Text.hbm.xml">
       <Generator>nhibernate-mapping.xsd</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="reports.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>reports.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Mapping\Mail.hbm.xml" />
+    <EmbeddedResource Include="Mapping\Research.hbm.xml" />
     <Content Include="Templates\AttackReport.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\InviteReport.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\" />
+    <Folder Include="TextRenderer\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

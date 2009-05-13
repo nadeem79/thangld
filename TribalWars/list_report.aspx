@@ -13,27 +13,27 @@
                         <tbody>
                             <tr>
                                 <td width="100">
-                                    <asp:HyperLink ID="urlAllReports" runat="server" NavigateUrl="~/report_details.aspx">Tất cả</asp:HyperLink>
+                                    <a href="list_report.aspx?id=<% = this.village.ID %>">Tất cả</a>
                                 </td>
                             </tr>
                             <tr>
                                 <td width="100">
-                                    <asp:HyperLink ID="urlAttackReports" runat="server" NavigateUrl="~/report_details.aspx?type=1">Tấn công</asp:HyperLink>
+                                    <a href="list_report.aspx?id=<% = this.village.ID %>&type=1">Tất cả</a>
                                 </td>
                             </tr>
                             <tr>
                                 <td width="100">
-                                    <asp:HyperLink ID="urlDefenseReports" runat="server" NavigateUrl="~/report_details.aspx?type=2">Phòng thủ</asp:HyperLink>
+                                    <a href="list_report.aspx?id=<% = this.village.ID %>&type=2">Phòng thủ</a>
                                 </td>
                             </tr>
                             <tr>
                                 <td width="100">
-                                    <asp:HyperLink ID="urlSupportReports" runat="server" NavigateUrl="~/report_details.aspx?type=3">Hỗ trợ</asp:HyperLink>
+                                    <a href="list_report.aspx?id=<% = this.village.ID %>&type=3">Hỗ trợ</a>
                                 </td>
                             </tr>
                             <tr>
                                 <td width="100">
-                                    <asp:HyperLink ID="urlMarketReports" runat="server" NavigateUrl="~/report_details.aspx?type=4">Buôn bán</asp:HyperLink>
+                                    <a href="list_report.aspx?id=<% = this.village.ID %>&type=4">Buôn bán</a>
                                 </td>
                             </tr>
                         </tbody>

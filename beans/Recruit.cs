@@ -12,7 +12,7 @@ namespace beans
         string _name;
         int wood, iron, clay;
         int time;
-        double _pop;
+        float _pop;
 
         public int Wood
         {
@@ -30,7 +30,7 @@ namespace beans
         {
             get { return this.time; }
         }
-        public double Population
+        public float Population
         {
             get { return this._pop; }
         }
@@ -38,7 +38,7 @@ namespace beans
         {
             get { return this._name; }
         }
-        public Price(string name, int time, int wood, int clay, int iron, double population)
+        public Price(string name, int time, int wood, int clay, int iron, float population)
         {
             this._name = name;
             this.iron = iron;

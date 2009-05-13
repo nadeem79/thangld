@@ -17,24 +17,15 @@ public partial class PlayerBox : System.Web.UI.UserControl
 {
 
     protected Player player;
+    public Player Player
+    {
+        get;
+        set;
+    }
+
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        //this.error.Text = Request.Cookies["username"].Value;
-        ISession session = null;
-        try
-        {
-            session = NHibernateHelper.CreateSession();
-            this.player = session.Get<Player>(Session["user"]);
-        }
-        catch (Exception ex)
-        {
-            this.error.Text = ex.Message;
-        }
-        finally
-        {
-            if (session != null)
-                session.Close();
-        }
+        
     }
 }

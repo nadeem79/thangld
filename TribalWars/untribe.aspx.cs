@@ -55,6 +55,7 @@ public partial class untribe : System.Web.UI.Page
             currentPlayer.Group = this.invites[int.Parse((string)e.CommandArgument)].Group;
             currentPlayer.TribePermission = TribePermission.Member;
             session.Update(currentPlayer);
+            session.Delete(this.invites[int.Parse((string)e.CommandArgument)]);
             trans.Commit();
             session.Close();
             Response.Redirect("tribe.aspx?id=" + this.village.ID.ToString(), true);
@@ -66,7 +67,6 @@ public partial class untribe : System.Web.UI.Page
             session.Close();
             Response.Redirect("untribe.aspx?id=" + this.village.ID.ToString(), true);
         }
-        
     }
 
     protected void bttnCreateTribe_Click(object sender, EventArgs e)

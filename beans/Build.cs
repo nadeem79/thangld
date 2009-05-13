@@ -13,21 +13,21 @@ namespace beans
     {
 
         #region Static Members
-        private static BuildPrice _headquarter = new BuildPrice("Headquarter", 948, 90, 80, 70, 5, 30);
-        private static BuildPrice _barrack = new BuildPrice("Barrack", 1897, 200, 170, 90, 7, 25);
-        private static BuildPrice _stable = new BuildPrice("Stable", 6333, 270, 240, 260, 8, 20);
-        private static BuildPrice _workshop = new BuildPrice("Workshop", 6328, 300, 240, 260, 8, 15);
-        private static BuildPrice _academy = new BuildPrice("Academy", 68112, 25000, 30000, 20000, 80, 3);
-        private static BuildPrice _smithy = new BuildPrice("Smithy", 6300, 220, 180, 240, 20, 20);
-        private static BuildPrice _rally = new BuildPrice("Rally", 1658, 10, 40, 30, 0, 1);
-        private static BuildPrice _market = new BuildPrice("Market", 2848, 100, 100, 100, 20, 25);
-        private static BuildPrice _timber = new BuildPrice("Timber camp", 949, 50, 60, 40, 10, 30);
-        private static BuildPrice _clay = new BuildPrice("Clay pit", 949, 65, 50, 40, 10, 30);
-        private static BuildPrice _iron = new BuildPrice("Iron mine", 1139, 75, 65, 70, 10, 30);
-        private static BuildPrice _farm = new BuildPrice("Farm", 1054, 45, 40, 30, 0, 30);
-        private static BuildPrice _warehouse = new BuildPrice("Warehouse", 1075, 60, 50, 40, 0, 30);
-        private static BuildPrice _hiding = new BuildPrice("Hiding place", 1561, 50, 60, 50, 2, 10);
-        private static BuildPrice _wall = new BuildPrice("Wall", 3801, 50, 100, 20, 5, 20);
+        private static BuildPrice _headquarter = new BuildPrice("Headquarter", 948, 90, 80, 70, 5, 30, 10);
+        private static BuildPrice _barrack = new BuildPrice("Barrack", 1897, 200, 170, 90, 7, 25, 16);
+        private static BuildPrice _stable = new BuildPrice("Stable", 6333, 270, 240, 260, 8, 20, 20);
+        private static BuildPrice _workshop = new BuildPrice("Workshop", 6328, 300, 240, 260, 8, 15, 24);
+        private static BuildPrice _academy = new BuildPrice("Academy", 68112, 25000, 30000, 20000, 80, 3, 512);
+        private static BuildPrice _smithy = new BuildPrice("Smithy", 6300, 220, 180, 240, 20, 20, 19);
+        private static BuildPrice _rally = new BuildPrice("Rally", 1658, 10, 40, 30, 0, 1, 0);
+        private static BuildPrice _market = new BuildPrice("Market", 2848, 100, 100, 100, 20, 25, 10);
+        private static BuildPrice _timber = new BuildPrice("Timber camp", 949, 50, 60, 40, 10, 30, 6);
+        private static BuildPrice _clay = new BuildPrice("Clay pit", 949, 65, 50, 40, 10, 30, 6);
+        private static BuildPrice _iron = new BuildPrice("Iron mine", 1139, 75, 65, 70, 10, 30, 6);
+        private static BuildPrice _farm = new BuildPrice("Farm", 1054, 45, 40, 30, 0, 30, 5);
+        private static BuildPrice _warehouse = new BuildPrice("Warehouse", 1075, 60, 50, 40, 0, 30, 6);
+        private static BuildPrice _hiding = new BuildPrice("Hiding place", 1561, 50, 60, 50, 2, 10, 5);
+        private static BuildPrice _wall = new BuildPrice("Wall", 3801, 50, 100, 20, 5, 20, 8);
         private static Dictionary<int, BuildPrice> _dictionary = new Dictionary<int, BuildPrice>();
 
         public static Dictionary<int, BuildPrice> PriceDictionary
@@ -162,43 +162,53 @@ namespace beans
             get;
             set;
         }
+        public int Level
+        {
+            get;
+            set;
+        }
+        public virtual int Wood
+        {
+            get; set;
+        }
+        public int Clay
+        {
+            get; set;
+        }
+        public int Iron
+        {
+            get; set;
+        }
+        public float Point
+        {
+            get; set;
+        }
+        public float Population
+        {
+            get; set;
+        }
         #endregion
 
         #region Methods
-        public void execute(ISession session)
-        {
-            BuildPrice price = Build.GetPrice(this.Building, this.InVillage.GetTotalBuildingLevel(this.Building, session) + 1, this.InVillage.Buildings.Headquarter);
-
-            if (this.InVillage.CanBuild(this.Building, session) != BuildableStatus.JustDoIt)
-                return;
-
-            this.Start = DateTime.Now;
-            this.End = DateTime.Now.AddSeconds(price.BuildTime);
-            this.InVillage.Resources.Wood -= price.Wood;
-            this.InVillage.Resources.Clay -= price.Clay;
-            this.InVillage.Resources.Iron -= price.Iron;
-            session.Update(this.InVillage);
-            session.Save(this);
-        }
-        public bool expense(DateTime time)
+        public bool Expense(DateTime time)
         {
             if (this.End > time)
                 return false;
             this.InVillage[this.Building]++;
             BuildPrice p = Build.GetPrice(this.Building, this.InVillage[this.Building], this.InVillage[beans.BuildingType.Headquarter]);
-            this.InVillage.Points += p.Point;
-            this.InVillage.Population += p.Population;
             this.InVillage.Owner.Point += p.Point;
             return true;
         }
-        public void cancel(ISession session)
+        public void Cancel(ISession session)
         {
-            BuildPrice price = Build.GetPrice(this.Building, this.InVillage[this.Building], this.InVillage[BuildingType.Headquarter]);
-
-            this.InVillage.Resources.Wood += price.Wood;
-            this.InVillage.Resources.Clay += price.Clay;
-            this.InVillage.Resources.Iron += price.Iron;
-
+            BuildPrice price = Build.GetPrice(this.Building, this.Level, this.InVillage[BuildingType.Headquarter]);
+            
+            this.InVillage.Resources.Wood += (int)(price.Wood * 0.8);
+            this.InVillage.Resources.Clay += (int)(price.Clay * 0.8);
+            this.InVillage.Resources.Iron += (int)(price.Iron * 0.8);
+            this.InVillage.Population -= price.Population;
+            this.InVillage.Points -= price.Point;
+            
             session.Update(this.InVillage);
             session.Delete(this);
         }
@@ -217,18 +227,21 @@ namespace beans
 
             BuildPrice basePrice = Build.GetPrice(type);
             int wood = basePrice.Wood, clay = basePrice.Clay, iron = basePrice.Iron, time = basePrice.BuildTime;
-            double population = basePrice.Population;
+            float point = basePrice.Point;
+            float population = basePrice.Population;
             for (int i = 1; i < level; i++)
             {
                 clay += (int)(clay * 0.28);
                 wood += (int)(wood * 0.25);
                 iron += (int)(iron * 0.25);
                 time += (int)(time * 0.22);
-                population += population * 0.1;
+                population += (float)(population * 0.1);
+                point += (int)Math.Round(point*0.2, MidpointRounding.AwayFromZero);
+                
             }
             for (int i = 1; i < headquarter; i++)
                 time -= (int)(time * 0.05);
-            BuildPrice price = new BuildPrice(basePrice.Name, time, wood, clay, iron, population, basePrice.MaxLevel);
+            BuildPrice price = new BuildPrice(basePrice.Name, time, wood, clay, iron, population, basePrice.MaxLevel, point);
             Build.PriceDictionary.Add(key, price);
             return price;
         }
@@ -367,9 +380,10 @@ namespace beans
 
     public class BuildPrice:Price
     {
-        private int _point, _max;
+        private float _point;
+        private int _max;
         
-        public int Point
+        public float Point
         {
             get { return this._point; }
         }
@@ -378,9 +392,10 @@ namespace beans
             get { return this._max; }
         }
 
-        public BuildPrice(string name, int time, int wood, int clay, int iron, double population, int max):base(name, time, wood, clay, iron, population)
+        public BuildPrice(string name, int time, int wood, int clay, int iron, float population, int max, float point):base(name, time, wood, clay, iron, population)
         {
             this._max = max;
+            this._point = point;
         }
 
     }

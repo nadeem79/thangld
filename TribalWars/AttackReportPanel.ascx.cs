@@ -15,7 +15,6 @@ using beans;
 public partial class AttackReportPanel : System.Web.UI.UserControl
 {
 
-    protected beans.AttackReport report;
     protected Village village;
 
     public Village CurrentVillage
@@ -32,16 +31,8 @@ public partial class AttackReportPanel : System.Web.UI.UserControl
 
     public Report CurrentReport
     {
-        get
-        {
-            return this.report;
-        }
-        set
-        {
-            if (value.Type != ReportType.Attack)
-                throw new Exception("Hack hả ku :))");
-            this.report = (AttackReport)value;
-        }
+        get;
+        set;
     }
 
     public AttackReportPanel() 

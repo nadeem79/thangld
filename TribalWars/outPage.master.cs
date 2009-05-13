@@ -16,7 +16,7 @@ public partial class outPage : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        //if (!IsPostBack)
-            //this.lblToogleShoutbox.Text = "<a href=\"javascript:void(0);\" onclick=\"ShowHideShoutbox('" + this.RadDock1.ClientID + "')\">Ẩn / hiện shoutbox</a>";
+        
+
     }
 }
