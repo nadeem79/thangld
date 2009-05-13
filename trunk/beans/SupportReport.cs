@@ -74,6 +74,5 @@ namespace beans
         }
 
         #endregion
-
     }
 }

@@ -5,6 +5,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using beans;
+using NHibernate;
+using System.Data;
+using Telerik.Web.UI;
 
 public partial class TribeMembers : System.Web.UI.UserControl
 {
@@ -32,9 +35,52 @@ public partial class TribeMembers : System.Web.UI.UserControl
     {
         NHibernate.ISession session = NHibernateHelper.CreateSession();
         this.Member = session.Get<Player>(Session["user"]);
-        this.tribe = this.Member.Group;
         this.drTribeMembers.DataSource = this.Member.Group.Members;
         this.drTribeMembers.DataBind();
+
+        if (((this.Member.TribePermission & TribePermission.Inviter) != TribePermission.Inviter) || (this.Tribe != this.Member.Group))
+            this.pInviting.Visible = false;
+
         session.Close();
+    }
+
+    protected void bttnInvite_Click(object sender, EventArgs e)
+    {
+        ISession session = null;
+        ITransaction trans = null;
+        try
+        {
+            session = NHibernateHelper.CreateSession();
+            trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
+
+            Player me = session.Load<Player>(Session["user"]);
+            IList<beans.Error> lstErrors = me.InvitePlayer(this.txtUser.Text, session);
+            if (lstErrors.Count>0)
+            {
+                string errors = "";
+                foreach (Error error in lstErrors)
+                    errors += String.Format("{0}{1}", error.Text, Environment.NewLine);
+                ScriptManager.RegisterStartupScript(bttnInvite, bttnInvite.GetType(), "ShowException", "jQuery.facebox('" + errors + "');", true);
+            }
+
+            ScriptManager.RegisterStartupScript(bttnInvite, bttnInvite.GetType(), "ShowException", "jQuery.facebox('Gửi thư mời gia nhập thành công');", true);
+            trans.Commit();
+        }
+        catch (Exception ex)
+        {
+            if (trans!=null)
+                trans.Rollback();
+            RadScriptManager.RegisterStartupScript(bttnInvite, bttnInvite.GetType(), "ShowException", "jQuery.facebox('" + ex.Message + "');", true);
+        }
+        finally
+        {
+            if (session!=null)
+                session.Close();
+        }
+
+        
+
+        
+        
     }
 }

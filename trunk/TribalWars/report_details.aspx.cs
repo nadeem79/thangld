@@ -40,15 +40,13 @@ public partial class report_details : System.Web.UI.Page
         if (report != null)
         {
             pNoReport.Visible = false;
-            switch (report.Type)
-            {
-                case ReportType.Attack:
-                    AttackReportPanel c = (AttackReportPanel)Page.LoadControl("AttackReportPanel.ascx");
-                    c.CurrentReport = report;
-                    c.CurrentVillage = village;
-                    this.pReport.Controls.Add(c);
-                    return;
-            }
+            pHasReport.Visible = true;
+            //this.navigator.
+        }
+        else
+        {
+            pNoReport.Visible = true;
+            pHasReport.Visible = false;
         }
 
         

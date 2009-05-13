@@ -7,6 +7,10 @@ namespace beans
 {
     public class TribeInvite:IdentityObject
     {
+        public Player Inviter
+        {
+            get; set;
+        }
         public Player Player
         {
             get;

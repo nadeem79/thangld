@@ -7,7 +7,6 @@
     <id name="ID" column="id" type="Int32">
       <generator class="identity"/>
     </id>
-    <discriminator column="type" type="Int32" />
     
     <many-to-one name="Owner" class="beans.Player, beans" lazy="proxy" column="owner" not-null="true" cascade="none" />
     <property name="Time" column="create_time" type="timestamp"/>

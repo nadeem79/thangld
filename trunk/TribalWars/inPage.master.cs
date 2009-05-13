@@ -54,7 +54,8 @@ public partial class inPage : System.Web.UI.MasterPage
 
     void inPage_Init(object sender, EventArgs e)
     {
-        Session["user"] = 1;
+        if (Session["user"]==null)
+            Session["user"] = 1;
 
         if (object.Equals(Session["user"], null))
         {
@@ -115,50 +116,20 @@ public partial class inPage : System.Web.UI.MasterPage
             menuItem.NavigateUrl += string.Format("?id={0}", this.village.ID);
         foreach (RadMenuItem item in this.RadToolBar1.Items)
         {
-            item.NavigateUrl += string.Format("?id={0}", this.village.ID);
+            if (item.NavigateUrl.Contains("?"))
+                item.NavigateUrl += string.Format("&id={0}", this.village.ID);
+            else
+                item.NavigateUrl += string.Format("?id={0}", this.village.ID);
             foreach (RadMenuItem subItem in item.Items)
-                subItem.NavigateUrl += string.Format("&id={0}", this.village.ID);
+                if (subItem.NavigateUrl.Contains("?"))
+                    subItem.NavigateUrl += string.Format("&id={0}", this.village.ID);
+                else
+                    subItem.NavigateUrl += string.Format("?id={0}", this.village.ID);
         }
     }
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        ViewState["village"] = village.ID;
-        //if (this.village == null)
-        //{
-        //    ISession session;
-        //    ITransaction trans;
 
-
-        //    session = NHibernateHelper.CreateSession();
-        //    trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
-
-        //    this.player = session.Load<beans.Player>((int)Session["user"]);
-
-        //    if (this.player == null)
-        //    {
-        //        session.Close();
-        //        Response.Redirect("index.aspx", true);
-        //    }
-        //    trans = session.BeginTransaction();
-        //    this.player.Update(DateTime.Now, session);
-        //    trans.Commit();
-        //    int id = 0;
-        //    if (object.Equals(Request["id"], null) || (!int.TryParse(Request["id"], out id)))
-        //        this.village = this.player.Villages[0];
-        //    else
-        //        this.village = this.player.GetVillage(id);
-
-        //    if (this.village == null)
-        //        this.village = this.player.Villages[0];
-
-        //    trans.Commit();
-        //    session.Close();
-        //}
-
-        //if (!IsPostBack)
-        //{
-        //    //this.lblToogleShoutbox.Text = "<a href=\"javascript:void(0);\" onclick=\"ShowHideShoutbox('" + this.radShoutbox.ClientID + "')\">Shoutbox</a>";
-        //}
     }
 }

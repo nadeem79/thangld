@@ -7,8 +7,7 @@ using NHibernate.Criterion;
 
 namespace beans
 {
-    [Serializable]
-    public class Group
+    public class Group:IdentityObject
     {
         #region Variables
 
@@ -37,11 +36,6 @@ namespace beans
             set;
         }
         public string Name
-        {
-            get;
-            set;
-        }
-        public int ID
         {
             get;
             set;

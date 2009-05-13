@@ -36,7 +36,7 @@
             <tr>
                 <td>
                     <telerik:RadMenu ID="RadToolBar1" runat="server" 
-                        DataMember="this.CurrentVillage">
+                        DataMember="this.CurrentVillage" style="z-index:0;">
                         <Items>
                             <telerik:RadMenuItem runat="server" NavigateUrl="~/logout.aspx" Text="Thoát game">
                             </telerik:RadMenuItem>
@@ -251,7 +251,7 @@
                                                 <img src="images/face.png" /></a>
                                         </td>
                                         <td align="center" style="margin: 0; padding: 0;">
-                                            <% = this.CurrentVillage.Population %>/<% =this.CurrentVillage.MaxPopulation %>
+                                            <% = Math.Round(CurrentVillage.Population)%>/<% =this.CurrentVillage.MaxPopulation %>
                                         </td>
                                     </tr>
                                 </table>

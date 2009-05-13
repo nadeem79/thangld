@@ -1,7 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="TribeProfile.ascx.cs"
     Inherits="TribeProfile" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<%@ Register Assembly="FreeTextBox" Namespace="FreeTextBoxControls" TagPrefix="FTB" %>
 <telerik:RadFormDecorator ID="RadFormDecorator1" runat="server" Skin="Office2007" />
 <telerik:RadToolTipManager ID="pChangeTribeInformation" runat="server">
 </telerik:RadToolTipManager>

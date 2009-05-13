@@ -13,7 +13,7 @@
     <property name="Introduction" column="introduction" type="string" length="10000" not-null="false" />
     <property name="Avatar" column="avatar" type="Boolean" not-null="false" />
 
-    <bag name="Members" table="users" cascade="none" fetch="join" inverse="true" lazy="true" order-by="point desc">
+    <bag name="Members" table="users" cascade="none" fetch="join" inverse="true" lazy="1" order-by="point desc">
       <key column="group_id" />
       <one-to-many class="beans.Player, beans" not-found="ignore"/>
     </bag>

@@ -10,6 +10,7 @@
     <property name="Building" column="building" type="beans.BuildingType, beans" />
     <property name="Start" column="start_time" type="timestamp" />
     <property name="End" column="stop_time" type="timestamp" />
+    <property name="Level" column="upgrade_level" type="Int32" />
   </class>
 
 </hibernate-mapping>

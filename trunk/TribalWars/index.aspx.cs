@@ -60,7 +60,11 @@ public partial class index : System.Web.UI.Page
                 this.pBox.Controls.Add(login);
                 break;
             default:
+                ISession session = NHibernateHelper.CreateSession();
+                
                 PlayerBox player = (PlayerBox)Page.LoadControl("PlayerBox.ascx");
+                player.Player = session.Get<Player>(Session["user"]);
+                session.Close();
                 this.pBox.Controls.Add(player);
                 break;
         }

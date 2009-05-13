@@ -18,9 +18,8 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
     <telerik:RadWindowManager ID="RadWindowManager1" runat="server" Modal="true" InitialBehavior="Pin"
-        Width="500">
+        Width="500" style="z-index:1;">
     </telerik:RadWindowManager>
-    <telerik:RadFormDecorator ID="RadFormDecorator1" runat="server" Skin="Vista" DecoratedControls="All" />
     <table>
         <tbody>
             <tr>
