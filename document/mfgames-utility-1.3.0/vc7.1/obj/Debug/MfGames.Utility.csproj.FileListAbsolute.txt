@@ -1,0 +1,5 @@
+C:\Documents and Settings\DF.thangld\Desktop\mfgames-utility-1.3.0\mfgames-utility-1.3.0\vc7.1\bin\Debug\MfGames.Utility.dll
+C:\Documents and Settings\DF.thangld\Desktop\mfgames-utility-1.3.0\mfgames-utility-1.3.0\vc7.1\bin\Debug\MfGames.Utility.pdb
+C:\Documents and Settings\DF.thangld\Desktop\mfgames-utility-1.3.0\mfgames-utility-1.3.0\vc7.1\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\DF.thangld\Desktop\mfgames-utility-1.3.0\mfgames-utility-1.3.0\vc7.1\obj\Debug\MfGames.Utility.dll
+C:\Documents and Settings\DF.thangld\Desktop\mfgames-utility-1.3.0\mfgames-utility-1.3.0\vc7.1\obj\Debug\MfGames.Utility.pdb

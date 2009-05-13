@@ -1,0 +1,2 @@
+#!/bin/sh
+exec mono /usr/lib/cli/mfgames-template-1.0/mfgames-template.exe $*

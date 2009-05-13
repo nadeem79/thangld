@@ -1,0 +1,4 @@
+C:\Documents and Settings\DF.thangld\Desktop\mfgames-template-1.1.0\mfgames-template-1.1.0\vc7.1\obj\Release\ResolveAssemblyReference.cache
+C:\Documents and Settings\DF.thangld\Desktop\mfgames-template-1.1.0\mfgames-template-1.1.0\vc7.1\bin\Release\MfGames.Template.dll
+C:\Documents and Settings\DF.thangld\Desktop\mfgames-template-1.1.0\mfgames-template-1.1.0\vc7.1\bin\Release\MfGames.Utility.dll
+C:\Documents and Settings\DF.thangld\Desktop\mfgames-template-1.1.0\mfgames-template-1.1.0\vc7.1\obj\Release\MfGames.Template.dll

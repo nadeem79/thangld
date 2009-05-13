@@ -1,0 +1,341 @@
+﻿<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{60CD8BA2-8BD5-41F0-9BD2-5731CB33A740}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>MfGames.Utility</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>mfgames_utility</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>0.0</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\src\AssemblyInfo.cs">
+      <Link>AssemblyInfo.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\asset\AssemblyAsset.cs">
+      <Link>asset\AssemblyAsset.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\asset\AssemblyAssetProvider.cs">
+      <Link>asset\AssemblyAssetProvider.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\asset\AssetException.cs">
+      <Link>asset\AssetException.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\asset\IAsset.cs">
+      <Link>asset\IAsset.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\asset\IAssetProvider.cs">
+      <Link>asset\IAssetProvider.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\asset\ListAssetProvider.cs">
+      <Link>asset\ListAssetProvider.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\AttributeTree.cs">
+      <Link>AttributeTree.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\AttributeTreeCollection.cs">
+      <Link>AttributeTreeCollection.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\Auditable.cs">
+      <Link>Auditable.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\AuditMessageArgs.cs">
+      <Link>AuditMessageArgs.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\AuditMessageHandler.cs">
+      <Link>AuditMessageHandler.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\AuditSeverityArgs.cs">
+      <Link>AuditSeverityArgs.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\AuditSeverityHandler.cs">
+      <Link>AuditSeverityHandler.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\ConfigStorage.cs">
+      <Link>ConfigStorage.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\ConsoleLogger.cs">
+      <Link>ConsoleLogger.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\dice\AdditionDice.cs">
+      <Link>dice\AdditionDice.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\dice\ConstantDice.cs">
+      <Link>dice\ConstantDice.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\dice\DiceException.cs">
+      <Link>dice\DiceException.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\dice\DiceFactory.cs">
+      <Link>dice\DiceFactory.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\dice\IDice.cs">
+      <Link>dice\IDice.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\dice\Parser.cs">
+      <Link>dice\Parser.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\dice\RandomDice.cs">
+      <Link>dice\RandomDice.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\dice\Scanner.cs">
+      <Link>dice\Scanner.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\dice\SubtractionDice.cs">
+      <Link>dice\SubtractionDice.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\Entropy.cs">
+      <Link>Entropy.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\IAuditable.cs">
+      <Link>IAuditable.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\IEntropy.cs">
+      <Link>IEntropy.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\InvalidPathException.cs">
+      <Link>InvalidPathException.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\ITickable.cs">
+      <Link>ITickable.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\log\ILogSink.cs">
+      <Link>log\ILogSink.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\log\Log.cs">
+      <Link>log\Log.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\log\Logable.cs">
+      <Link>log\Logable.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\log\Logger.cs">
+      <Link>log\Logger.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\MersenneEntropy.cs">
+      <Link>MersenneEntropy.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\MersenneTwister.cs">
+      <Link>MersenneTwister.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\MfConvert.cs">
+      <Link>MfConvert.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\MimeFilenameIdentifier.cs">
+      <Link>MimeFilenameIdentifier.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\NodeRef.cs">
+      <Link>NodeRef.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\NotAbsolutePathException.cs">
+      <Link>NotAbsolutePathException.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\SecondGuage.cs">
+      <Link>SecondGuage.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\Severity.cs">
+      <Link>Severity.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\TickManager.cs">
+      <Link>TickManager.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\tool\ArgumentScanner.cs">
+      <Link>tool\ArgumentScanner.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\tool\CommandLineArguments.cs">
+      <Link>tool\CommandLineArguments.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\tool\IArgumentAttribute.cs">
+      <Link>tool\IArgumentAttribute.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\tool\ITool.cs">
+      <Link>tool\ITool.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\tool\LongArgumentAttribute.cs">
+      <Link>tool\LongArgumentAttribute.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\tool\LongArgumentScanner.cs">
+      <Link>tool\LongArgumentScanner.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\tool\PositionalAttribute.cs">
+      <Link>tool\PositionalAttribute.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\tool\ToolException.cs">
+      <Link>tool\ToolException.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\tool\ToolManager.cs">
+      <Link>tool\ToolManager.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\tool\UsageFormatter.cs">
+      <Link>tool\UsageFormatter.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\TypeChooser.cs">
+      <Link>TypeChooser.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\UtilityException.cs">
+      <Link>UtilityException.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\ValueTree.cs">
+      <Link>ValueTree.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\Version.cs">
+      <Link>Version.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\src\WeightedSelector.cs">
+      <Link>WeightedSelector.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <None Include="ModelSupport\default.txaPackage" />
+    <None Include="ModelSupport\default.txvpck" />
+    <None Include="ModelSupport\MfGames\default.txaPackage" />
+    <None Include="ModelSupport\MfGames\default.txvpck" />
+    <None Include="ModelSupport\MfGames\Utility\Asset\default.txaPackage" />
+    <None Include="ModelSupport\MfGames\Utility\Asset\default.txvpck" />
+    <None Include="ModelSupport\MfGames\Utility\default.txaPackage" />
+    <None Include="ModelSupport\MfGames\Utility\default.txvpck" />
+    <None Include="ModelSupport\MfGames\Utility\Dice\default.txaPackage" />
+    <None Include="ModelSupport\MfGames\Utility\Dice\default.txvpck" />
+    <None Include="ModelSupport\MfGames\Utility\Tool\default.txaPackage" />
+    <None Include="ModelSupport\MfGames\Utility\Tool\default.txvpck" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

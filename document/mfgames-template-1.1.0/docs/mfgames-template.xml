@@ -1,0 +1,103 @@
+<!DOCTYPE book
+  PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+  "file:///usr/share/xml/docbook/schema/dtd/4.4/docbookx.dtd">
+<article>
+  <articleinfo>
+    <title>MfGames.Template - Template Engine for C#</title>
+    <authorgroup>
+      <author>
+	<firstname>Dylan</firstname>
+	<othername>R. E.</othername>
+	<surname>Moonfire</surname>
+      </author>
+    </authorgroup>
+    
+    <copyright>
+      <year>2005</year>
+      <holder>Dylan R. E. Moonfire</holder>
+    </copyright>
+  </articleinfo>
+
+  <sect1>
+    <title>Introduction</title>
+    
+    <para>A string template library is a very simple concept. It is
+    somewhat based on the idea of a mail merge feature in many word
+    processors. You start with a string or file that has tags (such as
+    <code>&lt;%=FirstName%&gt;</code>) and run it against a list of
+    addresses. The result is a string (or a file) that has the first
+    name of each record in the address.</para>
+
+    <para><application>MfGames.Template</application> is a little more
+    complicated than that, but as a general synopsis, this
+    functions. <application>MfGames.Template</application> has the
+    following features:</para>
+
+    <itemizedlist>
+      <listitem>ASP.NET and PHP-inspired substitutions. The default is
+      to use <code>&lt;% %&gt;</code> tags to identify the sections
+      that are processed verses embedded into the stream
+      literally.</listitem>
+
+      <listitem>Compiled into CIL. All templates are converted into
+      actual CIL bytecode and then loaded as a dynamic assembly and
+      class. This enables any new features in the CIL engine,
+      including optmization, to be available immediately.</listitem>
+
+      <listitem>Code processing handled by the built-in
+      <code>System.CodeDom</code> library and the related C#
+      provider. The same code and structured used in C# is also
+      available in the template, including libraries and other
+      packages. Furthermore, this gives the ability to take advantage
+      of new C# features without changing the
+      <code>MfGames.Template</code> library.</listitem>
+    </itemizedlist>
+
+    <sect2>
+      <title>Moonfire Games</title>
+
+      <para>Moonfire Games is a small development shop with a focus on
+      role-playing games, both on the computer and table-top. Using a
+      great number of open-sourced products, they have released many
+      of their own libraries, as they are developed, for general use
+      under a rather open license, the Lesser GNU Public License
+      (LGPL).</para>
+
+      <para>For those more interested in a more commerical product are
+      welcome to contact Moonfire Games for a more precise licensing
+      term.</para>
+    </sect2>
+
+    <sect2>
+      <title>The MfGames.* Libraries</title>
+
+      <para>For libraries for C# and other CIL languages, the
+      namespace used is <code>MfGames.</code> with the individual
+      libraries have the second-level namespace,
+      <code>MfGames.Template</code> in this case.</para>
+    </sect2>
+  </sect1>
+
+  <sect1>
+    <title>The Basics</title>
+
+    <para>While there are multiple ways of using
+    <code>MfGames.Template</code>, there is a common set of objects
+    that are used in all string and stream substitutions. Using
+    <code>MfGames.Template</code> consists of the following simple
+    steps:</para>
+
+    <orderedlist>
+      <listitem>Include the namespace in the code.</listitem>
+      <listitem>Create a <code>TemplateFactory</code>
+      object.</listitem>
+      <listitem>Create a <code>ITemplate</code> by parsing a text or
+      stream using the <code>TemplateFactory</code>.</listitem>
+      <listitem>Create a <code>Context</code> object and populate
+      it.</listitem>
+      <listitem>Create a string using the created
+      <code>ITemplate</code> and <code>Context</code>
+      objects.</listitem>
+    </orderedlist>
+  </sect1>
+</article>
