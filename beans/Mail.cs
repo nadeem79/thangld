@@ -38,5 +38,20 @@ namespace beans
             get;
             set;
         }
+        public bool SenderDelete
+        {
+            get;
+            set;
+        }
+        public bool ReceiverDelete
+        {
+            get;
+            set;
+        }
+
+        public override string ToString()
+        {
+            return this.Title;
+        }
     }
 }
