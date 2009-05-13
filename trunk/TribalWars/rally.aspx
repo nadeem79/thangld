@@ -80,7 +80,6 @@
                                                     <img src="images/unit_spear.png" title="Spear fighter" alt="" />
                                                     <asp:TextBox ID="spear" runat="server" Width="50px">
                                                     </asp:TextBox>
-                                                    <span>(<a href="javascript:void(0);" onclick="insert('<% Response.Write(this.spear.ClientID); %>', 'spear')"><span id="spear"><% = this.village.Troop.Spear %></span></a></span>
                                                     <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.spear.ClientID); %>', <% Response.Write(this.village.Troop.Spear.ToString()); %>)"><% Response.Write(this.village.Troop.Spear.ToString()); %></a>)</span>
                                                 </td>
                                             </tr>

@@ -1,5 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/inPage.master" AutoEventWireup="true"
     CodeFile="market.aspx.cs" Inherits="market" %>
+    
+<%@ Reference Control="CustomControls/MerchantStatus.ascx" %>
+<%@ Reference Control="CustomControls/SendResource.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
@@ -42,13 +45,15 @@
                             </tr>
                             <tr>
                                 <td class="selected" width="100">
-                                    <a href=""market.aspx?id=<%= this.Village.ID %>&page=status"">Merchant status</a>
+                                    <a href="market.aspx?id=<%= this.Village.ID %>&page=merchant_status">Merchant status</a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </td>
                 <td valign="top">
+                    
+                    <asp:PlaceHolder ID="pMarket" runat="server"></asp:PlaceHolder>
                     
                 </td>
             </tr>
