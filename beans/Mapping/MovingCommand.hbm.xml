@@ -38,6 +38,7 @@
       <property name="Catapult" column="catapult" type="Int32" />
       <property name="Ram" column="ram" type="Int32" />
       <property name="Noble" column="noble" type="Int32" />
+      <property name="Merchant" column="merchant" type="Int32" />
       <property name="Clay" column="clay" type="Int32" />
       <property name="Wood" column="wood" type="Int32" />
       <property name="Iron" column="iron" type="Int32" />

@@ -8,42 +8,26 @@
     <tbody>
         <tr>
             <td width="320">
-                Merchants on their way to destination
+                Số thương nhân đang chuyển hàng
             </td>
             <td align="right" width="60">
-                0
+                <asp:Label ID="lblMerchantOnTheWay" runat="server"></asp:Label>
             </td>
         </tr>
         <tr>
             <td>
-                Merchants on their way home
+                Thương nhân đang quay về
             </td>
             <td align="right">
-                0
+                <asp:Label ID="lblMerchantOnTheWayHome" runat="server"></asp:Label>
             </td>
         </tr>
         <tr>
             <td>
-                Your offers on the market
+                Tổng số thương nhân
             </td>
             <td align="right">
-                0
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Busy merchants
-            </td>
-            <td align="right">
-                <b>0</b>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Total merchants
-            </td>
-            <td align="right">
-                <b>110</b>
+                <b><% = this.Village.Buildings.Merchant %></b>
             </td>
         </tr>
     </tbody>

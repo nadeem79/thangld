@@ -73,6 +73,11 @@ namespace beans
             get;
             set;
         }
+        public int Merchant
+        {
+            get;
+            set;
+        }
         public override MoveType Type
         {
             get { return MoveType.Return; }
