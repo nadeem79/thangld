@@ -26,7 +26,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a href='write_message.aspx?id=<% Response.Write(this.village.ID); %>&player=<% Response.Write(this.player.ID); %>'>
+                                        <a href='write_mail.aspx?receiver=<% Response.Write(this.player.Username); %>'>
                                             » Gửi tin nhắn</a>
                                     </td>
                                 </tr>

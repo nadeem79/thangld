@@ -62,6 +62,16 @@ namespace beans
             return lst[0];
 
         }
+        public static String GetPlayerUser(int Receiver, ISession session)
+        {
+            IQuery query = session.CreateQuery("select user.Username from Player as user where user.ID=:Receiver");
+            query.SetInt32("Receiver", Receiver);       
+            IList<string> lst = query.List<string>();
+            if (lst.Count == 0)
+                return null;
+            return lst[0];
+
+        }
         #endregion;
     }
 }
