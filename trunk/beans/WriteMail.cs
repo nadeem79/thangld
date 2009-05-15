@@ -2,18 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using NHibernate;
+using NHibernate.Criterion;
 
 namespace beans
 {
-    public class Mail : IdentityObject
+    public class WriteMail : IdentityObject
     {
-        public Player From
+        public int From
         {
             get;
             set;
         }
-        public Player To
+        public int To
         {
             get;
             set;
@@ -49,9 +50,18 @@ namespace beans
             get;
             set;
         }
-        public override string ToString()
+
+        #region Static Member
+        public static int GetPlayerID(string Receiver, ISession session)
         {
-            return this.Title;
+            IQuery query = session.CreateQuery("select user.ID from Player as user where user.Username=:Receiver");
+            query.SetString("Receiver", Receiver);
+            IList<int> lst = query.List<int>();
+            if (lst.Count == 0)
+                return -1 ;
+            return lst[0];
+
         }
+        #endregion;
     }
-   }
+}

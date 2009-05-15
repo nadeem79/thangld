@@ -22,7 +22,7 @@
                             </tr>
                             <tr>
                                 <td width="100">
-                                    <asp:HyperLink ID="urlComposeMail" runat="server" NavigateUrl="~/WriteMail.aspx">Viết thư</asp:HyperLink>
+                                    <asp:HyperLink ID="urlComposeMail" runat="server" NavigateUrl="~/write_mail.aspx">Viết thư</asp:HyperLink>
                                 </td>
                             </tr>
                         </tbody>

@@ -98,10 +98,10 @@
                                     <telerik:RadMenuItem runat="server" Text="Thư đi" NavigateUrl="Mail_send.aspx"
                                         ValidationGroup="menu">
                                     </telerik:RadMenuItem>
-                                    <telerik:RadMenuItem runat="server" Text="Viết thư" NavigateUrl="Compose_mail.aspx"
+                                    <telerik:RadMenuItem runat="server" Text="Viết thư" NavigateUrl="write_mail.aspx"
                                         ValidationGroup="menu">
                                     </telerik:RadMenuItem>
-                                    <telerik:RadMenuItem runat="server" Text="Hỗ trợ" NavigateUrl="list_report.aspx?type=3"
+                                    <telerik:RadMenuItem runat="server" Text="Hỗ trợ" NavigateUrl=""
                                         ValidationGroup="menu">
                                     </telerik:RadMenuItem>                                    
                                 </Items>

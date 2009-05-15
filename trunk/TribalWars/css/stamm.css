@@ -27,9 +27,10 @@ p:first-child, h1:first-child, h2:first-child, h3:first-child, h4:first-child,
 table.blind { border-spacing:0px; }
 table.blind td { padding: 0px; }
 
-table.left { float: left;}
+le.left { float: left;}
 table.vis {border-collapse:separate;}
 table.vis td { background-color:#F7EED3; }
+table.vis td.selected { background-color:#F0D49A; }
 table.vis td.selected { background-color:#F0D49A; }
 table.vis tr.nowrap td { white-space:nowrap; background-color:#F7EED3; background-image:none;}
 table.vis tr.units_home td { background-color:#F6EBCA; background-image:none;}
@@ -254,10 +255,9 @@ table.box {
 table.box tr td { white-space:nowrap; }
 
 input, select { font-size: 8pt;
-    width: 83px;
+    width: 87px;
     height: 22px;
-    margin-bottom: 0px;
-}
+    }
 
 input.attack { background-color: rgb(250, 210, 210) }
 input.support { background-color: rgb(210, 250, 210) }
