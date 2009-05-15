@@ -17,12 +17,12 @@
                             </tr>
                             <tr>
                                 <td class="selected" width="100" >
-                                    <asp:HyperLink ID="urlMailSend" runat="server" NavigateUrl="~/Mail_send.aspx">Thư đi</asp:HyperLink>
+                                    <asp:HyperLink ID="urlMailSend" runat="server" NavigateUrl="~/write_mail.aspx">Thư đi</asp:HyperLink>
                                 </td>
                             </tr>
                             <tr>
                                 <td width="100">
-                                    <asp:HyperLink ID="urlComposeMail" runat="server" NavigateUrl="~/WriteMail.aspx">Viết thư</asp:HyperLink>
+                                    <asp:HyperLink ID="urlComposeMail" runat="server" NavigateUrl="~/write_mail.aspx">Viết thư</asp:HyperLink>
                                 </td>
                             </tr>
                         </tbody>
@@ -38,7 +38,7 @@
                                 DataNavigateUrlFields="ID">
                                 <ItemStyle Width="60%" />
                             </asp:HyperLinkField>
-                            <asp:BoundField DataField="From" HeaderText="Người gửi" />
+                            <asp:BoundField DataField="To" HeaderText="Người nhận" />
                             <asp:BoundField DataField="Time" HeaderText="Thời gian" />
                         </Columns>
                     </asp:GridView>

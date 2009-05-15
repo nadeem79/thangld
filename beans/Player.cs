@@ -164,6 +164,16 @@ namespace beans
             return lst[0];
 
         }
+        public static Player GetPlayerID(string Receiver, ISession session)
+        {
+            IQuery query = session.CreateQuery("select *.* from Player as user where user.Username=:Receiver");
+            query.SetString("Receiver", Receiver);
+            IList<Player> lst = query.List<Player>();
+            if (lst.Count == 0)
+                return null;
+            return lst[0];
+
+        }
 
         public static Village CheckVillage(int user, int village, ISession session)
         {
@@ -381,11 +391,11 @@ namespace beans
             criteria.SetFirstResult(page * 40);
             return criteria.List<Report>();
         }
-        public MailDetail GetMailDetail(int Mail_id, ISession session)
+        public Mail GetMailDetail(int Mail_id, ISession session)
         {
-            ICriteria criteria = session.CreateCriteria(typeof(MailDetail));
+            ICriteria criteria = session.CreateCriteria(typeof(Mail));
             criteria.Add(Expression.Eq("ID", Mail_id));
-            IList<MailDetail> lstMail = criteria.List<MailDetail>();
+            IList<Mail> lstMail = criteria.List<Mail>();
             if (lstMail.Count == 0)
                 return null;
             return lstMail[0];
@@ -410,17 +420,22 @@ namespace beans
             criteria.SetFirstResult(page * 40);
             return criteria.List<Mail>();
         }
-        public Mail GetRevieceDetail(int Mail_id, ISession session)
+        public Boolean SendMail(int Receiver,String Title, String Detail,  ISession session)
         {
-            ICriteria criteria = session.CreateCriteria(typeof(MailDetail));
-            criteria.Add(Expression.Eq("To", this));
-            criteria.Add(Expression.Eq("ID", Mail_id));
-            IList<Mail> lstMail = criteria.List<Mail>();
-            if (lstMail.Count == 0)
-                return null;
-            return lstMail[0];
+            WriteMail send = new WriteMail();
+            send.From = this.ID;
+            send.To = Receiver;
+            send.Time = DateTime.Now;
+            send.Title = Title;
+            send.Detail = Detail;
+            send.Unread = true;
+            send.ReceiverDelete = false;
+            send.SenderDelete = false;
+            session.Save(send);
+            session.Update(this);
+            return true;
         }
-
+        
         public void Update(DateTime time, ISession session)
         {
             if (this.Villages.Count == 0)

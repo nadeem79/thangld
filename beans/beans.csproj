@@ -81,7 +81,7 @@
     <Compile Include="Error.cs" />
     <Compile Include="InviteToTribeReport.cs" />
     <Compile Include="Mail.cs" />
-    <Compile Include="MailDetail.cs" />
+    <Compile Include="WriteMail.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="MovingCommand.cs">
       <SubType>Code</SubType>
@@ -242,6 +242,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Mapping\Mail.hbm.xml" />
     <EmbeddedResource Include="Mapping\Research.hbm.xml" />
+    <EmbeddedResource Include="Mapping\WriteMail.hbm.xml" />
     <Content Include="Templates\AttackReport.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
