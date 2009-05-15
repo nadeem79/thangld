@@ -18,10 +18,10 @@ public partial class writemail : System.Web.UI.UserControl
 
     protected Player player; 
     protected void Page_Load(object sender, EventArgs e)
-    {
+    {   
         ISession session = NHibernateHelper.CreateSession();
         this.player = session.Load<Player>(Session["user"]);
-        session.Close();
+        this.Receiver.Text =(Request["receiver"]);
     }
     protected void sendmail_Click(object sender, EventArgs e)
     {       

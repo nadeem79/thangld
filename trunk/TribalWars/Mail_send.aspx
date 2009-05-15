@@ -38,7 +38,11 @@
                                 DataNavigateUrlFields="ID">
                                 <ItemStyle Width="60%" />
                             </asp:HyperLinkField>
-                            <asp:BoundField DataField="To" HeaderText="Người nhận" />
+                            <asp:HyperLinkField
+                                DataTextField="To" HeaderText="Người nhận"
+                                DataNavigateUrlFormatString="write_mail.aspx?id={0}" 
+                                DataNavigateUrlFields="To"> 
+                            </asp:HyperLinkField>
                             <asp:BoundField DataField="Time" HeaderText="Thời gian" />
                         </Columns>
                     </asp:GridView>

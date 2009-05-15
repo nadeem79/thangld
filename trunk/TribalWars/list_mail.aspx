@@ -36,9 +36,13 @@
                                 DataTextField="Title" HeaderText="Tiêu đề" 
                                 DataNavigateUrlFormatString="mail_details.aspx?id={0}" 
                                 DataNavigateUrlFields="Id">
-                                <ItemStyle Width="60%" />
+                            <ItemStyle Width="60%" />   
                             </asp:HyperLinkField>
-                            <asp:BoundField DataField="From" HeaderText="Người gửi" />
+                            <asp:HyperLinkField
+                                DataTextField="From" HeaderText="Người gửi"
+                                DataNavigateUrlFormatString="write_mail.aspx?id={0}" 
+                                DataNavigateUrlFields="From"> 
+                            </asp:HyperLinkField>    
                             <asp:BoundField DataField="Time" HeaderText="Thời gian" />
                         </Columns>
                     </asp:GridView>
