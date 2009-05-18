@@ -31,9 +31,9 @@
                <td valign="top" width="100%">
                     <asp:GridView ID="gvMail" runat="server" AutoGenerateColumns="False" 
                         Width="100%" BorderColor="Black" BorderStyle="Solid" BorderWidth="1px">
-                        <Columns>
+                        <Columns>                                                               
                             <asp:HyperLinkField
-                                DataTextField="Title" HeaderText="Tiêu đề" 
+                                DataTextField="Title" HeaderText="Tiêu đề"
                                 DataNavigateUrlFormatString="mail_details.aspx?id={0}" 
                                 DataNavigateUrlFields="Id">
                             <ItemStyle Width="60%" />   

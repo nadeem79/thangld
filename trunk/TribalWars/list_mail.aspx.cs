@@ -18,7 +18,7 @@ public partial class list_mail : System.Web.UI.Page
         IList<Mail> lstMail = user.GetMailReviece(page, session);
         this.gvMail.DataSource = lstMail;
         System.Web.UI.WebControls.HyperLinkField field = (HyperLinkField)this.gvMail.Columns[0];
-        field.DataNavigateUrlFormatString = "Mail_Detail.aspx?mail={0}";
+        field.DataNavigateUrlFormatString = "Mail_Detail.aspx?mail={0}&type=1";
         System.Web.UI.WebControls.HyperLinkField field1 = (HyperLinkField)this.gvMail.Columns[1];
         field1.DataNavigateUrlFormatString = "write_mail.aspx?receiver={0}";
         this.gvMail.DataBind();        

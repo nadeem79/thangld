@@ -17,4 +17,18 @@ public partial class Mail_detail : System.Web.UI.Page
         Detail = user.GetMailDetail(mail_id, session);
         session.Close();
     }
+    protected void delete_click(object sender, EventArgs e)
+    {
+        ISession session = null;
+        int types;
+        session = NHibernateHelper.CreateSession();
+        int.TryParse(Request["type"], out types);
+        if (types == 1)
+        {
+            Detail.ReceiverDelete = true;
+        }
+        else Detail.SenderDelete = true;
+        session.Save(Detail);
+        session.Close();
+    }
 }
