@@ -2,7 +2,7 @@
     Inherits="Mail_detail" Title="Mail" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
- <h2>Hòm thư đi</h2>
+    <h2>Hòm thư đi</h2>
     <table width="100%">
         <tbody>
             <tr>
@@ -29,7 +29,7 @@
                 </td>
                <td valign="top" width="100%">
                     
-                   <table class="vis" width="80%">
+                   <table class="vis" width="80%" align="center">
                        <tr>
                            <td style="background-color: #DFCCA6" class="style2">
                                Tiêu đề :</td>
@@ -38,21 +38,27 @@
                                <% =Detail.Title %></td>
                        </tr>
                        <tr>
-                           <td width="25%">
+                           <td width="25%" class="style1">
                                Người gửi :</td>
-                           <td width="25%">
-                               <% =Detail.To %></td>
-                           <td width="25%">
-                               Người nhận :</td>
-                           <td width="25%">
+                           <td width="25%" class="style1">
                                <% =Detail.From %></td>
+                           <td width="25%" class="style1">
+                               Người nhận :</td>
+                           <td width="25%" class="style1">
+                               <% =Detail.To %></td>
                        </tr>
-                       <tr>
+                       <tr align="center">
                            <td class="style1" >
+                                <a href='write_mail.aspx?Receiver=<% Response.Write(Detail.To); %>&Title=Re:<% Response.Write(Detail.Title); %>'>
+                                            Reply</a>
                                </td>
                            <td class="style1">
+                               <a href='write_mail.aspx?Detail=<% Response.Write(Detail.Detail); %>'>
+                                            Forward</a>
                                </td>
                            <td class="style1" >
+                               <a href='list_mail.aspx' id="delete" onclick='delete_click()'>
+                                            Delete</a>
                                </td>
                            <td class="style1">
                                </td>
@@ -63,13 +69,15 @@
                            </td>
                        </tr>
                        <tr>
-                           <td >
+                           <td align="center" >
+                               <a href='write_mail.aspx?Receiver=<% Response.Write(Detail.To); %>&Title=Re:<% Response.Write(Detail.Title); %>'>
+                                            Reply</a></td>
+                           <td align="center">
+                              <a href='write_mail.aspx?Detail=<% Response.Write(Detail.Detail); %>'>
+                                            Forward</a></td>
+                           <td align="center" >
                                &nbsp;</td>
-                           <td>
-                               &nbsp;</td>
-                           <td >
-                               &nbsp;</td>
-                           <td>
+                           <td align="center">
                                &nbsp;</td>
                        </tr>
                    </table>

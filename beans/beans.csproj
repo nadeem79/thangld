@@ -70,6 +70,7 @@
     <Compile Include="Build.cs" />
     <Compile Include="BuildingType.cs" />
     <Compile Include="Configuration.cs" />
+    <Compile Include="Admin.cs" />
     <Compile Include="Village.Methods.Building.cs" />
     <Compile Include="Village.Methods.Resources.cs" />
     <Compile Include="Village.Methods.Troops.cs" />
@@ -243,6 +244,9 @@
     <EmbeddedResource Include="Mapping\Mail.hbm.xml" />
     <EmbeddedResource Include="Mapping\Research.hbm.xml" />
     <EmbeddedResource Include="Mapping\WriteMail.hbm.xml" />
+    <EmbeddedResource Include="Mapping\Admin.hbm.xml">
+      <Generator>nhibernate-mapping.xsd</Generator>
+    </EmbeddedResource>
     <Content Include="Templates\AttackReport.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

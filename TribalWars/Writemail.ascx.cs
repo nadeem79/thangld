@@ -22,6 +22,9 @@ public partial class writemail : System.Web.UI.UserControl
         ISession session = NHibernateHelper.CreateSession();
         this.player = session.Load<Player>(Session["user"]);
         this.Receiver.Text =(Request["receiver"]);
+        this.Title.Text = (Request["Title"]);
+        String temp = (Request["Detail"]);
+            if ( temp != null ) this.Detail.Content = temp;
     }
     protected void sendmail_Click(object sender, EventArgs e)
     {       
