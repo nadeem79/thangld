@@ -13,11 +13,11 @@ using System.Web.UI.WebControls.WebParts;
 using beans;
 using NHibernate;
 
-public partial class PlayerBox : System.Web.UI.UserControl
+public partial class aPlayerBox : System.Web.UI.UserControl
 {
 
-    protected Player player;
-    public Player Player
+    protected Admin admin;
+    public Admin Admin
     {
         get;
         set;

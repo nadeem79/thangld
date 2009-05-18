@@ -1,5 +1,5 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/outPage.master" AutoEventWireup="true" CodeFile="Admin.aspx.cs"
-    Inherits="index" Title="TribalWars - Trang chủ" %>
+<%@ Page Language="C#" MasterPageFile="~/outPage.master" AutoEventWireup="true" CodeFile="Admin.aspx.cs"
+    Inherits="admin" Title="TribalWars - Trang chủ" %>
 <%@ Reference Control="aLoginBox.ascx" %>
 <%@ Reference Control="aPlayerBox.ascx" %>
 
