@@ -14,7 +14,7 @@ using beans;
 using NHibernate.Criterion;
 using System.Collections.Generic;
 
-public partial class index : System.Web.UI.Page
+public partial class admin : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -49,13 +49,13 @@ public partial class index : System.Web.UI.Page
         switch (Session["user"]==null)
         {
             case true:
-                LoginBox login = (LoginBox)Page.LoadControl("aLoginBox.ascx");
-                this.pBox.Controls.Add(login);
+                
+                this.pBox.Controls.Add(Page.LoadControl("aLoginbox.ascx");
                 break;
             default:
                 ISession session = NHibernateHelper.CreateSession();
                 
-                PlayerBox player = (PlayerBox)Page.LoadControl("aPlayerBox.ascx");
+                aPlayerBox player = (aPlayerBox)Page.LoadControl("aPlayerBox.ascx");
                 player.Player = session.Get<Player>(Session["user"]);
                 session.Close();
                 this.pBox.Controls.Add(player);
@@ -64,3 +64,4 @@ public partial class index : System.Web.UI.Page
         
     }
 }
+

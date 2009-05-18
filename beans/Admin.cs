@@ -132,6 +132,16 @@ namespace beans
         }
 
         #endregion
-    
+        #region Methods
+        public IList<Player> GetUserlist(int page, ISession session)
+        {
+            ICriteria criteria = session.CreateCriteria(typeof(Player));
+            criteria.AddOrder(Order.Desc("ID"));
+            criteria.SetMaxResults(40);
+            criteria.SetFirstResult(page * 40);
+            return criteria.List<Player>();
+        }
+        #endregion  
+
     }
 }

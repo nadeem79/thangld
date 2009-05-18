@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="aLoginBox.ascx.cs" Inherits="LoginBox" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="aLoginBox.ascx.cs" Inherits="aLoginBox" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 
 <div class="login-block">

@@ -12,7 +12,7 @@ using NHibernate;
 using beans;
 using NHibernate.Criterion;
 
-public partial class LoginBox : System.Web.UI.UserControl
+public partial class aLoginBox : System.Web.UI.UserControl
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -23,6 +23,7 @@ public partial class LoginBox : System.Web.UI.UserControl
     {
         ISession session = NHibernateHelper.CreateSession();
         try
+        {
             int id = beans.Admin.Authentication(this.username.Text, this.password.Text, session);
             if (id < 0)
             {
@@ -32,7 +33,7 @@ public partial class LoginBox : System.Web.UI.UserControl
             else
             {
                 Session.Add("user", id);
-                Response.Redirect("overview.aspx", true);
+                Response.Redirect("aUser.aspx", true);
             }
         }
         catch (Exception exc)
