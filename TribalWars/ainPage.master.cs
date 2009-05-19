@@ -16,16 +16,16 @@ using beans;
 using System.Collections.Generic;
 using Telerik.Web.UI;
 
-public partial class inPage : System.Web.UI.MasterPage
+public partial class ainPage : System.Web.UI.MasterPage
 {
     private Admin admin;
     public Admin Admin
     {
         get { return this.Admin; }
     }
-    
-    
-    public inPage()
+
+
+    public ainPage()
     {
         this.Init += new EventHandler(inPage_Init);
     }
