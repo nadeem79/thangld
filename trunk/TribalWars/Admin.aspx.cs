@@ -50,13 +50,13 @@ public partial class admin : System.Web.UI.Page
         {
             case true:
                 
-                this.pBox.Controls.Add(Page.LoadControl("aLoginbox.ascx");
+                this.pBox.Controls.Add(Page.LoadControl("aLoginbox.ascx"));
                 break;
             default:
                 ISession session = NHibernateHelper.CreateSession();
                 
                 aPlayerBox player = (aPlayerBox)Page.LoadControl("aPlayerBox.ascx");
-                player.Player = session.Get<Player>(Session["user"]);
+                player.Admin = session.Get<Admin>(Session["user"]);
                 session.Close();
                 this.pBox.Controls.Add(player);
                 break;
