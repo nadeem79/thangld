@@ -3,7 +3,7 @@
 
   <class name="beans.Player, beans" table="users" lazy="false">
     <id name="ID" column="id" type="Int32">
-      <generator class="increment"/>
+      <generator class="identity"/>
     </id>
     
     <property name="Username" column="username" length="200" type="String" not-null="true" unique="true"/>
