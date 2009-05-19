@@ -59,6 +59,7 @@
                            <td class="style1" >
                                <a href='list_mail.aspx' id="delete" onclick='delete_click()'>
                                             Delete</a>
+                               <asp:LinkButton ID="LinkButton1" runat="server" onclick="LinkButton1_Click">LinkButton</asp:LinkButton>
                                </td>
                            <td class="style1">
                                </td>

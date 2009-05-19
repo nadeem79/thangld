@@ -84,6 +84,8 @@
         <tr>
             <td colspan="2">
                 <telerik:RadEditor ID="txtPersonalText" runat="server" Skin="Office2007" BackColor="White">
+                    <Content>
+</Content>
                 </telerik:RadEditor> 
                 
             </td>

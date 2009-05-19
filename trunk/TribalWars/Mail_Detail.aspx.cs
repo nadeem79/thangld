@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Web.UI.WebControls;
 using beans;
 using NHibernate;
+using System.Data;
 public partial class Mail_detail : System.Web.UI.Page
 {
     protected Village village;
@@ -19,16 +20,23 @@ public partial class Mail_detail : System.Web.UI.Page
     }
     protected void delete_click(object sender, EventArgs e)
     {
+        
+    }
+
+    protected void LinkButton1_Click(object sender, EventArgs e)
+    {
         ISession session = null;
         int types;
         session = NHibernateHelper.CreateSession();
         int.TryParse(Request["type"], out types);
+        ITransaction trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
         if (types == 1)
-        {
             Detail.ReceiverDelete = true;
-        }
-        else Detail.SenderDelete = true;
-        session.Save(Detail);
+        else 
+            Detail.SenderDelete = true;
+        session.Update(Detail);
+        trans.Commit();
+        
         session.Close();
     }
 }

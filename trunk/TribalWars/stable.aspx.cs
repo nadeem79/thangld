@@ -24,6 +24,22 @@ public partial class stable : System.Web.UI.Page
     {
         village = ((inPage)this.Master).CurrentVillage;
         ISession session = NHibernateHelper.CreateSession();
+        session.Lock(village, LockMode.None);
+        if (Request["mode"] != null && Request["mode"] == "cancel_recruit")
+        {
+            int id = 0;
+            int.TryParse(Request["recruit_id"], out id);
+            if (id != 0)
+            {
+                ITransaction trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
+                this.village.CancelRecruit(id, session);
+                trans.Commit();
+                ((inPage)this.Master).WoodLabel.Text = this.village.Resources.Wood.ToString();
+                ((inPage)this.Master).ClayLabel.Text = this.village.Resources.Clay.ToString();
+                ((inPage)this.Master).IronLabel.Text = this.village.Resources.Iron.ToString();
+            }
+        }
+
         IList<Recruit> recruits = village.GetRecruit(session, BuildingType.Stable);
         DateTime last_complete = DateTime.Now;
         string sRecruitCommands = "";
@@ -57,17 +73,21 @@ public partial class stable : System.Web.UI.Page
             }
 
             sRecruitCommands += Functions.FormatTime(Recruit.RecruitTime(recruits[i].Troop, recruits[i].Quantity, this.village.Buildings.Stable)) + "</span></td>";
-            sRecruitCommands += "<td>" + last_complete.AddSeconds(Recruit.RecruitTime(recruits[i].Troop, recruits[i].Quantity, this.village.Buildings.Stable)).ToString("dd/MM/yyyy hh:mm:ss") + "</td>";
+            sRecruitCommands += "<td>" + last_complete.AddSeconds(Recruit.RecruitTime(recruits[i].Troop, recruits[i].Quantity, this.village.Buildings.Stable)).ToString("HH:mm:ss 'ngày' dd/MM/yyyy ") + "</td>";
+            sRecruitCommands += String.Format("<td><a href=\"stable.aspx?id={0}&mode=cancel_recruit&recruit_id={1}\">Hủy</a></td>", this.village.ID, recruits[i].ID);
+            sRecruitCommands += "</tr>";
         }
         this.lblRecruiting.Text = sRecruitCommands;
+        string s = Functions.FormatTime(beans.Recruit.GetPrice(beans.TroopType.Heavy, this.village.Buildings.Stable).BuildTime);
         session.Close();
+        
     }
 
     protected void bttnRecruit_Click(object sender, EventArgs e)
     {
         ISession session = NHibernateHelper.CreateSession();
         //this.village.Update(DateTime.Now, session);
-
+        ITransaction trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
         int scout = 0, light = 0, heavy = 0;
 
         int.TryParse(this.txtScout.Text, out scout);
@@ -84,7 +104,7 @@ public partial class stable : System.Web.UI.Page
         if (heavy > 0)
             if (this.village.BeginRecruit(TroopType.Heavy, heavy, session) == null)
                 lblError.Text = "Không đủ tài nguyên";
-        
+        trans.Commit();
         session.Close();
         if (lblError.Text.Equals(string.Empty))
             Response.Redirect("stable.aspx?id=" + this.village.ID.ToString(), true);

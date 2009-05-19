@@ -54,8 +54,6 @@ public partial class inPage : System.Web.UI.MasterPage
 
     void inPage_Init(object sender, EventArgs e)
     {
-        if (Session["user"]==null)
-            Session["user"] = 1;
 
         if (object.Equals(Session["user"], null))
         {
@@ -73,7 +71,6 @@ public partial class inPage : System.Web.UI.MasterPage
 
 
         this.player = session.Load<beans.Player>((int)Session["user"]);
-
         if (this.player == null)
         {
             session.Close();

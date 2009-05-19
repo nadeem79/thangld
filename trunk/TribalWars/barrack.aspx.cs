@@ -19,6 +19,11 @@ public partial class barrack : System.Web.UI.Page
 {
 
     protected beans.Village village;
+    private ISession NHibernateSession
+    {
+        get;
+        set;
+    }
 
     protected string GetTroopText(TroopType type)
     {
@@ -40,14 +45,51 @@ public partial class barrack : System.Web.UI.Page
         return "";
     }
 
+    public barrack()
+    {
+        this.PreInit += new EventHandler(barrack_PreInit);
+        this.LoadComplete += new EventHandler(barrack_LoadComplete);
+    }
+
+    protected void barrack_PreInit(object sender, EventArgs e)
+    {
+        this.NHibernateSession = NHibernateHelper.CreateSession();
+        
+    }
+
+    protected void barrack_LoadComplete(object sender, EventArgs e)
+    {
+        if (this.NHibernateSession != null)
+            this.NHibernateSession.Close();
+    }
 
     protected void Page_Load(object sender, EventArgs e)
     {
+
+
+
         village = ((inPage)this.Master).CurrentVillage;
-        ISession session = NHibernateHelper.CreateSession();
-        IList<Recruit> recruits = village.GetRecruit(session, BuildingType.Barracks);
+        this.NHibernateSession.Lock(this.village, LockMode.None);
+
+        if (Request["mode"] != null && Request["mode"] == "cancel_recruit")
+        {
+            int id = 0;
+            int.TryParse(Request["recruit_id"], out id);
+            if (id != 0)
+            {
+                ITransaction trans = this.NHibernateSession.BeginTransaction(IsolationLevel.ReadCommitted);
+                this.village.CancelRecruit(id, this.NHibernateSession);
+                trans.Commit();
+                ((inPage)this.Master).WoodLabel.Text = this.village.Resources.Wood.ToString();
+                ((inPage)this.Master).ClayLabel.Text = this.village.Resources.Clay.ToString();
+                ((inPage)this.Master).IronLabel.Text = this.village.Resources.Iron.ToString();
+            }
+        }
+
+        IList<Recruit> recruits = village.GetRecruit(this.NHibernateSession, BuildingType.Barracks);
         string sRecruitCommands = "";
         DateTime last_complete = DateTime.Now;
+        DateTime complete = DateTime.Now;
         for (int i=0; i<recruits.Count; i++)
         {
             sRecruitCommands += "<tr class='lit'>";
@@ -67,22 +109,21 @@ public partial class barrack : System.Web.UI.Page
                     break;
             }
             sRecruitCommands += "<td>";
+
             if (i == 0)
             {
                 sRecruitCommands += "<span class='timer'>";
                 last_complete = recruits[i].LastUpdate;
             }
             else
-            {
-                last_complete = last_complete.AddSeconds(Recruit.RecruitTime(recruits[i - 1].Troop, recruits[i - 1].Quantity, this.village.Buildings.Barracks));
-            }
+                last_complete = complete;
+            complete = last_complete + TimeSpan.FromSeconds(beans.Recruit.GetPrice(recruits[i].Troop, this.village[beans.BuildingType.Barracks]).BuildTime * recruits[i].Quantity);
+            sRecruitCommands += Functions.FormatTime(beans.Recruit.GetPrice(recruits[i].Troop, this.village[beans.BuildingType.Barracks]).BuildTime * recruits[i].Quantity) + "</span></td>";
+            sRecruitCommands += String.Format("<td>{0}</td>", complete.ToString("HH:mm:ss 'ngày' dd/MM/yyyy"));
 
-            sRecruitCommands += Functions.FormatTime(Recruit.RecruitTime(recruits[i].Troop, recruits[i].Quantity, this.village.Buildings.Barracks)) + "</span></td>";
-            sRecruitCommands += "<td>" + last_complete.AddSeconds(Recruit.RecruitTime(recruits[i].Troop, recruits[i].Quantity, this.village.Buildings.Barracks)).ToString("dd/MM/yyyy hh:mm:ss") + "</td>";
-            sRecruitCommands += "<td><a href=\"barracks.aspx?id=" + this.village.ID.ToString() + "&mode=cancel_recruit&recruit_id=" + recruits[i].ID.ToString() + "\">Huỷ</a></td>";
+            sRecruitCommands += "<td><a href=\"barrack.aspx?id=" + this.village.ID.ToString() + "&mode=cancel_recruit&recruit_id=" + recruits[i].ID.ToString() + "\">Huỷ</a></td>";
         }
         this.lblRecruiting.Text = sRecruitCommands;
-        session.Close();
     }
 
 
@@ -90,26 +131,24 @@ public partial class barrack : System.Web.UI.Page
     protected void bttnRecruit_Click(object sender, EventArgs e)
     {
         
-        ISession session = NHibernateHelper.CreateSession();
-        
+
         int spear = 0, sword = 0, axe = 0;
 
         int.TryParse(this.txtSpear.Text, out spear);
         int.TryParse(this.txtSword.Text, out sword);
         int.TryParse(this.txtAxe.Text, out axe);
-        ITransaction trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
+        ITransaction trans = this.NHibernateSession.BeginTransaction(IsolationLevel.ReadCommitted);
         if (spear > 0)
-            if (this.village.BeginRecruit(TroopType.Spear, spear, session)==null)
+            if (this.village.BeginRecruit(TroopType.Spear, spear, this.NHibernateSession) == null)
                 lblError.Text = "Không đủ tài nguyên";
         
         if (sword > 0)
-            if (this.village.BeginRecruit(TroopType.Sword, sword, session) == null)
+            if (this.village.BeginRecruit(TroopType.Sword, sword, this.NHibernateSession) == null)
                 lblError.Text = "Không đủ tài nguyên";
         if (axe > 0)
-            if (this.village.BeginRecruit(TroopType.Axe, axe, session) == null)
+            if (this.village.BeginRecruit(TroopType.Axe, axe, this.NHibernateSession) == null)
                 lblError.Text = "Không đủ tài nguyên";
         trans.Commit();
-        session.Close();
 
         if (lblError.Text.Equals(string.Empty))
             Response.Redirect("barrack.aspx?id=" + this.village.ID.ToString(), true);
