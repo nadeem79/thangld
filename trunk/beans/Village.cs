@@ -304,10 +304,7 @@ namespace beans
         #endregion
 
         #region Constructors
-        public Village() 
-        {
-            
-        }
+
 
         #endregion
 
@@ -407,7 +404,7 @@ namespace beans
             return this.Name;
         }
 
-        //Chưa xét trường hợp xây nhà, xây noble và xe
+        //Chưa xét trường hợp xây noble
         public void Update(DateTime to, ISession session)
         {
             this.Loyal += (int)(to - this.LastUpdate).TotalHours;
@@ -522,10 +519,16 @@ namespace beans
                     }
                 #endregion
 
+                #region Gửi resource đến làng khác
+                IList<SendResource> sendings = this.GetDependingResource(incoming.LandingTime, session);
+                foreach (SendResource sending in sendings)
+                    sending.To.Update(sending.LandingTime, session);
+                #endregion
+
                 #region Quân đi đánh làng khác
                 IList<Attack> attacks = this.getDependingAttacking(incoming.LandingTime, session);
                 foreach (Attack attack in attacks)
-                    attack.To.Update(to, session);
+                    attack.To.Update(attack.LandingTime, session);
                 #endregion
 
                 #region Quân hỗ trợ hoặc quay về từ làng khác

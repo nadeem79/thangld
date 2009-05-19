@@ -4,9 +4,57 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using beans;
+using NHibernate;
+using System.Data;
+using System.Data.Common;
 
 public partial class CustomControls_SendResource : System.Web.UI.UserControl
 {
+
+    protected string TypePrefix(MoveType type)
+    {
+        switch (type)
+        {
+            case MoveType.SendResources:
+                return "Gửi đến";
+                break;
+            case MoveType.Return:
+                return "Quay về từ";
+                break;
+            default:
+                return "";
+                break;
+        }
+    }
+
+    protected int MerchantCalculation(MovingCommand command)
+    {
+        if (command.GetType() == typeof(Return))
+            return ((Return)command).Merchant;
+
+        SendResource sendResource = (SendResource)command;
+
+        return (sendResource.Wood + sendResource.Clay + sendResource.Iron) / 1000 + ((sendResource.Wood + sendResource.Clay + sendResource.Iron) % 1000 > 0 ? 1 : 0);
+    }
+
+    protected string DisplayResources(MovingCommand command)
+    {
+        if (command.GetType() != typeof(SendResource))
+            return "";
+
+        SendResource sendResource = (SendResource)command;
+
+        string result = "";
+        if (sendResource.Wood>0)
+            result += String.Format("<img src=\"images\\holz.png\" /> {0}", sendResource.Wood);
+        if (sendResource.Clay > 0)
+            result += String.Format("<img src=\"images\\lehm.png\" /> {0}", sendResource.Clay);
+        if (sendResource.Iron > 0)
+            result += String.Format("<img src=\"images\\eisen.png\" /> {0}", sendResource.Iron);
+
+        return result;
+    }
 
     public NHibernate.ISession Session
     {
@@ -22,6 +70,29 @@ public partial class CustomControls_SendResource : System.Web.UI.UserControl
     protected void Page_Load(object sender, EventArgs e)
     {
         this.lblAvailableMerchant.Text = this.Village.MerchantAvailable(this.Session).ToString();
+        IList<MovingCommand> lstIncoming = this.Village.IncomingMerchants(this.Session);
+        this.rMyTransport.DataSource = lstIncoming;
+        this.rMyTransport.DataBind();
+        this.rOutgoings.DataSource = this.Village.GetOutgoingMerchants(this.Session);
+        this.rOutgoings.DataBind();
+
+        
+
+        if (Request["target"] == null)
+            return;
+
+        int village_id = 0;
+        int.TryParse(Request["target"], out village_id);
+        if (village_id == 0)
+            return;
+
+        beans.Village target = this.Session.Get<Village>(village_id);
+        if (target != null)
+        {
+            this.txtX.Text = target.X.ToString("000");
+            this.txtY.Text = target.Y.ToString("000");
+        }
+
     }
 
     protected void bttnSend_Click(object sender, EventArgs e)
@@ -38,21 +109,21 @@ public partial class CustomControls_SendResource : System.Web.UI.UserControl
             return;
         }
 
-        if ((clay + wood + iron) <= 0 || wood < 0 || clay < 0 || iron < 0)
+        ITransaction transaction = null;
+        try
         {
-            ScriptManager.RegisterStartupScript(bttnSend, bttnSend.GetType(), "ShowException", "jQuery.facebox('Nhập tài nguyên');", true);
-            return;
+            transaction = this.Session.BeginTransaction(IsolationLevel.ReadCommitted);
+            SendResource sendResource = SendResource.PrepareSendingResources(this.Session, this.Village, x, y, wood, clay, iron);
+            transaction.Commit();
+            Response.Redirect(String.Format("market.aspx?id={0}", this.Village.ID), false);
         }
-
-        int village_id = beans.Village.CheckVillage(x, y, this.Session);
-
-        if (village_id <= 0)
+        catch (Exception exception)
         {
-            ScriptManager.RegisterStartupScript(bttnSend, bttnSend.GetType(), "ShowException", String.Format("jQuery.facebox('Thành phố không tồn tại ở toạ độ ({0}|{1})');", x.ToString("000"), y.ToString("000")), true);
-            return;
+            ScriptManager.RegisterStartupScript(bttnSend, bttnSend.GetType(), "ShowException", "jQuery.facebox('" + exception.Message + "');", true);
+            transaction.Rollback();
         }
+         
 
-        
         
     }
 }

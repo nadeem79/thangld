@@ -99,5 +99,32 @@ namespace beans {
                 return ResourceManager.GetString("Invite", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;table width=&quot;100%&quot;&gt;
+        ///    &lt;tbody&gt;
+        ///        &lt;tr&gt;
+        ///            &lt;th width=&quot;60&quot;&gt;
+        ///                from:
+        ///            &lt;/th&gt;
+        ///            &lt;th&gt;
+        ///                &lt;a href=&quot;user_info.aspx?player=$from_id$&quot;&gt;$from_name$&lt;/a&gt;
+        ///            &lt;/th&gt;
+        ///        &lt;/tr&gt;
+        ///        &lt;tr&gt;
+        ///            &lt;td&gt;
+        ///                Village:
+        ///            &lt;/td&gt;
+        ///            &lt;td&gt;
+        ///                &lt;a href=&apos;village_info.aspx?village=$from_village_id$&apos;&gt;$from_village_name$ ($from_village_x$|$from_village_y$)&lt;/a&gt;
+        ///            &lt;/td&gt;
+        ///        &lt;/tr&gt;
+        ///      [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ResourceReceive {
+            get {
+                return ResourceManager.GetString("ResourceReceive", resourceCulture);
+            }
+        }
     }
 }

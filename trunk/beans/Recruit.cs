@@ -224,8 +224,33 @@ namespace beans
 
         public bool Expense(DateTime to)
         {
+            
+            int level = 0;
+            switch (this.Troop)
+	        {
+		        case TroopType.Spear:
+                case TroopType.Sword:
+                case TroopType.Axe:
+                    level = this.InVillage[BuildingType.Barracks];
+                    break;
+                case TroopType.Scout:
+                case TroopType.Light:
+                case TroopType.Heavy:
+                    level = this.InVillage[BuildingType.Stable];
+                    break;
+                case TroopType.Ram:
+                case TroopType.Catapult:
+                    level = this.InVillage[BuildingType.Workshop];
+                    break;
+                case TroopType.Nobleman:
+                    level = this.InVillage[BuildingType.Academy];
+                    break;
+                default:
+                    break;
+            }
+
             TimeSpan t = to - this.LastUpdate;
-            Price p = Recruit.GetPrice(this.Troop);
+            Price p = Recruit.GetPrice(this.Troop, level);
 
 
             int total_troop = (int)(t.TotalSeconds / p.BuildTime);

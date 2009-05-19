@@ -16,9 +16,10 @@ namespace beans
             ICriteria criteria = session.CreateCriteria(typeof(SendResource));
             criteria.Add(Expression.Eq("From", this));
 
+            
             int merchantCount = 0;
             foreach (SendResource sending in criteria.List<SendResource>())
-                merchantCount += (int)Math.Round((double)((sending.Wood + sending.Clay + sending.Iron) / 1000), MidpointRounding.AwayFromZero);
+                merchantCount += (sending.Wood + sending.Clay + sending.Iron) / 1000 + ((sending.Wood + sending.Clay + sending.Iron) % 1000 > 0 ? 1 : 0);
 
 
             return merchantCount;
@@ -33,7 +34,7 @@ namespace beans
             if (o==null)
                 return 0;
 
-            return (Int32)o;
+            return Convert.ToInt32(o);
         }
 
         public int MerchantAvailable(ISession session)
@@ -41,7 +42,6 @@ namespace beans
             
             ICriteria criteria = session.CreateCriteria(typeof(Offer));
             criteria.Add(Expression.Eq("AtVillage", this));
-            criteria.Add(Expression.
 
             int merchantCount = 0;
 
@@ -51,7 +51,7 @@ namespace beans
                 else
                     merchantCount += (int)Math.Round((double)(offer.OfferQuantity / 1000)) * offer.OfferNumber;
 
-            return this.Buildings.Merchant - merchantCount;
+            return this.Buildings.Merchant - merchantCount - this.MerchantOnTheWay(session) - this.MerchantOnTheWayHome(session);
         }
 
         public int AvailableMerchant(ISession session)
@@ -59,6 +59,68 @@ namespace beans
             return this.Buildings.Merchant - this.MerchantOnTheWay(session) - this.MerchantOnTheWayHome(session);
         }
 
-        
+        public IList<SendResource> GetDependingResource(DateTime to, ISession session)
+        {
+            ICriteria criteria = session.CreateCriteria(typeof(SendResource));
+            criteria.Add(Expression.Eq("To", this));
+            criteria.Add(Expression.Gt("LandingTimestamp", this.LastUpdateTimestamp));
+            criteria.Add(Expression.Le("LandingTimestamp", DatetimeHelper.DatetimeToInt64(to)));
+            criteria.AddOrder(new Order("LandingTimestamp", true));
+
+            return criteria.List<SendResource>();
+        }
+
+        public IList<SendResource> GetDependingResource(ISession session)
+        {
+            ICriteria criteria = session.CreateCriteria(typeof(SendResource));
+            criteria.Add(Expression.Eq("To", this));
+            criteria.AddOrder(new Order("LandingTimestamp", true));
+
+            return criteria.List<SendResource>();
+        }
+
+        public IList<SendResource> GetIncomingMerchants(ISession session)
+        {
+            ICriteria criteria = session.CreateCriteria(typeof(SendResource));
+            criteria.Add(Expression.Eq("To", this));
+            return criteria.List<SendResource>();
+        }
+        public IList<MovingCommand> GetReturnMerchants(ISession session)
+        {
+            ICriteria criteria = session.CreateCriteria(typeof(Return));
+            criteria.Add(Expression.Eq("To", this));
+            criteria.Add(Expression.Gt("Merchant", 0));
+            return criteria.List<MovingCommand>();
+        }
+        public IList<SendResource> GetOutgoingMerchants(ISession session)
+        {
+            ICriteria criteria = session.CreateCriteria(typeof(SendResource));
+            criteria.Add(Expression.Eq("From", this));
+            return criteria.List<SendResource>();
+        }
+        public IList<MovingCommand> IncomingMerchants(ISession session)
+        {
+            IList<MovingCommand> incomings = new List<MovingCommand>();
+            foreach (MovingCommand command in this.GetIncomingMerchants(session))
+                incomings.Add(command);
+            foreach (MovingCommand command in this.GetReturnMerchants(session))
+                incomings.Add(command);
+            return incomings;
+        }
+
+        public IList<MovingCommand> GetIncomingMerchants(DateTime to, ISession session)
+        {
+            ICriteria criteria = session.CreateCriteria(typeof(Return));
+            criteria.Add(Expression.Gt("Merchant", 0));
+
+            IList<MovingCommand> lstIncomings = criteria.List<MovingCommand>();
+
+
+            foreach (MovingCommand incoming in this.GetDependingResource(session))
+                if (!lstIncomings.Contains(incoming))
+                    lstIncomings.Add(incoming);
+
+            return lstIncomings;
+        }
     }
 }

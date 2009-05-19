@@ -26,7 +26,7 @@ public partial class market : System.Web.UI.Page
     protected void market_PreInit(object sender, EventArgs e)
     {
         this.NHibernateSession = NHibernateHelper.CreateSession();
-        this.NHibernateSession.Lock(this.Village, LockMode.None);
+        
     }
     protected void market_LoadComplete(object sender, EventArgs e)
     {
@@ -37,6 +37,7 @@ public partial class market : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         this.Village = ((inPage)this.Master).CurrentVillage;
+        this.NHibernateSession.Lock(this.Village, LockMode.None);
         string page = "";
         if (!object.Equals(Request["page"], null))
             page = Request["page"];
