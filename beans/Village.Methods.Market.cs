@@ -63,8 +63,8 @@ namespace beans
         {
             ICriteria criteria = session.CreateCriteria(typeof(SendResource));
             criteria.Add(Expression.Eq("To", this));
-            criteria.Add(Expression.Gt("LandingTimestamp", this.LastUpdateTimestamp));
-            criteria.Add(Expression.Le("LandingTimestamp", DatetimeHelper.DatetimeToInt64(to)));
+            criteria.Add(Expression.Ge("LandingTimestamp", this.LastUpdateTimestamp));
+            criteria.Add(Expression.Lt("LandingTimestamp", DatetimeHelper.DatetimeToInt64(to)));
             criteria.AddOrder(new Order("LandingTimestamp", true));
 
             return criteria.List<SendResource>();
@@ -96,8 +96,20 @@ namespace beans
         {
             ICriteria criteria = session.CreateCriteria(typeof(SendResource));
             criteria.Add(Expression.Eq("From", this));
+            criteria.AddOrder(new Order("LandingTimestamp", true));
             return criteria.List<SendResource>();
         }
+
+        public IList<SendResource> GetOutgoingMerchants(DateTime to, ISession session)
+        {
+            ICriteria criteria = session.CreateCriteria(typeof(SendResource));
+            criteria.Add(Expression.Eq("From", this));
+            criteria.Add(Expression.Ge("LandingTimestamp", this.LastUpdateTimestamp));
+            criteria.Add(Expression.Lt("LandingTimestamp", DatetimeHelper.DatetimeToInt64(to)));
+            criteria.AddOrder(new Order("LandingTimestamp", true));
+            return criteria.List<SendResource>();
+        }
+
         public IList<MovingCommand> IncomingMerchants(ISession session)
         {
             IList<MovingCommand> incomings = new List<MovingCommand>();

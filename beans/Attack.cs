@@ -462,6 +462,10 @@ namespace beans
                         this.To.Resources.Iron -= returnTroop.Iron;
                     }
 
+                    attack.Clay = returnTroop.Clay;
+                    attack.Wood = returnTroop.Wood;
+                    attack.Iron = returnTroop.Iron;
+
                     returnTroop.save(session);
                     #endregion
                 }

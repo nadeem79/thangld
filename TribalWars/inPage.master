@@ -28,8 +28,15 @@
     </telerik:RadScriptManager>
     <telerik:RadFormDecorator ID="RadFormDecorator1" runat="server" DecoratedControls="All"
         Skin="Vista" />
+    <telerik:RadWindowManager ID="RadWindowManager1" runat="server" >
+        <Windows>
+            <telerik:RadWindow ID="ConfirmAttack" Modal="true" InitialBehavior="Pin"
+        Width="500" style="z-index:1;"></telerik:RadWindow>
+        </Windows>
+    </telerik:RadWindowManager>
     <div class="top_background">
     </div>
+
     <div style="text-align: center;">
         <table class="navi-border" style="width: 840px; border-collapse: collapse; margin: 11px auto auto;
             text-align: left;">
@@ -39,8 +46,6 @@
                         DataMember="this.CurrentVillage" style="z-index:0;">
                         <Items>
                             <telerik:RadMenuItem runat="server" NavigateUrl="~/logout.aspx" Text="Thoát game">
-                            </telerik:RadMenuItem>
-                            <telerik:RadMenuItem runat="server" Text="Shoutbox">
                             </telerik:RadMenuItem>
                             <telerik:RadMenuItem runat="server" Text="Tài khoản" NavigateUrl="user_profile.aspx">
                                 <Items>
@@ -131,9 +136,6 @@
                                 <telerik:RadToolBarButton runat="server" ImageUrl="~/images/garage.png" NavigateUrl="~/workshop.aspx"
                                     Text="Nhà xe">
                                 </telerik:RadToolBarButton>
-                                <telerik:RadToolBarButton runat="server" ImageUrl="~/images/snob.png" NavigateUrl="~/academy.aspx"
-                                    Text="Trường đại học">
-                                </telerik:RadToolBarButton>
                                 <telerik:RadToolBarButton runat="server" ImageUrl="~/images/smith.png" NavigateUrl="~/smithy.aspx"
                                     Text="Viện nghiên cứu">
                                 </telerik:RadToolBarButton>
@@ -158,15 +160,11 @@
                                 <telerik:RadToolBarButton runat="server" ImageUrl="~/images/storage.png" NavigateUrl="~/warehouse.aspx"
                                     Text="Nhà kho">
                                 </telerik:RadToolBarButton>
-                                <telerik:RadToolBarButton runat="server" ImageUrl="~/images/hide.png" NavigateUrl="~/hidden.aspx"
-                                    Text="Kho tàng">
-                                </telerik:RadToolBarButton>
                                 <telerik:RadToolBarButton runat="server" ImageUrl="~/images/wall.png" NavigateUrl="~/wall.aspx"
                                     Text="Tường thành">
                                 </telerik:RadToolBarButton>
                             </Items>
                         </telerik:RadToolBar>
-                        </ContentTemplate></telerik:RadDock> </telerik:RadDockZone>
                     </td>
                 </tr>
             </table>
@@ -182,7 +180,8 @@
                                 <table class="menu nowrap" style="width: 100%;">
                                     <tr id="menu_row2">
                                         <td>
-                                            <a href="overview.aspx?id=<%Response.Write(this.CurrentVillage.ID); %>">Overview</a>
+                                            
+                                            <a href="javascript:void(0);" onclick="radopen('shoutbox.aspx', 'Shoutbox');">Shoutbox</a>
                                         </td>
                                         <td>
                                             <a href="map.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>">Bản đồ</a>

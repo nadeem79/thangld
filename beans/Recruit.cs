@@ -178,7 +178,7 @@ namespace beans
             if (level <= 1)
                 return Recruit.GetPrice(troop);
 
-            int key = (int)troop | level;
+            int key = (int)troop*1000 + level;
             if (Recruit.PriceDictionary.ContainsKey(key))
                 return Recruit.PriceDictionary[key];
 
@@ -224,7 +224,7 @@ namespace beans
 
         public bool Expense(DateTime to)
         {
-            
+            BuildingType building = BuildingType.NoBuiding;
             int level = 0;
             switch (this.Troop)
 	        {
@@ -232,18 +232,22 @@ namespace beans
                 case TroopType.Sword:
                 case TroopType.Axe:
                     level = this.InVillage[BuildingType.Barracks];
+                    building = BuildingType.Barracks;
                     break;
                 case TroopType.Scout:
                 case TroopType.Light:
                 case TroopType.Heavy:
                     level = this.InVillage[BuildingType.Stable];
+                    building = BuildingType.Stable;
                     break;
                 case TroopType.Ram:
                 case TroopType.Catapult:
                     level = this.InVillage[BuildingType.Workshop];
+                    building = BuildingType.Workshop;
                     break;
                 case TroopType.Nobleman:
                     level = this.InVillage[BuildingType.Academy];
+                    building = BuildingType.Academy;
                     break;
                 default:
                     break;
@@ -311,12 +315,12 @@ namespace beans
 
             if (totalRecruit == this.Quantity)
             {
-                this.LastUpdate = this.LastUpdate.AddSeconds(totalRecruit * Recruit.GetPrice(this.Troop).BuildTime);
+                this.LastUpdate = this.LastUpdate.AddSeconds(totalRecruit * Recruit.GetPrice(this.Troop, this.InVillage[building]).BuildTime);
                 this.Quantity = 0;
                 return true;
             }
 
-            this.LastUpdate = this.LastUpdate.AddSeconds(totalRecruit * Recruit.GetPrice(this.Troop).BuildTime);
+            this.LastUpdate = this.LastUpdate.AddSeconds(totalRecruit * Recruit.GetPrice(this.Troop, this.InVillage[building]).BuildTime);
             this.Quantity -= totalRecruit;
 
             return false;

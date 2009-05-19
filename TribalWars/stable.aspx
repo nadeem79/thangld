@@ -37,6 +37,9 @@
                 <th width="200">
                     Completion
                 </th>
+                <th width="200">
+                    Hủy
+                </th>
             </tr>
             <asp:Label ID="lblRecruiting" runat="server"></asp:Label>
         </tbody>
@@ -84,7 +87,7 @@
                     2
                 </td>
                 <td>
-                    0:03:08
+                    <% = Functions.FormatTime(beans.Recruit.GetPrice(beans.TroopType.Scout, this.village.Buildings.Stable).BuildTime) %>
                 </td>
                 <td>
                     <% Response.Write(this.village.Troop.Scout.ToString()); %>/<%Response.Write(this.village.Troop.InVillageScout.ToString()); %>
@@ -117,7 +120,7 @@
                     4
                 </td>
                 <td>
-                    0:06:15
+                    <% = Functions.FormatTime(beans.Recruit.GetPrice(beans.TroopType.Light, this.village.Buildings.Stable).BuildTime) %>
                 </td>
                 <td>
                     <% Response.Write(this.village.Troop.Light.ToString()); %>/<%Response.Write(this.village.Troop.InVillageLight.ToString()); %>
@@ -150,7 +153,7 @@
                     6
                 </td>
                 <td>
-                    0:12:29
+                    <% = Functions.FormatTime(beans.Recruit.GetPrice(beans.TroopType.Heavy, this.village.Buildings.Stable).BuildTime)%>
                 </td>
                 <td>
                     <% Response.Write(this.village.Troop.Heavy.ToString()); %>/<%Response.Write(this.village.Troop.InVillageHeavy.ToString()); %>

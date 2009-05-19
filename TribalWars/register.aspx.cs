@@ -48,8 +48,8 @@ public partial class Default2 : System.Web.UI.Page
         user.Msn = "";
 
         NHibernate.ISession session = null;
-        try
-        {
+        //try
+        //{
             session = NHibernateHelper.CreateSession();
             ITransaction trans = session.BeginTransaction();
             session.Save(user);
@@ -57,15 +57,15 @@ public partial class Default2 : System.Web.UI.Page
             Session.RemoveAll();
             Session.Add("user", user.ID);
             Response.Redirect("overview.aspx", true);
-        }
-        catch (Exception exc)
-        {
-            this.lblError.Text = exc.Message;
-        }
-        finally
-        {
+        //}
+        //catch (Exception exc)
+        //{
+        //    this.lblError.Text = exc.Message;
+        //}
+        //finally
+        //{
             session.Close();
-        }
+        //}
 
     }
 }

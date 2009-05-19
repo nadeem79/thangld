@@ -449,7 +449,7 @@ namespace beans
                     }
 
                 if (lstInfantryRecruits.Count > 0)
-                    while (lstInfantryRecruits[0].Expense(to))
+                    while (lstInfantryRecruits[0].Expense(incoming.LandingTime))
                     {
                         DateTime start = lstInfantryRecruits[0].LastUpdate;
                         session.Delete(lstInfantryRecruits[0]);
@@ -529,6 +529,12 @@ namespace beans
                 IList<Attack> attacks = this.getDependingAttacking(incoming.LandingTime, session);
                 foreach (Attack attack in attacks)
                     attack.To.Update(attack.LandingTime, session);
+                #endregion
+
+                #region Gửi tài nguyên đến làng khác
+                IList<SendResource> lstSendResources = this.GetOutgoingMerchants(incoming.LandingTime, session);
+                foreach (SendResource sendResource in lstSendResources)
+                    sendResource.To.Update(incoming.LandingTime, session);
                 #endregion
 
                 #region Quân hỗ trợ hoặc quay về từ làng khác
@@ -635,6 +641,12 @@ namespace beans
             IList<Attack> _attacks = this.getDependingAttacking(to, session);
             foreach (Attack attack in _attacks)
                 attack.To.Update(to, session);
+            #endregion
+
+            #region Gửi tài nguyên đến làng khác
+            IList<SendResource> _lstSendResources = this.GetOutgoingMerchants(to, session);
+            foreach (SendResource sendResource in _lstSendResources)
+                sendResource.To.Update(to, session);
             #endregion
 
             #region Quân hỗ trợ hoặc quay về từ làng khác

@@ -18,6 +18,5 @@ public partial class wall : System.Web.UI.Page
     {
         inPage p = (inPage)this.Master;
         this.Village = p.CurrentVillage;
-
     }
 }
