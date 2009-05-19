@@ -93,7 +93,6 @@ namespace beans
                 throw new Exception("Nhập toạ độ");
 
             int intTo = Village.CheckVillage(x, y, session);
-
             if (intTo < 0)
                 throw new Exception("Toạ độ không tồn tại");
 

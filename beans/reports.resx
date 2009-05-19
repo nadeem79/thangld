@@ -386,4 +386,46 @@ May mắn (phía tấn công): $luck$
 &lt;br /&gt;&lt;br /&gt;
 &lt;a href='untribe.aspx'&gt;Xem thư mời&lt;/a&gt;</value>
   </data>
+  <data name="ResourceReceive" xml:space="preserve">
+    <value>&lt;table width="100%"&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;
+            &lt;th width="60"&gt;
+                from:
+            &lt;/th&gt;
+            &lt;th&gt;
+                &lt;a href="user_info.aspx?player=$from_id$"&gt;$from_name$&lt;/a&gt;
+            &lt;/th&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;
+                Village:
+            &lt;/td&gt;
+            &lt;td&gt;
+                &lt;a href='village_info.aspx?village=$from_village_id$'&gt;$from_village_name$ ($from_village_x$|$from_village_y$)&lt;/a&gt;
+            &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;th&gt;
+                To:
+            &lt;/th&gt;
+            &lt;th&gt;
+                &lt;a href="user_info.aspx?player=$to_id$"&gt;$to_name$&lt;/a&gt;
+            &lt;/th&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;
+                Village:
+            &lt;/td&gt;
+            &lt;td&gt;
+                &lt;a href='village_info.aspx?village=$to_village_id$'&gt;$to_village_name$ ($to_village_x$|$to_village_y$)&lt;/a&gt;
+            &lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;br&gt;
+&lt;h4&gt;
+    Resources:
+    $wood$ $clay$ $iron$</value>
+  </data>
 </root>

@@ -45,6 +45,12 @@
                             » Gửi quân</a>
                     </td>
                 </tr>
+                <tr>
+                    <td colspan="2">
+                        <a href='market.aspx?id=<% Response.Write(this.village.ID); %>&target=<% Response.Write(this.target.ID); %>'>
+                            » Gửi tài nguyên</a>
+                    </td>
+                </tr>
                 <asp:Panel ID="pIsOwner" runat="server">
                 <tr>
                     <td colspan="2">

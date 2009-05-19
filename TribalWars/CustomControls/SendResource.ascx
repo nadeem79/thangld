@@ -4,17 +4,16 @@
     <tbody>
         <tr>
             <th>
-                Merchants: 
+                Merchants:
                 <asp:Label ID="lblAvailableMerchant" runat="server"></asp:Label>/<% = this.Village.Buildings.Merchant %>
             </th>
             <th>
-                Maximum transport amount: <% = (this.Village.Resources.Wood + this.Village.Resources.Clay + this.Village.Resources.Iron < this.Village.Buildings.Merchant * 1000) ? this.Village.Resources.Wood + this.Village.Resources.Clay + this.Village.Resources.Iron : this.Village.Buildings.Merchant * 1000%>
+                Maximum transport amount:
+                <% = (this.Village.Resources.Wood + this.Village.Resources.Clay + this.Village.Resources.Iron < this.Village.Buildings.Merchant * 1000) ? this.Village.Resources.Wood + this.Village.Resources.Clay + this.Village.Resources.Iron : this.Village.Buildings.Merchant * 1000%>
             </th>
         </tr>
     </tbody>
 </table>
-
-
 <table>
     <tbody>
         <tr>
@@ -84,114 +83,111 @@
         </tr>
     </tbody>
 </table>
-
-
 <h3>
     Your transports</h3>
-<table class="vis">
-    <tbody>
-        <tr>
-            <th width="200">
-                Destination
-            </th>
-            <th width="80">
-                Goods
-            </th>
-            <th>
-                Merchants
-            </th>
-            <th width="70">
-                Duration
-            </th>
-            <th width="100">
-                arrival time
-            </th>
-            <th width="70">
-                Arrival in
-            </th>
-        </tr>
-        <tr>
-            <td>
-                Transport to<br>
-                <a href="/game.php?village=51549&amp;screen=info_village&amp;id=50547">K75 I kill landlubbers!
-                    (513|728) K75</a>
+<asp:Repeater ID="rMyTransport" runat="server">
+    <HeaderTemplate>
+        <table class="vis">
+            <tbody>
+                <tr>
+                    <th>
+                        Destination
+                    </th>
+                    <th>
+                        Goods
+                    </th>
+                    <th>
+                        Merchants
+                    </th>
+                    <th>
+                        Duration
+                    </th>
+                    <th>
+                        arrival time
+                    </th>
+                    <th>
+                        Arrival in
+                    </th>
+                    <th></th>
+                </tr>
+    </HeaderTemplate>
+    <ItemTemplate>
+        <td>
+                <%# TypePrefix((beans.MoveType)DataBinder.Eval(Container.DataItem, "Type")) %> 
+                <a href="<%# String.Format("village_info.aspx?id={0}&village={1}", this.Village.ID, ((beans.Village)(DataBinder.Eval(Container.DataItem, "To"))).ID) %>"><%# ((beans.Village)(DataBinder.Eval(Container.DataItem, "To"))).Name%></a>
             </td>
             <td>
-                <img src="/graphic/lehm.png?1" title="Clay" alt="">1<span class="grey">.</span>000
+                <%# DisplayResources((beans.MovingCommand)Container.DataItem)%>
             </td>
             <td>
-                1
+                <%# MerchantCalculation((beans.MovingCommand)Container.DataItem) %>
             </td>
             <td>
-                0:24:44
+                <%# Functions.FormatTime((DateTime)DataBinder.Eval(Container.DataItem, "LandingTime") - (DateTime)DataBinder.Eval(Container.DataItem, "StartTime")) %>
             </td>
             <td>
-                today at 18:21
+                <%# ((DateTime)DataBinder.Eval(Container.DataItem, "LandingTime")).ToString("HH:mm:ss:'<span class=\"small inactive\">'fff'</span> ngày' dd:MM:yyyy") %>
             </td>
             <td>
-                <span class="timer">0:08:12</span>
+                <span class="timer"><%# Functions.FormatTime((DateTime)DataBinder.Eval(Container.DataItem, "LandingTime") - DateTime.Now) %></span>
             </td>
-            <td style="display: none;">
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Return from<br>
-                <a href="/game.php?village=51549&amp;screen=info_village&amp;id=39848">002 Bravo (534|701)
-                    K75</a>
-            </td>
-            <td>
-            </td>
-            <td>
-                1
-            </td>
-            <td>
-                3:02:53
-            </td>
-            <td>
-                today at 18:39
-            </td>
-            <td>
-                <span class="timer">0:26:54</span>
-            </td>
-            <td style="display: none;">
-            </td>
-        </tr>
-    </tbody>
-</table>
+    </ItemTemplate>
+    <FooterTemplate>
+        </tbody></table>
+    </FooterTemplate>
+</asp:Repeater>
+
+
 <h3>
     Incoming transports</h3>
-<table class="vis">
-    <tbody>
-        <tr>
-            <th width="160">
-                Origin
-            </th>
-            <th width="80">
-                Goods
-            </th>
-            <th width="100">
-                arrival time
-            </th>
-            <th width="70">
-                Arrival in
-            </th>
-        </tr>
-        <tr>
-            <td>
-                Delivery from<br>
-                <a href="/game.php?village=51549&amp;screen=info_village&amp;id=50547">K75 I kill landlubbers!
-                    (513|728) K75</a>
+<asp:Repeater ID="rOutgoings" runat="server">
+    <HeaderTemplate>
+        <table class="vis">
+            <tbody>
+                <tr>
+                    <th>
+                        Destination
+                    </th>
+                    <th>
+                        Goods
+                    </th>
+                    <th>
+                        Merchants
+                    </th>
+                    <th>
+                        Duration
+                    </th>
+                    <th>
+                        arrival time
+                    </th>
+                    <th>
+                        Arrival in
+                    </th>
+                    <th></th>
+                </tr>
+    </HeaderTemplate>
+    <ItemTemplate>
+        <td>
+                <%# TypePrefix((beans.MoveType)DataBinder.Eval(Container.DataItem, "Type")) %> 
+                <a href="<%# String.Format("village_info.aspx?id={0}&village={1}", this.Village.ID, ((beans.Village)(DataBinder.Eval(Container.DataItem, "To"))).ID) %>"><%# ((beans.Village)(DataBinder.Eval(Container.DataItem, "To"))).Name%></a>
             </td>
             <td>
-                <img src="/graphic/eisen.png?1" title="Iron" alt="">1<span class="grey">.</span>000
+                <%# DisplayResources((beans.MovingCommand)Container.DataItem) %>
             </td>
             <td>
-                today at 18:21
+                <%# MerchantCalculation((beans.MovingCommand)Container.DataItem) %>
             </td>
             <td>
-                <span class="timer">0:08:12</span>
+                <%# Functions.FormatTime((DateTime)DataBinder.Eval(Container.DataItem, "LandingTime") - (DateTime)DataBinder.Eval(Container.DataItem, "StartTime")) %>
             </td>
-        </tr>
-    </tbody>
-</table>
+            <td>
+                <%# ((DateTime)DataBinder.Eval(Container.DataItem, "LandingTime")).ToString("HH:mm:ss:'<span class=\"small inactive\">'fff'</span> ngày' dd:MM:yyyy") %>
+            </td>
+            <td>
+                <span class="timer"><%# Functions.FormatTime((DateTime)DataBinder.Eval(Container.DataItem, "LandingTime") - DateTime.Now) %></span>
+            </td>
+    </ItemTemplate>
+    <FooterTemplate>
+        </tbody></table>
+    </FooterTemplate>
+</asp:Repeater>

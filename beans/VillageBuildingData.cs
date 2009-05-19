@@ -131,7 +131,7 @@ namespace beans
                 for (int i = 1; i <= this.Wall; i++)
                     defense += (int)(defense * 0.2);
 
-                VillageBuildingData.basicDefense.Add(this.Market, defense);
+                VillageBuildingData.basicDefense.Add(this.Wall, defense);
                 return defense;
             }
         }

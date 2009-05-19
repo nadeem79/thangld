@@ -10,10 +10,13 @@ using System.Collections;
 using System.Linq;
 using NHibernate.Type;
 using Antlr.StringTemplate;
+using NHibernate.UserTypes;
 
 namespace beans
 {
-   
+
+    
+
     public class Player:IdentityObject
     {
         #region Variable
@@ -49,6 +52,8 @@ namespace beans
                     throw new ArgumentException("Tên đăng nhập không được rỗng");
             }
         }
+
+
         public virtual string Password
         {
             get { return this.password; }

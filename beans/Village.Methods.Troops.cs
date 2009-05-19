@@ -27,9 +27,12 @@ namespace beans
         {
             ICriteria criteria = session.CreateCriteria(typeof(Attack));
             criteria.Add(Expression.Eq("To", this));
-            criteria.Add(Expression.Gt("LandingTimestamp", this.LastUpdateTimestamp));
-            criteria.Add(Expression.Le("LandingTimestamp", DatetimeHelper.DatetimeToInt64(to)));
+            criteria.Add(Expression.Ge("LandingTimestamp", this.LastUpdateTimestamp));
+            criteria.Add(Expression.Lt("LandingTimestamp", DatetimeHelper.DatetimeToInt64(to)));
             criteria.AddOrder(new Order("LandingTimestamp", true));
+
+            
+
             return criteria.List<Attack>();
         }
 
@@ -43,7 +46,7 @@ namespace beans
                     Expression.Eq("From", this))
                 );
             criteria.Add(Expression.Eq("Pending", false));
-            criteria.Add(Expression.Gt("LandingTimestamp", DatetimeHelper.DatetimeToInt64(DateTime.Now)));
+            criteria.Add(Expression.Ge("LandingTimestamp", DatetimeHelper.DatetimeToInt64(DateTime.Now)));
             criteria.AddOrder(Order.Asc("LandingTimestamp"));
             IList<MovingCommand> lst = criteria.List<MovingCommand>();
             return lst;
@@ -63,8 +66,8 @@ namespace beans
         {
             ICriteria criteria = session.CreateCriteria(typeof(Attack));
             criteria.Add(Expression.Eq("From", this));
-            criteria.Add(Expression.Gt("LandingTimestamp", this.LastUpdateTimestamp));
-            criteria.Add(Expression.Le("LandingTimestamp", DatetimeHelper.DatetimeToInt64(to)));
+            criteria.Add(Expression.Ge("LandingTimestamp", this.LastUpdateTimestamp));
+            criteria.Add(Expression.Lt("LandingTimestamp", DatetimeHelper.DatetimeToInt64(to)));
             criteria.AddOrder(new Order("LandingTimestamp", true));
 
             return criteria.List<Attack>();
@@ -74,8 +77,8 @@ namespace beans
             ICriteria criteria = session.CreateCriteria(typeof(MovingCommand));
             criteria.Add(Expression.Eq("To", this));
             criteria.Add(Expression.Sql(new NHibernate.SqlCommand.SqlString("type != 2")));
-            criteria.Add(Expression.Gt("LandingTimestamp", this.LastUpdateTimestamp));
-            criteria.Add(Expression.Le("LandingTimestamp", DatetimeHelper.DatetimeToInt64(to)));
+            criteria.Add(Expression.Ge("LandingTimestamp", this.LastUpdateTimestamp));
+            criteria.Add(Expression.Lt("LandingTimestamp", DatetimeHelper.DatetimeToInt64(to)));
             criteria.AddOrder(new Order("LandingTimestamp", true));
 
             return criteria.List<MovingCommand>();

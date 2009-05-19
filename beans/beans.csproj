@@ -250,6 +250,9 @@
     <Content Include="Templates\AttackReport.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Templates\ResourceReceiveReport.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Templates\InviteReport.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
