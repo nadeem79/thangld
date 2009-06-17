@@ -9,16 +9,6 @@ namespace beans
     public abstract class MovingCommand : IdentityObject
     {
         #region Properties
-        public long StartTimestamp
-        {
-            get;
-            set;
-        }
-        public long LandingTimestamp
-        {
-            get;
-            set;
-        } 
         public Village From
         {
             get;
@@ -29,34 +19,16 @@ namespace beans
             get;
             set;
         }
-        public bool Pending
+
+        public DateTime StartingTime
         {
             get;
             set;
         }
-        public DateTime StartTime
-        {
-            get
-            {
-                return DatetimeHelper.TimestampToDatetime(StartTimestamp);
-                //return (new DateTime(1970, 1, 1, 0, 0, 0, 0)).AddMilliseconds((double)StartTimestamp);
-            }
-            set
-            {
-
-                this.StartTimestamp = DatetimeHelper.DatetimeToInt64(value);
-            }
-        }
         public DateTime LandingTime
         {
-            get
-            {
-                return DatetimeHelper.TimestampToDatetime(LandingTimestamp);
-            }
-            set
-            {
-                this.LandingTimestamp = DatetimeHelper.DatetimeToInt64(value);
-            }
+            get;
+            set;
         }
         public abstract MoveType Type
         {
@@ -64,8 +36,8 @@ namespace beans
         }
         #endregion
 
-        public abstract void save(ISession session);
-        public abstract void effect(ISession session);
-        public abstract void cancel(ISession session);
+        public abstract void Save(ISession session);
+        public abstract MovingCommand Effect(ISession session);
+        public abstract MovingCommand Cancel(ISession session);
     }
 }

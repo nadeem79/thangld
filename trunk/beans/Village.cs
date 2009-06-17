@@ -11,7 +11,8 @@ namespace beans
     {
         #region Variables
 
-        private int _loyal, _maxResources = -1;
+        private int _maxResources = -1;
+        private double loyal;
         
         private IList<Stationed> stationedTroops = new List<Stationed>();
         private IList<Stationed> troopsOutside = new List<Stationed>();
@@ -42,39 +43,28 @@ namespace beans
             get;
             set;
         }
-        public int Loyal
+        public double Loyal
         {
-            get { return _loyal; }
+            get { return loyal; }
             set
             {
                 if (value > 100)
-                    _loyal = 100;
+                    loyal = 100;
                 else
-                    _loyal = value;
+                    _oyal = value;
             }
-        }
-        protected long LastUpdateTimestamp
-        {
-            get;
-            set;
         }
         public virtual DateTime LastUpdate
         {
-            get
-            {
-                return DatetimeHelper.TimestampToDatetime(LastUpdateTimestamp);
-            }
-            set
-            {
-                this.LastUpdateTimestamp = DatetimeHelper.DatetimeToInt64(value);
-            }
+            get;
+            set;
         }
-        public virtual float Points
+        public virtual double Points
         {
             get;
             set;
         }
-        public float Population
+        public double Population
         {
             get;
             set;

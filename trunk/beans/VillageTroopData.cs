@@ -9,11 +9,7 @@ namespace beans
     {
         #region Properties.Troop
 
-        public virtual int Noble
-        {
-            get;
-            set;
-        }
+        #region Quân đội có thể điều động
         public virtual int Spear
         {
             get;
@@ -34,12 +30,12 @@ namespace beans
             get;
             set;
         }
-        public virtual int Light
+        public virtual int LightCavalry
         {
             get;
             set;
         }
-        public virtual int Heavy
+        public virtual int HeavyCavalry
         {
             get;
             set;
@@ -54,111 +50,111 @@ namespace beans
             get;
             set;
         }
+        public virtual int Noble
+        {
+            get;
+            set;
+        }
+        #endregion
 
-        public virtual int InVillageSpear
+        #region Quân đội của thành phố, có thể ở trong hoặc ngoài
+        public virtual int SpearOfVillage
         {
             get;
             set;
         }
-        public virtual int InVillageSword
+        public virtual int SwordOfVillage
         {
             get;
             set;
         }
-        public virtual int InVillageAxe
+        public virtual int AxeOfVillage
         {
             get;
             set;
         }
-        public virtual int InVillageScout
+        public virtual int ScoutOfVillage
         {
             get;
             set;
         }
-        public virtual int InVillageLight
+        public virtual int LightCavalryOfVillage
         {
             get;
             set;
         }
-        public virtual int InVillageHeavy
+        public virtual int HeavyCavalryOfVillage
         {
             get;
             set;
         }
-        public virtual int InVillageRam
+        public virtual int RamOfVillage
         {
             get;
             set;
         }
-        public virtual int InVillageCatapult
+        public virtual int CatapultOfVillage
         {
             get;
             set;
         }
-        public virtual int InVillageNoble
+        public virtual int NobleOfVillage
         {
             get;
             set;
         }
+        #endregion
 
-        public virtual int TotalSpear
+        #region Quân đội đang đóng trong thành phố
+        public virtual int SpearInVillage
         {
             get;
             set;
         }
-        public virtual int TotalSword
+        public virtual int SwordInVillage
         {
             get;
             set;
         }
-        public virtual int TotalAxe
+        public virtual int AxeInVillage
         {
             get;
             set;
         }
-        public virtual int TotalLight
+        public virtual int LightCavalryInVillage
         {
             get;
             set;
         }
-        public virtual int TotalScout
+        public virtual int ScoutInVillage
         {
             get;
             set;
         }
-        public virtual int TotalHeavy
+        public virtual int HeavyCavalryInVillage
         {
             get;
             set;
         }
-        public virtual int TotalRam
+        public virtual int RamInVillage
         {
             get;
             set;
         }
-        public virtual int TotalCatapult
+        public virtual int CatapultInVillage
         {
             get;
             set;
         }
-        public virtual int TotalNoble
+        public virtual int NobleInVillage
         {
             get;
             set;
         }
+        #endregion
 
         #endregion
 
-        public virtual IList<Stationed> StationedTroops
-        {
-            get;
-            set;
-        }
-        public virtual IList<Stationed> TroopsOutside
-        {
-            get;
-            set;
-        }
 
         public virtual Village Village
         {
