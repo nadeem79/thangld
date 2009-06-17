@@ -9,51 +9,27 @@ namespace beans
     {
         #region Properties.Research
 
-        public virtual int ResearchSpear
+        public virtual int Attack
         {
             get;
             set;
         }
-        public virtual int ResearchSword
+        public virtual int Defense
         {
             get;
             set;
         }
-        public virtual int ResearchAxe
+        public virtual int TroopSpeed
         {
             get;
             set;
         }
-        public virtual int ResearchScout
+        public virtual int VillageSpeed
         {
             get;
             set;
         }
-        public virtual int ResearchLight
-        {
-            get;
-            set;
-        }
-        public virtual int ResearchHeavy
-        {
-            get;
-            set;
-        }
-        public virtual int ResearchRam
-        {
-            get;
-            set;
-        }
-        public virtual int ResearchCatapult
-        {
-            get;
-            set;
-        }
-        public virtual int ResearchNoble
-        {
-            get;
-            set;
-        }
+        
 
         #endregion
 

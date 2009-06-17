@@ -9,7 +9,6 @@ namespace beans
 {
     public partial class Village
     {
-        #region Methods.Troops
 
         public int GetIncomingAttackCount(ISession session)
         {
@@ -25,12 +24,14 @@ namespace beans
         }
         protected IList<Attack> GetDependingAttack(DateTime to, ISession session)
         {
+
+
+
             ICriteria criteria = session.CreateCriteria(typeof(Attack));
             criteria.Add(Expression.Eq("To", this));
-            criteria.Add(Expression.Ge("LandingTimestamp", this.LastUpdateTimestamp));
-            criteria.Add(Expression.Lt("LandingTimestamp", DatetimeHelper.DatetimeToInt64(to)));
-            criteria.AddOrder(new Order("LandingTimestamp", true));
-
+            criteria.Add(Expression.Gt("LandingTime", this.LastUpdate));
+            criteria.Add(Expression.Lt("LandingTime", DatetimeHelper.DatetimeToInt64(to)));
+            criteria.AddOrder(new Order("LandingTime", true));
             
 
             return criteria.List<Attack>();
@@ -84,6 +85,5 @@ namespace beans
             return criteria.List<MovingCommand>();
         }
 
-        #endregion 
     }
 }
