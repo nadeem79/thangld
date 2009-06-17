@@ -29,7 +29,8 @@ namespace beans
         public List<MovingCommand> GetTroopMovement(ISession session)
         {
             return (from movement in session.Linq<MovingCommand>()
-                    where movement.From == this || movement.To == this
+                    where (movement.From == this || movement.To == this)
+                    && movement.LandingTime > this.LastUpdate
                     orderby movement.LandingTime ascending
                     select movement).ToList();
         }
@@ -39,6 +40,7 @@ namespace beans
             return (from movement in session.Linq<MovingCommand>()
                     where (movement.From == this || movement.To == this)
                     && movement.LandingTime < time
+                    && movement.LandingTime > this.LastUpdate
                     orderby movement.LandingTime ascending
                     select movement).ToList();
         }
