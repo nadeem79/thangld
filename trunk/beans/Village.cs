@@ -4,6 +4,7 @@ using NHibernate;
 using NHibernate.Linq;
 using System.Text;
 using NHibernate.Criterion;
+using System.Linq;
 
 namespace beans
 {
@@ -231,23 +232,23 @@ namespace beans
                 switch (troopType)
                 {
                     case TroopType.Axe:
-                        return this.Troop.TotalAxe;
+                        return this.Troop.AxeInVillage;
                     case TroopType.Catapult:
-                        return this.Troop.TotalCatapult;
+                        return this.Troop.CatapultInVillage;
                     case TroopType.Heavy:
-                        return this.Troop.TotalHeavy;
+                        return this.Troop.HeavyCavalryInVillage;
                     case TroopType.Light:
-                        return this.Troop.TotalLight;
+                        return this.Troop.LightCavalryInVillage;
                     case TroopType.Nobleman:
-                        return this.Troop.TotalNoble;
+                        return this.Troop.NobleInVillage;
                     case TroopType.Ram:
-                        return this.Troop.TotalRam;
+                        return this.Troop.RamInVillage;
                     case TroopType.Scout:
-                        return this.Troop.TotalScout;
+                        return this.Troop.ScoutInVillage;
                     case TroopType.Spear:
-                        return this.Troop.TotalSpear;
+                        return this.Troop.SpearInVillage;
                     case TroopType.Sword:
-                        return this.Troop.TotalSword;
+                        return this.Troop.SwordInVillage;
                     default:
                         return -1;
                 }
@@ -295,18 +296,6 @@ namespace beans
         #endregion
 
         #region Static Members
-
-        public static int CheckVillage(int x, int y, ISession session)
-        {
-            IQuery query = session.CreateQuery("select v.ID from Village as v where v.X=:X and v.Y=:Y");
-            query.SetInt32("X", x);
-            query.SetInt32("Y", y);
-
-            IList<int> lst = query.List<int>();
-            if (lst.Count == 0)
-                return -1;
-            return lst[0];
-        }
 
         public static Village CreateVillage(ISession session)
         {
@@ -388,11 +377,12 @@ namespace beans
             return session.Load<Village>(ID);
         }
 
-        //public Village GetVillageByCoordinate(int x, int y, ISession session)
-        //{
-        //    var query = from village in session.Linq<Village>()
-        //                where village.
-        //}
+        public Village GetVillageByCoordinate(int x, int y, ISession session)
+        {
+            return (from village in session.Linq<Village>()
+                    where village.X == x && village.Y == y
+                    select village).SingleOrDefault<Village>();
+        }
         
         #endregion
 
@@ -404,259 +394,7 @@ namespace beans
         //Chưa xét trường hợp xây noble
         public void Update(DateTime to, ISession session)
         {
-            this.Loyal += (int)(to - this.LastUpdate).TotalHours;
-
-            IList<Attack> incomings = this.GetDependingAttack(to, session);
-            IList<Recruit> lstInfantryRecruits = this.GetDependingInfantryRecruit(session);
-            IList<Recruit> lstCavalryRecruits = this.GetDependingCavalryRecruit(session);
-            IList<Recruit> lstCarRecruits = this.GetDependingCarRecruit(session);
-            IList<Recruit> lstNobleRecruits = this.GetDependingNobleRecruit(session);
-            IList<Build> lstConstructing = this.GetPendingConstruction(session);
-            IList<Research> lstReseaching = this.GetPendingResearch(session);
-
-            foreach (Attack incoming in incomings)
-            {
-                #region Tài nguyên
-                this.UpdateResources(this.LastUpdate, incoming.LandingTime);
-                if (lstInfantryRecruits.Count > 0)
-                    while (lstInfantryRecruits[0].Expense(incoming.LandingTime))
-                    {
-                        DateTime start = lstInfantryRecruits[0].LastUpdate;
-                        session.Delete(lstInfantryRecruits[0]);
-                        lstInfantryRecruits.RemoveAt(0);
-                        if (lstInfantryRecruits.Count == 0)
-                            break;
-                        else
-                            lstInfantryRecruits[0].LastUpdate = start;
-                    }
-
-                #endregion 
-
-                #region Xây quân
-                if (lstCavalryRecruits.Count > 0)
-                    while (lstCavalryRecruits[0].Expense(incoming.LandingTime))
-                    {
-                        DateTime start = lstCavalryRecruits[0].LastUpdate;
-                        session.Delete(lstCavalryRecruits[0]);
-                        lstCavalryRecruits.RemoveAt(0);
-                        if (lstCavalryRecruits.Count == 0)
-                            break;
-                        else
-                            lstCavalryRecruits[0].LastUpdate = start;
-                    }
-
-                if (lstInfantryRecruits.Count > 0)
-                    while (lstInfantryRecruits[0].Expense(incoming.LandingTime))
-                    {
-                        DateTime start = lstInfantryRecruits[0].LastUpdate;
-                        session.Delete(lstInfantryRecruits[0]);
-                        lstInfantryRecruits.RemoveAt(0);
-                        if (lstInfantryRecruits.Count == 0)
-                            break;
-                        else
-                            lstInfantryRecruits[0].LastUpdate = start;
-                    }
-
-                if (lstCarRecruits.Count > 0)
-                    while (lstCarRecruits[0].Expense(to))
-                    {
-                        DateTime start = lstCarRecruits[0].LastUpdate;
-                        session.Delete(lstCarRecruits[0]);
-                        lstCarRecruits.RemoveAt(0);
-                        if (lstCarRecruits.Count == 0)
-                            break;
-                        else
-                            lstCarRecruits[0].LastUpdate = start;
-                    }
-
-                if (lstNobleRecruits.Count > 0)
-                    while (lstNobleRecruits[0].Expense(to))
-                    {
-                        DateTime start = lstNobleRecruits[0].LastUpdate;
-                        session.Delete(lstNobleRecruits[0]);
-                        lstNobleRecruits.RemoveAt(0);
-                        if (lstNobleRecruits.Count == 0)
-                            break;
-                        else
-                            lstNobleRecruits[0].LastUpdate = start;
-                    }
-
-                #endregion
-
-                #region Xây nhà
-                if (lstConstructing.Count > 0)
-                    while (lstConstructing[0].Expense(incoming.LandingTime))
-                    {
-                        DateTime end = lstConstructing[0].End;
-                        session.Delete(lstConstructing[0]);
-                        lstConstructing.RemoveAt(0);
-                        if (lstConstructing.Count == 0)
-                            break;
-                        else
-                        {
-                            TimeSpan t = lstConstructing[0].End - lstConstructing[0].Start;
-                            lstConstructing[0].Start = end;
-                            lstConstructing[0].End = lstConstructing[0].Start + t;
-                        }
-                    }
-                #endregion
-
-                #region Nâng cấp
-                if (lstReseaching.Count > 0)
-                    while (lstReseaching[0].Expense(incoming.LandingTime))
-                    {
-                        ResearchPrice price = beans.Research.GetPrice(lstReseaching[0].Type, lstReseaching[0].Level, this[BuildingType.Smithy]);
-                        DateTime end = lstReseaching[0].Start + new TimeSpan(price.Time);
-                        session.Delete(lstReseaching[0]);
-                        lstReseaching.RemoveAt(0);
-                        if (lstReseaching.Count == 0)
-                            break;
-                        else
-                            lstReseaching[0].Start = end;
-                    }
-                #endregion
-
-                #region Gửi resource đến làng khác
-                IList<SendResource> sendings = this.GetDependingResource(incoming.LandingTime, session);
-                foreach (SendResource sending in sendings)
-                    sending.To.Update(sending.LandingTime, session);
-                #endregion
-
-                #region Quân đi đánh làng khác
-                IList<Attack> attacks = this.getDependingAttacking(incoming.LandingTime, session);
-                foreach (Attack attack in attacks)
-                    attack.To.Update(attack.LandingTime, session);
-                #endregion
-
-                #region Gửi tài nguyên đến làng khác
-                IList<SendResource> lstSendResources = this.GetOutgoingMerchants(incoming.LandingTime, session);
-                foreach (SendResource sendResource in lstSendResources)
-                    sendResource.To.Update(incoming.LandingTime, session);
-                #endregion
-
-                #region Quân hỗ trợ hoặc quay về từ làng khác
-                IList<MovingCommand> friendlyIncomings = this.getFriendlyIncomings(to, session);
-                foreach(MovingCommand command in friendlyIncomings)
-                    command.effect(session);
-                #endregion
-
-                this.LastUpdate = incoming.LandingTime;
-                incoming.effect(session);
-                
-            }
-
-            if (lstInfantryRecruits.Count > 0)
-                while (lstInfantryRecruits[0].Expense(to))
-                {
-                    DateTime start = lstInfantryRecruits[0].LastUpdate;
-                    session.Delete(lstInfantryRecruits[0]);
-                    lstInfantryRecruits.RemoveAt(0);
-                    if (lstInfantryRecruits.Count == 0)
-                        break;
-                    else
-                        lstInfantryRecruits[0].LastUpdate = start;
-                }
-            if (lstInfantryRecruits.Count > 0)
-                session.Update(lstInfantryRecruits[0]);
-
-            if (lstCavalryRecruits.Count > 0)
-                while (lstCavalryRecruits[0].Expense(to))
-                {
-                    DateTime start = lstCavalryRecruits[0].LastUpdate;
-                    session.Delete(lstCavalryRecruits[0]);
-                    lstCavalryRecruits.RemoveAt(0);
-                    if (lstCavalryRecruits.Count == 0)
-                        break;
-                    else
-                        lstCavalryRecruits[0].LastUpdate = start;
-                }
-            if (lstCavalryRecruits.Count > 0)
-                session.Update(lstCavalryRecruits[0]);
-
-            if (lstCarRecruits.Count > 0)
-                while (lstCarRecruits[0].Expense(to))
-                {
-                    DateTime start = lstCarRecruits[0].LastUpdate;
-                    session.Delete(lstCarRecruits[0]);
-                    lstCarRecruits.RemoveAt(0);
-                    if (lstCarRecruits.Count == 0)
-                        break;
-                    else
-                        lstCarRecruits[0].LastUpdate = start;
-                }
-            if (lstCarRecruits.Count > 0)
-                session.Update(lstCarRecruits[0]);
-
-            if (lstNobleRecruits.Count > 0)
-                while (lstNobleRecruits[0].Expense(to))
-                {
-                    DateTime start = lstNobleRecruits[0].LastUpdate;
-                    session.Delete(lstNobleRecruits[0]);
-                    lstNobleRecruits.RemoveAt(0);
-                    if (lstNobleRecruits.Count == 0)
-                        break;
-                    else
-                        lstNobleRecruits[0].LastUpdate = start;
-                }
-            if (lstNobleRecruits.Count > 0)
-                session.Update(lstNobleRecruits[0]);
-
-            if (lstConstructing.Count > 0)
-                while (lstConstructing[0].Expense(to))
-                {
-                    DateTime end = lstConstructing[0].End;
-                    session.Delete(lstConstructing[0]);
-                    lstConstructing.RemoveAt(0);
-                    if (lstConstructing.Count == 0)
-                        break;
-                    else
-                    {
-                        TimeSpan t = lstConstructing[0].End - lstConstructing[0].Start;
-                        lstConstructing[0].Start = end;
-                        lstConstructing[0].End = lstConstructing[0].Start + t;
-                    }
-                }
-            if (lstConstructing.Count > 0)
-                session.Update(lstConstructing[0]);
-
-            #region Nâng cấp
-            if (lstReseaching.Count > 0)
-                while (lstReseaching[0].Expense(to))
-                {
-                    ResearchPrice price = beans.Research.GetPrice(lstReseaching[0].Type, lstReseaching[0].Level, this[BuildingType.Smithy]);
-                    DateTime end = lstReseaching[0].Start + new TimeSpan(price.Time);
-                    session.Delete(lstReseaching[0]);
-                    lstReseaching.RemoveAt(0);
-                    if (lstReseaching.Count == 0)
-                        break;
-                    else
-                        lstReseaching[0].Start = end;
-                }
-            #endregion
-
-            #region Quân đi đánh làng khác
-            IList<Attack> _attacks = this.getDependingAttacking(to, session);
-            foreach (Attack attack in _attacks)
-                attack.To.Update(to, session);
-            #endregion
-
-            #region Gửi tài nguyên đến làng khác
-            IList<SendResource> _lstSendResources = this.GetOutgoingMerchants(to, session);
-            foreach (SendResource sendResource in _lstSendResources)
-                sendResource.To.Update(to, session);
-            #endregion
-
-            #region Quân hỗ trợ hoặc quay về từ làng khác
-            IList<MovingCommand> _friendlyIncomings = this.getFriendlyIncomings(to, session);
-            foreach (MovingCommand command in _friendlyIncomings)
-                command.effect(session);
-            #endregion
-
-            this.UpdateResources(this.LastUpdate, to);
-            this.LastUpdate = to;
-
-            session.Update(this);
-            session.Update(this.Owner);
+            
         }
   
     }
