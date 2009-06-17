@@ -8,7 +8,6 @@ namespace beans
 {
     public partial class Village
     {
-        #region Methods.Resources
 
         public int ProductPerHour(ResourcesType type)
         {
@@ -80,6 +79,5 @@ namespace beans
             return (int)(canStore * this.SecondPerResourceUnit(type));
         }
 
-        #endregion    
     }
 }

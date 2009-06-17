@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{80605D3E-7DA8-43CA-8761-8DFBA843F654}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -37,7 +37,11 @@
     </Reference>
     <Reference Include="NHibernate, Version=2.0.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Documents and Settings\DF.thangld\Desktop\bin\net-2.0\NHibernate.dll</HintPath>
+      <HintPath>..\document\linq\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.Linq, Version=1.0.0.0, Culture=neutral, PublicKeyToken=444cf6a87fdab271, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\document\linq\NHibernate.Linq.dll</HintPath>
     </Reference>
     <Reference Include="StringTemplate, Version=3.0.1.6846, Culture=neutral, PublicKeyToken=beee492b52c41e85, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -71,6 +75,7 @@
     <Compile Include="BuildingType.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Admin.cs" />
+    <Compile Include="MovingCommandLandingTimeComparer.cs" />
     <Compile Include="Village.Methods.Building.cs" />
     <Compile Include="Village.Methods.Resources.cs" />
     <Compile Include="Village.Methods.Troops.cs" />
@@ -238,6 +243,7 @@
     <EmbeddedResource Include="reports.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>reports.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
