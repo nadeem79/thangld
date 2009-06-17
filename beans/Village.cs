@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using NHibernate;
+using NHibernate.Linq;
 using System.Text;
 using NHibernate.Criterion;
 
@@ -293,11 +294,6 @@ namespace beans
         
         #endregion
 
-        #region Constructors
-
-
-        #endregion
-
         #region Static Members
 
         public static int CheckVillage(int x, int y, ISession session)
@@ -387,6 +383,17 @@ namespace beans
             session.Save(this.Troop);
         }
 
+        public Village GetVillageByID(int ID, ISession session)
+        {
+            return session.Load<Village>(ID);
+        }
+
+        //public Village GetVillageByCoordinate(int x, int y, ISession session)
+        //{
+        //    var query = from village in session.Linq<Village>()
+        //                where village.
+        //}
+        
         #endregion
 
         public override string ToString()

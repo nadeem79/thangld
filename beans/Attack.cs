@@ -188,7 +188,7 @@ namespace beans
             session.Update(this.From);
         }
 
-        public override void save(ISession session)
+        public override void Save(ISession session)
         {
             if ((this.Spear > this.From.Troop.Spear) ||
             (this.Sword > this.From.Troop.Sword) ||
@@ -248,7 +248,7 @@ namespace beans
             session.Update(this.From);
         }
 
-        public override void effect(ISession session)
+        public override MovingCommand Effect(ISession session)
         {
             this.To.Update(this.LandingTime, session);
 

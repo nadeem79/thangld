@@ -13,18 +13,35 @@ namespace beans
 
         public int GetIncomingAttackCount(ISession session)
         {
-            IQuery query = session.CreateQuery("select count(a.ID) from Attack a where a.To=:village");
-            query.SetEntity("village", this);
-            return Convert.ToInt32(query.List()[0]);
+
+            return (from attack in session.Linq<Attack>()
+                    where attack.To == this
+                    select attack).Count();
+
         }
         public int GetIncomingSupportCount(ISession session)
         {
-            IQuery query = session.CreateQuery("select count(s.ID) from Support s where s.To=:village");
-            query.SetEntity("village", this);
-            return Convert.ToInt32(query.List()[0]);
+            return (from support in session.Linq<Support>()
+                    where support.To == this
+                    select support).Count();
         }
-        
 
+        public List<MovingCommand> GetTroopMovement(ISession session)
+        {
+            return (from movement in session.Linq<MovingCommand>()
+                    where movement.From == this || movement.To == this
+                    orderby movement.LandingTime ascending
+                    select movement).ToList();
+        }
+
+        public List<MovingCommand> GetTroopMovement(DateTime time, ISession session)
+        {
+            return (from movement in session.Linq<MovingCommand>()
+                    where (movement.From == this || movement.To == this)
+                    && movement.LandingTime < time
+                    orderby movement.LandingTime ascending
+                    select movement).ToList();
+        }
 
     }
 }
