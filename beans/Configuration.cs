@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NHibernate;
+using NHibernate.Linq;
 
 namespace beans
 {
@@ -24,21 +25,21 @@ namespace beans
 
         protected Configuration()
         {
-            stringConfiguration = new Dictionary<string, string>();
-            numericConfiguration = new Dictionary<string, double>();
+            stringConfiguration = new Dictionary<string, StringConfiguration>();
+            numericConfiguration = new Dictionary<string, NumericConfiguration>();
         }
 
-        private Dictionary<string, string> stringConfiguration;
-        private Dictionary<string, double> numericConfiguration;
+        private Dictionary<string, StringConfiguration> stringConfiguration;
+        private Dictionary<string, NumericConfiguration> numericConfiguration;
 
-        public Dictionary<string, string> StringConfiguration
+        public Dictionary<string, StringConfiguration> StringConfiguration
         {
             get
             {
                 return this.stringConfiguration;
             }
         }
-        public Dictionary<string, double> NumericConfiguration
+        public Dictionary<string, NumericConfiguration> NumericConfiguration
         {
             get
             {
@@ -46,31 +47,47 @@ namespace beans
             }
         }
 
-        public object GetItem(string key, ConfigurationType type, ISession session)
+        public NumericConfiguration GetNumericConfigurationItem(string key)
         {
-            switch (type)
-            {
-                case ConfigurationType.Numeric:
-                    if (this.NumericConfiguration.ContainsKey(key))
-                        return this.NumericConfiguration[key];
+            if (this.NumericConfiguration.ContainsKey(key))
+                return this.NumericConfiguration[key];
 
-                    beans.NumericConfiguration numericConfiguration = beans.NumericConfiguration.GetItem(key, session);
-                    if (object.Equals(numericConfiguration, null))
-                        return null;
-                    return numericConfiguration.Value;
-                    
-                case ConfigurationType.String:
-                    if (this.StringConfiguration.ContainsKey(key))
-                        return this.StringConfiguration[key];
+            return null;
 
-                    beans.StringConfiguration stringConfiguration = beans.StringConfiguration.GetItem(key, session);
-                    if (object.Equals(stringConfiguration, null))
-                        return null;
-                    return stringConfiguration.Value;
-                    break;
-                default:
-                    return null;
-            }
+        }
+        public StringConfiguration GetStringConfigurationItem(string key)
+        {
+            if (this.StringConfiguration.ContainsKey(key))
+                return this.StringConfiguration[key];
+
+            return null;
+        }
+
+        public void LoadData(ISession session)
+        {
+            IList<StringConfiguration> stringConfigurations = (from stringConfiguration in session.Linq<StringConfiguration>()
+                                                               select stringConfiguration).ToList<StringConfiguration>();
+            foreach (StringConfiguration stringConfiguration in stringConfigurations)
+                this.StringConfiguration.Add(stringConfiguration.Key, stringConfiguration);
+
+            IList<NumericConfiguration> numericConfigurations = (from numericConfiguration in session.Linq<NumericConfiguration>()
+                                                                 select numericConfiguration).ToList<NumericConfiguration>();
+            foreach (NumericConfiguration numericConfiguration in numericConfigurations)
+                this.NumericConfiguration.Add(numericConfiguration.Key, numericConfiguration);
+        }
+        public void InsertOrUpdateConfiguration(NumericConfiguration numericConfiguration, ISession session)
+        {
+            if (this.NumericConfiguration.ContainsKey(numericConfiguration.Key))
+                session.Update(numericConfiguration);
+
+            session.Save(numericConfiguration);
+        }
+        public void InsertOrUpdateConfiguration(StringConfiguration stringConfiguration, ISession session)
+        {
+            if (this.NumericConfiguration.ContainsKey(stringConfiguration.Key))
+                session.Update(stringConfiguration);
+
+            session.Save(stringConfiguration);
         }
     }
 }

@@ -9,12 +9,12 @@ namespace beans
     public abstract class MovingCommand : IdentityObject
     {
         #region Properties
-        public Village From
+        public Village FromVillage
         {
             get;
             set;
         }
-        public Village To
+        public Village ToVillage
         {
             get;
             set;

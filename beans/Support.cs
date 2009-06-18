@@ -265,15 +265,15 @@ namespace beans
 
         public override void effect(ISession session)
         {
-            ICriteria criteria = session.CreateCriteria(typeof(Stationed));
+            ICriteria criteria = session.CreateCriteria(typeof(Station));
 
             criteria.Add(Expression.Eq("AtVillage", this.To));
             criteria.Add(Expression.Eq("FromVillage", this.From));
-            IList<Stationed> lstStations = criteria.List<Stationed>();
+            IList<Station> lstStations = criteria.List<Station>();
 
             if (lstStations.Count == 0)
             {
-                Stationed newStation = new Stationed();
+                Station newStation = new Station();
                 newStation.FromVillage = this.From;
                 newStation.AtVillage = this.To;
                 newStation.Spear = this.Spear;
@@ -301,7 +301,7 @@ namespace beans
             }
             else
             {
-                Stationed station = lstStations[0];
+                Station station = lstStations[0];
                 station.Spear += this.Spear;
                 station.Sword += this.Sword;
                 station.Axe += this.Axe;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NHibernate;
+using NHibernate.Linq;
 using NHibernate.Criterion;
 
 namespace beans
@@ -17,40 +18,44 @@ namespace beans
 
         public static DateTime LandingTime (TroopType troop, int sourceX, int sourceY, int desX, int desY, DateTime start)
         {
-            int intMoveTime = 360000;
+            string type = "Map.merchant_speed";
             switch (troop)
             {
                 case TroopType.Axe:
+                    type = "Map.axe_speed";
                 case TroopType.Spear:
-                    intMoveTime = 1080000;
+                    type = "Map.spear_speed";
                     break;
                 case TroopType.Sword:
-                    intMoveTime = 1320000;
+                    type = "Map.sword_speed";
                     break;
                 case TroopType.Heavy:
-                    intMoveTime = 660000;
+                    type = "Map.heavy_cavalry_speed";
                     break;
                 case TroopType.Light:
-                    intMoveTime = 600000;
+                    type = "Map.light_cavalry_speed";
                     break;
                 case TroopType.Scout:
-                    intMoveTime = 540000;
+                    type = "Map.scout_speed";
                     break;
                 case TroopType.Nobleman:
-                    intMoveTime = 2100000;
-                    break;
-                case TroopType.Merchant:
-                    intMoveTime = 360000;
+                    type = "Map.noble_speed";
                     break;
                 case TroopType.Ram:
+                    type = "Map.ram_speed";
+                    break;
                 case TroopType.Catapult:
-                    intMoveTime = 1800000;
+                    type = "Map.catapult_speed";
                     break;
                 default:
-
+                    type = "Map.merchant_speed";
                     break;
             }
-            return start.AddMilliseconds(RangeCalculator(sourceX, sourceY, desX, desY) * intMoveTime);
+
+            Configuration config = Configuration.TribalWarsConfiguration;
+            NumericConfiguration troopSpeedConfiguration = config.GetNumericConfigurationItem("type");
+
+            return start.AddMilliseconds(RangeCalculator(sourceX, sourceY, desX, desY) * troopSpeedConfiguration.Value);
         }
         public static DateTime LandingTime(TroopType troop, Village from, Village to, DateTime start)
         {
@@ -59,32 +64,71 @@ namespace beans
         
         public static IList<Village> GetMap(Village center, ISession session)
         {
-            ICriteria criteria = session.CreateCriteria(typeof(Village));
+            Configuration config = Configuration.TribalWarsConfiguration;
+            NumericConfiguration mapSizeConfiguration = config.GetNumericConfigurationItem("Map.map_size");
+            int mapSize = (int)mapSizeConfiguration.Value;
 
-            criteria.Add(Expression.Le("X", center.X + 7));
-            criteria.Add(Expression.Ge("X", center.X - 7));
-            criteria.Add(Expression.Le("Y", center.Y + 7));
-            criteria.Add(Expression.Ge("Y", center.Y - 7));
-            criteria.AddOrder(Order.Desc("X"));
-            criteria.AddOrder(Order.Desc("Y"));
-
-            return criteria.List<Village>();
+            return (from village in session.Linq<Village>()
+                    where village.X >= center.X - mapSize && village.X <= center.X + mapSize
+                    && village.Y >= center.Y - mapSize && village.Y <= center.Y + mapSize
+                    orderby village.X descending
+                    orderby village.Y descending
+                    select village).ToList<Village>();
         }
 
         public static IList<Village> GetMap(int x, int y, ISession session)
         {
-            ICriteria criteria = session.CreateCriteria(typeof(Village));
+            Configuration config = Configuration.TribalWarsConfiguration;
+            NumericConfiguration mapSizeConfiguration = config.GetNumericConfigurationItem("Map.map_size");
+            int mapSize = (int)mapSizeConfiguration.Value;
 
-            criteria.Add(Expression.Le("X", x + 7));
-            criteria.Add(Expression.Ge("X", x - 7));
-            criteria.Add(Expression.Le("Y", y + 7));
-            criteria.Add(Expression.Ge("Y", y - 7));
-            criteria.AddOrder(Order.Desc("X"));
-            criteria.AddOrder(Order.Desc("Y"));
-
-            return criteria.List<Village>();
+            return (from village in session.Linq<Village>()
+                    where village.X >= x - mapSize && village.X <= x + mapSize
+                    && village.Y >= y - mapSize && village.Y <= y + mapSize
+                    orderby village.X descending
+                    orderby village.Y descending
+                    select village).ToList<Village>();
         }
 
+        public static bool HasVillage(int x, int y, ISession session)
+        {
+            int villageCount = (from village in session.Linq<Village>()
+                                where village.X == x && village.Y == y
+                                select village).Count<Village>();
+            return (villageCount > 0);
+        }
 
+        public static int SlowestSpeed(int spear,
+                                        int sword,
+                                        int axe,
+                                        int scout,
+                                        int lightCavalry,
+                                        int heavyCavalry,
+                                        int ram,
+                                        int catapult,
+                                        int noble)
+        {
+            Configuration config = Configuration.TribalWarsConfiguration;
+            List<double> speeds = new List<double>();
+            if (spear > 0)
+                speeds.Add(config.GetNumericConfigurationItem("Map.spear_speed").Value);
+            if (sword > 0)
+                speeds.Add(config.GetNumericConfigurationItem("Map.spear_speed").Value);
+            if (axe > 0)
+                speeds.Add(config.GetNumericConfigurationItem("Map.spear_speed").Value);
+            if (scout > 0)
+                speeds.Add(config.GetNumericConfigurationItem("Map.spear_speed").Value);
+            if (spear > 0)
+                speeds.Add(config.GetNumericConfigurationItem("Map.spear_speed").Value);
+            if (spear > 0)
+                speeds.Add(config.GetNumericConfigurationItem("Map.spear_speed").Value);
+            if (spear > 0)
+                speeds.Add(config.GetNumericConfigurationItem("Map.spear_speed").Value);
+            if (spear > 0)
+                speeds.Add(config.GetNumericConfigurationItem("Map.spear_speed").Value);
+            if (spear > 0)
+                speeds.Add(config.GetNumericConfigurationItem("Map.spear_speed").Value);
+
+        }
     }
 }

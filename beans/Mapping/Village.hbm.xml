@@ -15,10 +15,10 @@
     <property name="Loyal" column="loyal" type="float" />
     <property name="LastUpdate" column="last_update" type="timestamp" not-null="true" />
     <property name="Population" column="population" type="float" />
-    <one-to-one name="Buildings" class="beans.VillageBuildingData, beans" cascade="all" />
-    <one-to-one name="Resources" class="beans.VillageResourcesData, beans" cascade="all" />
-    <one-to-one name="Research" class="beans.VillageReseachData, beans" cascade="all" />
-    <one-to-one name="Troop" class="beans.VillageTroopData, beans" cascade="all" />
+    <one-to-one name="VillageBuildingData" class="beans.VillageBuildingData, beans" cascade="all" />
+    <one-to-one name="VillageResourceData" class="beans.VillageResourcesData, beans" cascade="all" />
+    <one-to-one name="VillageReseachData" class="beans.VillageReseachData, beans" cascade="all" />
+    <one-to-one name="VillageTroopData" class="beans.VillageTroopData, beans" cascade="all" />
     
   </class>
 
