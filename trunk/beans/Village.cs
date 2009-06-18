@@ -326,44 +326,43 @@ namespace beans
             } while (lst.Count > 0);
 
             Village village = new Village();
-            village.Buildings = new VillageBuildingData();
-            village.Troop = new VillageTroopData();
-            village.Resources = new VillageResourcesData();
-            village.Research = new VillageReseachData();
+            village.VillageBuildingData = new VillageBuildingData();
+            village.VillageTroopData = new VillageTroopData();
+            village.VillageResourceData = new VillageResourcesData();
+            village.VillageResearchData = new VillageReseachData();
 
-            village.Buildings.Village = village;
-            village.Troop.Village = village;
-            village.Resources.Village = village;
-            village.Research.Village = village;
+            village.VillageBuildingData.Village = village;
+            village.VillageTroopData.Village = village;
+            village.VillageResourceData.Village = village;
+            village.VillageResearchData.Village = village;
 
             village.X = X;
             village.Y = Y;
-            village.Buildings.Headquarter = 1;
-            village.Buildings.Rally = 1;
-            village.Buildings.Farm = 5;
-            village.Buildings.ClayPit = 5;
-            village.Buildings.IronMine = 5;
-            village.Buildings.TimberCamp = 5;
-            village.Buildings.Warehouse = 5;
             village.Loyal = 100;
 
-            village.Points += Build.GetPrice(BuildingType.Headquarter).Point;
-            village.Points += Build.GetPrice(BuildingType.Rally).Point;
-            for (int i = 1; i <= 5; i++)
-            {
-                village.Points += Build.GetPrice(BuildingType.Farm, i, 1).Point;
-                village.Points += Build.GetPrice(BuildingType.Warehouse, i, 1).Point;
-                village.Points += Build.GetPrice(BuildingType.ClayPit, i, 1).Point;
-                village.Points += Build.GetPrice(BuildingType.IronMine, i, 1).Point;
-                village.Points += Build.GetPrice(BuildingType.TimberCamp, i, 1).Point;
-            }
+            village.UpgradeBuilding(BuildingType.Headquarter, 1);
+            village.UpgradeBuilding(BuildingType.Rally, 1);
+            village.UpgradeBuilding(BuildingType.Farm, 5);
+            village.UpgradeBuilding(BuildingType.ClayPit, 5);
+            village.UpgradeBuilding(BuildingType.IronMine, 5);
+            village.UpgradeBuilding(BuildingType.TimberCamp, 5);
+            village.UpgradeBuilding(BuildingType.Warehouse, 5);
 
-            village.Resources.Iron = 2000;
-            village.Resources.Clay = 2000;
-            village.Resources.Wood = 2000;
+            village.VillageResourceData.Iron = 2000;
+            village.VillageResourceData.Clay = 2000;
+            village.VillageResourceData.Wood = 2000;
             session.Update(config);
             return village;
         }
+
+        public void UpgradeBuilding(BuildingType building, int level)
+        {
+            for (int i = this[building]; i <= level; i++)
+                this.Points += Build.GetPrice(building, i, 1).Point;
+
+            this[building] = level;
+        }
+
 
         public void Save(ISession session)
         {

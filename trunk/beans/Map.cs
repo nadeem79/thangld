@@ -61,6 +61,10 @@ namespace beans
         {
             return Map.LandingTime(troop, from.X, from.Y, to.X, to.Y, start);
         }
+        public static DateTime LandingTime(int speed, Village from, Village to, DateTime start)
+        {
+            return start.AddMilliseconds(RangeCalculator(from.X, from.Y, to.X, to.Y) * speed);
+        }
         
         public static IList<Village> GetMap(Village center, ISession session)
         {
@@ -113,22 +117,23 @@ namespace beans
             if (spear > 0)
                 speeds.Add(config.GetNumericConfigurationItem("Map.spear_speed").Value);
             if (sword > 0)
-                speeds.Add(config.GetNumericConfigurationItem("Map.spear_speed").Value);
+                speeds.Add(config.GetNumericConfigurationItem("Map.sword_speed").Value);
             if (axe > 0)
-                speeds.Add(config.GetNumericConfigurationItem("Map.spear_speed").Value);
+                speeds.Add(config.GetNumericConfigurationItem("Map.axe_speed").Value);
             if (scout > 0)
-                speeds.Add(config.GetNumericConfigurationItem("Map.spear_speed").Value);
-            if (spear > 0)
-                speeds.Add(config.GetNumericConfigurationItem("Map.spear_speed").Value);
-            if (spear > 0)
-                speeds.Add(config.GetNumericConfigurationItem("Map.spear_speed").Value);
-            if (spear > 0)
-                speeds.Add(config.GetNumericConfigurationItem("Map.spear_speed").Value);
-            if (spear > 0)
-                speeds.Add(config.GetNumericConfigurationItem("Map.spear_speed").Value);
-            if (spear > 0)
-                speeds.Add(config.GetNumericConfigurationItem("Map.spear_speed").Value);
+                speeds.Add(config.GetNumericConfigurationItem("Map.scout_speed").Value);
+            if (lightCavalry > 0)
+                speeds.Add(config.GetNumericConfigurationItem("Map.light_cavalry_speed").Value);
+            if (heavyCavalry > 0)
+                speeds.Add(config.GetNumericConfigurationItem("Map.heavy_cavalry_speed").Value);
+            if (ram > 0)
+                speeds.Add(config.GetNumericConfigurationItem("Map.ram_speed").Value);
+            if (catapult > 0)
+                speeds.Add(config.GetNumericConfigurationItem("Map.catapult_speed").Value);
+            if (noble > 0)
+                speeds.Add(config.GetNumericConfigurationItem("Map.noble_speed").Value);
 
+            return (int)speeds.Max();
         }
     }
 }
