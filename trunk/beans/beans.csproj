@@ -81,7 +81,6 @@
     <Compile Include="Village.Methods.Building.cs" />
     <Compile Include="Village.Methods.Resources.cs" />
     <Compile Include="Village.Methods.Troops.cs" />
-    <Compile Include="Village.Methods.Research.cs" />
     <Compile Include="Village.Methods.Recruit.cs" />
     <Compile Include="DatetimeHelper.cs" />
     <Compile Include="DefenseOtherReport.cs" />
@@ -110,7 +109,7 @@
     <Compile Include="IdentityObject.cs" />
     <Compile Include="IVillageEffector.cs" />
     <Compile Include="ReportType.cs" />
-    <Compile Include="Stationed.cs" />
+    <Compile Include="Station.cs" />
     <Compile Include="Group.cs" />
     <Compile Include="MoveType.cs" />
     <Compile Include="Offer.cs" />

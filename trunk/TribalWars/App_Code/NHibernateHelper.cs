@@ -15,7 +15,9 @@ using NHibernate.Engine;
         {
             if (object.Equals(NHibernateHelper.sessionFactory, null))
                 NHibernateHelper.sessionFactory = NHibernateHelper.MWConfig().BuildSessionFactory();
-            
+
+            NHibernateHelper.sessionFactory.Settings.IsolationLevel = System.Data.IsolationLevel.ReadCommitted;
+
             return NHibernateHelper.sessionFactory;
         }
 
@@ -35,6 +37,7 @@ using NHibernate.Engine;
             session.EnableFilter("NapFilter");
             session.EnableFilter("EnemyFilter");
             session.EnableFilter("AllyFilter");
+            
             return session;
         }
     }

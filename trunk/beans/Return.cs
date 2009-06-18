@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NHibernate;
+using System.Data;
 
 namespace beans
 {
     public class Return:MovingCommand
     {
-        #region Variables
-        #endregion
 
         #region Properties
 
@@ -33,12 +32,12 @@ namespace beans
             get;
             set;
         }
-        public int Light
+        public int LightCavalry
         {
             get;
             set;
         }
-        public int Heavy
+        public int HeavyCavalry
         {
             get;
             set;
@@ -84,38 +83,56 @@ namespace beans
         }
         #endregion
 
-        #region Constructors
-        public Return()
-        {
-
-        }
-
-        #endregion
-
         #region Methods
 
-        public override void save(ISession session)
+        public override void Save(ISession session)
         {
             session.Save(this);
         }
 
-        public override void effect(ISession session)
+        public override MovingCommand Effect(ISession session)
         {
-            this.To.Troop.Spear += this.Spear;
-            this.To.Troop.Sword += this.Sword;
-            this.To.Troop.Axe += this.Axe;
-            this.To.Troop.Scout += this.Scout;
-            this.To.Troop.Light += this.Light;
-            this.To.Troop.Heavy += this.Heavy;
-            this.To.Troop.Ram += this.Ram;
-            this.To.Troop.Catapult += this.Catapult;
-            this.To.Troop.Noble += this.Noble;
-            this.To.Resources.Clay += this.Clay;
-            this.To.Resources.Wood += this.Wood;
-            this.To.Resources.Iron += this.Iron;
+            this.ToVillage.VillageTroopData.Spear += this.Spear;
+            this.ToVillage.VillageTroopData.Sword += this.Sword;
+            this.ToVillage.VillageTroopData.Axe += this.Axe;
+            this.ToVillage.VillageTroopData.Scout += this.Scout;
+            this.ToVillage.VillageTroopData.LightCavalry += this.LightCavalry;
+            this.ToVillage.VillageTroopData.HeavyCavalry += this.HeavyCavalry;
+            this.ToVillage.VillageTroopData.Ram += this.Ram;
+            this.ToVillage.VillageTroopData.Catapult += this.Catapult;
+            this.ToVillage.VillageTroopData.Noble += this.Noble;
+
+            this.ToVillage.VillageTroopData.SpearInVillage += this.Spear;
+            this.ToVillage.VillageTroopData.SwordInVillage += this.Sword;
+            this.ToVillage.VillageTroopData.AxeInVillage += this.Axe;
+            this.ToVillage.VillageTroopData.ScoutInVillage += this.Scout;
+            this.ToVillage.VillageTroopData.LightCavalryInVillage += this.LightCavalry;
+            this.ToVillage.VillageTroopData.HeavyCavalryInVillage += this.HeavyCavalry;
+            this.ToVillage.VillageTroopData.RamInVillage += this.Ram;
+            this.ToVillage.VillageTroopData.CatapultInVillage += this.Catapult;
+            this.ToVillage.VillageTroopData.NobleInVillage += this.Noble;
+
+            this.ToVillage.VillageResourceData.Clay += this.Clay;
+            this.ToVillage.VillageResourceData.Wood += this.Wood;
+            this.ToVillage.VillageResourceData.Iron += this.Iron;
+
+            ITransaction transaction = null;
+            try
+            {
+                transaction = session.BeginTransaction();
+                session.Update(this.ToVillage.VillageTroopData);
+                session.Update(this.ToVillage.VillageResourceData);
+                session.Delete(this);
+                transaction.Commit();
+            }
+            catch
+            {
+                transaction.Rollback();
+            }
+            return null;
         }
 
-        public override void cancel(ISession session)
+        public override MovingCommand Cancel(ISession session)
         {
             throw new Exception("HACK!!!");
         }

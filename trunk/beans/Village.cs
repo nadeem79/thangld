@@ -16,10 +16,8 @@ namespace beans
         private int _maxResources = -1;
         private double loyal;
         
-        private IList<Stationed> stationedTroops = new List<Stationed>();
-        private IList<Stationed> troopsOutside = new List<Stationed>();
         private Player _owner;
-        public Player Owner
+        public Player Player
         {
             get { return this._owner; }
             set { this._owner = value; }
@@ -53,7 +51,7 @@ namespace beans
                 if (value > 100)
                     loyal = 100;
                 else
-                    _oyal = value;
+                    _loyal = value;
             }
         }
         public virtual DateTime LastUpdate
@@ -108,22 +106,22 @@ namespace beans
             }
         }
 
-        public VillageBuildingData Buildings
+        public VillageBuildingData VillageBuildingData
         {
             get;
             set;
         }
-        public VillageResourcesData Resources
+        public VillageResourcesData VillageResourceData
         {
             get;
             set;
         }
-        public VillageReseachData Research
+        public VillageReseachData VillageResearchData
         {
             get;
             set;
         }
-        public VillageTroopData Troop
+        public VillageTroopData VillageTroopData
         {
             get;
             set;
@@ -300,22 +298,26 @@ namespace beans
         public static Village CreateVillage(ISession session)
         {
 
-            Configuration config = session.Load<Configuration>(1);
+            Configuration config = Configuration.TribalWarsConfiguration;
+            NumericConfiguration expandTo = config.GetNumericConfigurationItem("Village.expand_to");
+            NumericConfiguration expandCount = config.GetNumericConfigurationItem("Village.expand_count");
+            NumericConfiguration centerX = config.GetNumericConfigurationItem("Map.center_x");
+            NumericConfiguration centerY = config.GetNumericConfigurationItem("Map.center_y");
 
-            if (config.Index >= (config.Expand * 2 + 1))
+            if (expandCount.Value >= (expandTo.Value * 2 + 1))
             {
-                config.Expand++;
-                config.Index = 0;
+                expandTo.Value++;
+                expandCount.Value = 0;
             }
-            config.Index++;
+            expandCount.Value++;
             IList<Village> lst;
             Random r = new Random();
             int X, Y;
 
             do
             {
-                X = 50 + config.Expand * (r.Next(3) - 1);
-                Y = 50 + config.Expand * (r.Next(3) - 1);
+                X = (int)(centerX.Value + expandTo.Value * (r.Next(3) - 1));
+                Y = (int)(centerY.Value + expandTo.Value * (r.Next(3) - 1));
 
                 ICriteria criteria = session.CreateCriteria(typeof(Village));
                 criteria.Add(Expression.Eq("X", X));
