@@ -115,8 +115,11 @@ namespace beans
             returnTroop.FromVillage = this.AtVillage;
             returnTroop.ToVillage = this.FromVillage;
             returnTroop.StartingTime = DateTime.Now;
-            returnTroop.LandingTime = Map.LandingTime(
-
+            returnTroop.LandingTime = Map.LandingTime(  Map.SlowestSpeed(spear, sword, axe, scout, lightCavalry, heavyCavalry, ram, catapult, noble), 
+                                                        this.AtVillage, 
+                                                        this.FromVillage, 
+                                                        returnTroop.StartingTime);
+                
             bool delete = (this.Spear <= 0 && this.Sword <= 0 && this.Axe <= 0
                 && this.Scout <= 0 && this.LightCavalry <= 0 && this.HeavyCavalry <= 0
                 && this.Ram <= 0 && this.Catapult <= 0
@@ -127,6 +130,7 @@ namespace beans
             {
                 transaction = session.BeginTransaction();
                 session.Update(this.AtVillage.VillageTroopData);
+                session.Save(returnTroop);
                 if (delete)
                     session.Delete(this);
                 else
@@ -137,7 +141,21 @@ namespace beans
             {
                 transaction.Rollback();
             }
-            
+            return returnTroop;
+        }
+
+        public Return Return(ISession session)
+        {
+            return this.Return( this.Spear,
+                                this.Sword,
+                                this.Axe,
+                                this.Scout,
+                                this.LightCavalry,
+                                this.HeavyCavalry,
+                                this.Ram,
+                                this.Catapult,
+                                this.Noble,
+                                session);
         }
         #endregion
     }
