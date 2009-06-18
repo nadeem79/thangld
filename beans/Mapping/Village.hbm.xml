@@ -12,8 +12,8 @@
     <property name="Y" column="y" type="Int32" />
     <many-to-one name="Owner" class="beans.Player, beans" column="userid" not-null="false" fetch="join" cascade="none" />
     <property name="Points" column="points" type="float" />
-    <property name="Loyal" column="loyal" type="Int32" />
-    <property name="LastUpdateTimestamp" column="last_update" type="Int64" not-null="true" />
+    <property name="Loyal" column="loyal" type="float" />
+    <property name="LastUpdate" column="last_update" type="timestamp" not-null="true" />
     <property name="Population" column="population" type="float" />
     <one-to-one name="Buildings" class="beans.VillageBuildingData, beans" cascade="all" />
     <one-to-one name="Resources" class="beans.VillageResourcesData, beans" cascade="all" />
@@ -53,14 +53,10 @@
         <param name="property">Village</param>
       </generator>
     </id>
-    <property name="ResearchSpear" column="unit_spear_tec_level" type="Int32" />
-    <property name="ResearchSword" column="unit_sword_tec_level" type="Int32" />
-    <property name="ResearchAxe" column="unit_axe_tec_level" type="Int32" />
-    <property name="ResearchScout" column="unit_spy_tec_level" type="Int32" />
-    <property name="ResearchLight" column="unit_light_tec_level" type="Int32" />
-    <property name="ResearchHeavy" column="unit_heavy_tec_level" type="Int32" />
-    <property name="ResearchRam" column="unit_ram_tec_level" type="Int32" />
-    <property name="ResearchCatapult" column="unit_catapult_tec_level" type="Int32" />
+    <property name="Attack" column="attack" type="Int32" />
+    <property name="Defense" column="defense" type="Int32" />
+    <property name="TroopSpeed" column="unit_speed" type="Int32" />
+    <property name="VillageSpeed" column="village_speed" type="Int32" />
 
     <one-to-one name="Village" class="beans.Village, beans" constrained="true" property-ref="Research" />
   </class>
@@ -113,16 +109,7 @@
     <property name="TotalHeavy" column="total_heavy" type="Int32" />
     <property name="TotalCatapult" column="total_catapult" type="Int32" />
     <property name="TotalRam" column="total_ram" type="Int32" />
-    <property name="TotalNoble" column="total_noble" type="Int32" />
-
-    <bag name="StationedTroops" table="stationed" cascade="none" fetch="join" inverse="true"  lazy="true">
-      <key column="at_village" />
-      <one-to-many class="beans.Stationed, beans"/>
-    </bag>
-    <bag name="TroopsOutside" table="stationed" cascade="none" fetch="join" inverse="true"  lazy="true">
-      <key column="from_village" />
-      <one-to-many class="beans.Stationed, beans"/>
-    </bag>
+    <property name="TotalNoble" column="total_noble" type="Int32" /
 
     <one-to-one name="Village" class="beans.Village, beans" constrained="true" property-ref="Troop" />
   </class>
