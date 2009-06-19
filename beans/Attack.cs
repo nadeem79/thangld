@@ -57,6 +57,11 @@ namespace beans
             get;
             set;
         }
+        public virtual BuildingType Building
+        {
+            get;
+            set;
+        }
         #endregion
 
         public override void Save(ISession session)
@@ -112,7 +117,17 @@ namespace beans
             returnTroop.StartingTime = returnTroop.LandingTime = DateTime.Now;
             returnTroop.LandingTime += (DateTime.Now - this.StartingTime);
 
-            session.Delete(this);
+            ITransaction transaction = session.BeginTransaction();
+            try
+            {
+                session.Delete(this);
+                session.Save(returnTroop);
+                transaction.Commit();
+            }
+            catch
+            {
+                transaction.Rollback();
+            }
 
             return returnTroop;
         }
@@ -143,6 +158,37 @@ namespace beans
             int catapultLostInDefenseSide;
             int nobleLostInDefenseSide;
 
+            Configuration config = Configuration.TribalWarsConfiguration;
+            double spearDamage = config.GetNumericConfigurationItem("Unit.spear_damage").Value;
+            double swordDamage = config.GetNumericConfigurationItem("Unit.sword_damage").Value;
+            double axeDamage = config.GetNumericConfigurationItem("Unit.axe_damage").Value;
+            double lightCavalryDamage = config.GetNumericConfigurationItem("Unit.light_cavalry_damage").Value;
+            double heavyCavalryDamage = config.GetNumericConfigurationItem("Unit.heavy_cavalry_damage").Value;
+            double scoutDamage = config.GetNumericConfigurationItem("Unit.scout_damage").Value;
+            double ramDamage = config.GetNumericConfigurationItem("Unit.ram_damage").Value;
+            double catapultDamage = config.GetNumericConfigurationItem("Unit.catapult_damage").Value;
+            double nobleDamage = config.GetNumericConfigurationItem("Unit.noble_damage").Value;
+
+            double spearInfantryDefense = config.GetNumericConfigurationItem("Unit.spear_infantry_defense").Value;
+            double swordInfantryDefense = config.GetNumericConfigurationItem("Unit.sword_infantry_defense").Value;
+            double axeInfantryDefense = config.GetNumericConfigurationItem("Unit.axe_infantry_defense").Value;
+            double lightCavalryInfantryDefense = config.GetNumericConfigurationItem("Unit.light_cavalry_infantry_defense").Value;
+            double heavyCavalryInfantryDefense = config.GetNumericConfigurationItem("Unit.heavy_cavalry_infantry_defense").Value;
+            double scoutInfantryDefense = config.GetNumericConfigurationItem("Unit.scout_infantry_defense").Value;
+            double ramInfantryDefense = config.GetNumericConfigurationItem("Unit.ram_infantry_defense").Value;
+            double catapultInfantryDefense = config.GetNumericConfigurationItem("Unit.catapult_infantry_defense").Value;
+            double nobleInfantryDefense = config.GetNumericConfigurationItem("Unit.noble_infantry_defense").Value;
+
+            double spearCavalryDefense = config.GetNumericConfigurationItem("Unit.spear_cavalry_defense").Value;
+            double swordCavalryDefense = config.GetNumericConfigurationItem("Unit.sword_cavalry_defense").Value;
+            double axeCavalryDefense = config.GetNumericConfigurationItem("Unit.axe_cavalry_defense").Value;
+            double lightCavalryCavalryDefense = config.GetNumericConfigurationItem("Unit.light_cavalry_cavalry_defense").Value;
+            double heavyCavalryCavalryDefense = config.GetNumericConfigurationItem("Unit.heavy_cavalry_cavalry_defense").Value;
+            double scoutCavalryDefense = config.GetNumericConfigurationItem("Unit.scout_cavalry_defense").Value;
+            double ramCavalryDefense = config.GetNumericConfigurationItem("Unit.ram_cavalry_defense").Value;
+            double catapultCavalryDefense = config.GetNumericConfigurationItem("Unit.catapult_cavalry_defense").Value;
+            double nobleCavalryDefense = config.GetNumericConfigurationItem("Unit.noble_cavalry_defense").Value;
+
             Return returnTroop;
             Report attackSideReport, defenseSideReport;
 
@@ -150,23 +196,23 @@ namespace beans
             IList<Village> villages;
             #region
 
-            this.ToVillage.Update(this.LandingTime.Value, context);
+            this.ToVillage.Update(this.LandingTime, session);
 
             #region Report
             attackSideReport = new Report();
-            attackSideReport.CreateTime = this.LandingTime.Value;
-            attackSideReport.Player = this.FromVillage.Player;
+            attackSideReport.Time = this.LandingTime;
+            attackSideReport.Owner = this.FromVillage.Player;
             attackSideReport.Type = ReportType.Attack;
             attackSideReport.Title = string.Format("{0} tấn công {1} ({2}|{3})", this.FromVillage.Player.Username, this.ToVillage.Name, this.ToVillage.X.ToString("000"), this.ToVillage.Y.ToString("000"));
 
             defenseSideReport = new Report();
-            defenseSideReport.CreateTime = this.LandingTime.Value;
-            defenseSideReport.Player = this.ToVillage.Player;
+            defenseSideReport.Time = this.LandingTime;
+            defenseSideReport.Owner = this.ToVillage.Player;
             defenseSideReport.Type = ReportType.Defense;
             defenseSideReport.Title = attackSideReport.Title;
 
             temp.SetAttribute("title", attackSideReport.Title);
-            temp.SetAttribute("time", attackSideReport.CreateTime.ToString("hh:mm:ss:'<span class=\"hidden\">'fff'</span>' 'ngày' dd/MM/yyyy"));
+            temp.SetAttribute("time", attackSideReport.Time.ToString("hh:mm:ss:'<span class=\"hidden\">'fff'</span>' 'ngày' dd/MM/yyyy"));
 
             temp.SetAttribute("attacker_name", this.FromVillage.Player.Username);
             temp.SetAttribute("attacker_id", this.FromVillage.Player.ID);
@@ -201,7 +247,7 @@ namespace beans
             temp.SetAttribute("CatapultDefense", (this.ToVillage.VillageTroopData.CatapultInVillage > 0) ? this.ToVillage.VillageTroopData.CatapultInVillage.Value.ToString() : "<span class='hidden'>0</span>");
             temp.SetAttribute("NobleDefense", (this.ToVillage.VillageTroopData.NobleInVillage > 0) ? this.ToVillage.VillageTroopData.NobleInVillage.Value.ToString() : "<span class='hidden'>0</span>");
 
-            temp.SetAttribute("loyal_before", this.ToVillage.Loyal.Value.ToString("000"));
+            temp.SetAttribute("loyal_before", this.ToVillage.Loyal.ToString("000"));
             temp.SetAttribute("building", BuildingTypeFactory.ToString(this.Building));
             temp.SetAttribute("building_before", this.ToVillage[this.Building]);
 
@@ -209,8 +255,8 @@ namespace beans
 
             Random r = new Random();
             luck = 0.3 * (2 * r.NextDouble() - 1);
-            long infantryAttack = this.Spear.Value * 10 + this.Sword.Value * 25 + this.Axe.Value * 40 + this.Noble.Value * 30;
-            long cavalryAttack = this.LightCavalry.Value * 130 + this.HeavyCavalry.Value * 150;
+            long infantryAttack = this.Spear * 10 + this.Sword * 25 + this.Axe * 40 + this.Noble * 30;
+            long cavalryAttack = this.LightCavalry * 130 + this.HeavyCavalry * 150;
             long totalAttack = infantryAttack + cavalryAttack;
 
             double pInfantry = (double)infantryAttack / (double)totalAttack;
