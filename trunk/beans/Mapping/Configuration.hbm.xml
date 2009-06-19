@@ -7,7 +7,7 @@
       <generator class="assigned"/>
     </id>
 
-    <property name="Value" column="value" type="string" />
+    <property name="Value" column="item" type="string" />
   </class>
 
   <class name="beans.NumericConfiguration, beans" table="numeric_configuration" lazy="false">
@@ -16,7 +16,7 @@
       <generator class="assigned"/>
     </id>
 
-    <property name="Value" column="value" type="double" />
+    <property name="Value" column="item" type="double" />
   </class>
 
 </hibernate-mapping>
