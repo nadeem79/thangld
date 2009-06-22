@@ -310,7 +310,8 @@ namespace beans
                 this.ToVillage.VillageTroopData.CatapultOfVillage = this.ToVillage.VillageTroopData.Catapult = 0;
                 this.ToVillage.VillageTroopData.NobleOfVillage = this.ToVillage.VillageTroopData.Noble = 0;
 
-                //station đến nơi khác
+                //station từ thành phố bị tấn công đến nơi khác
+                ITransaction transaction = session.BeginTransaction();
                 villages = (from village in session.Linq<Village>()
                             join station in session.Linq<Station>() on this.ToVillage equals station.AtVillage
                             select station.FromVillage).ToList<Village>();
@@ -318,29 +319,41 @@ namespace beans
                 foreach (Village village in villages)
                     village.Update(this.LandingTime, session);
 
-                stations = (from station in session.Linq<Station>()
-                            where station.AtVillage == this.ToVillage
-                            select station).ToList<Station>();
+                
 
-                foreach (Station station in stations)
+                try
                 {
-                    station.FromVillage.VillageTroopData.SpearOfVillage -= station.Spear;
-                    station.FromVillage.VillageTroopData.SwordOfVillage -= station.Sword;
-                    station.FromVillage.VillageTroopData.AxeOfVillage -= station.Axe;
-                    station.FromVillage.VillageTroopData.ScoutOfVillage -= station.Scout;
-                    station.FromVillage.VillageTroopData.LightCavalryOfVillage -= station.LightCavalry;
-                    station.FromVillage.VillageTroopData.HeavyCavalryOfVillage -= station.HeavyCavalry;
-                    station.FromVillage.VillageTroopData.RamOfVillage -= station.Ram;
-                    station.FromVillage.VillageTroopData.CatapultOfVillage -= station.Catapult;
-                    station.FromVillage.VillageTroopData.NobleOfVillage -= station.Noble;
 
-                    
+                    stations = (from station in session.Linq<Station>()
+                                where station.AtVillage == this.ToVillage
+                                select station).ToList<Station>();
 
-                    #region Viết báo cáo
+                    foreach (Station station in stations)
+                    {
+                        station.FromVillage.VillageTroopData.SpearOfVillage -= station.Spear;
+                        station.FromVillage.VillageTroopData.SwordOfVillage -= station.Sword;
+                        station.FromVillage.VillageTroopData.AxeOfVillage -= station.Axe;
+                        station.FromVillage.VillageTroopData.ScoutOfVillage -= station.Scout;
+                        station.FromVillage.VillageTroopData.LightCavalryOfVillage -= station.LightCavalry;
+                        station.FromVillage.VillageTroopData.HeavyCavalryOfVillage -= station.HeavyCavalry;
+                        station.FromVillage.VillageTroopData.RamOfVillage -= station.Ram;
+                        station.FromVillage.VillageTroopData.CatapultOfVillage -= station.Catapult;
+                        station.FromVillage.VillageTroopData.NobleOfVillage -= station.Noble;
 
-                    #endregion
+                        session.Update(station.FromVillage.VillageTroopData);
+
+                        #region Viết báo cáo
+
+                        #endregion
+                    }
+                    session.Delete("from Station station where station.AtVillage = :village", this.ToVillage, NHibernate.NHibernateUtil.Entity("Village"));
+
+                    transaction.Commit();
                 }
-                session.Delete("from ");
+                catch
+                {
+                    transaction.Rollback();
+                }
 
                 if (this.Noble > 0)
                     this.ToVillage.Loyal -= (r.Next(15) + 20);
@@ -369,55 +382,51 @@ namespace beans
                 temp.SetAttribute("success", true);
                 temp.SetAttribute("luck", luck.ToString("0.00"));
                 temp.SetAttribute("winning", "Bên tấn công");
-                temp.SetAttribute("loyal_after", this.ToVillage.Loyal.Value.ToString("000"));
+                temp.SetAttribute("loyal_after", this.ToVillage.Loyal.ToString("000"));
                 temp.SetAttribute("building_after", this.ToVillage[this.Building]);
                 #endregion
 
                 if (this.ToVillage.Loyal <= 0)
                 {
-                    this.ToVillage.Player.Point -= this.ToVillage.Point;
-                    this.FromVillage.Player.Point += this.ToVillage.Point;
+                    this.ToVillage.Player.Point -= this.ToVillage.Points;
+                    this.FromVillage.Player.Point += this.ToVillage.Points;
                     this.ToVillage.Player = this.FromVillage.Player;
                     this.ToVillage.Loyal = 25;
 
-                    villages = (from village in context.Villages
-                                join station in context.Stations on village equals station.FromVillage
+                    villages = (from village in session.Linq<Village>()
+                                join station in session.Linq<Station>() on village equals station.FromVillage
                                 select village).ToList<Village>();
 
                     foreach (Village village in villages)
-                        village.Update(this.LandingTime.Value, context);
+                        village.Update(this.LandingTime, session);
 
-                    stations = (from station in context.Stations
+                    stations = (from station in session.Linq<Station>()
                                 where station.FromVillage == this.ToVillage
                                 select station).ToList<Station>();
 
                     foreach (Station station in stations)
                     {
-                        station.FromVillage.VillageTroopData.SpearOfVillage -= station.Spear.Value;
-                        station.FromVillage.VillageTroopData.SwordOfVillage -= station.Sword.Value;
-                        station.FromVillage.VillageTroopData.AxeOfVillage -= station.Axe.Value;
-                        station.FromVillage.VillageTroopData.ScoutOfVillage -= station.Scout.Value;
-                        station.FromVillage.VillageTroopData.LightCavalryOfVillage -= station.LightCavalry.Value;
-                        station.FromVillage.VillageTroopData.HeavyCavalryOfVillage -= station.HeavyCavalry.Value;
-                        station.FromVillage.VillageTroopData.RamOfVillage -= station.Ram.Value;
-                        station.FromVillage.VillageTroopData.CatapultOfVillage -= station.Catapult.Value;
-                        station.FromVillage.VillageTroopData.NobleOfVillage -= station.Noble.Value;
+                        station.FromVillage.VillageTroopData.SpearOfVillage -= station.Spear;
+                        station.FromVillage.VillageTroopData.SwordOfVillage -= station.Sword;
+                        station.FromVillage.VillageTroopData.AxeOfVillage -= station.Axe;
+                        station.FromVillage.VillageTroopData.ScoutOfVillage -= station.Scout;
+                        station.FromVillage.VillageTroopData.LightCavalryOfVillage -= station.LightCavalry;
+                        station.FromVillage.VillageTroopData.HeavyCavalryOfVillage -= station.HeavyCavalry;
+                        station.FromVillage.VillageTroopData.RamOfVillage -= station.Ram;
+                        station.FromVillage.VillageTroopData.CatapultOfVillage -= station.Catapult;
+                        station.FromVillage.VillageTroopData.NobleOfVillage -= station.Noble;
 
-                        context.Stations.DeleteOnSubmit(station);
                     }
 
-                    stations = (from station in context.Stations
+                    stations = (from station in session.Linq<Station>()
                                 where station.FromVillage == this.ToVillage
                                 select station).ToList<Station>();
 
                     foreach (Station station in stations)
-                    {
-                        station.InVillage.Update(this.LandingTime.Value, context);
-                        context.Stations.DeleteOnSubmit(station);
-                    }
+                        station.AtVillage.Update(this.LandingTime, session);
 
                     Station newStation = new Station();
-                    newStation.InVillage = this.ToVillage;
+                    newStation.AtVillage = this.ToVillage;
                     newStation.FromVillage = this.FromVillage;
                     newStation.Spear = this.Spear;
                     newStation.Sword = this.Sword;

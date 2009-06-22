@@ -127,7 +127,7 @@ namespace beans
             get;
             set;
         }
-        public float Point
+        public double Point
         {
             get;
             set;
