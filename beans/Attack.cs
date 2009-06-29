@@ -189,12 +189,18 @@ namespace beans
             double catapultCavalryDefense = config.GetNumericConfigurationItem("Unit.catapult_cavalry_defense").Value;
             double nobleCavalryDefense = config.GetNumericConfigurationItem("Unit.noble_cavalry_defense").Value;
 
+            double spearHaul = config.GetNumericConfigurationItem("Unit.spear_can_haul").Value;
+            double swordHaul = config.GetNumericConfigurationItem("Unit.sword_can_haul").Value;
+            double axeHaul = config.GetNumericConfigurationItem("Unit.axe_can_haul").Value;
+            double lightCavalryHaul = config.GetNumericConfigurationItem("Unit.light_cavalry_can_haul").Value;
+            double heavyCavalryHaul = config.GetNumericConfigurationItem("Unit.heavy_cavalry_can_haul").Value;
+
             Return returnTroop;
             Report attackSideReport, defenseSideReport;
 
             IList<Station> stations;
             IList<Village> villages;
-            #region
+            #endregion
 
             this.ToVillage.Update(this.LandingTime, session);
 
@@ -448,7 +454,8 @@ namespace beans
                     this.ToVillage.VillageTroopData.CatapultInVillage = this.Catapult - catapultLostInAttackSide;
                     this.ToVillage.VillageTroopData.NobleInVillage = this.Noble - nobleLostInAttackSide;
 
-                    context.Stations.InsertOnSubmit(newStation);
+                    session.Save(newStation);
+
 
                 }
                 else
@@ -471,14 +478,14 @@ namespace beans
 
                     returnTroop.LandingTime = this.LandingTime + (this.LandingTime - this.StartingTime);
 
-                    int intCanHaul = this.Spear.Value * 25 + this.Sword.Value * 15 + this.Axe.Value * 10 + this.LightCavalry.Value * 80 + this.HeavyCavalry.Value;
-                    int intTotalResource = this.ToVillage.VillageResourceData.Iron.Value + this.ToVillage.VillageResourceData.Clay.Value + this.ToVillage.VillageResourceData.Wood.Value;
+                    int intCanHaul = (int)(this.Spear * spearHaul + this.Sword * swordHaul + this.Axe * axeHaul + this.LightCavalry * lightCavalryHaul + this.HeavyCavalry * heavyCavalryHaul);
+                    int intTotalResource = this.ToVillage.VillageResourceData.Iron + this.ToVillage.VillageResourceData.Clay + this.ToVillage.VillageResourceData.Wood;
 
                     if (intTotalResource <= intCanHaul)
                     {
-                        returnTroop.Clay = this.ToVillage.VillageResourceData.Clay.Value;
-                        returnTroop.Wood = this.ToVillage.VillageResourceData.Wood.Value;
-                        returnTroop.Iron = this.ToVillage.VillageResourceData.Iron.Value;
+                        returnTroop.Clay = this.ToVillage.VillageResourceData.Clay;
+                        returnTroop.Wood = this.ToVillage.VillageResourceData.Wood;
+                        returnTroop.Iron = this.ToVillage.VillageResourceData.Iron;
 
                         this.ToVillage.VillageResourceData.Clay = this.ToVillage.VillageResourceData.Wood = this.ToVillage.VillageResourceData.Iron = 0;
                     }
@@ -493,7 +500,7 @@ namespace beans
                         this.ToVillage.VillageResourceData.Iron -= returnTroop.Iron;
                     }
 
-                    context.Movements.InsertOnSubmit(returnTroop);
+                    session.Save(returnTroop);
 
                     temp.SetAttribute("Clay", returnTroop.Clay > 0 ? String.Format("<img src=\"images/lehm.png\" />{0}", returnTroop.Clay) : "");
                     temp.SetAttribute("Iron", returnTroop.Clay > 0 ? String.Format("<img src=\"images/eisen.png\" />{0}", returnTroop.Iron) : "");
@@ -509,24 +516,24 @@ namespace beans
                     totalAttack = 1;
                 ratio = 1 - ((double)totalAttack / (double)totalDefense);
 
-                spearLostInAttackSide = this.Spear.Value;
-                swordLostInAttackSide = this.Sword.Value;
-                axeLostInAttackSide = this.Axe.Value;
-                lightCavalryLostInAttackSide = this.LightCavalry.Value;
-                scoutLostInAttackSide = this.Scout.Value;
-                heavyCavalryLostInAttackSide = this.HeavyCavalry.Value;
-                ramLostInAttackSide = this.Ram.Value;
-                catapultLostInAttackSide = this.Catapult.Value;
-                nobleLostInAttackSide = this.Noble.Value;
+                spearLostInAttackSide = this.Spear;
+                swordLostInAttackSide = this.Sword;
+                axeLostInAttackSide = this.Axe;
+                lightCavalryLostInAttackSide = this.LightCavalry;
+                scoutLostInAttackSide = this.Scout;
+                heavyCavalryLostInAttackSide = this.HeavyCavalry;
+                ramLostInAttackSide = this.Ram;
+                catapultLostInAttackSide = this.Catapult;
+                nobleLostInAttackSide = this.Noble;
 
-                spearLostInDefenseSide = this.FromVillage.VillageTroopData.SpearInVillage.Value;
-                swordLostInDefenseSide = this.FromVillage.VillageTroopData.SwordInVillage.Value;
-                axeLostInDefenseSide = this.FromVillage.VillageTroopData.AxeInVillage.Value;
-                lightCavalryLostInDefenseSide = this.FromVillage.VillageTroopData.LightCavalryInVillage.Value;
-                heavyCavalryLostInDefenseSide = this.FromVillage.VillageTroopData.HeavyCavalryInVillage.Value;
-                ramLostInDefenseSide = this.FromVillage.VillageTroopData.RamInVillage.Value;
-                catapultLostInDefenseSide = this.FromVillage.VillageTroopData.CatapultInVillage.Value;
-                nobleLostInDefenseSide = this.FromVillage.VillageTroopData.NobleInVillage.Value;
+                spearLostInDefenseSide = this.FromVillage.VillageTroopData.SpearInVillage;
+                swordLostInDefenseSide = this.FromVillage.VillageTroopData.SwordInVillage;
+                axeLostInDefenseSide = this.FromVillage.VillageTroopData.AxeInVillage;
+                lightCavalryLostInDefenseSide = this.FromVillage.VillageTroopData.LightCavalryInVillage;
+                heavyCavalryLostInDefenseSide = this.FromVillage.VillageTroopData.HeavyCavalryInVillage;
+                ramLostInDefenseSide = this.FromVillage.VillageTroopData.RamInVillage;
+                catapultLostInDefenseSide = this.FromVillage.VillageTroopData.CatapultInVillage;
+                nobleLostInDefenseSide = this.FromVillage.VillageTroopData.NobleInVillage;
 
                 this.FromVillage.VillageTroopData.SpearOfVillage -= this.Spear;
                 this.FromVillage.VillageTroopData.SwordOfVillage -= this.Sword;
@@ -578,29 +585,29 @@ namespace beans
                 this.ToVillage.VillageTroopData.CatapultOfVillage -= catapultOfVillageLost;
                 this.ToVillage.VillageTroopData.NobleOfVillage -= nobleOfVillageLost;
 
-                stations = (from station in context.Stations
-                            where station.InVillage == this.ToVillage
+                stations = (from station in session.Linq<Station>()
+                            where station.AtVillage == this.ToVillage
                             select station).ToList<Station>();
 
                 foreach (Station station in stations)
                 {
-                    station.Spear = (int)Math.Round(station.Spear.Value * ratio);
-                    station.Sword = (int)Math.Round(station.Sword.Value * ratio);
-                    station.Axe = (int)Math.Round(station.Axe.Value * ratio);
-                    station.LightCavalry = (int)Math.Round(station.LightCavalry.Value * ratio);
-                    station.Scout = (int)Math.Round(station.Scout.Value * ratio);
-                    station.HeavyCavalry = (int)Math.Round(station.HeavyCavalry.Value * ratio);
-                    station.Ram = (int)Math.Round(station.Ram.Value * ratio);
-                    station.Catapult = (int)Math.Round(station.Catapult.Value * ratio);
-                    station.Noble = (int)Math.Round(station.Noble.Value * ratio);
+                    station.Spear = (int)Math.Round(station.Spear * ratio);
+                    station.Sword = (int)Math.Round(station.Sword * ratio);
+                    station.Axe = (int)Math.Round(station.Axe * ratio);
+                    station.LightCavalry = (int)Math.Round(station.LightCavalry * ratio);
+                    station.Scout = (int)Math.Round(station.Scout * ratio);
+                    station.HeavyCavalry = (int)Math.Round(station.HeavyCavalry * ratio);
+                    station.Ram = (int)Math.Round(station.Ram * ratio);
+                    station.Catapult = (int)Math.Round(station.Catapult * ratio);
+                    station.Noble = (int)Math.Round(station.Noble * ratio);
 
                     #region tạo report
-                    if (station.FromVillage.Owner != this.To.Owner)
+                    if (station.FromVillage.Player != this.ToVillage.Player)
                     {
                         DefenseOtherReport defenseOtherReport = new DefenseOtherReport();
                         defenseOtherReport.Time = this.LandingTime;
-                        defenseOtherReport.Owner = station.FromVillage.Owner;
-                        defenseOtherReport.Title = "Quân phòng thủ của bạn ở " + this.To.Name + "(" + this.To.X.ToString() + "|" + this.To.Y.ToString() + ") bị tấn công";
+                        defenseOtherReport.Owner = station.FromVillage.Player;
+                        defenseOtherReport.Title = "Quân phòng thủ của bạn ở " + this.ToVillage.Name + "(" + this.ToVillage.X.ToString() + "|" + this.ToVillage.Y.ToString() + ") bị tấn công";
 
                         session.Save(defenseOtherReport);
                     }
@@ -614,14 +621,14 @@ namespace beans
 
             }
 
-            this.From.LastUpdate = this.To.LastUpdate = this.LandingTime;
+            this.FromVillage.LastUpdate = this.ToVillage.LastUpdate = this.LandingTime;
 
             attackSideReport.SetAttackReport(attack);
             defenseSideReport.Title = attackSideReport.Title;
 
             defenseSideReport.Description = attackSideReport.Description;
 
-            session.Update(this.To);
+            session.Update(this.Toz);
             session.Update(this.From);
             session.Update(this.To.Owner);
             session.Update(this.From.Owner);
@@ -635,16 +642,6 @@ namespace beans
         public override MoveType  Type
         {
             get { return MoveType.Attack; }
-        }
-
-        public override MovingCommand Effect(ISession session)
-        {
- 	        throw new NotImplementedException();
-        }
-
-        public override MovingCommand Cancel(ISession session)
-        {
- 	        throw new NotImplementedException();
         }
     }
 }
