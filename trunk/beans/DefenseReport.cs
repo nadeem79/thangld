@@ -8,304 +8,279 @@ namespace beans
     public class DefenseReport:Report
     {
 
-        #region Variables
-        private Village from, to;
-        private int spearSent, swordSent, axeSent, scoutSent, lightSent, heavySent, ramSent, catapultSent, nobleSent;
-        private int spearReturnt, swordReturnt, axeReturnt, scoutReturnt, lightReturnt, heavyReturnt, ramReturnt, catapultReturnt, nobleReturnt;
-        private int spearDefense, swordDefense, axeDefense, scoutDefense, lightDefense, heavyDefense, ramDefense, catapultDefense, nobleDefense;
-        private int spearSurvived, swordSurvived, axeSurvived, scoutSurvived, lightSurvived, heavySurvived, ramSurvived, catapultSurvived, nobleSurvived;
-        private int wood, clay, iron;
-        private BuildingType building;
-        private int wallAfter, wallBefore, buildingAfter, buildingBefore, loyalAfter, loyalBefore;
-        private bool successAttack;
-        private double morale, luck;
-        #endregion
-
         #region Properties
 
-        public Village From
+        public Village FromVillage
         {
-            get { return this.from; }
-            set { this.from = value; }
+            get;
+            set;
         }
 
-        public Village To
+        public Village ToVillage
         {
-            get { return this.to; }
-            set { this.to = value; }
+            get;
+            set;
         }
 
         public virtual int SpearSent
         {
-            get { return this.spearSent; }
-            set { this.spearSent = value; }
+            get;
+            set;
         }
         public virtual int AxeSent
         {
-            get { return this.axeSent; }
-            set { this.axeSent = value; }
+            get;
+            set;
         }
         public virtual int SwordSent
         {
-            get { return this.swordSent; }
-            set { this.swordSent = value; }
+            get;
+            set;
         }
         public virtual int ScoutSent
         {
-            get { return this.scoutSent; }
-            set { this.scoutSent = value; }
+            get;
+            set;
         }
-        public virtual int LightSent
+        public virtual int LightCavalrySent
         {
-            get { return this.lightSent; }
-            set { this.lightSent = value; }
+            get;
+            set;
         }
-        public virtual int HeavySent
+        public virtual int HeavyCavalrySent
         {
-            get { return this.heavySent; }
-            set { this.heavySent = value; }
+            get;
+            set;
         }
         public virtual int RamSent
         {
-            get { return this.ramSent; }
-            set { this.ramSent = value; }
+            get;
+            set;
         }
         public virtual int CatapultSent
         {
-            get { return this.catapultSent; }
-            set { this.catapultSent = value; }
+            get;
+            set;
         }
         public virtual int NobleSent
         {
-            get { return this.nobleSent; }
-            set { this.nobleSent = value; }
+            get;
+            set;
         }
 
         public virtual int SpearReturnt
         {
-            get { return this.spearReturnt; }
-            set { this.spearReturnt = value; }
+            get;
+            set;
         }
         public virtual int AxeReturnt
         {
-            get { return this.axeReturnt; }
-            set { this.axeReturnt = value; }
+            get;
+            set;
         }
         public virtual int SwordReturnt
         {
-            get { return this.swordReturnt; }
-            set { this.swordReturnt = value; }
+            get;
+            set;
         }
         public virtual int ScoutReturnt
         {
-            get { return this.scoutReturnt; }
-            set { this.scoutReturnt = value; }
+            get;
+            set;
         }
-        public virtual int LightReturnt
+        public virtual int LightCavalryReturnt
         {
-            get { return this.lightReturnt; }
-            set { this.lightReturnt = value; }
+            get;
+            set;
         }
-        public virtual int HeavyReturnt
+        public virtual int HeavyCavalryReturnt
         {
-            get { return this.heavyReturnt; }
-            set { this.heavyReturnt = value; }
+            get;
+            set;
         }
         public virtual int RamReturnt
         {
-            get { return this.ramReturnt; }
-            set { this.ramReturnt = value; }
+            get;
+            set;
         }
         public virtual int CatapultReturnt
         {
-            get { return this.catapultReturnt; }
-            set { this.catapultReturnt = value; }
+            get;
+            set;
         }
         public virtual int NobleReturnt
         {
-            get { return this.nobleReturnt; }
-            set { this.nobleReturnt = value; }
+            get;
+            set;
         }
 
         public virtual int SpearDefense
         {
-            get { return this.spearDefense; }
-            set { this.spearDefense = value; }
+            get;
+            set;
         }
         public virtual int AxeDefense
         {
-            get { return this.axeDefense; }
-            set { this.axeDefense = value; }
+            get;
+            set;
         }
         public virtual int SwordDefense
         {
-            get { return this.swordDefense; }
-            set { this.swordDefense = value; }
+            get;
+            set;
         }
         public virtual int ScoutDefense
         {
-            get { return this.scoutDefense; }
-            set { this.scoutDefense = value; }
+            get;
+            set;
         }
-        public virtual int LightDefense
+        public virtual int LightCavalryDefense
         {
-            get { return this.lightDefense; }
-            set { this.lightDefense = value; }
+            get;
+            set;
         }
-        public virtual int HeavyDefense
+        public virtual int HeavyCavalryDefense
         {
-            get { return this.heavyDefense; }
-            set { this.heavyDefense = value; }
+            get;
+            set;
         }
         public virtual int RamDefense
         {
-            get { return this.ramDefense; }
-            set { this.ramDefense = value; }
+            get;
+            set;
         }
         public virtual int CatapultDefense
         {
-            get { return this.catapultDefense; }
-            set { this.catapultDefense = value; }
+            get;
+            set;
         }
         public virtual int NobleDefense
         {
-            get { return this.nobleDefense; }
-            set { this.nobleDefense = value; }
+            get;
+            set;
         }
 
         public virtual int SpearSurvived
         {
-            get { return this.spearSurvived; }
-            set { this.spearSurvived = value; }
+            get;
+            set;
         }
         public virtual int AxeSurvived
         {
-            get { return this.axeSurvived; }
-            set { this.axeSurvived = value; }
+            get;
+            set;
         }
         public virtual int SwordSurvived
         {
-            get { return this.swordSurvived; }
-            set { this.swordSurvived = value; }
+            get;
+            set;
         }
         public virtual int ScoutSurvived
         {
-            get { return this.scoutSurvived; }
-            set { this.scoutSurvived = value; }
+            get;
+            set;
         }
-        public virtual int LightSurvived
+        public virtual int LightCavalrySurvived
         {
-            get { return this.lightSurvived; }
-            set { this.lightSurvived = value; }
+            get;
+            set;
         }
-        public virtual int HeavySurvived
+        public virtual int HeavyCavalrySurvived
         {
-            get { return this.heavySurvived; }
-            set { this.heavySurvived = value; }
+            get;
+            set;
         }
         public virtual int RamSurvived
         {
-            get { return this.ramSurvived; }
-            set { this.ramSurvived = value; }
+            get;
+            set;
         }
         public virtual int CatapultSurvived
         {
-            get { return this.catapultSurvived; }
-            set { this.catapultSurvived = value; }
+            get;
+            set;
         }
         public virtual int NobleSurvived
         {
-            get { return this.nobleSurvived; }
-            set { this.nobleSurvived = value; }
+            get;
+            set;
         }
 
         public virtual int Wood
         {
-            get { return this.wood; }
-            set { this.wood = value; }
+            get;
+            set;
         }
-
         public virtual int Clay
         {
-            get { return this.clay; }
-            set { this.clay = value; }
+            get;
+            set;
         }
-
         public virtual int Iron
         {
-            get { return this.iron; }
-            set { this.iron = value; }
+            get;
+            set;
         }
 
         public virtual BuildingType Building
         {
-            get { return this.building; }
-            set { this.building = value; }
+            get;
+            set;
         }
-
         public virtual int WallAfter
         {
-            get { return wallAfter; }
-            set { this.wallAfter = value; }
+            get;
+            set;
         }
-
         public virtual int WallBefore
         {
-            get { return this.wallBefore; }
-            set { this.wallBefore = value; }
+            get;
+            set;
         }
-
         public virtual int BuildingAfter
         {
-            get { return this.buildingAfter; }
-            set { this.buildingAfter = value; }
+            get;
+            set;
         }
-
         public virtual int BuildingBefore
         {
-            get { return this.buildingBefore; }
-            set { this.buildingBefore = value; }
+            get;
+            set;
         }
 
         public virtual int LoyalAfter
         {
-            get { return this.loyalAfter; }
-            set { this.loyalAfter = value; }
+            get;
+            set;
         }
-
         public virtual int LoyalBefore
         {
-            get { return this.loyalBefore; }
-            set { this.loyalBefore = value; }
+            get;
+            set;
         }
 
         public virtual bool SuccessAttack
         {
-            get { return this.successAttack; }
-            set { this.successAttack = value; }
+            get;
+            set;
         }
-
         public virtual double Morale
         {
-            get { return this.morale; }
-            set { this.morale = value; }
+            get;
+            set;
         }
-
         public virtual double Luck
         {
-            get { return this.luck; }
-            set { this.luck = value; }
+            get;
+            set;
         }
 
         public ReportType Type
         {
-            get { return ReportType.Attack; }
+            get { return ReportType.Defense; }
         }
 
         #endregion
 
-
-        #region Constructors
-        #endregion
     }
 }

@@ -7,11 +7,6 @@ namespace beans
 {
     public class AttackReport:Report
     {
-        public AttackReport() { }
-
-        
-
-        
 
         public  int SpearSent
         {
@@ -269,6 +264,17 @@ namespace beans
             set;
         }
         public Village To
+        {
+            get;
+            set;
+        }
+
+        public Player FromPlayer
+        {
+            get;
+            set;
+        }
+        public Player ToPlayer
         {
             get;
             set;
