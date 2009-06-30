@@ -196,6 +196,8 @@ namespace beans
             double heavyCavalryHaul = config.GetNumericConfigurationItem("Unit.heavy_cavalry_can_haul").Value;
 
             Return returnTroop;
+            AttackReport attackReport;
+            DefenseReport defenseReport;
             Report attackSideReport, defenseSideReport;
 
             IList<Station> stations;
