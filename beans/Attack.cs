@@ -198,7 +198,6 @@ namespace beans
             Return returnTroop;
             AttackReport attackReport;
             DefenseReport defenseReport;
-            Report attackSideReport, defenseSideReport;
 
             IList<Station> stations;
             IList<Village> villages;
@@ -207,57 +206,68 @@ namespace beans
             this.ToVillage.Update(this.LandingTime, session);
 
             #region Report
-            attackSideReport = new Report();
-            attackSideReport.Time = this.LandingTime;
-            attackSideReport.Owner = this.FromVillage.Player;
-            attackSideReport.Type = ReportType.Attack;
-            attackSideReport.Title = string.Format("{0} tấn công {1} ({2}|{3})", this.FromVillage.Player.Username, this.ToVillage.Name, this.ToVillage.X.ToString("000"), this.ToVillage.Y.ToString("000"));
+            attackReport = new AttackReport();
+            attackReport.Time = this.LandingTime;
+            attackReport.Owner = this.FromVillage.Player;
+            attackReport.Title = string.Format("{0} tấn công {1} ({2}|{3})", this.FromVillage.Player.Username, this.ToVillage.Name, this.ToVillage.X.ToString("000"), this.ToVillage.Y.ToString("000"));
+            defenseReport = new DefenseReport();
+            defenseReport.Time = this.LandingTime;
+            defenseReport.Owner = this.ToVillage.Player;
+            defenseReport.Title = attackReport.Title;
 
-            defenseSideReport = new Report();
-            defenseSideReport.Time = this.LandingTime;
-            defenseSideReport.Owner = this.ToVillage.Player;
-            defenseSideReport.Type = ReportType.Defense;
-            defenseSideReport.Title = attackSideReport.Title;
+            attackReport.FromVillage = this.FromVillage;
+            attackReport.FromPlayer = this.FromVillage.Player;
+            attackReport.ToVillage = this.ToVillage;
+            attackReport.ToPlayer = this.ToVillage.Player;
+            defenseReport.FromVillage = this.FromVillage;
+            defenseReport.FromPlayer = this.FromVillage.Player;
+            defenseReport.ToVillage = this.ToVillage;
+            defenseReport.ToPlayer = this.ToVillage.Player;
 
-            temp.SetAttribute("title", attackSideReport.Title);
-            temp.SetAttribute("time", attackSideReport.Time.ToString("hh:mm:ss:'<span class=\"hidden\">'fff'</span>' 'ngày' dd/MM/yyyy"));
+            attackReport.SpearSent = this.Spear;
+            attackReport.SwordSent = this.Sword;
+            attackReport.AxeSent = this.Axe;
+            attackReport.ScoutSent = this.Scout;
+            attackReport.LightCavalrySent = this.LightCavalry;
+            attackReport.HeavyCavalrySent = this.HeavyCavalry;
+            attackReport.RamSent = this.Ram;
+            attackReport.CatapultSent = this.Catapult;
+            attackReport.NobleSent = this.Noble;
+            defenseReport.SpearSent = this.Spear;
+            defenseReport.SwordSent = this.Sword;
+            defenseReport.AxeSent = this.Axe;
+            defenseReport.ScoutSent = this.Scout;
+            defenseReport.LightCavalrySent = this.LightCavalry;
+            defenseReport.HeavyCavalrySent = this.HeavyCavalry;
+            defenseReport.RamSent = this.Ram;
+            defenseReport.CatapultSent = this.Catapult;
+            defenseReport.NobleSent = this.Noble;
 
-            temp.SetAttribute("attacker_name", this.FromVillage.Player.Username);
-            temp.SetAttribute("attacker_id", this.FromVillage.Player.ID);
-            temp.SetAttribute("attacker_village_name", this.FromVillage.Name);
-            temp.SetAttribute("attacker_village_id", this.FromVillage.ID);
-            temp.SetAttribute("attacker_village_x", this.FromVillage.X.ToString("000"));
-            temp.SetAttribute("attacker_village_y", this.FromVillage.Y.ToString("000"));
-            temp.SetAttribute("defender_name", this.ToVillage.Player.Username);
-            temp.SetAttribute("defender_id", this.ToVillage.Player.ID);
-            temp.SetAttribute("defender_village_name", this.ToVillage.Name);
-            temp.SetAttribute("defender_village_id", this.ToVillage.ID);
-            temp.SetAttribute("defender_village_x", this.ToVillage.X.ToString("000"));
-            temp.SetAttribute("defender_village_y", this.ToVillage.Y.ToString("000"));
+            attackReport.SpearDefense = this.ToVillage.VillageTroopData.SpearInVillage;
+            attackReport.SwordDefense = this.ToVillage.VillageTroopData.SwordInVillage;
+            attackReport.AxeDefense = this.ToVillage.VillageTroopData.AxeInVillage;
+            attackReport.ScoutDefense = this.ToVillage.VillageTroopData.ScoutInVillage;
+            attackReport.LightCavalryDefense = this.ToVillage.VillageTroopData.LightCavalryInVillage;
+            attackReport.HeavyCavalryDefense = this.ToVillage.VillageTroopData.HeavyCavalryInVillage;
+            attackReport.RamDefense = this.ToVillage.VillageTroopData.RamInVillage;
+            attackReport.CatapultDefense = this.ToVillage.VillageTroopData.CatapultInVillage;
+            attackReport.NobleDefense = this.ToVillage.VillageTroopData.NobleInVillage;
+            defenseReport.SpearDefense = this.ToVillage.VillageTroopData.SpearInVillage;
+            defenseReport.SwordDefense = this.ToVillage.VillageTroopData.SwordInVillage;
+            defenseReport.AxeDefense = this.ToVillage.VillageTroopData.AxeInVillage;
+            defenseReport.ScoutDefense = this.ToVillage.VillageTroopData.ScoutInVillage;
+            defenseReport.LightCavalryDefense = this.ToVillage.VillageTroopData.LightCavalryInVillage;
+            defenseReport.HeavyCavalryDefense = this.ToVillage.VillageTroopData.HeavyCavalryInVillage;
+            defenseReport.RamDefense = this.ToVillage.VillageTroopData.RamInVillage;
+            defenseReport.CatapultDefense = this.ToVillage.VillageTroopData.CatapultInVillage;
+            defenseReport.NobleDefense = this.ToVillage.VillageTroopData.NobleInVillage;
 
-            temp.SetAttribute("SpearSent", (this.Spear > 0) ? this.Spear.ToString() : "<span class='hidden'>0</span>");
-            temp.SetAttribute("SwordSent", (this.Sword > 0) ? this.Sword.ToString() : "<span class='hidden'>0</span>");
-            temp.SetAttribute("AxeSent", (this.Axe > 0) ? this.Axe.ToString() : "<span class='hidden'>0</span>");
-            temp.SetAttribute("ScoutSent", (this.Scout > 0) ? this.Scout.ToString() : "<span class='hidden'>0</span>");
-            temp.SetAttribute("LightSent", (this.LightCavalry > 0) ? this.LightCavalry.ToString() : "<span class='hidden'>0</span>");
-            temp.SetAttribute("HeavySent", (this.HeavyCavalry > 0) ? this.HeavyCavalry.ToString() : "<span class='hidden'>0</span>");
-            temp.SetAttribute("RamSent", (this.Ram > 0) ? this.Ram.ToString() : "<span class='hidden'>0</span>");
-            temp.SetAttribute("CatapultSent", (this.Catapult > 0) ? this.Catapult.ToString() : "<span class='hidden'>0</span>");
-            temp.SetAttribute("NobleSent", (this.Noble > 0) ? this.Noble.ToString() : "<span class='hidden'>0</span>");
-
-            temp.SetAttribute("SpearDefense", (this.ToVillage.VillageTroopData.SpearInVillage > 0) ? this.ToVillage.VillageTroopData.SpearInVillage.Value.ToString() : "<span class='hidden'>0</span>");
-            temp.SetAttribute("SwordDefense", (this.ToVillage.VillageTroopData.SwordInVillage > 0) ? this.ToVillage.VillageTroopData.SwordInVillage.Value.ToString() : "<span class='hidden'>0</span>");
-            temp.SetAttribute("AxeDefense", (this.ToVillage.VillageTroopData.AxeInVillage > 0) ? this.ToVillage.VillageTroopData.AxeInVillage.Value.ToString() : "<span class='hidden'>0</span>");
-            temp.SetAttribute("ScoutDefense", (this.ToVillage.VillageTroopData.ScoutInVillage > 0) ? this.ToVillage.VillageTroopData.ScoutInVillage.Value.ToString() : "<span class='hidden'>0</span>");
-            temp.SetAttribute("LightDefense", (this.ToVillage.VillageTroopData.LightCavalryInVillage > 0) ? this.ToVillage.VillageTroopData.LightCavalryInVillage.Value.ToString() : "<span class='hidden'>0</span>");
-            temp.SetAttribute("HeavyDefense", (this.ToVillage.VillageTroopData.HeavyCavalryInVillage > 0) ? this.ToVillage.VillageTroopData.HeavyCavalryInVillage.Value.ToString() : "<span class='hidden'>0</span>");
-            temp.SetAttribute("RamDefense", (this.ToVillage.VillageTroopData.RamInVillage > 0) ? this.ToVillage.VillageTroopData.RamInVillage.Value.ToString() : "<span class='hidden'>0</span>");
-            temp.SetAttribute("CatapultDefense", (this.ToVillage.VillageTroopData.CatapultInVillage > 0) ? this.ToVillage.VillageTroopData.CatapultInVillage.Value.ToString() : "<span class='hidden'>0</span>");
-            temp.SetAttribute("NobleDefense", (this.ToVillage.VillageTroopData.NobleInVillage > 0) ? this.ToVillage.VillageTroopData.NobleInVillage.Value.ToString() : "<span class='hidden'>0</span>");
-
-            temp.SetAttribute("loyal_before", this.ToVillage.Loyal.ToString("000"));
-            temp.SetAttribute("building", BuildingTypeFactory.ToString(this.Building));
-            temp.SetAttribute("building_before", this.ToVillage[this.Building]);
+            attackReport.LoyalBefore = this.ToVillage.Loyal;
+            attackReport.Building = this.Building;
+            attackReport.BuildingBefore = this.ToVillage[this.Building];
+            defenseReport.LoyalBefore = this.ToVillage.Loyal;
+            defenseReport.Building = this.Building;
+            defenseReport.BuildingBefore = this.ToVillage[this.Building];
 
             #endregion
 
@@ -278,6 +288,12 @@ namespace beans
             totalAttack += (long)(totalAttack * luck);
 
             bool successAttack = (totalAttack > totalDefense);
+
+            attackReport.Luck = luck;
+            attackReport.SuccessAttack = successAttack;
+            defenseReport.Luck = luck;
+            defenseReport.SuccessAttack = successAttack;
+
             if (successAttack) // quân tấn công thắng
             {
                 ratio = 1 - ((double)totalDefense / (double)totalAttack);
@@ -338,6 +354,36 @@ namespace beans
 
                     foreach (Station station in stations)
                     {
+
+                        DefenseOtherReport defenseOtherReport = new DefenseOtherReport();
+                        defenseOtherReport.Owner = station.FromVillage.Player;
+                        defenseOtherReport.Time = this.LandingTime;
+                        defenseOtherReport.Unread = true;
+                        defenseOtherReport.Title = String.Format("Quân hỗ trợ của bạn từ {0} ở {1} bị tấn công", station.FromVillage.Name, station.AtVillage.Name);
+                        defenseOtherReport.FromVillage = station.FromVillage;
+                        defenseOtherReport.ToVillage = this.ToVillage;
+                        defenseOtherReport.ToPlayer = this.ToVillage.Player;
+
+                        defenseOtherReport.SpearDefense = station.Spear;
+                        defenseOtherReport.SwordDefense = station.Sword;
+                        defenseOtherReport.AxeDefense = station.Axe;
+                        defenseOtherReport.ScoutDefense = station.Scout;
+                        defenseOtherReport.LightCavalryDefense = station.LightCavalry;
+                        defenseOtherReport.HeavyCavalryDefense = station.HeavyCavalry;
+                        defenseOtherReport.RamDefense = station.Ram;
+                        defenseOtherReport.CatapultDefense = station.Catapult;
+                        defenseOtherReport.NobleDefense = station.Noble;
+
+                        defenseOtherReport.SpearDead = station.Spear;
+                        defenseOtherReport.SwordDead = station.Sword;
+                        defenseOtherReport.AxeDead = station.Axe;
+                        defenseOtherReport.ScoutDead = station.Scout;
+                        defenseOtherReport.LightCavalryDead = station.LightCavalry;
+                        defenseOtherReport.HeavyCavalryDead = station.HeavyCavalry;
+                        defenseOtherReport.RamDead = station.Ram;
+                        defenseOtherReport.CatapultDead = station.Catapult;
+                        defenseOtherReport.NobleDead = station.Noble;
+
                         station.FromVillage.VillageTroopData.SpearOfVillage -= station.Spear;
                         station.FromVillage.VillageTroopData.SwordOfVillage -= station.Sword;
                         station.FromVillage.VillageTroopData.AxeOfVillage -= station.Axe;
@@ -349,10 +395,7 @@ namespace beans
                         station.FromVillage.VillageTroopData.NobleOfVillage -= station.Noble;
 
                         session.Update(station.FromVillage.VillageTroopData);
-
-                        #region Viết báo cáo
-
-                        #endregion
+                        session.Save(defenseOtherReport);
                     }
                     session.Delete("from Station station where station.AtVillage = :village", this.ToVillage, NHibernate.NHibernateUtil.Entity("Village"));
 
@@ -366,34 +409,6 @@ namespace beans
                 if (this.Noble > 0)
                     this.ToVillage.Loyal -= (r.Next(15) + 20);
 
-                #region Report
-                temp.SetAttribute("SpearRemaint", (spearLostInAttackSide > 0) ? spearLostInAttackSide.ToString() : "<span class='hidden'>0</span>");
-                temp.SetAttribute("SwordRemaint", (swordLostInAttackSide > 0) ? swordLostInAttackSide.ToString() : "<span class='hidden'>0</span>");
-                temp.SetAttribute("AxeRemaint", (axeLostInAttackSide > 0) ? axeLostInAttackSide.ToString() : "<span class='hidden'>0</span>");
-                temp.SetAttribute("ScoutRemaint", (scoutLostInAttackSide > 0) ? scoutLostInAttackSide.ToString() : "<span class='hidden'>0</span>");
-                temp.SetAttribute("LightRemaint", (lightCavalryLostInAttackSide > 0) ? lightCavalryLostInAttackSide.ToString() : "<span class='hidden'>0</span>");
-                temp.SetAttribute("HeavyRemaint", (heavyCavalryLostInAttackSide > 0) ? heavyCavalryLostInAttackSide.ToString() : "<span class='hidden'>0</span>");
-                temp.SetAttribute("RamRemaint", (ramLostInAttackSide > 0) ? ramLostInAttackSide.ToString() : "<span class='hidden'>0</span>");
-                temp.SetAttribute("CatapultRemaint", (catapultLostInAttackSide > 0) ? catapultLostInAttackSide.ToString() : "<span class='hidden'>0</span>");
-                temp.SetAttribute("NobleRemaint", (nobleLostInAttackSide > 0) ? nobleLostInAttackSide.ToString() : "<span class='hidden'>0</span>");
-
-                temp.SetAttribute("SpearSurvived", (spearLostInDefenseSide > 0) ? spearLostInDefenseSide.ToString() : "<span class='hidden'>0</span>");
-                temp.SetAttribute("SwordSurvived", (swordLostInDefenseSide > 0) ? swordLostInDefenseSide.ToString() : "<span class='hidden'>0</span>");
-                temp.SetAttribute("AxeSurvived", (axeLostInDefenseSide > 0) ? axeLostInDefenseSide.ToString() : "<span class='hidden'>0</span>");
-                temp.SetAttribute("ScoutSurvived", (scoutLostInDefenseSide > 0) ? scoutLostInDefenseSide.ToString() : "<span class='hidden'>0</span>");
-                temp.SetAttribute("LightSurvived", (lightCavalryLostInDefenseSide > 0) ? lightCavalryLostInDefenseSide.ToString() : "<span class='hidden'>0</span>");
-                temp.SetAttribute("HeavySurvived", (heavyCavalryLostInDefenseSide > 0) ? heavyCavalryLostInDefenseSide.ToString() : "<span class='hidden'>0</span>");
-                temp.SetAttribute("RamSurvived", (ramLostInDefenseSide > 0) ? ramLostInDefenseSide.ToString() : "<span class='hidden'>0</span>");
-                temp.SetAttribute("CatapultSurvived", (catapultLostInDefenseSide > 0) ? catapultLostInDefenseSide.ToString() : "<span class='hidden'>0</span>");
-                temp.SetAttribute("NobleSurvived", (nobleLostInDefenseSide > 0) ? nobleLostInDefenseSide.ToString() : "<span class='hidden'>0</span>");
-
-                temp.SetAttribute("success", true);
-                temp.SetAttribute("luck", luck.ToString("0.00"));
-                temp.SetAttribute("winning", "Bên tấn công");
-                temp.SetAttribute("loyal_after", this.ToVillage.Loyal.ToString("000"));
-                temp.SetAttribute("building_after", this.ToVillage[this.Building]);
-                #endregion
-
                 if (this.ToVillage.Loyal <= 0)
                 {
                     this.ToVillage.Player.Point -= this.ToVillage.Points;
@@ -401,19 +416,14 @@ namespace beans
                     this.ToVillage.Player = this.FromVillage.Player;
                     this.ToVillage.Loyal = 25;
 
-                    villages = (from village in session.Linq<Village>()
-                                join station in session.Linq<Station>() on village equals station.FromVillage
-                                select village).ToList<Village>();
-
-                    foreach (Village village in villages)
-                        village.Update(this.LandingTime, session);
-
                     stations = (from station in session.Linq<Station>()
                                 where station.FromVillage == this.ToVillage
                                 select station).ToList<Station>();
 
                     foreach (Station station in stations)
                     {
+                        station.AtVillage.Update(this.LandingTime, session);
+
                         station.FromVillage.VillageTroopData.SpearOfVillage -= station.Spear;
                         station.FromVillage.VillageTroopData.SwordOfVillage -= station.Sword;
                         station.FromVillage.VillageTroopData.AxeOfVillage -= station.Axe;
@@ -424,14 +434,10 @@ namespace beans
                         station.FromVillage.VillageTroopData.CatapultOfVillage -= station.Catapult;
                         station.FromVillage.VillageTroopData.NobleOfVillage -= station.Noble;
 
+                        session.Update(station.FromVillage.VillageTroopData);
+
                     }
-
-                    stations = (from station in session.Linq<Station>()
-                                where station.FromVillage == this.ToVillage
-                                select station).ToList<Station>();
-
-                    foreach (Station station in stations)
-                        station.AtVillage.Update(this.LandingTime, session);
+                    session.Delete("from Station station where station.FromVillage = :village", this.ToVillage, NHibernate.NHibernateUtil.Entity("Village"));
 
                     Station newStation = new Station();
                     newStation.AtVillage = this.ToVillage;
@@ -504,9 +510,12 @@ namespace beans
 
                     session.Save(returnTroop);
 
-                    temp.SetAttribute("Clay", returnTroop.Clay > 0 ? String.Format("<img src=\"images/lehm.png\" />{0}", returnTroop.Clay) : "");
-                    temp.SetAttribute("Iron", returnTroop.Clay > 0 ? String.Format("<img src=\"images/eisen.png\" />{0}", returnTroop.Iron) : "");
-                    temp.SetAttribute("Wood", returnTroop.Clay > 0 ? String.Format("<img src=\"images/holz.png\" />{0}", returnTroop.Wood) : "");
+                    attackReport.Wood = returnTroop.Wood;
+                    attackReport.Clay = returnTroop.Clay;
+                    attackReport.Iron = returnTroop.Iron;
+                    defenseReport.Wood = returnTroop.Wood;
+                    defenseReport.Clay = returnTroop.Clay;
+                    defenseReport.Iron = returnTroop.Iron;
 
                     #endregion
                 }
@@ -623,25 +632,63 @@ namespace beans
 
             }
 
+            attackReport.SpearAttackDead = spearLostInAttackSide;
+            attackReport.SwordAttackDead = swordLostInAttackSide;
+            attackReport.AxeAttackDead = axeLostInAttackSide;
+            attackReport.ScoutAttackDead = scoutLostInAttackSide;
+            attackReport.LightCavalryAttackDead = lightCavalryLostInAttackSide;
+            attackReport.HeavyCavalryAttackDead = heavyCavalryLostInAttackSide;
+            attackReport.RamAttackDead = ramLostInAttackSide;
+            attackReport.CatapultAttackDead = catapultLostInAttackSide;
+            attackReport.NobleAttackDead = nobleLostInAttackSide;
+            attackReport.SpearDefenseDead = spearLostInDefenseSide;
+            attackReport.SwordDefenseDead = swordLostInDefenseSide;
+            attackReport.AxeDefenseDead = axeLostInDefenseSide;
+            attackReport.ScoutDefenseDead = scoutLostInDefenseSide = 0;
+            attackReport.LightCavalryDefenseDead = lightCavalryLostInDefenseSide;
+            attackReport.HeavyCavalryDefenseDead = heavyCavalryLostInDefenseSide;
+            attackReport.RamDefenseDead = ramLostInDefenseSide;
+            attackReport.CatapultDefenseDead = catapultLostInDefenseSide;
+            attackReport.NobleDefenseDead = nobleLostInDefenseSide;
+
+            defenseReport.SpearAttackDead = spearLostInAttackSide;
+            defenseReport.SwordAttackDead = swordLostInAttackSide;
+            defenseReport.AxeAttackDead = axeLostInAttackSide;
+            defenseReport.ScoutAttackDead = scoutLostInAttackSide;
+            defenseReport.LightCavalryAttackDead = lightCavalryLostInAttackSide;
+            defenseReport.HeavyCavalryAttackDead = heavyCavalryLostInAttackSide;
+            defenseReport.RamAttackDead = ramLostInAttackSide;
+            defenseReport.CatapultAttackDead = catapultLostInAttackSide;
+            defenseReport.NobleAttackDead = nobleLostInAttackSide;
+            defenseReport.SpearDefenseDead = spearLostInDefenseSide;
+            defenseReport.SwordDefenseDead = swordLostInDefenseSide;
+            defenseReport.AxeDefenseDead = axeLostInDefenseSide;
+            defenseReport.ScoutDefenseDead = scoutLostInDefenseSide;
+            defenseReport.LightCavalryDefenseDead = lightCavalryLostInDefenseSide;
+            defenseReport.HeavyCavalryDefenseDead = heavyCavalryLostInDefenseSide;
+            defenseReport.RamDefenseDead = ramLostInDefenseSide;
+            defenseReport.CatapultDefenseDead = catapultLostInDefenseSide;
+            defenseReport.NobleDefenseDead = nobleLostInDefenseSide;
+
+            attackReport.LoyalAfter = this.ToVillage.Loyal;
+            attackReport.BuildingAfter = this.ToVillage[this.Building];
+            defenseReport.LoyalAfter = this.ToVillage.Loyal;
+            defenseReport.BuildingAfter = this.ToVillage[this.Building];
+
             this.FromVillage.LastUpdate = this.ToVillage.LastUpdate = this.LandingTime;
 
-            attackSideReport.SetAttackReport(attack);
-            defenseSideReport.Title = attackSideReport.Title;
+            session.Update(this.ToVillage);
+            session.Update(this.FromVillage);
+            session.Update(this.ToVillage.Player);
+            session.Update(this.FromVillage.Player);
 
-            defenseSideReport.Description = attackSideReport.Description;
-
-            session.Update(this.Toz);
-            session.Update(this.From);
-            session.Update(this.To.Owner);
-            session.Update(this.From.Owner);
-
-            session.Save(attackSideReport);
-            session.Save(defenseSideReport);
+            session.Save(attackReport);
+            session.Save(defenseReport);
 
             session.Delete(this);
         }
     
-        public override MoveType  Type
+        public override MoveType Type
         {
             get { return MoveType.Attack; }
         }

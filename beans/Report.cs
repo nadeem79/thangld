@@ -16,10 +16,9 @@ namespace beans
             get;
             set;
         }
-        public virtual ReportType Type
+        public abstract ReportType Type
         {
             get;
-            set;
         }
         public string Title
         {

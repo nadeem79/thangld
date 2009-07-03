@@ -8,12 +8,6 @@ namespace beans
     public class DefenseOtherReport : Report
     {
 
-        #region Variables
-
-        private int spearDefense, swordDefense, axeDefense, scoutDefense, lightDefense, heavyDefense, ramDefense, catapultDefense, nobleDefense;
-        private int spearSurvived, swordSurvived, axeSurvived, scoutSurvived, lightSurvived, heavySurvived, ramSurvived, catapultSurvived, nobleSurvived;
-        #endregion
-
         #region Properties
 
         public ReportType Type
@@ -21,103 +15,113 @@ namespace beans
             get { return ReportType.DefenseOther; }
         }
 
+        public Village FromVillage
+        {
+            get;
+            set;
+        }
+        public Village ToVillage
+        {
+            get;
+            set;
+        }
+        public Player ToPlayer
+        {
+            get;
+            set;
+        }
+
         public virtual int SpearDefense
         {
-            get { return this.spearDefense; }
-            set { this.spearDefense = value; }
+            get;
+            set;
         }
         public virtual int AxeDefense
         {
-            get { return this.axeDefense; }
-            set { this.axeDefense = value; }
+            get;
+            set;
         }
         public virtual int SwordDefense
         {
-            get { return this.swordDefense; }
-            set { this.swordDefense = value; }
+            get;
+            set;
         }
         public virtual int ScoutDefense
         {
-            get { return this.scoutDefense; }
-            set { this.scoutDefense = value; }
+            get;
+            set;
         }
-        public virtual int LightDefense
+        public virtual int LightCavalryDefense
         {
-            get { return this.lightDefense; }
-            set { this.lightDefense = value; }
+            get;
+            set;
         }
-        public virtual int HeavyDefense
+        public virtual int HeavyCavalryDefense
         {
-            get { return this.heavyDefense; }
-            set { this.heavyDefense = value; }
+            get;
+            set;
         }
         public virtual int RamDefense
         {
-            get { return this.ramDefense; }
-            set { this.ramDefense = value; }
+            get; 
+            set; 
         }
         public virtual int CatapultDefense
         {
-            get { return this.catapultDefense; }
-            set { this.catapultDefense = value; }
+            get;
+            set;
         }
         public virtual int NobleDefense
         {
-            get { return this.nobleDefense; }
-            set { this.nobleDefense = value; }
+            get;
+            set;
         }
 
-        public virtual int SpearSurvived
+        public virtual int SpearDead
         {
-            get { return this.spearSurvived; }
-            set { this.spearSurvived = value; }
+            get;
+            set;
         }
-        public virtual int AxeSurvived
+        public virtual int AxeDead
         {
-            get { return this.axeSurvived; }
-            set { this.axeSurvived = value; }
+            get;
+            set;
         }
-        public virtual int SwordSurvived
+        public virtual int SwordDead
         {
-            get { return this.swordSurvived; }
-            set { this.swordSurvived = value; }
+            get;
+            set;
         }
-        public virtual int ScoutSurvived
+        public virtual int ScoutDead
         {
-            get { return this.scoutSurvived; }
-            set { this.scoutSurvived = value; }
+            get;
+            set;
         }
-        public virtual int LightSurvived
+        public virtual int LightCavalryDead
         {
-            get { return this.lightSurvived; }
-            set { this.lightSurvived = value; }
+            get;
+            set;
         }
-        public virtual int HeavySurvived
+        public virtual int HeavyCavalryDead
         {
-            get { return this.heavySurvived; }
-            set { this.heavySurvived = value; }
+            get;
+            set;
         }
-        public virtual int RamSurvived
+        public virtual int RamDead
         {
-            get { return this.ramSurvived; }
-            set { this.ramSurvived = value; }
+            get;
+            set;
         }
-        public virtual int CatapultSurvived
+        public virtual int CatapultDead
         {
-            get { return this.catapultSurvived; }
-            set { this.catapultSurvived = value; }
+            get;
+            set;
         }
-        public virtual int NobleSurvived
+        public virtual int NobleDead
         {
-            get { return this.nobleSurvived; }
-            set { this.nobleSurvived = value; }
+            get;
+            set;
         }
         #endregion
-
-
-        public DefenseOtherReport()
-        {
-            
-        }
     }
 }

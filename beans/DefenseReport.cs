@@ -22,6 +22,18 @@ namespace beans
             set;
         }
 
+        public Player FromPlayer
+        {
+            get;
+            set;
+        }
+
+        public Player ToPlayer
+        {
+            get;
+            set;
+        }
+
         public virtual int SpearSent
         {
             get;
@@ -68,47 +80,47 @@ namespace beans
             set;
         }
 
-        public virtual int SpearReturnt
+        public virtual int SpearAttackDead
         {
             get;
             set;
         }
-        public virtual int AxeReturnt
+        public virtual int AxeAttackDead
         {
             get;
             set;
         }
-        public virtual int SwordReturnt
+        public virtual int SwordAttackDead
         {
             get;
             set;
         }
-        public virtual int ScoutReturnt
+        public virtual int ScoutAttackDead
         {
             get;
             set;
         }
-        public virtual int LightCavalryReturnt
+        public virtual int LightCavalryAttackDead
         {
             get;
             set;
         }
-        public virtual int HeavyCavalryReturnt
+        public virtual int HeavyCavalryAttackDead
         {
             get;
             set;
         }
-        public virtual int RamReturnt
+        public virtual int RamAttackDead
         {
             get;
             set;
         }
-        public virtual int CatapultReturnt
+        public virtual int CatapultAttackDead
         {
             get;
             set;
         }
-        public virtual int NobleReturnt
+        public virtual int NobleAttackDead
         {
             get;
             set;
@@ -160,47 +172,47 @@ namespace beans
             set;
         }
 
-        public virtual int SpearSurvived
+        public virtual int SpearDefenseDead
         {
             get;
             set;
         }
-        public virtual int AxeSurvived
+        public virtual int AxeDefenseDead
         {
             get;
             set;
         }
-        public virtual int SwordSurvived
+        public virtual int SwordDefenseDead
         {
             get;
             set;
         }
-        public virtual int ScoutSurvived
+        public virtual int ScoutDefenseDead
         {
             get;
             set;
         }
-        public virtual int LightCavalrySurvived
+        public virtual int LightCavalryDefenseDead
         {
             get;
             set;
         }
-        public virtual int HeavyCavalrySurvived
+        public virtual int HeavyCavalryDefenseDead
         {
             get;
             set;
         }
-        public virtual int RamSurvived
+        public virtual int RamDefenseDead
         {
             get;
             set;
         }
-        public virtual int CatapultSurvived
+        public virtual int CatapultDefenseDead
         {
             get;
             set;
         }
-        public virtual int NobleSurvived
+        public virtual int NobleDefenseDead
         {
             get;
             set;
@@ -248,12 +260,12 @@ namespace beans
             set;
         }
 
-        public virtual int LoyalAfter
+        public virtual double LoyalAfter
         {
             get;
             set;
         }
-        public virtual int LoyalBefore
+        public virtual double LoyalBefore
         {
             get;
             set;
