@@ -8,6 +8,15 @@ namespace beans
     public class AttackReport:Report
     {
 
+        public override ReportType Type
+        {
+            get
+            {
+                return ReportType.Attack;
+            }
+
+        }
+
         public  int SpearSent
         {
             get;
@@ -28,12 +37,12 @@ namespace beans
             get;
             set;
         }
-        public  int LightSent
+        public  int LightCavalrySent
         {
             get;
             set;
         }
-        public  int HeavySent
+        public int HeavyCavalrySent
         {
             get;
             set;
@@ -54,47 +63,47 @@ namespace beans
             set;
         }
 
-        public  int SpearReturnt
+        public  int SpearAttackDead
         {
             get;
             set;
         }
-        public  int AxeReturnt
+        public  int AxeAttackDead
         {
             get;
             set;
         }
-        public  int SwordReturnt
+        public  int SwordAttackDead
         {
             get;
             set;
         }
-        public  int ScoutReturnt
+        public  int ScoutAttackDead
         {
             get;
             set;
         }
-        public  int LightReturnt
+        public int LightCavalryAttackDead
         {
             get;
             set;
         }
-        public  int HeavyReturnt
+        public int HeavyCavalryAttackDead
         {
             get;
             set;
         }
-        public  int RamReturnt
+        public  int RamAttackDead
         {
             get;
             set;
         }
-        public  int CatapultReturnt
+        public  int CatapultAttackDead
         {
             get;
             set;
         }
-        public  int NobleReturnt
+        public  int NobleAttackDead
         {
             get;
             set;
@@ -120,12 +129,12 @@ namespace beans
             get;
             set;
         }
-        public  int LightDefense
+        public int LightCavalryDefense
         {
             get;
             set;
         }
-        public  int HeavyDefense
+        public int HeavyCavalryDefense
         {
             get;
             set;
@@ -146,47 +155,47 @@ namespace beans
             set;
         }
 
-        public  int SpearSurvived
+        public  int SpearDefenseDead
         {
             get;
             set;
         }
-        public  int AxeSurvived
+        public  int AxeDefenseDead
         {
             get;
             set;
         }
-        public  int SwordSurvived
+        public  int SwordDefenseDead
         {
             get;
             set;
         }
-        public  int ScoutSurvived
+        public  int ScoutDefenseDead
         {
             get;
             set;
         }
-        public  int LightSurvived
+        public int LightCavalryDefenseDead
         {
             get;
             set;
         }
-        public  int HeavySurvived
+        public int HeavyCavalryDefenseDead
         {
             get;
             set;
         }
-        public  int RamSurvived
+        public  int RamDefenseDead
         {
             get;
             set;
         }
-        public  int CatapultSurvived
+        public  int CatapultDefenseDead
         {
             get;
             set;
         }
-        public  int NobleSurvived
+        public  int NobleDefenseDead
         {
             get;
             set;
@@ -233,12 +242,12 @@ namespace beans
             get;
             set;
         }
-        public  int LoyalAfter
+        public  double LoyalAfter
         {
             get;
             set;
         }
-        public  int LoyalBefore
+        public double LoyalBefore
         {
             get;
             set;
@@ -258,12 +267,12 @@ namespace beans
             get;
             set;
         }
-        public Village From
+        public Village FromVillage
         {
             get;
             set;
         }
-        public Village To
+        public Village ToVillage
         {
             get;
             set;
