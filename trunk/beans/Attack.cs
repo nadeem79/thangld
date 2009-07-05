@@ -455,7 +455,7 @@ namespace beans
                     this.ToVillage.VillageTroopData.SpearInVillage = this.Spear - spearLostInAttackSide;
                     this.ToVillage.VillageTroopData.SwordInVillage = this.Sword - swordLostInAttackSide;
                     this.ToVillage.VillageTroopData.AxeInVillage = this.Axe - axeLostInAttackSide;
-                    this.ToVillage.VillageTroopData.ScoutInVillage = this.Scout - scoutLostInAttackSide;
+                    //this.ToVillage.VillageTroopData.ScoutInVillage = this.Scout - scoutLostInAttackSide;
                     this.ToVillage.VillageTroopData.LightCavalryInVillage = this.LightCavalry - lightCavalryLostInAttackSide;
                     this.ToVillage.VillageTroopData.HeavyCavalryInVillage = this.HeavyCavalry - heavyCavalryLostInAttackSide;
                     this.ToVillage.VillageTroopData.RamInVillage = this.Ram - ramLostInAttackSide;
@@ -557,14 +557,14 @@ namespace beans
                 this.FromVillage.VillageTroopData.NobleOfVillage -= this.Noble;
 
                 this.ToVillage.VillageTroopData.SpearInVillage -= spearLostInDefenseSide;
-                this.ToVillage.VillageTroopData.SpearInVillage -= swordLostInDefenseSide;
-                this.ToVillage.VillageTroopData.SpearInVillage -= axeLostInDefenseSide;
-                this.ToVillage.VillageTroopData.SpearInVillage -= scoutLostInDefenseSide;
-                this.ToVillage.VillageTroopData.SpearInVillage -= lightCavalryLostInDefenseSide;
-                this.ToVillage.VillageTroopData.SpearInVillage -= heavyCavalryLostInDefenseSide;
-                this.ToVillage.VillageTroopData.SpearInVillage -= ramLostInDefenseSide;
-                this.ToVillage.VillageTroopData.SpearInVillage -= catapultLostInDefenseSide;
-                this.ToVillage.VillageTroopData.SpearInVillage -= nobleLostInDefenseSide;
+                this.ToVillage.VillageTroopData.SwordInVillage -= swordLostInDefenseSide;
+                this.ToVillage.VillageTroopData.AxeInVillage -= axeLostInDefenseSide;
+                //this.ToVillage.VillageTroopData.ScoutInVillage -= scoutLostInDefenseSide;
+                this.ToVillage.VillageTroopData.LightCavalryInVillage -= lightCavalryLostInDefenseSide;
+                this.ToVillage.VillageTroopData.HeavyCavalryInVillage -= heavyCavalryLostInDefenseSide;
+                this.ToVillage.VillageTroopData.RamInVillage -= ramLostInDefenseSide;
+                this.ToVillage.VillageTroopData.CatapultInVillage -= catapultLostInDefenseSide;
+                this.ToVillage.VillageTroopData.NobleInVillage -= nobleLostInDefenseSide;
 
                 int spearOfVillageLost = (int)Math.Round(this.ToVillage.VillageTroopData.Spear * (1 - ratio));
                 int swordOfVillageLost = (int)Math.Round(this.ToVillage.VillageTroopData.Sword * (1 - ratio));
@@ -602,23 +602,57 @@ namespace beans
 
                 foreach (Station station in stations)
                 {
-                    station.Spear = (int)Math.Round(station.Spear * ratio);
-                    station.Sword = (int)Math.Round(station.Sword * ratio);
-                    station.Axe = (int)Math.Round(station.Axe * ratio);
-                    station.LightCavalry = (int)Math.Round(station.LightCavalry * ratio);
-                    station.Scout = (int)Math.Round(station.Scout * ratio);
-                    station.HeavyCavalry = (int)Math.Round(station.HeavyCavalry * ratio);
-                    station.Ram = (int)Math.Round(station.Ram * ratio);
-                    station.Catapult = (int)Math.Round(station.Catapult * ratio);
-                    station.Noble = (int)Math.Round(station.Noble * ratio);
+                    DefenseOtherReport defenseOtherReport = null;
+                    if (station.FromVillage.Player != this.ToVillage.Player)
+                    {
+                        defenseOtherReport = new DefenseOtherReport();
+                        defenseOtherReport.SpearDefense = station.Spear;
+                        defenseOtherReport.SwordDefense = station.Sword;
+                        defenseOtherReport.AxeDefense = station.Axe;
+                        defenseOtherReport.ScoutDefense = station.Scout;
+                        defenseOtherReport.LightCavalryDefense = station.LightCavalry;
+                        defenseOtherReport.HeavyCavalryDefense = station.HeavyCavalry;
+                        defenseOtherReport.RamDefense = station.Ram;
+                        defenseOtherReport.CatapultDefense = station.Catapult;
+                        defenseOtherReport.NobleDefense = station.Noble;
+                    }
+
+                    int spearDead = (int)Math.Round(station.Spear * (1 - ratio));
+                    int swordDead = (int)Math.Round(station.Sword * (1 - ratio));
+                    int axeDead = (int)Math.Round(station.Axe * (1 - ratio));
+                    int scoutDead = (int)Math.Round(station.Scout * (1 - ratio));
+                    int lightCavalryDead = (int)Math.Round(station.LightCavalry * (1 - ratio));
+                    int heavyCavalryDead = (int)Math.Round(station.HeavyCavalry * (1 - ratio));
+                    int ramDead = (int)Math.Round(station.Ram * (1 - ratio));
+                    int catapultDead = (int)Math.Round(station.Catapult * (1 - ratio));
+                    int nobleDead = (int)Math.Round(station.Noble * (1 - ratio));
+
+                    station.Spear -= spearDead;
+                    station.Sword -= swordDead;
+                    station.Axe -= axeDead;
+                    station.LightCavalry -= scoutDead;
+                    station.Scout -= lightCavalryDead;
+                    station.HeavyCavalry -= heavyCavalryDead;
+                    station.Ram -= ramDead;
+                    station.Catapult -= catapultDead;
+                    station.Noble -= nobleDead;
 
                     #region tạo report
                     if (station.FromVillage.Player != this.ToVillage.Player)
                     {
-                        DefenseOtherReport defenseOtherReport = new DefenseOtherReport();
                         defenseOtherReport.Time = this.LandingTime;
                         defenseOtherReport.Owner = station.FromVillage.Player;
                         defenseOtherReport.Title = "Quân phòng thủ của bạn ở " + this.ToVillage.Name + "(" + this.ToVillage.X.ToString() + "|" + this.ToVillage.Y.ToString() + ") bị tấn công";
+
+                        defenseOtherReport.SpearDead = spearDead;
+                        defenseOtherReport.SwordDead = swordDead;
+                        defenseOtherReport.AxeDead = axeDead;
+                        defenseOtherReport.ScoutDead = scoutDead;
+                        defenseOtherReport.LightCavalryDead = lightCavalryDead;
+                        defenseOtherReport.HeavyCavalryDead = heavyCavalryDead;
+                        defenseOtherReport.RamDead = ramDead;
+                        defenseOtherReport.CatapultDead = catapultDead;
+                        defenseOtherReport.NobleDead = nobleDead;
 
                         session.Save(defenseOtherReport);
                     }

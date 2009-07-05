@@ -367,10 +367,10 @@ namespace beans
         public void Save(ISession session)
         {
             session.Save(this);
-            session.Save(this.Buildings);
-            session.Save(this.Resources);
-            session.Save(this.Research);
-            session.Save(this.Troop);
+            session.Save(this.VillageBuildingData);
+            session.Save(this.VillageResourceData);
+            session.Save(this.VillageResearchData);
+            session.Save(this.VillageTroopData);
         }
 
         public Village GetVillageByID(int ID, ISession session)
