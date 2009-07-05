@@ -15,21 +15,21 @@ namespace beans
         {
 
             return (from attack in session.Linq<Attack>()
-                    where attack.To == this
+                    where attack.ToVillage == this
                     select attack).Count();
 
         }
         public int GetIncomingSupportCount(ISession session)
         {
             return (from support in session.Linq<Support>()
-                    where support.To == this
+                    where support.ToVillage == this
                     select support).Count();
         }
 
         public List<MovingCommand> GetTroopMovement(ISession session)
         {
             return (from movement in session.Linq<MovingCommand>()
-                    where (movement.From == this || movement.To == this)
+                    where (movement.FromVillage == this || movement.ToVillage == this)
                     && movement.LandingTime > this.LastUpdate
                     orderby movement.LandingTime ascending
                     select movement).ToList();
@@ -38,7 +38,7 @@ namespace beans
         public List<MovingCommand> GetTroopMovement(DateTime time, ISession session)
         {
             return (from movement in session.Linq<MovingCommand>()
-                    where (movement.From == this || movement.To == this)
+                    where (movement.FromVillage == this || movement.ToVillage == this)
                     && movement.LandingTime < time
                     && movement.LandingTime > this.LastUpdate
                     orderby movement.LandingTime ascending
