@@ -7,7 +7,6 @@ namespace beans
 {
     public class VillageTroopData:IdentityObject
     {
-        #region Properties.Troop
 
         #region Quân đội có thể điều động
         public virtual int Spear
@@ -152,9 +151,6 @@ namespace beans
             set;
         }
         #endregion
-
-        #endregion
-
 
         public virtual Village Village
         {

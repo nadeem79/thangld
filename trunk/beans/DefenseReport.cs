@@ -8,8 +8,6 @@ namespace beans
     public class DefenseReport:Report
     {
 
-        #region Properties
-
         public Village FromVillage
         {
             get;
@@ -287,12 +285,11 @@ namespace beans
             set;
         }
 
-        public ReportType Type
+        public override ReportType Type
         {
             get { return ReportType.Defense; }
         }
 
-        #endregion
 
     }
 }
