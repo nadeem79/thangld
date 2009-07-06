@@ -79,5 +79,38 @@ namespace beans
             return (int)(canStore * this.SecondPerResourceUnit(type));
         }
 
+        public SendResource CreateSendResource(ISession session,
+                                                int x,
+                                                int y,
+                                                int clay,
+                                                int wood,
+                                                int iron)
+        {
+            if (x == this.X && y == this.Y)
+                throw new Exception("Nhập toạ độ");
+
+            if ((clay + wood + iron) == 0)
+                throw new Exception("Nhập một loại tài nguyên");
+
+            if ((clay > this.VillageResourceData.Clay) ||
+            (wood > this.VillageResourceData.Wood) ||
+            (iron > this.VillageResourceData.Iron))
+                throw new Exception("Không đủ tài nguyên");
+
+            Village toVillage = Village.GetVillageByCoordinate(x, y, session);
+            if (toVillage == null)
+                throw new Exception("Toạ độ không tồn tại");
+
+            SendResource sendResource = new SendResource();
+            sendResource.Clay = clay;
+            sendResource.Iron = iron;
+            sendResource.Wood = wood;
+
+            sendResource.StartingTime = DateTime.Now;
+            sendResource.LandingTime = Map.LandingTime(TroopType.Merchant, this, toVillage, sendResource.StartingTime);
+            sendResource.FromVillage = this;
+            sendResource.ToVillage = toVillage;
+
+        }
     }
 }
