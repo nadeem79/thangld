@@ -65,23 +65,23 @@ namespace beans
 
         public override void Save(ISession session)
         {
-            if ((this.Spear > this.From.Troop.Spear) ||
-            (this.Sword > this.From.Troop.Sword) ||
-            (this.Axe > this.From.Troop.Axe) ||
-            (this.Scout > this.From.Troop.Scout) ||
-            (this.Light > this.From.Troop.Light) ||
-            (this.Heavy > this.From.Troop.Heavy) ||
-            (this.Ram > this.From.Troop.Ram) ||
-            (this.Catapult > this.From.Troop.Catapult) ||
-            (this.Noble > this.From.Troop.Noble))
+            if ((this.Spear > this.FromVillage.VillageTroopData.Spear) ||
+            (this.Sword > this.FromVillage.VillageTroopData.Sword) ||
+            (this.Axe > this.FromVillage.VillageTroopData.Axe) ||
+            (this.Scout > this.FromVillage.VillageTroopData.Scout) ||
+            (this.LightCavalry > this.FromVillage.VillageTroopData.LightCavalry) ||
+            (this.HeavyCavalry > this.FromVillage.VillageTroopData.HeavyCavalry) ||
+            (this.Ram > this.FromVillage.VillageTroopData.Ram) ||
+            (this.Catapult > this.FromVillage.VillageTroopData.Catapult) ||
+            (this.Noble > this.FromVillage.VillageTroopData.Noble))
                 throw new Exception("Không đủ quân");
 
             TroopType type = TroopType.Spear;
             if (this.Scout > 0)
                 type = TroopType.Scout;
-            if (this.Light > 0)
+            if (this.LightCavalry > 0)
                 type = TroopType.Light;
-            if (this.Heavy > 0)
+            if (this.HeavyCavalry > 0)
                 type = TroopType.Heavy;
             if (this.Spear > 0)
                 type = TroopType.Spear;
@@ -96,67 +96,67 @@ namespace beans
             if (this.Noble > 0)
                 type = TroopType.Nobleman;
 
-            this.StartTime = DateTime.Now;
-            this.LandingTime = Map.LandingTime(type, this.From, this.To, this.StartTime);
+            this.StartingTime = DateTime.Now;
+            this.LandingTime = Map.LandingTime(type, this.FromVillage, this.ToVillage, this.StartingTime);
 
-            this.From.Troop.Spear -= this.Spear;
-            this.From.Troop.Sword -= this.Sword;
-            this.From.Troop.Axe -= this.Axe;
-            this.From.Troop.Scout -= this.Scout;
-            this.From.Troop.Light -= this.Light;
-            this.From.Troop.Heavy -= this.Heavy;
-            this.From.Troop.Ram -= this.Ram;
-            this.From.Troop.Catapult -= this.Catapult;
-            this.From.Troop.Noble -= this.Noble;
+            this.FromVillage.VillageTroopData.Spear -= this.Spear;
+            this.FromVillage.VillageTroopData.Sword -= this.Sword;
+            this.FromVillage.VillageTroopData.Axe -= this.Axe;
+            this.FromVillage.VillageTroopData.Scout -= this.Scout;
+            this.FromVillage.VillageTroopData.LightCavalry -= this.LightCavalry;
+            this.FromVillage.VillageTroopData.HeavyCavalry -= this.HeavyCavalry;
+            this.FromVillage.VillageTroopData.Ram -= this.Ram;
+            this.FromVillage.VillageTroopData.Catapult -= this.Catapult;
+            this.FromVillage.VillageTroopData.Noble -= this.Noble;
 
-            this.From.Troop.TotalSpear -= this.Spear;
-            this.From.Troop.TotalSword -= this.Sword;
-            this.From.Troop.TotalAxe -= this.Axe;
-            this.From.Troop.TotalScout -= this.Scout;
-            this.From.Troop.TotalLight -= this.Light;
-            this.From.Troop.TotalHeavy -= this.Heavy;
-            this.From.Troop.TotalRam -= this.Ram;
-            this.From.Troop.TotalCatapult -= this.Catapult;
-            this.From.Troop.TotalNoble -= this.Noble;
+            this.FromVillage.VillageTroopData.SpearInVillage -= this.Spear;
+            this.FromVillage.VillageTroopData.SwordInVillage -= this.Sword;
+            this.FromVillage.VillageTroopData.AxeInVillage -= this.Axe;
+            this.FromVillage.VillageTroopData.ScoutInVillage -= this.Scout;
+            this.FromVillage.VillageTroopData.LightCavalry -= this.LightCavalry;
+            this.FromVillage.VillageTroopData.HeavyCavalryInVillage -= this.HeavyCavalry;
+            this.FromVillage.VillageTroopData.RamInVillage -= this.Ram;
+            this.FromVillage.VillageTroopData.CatapultInVillage -= this.Catapult;
+            this.FromVillage.VillageTroopData.NobleInVillage -= this.Noble;
 
             session.Save(this);
-            session.Update(this.From);
+            session.Update(this.FromVillage);
         }
 
         public override MovingCommand Effect(ISession session)
         {
             ICriteria criteria = session.CreateCriteria(typeof(Station));
 
-            criteria.Add(Expression.Eq("AtVillage", this.To));
-            criteria.Add(Expression.Eq("FromVillage", this.From));
+            criteria.Add(Expression.Eq("AtVillage", this.ToVillage));
+            criteria.Add(Expression.Eq("FromVillage", this.FromVillage));
             IList<Station> lstStations = criteria.List<Station>();
 
             if (lstStations.Count == 0)
             {
                 Station newStation = new Station();
-                newStation.FromVillage = this.From;
-                newStation.AtVillage = this.To;
+                newStation.FromVillage = this.FromVillage;
+                newStation.AtVillage = this.ToVillage;
                 newStation.Spear = this.Spear;
                 newStation.Sword = this.Sword;
                 newStation.Axe = this.Axe;
                 newStation.Scout = this.Scout;
-                newStation.Light = this.Light;
-                newStation.Heavy = this.Heavy;
+                newStation.LightCavalry = this.LightCavalry;
+                newStation.HeavyCavalry = this.HeavyCavalry;
                 newStation.Ram = this.Ram;
                 newStation.Catapult = this.Catapult;
                 newStation.Noble = this.Noble;
 
-                this.To.Troop.TotalSpear += this.Spear;
-                this.To.Troop.TotalSword += this.Sword;
-                this.To.Troop.TotalAxe += this.Axe;
-                this.To.Troop.TotalLight += this.Light;
-                this.To.Troop.TotalHeavy += this.Heavy;
-                this.To.Troop.TotalScout += this.Scout;
-                this.To.Troop.TotalRam += this.Ram;
-                this.To.Troop.TotalCatapult += this.Catapult;
-                this.To.Troop.TotalNoble += this.Noble;
+                this.ToVillage.VillageTroopData.SpearInVillage += this.Spear;
+                this.ToVillage.VillageTroopData.SwordInVillage += this.Sword;
+                this.ToVillage.VillageTroopData.AxeInVillage+= this.Axe;
+                this.ToVillage.VillageTroopData.LightCavalryInVillage += this.LightCavalry;
+                this.ToVillage.VillageTroopData.HeavyCavalryInVillage += this.HeavyCavalry;
+                this.ToVillage.VillageTroopData.ScoutInVillage += this.Scout;
+                this.ToVillage.VillageTroopData.RamInVillage += this.Ram;
+                this.ToVillage.VillageTroopData.CatapultInVillage += this.Catapult;
+                this.ToVillage.VillageTroopData.NobleInVillage += this.Noble;
 
-                session.Update(this.To);
+                session.Update(this.ToVillage);
                 session.Save(newStation);
             }
             else
@@ -166,45 +166,44 @@ namespace beans
                 station.Sword += this.Sword;
                 station.Axe += this.Axe;
                 station.Scout += this.Scout;
-                station.Light += this.Light;
-                station.Heavy += this.Heavy;
+                station.LightCavalry += this.LightCavalry;
+                station.HeavyCavalry += this.HeavyCavalry;
                 station.Ram += this.Ram;
                 station.Catapult += this.Catapult;
                 station.Noble += this.Noble;
 
-                this.To.Troop.TotalSpear += this.Spear;
-                this.To.Troop.TotalSword += this.Sword;
-                this.To.Troop.TotalAxe += this.Axe;
-                this.To.Troop.TotalLight += this.Light;
-                this.To.Troop.TotalHeavy += this.Heavy;
-                this.To.Troop.TotalScout += this.Scout;
-                this.To.Troop.TotalRam += this.Ram;
-                this.To.Troop.TotalCatapult += this.Catapult;
-                this.To.Troop.TotalNoble += this.Noble;
+                this.ToVillage.VillageTroopData.SpearInVillage += this.Spear;
+                this.ToVillage.VillageTroopData.SwordInVillage += this.Sword;
+                this.ToVillage.VillageTroopData.AxeInVillage += this.Axe;
+                this.ToVillage.VillageTroopData.LightCavalryInVillage += this.LightCavalry;
+                this.ToVillage.VillageTroopData.HeavyCavalryInVillage += this.HeavyCavalry;
+                this.ToVillage.VillageTroopData.ScoutInVillage += this.Scout;
+                this.ToVillage.VillageTroopData.RamInVillage += this.Ram;
+                this.ToVillage.VillageTroopData.CatapultInVillage += this.Catapult;
+                this.ToVillage.VillageTroopData.NobleInVillage += this.Noble;
 
-                session.Update(this.To);
+                session.Update(this.ToVillage.VillageTroopData);
                 session.Save(station);
-                return;
             }
 
             SupportReport supportReport = new SupportReport();
-            supportReport.Owner = this.To.Owner;
+            supportReport.Owner = this.ToVillage.Player;
             supportReport.Time = this.LandingTime;
-            supportReport.Title = this.From.Owner + " gửi quân hỗ trợ " + this.To.Name + "(" + this.To.X.ToString("000") + "|" + this.To.Y.ToString("000") + ")";
-            supportReport.From = this.From;
-            supportReport.To = this.To;
+            supportReport.Title = this.FromVillage.Player + " gửi quân hỗ trợ " + this.ToVillage.Name + "(" + this.ToVillage.X.ToString("000") + "|" + this.ToVillage.Y.ToString("000") + ")";
+            supportReport.FromVillage = this.FromVillage;
+            supportReport.ToVillage = this.ToVillage;
             supportReport.Spear = this.Spear;
             supportReport.Sword = this.Sword;
             supportReport.Axe = this.Axe;
             supportReport.Scout = this.Scout;
-            supportReport.Light = this.Light;
-            supportReport.Heavy = this.Heavy;
+            supportReport.LightCavalry = this.LightCavalry;
+            supportReport.HeavyCavalry = this.HeavyCavalry;
             supportReport.Ram = this.Ram;
             supportReport.Catapult = this.Catapult;
             supportReport.Noble = this.Noble;
 
             session.Save(supportReport);
-            supportReport.Owner = this.From.Owner;
+            supportReport.Owner = this.FromVillage.Player;
             session.Save(supportReport);
 
 
@@ -217,21 +216,23 @@ namespace beans
             r.Sword = this.Sword;
             r.Axe = this.Axe;
             r.Scout = this.Scout;
-            r.Light = this.Light;
-            r.Heavy = this.Heavy;
+            r.LightCavalry = this.LightCavalry;
+            r.HeavyCavalry = this.HeavyCavalry;
             r.Ram = this.Ram;
             r.Catapult = this.Catapult;
             r.Noble = this.Noble;
-            r.From = this.To;
-            r.To = this.From;
-            r.Pending = false;
-            r.StartTime = DateTime.Now;
-            r.LandingTime = r.StartTime.Add(this.LandingTime - this.StartTime);
+            r.FromVillage = this.ToVillage;
+            r.ToVillage = this.FromVillage;
+            r.StartingTime = DateTime.Now;
+            r.LandingTime = r.StartingTime.Add(this.LandingTime - this.StartingTime);
 
 
             session.Save(r);
             session.Delete(this);
+
+            return r;
         }
+
         
         #endregion
 
