@@ -9,10 +9,7 @@ namespace beans
 {
     public class Support:MovingCommand
     {
-        #region Variables
-        #endregion
 
-        #region Properties
         public int Spear
         {
             get;
@@ -33,12 +30,12 @@ namespace beans
             get;
             set;
         }
-        public int Light
+        public int LightCavalry
         {
             get;
             set;
         }
-        public int Heavy
+        public int HeavyCavalry
         {
             get;
             set;
@@ -63,147 +60,10 @@ namespace beans
             get { return MoveType.Support; }
         }
 
-        #endregion
-
-        #region Constructors
-        public Support()
-        {
-
-        }
-
-        public Support(int ID)
-            : this()
-        {
-
-        }
-        #endregion
-
-        #region Static Members
-        public static Support CreateSupport(ISession session,
-                                            Village from,
-                                            int x,
-                                            int y,
-                                            int spear,
-                                            int sword,
-                                            int axe,
-                                            int scout,
-                                            int light,
-                                            int heavy,
-                                            int ram,
-                                            int catapult,
-                                            int noble)
-        {
-            if (x == from.X && y == from.Y)
-                throw new Exception("Nhập toạ độ");
-
-            int intTo = Village.CheckVillage(x, y, session);
-
-            if (intTo < 0)
-                throw new Exception("Toạ độ không tồn tại");
-
-            if ((spear + sword + axe + scout + light + heavy + ram + catapult + noble) == 0)
-                throw new Exception("Nhập một loại quân");
-
-            if ((spear > from.Troop.Spear) ||
-            (sword > from.Troop.Sword) ||
-            (axe > from.Troop.Axe) ||
-            (scout > from.Troop.Scout) ||
-            (light > from.Troop.Light) ||
-            (heavy > from.Troop.Heavy) ||
-            (ram > from.Troop.Ram) ||
-            (catapult > from.Troop.Catapult) ||
-            (noble > from.Troop.Noble))
-                throw new Exception("Không đủ quân");
-
-            Support support = new Support();
-            support.To = session.Load<Village>(intTo);
-            support.From = from;
-            
-
-            TroopType type = TroopType.Spear;
-            if (scout > 0)
-                type = TroopType.Scout;
-            if (light > 0)
-                type = TroopType.Light;
-            if (heavy > 0)
-                type = TroopType.Heavy;
-            if (spear > 0)
-                type = TroopType.Spear;
-            if (axe > 0)
-                type = TroopType.Axe;
-            if (sword > 0)
-                type = TroopType.Sword;
-            if (ram > 0)
-                type = TroopType.Ram;
-            if (catapult > 0)
-                type = TroopType.Catapult;
-            if (noble > 0)
-                type = TroopType.Nobleman;
-
-            support.Spear = spear;
-            support.Sword = sword;
-            support.Axe = axe;
-            support.Scout = scout;
-            support.Light = light;
-            support.Heavy = heavy;
-            support.Ram = ram;
-            support.Catapult = catapult;
-            support.Noble = noble;
-            support.StartTime = DateTime.Now;
-            support.LandingTime = Map.LandingTime(type, support.From.X, support.From.Y, support.To.X, support.To.Y, support.StartTime);
-            support.Pending = true;
-
-            session.Save(support);
-
-            return support;
-        }
-        #endregion
 
         #region Methods
 
-        public void execute(ISession session)
-        {
-            if ((this.Spear > this.From.Troop.Spear) ||
-            (this.Sword > this.From.Troop.Sword) ||
-            (this.Axe > this.From.Troop.Axe) ||
-            (this.Scout > this.From.Troop.Scout) ||
-            (this.Light > this.From.Troop.Light) ||
-            (this.Heavy > this.From.Troop.Heavy) ||
-            (this.Ram > this.From.Troop.Ram) ||
-            (this.Catapult > this.From.Troop.Catapult) ||
-            (this.Noble > this.From.Troop.Noble))
-                throw new Exception("Không đủ quân");
-
-            TimeSpan transitTime = this.LandingTime - this.StartTime;
-            this.StartTime = DateTime.Now;
-            this.LandingTime = this.StartTime + transitTime;
-            this.Pending = false;
-
-            this.From.Troop.Spear -= this.Spear;
-            this.From.Troop.Sword -= this.Sword;
-            this.From.Troop.Axe -= this.Axe;
-            this.From.Troop.Scout -= this.Scout;
-            this.From.Troop.Light -= this.Light;
-            this.From.Troop.Heavy -= this.Heavy;
-            this.From.Troop.Ram -= this.Ram;
-            this.From.Troop.Catapult -= this.Catapult;
-            this.From.Troop.Noble -= this.Noble;
-
-            this.From.Troop.TotalSpear -= this.Spear;
-            this.From.Troop.TotalSword -= this.Sword;
-            this.From.Troop.TotalAxe -= this.Axe;
-            this.From.Troop.TotalScout -= this.Scout;
-            this.From.Troop.TotalLight -= this.Light;
-            this.From.Troop.TotalHeavy -= this.Heavy;
-            this.From.Troop.TotalRam -= this.Ram;
-            this.From.Troop.TotalCatapult -= this.Catapult;
-            this.From.Troop.TotalNoble -= this.Noble;
-
-            session.Update(this);
-            session.Update(this.From);
-        }
-
-        public override void save(ISession session)
+        public override void Save(ISession session)
         {
             if ((this.Spear > this.From.Troop.Spear) ||
             (this.Sword > this.From.Troop.Sword) ||
@@ -263,7 +123,7 @@ namespace beans
             session.Update(this.From);
         }
 
-        public override void effect(ISession session)
+        public override MovingCommand Effect(ISession session)
         {
             ICriteria criteria = session.CreateCriteria(typeof(Station));
 
@@ -350,7 +210,7 @@ namespace beans
 
         }
 
-        public override void cancel(ISession session)
+        public override MovingCommand Cancel(ISession session)
         {
             Return r = new Return();
             r.Spear = this.Spear;

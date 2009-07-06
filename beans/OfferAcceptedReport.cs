@@ -8,15 +8,34 @@ namespace beans
     public class OfferAcceptedReport : Report
     {
 
-
-        #region Properties
-
-
-        public ReportType Type
+        public override ReportType Type
         {
             get { return ReportType.OfferAccepted; }
         }
-        #endregion
+
+        public ResourcesType BoughtType
+        {
+            get;
+            set;
+        }
+
+        public ResourcesType SoldType
+        {
+            get;
+            set;
+        }
+
+        public int BoughtQuantity
+        {
+            get;
+            set;
+        }
+
+        public int SoldQuantity
+        {
+            get;
+            set;
+        }
 
     }
 }

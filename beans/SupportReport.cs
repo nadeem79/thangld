@@ -7,26 +7,33 @@ namespace beans
 {
     public class SupportReport:Report
     {
-        #region Variables
 
-        #endregion
-
-        #region Properties
-
-        public ReportType Type
+        public override ReportType Type
         {
             get { return ReportType.Support; }
         }
-        public virtual Village From
+        public virtual Village FromVillage
         {
             get;
             set;
         }
-        public virtual Village To
+        public Player FromPlayer
         {
             get;
             set;
         }
+
+        public virtual Village ToVillage
+        {
+            get;
+            set;
+        }
+        public Player ToPlayer
+        {
+            get;
+            set;
+        }
+
         public virtual int Spear
         {
             get;
@@ -47,12 +54,12 @@ namespace beans
             get;
             set;
         }
-        public virtual int Light
+        public virtual int LightCavalry
         {
             get;
             set;
         }
-        public virtual int Heavy
+        public virtual int HeavyCavalry
         {
             get;
             set;
@@ -73,6 +80,5 @@ namespace beans
             set;
         }
 
-        #endregion
     }
 }

@@ -355,30 +355,13 @@ namespace beans
             return village;
         }
 
-        public void UpgradeBuilding(BuildingType building, int level)
-        {
-            for (int i = this[building]; i <= level; i++)
-                this.Points += Build.GetPrice(building, i, 1).Point;
-
-            this[building] = level;
-        }
-
-
-        public void Save(ISession session)
-        {
-            session.Save(this);
-            session.Save(this.VillageBuildingData);
-            session.Save(this.VillageResourceData);
-            session.Save(this.VillageResearchData);
-            session.Save(this.VillageTroopData);
-        }
-
-        public Village GetVillageByID(int ID, ISession session)
+        
+        public static Village GetVillageByID(int ID, ISession session)
         {
             return session.Load<Village>(ID);
         }
 
-        public Village GetVillageByCoordinate(int x, int y, ISession session)
+        public static Village GetVillageByCoordinate(int x, int y, ISession session)
         {
             return (from village in session.Linq<Village>()
                     where village.X == x && village.Y == y
@@ -390,6 +373,23 @@ namespace beans
         public override string ToString()
         {
             return this.Name;
+        }
+
+        public void UpgradeBuilding(BuildingType building, int level)
+        {
+            for (int i = this[building]; i <= level; i++)
+                this.Points += Build.GetPrice(building, i, 1).Point;
+
+            this[building] = level;
+        }
+
+        public void Save(ISession session)
+        {
+            session.Save(this);
+            session.Save(this.VillageBuildingData);
+            session.Save(this.VillageResourceData);
+            session.Save(this.VillageResearchData);
+            session.Save(this.VillageTroopData);
         }
 
         //Chưa xét trường hợp xây noble

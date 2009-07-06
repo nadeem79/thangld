@@ -7,83 +7,85 @@ namespace beans
 {
     public class SupportWithdawalReport : Report
     {
-        private Village from, to;
-        private int spearSent, swordSent, axeSent, scoutSent, lightSent, heavySent, ramSent, catapultSent, nobleSent;
-
-        #region Properties
 
 
-        public ReportType Type
+
+        public override ReportType Type
         {
             get { return ReportType.SupportWithdawal; }
         }
 
-        public virtual Village From
+        public virtual Village FromVillage
         {
-            get { return this.from; }
-            set { this.from = value; }
+            get;
+            set;
         }
 
-        public virtual Village To
+        public Player WithdrawPlayer
         {
-            get { return this.to; }
-            set { this.to = value; }
+            get;
+            set;
+        }
+
+        public virtual Village ToVillage
+        {
+            get;
+            set;
         }
 
         public virtual int Spear
         {
-            get { return spearSent; }
-            set { spearSent = value; }
+            get;
+            set;
         }
 
         public virtual int Sword
         {
-            get { return swordSent; }
-            set { swordSent = value; }
+            get;
+            set;
         }
 
         public virtual int Axe
         {
-            get { return axeSent; }
-            set { axeSent = value; }
+            get;
+            set;
         }
 
         public virtual int Scout
         {
-            get { return scoutSent; }
-            set { scoutSent = value; }
+            get;
+            set;
         }
 
-        public virtual int Light
+        public virtual int LightCavalry
         {
-            get { return lightSent; }
-            set { lightSent = value; }
+            get;
+            set;
         }
 
-        public virtual int Heavy
+        public virtual int HeavyCavalry
         {
-            get { return heavySent; }
-            set { heavySent = value; }
+            get;
+            set;
         }
 
         public virtual int Ram
         {
-            get { return ramSent; }
-            set { ramSent = value; }
+            get;
+            set;
         }
 
         public virtual int Catapult
         {
-            get { return catapultSent; }
-            set { catapultSent = value; }
+            get;
+            set;
         }
 
         public virtual int Noble
         {
-            get { return nobleSent; }
-            set { nobleSent = value; }
+            get;
+            set;
         }
-        #endregion
 
     }
 }

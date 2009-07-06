@@ -7,48 +7,52 @@ namespace beans
 {
     public class ResourceReceiveReport:Report
     {
-        #region Variables
-        private int iron, wood, clay;
-        private Village from, to;
-        #endregion
 
-        #region Properties
-
-        public virtual Village From
+        public virtual Village FromVillage
         {
-            get { return this.from; }
-            set { this.from = value; }
+            get;
+            set;
         }
 
-        public virtual Village To
+        public virtual Village ToVillage
         {
-            get { return this.to; }
-            set { this.to = value; }
+            get;
+            set;
+        }
+
+        public Player FromPlayer
+        {
+            get;
+            set;
+        }
+        public Player ToPlayer
+        {
+            get;
+            set;
         }
 
         public virtual int Iron
         {
-            get { return this.iron; }
-            set { this.iron = value; }
+            get;
+            set;
         }
 
         public virtual int Wood
         {
-            get { return this.wood; }
-            set { this.wood = value; }
+            get;
+            set;
         }
 
         public virtual int Clay
         {
-            get { return this.clay; }
-            set { this.clay = value; }
+            get;
+            set;
         }
 
-        public ReportType Type
+        public override ReportType Type
         {
             get { return ReportType.ResourceReceive; }
         }
-        #endregion
 
     }
 

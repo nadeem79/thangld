@@ -10,7 +10,7 @@ namespace beans
 
         #region Properties
 
-        public ReportType Type
+        public override ReportType Type
         {
             get { return ReportType.DefenseOther; }
         }

@@ -8,15 +8,23 @@ namespace beans
     public class InviteToTribeReport:Report
     {
 
-        #region Properties
 
-
-        public ReportType Type
+        public override ReportType Type
         {
             get { return ReportType.InviteToTribe; }
         }
-        #endregion
 
+        public Group Tribe
+        {
+            get;
+            set;
+        }
+
+        public Player Player
+        {
+            get;
+            set;
+        }
 
     }
 }

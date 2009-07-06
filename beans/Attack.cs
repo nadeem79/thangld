@@ -11,7 +11,6 @@ namespace beans
     public class Attack : MovingCommand
     {
 
-        #region Properties
         public virtual int Spear
         {
             get;
@@ -62,7 +61,6 @@ namespace beans
             get;
             set;
         }
-        #endregion
 
         public override void Save(ISession session)
         {
@@ -137,6 +135,8 @@ namespace beans
             #region Data Declaration
             StringTemplateGroup group = new StringTemplateGroup("attack");
             StringTemplate temp = new StringTemplate(group, reports.Attack);
+
+
             double luck, ratio;
             int spearLostInAttackSide;
             int swordLostInAttackSide;
@@ -195,7 +195,7 @@ namespace beans
             double lightCavalryHaul = config.GetNumericConfigurationItem("Unit.light_cavalry_can_haul").Value;
             double heavyCavalryHaul = config.GetNumericConfigurationItem("Unit.heavy_cavalry_can_haul").Value;
 
-            Return returnTroop;
+            Return returnTroop = null;
             AttackReport attackReport;
             DefenseReport defenseReport;
 
@@ -476,7 +476,7 @@ namespace beans
                     returnTroop.Spear = this.Spear - spearLostInAttackSide;
                     returnTroop.Sword = this.Sword - swordLostInAttackSide;
                     returnTroop.Axe = this.Axe - axeLostInAttackSide;
-                    returnTroop.Scout = this.Scout - scoutLostInAttackSide;
+                    //returnTroop.Scout = this.Scout - scoutLostInAttackSide;
                     returnTroop.LightCavalry = this.LightCavalry - lightCavalryLostInAttackSide;
                     returnTroop.HeavyCavalry = this.HeavyCavalry - heavyCavalryLostInAttackSide;
                     returnTroop.Ram = this.Ram - ramLostInAttackSide;
@@ -669,7 +669,7 @@ namespace beans
             attackReport.SpearAttackDead = spearLostInAttackSide;
             attackReport.SwordAttackDead = swordLostInAttackSide;
             attackReport.AxeAttackDead = axeLostInAttackSide;
-            attackReport.ScoutAttackDead = scoutLostInAttackSide;
+            //attackReport.ScoutAttackDead = scoutLostInAttackSide;
             attackReport.LightCavalryAttackDead = lightCavalryLostInAttackSide;
             attackReport.HeavyCavalryAttackDead = heavyCavalryLostInAttackSide;
             attackReport.RamAttackDead = ramLostInAttackSide;
@@ -720,6 +720,11 @@ namespace beans
             session.Save(defenseReport);
 
             session.Delete(this);
+
+            if (returnTroop != null)
+                session.Save(returnTroop);
+
+            return returnTroop;
         }
     
         public override MoveType Type
