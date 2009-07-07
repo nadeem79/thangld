@@ -35,8 +35,12 @@ namespace beans
             get;
             set;
         }
+        public virtual int Merchant
+        {
+            get;
+            set;
+        }
 
-        #region Methods
 
         public override MovingCommand Effect(ISession session)
         {
@@ -91,7 +95,6 @@ namespace beans
             return r;
         }
 
-        #endregion
 
         public override void Save(ISession session)
         {

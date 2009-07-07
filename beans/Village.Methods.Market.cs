@@ -11,7 +11,7 @@ namespace beans
 {
     public partial class Village
     {
-        public int MerchantOnTheWay(ISession session)
+        public virtual int MerchantOnTheWay(ISession session)
         {
 
             ICriteria criteria = session.CreateCriteria(typeof(SendResource));
@@ -26,7 +26,7 @@ namespace beans
             return merchantCount;
         }
 
-        public int MerchantOnTheWayHome(ISession session)
+        public virtual int MerchantOnTheWayHome(ISession session)
         {
 
             return (from Return r in session.Linq<Return>()
@@ -34,7 +34,7 @@ namespace beans
                     select r).Sum<Return>(r => r.Merchant);
         }
 
-        public int MerchantAvailable(ISession session)
+        public virtual int MerchantAvailable(ISession session)
         {
             
             ICriteria criteria = session.CreateCriteria(typeof(Offer));
@@ -51,12 +51,12 @@ namespace beans
             return this.VillageBuildingData.Merchant - merchantCount - this.MerchantOnTheWay(session) - this.MerchantOnTheWayHome(session);
         }
 
-        public int AvailableMerchant(ISession session)
+        public virtual int AvailableMerchant(ISession session)
         {
             return this.VillageBuildingData.Merchant - this.MerchantOnTheWay(session) - this.MerchantOnTheWayHome(session);
         }
 
-        public IList<SendResource> GetDependingResource(DateTime to, ISession session)
+        public virtual IList<SendResource> GetDependingResource(DateTime to, ISession session)
         {
 
             return (from SendResource sendResource in session.Linq<SendResource>()
@@ -67,7 +67,7 @@ namespace beans
                     select sendResource).ToList<SendResource>();
         }
 
-        public IList<SendResource> GetDependingResource(ISession session)
+        public virtual IList<SendResource> GetDependingResource(ISession session)
         {
 
             return (from SendResource sendResource in session.Linq<SendResource>()
@@ -76,13 +76,13 @@ namespace beans
                     select sendResource).ToList<SendResource>();
         }
 
-        public IList<SendResource> GetIncomingMerchants(ISession session)
+        public virtual IList<SendResource> GetIncomingMerchants(ISession session)
         {
             ICriteria criteria = session.CreateCriteria(typeof(SendResource));
             criteria.Add(Expression.Eq("To", this));
             return criteria.List<SendResource>();
         }
-        public IList<Return> GetReturnMerchants(ISession session)
+        public virtual IList<Return> GetReturnMerchants(ISession session)
         {
 
             return (from Return r in session.Linq<Return>()
@@ -91,7 +91,7 @@ namespace beans
                     select r).ToList<Return>();
 
         }
-        public IList<SendResource> GetOutgoingMerchants(ISession session)
+        public virtual IList<SendResource> GetOutgoingMerchants(ISession session)
         {
 
             return (from SendResource sendResource in session.Linq<SendResource>()
@@ -100,7 +100,7 @@ namespace beans
                     select sendResource).ToList<SendResource>();
         }
 
-        public IList<SendResource> GetOutgoingMerchants(DateTime to, ISession session)
+        public virtual IList<SendResource> GetOutgoingMerchants(DateTime to, ISession session)
         {
 
             return (from SendResource sendResource in session.Linq<SendResource>()
@@ -111,7 +111,7 @@ namespace beans
                     select sendResource).ToList<SendResource>();
         }
 
-        public IList<MovingCommand> IncomingMerchants(ISession session)
+        public virtual IList<MovingCommand> IncomingMerchants(ISession session)
         {
             IList<MovingCommand> incomings = new List<MovingCommand>();
             foreach (MovingCommand command in this.GetIncomingMerchants(session))
@@ -121,7 +121,7 @@ namespace beans
             return incomings;
         }
 
-        public IList<MovingCommand> GetIncomingMerchants(DateTime to, ISession session)
+        public virtual IList<MovingCommand> GetIncomingMerchants(DateTime to, ISession session)
         {
             ICriteria criteria = session.CreateCriteria(typeof(Return));
             criteria.Add(Expression.Gt("Merchant", 0));

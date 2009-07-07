@@ -147,7 +147,7 @@
     <Compile Include="VillageTroopData.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mapping\App.config">
+    <EmbeddedResource Include="MappingFiles\App.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <None Include="ClassDiagram1.cd" />
@@ -179,29 +179,29 @@
     <None Include="ClassDiagrams\Xem khả năng xây dựng công trình.cd" />
     <None Include="ClassDiagrams\Xây dựng công trình.cd" />
     <None Include="ClassDiagrams\Đăng nhập.cd" />
-    <None Include="Mapping\nhibernate-configuration.xsd" />
+    <None Include="MappingFiles\nhibernate-configuration.xsd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <EmbeddedResource Include="Mapping\nhibernate-mapping.xsd">
+    <EmbeddedResource Include="MappingFiles\nhibernate-mapping.xsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mapping\Player.hbm.xml">
+    <EmbeddedResource Include="MappingFiles\Player.hbm.xml">
       <Generator>nhibernate-mapping.xsd</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="Mapping\Village.hbm.xml">
+    <EmbeddedResource Include="MappingFiles\Village.hbm.xml">
       <Generator>nhibernate-mapping.xsd</Generator>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mapping\Build.hbm.xml" />
-    <EmbeddedResource Include="Mapping\Group.hbm.xml" />
-    <EmbeddedResource Include="Mapping\Offer.hbm.xml" />
-    <EmbeddedResource Include="Mapping\Recruit.hbm.xml" />
-    <EmbeddedResource Include="Mapping\Stationed.hbm.xml" />
+    <EmbeddedResource Include="MappingFiles\Build.hbm.xml" />
+    <EmbeddedResource Include="MappingFiles\Group.hbm.xml" />
+    <EmbeddedResource Include="MappingFiles\Offer.hbm.xml" />
+    <EmbeddedResource Include="MappingFiles\Recruit.hbm.xml" />
+    <EmbeddedResource Include="MappingFiles\Station.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -211,35 +211,35 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mapping\Configuration.hbm.xml">
+    <EmbeddedResource Include="MappingFiles\Configuration.hbm.xml">
       <Generator>nhibernate-mapping.xsd</Generator>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mapping\MovingCommand.hbm.xml" />
+    <EmbeddedResource Include="MappingFiles\MovingCommand.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mapping\Report.hbm.xml" />
+    <EmbeddedResource Include="MappingFiles\Report.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mapping\ShoutboxData.hbm.xml">
+    <EmbeddedResource Include="MappingFiles\ShoutboxData.hbm.xml">
       <Generator>nhibernate-mapping.xsd</Generator>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mapping\TribeInvite.hbm.xml" />
+    <EmbeddedResource Include="MappingFiles\TribeInvite.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mapping\filters.hbm.xml" />
+    <EmbeddedResource Include="MappingFiles\filters.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mapping\typedef.hbm.xml" />
+    <EmbeddedResource Include="MappingFiles\typedef.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mapping\Test.hbm.xml" />
+    <EmbeddedResource Include="MappingFiles\Test.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mapping\Text.hbm.xml">
+    <EmbeddedResource Include="MappingFiles\Text.hbm.xml">
       <Generator>nhibernate-mapping.xsd</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="reports.resx">
@@ -249,10 +249,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mapping\Mail.hbm.xml" />
-    <EmbeddedResource Include="Mapping\Research.hbm.xml" />
-    <EmbeddedResource Include="Mapping\WriteMail.hbm.xml" />
-    <EmbeddedResource Include="Mapping\Admin.hbm.xml">
+    <EmbeddedResource Include="MappingFiles\Mail.hbm.xml" />
+    <EmbeddedResource Include="MappingFiles\WriteMail.hbm.xml" />
+    <EmbeddedResource Include="MappingFiles\Admin.hbm.xml">
       <Generator>nhibernate-mapping.xsd</Generator>
     </EmbeddedResource>
     <Content Include="Templates\AttackReport.html">

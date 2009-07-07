@@ -9,7 +9,6 @@ namespace beans
     public class Station : IdentityObject
     {
 
-        #region Properties
 
         public virtual Village FromVillage
         {
@@ -68,9 +67,7 @@ namespace beans
             set;
         }
 
-        #endregion
 
-        #region Methods
         public Return Return(int spear, 
                             int sword,
                             int axe,
@@ -157,6 +154,5 @@ namespace beans
                                 this.Noble,
                                 session);
         }
-        #endregion
     }
 }

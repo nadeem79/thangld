@@ -9,23 +9,23 @@ namespace beans
     public abstract class MovingCommand : IdentityObject
     {
         #region Properties
-        public Village FromVillage
+        public virtual Village FromVillage
         {
             get;
             set;
         }
-        public Village ToVillage
+        public virtual Village ToVillage
         {
             get;
             set;
         }
 
-        public DateTime StartingTime
+        public virtual DateTime StartingTime
         {
             get;
             set;
         }
-        public DateTime LandingTime
+        public virtual DateTime LandingTime
         {
             get;
             set;

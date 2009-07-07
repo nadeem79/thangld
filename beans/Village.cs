@@ -17,7 +17,7 @@ namespace beans
         private double loyal;
         
         private Player _owner;
-        public Player Player
+        public virtual Player Player
         {
             get { return this._owner; }
             set { this._owner = value; }
@@ -43,7 +43,7 @@ namespace beans
             get;
             set;
         }
-        public double Loyal
+        public virtual double Loyal
         {
             get { return loyal; }
             set
@@ -64,12 +64,12 @@ namespace beans
             get;
             set;
         }
-        public double Population
+        public virtual double Population
         {
             get;
             set;
         }
-        public int MaxResources
+        public virtual int MaxResources
         {
             get
             {
@@ -88,7 +88,7 @@ namespace beans
                 return this._maxResources;
             }
         }
-        public int MaxPopulation
+        public virtual int MaxPopulation
         {
             get
             {
@@ -106,22 +106,18 @@ namespace beans
             }
         }
 
-        public VillageBuildingData VillageBuildingData
+        public virtual VillageBuildingData VillageBuildingData
         {
             get;
             set;
         }
-        public VillageResourcesData VillageResourceData
+        public virtual VillageResourcesData VillageResourceData
         {
             get;
             set;
         }
-        public VillageReseachData VillageResearchData
-        {
-            get;
-            set;
-        }
-        public VillageTroopData VillageTroopData
+
+        public virtual VillageTroopData VillageTroopData
         {
             get;
             set;
@@ -129,7 +125,7 @@ namespace beans
 
         #endregion
 
-        public int this[BuildingType buildType]
+        public virtual int this[BuildingType buildType]
         {
             get 
             {
@@ -223,7 +219,7 @@ namespace beans
                 }
             }
         }
-        public int this[TroopType troopType]
+        public virtual int this[TroopType troopType]
         {
             get
             {
@@ -252,7 +248,7 @@ namespace beans
                 }
             }
         }
-        public int this[ResourcesType resource]
+        public virtual int this[ResourcesType resource]
         {
             get
             {
@@ -260,16 +256,12 @@ namespace beans
                 {
                     case ResourcesType.Clay:
                         return this.VillageResourceData.Clay;
-                        break;
                     case ResourcesType.Wood:
                         return this.VillageResourceData.Wood;
-                        break;
                     case ResourcesType.Iron:
                         return this.VillageResourceData.Iron;
-                        break;
                     default:
                         return 0;
-                        break;
                 }
             }
             set
@@ -329,12 +321,12 @@ namespace beans
             village.VillageBuildingData = new VillageBuildingData();
             village.VillageTroopData = new VillageTroopData();
             village.VillageResourceData = new VillageResourcesData();
-            village.VillageResearchData = new VillageReseachData();
+            //village.VillageResearchData = new VillageReseachData();
 
             village.VillageBuildingData.Village = village;
             village.VillageTroopData.Village = village;
             village.VillageResourceData.Village = village;
-            village.VillageResearchData.Village = village;
+            //village.VillageResearchData.Village = village;
 
             village.X = X;
             village.Y = Y;
@@ -375,7 +367,7 @@ namespace beans
             return this.Name;
         }
 
-        public void UpgradeBuilding(BuildingType building, int level)
+        public virtual void UpgradeBuilding(BuildingType building, int level)
         {
             for (int i = this[building]; i <= level; i++)
                 this.Points += Build.GetPrice(building, i, 1).Point;
@@ -383,17 +375,17 @@ namespace beans
             this[building] = level;
         }
 
-        public void Save(ISession session)
+        public virtual void Save(ISession session)
         {
             session.Save(this);
             session.Save(this.VillageBuildingData);
             session.Save(this.VillageResourceData);
-            session.Save(this.VillageResearchData);
+            //session.Save(this.VillageResearchData);
             session.Save(this.VillageTroopData);
         }
 
         //Chưa xét trường hợp xây noble
-        public void Update(DateTime to, ISession session)
+        public virtual void Update(DateTime to, ISession session)
         {
             
         }

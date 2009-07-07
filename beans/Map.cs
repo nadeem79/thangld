@@ -54,7 +54,7 @@ namespace beans
             }
 
             Configuration config = Configuration.TribalWarsConfiguration;
-            NumericConfiguration troopSpeedConfiguration = config.GetNumericConfigurationItem("type");
+            NumericConfiguration troopSpeedConfiguration = config.GetNumericConfigurationItem(type);
 
             return start.AddMilliseconds(RangeCalculator(sourceX, sourceY, desX, desY) * troopSpeedConfiguration.Value);
         }
