@@ -29,6 +29,6 @@ public partial class SupportCommand : System.Web.UI.UserControl
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        this.pOwn.Visible = this.Command.From.Owner.ID == (int)Session["user"];
+        this.pOwn.Visible = this.Command.FromVillage.Player.ID == (int)Session["user"];
     }
 }

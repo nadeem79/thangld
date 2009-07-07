@@ -132,6 +132,9 @@ namespace beans
 
         public override MovingCommand Effect(ISession session)
         {
+
+            this.ToVillage.Update(this.LandingTime, session);
+
             #region Data Declaration
             StringTemplateGroup group = new StringTemplateGroup("attack");
             StringTemplate temp = new StringTemplate(group, reports.Attack);
@@ -688,7 +691,7 @@ namespace beans
             defenseReport.SpearAttackDead = spearLostInAttackSide;
             defenseReport.SwordAttackDead = swordLostInAttackSide;
             defenseReport.AxeAttackDead = axeLostInAttackSide;
-            defenseReport.ScoutAttackDead = scoutLostInAttackSide;
+            //defenseReport.ScoutAttackDead = scoutLostInAttackSide;
             defenseReport.LightCavalryAttackDead = lightCavalryLostInAttackSide;
             defenseReport.HeavyCavalryAttackDead = heavyCavalryLostInAttackSide;
             defenseReport.RamAttackDead = ramLostInAttackSide;

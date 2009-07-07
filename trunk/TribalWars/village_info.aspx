@@ -31,7 +31,7 @@
                         Chủ thành:
                     </td>
                     <td>
-                        <a href='user_info.aspx?id=<% Response.Write(this.village.ID); %>&player=<% Response.Write(this.target.Owner.ID); %>'><% Response.Write(this.target.Owner.Username); %></a>
+                        <a href='user_info.aspx?id=<% Response.Write(this.village.ID); %>&player=<% Response.Write(this.target.Player.ID); %>'><% Response.Write(this.target.Player.Username); %></a>
                     </td>
                 </tr>
                 <tr>

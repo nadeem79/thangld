@@ -1,8 +1,8 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="AttackCommand.ascx.cs"
     Inherits="AttackCommand" %>
 <h2>
-    Tấn công <% if (this.current.To.Owner.ID==(int)Session["user"]) Response.Write("tới "); %>thành phố
-    <% Response.Write(this.current.To.Name); %></h2>
+    Tấn công <% if (this.current.ToVillage.Player.ID==(int)Session["user"]) Response.Write("tới "); %>thành phố
+    <% Response.Write(this.current.ToVillage.Name); %></h2>
 <table class="vis" width="400">
     <tbody>
         <tr>
@@ -18,8 +18,8 @@
                 Lãnh chúa:
             </td>
             <td>
-                <a href="user_info.aspx?id=<% Response.Write(this.village.ID); %>&player=<% Response.Write(this.current.From.Owner.ID); %>">
-                    <%Response.Write(this.current.From.Owner.Username); %></a>
+                <a href="user_info.aspx?id=<% Response.Write(this.village.ID); %>&player=<% Response.Write(this.current.FromVillage.Player.ID); %>">
+                    <%Response.Write(this.current.FromVillage.Player.Username); %></a>
             </td>
         </tr>
         <tr>
@@ -27,9 +27,9 @@
                 Thành phố:
             </td>
             <td>
-                <a href="village_info.aspx?id=<% Response.Write(this.village.ID); %>&village=<% Response.Write(this.current.From.ID); %>">
-                    <% Response.Write(this.current.From.Name); %>
-                    (<% Response.Write(this.current.From.X.ToString("000")); %>|<% Response.Write(this.current.From.Y.ToString("000")); %>)</a>
+                <a href="village_info.aspx?id=<% Response.Write(this.village.ID); %>&village=<% Response.Write(this.current.FromVillage.ID); %>">
+                    <% Response.Write(this.current.FromVillage.Name); %>
+                    (<% Response.Write(this.current.FromVillage.X.ToString("000")); %>|<% Response.Write(this.current.FromVillage.Y.ToString("000")); %>)</a>
             </td>
         </tr>
         <tr>
@@ -40,8 +40,8 @@
                 Lãnh chúa:
             </td>
             <td>
-                <a href="user_info.aspx?id=<% Response.Write(this.village.ID); %>&player=<% Response.Write(this.current.To.Owner.ID); %>">
-                    <%Response.Write(this.current.To.Owner.Username); %></a>
+                <a href="user_info.aspx?id=<% Response.Write(this.village.ID); %>&player=<% Response.Write(this.current.ToVillage.Player.ID); %>">
+                    <%Response.Write(this.current.ToVillage.Player.Username); %></a>
             </td>
         </tr>
         <tr>
@@ -49,9 +49,9 @@
                 Thành phố:
             </td>
             <td>
-                <a href="village_info.aspx?id=<% Response.Write(this.village.ID); %>&village=<% Response.Write(this.current.To.ID); %>">
-                    <% Response.Write(this.current.To.Name); %>
-                    (<% Response.Write(this.current.To.X.ToString("000")); %>|<% Response.Write(this.current.To.Y.ToString("000")); %>)</a>
+                <a href="village_info.aspx?id=<% Response.Write(this.village.ID); %>&village=<% Response.Write(this.current.ToVillage.ID); %>">
+                    <% Response.Write(this.current.ToVillage.Name); %>
+                    (<% Response.Write(this.current.ToVillage.X.ToString("000")); %>|<% Response.Write(this.current.ToVillage.Y.ToString("000")); %>)</a>
             </td>
         </tr>
         <tr>
@@ -73,7 +73,7 @@
         </tr>
         <tr>
             <td colspan="3">
-                <a href="rally.aspx?id=<% if (this.current.To.Owner.ID == (int)Session["user"]) Response.Write(this.current.To.ID); else Response.Write(this.current.From.ID); %>">
+                <a href="rally.aspx?id=<% if (this.current.ToVillage.Player.ID == (int)Session["user"]) Response.Write(this.current.ToVillage.ID); else Response.Write(this.current.FromVillage.ID); %>">
                     » Trại lính</a>
             </td>
         </tr>
@@ -130,12 +130,12 @@
                         <% Response.Write(this.current.Scout); %></span>
                 </td>
                 <td>
-                    <span <% if (this.current.Light == 0) Response.Write("class='hidden'"); %>>
-                        <% Response.Write(this.current.Light); %></span>
+                    <span <% if (this.current.LightCavalry == 0) Response.Write("class='hidden'"); %>>
+                        <% Response.Write(this.current.LightCavalry); %></span>
                 </td>
                 <td>
-                    <span <% if (this.current.Heavy == 0) Response.Write("class='hidden'"); %>>
-                        <% Response.Write(this.current.Heavy); %></span>
+                    <span <% if (this.current.HeavyCavalry == 0) Response.Write("class='hidden'"); %>>
+                        <% Response.Write(this.current.HeavyCavalry); %></span>
                 </td>
                 <td>
                     <span <% if (this.current.Ram == 0) Response.Write("class='hidden'"); %>>

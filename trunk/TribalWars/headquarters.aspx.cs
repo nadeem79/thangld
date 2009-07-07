@@ -53,9 +53,9 @@ public partial class headquarters : System.Web.UI.Page
                     trans.Commit();
                 }
             }
-            master.ClayLabel.Text = this.village.Resources.Clay.ToString();
-            master.WoodLabel.Text = this.village.Resources.Wood.ToString();
-            master.IronLabel.Text = this.village.Resources.Iron.ToString();
+            master.ClayLabel.Text = this.village.VillageResourceData.Clay.ToString();
+            master.WoodLabel.Text = this.village.VillageResourceData.Wood.ToString();
+            master.IronLabel.Text = this.village.VillageResourceData.Iron.ToString();
         }
         catch (Exception ex)
         {

@@ -75,8 +75,10 @@
     <Compile Include="BuildingType.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Admin.cs" />
+    <Compile Include="InviteReport.cs" />
     <Compile Include="MovingCommandLandingTimeComparer.cs" />
     <Compile Include="NumericConfiguration.cs" />
+    <Compile Include="SendResourceReport.cs" />
     <Compile Include="StringConfiguration.cs" />
     <Compile Include="Village.Methods.Building.cs" />
     <Compile Include="Village.Methods.Resources.cs" />
@@ -100,7 +102,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>reports.resx</DependentUpon>
     </Compile>
-    <Compile Include="Research.cs" />
     <Compile Include="ResourceReceiveReport.cs" />
     <Compile Include="Return.cs" />
     <Compile Include="SendResource.cs" />

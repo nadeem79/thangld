@@ -56,7 +56,8 @@ namespace beans
                                     int heavy,
                                     int ram,
                                     int catapult,
-                                    int noble)
+                                    int noble,
+                                    BuildingType building)
         {
             if (x == this.X && y == this.Y)
                 throw new Exception("Nhập toạ độ");

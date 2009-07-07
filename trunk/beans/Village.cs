@@ -51,7 +51,7 @@ namespace beans
                 if (value > 100)
                     loyal = 100;
                 else
-                    _loyal = value;
+                    loyal = value;
             }
         }
         public virtual DateTime LastUpdate
@@ -136,35 +136,35 @@ namespace beans
                 switch (buildType)
                 {
                     case BuildingType.Headquarter:
-                        return this.Buildings.Headquarter;
+                        return this.VillageBuildingData.Headquarter;
                     case BuildingType.Academy:
-                        return this.Buildings.Academy;
+                        return this.VillageBuildingData.Academy;
                     case BuildingType.Barracks:
-                        return this.Buildings.Barracks;
+                        return this.VillageBuildingData.Barracks;
                     case BuildingType.ClayPit:
-                        return this.Buildings.ClayPit;
+                        return this.VillageBuildingData.ClayPit;
                     case BuildingType.Farm:
-                        return this.Buildings.Farm;
+                        return this.VillageBuildingData.Farm;
                     case BuildingType.HidingPlace:
-                        return this.Buildings.HidingPlace;
+                        return this.VillageBuildingData.HidingPlace;
                     case BuildingType.IronMine:
-                        return this.Buildings.IronMine;
+                        return this.VillageBuildingData.IronMine;
                     case BuildingType.Market:
-                        return this.Buildings.Market;
+                        return this.VillageBuildingData.Market;
                     case BuildingType.Rally:
-                        return this.Buildings.Rally;
+                        return this.VillageBuildingData.Rally;
                     case BuildingType.Smithy:
-                        return this.Buildings.Smithy;
+                        return this.VillageBuildingData.Smithy;
                     case BuildingType.Stable:
-                        return this.Buildings.Stable;
+                        return this.VillageBuildingData.Stable;
                     case BuildingType.TimberCamp:
-                        return this.Buildings.TimberCamp;
+                        return this.VillageBuildingData.TimberCamp;
                     case BuildingType.Wall:
-                        return this.Buildings.Wall;
+                        return this.VillageBuildingData.Wall;
                     case BuildingType.Warehouse:
-                        return this.Buildings.Warehouse;
+                        return this.VillageBuildingData.Warehouse;
                     case BuildingType.Workshop:
-                        return this.Buildings.Workshop;
+                        return this.VillageBuildingData.Workshop;
                     default:
                         return -1;
                 }
@@ -174,49 +174,49 @@ namespace beans
                 switch (buildType)
                 {
                     case BuildingType.Headquarter:
-                        this.Buildings.Headquarter = value;
+                        this.VillageBuildingData.Headquarter = value;
                         break;
                     case BuildingType.Academy:
-                        this.Buildings.Academy = value;
+                        this.VillageBuildingData.Academy = value;
                         break;
                     case BuildingType.Barracks:
-                        this.Buildings.Barracks = value;
+                        this.VillageBuildingData.Barracks = value;
                         break;
                     case BuildingType.ClayPit:
-                        this.Buildings.ClayPit = value;
+                        this.VillageBuildingData.ClayPit = value;
                         break;
                     case BuildingType.Farm:
-                        this.Buildings.Farm = value;
+                        this.VillageBuildingData.Farm = value;
                         break;
                     case BuildingType.HidingPlace:
-                        this.Buildings.HidingPlace = value;
+                        this.VillageBuildingData.HidingPlace = value;
                         break;
                     case BuildingType.IronMine:
-                        this.Buildings.IronMine = value;
+                        this.VillageBuildingData.IronMine = value;
                         break;
                     case BuildingType.Market:
-                        this.Buildings.Market = value;
+                        this.VillageBuildingData.Market = value;
                         break;
                     case BuildingType.Rally:
-                        this.Buildings.Rally = value;
+                        this.VillageBuildingData.Rally = value;
                         break;
                     case BuildingType.Smithy:
-                        this.Buildings.Smithy = value;
+                        this.VillageBuildingData.Smithy = value;
                         break;
                     case BuildingType.Stable:
-                        this.Buildings.Stable = value;
+                        this.VillageBuildingData.Stable = value;
                         break;
                     case BuildingType.TimberCamp:
-                        this.Buildings.TimberCamp = value;
+                        this.VillageBuildingData.TimberCamp = value;
                         break;
                     case BuildingType.Wall:
-                        this.Buildings.Wall = value;
+                        this.VillageBuildingData.Wall = value;
                         break;
                     case BuildingType.Warehouse:
-                        this.Buildings.Warehouse = value;
+                        this.VillageBuildingData.Warehouse = value;
                         break;
                     case BuildingType.Workshop:
-                        this.Buildings.Workshop = value;
+                        this.VillageBuildingData.Workshop = value;
                         break;
                     default:
                         break;
@@ -230,23 +230,23 @@ namespace beans
                 switch (troopType)
                 {
                     case TroopType.Axe:
-                        return this.Troop.AxeInVillage;
+                        return this.VillageTroopData.AxeInVillage;
                     case TroopType.Catapult:
-                        return this.Troop.CatapultInVillage;
+                        return this.VillageTroopData.CatapultInVillage;
                     case TroopType.Heavy:
-                        return this.Troop.HeavyCavalryInVillage;
+                        return this.VillageTroopData.HeavyCavalryInVillage;
                     case TroopType.Light:
-                        return this.Troop.LightCavalryInVillage;
+                        return this.VillageTroopData.LightCavalryInVillage;
                     case TroopType.Nobleman:
-                        return this.Troop.NobleInVillage;
+                        return this.VillageTroopData.NobleInVillage;
                     case TroopType.Ram:
-                        return this.Troop.RamInVillage;
+                        return this.VillageTroopData.RamInVillage;
                     case TroopType.Scout:
-                        return this.Troop.ScoutInVillage;
+                        return this.VillageTroopData.ScoutInVillage;
                     case TroopType.Spear:
-                        return this.Troop.SpearInVillage;
+                        return this.VillageTroopData.SpearInVillage;
                     case TroopType.Sword:
-                        return this.Troop.SwordInVillage;
+                        return this.VillageTroopData.SwordInVillage;
                     default:
                         return -1;
                 }
@@ -259,13 +259,13 @@ namespace beans
                 switch (resource)
                 {
                     case ResourcesType.Clay:
-                        return this.Resources.Clay;
+                        return this.VillageResourceData.Clay;
                         break;
                     case ResourcesType.Wood:
-                        return this.Resources.Wood;
+                        return this.VillageResourceData.Wood;
                         break;
                     case ResourcesType.Iron:
-                        return this.Resources.Iron;
+                        return this.VillageResourceData.Iron;
                         break;
                     default:
                         return 0;
@@ -277,13 +277,13 @@ namespace beans
                 switch (resource)
                 {
                     case ResourcesType.Clay:
-                        this.Resources.Clay = value;
+                        this.VillageResourceData.Clay = value;
                         break;
                     case ResourcesType.Wood:
-                        this.Resources.Clay = value;
+                        this.VillageResourceData.Clay = value;
                         break;
                     case ResourcesType.Iron:
-                        this.Resources.Clay = value;
+                        this.VillageResourceData.Clay = value;
                         break;
                     default:
                         break;

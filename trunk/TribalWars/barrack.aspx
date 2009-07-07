@@ -15,7 +15,7 @@
                 </td>
                 <td>
                     <h2>
-                        <asp:Literal runat="server" Text="<%$ Resources:text, barrack %>" /> <asp:Literal runat="server" Text="<%$ Resources:text, level %>" /> <%Response.Write(this.village.Buildings.Barracks); %></h2>
+                        <asp:Literal runat="server" Text="<%$ Resources:text, barrack %>" /> <asp:Literal runat="server" Text="<%$ Resources:text, level %>" /> <%Response.Write(this.village.VillageBuildingData.Barracks); %></h2>
                     <asp:Literal ID="Literal1" runat="server" Text="<%$ Resources:text, barrack_description %>" />
                 </td>
             </tr>
@@ -91,7 +91,7 @@
                     <% = Functions.FormatTime(beans.Recruit.GetPrice(beans.TroopType.Spear, this.village[beans.BuildingType.Barracks]).BuildTime) %>
                 </td>
                 <td>
-                    <% Response.Write(this.village.Troop.Spear.ToString()); %>/<%Response.Write(this.village.Troop.InVillageSpear.ToString()); %>
+                    <% Response.Write(this.village.VillageTroopData.Spear.ToString()); %>/<%Response.Write(this.village.VillageTroopData.SpearOfVillage.ToString()); %>
                 </td>
                 <td>
                     <asp:TextBox ID="txtSpear" runat="server" Width="33px"></asp:TextBox>
@@ -124,7 +124,7 @@
                     <% = Functions.FormatTime(beans.Recruit.GetPrice(beans.TroopType.Sword, this.village[beans.BuildingType.Barracks]).BuildTime) %>
                 </td>
                 <td>
-                    <% Response.Write(this.village.Troop.Sword.ToString()); %>/<%Response.Write(this.village.Troop.InVillageSword.ToString()); %>
+                    <% Response.Write(this.village.VillageTroopData.Sword.ToString()); %>/<%Response.Write(this.village.VillageTroopData.SwordOfVillage.ToString()); %>
                 </td>
                 <td>
                     <asp:TextBox ID="txtSword" runat="server" Width="33px"></asp:TextBox>
@@ -157,7 +157,7 @@
                     <% = Functions.FormatTime(beans.Recruit.GetPrice(beans.TroopType.Axe, this.village[beans.BuildingType.Barracks]).BuildTime) %>
                 </td>
                 <td>
-                    <% Response.Write(this.village.Troop.Axe.ToString()); %>/<%Response.Write(this.village.Troop.InVillageAxe.ToString()); %>
+                    <% Response.Write(this.village.VillageTroopData.Axe.ToString()); %>/<%Response.Write(this.village.VillageTroopData.AxeOfVillage.ToString()); %>
                 </td>
                 <td>
                     <asp:TextBox ID="txtAxe" runat="server" Width="33px"></asp:TextBox>

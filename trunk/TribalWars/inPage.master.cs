@@ -98,15 +98,15 @@ public partial class inPage : System.Web.UI.MasterPage
         session.Close();
 
 
-        this.lblClay.Text = this.CurrentVillage.Resources.Clay.ToString();
-        this.lblWood.Text = this.CurrentVillage.Resources.Wood.ToString();
-        this.lblIron.Text = this.CurrentVillage.Resources.Iron.ToString();
+        this.lblClay.Text = this.CurrentVillage.VillageResourceData.Clay.ToString();
+        this.lblWood.Text = this.CurrentVillage.VillageResourceData.Wood.ToString();
+        this.lblIron.Text = this.CurrentVillage.VillageResourceData.Iron.ToString();
 
-        if (this.CurrentVillage.Resources.Wood == this.CurrentVillage.MaxResources)
+        if (this.CurrentVillage.VillageResourceData.Wood == this.CurrentVillage.MaxResources)
             this.lblWood.ForeColor = System.Drawing.Color.Red;
-        if (this.CurrentVillage.Resources.Clay == this.CurrentVillage.MaxResources)
+        if (this.CurrentVillage.VillageResourceData.Clay == this.CurrentVillage.MaxResources)
             this.lblClay.ForeColor = System.Drawing.Color.Red;
-        if (this.CurrentVillage.Resources.Iron == this.CurrentVillage.MaxResources)
+        if (this.CurrentVillage.VillageResourceData.Iron == this.CurrentVillage.MaxResources)
             this.lblIron.ForeColor = System.Drawing.Color.Red;
         this.RadToolBar1.DataBind();
         foreach (RadToolBarButton menuItem in this.menu.Items)

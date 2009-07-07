@@ -41,38 +41,38 @@ public partial class rally : System.Web.UI.Page
         foreach (MovingCommand command in incomings)
             if (command.Type == MoveType.Attack)
             {
-                if (command.To == this.village)
+                if (command.ToVillage == this.village)
                 {
                     sInwardsCommand += "<tr><td><a href='command.aspx?id=" + this.village.ID.ToString() + "&command=" + command.ID.ToString() + "'>";
                     sInwardsCommand += "<img src='images/back.png'/>Tấn công từ ";
-                    sInwardsCommand += command.To.Name + " (" + command.From.X.ToString("000") + "|" + command.From.Y.ToString("000") + ")</td>";
+                    sInwardsCommand += command.ToVillage.Name + " (" + command.FromVillage.X.ToString("000") + "|" + command.FromVillage.Y.ToString("000") + ")</td>";
                     sInwardsCommand += "<td>" + command.LandingTime.ToString() + "</td>";
                     sInwardsCommand += "<td><span class='timer'>" + Functions.FormatTime(command.LandingTime - DateTime.Now) + "</span></td></tr>";
                 }
-                else if (command.From == this.village)
+                else if (command.FromVillage == this.village)
                 {
                     sOutwardsCommand += "<tr><td><a href='command.aspx?id=" + this.village.ID.ToString() + "&command=" + command.ID.ToString() + "'>";
                     sOutwardsCommand += "<img src='images/support.png'/>Tấn công thành phố ";
-                    sOutwardsCommand += command.To.Name + " (" + command.To.X.ToString("000") + "|" + command.To.Y.ToString("000") + ")</td>";
+                    sOutwardsCommand += command.ToVillage.Name + " (" + command.ToVillage.X.ToString("000") + "|" + command.ToVillage.Y.ToString("000") + ")</td>";
                     sOutwardsCommand += "<td>" + command.LandingTime.ToString() + "</td>";
                     sOutwardsCommand += "<td><span class='timer'>" + Functions.FormatTime(command.LandingTime - DateTime.Now) + "</span></td></tr>";
                 }
             }
             else if (command.Type == MoveType.Support)
             {
-                if (command.To == this.village)
+                if (command.ToVillage == this.village)
                 {
                     sInwardsCommand += "<tr><td><a href='command.aspx?id=" + this.village.ID.ToString() + "&command=" + command.ID.ToString() + "'>";
                     sInwardsCommand += "<img src='images/back.png'/>Hỗ trợ từ ";
-                    sInwardsCommand += command.To.Name + " (" + command.From.X.ToString("000") + "|" + command.From.Y.ToString("000") + ")</td>";
+                    sInwardsCommand += command.ToVillage.Name + " (" + command.FromVillage.X.ToString("000") + "|" + command.FromVillage.Y.ToString("000") + ")</td>";
                     sInwardsCommand += "<td>" + command.LandingTime.ToString() + "</td>";
                     sInwardsCommand += "<td><span class='timer'>" + Functions.FormatTime(command.LandingTime - DateTime.Now) + "</span></td></tr>";
                 }
-                else if (command.From == this.village)
+                else if (command.FromVillage == this.village)
                 {
                     sOutwardsCommand += "<tr><td><a href='command.aspx?id=" + this.village.ID.ToString() + "&command=" + command.ID.ToString() + "'>";
                     sOutwardsCommand += "<img src='images/support.png'/>Hỗ trợ thành phố ";
-                    sOutwardsCommand += command.To.Name + " (" + command.To.X.ToString("000") + "|" + command.To.Y.ToString("000") + ")</td>";
+                    sOutwardsCommand += command.ToVillage.Name + " (" + command.ToVillage.X.ToString("000") + "|" + command.ToVillage.Y.ToString("000") + ")</td>";
                     sOutwardsCommand += "<td>" + command.LandingTime.ToString() + "</td>";
                     sOutwardsCommand += "<td><span class='timer'>" + Functions.FormatTime(command.LandingTime - DateTime.Now) + "</span></td></tr>";
                 }
@@ -81,7 +81,7 @@ public partial class rally : System.Web.UI.Page
             {
                 sInwardsCommand += "<tr><td><a href='command.aspx?id=" + this.village.ID.ToString() + "&command=" + command.ID.ToString() + "'>";
                 sInwardsCommand += "<img src='images/back.png'/>Quay về từ ";
-                sInwardsCommand += command.To.Name + " (" + command.From.X.ToString("000") + "|" + command.From.Y.ToString("000") + ")</td>";
+                sInwardsCommand += command.ToVillage.Name + " (" + command.FromVillage.X.ToString("000") + "|" + command.FromVillage.Y.ToString("000") + ")</td>";
                 sInwardsCommand += "<td>" + command.LandingTime.ToString() + "</td>";
                 sInwardsCommand += "<td><span class='timer'>" + Functions.FormatTime(command.LandingTime - DateTime.Now) + "</span></td></tr>";
             }
@@ -135,7 +135,7 @@ public partial class rally : System.Web.UI.Page
             session = NHibernateHelper.CreateSession();
             trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
             
-            this.attack = Attack.CreateAttack(session, this.village, x, y, spear, sword, axe, scout, light, heavy, ram, catapult, noble, BuildingType.NoBuiding);
+            this.attack = this.village.CreateAttack(session, x, y, spear, sword, axe, scout, light, heavy, ram, catapult, noble, BuildingType.NoBuiding);
             
             trans.Commit();
 
@@ -176,7 +176,7 @@ public partial class rally : System.Web.UI.Page
             y = (int.TryParse(this.y.Text, out i)) ? i : 0;
             session = NHibernateHelper.CreateSession();
             trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
-            this.support = Support.CreateSupport(session, this.village, x, y, spear, sword, axe, scout, light, heavy, ram, catapult, noble);
+            this.support = this.village.CreateSupport(session, x, y, spear, sword, axe, scout, light, heavy, ram, catapult, noble);
             trans.Commit();
             
             RadScriptManager.RegisterStartupScript(bttnSupport, bttnSupport.GetType(), "DisplaySupport", "window.radopen('dialogs/support_confirm.aspx?id=" + this.village.ID.ToString() + "&command=" + this.support.ID.ToString() + "', 'ConfirmAttack');", true);

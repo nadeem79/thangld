@@ -15,13 +15,13 @@ namespace beans
             switch (type)
             {
                 case ResourcesType.Clay:
-                    level = this.Buildings.ClayPit;
+                    level = this.VillageBuildingData.ClayPit;
                     break;
                 case ResourcesType.Wood:
-                    level = this.Buildings.TimberCamp;
+                    level = this.VillageBuildingData.TimberCamp;
                     break;
                 case ResourcesType.Iron:
-                    level = this.Buildings.IronMine;
+                    level = this.VillageBuildingData.IronMine;
                     break;
                 default:
                     break;
@@ -41,13 +41,13 @@ namespace beans
             switch (type)
             {
                 case ResourcesType.Clay:
-                    level = this.Buildings.ClayPit;
+                    level = this.VillageBuildingData.ClayPit;
                     break;
                 case ResourcesType.Wood:
-                    level = this.Buildings.TimberCamp;
+                    level = this.VillageBuildingData.TimberCamp;
                     break;
                 case ResourcesType.Iron:
-                    level = this.Buildings.IronMine;
+                    level = this.VillageBuildingData.IronMine;
                     break;
                 default:
                     break;
@@ -62,16 +62,16 @@ namespace beans
         {
             TimeSpan span = to - from;
             double time = span.TotalHours;
-            this.Resources.Clay += (int)(time * this.ProductPerHour(ResourcesType.Clay));
-            this.Resources.Wood += (int)(time * this.ProductPerHour(ResourcesType.Wood));
-            this.Resources.Iron += (int)(time * this.ProductPerHour(ResourcesType.Iron));
+            this.VillageResourceData.Clay += (int)(time * this.ProductPerHour(ResourcesType.Clay));
+            this.VillageResourceData.Wood += (int)(time * this.ProductPerHour(ResourcesType.Wood));
+            this.VillageResourceData.Iron += (int)(time * this.ProductPerHour(ResourcesType.Iron));
 
-            if (this.Resources.Clay > this.MaxResources)
-                this.Resources.Clay = this.MaxResources;
-            if (this.Resources.Wood > this.MaxResources)
-                this.Resources.Wood = this.MaxResources;
-            if (this.Resources.Iron > this.MaxResources)
-                this.Resources.Iron = this.MaxResources;
+            if (this.VillageResourceData.Clay > this.MaxResources)
+                this.VillageResourceData.Clay = this.MaxResources;
+            if (this.VillageResourceData.Wood > this.MaxResources)
+                this.VillageResourceData.Wood = this.MaxResources;
+            if (this.VillageResourceData.Iron > this.MaxResources)
+                this.VillageResourceData.Iron = this.MaxResources;
         }
         public int TimeTillFullWarehouse(DateTime from, ResourcesType type)
         {
@@ -101,6 +101,9 @@ namespace beans
             if (toVillage == null)
                 throw new Exception("Toạ độ không tồn tại");
 
+            if (this.AvailableMerchant(session) < SendResource.CalculateMerchant(wood, clay, iron))
+                throw new Exception("Không đủ thương nhân");
+
             SendResource sendResource = new SendResource();
             sendResource.Clay = clay;
             sendResource.Iron = iron;
@@ -111,6 +114,7 @@ namespace beans
             sendResource.FromVillage = this;
             sendResource.ToVillage = toVillage;
 
+            return sendResource;
         }
     }
 }

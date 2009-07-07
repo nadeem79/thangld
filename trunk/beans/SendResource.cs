@@ -10,6 +10,12 @@ namespace beans
     public class SendResource:MovingCommand
     {
 
+        public static int CalculateMerchant(int wood, int clay, int iron)
+        {
+            double merchant = (wood + clay + iron) / 1000;
+            return Convert.ToInt32(merchant);
+        }
+
         public override MoveType Type
         {
             get { return MoveType.SendResources; }
@@ -32,39 +38,43 @@ namespace beans
 
         #region Methods
 
-        public override void Effect(ISession session)
+        public override MovingCommand Effect(ISession session)
         {
-            this.To.Update(this.LandingTime, session);
-            this.To.Resources.Clay += this.Clay;
-            this.To.Resources.Wood += this.Wood;
-            this.To.Resources.Iron += this.Iron;
+            this.ToVillage.Update(this.LandingTime, session);
+            this.ToVillage.VillageResourceData.Clay += this.Clay;
+            this.ToVillage.VillageResourceData.Wood += this.Wood;
+            this.ToVillage.VillageResourceData.Iron += this.Iron;
 
             Return r = new Return();
             r.Merchant = (int)Math.Round((double)((this.Clay + this.Wood + this.Iron) / 1000), MidpointRounding.AwayFromZero);
-            r.From = this.To;
-            r.To = this.From;
-            r.StartTime = DateTime.Now;
-            r.LandingTime = DateTime.Now + (DateTime.Now - this.StartTime);
+            r.FromVillage = this.ToVillage;
+            r.ToVillage = this.FromVillage;
+            r.StartingTime = DateTime.Now;
+            r.LandingTime = DateTime.Now + (DateTime.Now - this.StartingTime);
 
-            Report to = this.WriteReport();
-            to.Owner = this.To.Owner;
+            SendResourceReport report = new SendResourceReport();
+            report.Time = this.LandingTime;
+            report.Title = String.Format("{0} gửi tài nguyên đến {1} ({2}|{3})", this.FromVillage.Player.Username, this.ToVillage.Name, this.ToVillage.X.ToString("000"), this.ToVillage.Y.ToString("000"));
+            report.Unread = true;
+            report.Owner = this.FromVillage.Player;
+            report.Clay = this.Clay;
+            report.Wood = this.Wood;
+            report.Iron = this.Iron;
+            report.FromVillage = this.FromVillage;
+            report.FromPlayer = this.FromVillage.Player;
+            report.ToVillage = this.ToVillage;
+            report.ToPlayer = this.ToVillage.Player;
 
-            Report from = this.WriteReport();
-            from.Time = this.LandingTime;
-            from.Title = String.Format("{0} gửi tài nguyên đến {1} ({2}|{3})", this.From.Owner.Username, this.To.Name, this.To.X.ToString("000"), this.To.Y.ToString("000"));
-            from.Type = ReportType.ResourceReceive;
-            from.Unread = true;
-            from.Owner = this.From.Owner;
-            from.Description.Description = to.Description.Description;
-
+            session.Update(this.ToVillage.VillageResourceData);
             session.Save(r);
             session.Delete(this);
-            session.Save(from);
-            session.Save(to);
+            session.Save(report);
+
+            return r;
             
         }
 
-        public override void Cancel(ISession session)
+        public override MovingCommand Cancel(ISession session)
         {
             Return r = new Return();
             r.Wood = this.Wood;
@@ -77,6 +87,8 @@ namespace beans
 
             session.Save(r);
             session.Delete(this);
+
+            return r;
         }
 
         #endregion
@@ -93,6 +105,9 @@ namespace beans
 
             if (this.ToVillage == null)
                 throw new Exception("Nhập điểm đến");
+
+            if (this.ToVillage.AvailableMerchant(session) < SendResource.CalculateMerchant(this.Wood, this.Clay, this.Iron))
+                throw new Exception("Không đủ thương nhân");
 
             this.FromVillage.VillageResourceData.Clay -= this.Clay;
             this.FromVillage.VillageResourceData.Wood -= this.Wood;

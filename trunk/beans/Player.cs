@@ -332,20 +332,15 @@ namespace beans
             invite.Inviter = this;
             invite.Time = DateTime.Now;
 
-            Report inviteReport = new Report();
-            inviteReport.Type = ReportType.InviteToTribe;
+
+
+            InviteReport inviteReport = new InviteReport();
             inviteReport.Time = invite.Time;
             inviteReport.Title = String.Format("{0} mời gia nhập bang hội {1}", this.Username, this.Group.Name);
             inviteReport.Unread = true;
             inviteReport.Owner = player;
-
-            StringTemplateGroup group = new StringTemplateGroup("invite");
-            StringTemplate temp = new StringTemplate(group, reports.Invite);
-            temp.SetAttribute("inviter_id", this.ID);
-            temp.SetAttribute("inviter_name", this.Username);
-            temp.SetAttribute("group_id", this.Group.ID);
-            temp.SetAttribute("group_name", this.Group.Name);
-            inviteReport.Description.Description = temp.ToString();
+            invite.Inviter = this;
+            invite.Group = this.Group;
 
             session.Save(invite);
             session.Save(inviteReport);
@@ -365,7 +360,7 @@ namespace beans
                 return null;
 
             MovingCommand command = lstCommand[0];
-            if (command.From.Owner != this && command.To.Owner != this)
+            if (command.FromVillage.Player != this && command.ToVillage.Player != this)
                 return null;
 
 
@@ -446,7 +441,7 @@ namespace beans
             if (this.Villages.Count == 0)
             {
                 Village village = Village.CreateVillage(session);
-                village.Owner = this;
+                village.Player = this;
                 this.Villages.Add(village);
                 village.LastUpdate = time;
                 village.Name = "Thành phố " + this.Username;

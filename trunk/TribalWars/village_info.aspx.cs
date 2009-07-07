@@ -47,7 +47,7 @@ public partial class village_info : System.Web.UI.Page
         this.pHasVillage.Visible = true;
         this.pVillageNotFound.Visible = false;
 
-        if (this.target.Owner.ID == (int)Session["user"])
+        if (this.target.Player.ID == (int)Session["user"])
             this.pIsOwner.Visible = true;
         else
             this.pIsOwner.Visible = false;

@@ -14,9 +14,9 @@
                 Tấn công:
             </td>
             <td>
-                <a href="../village_info.aspx?player=<% = this.Command.To.ID %><% = (object.Equals(Request["id"], null) ? "&id=" + Request["id"] : "") %>"
+                <a href="../village_info.aspx?player=<% = this.Command.ToVillage.ID %><% = (object.Equals(Request["id"], null) ? "&id=" + Request["id"] : "") %>"
                     target="_blank">
-                    <% = this.Command.To.Name %></a>
+                    <% = this.Command.ToVillage.Name %></a>
             </td>
         </tr>
         <tr>
@@ -24,8 +24,8 @@
                 Đối thủ:
             </td>
             <td>
-                <a href="../user_info.aspx?player=<% = this.Command.To.Owner.ID %><% = (object.Equals(Request["id"], null) ? "&id=" + Request["id"] : "") %>">
-                    <% = this.Command.To.Owner.Username %></a>
+                <a href="../user_info.aspx?player=<% = this.Command.ToVillage.Player.ID %><% = (object.Equals(Request["id"], null) ? "&id=" + Request["id"] : "") %>">
+                    <% = this.Command.ToVillage.Player.Username%></a>
             </td>
         </tr>
         <tr>
@@ -33,7 +33,7 @@
                 Thời gian:
             </td>
             <td>
-                <% = Functions.FormatTime(this.Command.LandingTime - this.Command.StartTime)%>
+                <% = Functions.FormatTime(this.Command.LandingTime - this.Command.StartingTime)%>
             </td>
         </tr>
         <tr>
@@ -106,12 +106,12 @@
                     <% = this.Command.Scout %></span>
             </td>
             <td>
-                <span <% if (this.Command.Light == 0) Response.Write(" class='hidden'"); %>>
-                    <% = this.Command.Light %></span>
+                <span <% if (this.Command.LightCavalry == 0) Response.Write(" class='hidden'"); %>>
+                    <% = this.Command.LightCavalry %></span>
             </td>
             <td>
-                <span <% if (this.Command.Heavy == 0) Response.Write(" class='hidden'"); %>>
-                    <% = this.Command.Heavy %></span>
+                <span <% if (this.Command.HeavyCavalry == 0) Response.Write(" class='hidden'"); %>>
+                    <% = this.Command.HeavyCavalry%></span>
             </td>
             <td>
                 <span <% if (this.Command.Ram == 0) Response.Write(" class='hidden'"); %>>

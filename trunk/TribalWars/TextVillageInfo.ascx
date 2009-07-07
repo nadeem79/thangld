@@ -12,7 +12,7 @@
             <img src="images/main.png" alt="" />
             <a href="headquarters.aspx?id=<% Response.Write(this.current.ID); %>" <% if (this.current[beans.BuildingType.Headquarter] == 0){ %> onclick="jQuery.facebox('Chưa xây dựng công trình này');return false;"<%} %>>Nhà chính</a>
             &nbsp;(Cấp
-            <% Response.Write(this.current.Buildings.Headquarter); %>)
+            <% Response.Write(this.current.VillageBuildingData.Headquarter); %>)
         </td>
     </tr>
     <tr>
@@ -20,7 +20,7 @@
             <img src="images/barracks.png" alt="" />
             <a href="barrack.aspx?id=<% Response.Write(this.current.ID); %>" <% if (this.current[beans.BuildingType.Barracks] == 0){ %> onclick="jQuery.facebox('Chưa xây dựng công trình này');return false;"<%} %>>Bộ binh</a>
             &nbsp;(Cấp
-            <% Response.Write(this.current.Buildings.Barracks); %>)
+            <% Response.Write(this.current.VillageBuildingData.Barracks); %>)
         </td>
     </tr>
     <tr>
@@ -28,7 +28,7 @@
             <img src="images/stable.png" alt="" />
             <a href="stable.aspx?id=<% Response.Write(this.current.ID); %>" <% if (this.current[beans.BuildingType.Stable] == 0){ %> onclick="jQuery.facebox('Chưa xây dựng công trình này');return false;"<%} %>">Kỵ binh</a>
             &nbsp;(Cấp
-            <% Response.Write(this.current.Buildings.Stable); %>)
+            <% Response.Write(this.current.VillageBuildingData.Stable); %>)
         </td>
     </tr>
     <tr>
@@ -36,7 +36,7 @@
             <img src="images/garage.png" alt="" />
             <a href="workshop.aspx?id=<% Response.Write(this.current.ID); %>" <% if (this.current[beans.BuildingType.Workshop] == 0){ %> onclick="jQuery.facebox('Chưa xây dựng công trình này');return false;"<%} %>">Nhà xe</a>
             &nbsp;(Cấp
-            <% Response.Write(this.current.Buildings.Workshop); %>)
+            <% Response.Write(this.current.VillageBuildingData.Workshop); %>)
         </td>
     </tr>
     <tr>
@@ -44,7 +44,7 @@
             <img src="images/snob.png" alt="" />
             <a href="academy.aspx?id=<% Response.Write(this.current.ID); %>" <% if (this.current[beans.BuildingType.Academy] == 0){ %> onclick="jQuery.facebox('Chưa xây dựng công trình này');return false;"<%} %>">Trường đại học</a>
             &nbsp;(Cấp
-            <% Response.Write(this.current.Buildings.Academy); %>)
+            <% Response.Write(this.current.VillageBuildingData.Academy); %>)
         </td>
     </tr>
     <tr>
@@ -52,7 +52,7 @@
             <img src="images/smith.png" alt="" />
             <a href="smithy.aspx?id=<% Response.Write(this.current.ID); %>" <% if (this.current[beans.BuildingType.Smithy] == 0){ %> onclick="jQuery.facebox('Chưa xây dựng công trình này');return false;"<%} %>">Xưởng nghiên cứu</a>
             &nbsp;(Cấp
-            <% Response.Write(this.current.Buildings.Smithy.ToString()); %>)
+            <% = this.current.VillageBuildingData.Smithy %>)
         </td>
     </tr>
     <tr>
@@ -60,7 +60,7 @@
             <img src="images/place.png" alt="" />
             <a href="rally.aspx?id=<% Response.Write(this.current.ID); %>" <% if (this.current[beans.BuildingType.Rally] == 0){ %> onclick="jQuery.facebox('Chưa xây dựng công trình này');return false;"<%} %>>Trại lính</a>
             &nbsp;(Cấp
-            <% Response.Write(this.current.Buildings.Rally.ToString()); %>)
+            <% = this.current.VillageBuildingData.Rally %>)
         </td>
     </tr>
     <tr>
@@ -68,7 +68,7 @@
             <img src="images/market.png" alt="" />
             <a href="market.aspx?id=<% Response.Write(this.current.ID); %>" <% if (this.current[beans.BuildingType.Market] == 0){ %> onclick="jQuery.facebox('Chưa xây dựng công trình này');return false;"<%} %>>Chợ</a>
             &nbsp; (Cấp
-            <% Response.Write(this.current.Buildings.Market); %>)
+            <% = this.current.VillageBuildingData.Market %>)
         </td>
     </tr>
     <tr>
@@ -76,7 +76,7 @@
             <img src="images/wood.png" alt="" />
             <a href="wood.aspx?id=<% Response.Write(this.current.ID); %>" <% if (this.current[beans.BuildingType.TimberCamp] == 0){ %> onclick="jQuery.facebox('Chưa xây dựng công trình này');return false;"<%} %>>Trại gỗ</a>
             &nbsp;(Cấp
-            <% Response.Write(this.current.Buildings.TimberCamp); %>)
+            <% = this.current.VillageBuildingData.TimberCamp %>)
         </td>
     </tr>
     <tr>
@@ -84,7 +84,7 @@
             <img src="images/stone.png" alt="" />
             <a href="clay.aspx?id=<% Response.Write(this.current.ID); %>" <% if (this.current[beans.BuildingType.ClayPit] == 0){ %> onclick="jQuery.facebox('Chưa xây dựng công trình này');return false;"<%} %>">Trại đất sét</a>
             &nbsp;(Cấp
-            <% Response.Write(this.current.Buildings.ClayPit); %>)
+            <% = this.current.VillageBuildingData.ClayPit %>)
         </td>
     </tr>
     <tr>
@@ -92,7 +92,7 @@
             <img src="images/iron.png" alt="" />
             <a href="iron.aspx?id=<% Response.Write(this.current.ID); %>" <% if (this.current[beans.BuildingType.IronMine] == 0){ %> onclick="jQuery.facebox('Chưa xây dựng công trình này');return false;"<%} %>">Mỏ kim loại</a>
             &nbsp;(Cấp
-            <% Response.Write(this.current.Buildings.IronMine); %>)
+            <% = this.current.VillageBuildingData.IronMine %>)
         </td>
     </tr>
     <tr>
@@ -100,7 +100,7 @@
             <img src="images/farm.png" alt="" />
             <a href="farm.aspx?id=<% Response.Write(this.current.ID); %>" <% if (this.current[beans.BuildingType.Farm] == 0){ %> onclick="jQuery.facebox('Chưa xây dựng công trình này');return false;"<%} %>>Dân cư</a>
             &nbsp;(Cấp
-            <% Response.Write(this.current.Buildings.Farm); %>)
+            <% Response.Write(this.current.VillageBuildingData.Farm); %>)
         </td>
     </tr>
     <tr>
@@ -108,7 +108,7 @@
             <img src="images/storage.png" alt="" />
             <a href="warehouse.aspx?id=<% Response.Write(this.current.ID); %>" <% if (this.current[beans.BuildingType.Warehouse] == 0){ %> onclick="jQuery.facebox('Chưa xây dựng công trình này');return false;"<%} %>">Nhà kho</a>
             &nbsp;(Cấp
-            <% Response.Write(this.current.Buildings.Warehouse); %>
+            <% Response.Write(this.current.VillageBuildingData.Warehouse); %>
             )
         </td>
     </tr>
@@ -117,7 +117,7 @@
             <img src="images/hide.png" alt="" />
             <a href="hidden.aspx?id=<% Response.Write(this.current.ID); %>" <% if (this.current[beans.BuildingType.HidingPlace] == 0){ %> onclick="jQuery.facebox('Chưa xây dựng công trình này');return false;"<%} %>">Kho tàng</a>
             &nbsp;(Cấp
-            <% Response.Write(this.current.Buildings.HidingPlace); %>)
+            <% Response.Write(this.current.VillageBuildingData.HidingPlace); %>)
         </td>
     </tr>
     <tr>
@@ -125,7 +125,7 @@
             <img src="images/wall.png" alt="" />
             <a href="wall.aspx?id=<% Response.Write(this.current.ID); %>" <% if (this.current[beans.BuildingType.Wall] == 0){ %> onclick="jQuery.facebox('Chưa xây dựng công trình này');return false;"<%} %>>Tường thành</a>
             &nbsp;(Cấp
-            <% Response.Write(this.current.Buildings.Wall.ToString()); %>)
+            <% Response.Write(this.current.VillageBuildingData.Wall.ToString()); %>)
         </td>
     </tr>
 </table>

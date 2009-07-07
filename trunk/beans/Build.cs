@@ -196,16 +196,16 @@ namespace beans
                 return false;
             this.InVillage[this.Building]++;
             BuildPrice p = Build.GetPrice(this.Building, this.InVillage[this.Building], this.InVillage[beans.BuildingType.Headquarter]);
-            this.InVillage.Owner.Point += p.Point;
+            this.InVillage.Player.Point += p.Point;
             return true;
         }
         public void Cancel(ISession session)
         {
             BuildPrice price = Build.GetPrice(this.Building, this.Level, this.InVillage[BuildingType.Headquarter]);
             
-            this.InVillage.Resources.Wood += (int)(price.Wood * 0.8);
-            this.InVillage.Resources.Clay += (int)(price.Clay * 0.8);
-            this.InVillage.Resources.Iron += (int)(price.Iron * 0.8);
+            this.InVillage.VillageResourceData.Wood += (int)(price.Wood * 0.8);
+            this.InVillage.VillageResourceData.Clay += (int)(price.Clay * 0.8);
+            this.InVillage.VillageResourceData.Iron += (int)(price.Iron * 0.8);
             this.InVillage.Population -= price.Population;
             this.InVillage.Points -= price.Point;
             
@@ -305,75 +305,72 @@ namespace beans
             switch (building)
             {
                 case BuildingType.Headquarter:
-                    if (village.Buildings.Headquarter < 1)
+                    if (village.VillageBuildingData.Headquarter < 1)
                         return false;
                     break;
                 case BuildingType.Barracks:
-                    if (village.Buildings.Headquarter < 3)
+                    if (village.VillageBuildingData.Headquarter < 3)
                         return false;
                     break;
                 case BuildingType.Stable:
-                    if (village.Buildings.Barracks < 5 || village.Buildings.Smithy < 5 || village.Buildings.Headquarter < 10)
+                    if (village.VillageBuildingData.Barracks < 5 || village.VillageBuildingData.Smithy < 5 || village.VillageBuildingData.Headquarter < 10)
                         return false;
                     break;
                 case BuildingType.Workshop:
-                    if (village.Buildings.Headquarter < 10 || village.Buildings.Smithy < 10)
+                    if (village.VillageBuildingData.Headquarter < 10 || village.VillageBuildingData.Smithy < 10)
                         return false;
                     break;
                 case BuildingType.Academy:
-                    if (village.Buildings.Headquarter < 20 || village.Buildings.Smithy < 20 || village.Buildings.Market < 10)
+                    if (village.VillageBuildingData.Headquarter < 20 || village.VillageBuildingData.Smithy < 20 || village.VillageBuildingData.Market < 10)
                         return false;
                     break;
                 case BuildingType.Smithy:
-                    if (village.Buildings.Headquarter < 5 || village.Buildings.Barracks < 1)
+                    if (village.VillageBuildingData.Headquarter < 5 || village.VillageBuildingData.Barracks < 1)
                         return false;
                     break;
                 case BuildingType.Rally:
-                    if (village.Buildings.Headquarter < 1)
+                    if (village.VillageBuildingData.Headquarter < 1)
                         return false;
                     break;
                 case BuildingType.Market:
-                    if (village.Buildings.Headquarter < 3 || village.Buildings.Warehouse < 2)
+                    if (village.VillageBuildingData.Headquarter < 3 || village.VillageBuildingData.Warehouse < 2)
                         return false;
                     break;
                 case BuildingType.TimberCamp:
-                    if (village.Buildings.Headquarter < 1)
+                    if (village.VillageBuildingData.Headquarter < 1)
                         return false;
                     break;
                 case BuildingType.ClayPit:
-                    if (village.Buildings.Headquarter < 1)
+                    if (village.VillageBuildingData.Headquarter < 1)
                         return false;
                     break;
                 case BuildingType.IronMine:
-                    if (village.Buildings.Headquarter < 1)
+                    if (village.VillageBuildingData.Headquarter < 1)
                         return false;
                     break;
                 case BuildingType.Farm:
-                    if (village.Buildings.Headquarter < 1)
+                    if (village.VillageBuildingData.Headquarter < 1)
                         return false;
                     break;
                 case BuildingType.Warehouse:
-                    if (village.Buildings.Headquarter < 1)
+                    if (village.VillageBuildingData.Headquarter < 1)
                         return false;
                     break;
                 case BuildingType.HidingPlace:
-                    if (village.Buildings.Headquarter < 1)
+                    if (village.VillageBuildingData.Headquarter < 1)
                         return false;
                     break;
                 case BuildingType.Wall:
-                    if (village.Buildings.Headquarter < 1 || village.Buildings.Barracks < 1)
+                    if (village.VillageBuildingData.Headquarter < 1 || village.VillageBuildingData.Barracks < 1)
                         return false;
                     break;
                 default:
                     return false;
             }
 
-            BuildPrice price = Build.GetPrice(building, level, village.Buildings.Headquarter);
-            return (price.Wood < village.Resources.Wood && price.Clay < village.Resources.Clay && price.Iron < village.Resources.Iron);
+            BuildPrice price = Build.GetPrice(building, level, village.VillageBuildingData.Headquarter);
+            return (price.Wood < village.VillageResourceData.Wood && price.Clay < village.VillageResourceData.Clay && price.Iron < village.VillageResourceData.Iron);
         }
-        #endregion
-
-        #region Constructors
         #endregion
 
     }

@@ -80,9 +80,9 @@ public partial class barrack : System.Web.UI.Page
                 ITransaction trans = this.NHibernateSession.BeginTransaction(IsolationLevel.ReadCommitted);
                 this.village.CancelRecruit(id, this.NHibernateSession);
                 trans.Commit();
-                ((inPage)this.Master).WoodLabel.Text = this.village.Resources.Wood.ToString();
-                ((inPage)this.Master).ClayLabel.Text = this.village.Resources.Clay.ToString();
-                ((inPage)this.Master).IronLabel.Text = this.village.Resources.Iron.ToString();
+                ((inPage)this.Master).WoodLabel.Text = this.village.VillageResourceData.Wood.ToString();
+                ((inPage)this.Master).ClayLabel.Text = this.village.VillageResourceData.Clay.ToString();
+                ((inPage)this.Master).IronLabel.Text = this.village.VillageResourceData.Iron.ToString();
             }
         }
 

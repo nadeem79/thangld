@@ -27,7 +27,7 @@
                 Tổng số thương nhân
             </td>
             <td align="right">
-                <b><% = this.Village.Buildings.Merchant %></b>
+                <b><% = this.Village.VillageBuildingData.Merchant %></b>
             </td>
         </tr>
     </tbody>

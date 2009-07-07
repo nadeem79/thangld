@@ -263,49 +263,49 @@ namespace beans
             switch (this.Troop)
             {
                 case TroopType.Spear:
-                    this.InVillage.Troop.Spear += total_troop;
-                    this.InVillage.Troop.InVillageSpear += total_troop;
-                    this.InVillage.Troop.TotalSpear += total_troop;
+                    this.InVillage.VillageTroopData.Spear += total_troop;
+                    this.InVillage.VillageTroopData.SpearInVillage += total_troop;
+                    this.InVillage.VillageTroopData.SpearOfVillage += total_troop;
                     break;
                 case TroopType.Sword:
-                    this.InVillage.Troop.Sword += total_troop;
-                    this.InVillage.Troop.InVillageSword += total_troop;
-                    this.InVillage.Troop.TotalSword += total_troop;
+                    this.InVillage.VillageTroopData.Sword += total_troop;
+                    this.InVillage.VillageTroopData.SwordInVillage += total_troop;
+                    this.InVillage.VillageTroopData.SwordOfVillage += total_troop;
                     break;
                 case TroopType.Axe:
-                    this.InVillage.Troop.Axe += total_troop;
-                    this.InVillage.Troop.InVillageAxe += total_troop; 
-                    this.InVillage.Troop.TotalAxe += total_troop;
+                    this.InVillage.VillageTroopData.Axe += total_troop;
+                    this.InVillage.VillageTroopData.AxeInVillage += total_troop;
+                    this.InVillage.VillageTroopData.AxeOfVillage += total_troop;
                     break;
                 case TroopType.Scout:
-                    this.InVillage.Troop.Scout += total_troop;
-                    this.InVillage.Troop.InVillageScout += total_troop;
-                    this.InVillage.Troop.TotalScout += total_troop;
+                    this.InVillage.VillageTroopData.Scout += total_troop;
+                    this.InVillage.VillageTroopData.ScoutInVillage += total_troop;
+                    this.InVillage.VillageTroopData.ScoutOfVillage += total_troop;
                     break;
                 case TroopType.Light:
-                    this.InVillage.Troop.Light += total_troop;
-                    this.InVillage.Troop.InVillageLight += total_troop;
-                    this.InVillage.Troop.TotalLight += total_troop;
+                    this.InVillage.VillageTroopData.LightCavalry += total_troop;
+                    this.InVillage.VillageTroopData.LightCavalryInVillage += total_troop;
+                    this.InVillage.VillageTroopData.LightCavalryOfVillage += total_troop;
                     break;
                 case TroopType.Heavy:
-                    this.InVillage.Troop.Heavy += total_troop;
-                    this.InVillage.Troop.InVillageHeavy += total_troop;
-                    this.InVillage.Troop.TotalHeavy += total_troop;
+                    this.InVillage.VillageTroopData.HeavyCavalry += total_troop;
+                    this.InVillage.VillageTroopData.HeavyCavalryInVillage += total_troop;
+                    this.InVillage.VillageTroopData.HeavyCavalryOfVillage += total_troop;
                     break;
                 case TroopType.Ram:
-                    this.InVillage.Troop.Ram += total_troop;
-                    this.InVillage.Troop.InVillageRam += total_troop;
-                    this.InVillage.Troop.TotalRam += total_troop;
+                    this.InVillage.VillageTroopData.Ram += total_troop;
+                    this.InVillage.VillageTroopData.RamInVillage += total_troop;
+                    this.InVillage.VillageTroopData.RamOfVillage += total_troop;
                     break;
                 case TroopType.Catapult:
-                    this.InVillage.Troop.Catapult += total_troop;
-                    this.InVillage.Troop.InVillageCatapult += total_troop;
-                    this.InVillage.Troop.TotalCatapult += total_troop;
+                    this.InVillage.VillageTroopData.Catapult += total_troop;
+                    this.InVillage.VillageTroopData.CatapultInVillage += total_troop;
+                    this.InVillage.VillageTroopData.CatapultOfVillage += total_troop;
                     break;
                 case TroopType.Nobleman:
-                    this.InVillage.Troop.Noble += total_troop;
-                    this.InVillage.Troop.InVillageNoble += total_troop;
-                    this.InVillage.Troop.TotalNoble += total_troop;
+                    this.InVillage.VillageTroopData.Noble += total_troop;
+                    this.InVillage.VillageTroopData.NobleInVillage += total_troop;
+                    this.InVillage.VillageTroopData.NobleOfVillage += total_troop;
                     break;
                 default:
                     break;
@@ -328,9 +328,9 @@ namespace beans
         public void cancel(ISession session)
         {
             Price p = Recruit.GetPrice(this.Troop);
-            this.InVillage.Resources.Wood += (int)(this.Quantity * p.Wood * 0.9);
-            this.InVillage.Resources.Clay += (int)(this.Quantity * p.Clay * 0.9);
-            this.InVillage.Resources.Iron += (int)(this.Quantity * p.Iron * 0.9);
+            this.InVillage.VillageResourceData.Wood += (int)(this.Quantity * p.Wood * 0.9);
+            this.InVillage.VillageResourceData.Clay += (int)(this.Quantity * p.Clay * 0.9);
+            this.InVillage.VillageResourceData.Iron += (int)(this.Quantity * p.Iron * 0.9);
             session.Delete(this);
             session.Update(this.InVillage);
         }
@@ -339,39 +339,39 @@ namespace beans
             switch (troop)
             {
                 case TroopType.Spear:
-                    if (village.Buildings.Barracks == 0 || village.Research.ResearchSpear == 0)
+                    if (village.VillageBuildingData.Barracks == 0)
                         return false;
                     break;
                 case TroopType.Sword:
-                    if (village.Buildings.Barracks == 0 || village.Research.ResearchSword == 0 || village.Buildings.Smithy < 1)
+                    if (village.VillageBuildingData.Barracks == 0 || village.VillageBuildingData.Smithy < 1)
                         return false;
                     break;
                 case TroopType.Axe:
-                    if (village.Buildings.Barracks == 0 || village.Research.ResearchAxe == 0 || village.Buildings.Smithy < 2)
+                    if (village.VillageBuildingData.Barracks == 0 || village.VillageBuildingData.Smithy < 2)
                         return false;
                     break;
                 case TroopType.Scout:
-                    if (village.Buildings.Stable == 0 || village.Research.ResearchScout == 0)
+                    if (village.VillageBuildingData.Stable == 0)
                         return false;
                     break;
                 case TroopType.Light:
-                    if (village.Buildings.Stable < 3 || village.Research.ResearchLight == 0 || village.Buildings.Stable < 3)
+                    if (village.VillageBuildingData.Stable < 3 || village.VillageBuildingData.Stable < 3)
                         return false;
                     break;
                 case TroopType.Heavy:
-                    if (village.Buildings.Stable < 10 || village.Buildings.Smithy < 15 || village.Research.ResearchHeavy == 0)
+                    if (village.VillageBuildingData.Stable < 10 || village.VillageBuildingData.Smithy < 15)
                         return false;
                     break;
                 case TroopType.Ram:
-                    if (village.Buildings.Workshop == 0 || village.Research.ResearchRam == 0)
+                    if (village.VillageBuildingData.Workshop == 0)
                         return false;
                     break;
                 case TroopType.Catapult:
-                    if (village.Buildings.Workshop < 2 || village.Buildings.Smithy < 12 || village.Research.ResearchCatapult == 0)
+                    if (village.VillageBuildingData.Workshop < 2 || village.VillageBuildingData.Smithy < 12)
                         return false;
                     break;
                 case TroopType.Nobleman:
-                    if (village.Buildings.Academy == 0 || village.Buildings.Smithy < 20)
+                    if (village.VillageBuildingData.Academy == 0 || village.VillageBuildingData.Smithy < 20)
                         return false;
                     break;
                 default:
@@ -379,7 +379,7 @@ namespace beans
                     break;
             }
 
-            return Recruit.CanRecruit(troop, quantity, village.Resources.Wood, village.Resources.Clay, village.Resources.Iron);
+            return Recruit.CanRecruit(troop, quantity, village.VillageResourceData.Wood, village.VillageResourceData.Clay, village.VillageResourceData.Iron);
 
         }
         public static bool CanRecruit(TroopType troop, int quantity, int wood, int clay, int iron) 
