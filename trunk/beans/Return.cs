@@ -12,67 +12,67 @@ namespace beans
 
         #region Properties
 
-        public int Spear
+        public virtual int Spear
         {
             get;
             set;
         }
-        public int Sword
+        public virtual int Sword
         {
             get;
             set;
         }
-        public int Axe
+        public virtual int Axe
         {
             get;
             set;
         }
-        public int Scout
+        public virtual int Scout
         {
             get;
             set;
         }
-        public int LightCavalry
+        public virtual int LightCavalry
         {
             get;
             set;
         }
-        public int HeavyCavalry
+        public virtual int HeavyCavalry
         {
             get;
             set;
         }
-        public int Ram
+        public virtual int Ram
         {
             get;
             set;
         }
-        public int Catapult
+        public virtual int Catapult
         {
             get;
             set;
         }
-        public int Noble
+        public virtual int Noble
         {
             get;
             set;
         }
-        public int Wood
+        public virtual int Wood
         {
             get;
             set;
         }
-        public int Clay
+        public virtual int Clay
         {
             get;
             set;
         }
-        public int Iron
+        public virtual int Iron
         {
             get;
             set;
         }
-        public int Merchant
+        public virtual int Merchant
         {
             get;
             set;

@@ -10,9 +10,8 @@ namespace beans
 {
     public partial class Village
     {
-        #region Methods.Building
 
-        public BuildableStatus PrepareBuild(BuildingType building, ISession session)
+        public virtual BuildableStatus PrepareBuild(BuildingType building, ISession session)
         {
             int level = this.GetTotalBuildingLevel(building, session) + 1;
             BuildPrice price = Build.GetPrice(building, level, this.VillageBuildingData.Headquarter);
@@ -38,7 +37,7 @@ namespace beans
 
             return status;
         }
-        public int GetTotalBuildingLevel(BuildingType type, ISession session)
+        public virtual int GetTotalBuildingLevel(BuildingType type, ISession session)
         {
 
             return (from Build b in session.Linq<Build>()
@@ -46,13 +45,13 @@ namespace beans
                     b.Building == type
                     select b).Count<Build>() + this[type];
         }
-        public int GetTotalBuild(ISession session)
+        public virtual int GetTotalBuild(ISession session)
         {
             return (from Build b in session.Linq<Build>()
                     where b.InVillage == this
                     select b).Count<Build>();
         }
-        public BuildableStatus CanBuild(BuildingType type, ISession session)
+        public virtual BuildableStatus CanBuild(BuildingType type, ISession session)
         {
             if (this[type] == 0)
             {
@@ -146,7 +145,7 @@ namespace beans
             return BuildableStatus.JustDoIt;
 
         }
-        public IList<Build> GetPendingConstruction(ISession session)
+        public virtual IList<Build> GetPendingConstruction(ISession session)
         {
 
             return (from Build b in session.Linq<Build>()
@@ -154,7 +153,7 @@ namespace beans
                     orderby b.ID ascending
                     select b).ToList<Build>();
         }
-        public void CancelBuild(int id, ISession session)
+        public virtual void CancelBuild(int id, ISession session)
         {
 
             IList<Build> lstBuild = (from Build b in session.Linq<Build>()
@@ -182,7 +181,7 @@ namespace beans
             session.Delete(build);
             session.Update(build.InVillage);
         }
-        public double DefenseBonus()
+        public virtual double DefenseBonus()
         {
             double defense = 0;
             if (this[BuildingType.Wall] == 1)
@@ -194,6 +193,5 @@ namespace beans
             return defense;
         }
 
-        #endregion
     }
 }

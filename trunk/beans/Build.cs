@@ -251,52 +251,36 @@ namespace beans
             {
                 case BuildingType.Headquarter:
                     return Build.Headquarter;
-                    break;
                 case BuildingType.Barracks:
                     return Build.Barrack;
-                    break;
                 case BuildingType.Stable:
                     return Build.Stable;
-                    break;
                 case BuildingType.Workshop:
                     return Build.Workshop;
-                    break;
                 case BuildingType.Academy:
                     return Build.Academy;
-                    break;
                 case BuildingType.Smithy:
                     return Build.Smithy;
-                    break;
                 case BuildingType.Rally:
                     return Build.Rally;
-                    break;
                 case BuildingType.Market:
                     return Build.Market;
-                    break;
                 case BuildingType.TimberCamp:
                     return Build.TimberCamp;
-                    break;
                 case BuildingType.ClayPit:
                     return Build.ClayPit;
-                    break;
                 case BuildingType.IronMine:
                     return Build.IronMine;
-                    break;
                 case BuildingType.Farm:
                     return Build.Farm;
-                    break;
                 case BuildingType.Warehouse:
                     return Build.Warehouse;
-                    break;
                 case BuildingType.HidingPlace:
                     return Build.HidingPlace;
-                    break;
                 case BuildingType.Wall:
                     return Build.Wall;
-                    break;
                 default:
                     throw new Exception("Hack hả ku");
-                    break;
             }
         }
 

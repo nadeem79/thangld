@@ -143,34 +143,24 @@ namespace beans
             {
                 case TroopType.Spear:
                     return Recruit.Spear;
-                    break;
                 case TroopType.Sword:
                     return Recruit.Sword;
-                    break;
                 case TroopType.Axe:
                     return Recruit.Axe;
-                    break;
                 case TroopType.Scout:
                     return Recruit.Scout;
-                    break;
                 case TroopType.Light:
                     return Recruit.Light;
-                    break;
                 case TroopType.Heavy:
                     return Recruit.Heavy;
-                    break;
                 case TroopType.Ram:
                     return Recruit.Ram;
-                    break;
                 case TroopType.Catapult:
                     return Recruit.Catapult;
-                    break;
                 case TroopType.Nobleman:
                     return Recruit.Noble;
-                    break;
                 default:
                     throw new Exception("Báo động: HACK!!!");
-                    break;
             }
         }
         public static Price GetPrice(TroopType troop, int level)
@@ -376,7 +366,6 @@ namespace beans
                     break;
                 default:
                     return false;
-                    break;
             }
 
             return Recruit.CanRecruit(troop, quantity, village.VillageResourceData.Wood, village.VillageResourceData.Clay, village.VillageResourceData.Iron);

@@ -11,11 +11,11 @@ namespace beans
     public partial class Village
     {
 
-        public int MaxRecruit(TroopType troop)
+        public virtual int MaxRecruit(TroopType troop)
         {
             return Recruit.MaxRecruit(troop, this.VillageResourceData.Wood, this.VillageResourceData.Clay, this.VillageResourceData.Iron);
         }
-        public Recruit BeginRecruit(TroopType troop, int quantity, ISession session)
+        public virtual Recruit BeginRecruit(TroopType troop, int quantity, ISession session)
         {
             if (!Recruit.CanRecruit(troop, quantity, this.VillageResourceData.Wood, this.VillageResourceData.Clay, this.VillageResourceData.Iron))
                 return null;
@@ -42,7 +42,7 @@ namespace beans
 
             return recruit;
         }
-        public IList<Recruit> GetRecruit(ISession session, BuildingType building)
+        public virtual IList<Recruit> GetRecruit(ISession session, BuildingType building)
         {
 
             switch (building)
@@ -91,7 +91,7 @@ namespace beans
             return criteria.List<Recruit>();
         }
 
-        public void CancelRecruit(int recruit_id, ISession session)
+        public virtual void CancelRecruit(int recruit_id, ISession session)
         {
 
             Recruit recruit = (from Recruit r in session.Linq<Recruit>()
@@ -110,7 +110,7 @@ namespace beans
             session.Delete(recruit);
         }
 
-        protected IList<Recruit> GetDependingCarRecruit(ISession session)
+        protected virtual IList<Recruit> GetDependingCarRecruit(ISession session)
         {
             return (from Recruit recruit in session.Linq<Recruit>()
                     where recruit.InVillage == this &&
@@ -118,7 +118,7 @@ namespace beans
                     orderby recruit.ID ascending
                     select recruit).ToList<Recruit>();
         }
-        protected IList<Recruit> GetDependingNobleRecruit(ISession session)
+        protected virtual IList<Recruit> GetDependingNobleRecruit(ISession session)
         {
             return (from Recruit recruit in session.Linq<Recruit>()
                     where recruit.InVillage == this &&
@@ -127,7 +127,7 @@ namespace beans
                     select recruit).ToList<Recruit>();
 
         }
-        protected IList<Recruit> GetDependingInfantryRecruit(ISession session)
+        protected virtual IList<Recruit> GetDependingInfantryRecruit(ISession session)
         {
             return (from Recruit recruit in session.Linq<Recruit>()
                     where recruit.InVillage == this &&
@@ -135,7 +135,7 @@ namespace beans
                     orderby recruit.ID ascending
                     select recruit).ToList<Recruit>();
         }
-        protected IList<Recruit> GetDependingCavalryRecruit(ISession session)
+        protected virtual IList<Recruit> GetDependingCavalryRecruit(ISession session)
         {
             return (from Recruit recruit in session.Linq<Recruit>()
                     where recruit.InVillage == this &&

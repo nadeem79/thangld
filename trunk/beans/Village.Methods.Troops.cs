@@ -11,7 +11,7 @@ namespace beans
     public partial class Village
     {
 
-        public int GetIncomingAttackCount(ISession session)
+        public virtual int GetIncomingAttackCount(ISession session)
         {
 
             return (from attack in session.Linq<Attack>()
@@ -19,14 +19,14 @@ namespace beans
                     select attack).Count();
 
         }
-        public int GetIncomingSupportCount(ISession session)
+        public virtual int GetIncomingSupportCount(ISession session)
         {
             return (from support in session.Linq<Support>()
                     where support.ToVillage == this
                     select support).Count();
         }
 
-        public List<MovingCommand> GetTroopMovement(ISession session)
+        public virtual List<MovingCommand> GetTroopMovement(ISession session)
         {
             return (from movement in session.Linq<MovingCommand>()
                     where (movement.FromVillage == this || movement.ToVillage == this)
@@ -35,7 +35,7 @@ namespace beans
                     select movement).ToList();
         }
 
-        public List<MovingCommand> GetTroopMovement(DateTime time, ISession session)
+        public virtual List<MovingCommand> GetTroopMovement(DateTime time, ISession session)
         {
             return (from movement in session.Linq<MovingCommand>()
                     where (movement.FromVillage == this || movement.ToVillage == this)
@@ -45,7 +45,7 @@ namespace beans
                     select movement).ToList();
         }
 
-        public Attack CreateAttack( ISession session,
+        public virtual Attack CreateAttack(ISession session,
                                     int x,
                                     int y,
                                     int spear,
@@ -120,7 +120,7 @@ namespace beans
             return attack;
         }
 
-        public Support CreateSupport(ISession session,
+        public virtual Support CreateSupport(ISession session,
                                     int x,
                                     int y,
                                     int spear,

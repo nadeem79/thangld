@@ -9,7 +9,7 @@ namespace beans
     public partial class Village
     {
 
-        public int ProductPerHour(ResourcesType type)
+        public virtual int ProductPerHour(ResourcesType type)
         {
             int level = 0;
             switch (type)
@@ -34,7 +34,7 @@ namespace beans
                 result += (int)(result * 0.2);
             return result;
         }
-        public double SecondPerResourceUnit(ResourcesType type)
+        public virtual double SecondPerResourceUnit(ResourcesType type)
         {
 
             int level = 0;
@@ -58,7 +58,7 @@ namespace beans
                 return double.MaxValue;
             return (double)3600 / production;
         }
-        public void UpdateResources(DateTime from, DateTime to)
+        public virtual void UpdateResources(DateTime from, DateTime to)
         {
             TimeSpan span = to - from;
             double time = span.TotalHours;
@@ -73,13 +73,13 @@ namespace beans
             if (this.VillageResourceData.Iron > this.MaxResources)
                 this.VillageResourceData.Iron = this.MaxResources;
         }
-        public int TimeTillFullWarehouse(DateTime from, ResourcesType type)
+        public virtual int TimeTillFullWarehouse(DateTime from, ResourcesType type)
         {
             int canStore = this.MaxResources - this[type];
             return (int)(canStore * this.SecondPerResourceUnit(type));
         }
 
-        public SendResource CreateSendResource(ISession session,
+        public virtual SendResource CreateSendResource(ISession session,
                                                 int x,
                                                 int y,
                                                 int clay,
