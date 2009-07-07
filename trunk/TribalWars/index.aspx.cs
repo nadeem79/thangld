@@ -23,8 +23,7 @@ public partial class index : System.Web.UI.Page
     {
 
         ISession session2 = NHibernateHelper.CreateSession();
-        //Attack a = session2.Load<Attack>(368);
-        //this.Label1.Text = a.StartTimestamp.ToString() + " - " + DatetimeHelper.DatetimeToInt64(DateTime.Now).ToString();
+        Village v = session2.Get<Village>(23);
         session2.Close();
 
 

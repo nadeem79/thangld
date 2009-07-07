@@ -5,9 +5,8 @@
     void Application_Start(object sender, EventArgs e) 
     {
         // Code that runs on application startup
-        
-        if (System.IO.File.Exists("log.txt"))
-            System.IO.File.Delete("log.txt");
+
+        HibernatingRhinos.NHibernate.Profiler.Appender.NHibernateProfiler.Initialize();
         
         //log4net.Config.XmlConfigurator.Configure();
             
