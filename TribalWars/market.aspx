@@ -15,7 +15,7 @@
                 </td>
                 <td>
                     <h2>
-                        Market Level <% = this.Village.Buildings.Market %></h2>
+                        Market Level <% = this.Village.VillageBuildingData.Market %></h2>
                     On the market you can trade with other players.
                 </td>
             </tr>

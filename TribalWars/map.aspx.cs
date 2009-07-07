@@ -79,7 +79,7 @@ public partial class map : System.Web.UI.Page
             TableCell cell = this.tbVillages.Rows[7 + v.X - targetVillage.X].Cells[7 + v.Y - targetVillage.Y];
             cell.CssClass = "space-left-new space-bottom-new";
             cell.BackColor = Color.Red;
-            if (v.Owner.ID == (int)Session["user"])
+            if (v.Player.ID == (int)Session["user"])
                 cell.BackColor = Color.Yellow;
             HyperLink link = new HyperLink();
             link.Style.Add("margin", "0px");
@@ -89,7 +89,7 @@ public partial class map : System.Web.UI.Page
             link.NavigateUrl = "village_info.aspx?id=" + this.village.ID.ToString() + "&village=" + v.ID.ToString();
 
             link.ToolTip = "Thành phố: " + v.Name + " (" + v.X.ToString("000") + "|" + v.Y.ToString("000") + ")<br />" + Environment.NewLine;
-            link.ToolTip += "Chủ thành: " + v.Owner.Username;
+            link.ToolTip += "Chủ thành: " + v.Player.Username;
             cell.Controls.Add(link);
         }
         

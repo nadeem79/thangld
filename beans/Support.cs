@@ -125,6 +125,9 @@ namespace beans
 
         public override MovingCommand Effect(ISession session)
         {
+
+            this.ToVillage.Update(this.LandingTime, session);
+
             ICriteria criteria = session.CreateCriteria(typeof(Station));
 
             criteria.Add(Expression.Eq("AtVillage", this.ToVillage));
@@ -206,7 +209,7 @@ namespace beans
             supportReport.Owner = this.FromVillage.Player;
             session.Save(supportReport);
 
-
+            return null;
         }
 
         public override MovingCommand Cancel(ISession session)

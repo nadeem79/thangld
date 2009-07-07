@@ -68,31 +68,31 @@
                         <td>
                             <asp:Panel ID="pSpears" runat="server">
                                 <img src="images/unit_spear.png" alt="" />
-                                <% = this.current.Troop.TotalSpear%> <asp:Literal ID="Literal4" runat="server" Text="<%$ Resources:text, spear %>" /></asp:Panel>
+                                <% = this.current.VillageTroopData.SpearInVillage %> <asp:Literal ID="Literal4" runat="server" Text="<%$ Resources:text, spear %>" /></asp:Panel>
                             <asp:Panel ID="pSword" runat="server">
                                 <img src="images/unit_sword.png" alt="" />
-                                <% = this.current.Troop.TotalSword%> <asp:Literal ID="Literal1" runat="server" Text="<%$ Resources:text, sword %>" /></asp:Panel>
+                                <% = this.current.VillageTroopData.SwordInVillage %> <asp:Literal ID="Literal1" runat="server" Text="<%$ Resources:text, sword %>" /></asp:Panel>
                             <asp:Panel ID="pAxe" runat="server">
                                 <img src="images/unit_axe.png" alt="" />
-                                <% = this.current.Troop.TotalAxe%> <asp:Literal ID="Literal2" runat="server" Text="<%$ Resources:text, axe %>" /></asp:Panel>
+                                <% = this.current.VillageTroopData.AxeInVillage%> <asp:Literal ID="Literal2" runat="server" Text="<%$ Resources:text, axe %>" /></asp:Panel>
                             <asp:Panel ID="pScout" runat="server">
                                 <img src="images/unit_spy.png" alt="" />
-                                <% = this.current.Troop.TotalScout%> <asp:Literal ID="Literal3" runat="server" Text="<%$ Resources:text, scout %>" /></asp:Panel>
+                                <% = this.current.VillageTroopData.ScoutInVillage%> <asp:Literal ID="Literal3" runat="server" Text="<%$ Resources:text, scout %>" /></asp:Panel>
                             <asp:Panel ID="pLight" runat="server">
                                 <img src="images/unit_light.png" alt="" />
-                                <% = this.current.Troop.TotalLight%> <asp:Literal ID="Literal5" runat="server" Text="<%$ Resources:text, light %>" /></asp:Panel>
+                                <% = this.current.VillageTroopData.LightCavalryInVillage%> <asp:Literal ID="Literal5" runat="server" Text="<%$ Resources:text, light %>" /></asp:Panel>
                             <asp:Panel ID="pHeavy" runat="server">
                                 <img src="images/unit_heavy.png" alt="" />
-                                <% = this.current.Troop.TotalHeavy %> <asp:Literal ID="Literal6" runat="server" Text="<%$ Resources:text, heavy %>" /></asp:Panel>
+                                <% = this.current.VillageTroopData.HeavyCavalryInVillage%> <asp:Literal ID="Literal6" runat="server" Text="<%$ Resources:text, heavy %>" /></asp:Panel>
                             <asp:Panel ID="pRam" runat="server">
                                 <img src="images/unit_ram.png" alt="" />
-                                <% = this.current.Troop.TotalRam %> <asp:Literal ID="Literal7" runat="server" Text="<%$ Resources:text, ram %>" /></asp:Panel>
+                                <% = this.current.VillageTroopData.RamInVillage%> <asp:Literal ID="Literal7" runat="server" Text="<%$ Resources:text, ram %>" /></asp:Panel>
                             <asp:Panel ID="pCatapult" runat="server">
                                 <img src="images/unit_catapult.png" alt="" />
-                                <% = this.current.Troop.TotalCatapult%> <asp:Literal ID="Literal8" runat="server" Text="<%$ Resources:text, catapult %>" /></asp:Panel>
+                                <% = this.current.VillageTroopData.CatapultInVillage%> <asp:Literal ID="Literal8" runat="server" Text="<%$ Resources:text, catapult %>" /></asp:Panel>
                             <asp:Panel ID="pNoble" runat="server">
                                 <img src="images/unit_snob.png" alt="" />
-                                <% = this.current.Troop.TotalNoble%> <asp:Literal ID="Literal9" runat="server" Text="<%$ Resources:text, noble %>" /></asp:Panel>
+                                <% = this.current.VillageTroopData.NobleInVillage%> <asp:Literal ID="Literal9" runat="server" Text="<%$ Resources:text, noble %>" /></asp:Panel>
                         </td>
                     </tr>
                 </table>

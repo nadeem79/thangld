@@ -36,9 +36,8 @@ public partial class dialogs_attack_confirm : System.Web.UI.Page
             
             this.pFound.Visible = true;
             this.pNotFound.Visible = false;
-            DateTime landing = DateTime.Now + (command.LandingTime - command.StartTime);
+            DateTime landing = DateTime.Now + (command.LandingTime - command.StartingTime);
             this.lblLandingTime.Text = landing.ToString("dd/MM/yyyy hh:mm:ss") + ":<span class='small hidden'>" + landing.Millisecond.ToString("000") + "</span>";
-            this.Label1.Text = this.command.LandingTimestamp.ToString();
         }
         catch (Exception ex)
         {
@@ -64,7 +63,7 @@ public partial class dialogs_attack_confirm : System.Web.UI.Page
         {
             session = NHibernateHelper.CreateSession();
             trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
-            command.execute(session);
+            command.Execute(session);
             trans.Commit();
             RadScriptManager.RegisterStartupScript(bttnSendAttack, bttnSendAttack.GetType(), "SendAttack", "CloseAndRefresh();", true);
         }

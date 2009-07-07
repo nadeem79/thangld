@@ -13,7 +13,7 @@
                 <td>
                     <h2>
                         
-                        Trại ngựa cấp <% Response.Write(this.village.Buildings.Stable); %></h2>
+                        Trại ngựa cấp <% Response.Write(this.village.VillageBuildingData.Stable); %></h2>
                     In the stables you can recruit cavalry. The higher its level the faster the recruitment
                     of the troops will be finished.
                 </td>
@@ -87,10 +87,10 @@
                     2
                 </td>
                 <td>
-                    <% = Functions.FormatTime(beans.Recruit.GetPrice(beans.TroopType.Scout, this.village.Buildings.Stable).BuildTime) %>
+                    <% = Functions.FormatTime(beans.Recruit.GetPrice(beans.TroopType.Scout, this.village.VillageBuildingData.Stable).BuildTime)%>
                 </td>
                 <td>
-                    <% Response.Write(this.village.Troop.Scout.ToString()); %>/<%Response.Write(this.village.Troop.InVillageScout.ToString()); %>
+                    <% Response.Write(this.village.VillageTroopData.Scout.ToString()); %>/<%Response.Write(this.village.VillageTroopData.ScoutOfVillage.ToString()); %>
                 </td>
                 <td>
                     <asp:TextBox ID="txtScout" runat="server" Width="33px"></asp:TextBox>
@@ -120,10 +120,10 @@
                     4
                 </td>
                 <td>
-                    <% = Functions.FormatTime(beans.Recruit.GetPrice(beans.TroopType.Light, this.village.Buildings.Stable).BuildTime) %>
+                    <% = Functions.FormatTime(beans.Recruit.GetPrice(beans.TroopType.Light, this.village.VillageBuildingData.Stable).BuildTime)%>
                 </td>
                 <td>
-                    <% Response.Write(this.village.Troop.Light.ToString()); %>/<%Response.Write(this.village.Troop.InVillageLight.ToString()); %>
+                    <% Response.Write(this.village.VillageTroopData.LightCavalry.ToString()); %>/<%Response.Write(this.village.VillageTroopData.LightCavalryOfVillage.ToString()); %>
                 </td>
                 <td>
                     <asp:TextBox ID="txtLight" runat="server" Width="33px"></asp:TextBox>
@@ -153,10 +153,10 @@
                     6
                 </td>
                 <td>
-                    <% = Functions.FormatTime(beans.Recruit.GetPrice(beans.TroopType.Heavy, this.village.Buildings.Stable).BuildTime)%>
+                    <% = Functions.FormatTime(beans.Recruit.GetPrice(beans.TroopType.Heavy, this.village.VillageBuildingData.Stable).BuildTime)%>
                 </td>
                 <td>
-                    <% Response.Write(this.village.Troop.Heavy.ToString()); %>/<%Response.Write(this.village.Troop.InVillageHeavy.ToString()); %>
+                    <% Response.Write(this.village.VillageTroopData.HeavyCavalry.ToString()); %>/<%Response.Write(this.village.VillageTroopData.HeavyCavalryOfVillage.ToString()); %>
                 </td>
                 <td>
                     <asp:TextBox ID="txtHeavy" runat="server" Width="33px"></asp:TextBox>

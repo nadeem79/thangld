@@ -5,11 +5,11 @@
         <tr>
             <th>
                 Merchants:
-                <asp:Label ID="lblAvailableMerchant" runat="server"></asp:Label>/<% = this.Village.Buildings.Merchant %>
+                <asp:Label ID="lblAvailableMerchant" runat="server"></asp:Label>/<% = this.Village.VillageBuildingData.Merchant%>
             </th>
             <th>
                 Maximum transport amount:
-                <% = (this.Village.Resources.Wood + this.Village.Resources.Clay + this.Village.Resources.Iron < this.Village.Buildings.Merchant * 1000) ? this.Village.Resources.Wood + this.Village.Resources.Clay + this.Village.Resources.Iron : this.Village.Buildings.Merchant * 1000%>
+                <% = (this.Village.VillageResourceData.Wood + this.Village.VillageResourceData.Clay + this.Village.VillageResourceData.Iron < this.Village.VillageBuildingData.Merchant * 1000) ? this.Village.VillageResourceData.Wood + this.Village.VillageResourceData.Clay + this.Village.VillageResourceData.Iron : this.Village.VillageBuildingData.Merchant * 1000%>
             </th>
         </tr>
     </tbody>
@@ -28,19 +28,19 @@
                         <tr>
                             <td>
                                 <img src="images/holz.png" title="Wood" alt="">&nbsp;<asp:TextBox ID="txtWood" runat="server"></asp:TextBox>
-                                &nbsp;<a href="javascript:insertUnit('<% Response.Write(this.txtWood.ClientID); %>', <% = (this.Village.Resources.Wood < this.Village.Buildings.Merchant * 1000) ? this.Village.Resources.Wood : this.Village.Buildings.Merchant * 1000 %>)">(<% = (this.Village.Resources.Wood < this.Village.Buildings.Merchant * 1000) ? this.Village.Resources.Wood : this.Village.Buildings.Merchant * 1000 %>)</a>
+                                &nbsp;<a href="javascript:insertUnit('<% Response.Write(this.txtWood.ClientID); %>', <% = (this.Village.VillageResourceData.Wood < this.Village.VillageBuildingData.Merchant * 1000) ? this.Village.VillageResourceData.Wood : this.Village.VillageBuildingData.Merchant * 1000 %>)">(<% = (this.Village.VillageResourceData.Wood < this.Village.VillageBuildingData.Merchant * 1000) ? this.Village.VillageResourceData.Wood : this.Village.VillageBuildingData.Merchant * 1000%>)</a>
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <img src="images/lehm.png" title="Clay" alt="">&nbsp;<asp:TextBox ID="txtClay" runat="server"></asp:TextBox>
-                                &nbsp;<a href="javascript:insertUnit('<% Response.Write(this.txtClay.ClientID); %>', <% = (this.Village.Resources.Clay < this.Village.Buildings.Merchant * 1000) ? this.Village.Resources.Clay : this.Village.Buildings.Merchant * 1000 %>)">(<% = (this.Village.Resources.Clay < this.Village.Buildings.Merchant * 1000) ? this.Village.Resources.Clay : this.Village.Buildings.Merchant * 1000 %>)</a>
+                                &nbsp;<a href="javascript:insertUnit('<% Response.Write(this.txtClay.ClientID); %>', <% = (this.Village.VillageResourceData.Clay < this.Village.VillageBuildingData.Merchant * 1000) ? this.Village.VillageResourceData.Clay : this.Village.VillageBuildingData.Merchant * 1000 %>)">(<% = (this.Village.VillageResourceData.Clay < this.Village.VillageBuildingData.Merchant * 1000) ? this.Village.VillageResourceData.Clay : this.Village.VillageBuildingData.Merchant * 1000%>)</a>
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <img src="images/eisen.png" title="Iron" alt="">&nbsp;<asp:TextBox ID="txtIron" runat="server"></asp:TextBox>
-                                &nbsp;<a href="javascript:insertUnit('<% Response.Write(this.txtIron.ClientID); %>', <% = (this.Village.Resources.Iron < this.Village.Buildings.Merchant * 1000) ? this.Village.Resources.Iron : this.Village.Buildings.Merchant * 1000 %>)">(<% = (this.Village.Resources.Iron < this.Village.Buildings.Merchant * 1000) ? this.Village.Resources.Iron : this.Village.Buildings.Merchant * 1000 %>)</a>
+                                &nbsp;<a href="javascript:insertUnit('<% Response.Write(this.txtIron.ClientID); %>', <% = (this.Village.VillageResourceData.Iron < this.Village.VillageBuildingData.Merchant * 1000) ? this.Village.VillageResourceData.Iron : this.Village.VillageBuildingData.Merchant * 1000 %>)">(<% = (this.Village.VillageResourceData.Iron < this.Village.VillageBuildingData.Merchant * 1000) ? this.Village.VillageResourceData.Iron : this.Village.VillageBuildingData.Merchant * 1000%>)</a>
                             </td>
                         </tr>
                     </tbody>

@@ -113,7 +113,7 @@ public partial class CustomControls_SendResource : System.Web.UI.UserControl
         try
         {
             transaction = this.Session.BeginTransaction(IsolationLevel.ReadCommitted);
-            SendResource sendResource = SendResource.PrepareSendingResources(this.Session, this.Village, x, y, wood, clay, iron);
+            SendResource sendResource = this.Village.CreateSendResource(this.Session, x, y, wood, clay, iron);
             transaction.Commit();
             Response.Redirect(String.Format("market.aspx?id={0}", this.Village.ID), false);
         }

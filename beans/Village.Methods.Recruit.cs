@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NHibernate;
+using NHibernate.Linq;
 using NHibernate.Criterion;
 
 namespace beans
@@ -12,11 +13,11 @@ namespace beans
 
         public int MaxRecruit(TroopType troop)
         {
-            return Recruit.MaxRecruit(troop, this.Resources.Wood, this.Resources.Clay, this.Resources.Iron);
+            return Recruit.MaxRecruit(troop, this.VillageResourceData.Wood, this.VillageResourceData.Clay, this.VillageResourceData.Iron);
         }
         public Recruit BeginRecruit(TroopType troop, int quantity, ISession session)
         {
-            if (!Recruit.CanRecruit(troop, quantity, this.Resources.Wood, this.Resources.Clay, this.Resources.Iron))
+            if (!Recruit.CanRecruit(troop, quantity, this.VillageResourceData.Wood, this.VillageResourceData.Clay, this.VillageResourceData.Iron))
                 return null;
 
             int level = 0;
@@ -32,9 +33,9 @@ namespace beans
             recruit.LastUpdate = DateTime.Now;
 
             Price p = Recruit.GetPrice(troop);
-            this.Resources.Clay -= p.Clay * quantity;
-            this.Resources.Wood -= p.Wood * quantity;
-            this.Resources.Iron -= p.Iron * quantity;
+            this.VillageResourceData.Clay -= p.Clay * quantity;
+            this.VillageResourceData.Wood -= p.Wood * quantity;
+            this.VillageResourceData.Iron -= p.Iron * quantity;
 
             session.Save(recruit);
             session.Update(this);
@@ -92,17 +93,18 @@ namespace beans
 
         public void CancelRecruit(int recruit_id, ISession session)
         {
-            ICriteria criteria = session.CreateCriteria(typeof(Recruit));
-            criteria.Add(Expression.Eq("ID", recruit_id));
-            criteria.Add(Expression.Eq("InVillage", this));
-            Recruit recruit = criteria.UniqueResult<Recruit>();
+
+            Recruit recruit = (from Recruit r in session.Linq<Recruit>()
+                               where r.ID == recruit_id &&
+                               r.InVillage == this
+                               select r).SingleOrDefault<Recruit>();
             if (recruit == null)
                 return;
 
             Price price = Recruit.GetPrice(recruit.Troop);
-            this.Resources.Wood += price.Wood * recruit.Quantity;
-            this.Resources.Clay += price.Clay * recruit.Quantity;
-            this.Resources.Iron += price.Iron * recruit.Quantity;
+            this.VillageResourceData.Wood += price.Wood * recruit.Quantity;
+            this.VillageResourceData.Clay += price.Clay * recruit.Quantity;
+            this.VillageResourceData.Iron += price.Iron * recruit.Quantity;
             this.Population -= (int)(price.Population * recruit.Quantity);
             session.Update(this);
             session.Delete(recruit);
@@ -110,35 +112,36 @@ namespace beans
 
         protected IList<Recruit> GetDependingCarRecruit(ISession session)
         {
-            ICriteria criteria = session.CreateCriteria(typeof(Recruit));
-            criteria.Add(Expression.Eq("InVillage", this));
-            criteria.Add(Expression.Or(Expression.Eq("Troop", TroopType.Catapult), Expression.Eq("Troop", TroopType.Ram)));
-            criteria.AddOrder(new Order("ID", true));
-            return criteria.List<Recruit>();
+            return (from Recruit recruit in session.Linq<Recruit>()
+                    where recruit.InVillage == this &&
+                    (recruit.Troop == TroopType.Ram || recruit.Troop == TroopType.Catapult)
+                    orderby recruit.ID ascending
+                    select recruit).ToList<Recruit>();
         }
         protected IList<Recruit> GetDependingNobleRecruit(ISession session)
         {
-            ICriteria criteria = session.CreateCriteria(typeof(Recruit));
-            criteria.Add(Expression.Eq("InVillage", this));
-            criteria.Add(Expression.Eq("Troop", TroopType.Nobleman));
-            criteria.AddOrder(new Order("ID", true));
-            return criteria.List<Recruit>();
+            return (from Recruit recruit in session.Linq<Recruit>()
+                    where recruit.InVillage == this &&
+                    recruit.Troop == TroopType.Nobleman
+                    orderby recruit.ID ascending
+                    select recruit).ToList<Recruit>();
+
         }
         protected IList<Recruit> GetDependingInfantryRecruit(ISession session)
         {
-            ICriteria criteria = session.CreateCriteria(typeof(Recruit));
-            criteria.Add(Expression.Eq("InVillage", this));
-            criteria.Add(Expression.Or(Expression.Eq("Troop", TroopType.Axe), Expression.Or(Expression.Eq("Troop", TroopType.Spear), Expression.Eq("Troop", TroopType.Sword))));
-            criteria.AddOrder(new Order("ID", true));
-            return criteria.List<Recruit>();
+            return (from Recruit recruit in session.Linq<Recruit>()
+                    where recruit.InVillage == this &&
+                    (recruit.Troop == TroopType.Spear || recruit.Troop == TroopType.Sword || recruit.Troop == TroopType.Axe)
+                    orderby recruit.ID ascending
+                    select recruit).ToList<Recruit>();
         }
         protected IList<Recruit> GetDependingCavalryRecruit(ISession session)
         {
-            ICriteria criteria = session.CreateCriteria(typeof(Recruit));
-            criteria.Add(Expression.Eq("InVillage", this));
-            criteria.Add(Expression.Or(Expression.Eq("Troop", TroopType.Scout), Expression.Or(Expression.Eq("Troop", TroopType.Light), Expression.Eq("Troop", TroopType.Heavy))));
-            criteria.AddOrder(new Order("ID", true));
-            return criteria.List<Recruit>();
+            return (from Recruit recruit in session.Linq<Recruit>()
+                    where recruit.InVillage == this &&
+                    (recruit.Troop == TroopType.Scout || recruit.Troop == TroopType.Light || recruit.Troop == TroopType.Heavy)
+                    orderby recruit.ID ascending
+                    select recruit).ToList<Recruit>();
         }
     }
 }

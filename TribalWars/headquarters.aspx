@@ -22,7 +22,7 @@
                 <td width="100%">
                     <h2>
                         Village Headquarters (<asp:Literal ID="Literal1" runat="server" Text="<%$ Resources:text, level %>" />
-                        <% = this.village.Buildings.Headquarter %>)</h2>
+                        <% = this.village.VillageBuildingData.Headquarter %>)</h2>
                     In the village headquarters you can construct new buildings or upgrade existing
                     ones. The higher the level of your headquarters, the faster the constructions will
                     be finished. As soon as your village headquarters are upgraded to level 15, you

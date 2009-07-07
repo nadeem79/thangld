@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NHibernate;
+using NHibernate.Linq;
 using NHibernate.Criterion;
 using System.Diagnostics;
 
@@ -27,14 +28,10 @@ namespace beans
 
         public int MerchantOnTheWayHome(ISession session)
         {
-            IQuery query = session.CreateQuery("select sum(r.Merchant) from Return r where r.To=:village");
-            query.SetEntity("village", this);
-            int i = 0;
-            object o = query.List()[0];
-            if (o==null)
-                return 0;
 
-            return Convert.ToInt32(o);
+            return (from Return r in session.Linq<Return>()
+                    where r.ToVillage == this
+                    select r).Sum<Return>(r => r.Merchant);
         }
 
         public int MerchantAvailable(ISession session)
@@ -51,32 +48,32 @@ namespace beans
                 else
                     merchantCount += (int)Math.Round((double)(offer.OfferQuantity / 1000)) * offer.OfferNumber;
 
-            return this.Buildings.Merchant - merchantCount - this.MerchantOnTheWay(session) - this.MerchantOnTheWayHome(session);
+            return this.VillageBuildingData.Merchant - merchantCount - this.MerchantOnTheWay(session) - this.MerchantOnTheWayHome(session);
         }
 
         public int AvailableMerchant(ISession session)
         {
-            return this.Buildings.Merchant - this.MerchantOnTheWay(session) - this.MerchantOnTheWayHome(session);
+            return this.VillageBuildingData.Merchant - this.MerchantOnTheWay(session) - this.MerchantOnTheWayHome(session);
         }
 
         public IList<SendResource> GetDependingResource(DateTime to, ISession session)
         {
-            ICriteria criteria = session.CreateCriteria(typeof(SendResource));
-            criteria.Add(Expression.Eq("To", this));
-            criteria.Add(Expression.Ge("LandingTimestamp", this.LastUpdateTimestamp));
-            criteria.Add(Expression.Lt("LandingTimestamp", DatetimeHelper.DatetimeToInt64(to)));
-            criteria.AddOrder(new Order("LandingTimestamp", true));
 
-            return criteria.List<SendResource>();
+            return (from SendResource sendResource in session.Linq<SendResource>()
+                    where sendResource.ToVillage == this &&
+                    sendResource.LandingTime > this.LastUpdate &&
+                    sendResource.LandingTime < to
+                    orderby sendResource.LandingTime ascending
+                    select sendResource).ToList<SendResource>();
         }
 
         public IList<SendResource> GetDependingResource(ISession session)
         {
-            ICriteria criteria = session.CreateCriteria(typeof(SendResource));
-            criteria.Add(Expression.Eq("To", this));
-            criteria.AddOrder(new Order("LandingTimestamp", true));
 
-            return criteria.List<SendResource>();
+            return (from SendResource sendResource in session.Linq<SendResource>()
+                    where sendResource.ToVillage == this
+                    orderby sendResource.LandingTime ascending
+                    select sendResource).ToList<SendResource>();
         }
 
         public IList<SendResource> GetIncomingMerchants(ISession session)
@@ -85,29 +82,33 @@ namespace beans
             criteria.Add(Expression.Eq("To", this));
             return criteria.List<SendResource>();
         }
-        public IList<MovingCommand> GetReturnMerchants(ISession session)
+        public IList<Return> GetReturnMerchants(ISession session)
         {
-            ICriteria criteria = session.CreateCriteria(typeof(Return));
-            criteria.Add(Expression.Eq("To", this));
-            criteria.Add(Expression.Gt("Merchant", 0));
-            return criteria.List<MovingCommand>();
+
+            return (from Return r in session.Linq<Return>()
+                    where r.ToVillage == this &&
+                    r.Merchant > 0
+                    select r).ToList<Return>();
+
         }
         public IList<SendResource> GetOutgoingMerchants(ISession session)
         {
-            ICriteria criteria = session.CreateCriteria(typeof(SendResource));
-            criteria.Add(Expression.Eq("From", this));
-            criteria.AddOrder(new Order("LandingTimestamp", true));
-            return criteria.List<SendResource>();
+
+            return (from SendResource sendResource in session.Linq<SendResource>()
+                    where sendResource.FromVillage == this
+                    orderby sendResource.LandingTime ascending
+                    select sendResource).ToList<SendResource>();
         }
 
         public IList<SendResource> GetOutgoingMerchants(DateTime to, ISession session)
         {
-            ICriteria criteria = session.CreateCriteria(typeof(SendResource));
-            criteria.Add(Expression.Eq("From", this));
-            criteria.Add(Expression.Ge("LandingTimestamp", this.LastUpdateTimestamp));
-            criteria.Add(Expression.Lt("LandingTimestamp", DatetimeHelper.DatetimeToInt64(to)));
-            criteria.AddOrder(new Order("LandingTimestamp", true));
-            return criteria.List<SendResource>();
+
+            return (from SendResource sendResource in session.Linq<SendResource>()
+                    where sendResource.FromVillage == this &&
+                    sendResource.LandingTime > this.LastUpdate &&
+                    sendResource.LandingTime < to
+                    orderby sendResource.LandingTime ascending
+                    select sendResource).ToList<SendResource>();
         }
 
         public IList<MovingCommand> IncomingMerchants(ISession session)

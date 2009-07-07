@@ -16,8 +16,6 @@ using NHibernate.Engine;
             if (object.Equals(NHibernateHelper.sessionFactory, null))
                 NHibernateHelper.sessionFactory = NHibernateHelper.MWConfig().BuildSessionFactory();
 
-            NHibernateHelper.sessionFactory.Settings.IsolationLevel = System.Data.IsolationLevel.ReadCommitted;
-
             return NHibernateHelper.sessionFactory;
         }
 

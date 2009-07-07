@@ -34,9 +34,9 @@ public partial class stable : System.Web.UI.Page
                 ITransaction trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
                 this.village.CancelRecruit(id, session);
                 trans.Commit();
-                ((inPage)this.Master).WoodLabel.Text = this.village.Resources.Wood.ToString();
-                ((inPage)this.Master).ClayLabel.Text = this.village.Resources.Clay.ToString();
-                ((inPage)this.Master).IronLabel.Text = this.village.Resources.Iron.ToString();
+                ((inPage)this.Master).WoodLabel.Text = this.village.VillageResourceData.Wood.ToString();
+                ((inPage)this.Master).ClayLabel.Text = this.village.VillageResourceData.Clay.ToString();
+                ((inPage)this.Master).IronLabel.Text = this.village.VillageResourceData.Iron.ToString();
             }
         }
 
@@ -69,16 +69,16 @@ public partial class stable : System.Web.UI.Page
             }
             else
             {
-                last_complete = last_complete.AddSeconds(Recruit.RecruitTime(recruits[i - 1].Troop, recruits[i - 1].Quantity, this.village.Buildings.Stable));
+                last_complete = last_complete.AddSeconds(Recruit.RecruitTime(recruits[i - 1].Troop, recruits[i - 1].Quantity, this.village.VillageBuildingData.Stable));
             }
 
-            sRecruitCommands += Functions.FormatTime(Recruit.RecruitTime(recruits[i].Troop, recruits[i].Quantity, this.village.Buildings.Stable)) + "</span></td>";
-            sRecruitCommands += "<td>" + last_complete.AddSeconds(Recruit.RecruitTime(recruits[i].Troop, recruits[i].Quantity, this.village.Buildings.Stable)).ToString("HH:mm:ss 'ngày' dd/MM/yyyy ") + "</td>";
+            sRecruitCommands += Functions.FormatTime(Recruit.RecruitTime(recruits[i].Troop, recruits[i].Quantity, this.village.VillageBuildingData.Stable)) + "</span></td>";
+            sRecruitCommands += "<td>" + last_complete.AddSeconds(Recruit.RecruitTime(recruits[i].Troop, recruits[i].Quantity, this.village.VillageBuildingData.Stable)).ToString("HH:mm:ss 'ngày' dd/MM/yyyy ") + "</td>";
             sRecruitCommands += String.Format("<td><a href=\"stable.aspx?id={0}&mode=cancel_recruit&recruit_id={1}\">Hủy</a></td>", this.village.ID, recruits[i].ID);
             sRecruitCommands += "</tr>";
         }
         this.lblRecruiting.Text = sRecruitCommands;
-        string s = Functions.FormatTime(beans.Recruit.GetPrice(beans.TroopType.Heavy, this.village.Buildings.Stable).BuildTime);
+        string s = Functions.FormatTime(beans.Recruit.GetPrice(beans.TroopType.Heavy, this.village.VillageBuildingData.Stable).BuildTime);
         session.Close();
         
     }

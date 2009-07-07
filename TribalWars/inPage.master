@@ -305,12 +305,12 @@
     </div>
 
     <script language="javascript" type="text/javascript">
-        <% if (this.CurrentVillage.Resources.Clay < this.CurrentVillage.MaxResources)
+        <% if (this.CurrentVillage.VillageResourceData.Clay < this.CurrentVillage.MaxResources)
        { %>
         production("<% = this.lblClay.ClientID %>", <% Response.Write(this.CurrentVillage.SecondPerResourceUnit(beans.ResourcesType.Clay)); %>*1000);
-        <%}  if (this.CurrentVillage.Resources.Wood < this.CurrentVillage.MaxResources) { %>
+        <%}  if (this.CurrentVillage.VillageResourceData.Wood < this.CurrentVillage.MaxResources) { %>
         production("<% = this.lblWood.ClientID %>", <% Response.Write(this.CurrentVillage.SecondPerResourceUnit(beans.ResourcesType.Wood)); %>*1000);
-        <%}  if (this.CurrentVillage.Resources.Iron < this.CurrentVillage.MaxResources) { %>
+        <%}  if (this.CurrentVillage.VillageResourceData.Iron < this.CurrentVillage.MaxResources) { %>
         production("<% = this.lblIron.ClientID %>", <% Response.Write(this.CurrentVillage.SecondPerResourceUnit(beans.ResourcesType.Iron)); %>*1000);
         <%} %>
         attackTimer();

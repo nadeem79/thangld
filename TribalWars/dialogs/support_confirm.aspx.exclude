@@ -1,7 +1,17 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/dialogs/dialog_template.master"
-    AutoEventWireup="true" CodeFile="attack_confirm.aspx.cs" Inherits="dialogs_attack_confirm" %>
+    AutoEventWireup="true" CodeFile="support_confirm.aspx.cs" Inherits="dialogs_support_confirm" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    <style type="text/css">
+        #<% =this.pSendSupport.ClientID %>
+        {
+            float:left;
+        }
+        #<% =this.pCancelSupport.ClientID %>
+        {
+            float:left;
+        }
+        </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="dialog" runat="Server">
     <asp:Panel ID="pNotFound" runat="server">
@@ -24,9 +34,9 @@
                         Tấn công:
                     </td>
                     <td>
-                        <a href="../village_info.aspx?player=<% = command.To.ID %><% = (object.Equals(Request["id"], null) ? "&id=" + Request["id"] : "") %>"
+                        <a href="../village_info.aspx?player=<% = command.ToVillage.ID %><% = (object.Equals(Request["id"], null) ? "&id=" + Request["id"] : "") %>"
                             target="_blank">
-                            <% = command.To.Name %></a>
+                            <% = command.ToVillage.Name%></a>
                     </td>
                 </tr>
                 <tr>
@@ -34,8 +44,8 @@
                         Đối thủ:
                     </td>
                     <td>
-                        <a href="../user_info.aspx?player=<% = command.To.Owner.ID %><% = (object.Equals(Request["id"], null) ? "&id=" + Request["id"] : "") %>">
-                            <% = command.To.Owner.Username %></a>
+                        <a href="../user_info.aspx?player=<% = command.ToVillage.Player.ID %><% = (object.Equals(Request["id"], null) ? "&id=" + Request["id"] : "") %>">
+                            <% = command.ToVillage.Player.Username %></a>
                     </td>
                 </tr>
                 <tr>
@@ -43,7 +53,7 @@
                         Thời gian:
                     </td>
                     <td>
-                        <% = Functions.FormatTime(command.LandingTime - command.StartTime)%>
+                        <% = Functions.FormatTime(command.LandingTime - command.StartingTime)%>
                     </td>
                 </tr>
                 <tr>
@@ -60,8 +70,6 @@
                     </td>
                     <td>
                         <asp:Label ID="lblNote" runat="server"></asp:Label>
-                        <br />
-                        <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
                     </td>
                 </tr>
             </tbody>
@@ -116,12 +124,12 @@
                             <% = command.Scout %></span>
                     </td>
                     <td>
-                        <span <% if (command.Light == 0) Response.Write(" class='hidden'"); %>>
-                            <% = command.Light %></span>
+                        <span <% if (command.LightCavalry == 0) Response.Write(" class='hidden'"); %>>
+                            <% = command.LightCavalry %></span>
                     </td>
                     <td>
-                        <span <% if (command.Heavy == 0) Response.Write(" class='hidden'"); %>>
-                            <% = command.Heavy %></span>
+                        <span <% if (command.HeavyCavalry == 0) Response.Write(" class='hidden'"); %>>
+                            <% = command.HeavyCavalry %></span>
                     </td>
                     <td>
                         <span <% if (command.Ram == 0) Response.Write(" class='hidden'"); %>>
@@ -138,30 +146,22 @@
                 </tr>
                 <tr>
                     <td colspan="9">
-                        <table>
-                            <tr>
-                                <td>
-                                    <asp:UpdatePanel ID="pButtons" runat="server">
-                                        <ContentTemplate>
-                                            <asp:Button ID="bttnSendAttack" runat="server" Text="OK" OnClick="bttnSendAttack_Click" />
-                                        </ContentTemplate>
-                                        <Triggers>
-                                            <asp:AsyncPostBackTrigger ControlID="bttnSendAttack" EventName="Click" />
-                                        </Triggers>
-                                    </asp:UpdatePanel>
-                                </td>
-                                <td>
-                                    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-                                        <ContentTemplate>
-                                            <asp:Button ID="bttnCancelAttack" runat="server" Text="Huỷ" OnClick="bttnCancelAttack_Click" />
-                                        </ContentTemplate>
-                                        <Triggers>
-                                            <asp:AsyncPostBackTrigger ControlID="bttnCancelAttack" EventName="Click" />
-                                        </Triggers>
-                                    </asp:UpdatePanel>
-                                </td>
-                            </tr>
-                        </table>
+                        <asp:UpdatePanel ID="pSendSupport" runat="server">
+                            <ContentTemplate>
+                                <asp:Button ID="bttnSendSupport" runat="server" Text="OK" OnClick="bttnSendSupport_Click" />
+                            </ContentTemplate>
+                            <Triggers>
+                                <asp:AsyncPostBackTrigger ControlID="bttnSendSupport" EventName="Click" />
+                            </Triggers>
+                        </asp:UpdatePanel>
+                        <asp:UpdatePanel ID="pCancelSupport" runat="server">
+                            <ContentTemplate>
+                                <asp:Button ID="bttnCancelSupport" runat="server" Text="Huỷ" OnClick="bttnCancelSupport_Click" />
+                            </ContentTemplate>
+                            <Triggers>
+                                <asp:AsyncPostBackTrigger ControlID="bttnCancelSupport" EventName="Click" />
+                            </Triggers>
+                        </asp:UpdatePanel>
                     </td>
                 </tr>
             </tbody>

@@ -13,7 +13,7 @@
                 <td>
                     <h2>
                         Nhà xe cấp&nbsp;
-                        <% Response.Write(this.village.Buildings.Workshop); %></h2>
+                        <% Response.Write(this.village.VillageBuildingData.Workshop); %></h2>
                     Là nơi xây dựng các công trình quân sự dùng công phá tường thành, công trình 
                     thành phố đối phương&nbsp;
                 </td>
@@ -80,7 +80,7 @@
                     0:03:08
                 </td>
                 <td>
-                    <% Response.Write(this.village.Troop.Ram.ToString()); %>/<%Response.Write(this.village.Troop.InVillageRam.ToString()); %>
+                    <% Response.Write(this.village.VillageTroopData.Ram.ToString()); %>/<%Response.Write(this.village.VillageTroopData.RamOfVillage.ToString()); %>
                 </td>
                 <td>
                     <asp:TextBox ID="txtRam" runat="server" Width="33px"></asp:TextBox>
@@ -108,7 +108,7 @@
                     0:06:15
                 </td>
                 <td>
-                    <% Response.Write(this.village.Troop.Catapult.ToString()); %>/<%Response.Write(this.village.Troop.InVillageCatapult.ToString()); %>
+                    <% Response.Write(this.village.VillageTroopData.Catapult.ToString()); %>/<%Response.Write(this.village.VillageTroopData.CatapultOfVillage.ToString()); %>
                 </td>
                 <td>
                     <asp:TextBox ID="txtCatapult" runat="server" Width="33px"></asp:TextBox>

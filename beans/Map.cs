@@ -23,6 +23,7 @@ namespace beans
             {
                 case TroopType.Axe:
                     type = "Map.axe_speed";
+                    break;
                 case TroopType.Spear:
                     type = "Map.spear_speed";
                     break;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NHibernate;
+using NHibernate.Linq;
 using NHibernate.Criterion;
 
 namespace beans
@@ -14,7 +15,7 @@ namespace beans
         public BuildableStatus PrepareBuild(BuildingType building, ISession session)
         {
             int level = this.GetTotalBuildingLevel(building, session) + 1;
-            BuildPrice price = Build.GetPrice(building, level, this.Buildings.Headquarter);
+            BuildPrice price = Build.GetPrice(building, level, this.VillageBuildingData.Headquarter);
 
             BuildableStatus status = this.CanBuild(building, session);
 
@@ -27,9 +28,9 @@ namespace beans
             build.Start = DateTime.Now;
             build.End = DateTime.Now.AddSeconds(price.BuildTime);
             build.Level = level;
-            this.Resources.Wood -= price.Wood;
-            this.Resources.Clay -= price.Clay;
-            this.Resources.Iron -= price.Iron;
+            this.VillageResourceData.Wood -= price.Wood;
+            this.VillageResourceData.Clay -= price.Clay;
+            this.VillageResourceData.Iron -= price.Iron;
             this.Points += price.Point;
             this.Population += price.Population;
             session.Save(build);
@@ -39,16 +40,17 @@ namespace beans
         }
         public int GetTotalBuildingLevel(BuildingType type, ISession session)
         {
-            IQuery query = session.CreateQuery("select count(b.ID) from Build b where b.InVillage=:village and b.Building=:type");
-            query.SetEntity("village", this);
-            query.SetEnum("type", type);
-            return Convert.ToInt32(query.List()[0]) + this[type];
+
+            return (from Build b in session.Linq<Build>()
+                    where b.InVillage == this &&
+                    b.Building == type
+                    select b).Count<Build>() + this[type];
         }
         public int GetTotalBuild(ISession session)
         {
-            IQuery query = session.CreateQuery("select count(b.ID) from Build b where b.InVillage=:village");
-            query.SetEntity("village", this);
-            return Convert.ToInt32(query.List()[0]);
+            return (from Build b in session.Linq<Build>()
+                    where b.InVillage == this
+                    select b).Count<Build>();
         }
         public BuildableStatus CanBuild(BuildingType type, ISession session)
         {
@@ -131,11 +133,11 @@ namespace beans
             if ((this.MaxPopulation - this.Population) < price.Population)
                 return BuildableStatus.NotEnoughFarm;
 
-            if (this.Resources.Wood < price.Wood)
+            if (this.VillageResourceData.Wood < price.Wood)
                 return BuildableStatus.NotEnoughWood;
-            if (this.Resources.Clay < price.Clay)
+            if (this.VillageResourceData.Clay < price.Clay)
                 return BuildableStatus.NotEnoughClay;
-            if (this.Resources.Iron < price.Iron)
+            if (this.VillageResourceData.Iron < price.Iron)
                 return BuildableStatus.NotEnoughIron;
 
             if (this.GetTotalBuild(session) >= 5)
@@ -146,19 +148,22 @@ namespace beans
         }
         public IList<Build> GetPendingConstruction(ISession session)
         {
-            ICriteria criteria = session.CreateCriteria(typeof(Build));
-            criteria.Add(Expression.Eq("InVillage", this));
-            criteria.AddOrder(Order.Asc("ID"));
 
-            return criteria.List<Build>();
+            return (from Build b in session.Linq<Build>()
+                    where b.InVillage == this
+                    orderby b.ID ascending
+                    select b).ToList<Build>();
         }
         public void CancelBuild(int id, ISession session)
         {
 
-            ICriteria criteria = session.CreateCriteria(typeof(Build));
-            criteria.Add(Expression.Eq("ID", id));
-            criteria.Add(Expression.Eq("InVillage", this));
-            IList<Build> lstBuild = criteria.List<Build>();
+            IList<Build> lstBuild = (from Build b in session.Linq<Build>()
+                                     where b.ID == id &&
+                                     b.InVillage == this
+                                     select b).ToList<Build>();
+
+
+
             if (lstBuild.Count == 0)
                 return;
 
@@ -168,9 +173,9 @@ namespace beans
             session.Evict(build.InVillage);
             build.InVillage = this;
 
-            this.Resources.Wood += (int)(price.Wood * 0 / 8);
-            this.Resources.Clay += (int)(price.Clay * 0 / 8);
-            this.Resources.Iron += (int)(price.Iron * 0 / 8);
+            this.VillageResourceData.Wood += (int)(price.Wood * 0 / 8);
+            this.VillageResourceData.Clay += (int)(price.Clay * 0 / 8);
+            this.VillageResourceData.Iron += (int)(price.Iron * 0 / 8);
             this.Points -= price.Point;
             this.Population -= price.Point;
 
@@ -183,7 +188,7 @@ namespace beans
             if (this[BuildingType.Wall] == 1)
                 defense = 0.1;
 
-            for (int i = 1; i < this.Buildings.Wall; i++)
+            for (int i = 1; i < this.VillageBuildingData.Wall; i++)
                 defense += (defense * 0.15);
 
             return defense;

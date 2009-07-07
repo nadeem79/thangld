@@ -11,7 +11,7 @@ namespace beans
 
         public int Compare(MovingCommand x, MovingCommand y)
         {
-            return (int)(x.LandingTimestamp - y.LandingTimestamp);
+            return (x.LandingTime - y.LandingTime).Milliseconds;
         }
 
         #endregion
