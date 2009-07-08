@@ -40,14 +40,14 @@ namespace beans
         public virtual int GetTotalBuildingLevel(BuildingType type, ISession session)
         {
 
-            return (from Build b in session.Linq<Build>()
+            return (from b in session.Linq<Build>()
                     where b.InVillage == this &&
                     b.Building == type
                     select b).Count<Build>() + this[type];
         }
         public virtual int GetTotalBuild(ISession session)
         {
-            return (from Build b in session.Linq<Build>()
+            return (from b in session.Linq<Build>()
                     where b.InVillage == this
                     select b).Count<Build>();
         }

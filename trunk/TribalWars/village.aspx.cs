@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections;
 using System.Configuration;
 using System.Data;
@@ -18,14 +18,19 @@ public partial class village : System.Web.UI.Page
 {
 
     protected Village current;
+    protected ISession NHibernateSession
+    {
+        get;
+        set;
+    }
 
     protected void Page_Load(object sender, EventArgs e)
     {
         current = ((inPage)(this.Master)).CurrentVillage;
-        
-        ISession session =  NHibernateHelper.CreateSession();
 
-        Player currentPlayer = session.Load<Player>(Session["user"]);
+        this.NHibernateSession = ((inPage)(this.Master)).NHibernateSession;
+
+        Player currentPlayer = this.NHibernateSession.Load<Player>(Session["user"]);
 
         this.pSpears.Visible = (this.current.VillageTroopData.SpearInVillage != 0);
         this.pAxe.Visible = (this.current.VillageTroopData.AxeInVillage != 0);
@@ -37,7 +42,6 @@ public partial class village : System.Web.UI.Page
         this.pCatapult.Visible = (this.current.VillageTroopData.CatapultInVillage != 0);
         this.pNoble.Visible = (this.current.VillageTroopData.NobleInVillage != 0);
 
-        session.Close();
         if (currentPlayer.GraphicalVillage)
         {
             GraphicVillageInfo pGraphicVillageInfo = (GraphicVillageInfo)Page.LoadControl("GraphicVillageInfo.ascx");

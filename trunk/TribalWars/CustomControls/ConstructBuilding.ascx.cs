@@ -15,7 +15,7 @@ public partial class CustomControls_ConstructBuilding : System.Web.UI.UserContro
         get;
         set;
     }
-    public ISession Session
+    public ISession NHibernateSession
     {
         get;
         set;
@@ -24,36 +24,21 @@ public partial class CustomControls_ConstructBuilding : System.Web.UI.UserContro
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
-        {
-            this.Session = null;
-            try
-            {
-                this.Session = NHibernateHelper.CreateSession();
-                this.lblBuildHeadquarters.Text = this.BuildableStatusToString(BuildingType.Headquarter, Session);
-                this.lblBuildBarracks.Text = this.BuildableStatusToString(BuildingType.Barracks, Session);
-                this.lblBuildStable.Text = this.BuildableStatusToString(BuildingType.Stable, Session);
-                this.lblBuildWorkshop.Text = this.BuildableStatusToString(BuildingType.Workshop, Session);
-                this.lblBuildAcademy.Text = this.BuildableStatusToString(BuildingType.Academy, Session);
-                this.lblBuildMarket.Text = this.BuildableStatusToString(BuildingType.Market, Session);
-                this.lblBuildTimberCamp.Text = this.BuildableStatusToString(BuildingType.TimberCamp, Session);
-                this.lblBuildClayPit.Text = this.BuildableStatusToString(BuildingType.ClayPit, Session);
-                this.lblBuildIronMine.Text = this.BuildableStatusToString(BuildingType.IronMine, Session);
-                this.lblBuildFarm.Text = this.BuildableStatusToString(BuildingType.Farm, Session);
-                this.lblBuildWarehouse.Text = this.BuildableStatusToString(BuildingType.Warehouse, Session);
-                this.lblBuildHidingPlace.Text = this.BuildableStatusToString(BuildingType.HidingPlace, Session);
-                this.lblBuildWall.Text = this.BuildableStatusToString(BuildingType.Wall, Session);
-                this.lblBuildRally.Text = this.BuildableStatusToString(BuildingType.Rally, Session);
-                this.lblBuildSmithy.Text = this.BuildableStatusToString(BuildingType.Smithy, Session);
-            }
-            catch { }
-            finally
-            {
-                if (this.Session != null && this.Session.IsOpen)
-                    this.Session.Close();
-            }
-            
-        }
+        this.lblBuildHeadquarters.Text = this.BuildableStatusToString(BuildingType.Headquarter, this.NHibernateSession);
+        this.lblBuildBarracks.Text = this.BuildableStatusToString(BuildingType.Barracks, this.NHibernateSession);
+        this.lblBuildStable.Text = this.BuildableStatusToString(BuildingType.Stable, this.NHibernateSession);
+        this.lblBuildWorkshop.Text = this.BuildableStatusToString(BuildingType.Workshop, this.NHibernateSession);
+        this.lblBuildAcademy.Text = this.BuildableStatusToString(BuildingType.Academy, this.NHibernateSession);
+        this.lblBuildMarket.Text = this.BuildableStatusToString(BuildingType.Market, this.NHibernateSession);
+        this.lblBuildTimberCamp.Text = this.BuildableStatusToString(BuildingType.TimberCamp, this.NHibernateSession);
+        this.lblBuildClayPit.Text = this.BuildableStatusToString(BuildingType.ClayPit, this.NHibernateSession);
+        this.lblBuildIronMine.Text = this.BuildableStatusToString(BuildingType.IronMine, this.NHibernateSession);
+        this.lblBuildFarm.Text = this.BuildableStatusToString(BuildingType.Farm, this.NHibernateSession);
+        this.lblBuildWarehouse.Text = this.BuildableStatusToString(BuildingType.Warehouse, this.NHibernateSession);
+        this.lblBuildHidingPlace.Text = this.BuildableStatusToString(BuildingType.HidingPlace, this.NHibernateSession);
+        this.lblBuildWall.Text = this.BuildableStatusToString(BuildingType.Wall, this.NHibernateSession);
+        this.lblBuildRally.Text = this.BuildableStatusToString(BuildingType.Rally, this.NHibernateSession);
+        this.lblBuildSmithy.Text = this.BuildableStatusToString(BuildingType.Smithy, this.NHibernateSession);
     }
 
     private string BuildableStatusToString(beans.BuildingType type, ISession session)

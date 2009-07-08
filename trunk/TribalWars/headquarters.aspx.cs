@@ -11,7 +11,11 @@ using Telerik.Web.UI;
 
 public partial class headquarters : System.Web.UI.Page
 {
-
+    protected ISession NHibernateSession
+    {
+        get;
+        set;
+    }
     protected Village village;
     protected BuildPrice headquarter, barrack, stable, workshop, academy, smithy, rally, market, timber, clay, iron, farm, warehouse, hiding, wall;
 
@@ -19,17 +23,16 @@ public partial class headquarters : System.Web.UI.Page
     {
         
         inPage master = (inPage)this.Master;
+        this.NHibernateSession = master.NHibernateSession;
         village = master.CurrentVillage;
-        ISession session = null;
         ITransaction trans = null;
 
-        session = NHibernateHelper.CreateSession();
         try
         {
             if (Request["action"] == "build" && Request["building"] != null && BuildingTypeFactory.GetType(Request["building"]) != BuildingType.NoBuiding)
             {
-                trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
-                BuildableStatus enumBuildStatus = this.village.PrepareBuild(BuildingTypeFactory.GetType(Request["building"]), session);
+                trans = this.NHibernateSession.BeginTransaction(IsolationLevel.ReadCommitted);
+                BuildableStatus enumBuildStatus = this.village.PrepareBuild(BuildingTypeFactory.GetType(Request["building"]), this.NHibernateSession);
                 if (enumBuildStatus != BuildableStatus.JustDoIt)
                     this.lblError.Text = BuildableStatusFactory.ToString(enumBuildStatus);
                 trans.Commit();
@@ -37,7 +40,7 @@ public partial class headquarters : System.Web.UI.Page
 
             if (Request["action"] == "demolish" && Request["building"] != null && BuildingTypeFactory.GetType(Request["building"]) != BuildingType.NoBuiding)
             {
-                trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
+                trans = this.NHibernateSession.BeginTransaction(IsolationLevel.ReadCommitted);
                 trans.Commit();
             }
 
@@ -48,8 +51,8 @@ public partial class headquarters : System.Web.UI.Page
                 if (build_id != 0)
                 {
 
-                    trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
-                    this.village.CancelBuild(build_id, session);
+                    trans = this.NHibernateSession.BeginTransaction(IsolationLevel.ReadCommitted);
+                    this.village.CancelBuild(build_id, this.NHibernateSession);
                     trans.Commit();
                 }
             }
@@ -63,7 +66,7 @@ public partial class headquarters : System.Web.UI.Page
             this.lblError.Text = ex.Message;
         }
 
-        IList<Build> lstBuild = this.village.GetPendingConstruction(session);
+        IList<Build> lstBuild = this.village.GetPendingConstruction(this.NHibernateSession);
         if (lstBuild.Count > 0)
             lstBuild[0].Start = DateTime.Now;
         for (int i = 1; i < lstBuild.Count; i++)
@@ -89,11 +92,11 @@ public partial class headquarters : System.Web.UI.Page
             default:
                 CustomControls_ConstructBuilding pConstructing = (CustomControls_ConstructBuilding)Page.LoadControl("CustomControls/ConstructBuilding.ascx");
                 pConstructing.Village = this.village;
+                pConstructing.NHibernateSession = this.NHibernateSession;
                 this.phConstructing.Controls.Add(pConstructing);
                 break;
         } 
 
-        session.Close();
         
     }
 
