@@ -11,12 +11,17 @@ public partial class workshop : System.Web.UI.Page
 {
 
     protected beans.Village village;
+    protected ISession NHibernateSession
+    {
+        get;
+        set;
+    }
 
     protected void Page_Load(object sender, EventArgs e)
     {
         village = ((inPage)this.Master).CurrentVillage;
-        ISession session = NHibernateHelper.CreateSession();
-        IList<Recruit> recruits = village.GetRecruit(session, BuildingType.Workshop);
+        this.NHibernateSession = ((inPage)this.Master).NHibernateSession;
+        IList<Recruit> recruits = village.GetRecruit(this.NHibernateSession, BuildingType.Workshop);
 
         string sRecruitCommands = "";
         for (int i = 0; i < recruits.Count; i++)
@@ -42,29 +47,25 @@ public partial class workshop : System.Web.UI.Page
             sRecruitCommands += "<td>" + recruits[i].LastUpdate.AddSeconds(Recruit.RecruitTime(recruits[i].Troop, recruits[i].Quantity, this.village.VillageBuildingData.Barracks)) + "</td>";
         }
         this.lblRecruiting.Text = sRecruitCommands;
-        session.Close();
     }
 
 
     protected void bttnRecruit_Click(object sender, EventArgs e)
     {
-        ISession session = NHibernateHelper.CreateSession();
-
         int ram = 0, catapult = 0;
 
         int.TryParse(this.txtRam.Text, out ram);
         int.TryParse(this.txtCatapult.Text, out catapult);
 
         if (ram > 0)
-            if (this.village.BeginRecruit(TroopType.Ram, ram, session) == null)
+            if (this.village.BeginRecruit(TroopType.Ram, ram, this.NHibernateSession) == null)
                 lblError.Text = "Không đủ tài nguyên";
 
         if (catapult > 0)
-            if (this.village.BeginRecruit(TroopType.Catapult, catapult, session) == null)
+            if (this.village.BeginRecruit(TroopType.Catapult, catapult, this.NHibernateSession) == null)
                 lblError.Text = "Không đủ tài nguyên";
 
-        session.Close();
         if (lblError.Text.Equals(string.Empty))
-            Response.Redirect("workshop.aspx?id=" + this.village.ID.ToString(), true);
+            Response.Redirect("workshop.aspx?id=" + this.village.ID.ToString(), false);
     }
 }
