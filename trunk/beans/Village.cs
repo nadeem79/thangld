@@ -331,6 +331,7 @@ namespace beans
             village.X = X;
             village.Y = Y;
             village.Loyal = 100;
+            village.LastUpdate = DateTime.Now;
 
             village.UpgradeBuilding(BuildingType.Headquarter, 1);
             village.UpgradeBuilding(BuildingType.Rally, 1);
@@ -387,7 +388,7 @@ namespace beans
         //Chưa xét trường hợp xây noble
         public virtual void Update(DateTime to, ISession session)
         {
-            
+            this.LastUpdate = to;
         }
   
     }

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NHibernate;
-using NHibernate.Linq;
 using NHibernate.Criterion;
+using NHibernate.Linq;
 
 namespace beans
 {
@@ -148,7 +148,7 @@ namespace beans
         public virtual IList<Build> GetPendingConstruction(ISession session)
         {
 
-            return (from Build b in session.Linq<Build>()
+            return (from b in session.Linq<Build>()
                     where b.InVillage == this
                     orderby b.ID ascending
                     select b).ToList<Build>();
@@ -156,7 +156,7 @@ namespace beans
         public virtual void CancelBuild(int id, ISession session)
         {
 
-            IList<Build> lstBuild = (from Build b in session.Linq<Build>()
+            IList<Build> lstBuild = (from b in session.Linq<Build>()
                                      where b.ID == id &&
                                      b.InVillage == this
                                      select b).ToList<Build>();

@@ -2,14 +2,12 @@
 using System.Collections;
 using System.Configuration;
 using System.Data;
-
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
-
 using System.Data.SqlClient;
 using NHibernate;
 using beans;
@@ -18,6 +16,13 @@ using Telerik.Web.UI;
 
 public partial class inPage : System.Web.UI.MasterPage
 {
+    public ISession NHibernateSession
+    {
+        get;
+        set;
+    }
+
+    DateTime start, stop;
     private Player player;
     private beans.Village village;
     public beans.Village CurrentVillage
@@ -50,6 +55,14 @@ public partial class inPage : System.Web.UI.MasterPage
     public inPage()
     {
         this.Init += new EventHandler(inPage_Init);
+        this.PreRender += new EventHandler(inPage_Unload);
+    }
+
+    void inPage_Unload(object sender, EventArgs e)
+    {
+        this.NHibernateSession.Close();
+        this.stop = DateTime.Now;
+        this.delay.Text = (stop - start).Milliseconds.ToString();
     }
 
     void inPage_Init(object sender, EventArgs e)
@@ -61,23 +74,20 @@ public partial class inPage : System.Web.UI.MasterPage
             return;
         }
 
-        DateTime start = DateTime.Now;
+        this.start = DateTime.Now;
         int id;
-        ISession session;
-        ITransaction trans;
+
+        this.NHibernateSession = NHibernateHelper.CreateSession();
 
 
-        session = NHibernateHelper.CreateSession();
-
-
-        this.player = session.Load<beans.Player>((int)Session["user"]);
+        this.player = this.NHibernateSession.Load<beans.Player>((int)Session["user"]);
         if (this.player == null)
         {
-            session.Close();
+            this.NHibernateSession.Close();
             Response.Redirect("index.aspx", true);
         }
-        trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
-        this.player.Update(DateTime.Now, session);
+        ITransaction trans = this.NHibernateSession.BeginTransaction(IsolationLevel.ReadCommitted);
+        this.player.Update(DateTime.Now, this.NHibernateSession);
         trans.Commit();
 
         if (object.Equals(Request["id"], null) || (!int.TryParse(Request["id"], out id)))
@@ -89,14 +99,8 @@ public partial class inPage : System.Web.UI.MasterPage
             this.village = this.player.Villages[0];
 
 
-        int incomingAttackCount = village.GetIncomingAttackCount(session);
-        int incomingSupportCount = village.GetIncomingSupportCount(session);
-
-        DateTime stop = DateTime.Now;
-        this.delay.Text = (stop - start).Milliseconds.ToString();
-
-        session.Close();
-
+        int incomingAttackCount = village.GetIncomingAttackCount(this.NHibernateSession);
+        int incomingSupportCount = village.GetIncomingSupportCount(this.NHibernateSession);
 
         this.lblClay.Text = this.CurrentVillage.VillageResourceData.Clay.ToString();
         this.lblWood.Text = this.CurrentVillage.VillageResourceData.Wood.ToString();
