@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using System.Security.Cryptography;
 using System.IO;
 using NHibernate;
 using NHibernate.Criterion;
 using System.Text.RegularExpressions;
 using System.Collections;
-using System.Linq;
 using NHibernate.Type;
 using Antlr.StringTemplate;
 using NHibernate.UserTypes;
+using NHibernate.Linq;
 
 namespace beans
 {
@@ -464,13 +465,18 @@ namespace beans
 
         public virtual int GetVillageCount(ISession session)
         {
-            IQuery query = session.CreateQuery("select count(v.ID) from Village v where v.Owner.ID=:userID");
-            query.SetInt32("userID", this.ID);
-            IList lst = query.List();
-            if (lst.Count == 0)
-                return 0;
-            Int64 i = (long)lst[0];
-            return (Int32)i;
+
+            return (from village in session.Linq<Village>()
+                    where village.Player == this
+                    select village).Count<Village>();
+
+            //IQuery query = session.CreateQuery("select count(v.ID) from Village v where v.Player=:user");
+            //query.SetEntity("user", this);
+            //IList lst = query.List();
+            //if (lst.Count == 0)
+            //    return 0;
+            //Int64 i = (long)lst[0];
+            //return (Int32)i;
         }
         #endregion
 

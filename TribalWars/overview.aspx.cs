@@ -21,7 +21,7 @@ public partial class overview : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         village = ((inPage)this.Master).CurrentVillage;
-        ISession session = NHibernateHelper.CreateSession();
+        ISession session = ((inPage)this.Master).NHibernateSession;
         beans.Player user = session.Load<beans.Player>(Session["user"]);
         if (user.GetVillageCount(session) <= 1)
         {
