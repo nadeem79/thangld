@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+
+  
+  <class name="beans.MovingCommand, beans" table="movement" lazy="true" discriminator-value="0">
+
+    <id name="ID" column="id" type="Int32">
+      <generator class="identity"/>
+    </id>
+    <discriminator column="type" type="Int32" />
+    
+    <many-to-one name="FromVillage" class="beans.Village, beans" column="from_village" not-null="false" fetch="join" cascade="none" />
+    <many-to-one name="ToVillage" class="beans.Village, beans" column="to_village" not-null="false" fetch="join" cascade="none" />
+    <property name="StartingTime" column="starting_time" type="timestamp"/>
+    <property name="LandingTime" column="landing_time" type="timestamp"/>
+
+    <subclass discriminator-value="2" name="beans.Attack, beans" lazy="true">
+      <property name="Spear" column="spear" type="Int32" />
+      <property name="Sword" column="sword" type="Int32" />
+      <property name="Axe" column="axe" type="Int32" />
+      <property name="Scout" column="scout" type="Int32" />
+      <property name="LightCavalry" column="light" type="Int32" />
+      <property name="HeavyCavalry" column="heavy" type="Int32" />
+      <property name="Catapult" column="catapult" type="Int32" />
+      <property name="Ram" column="ram" type="Int32" />
+      <property name="Noble" column="noble" type="Int32" />
+      <property name="Building" column="building" type="beans.BuildingType, beans" />
+    </subclass>
+
+    <subclass discriminator-value="4" name="beans.Return, beans" lazy="true">
+      <property name="Spear" column="spear" type="Int32" />
+      <property name="Sword" column="sword" type="Int32" />
+      <property name="Axe" column="axe" type="Int32" />
+      <property name="Scout" column="scout" type="Int32" />
+      <property name="LightCavalry" column="light" type="Int32" />
+      <property name="HeavyCavalry" column="heavy" type="Int32" />
+      <property name="Catapult" column="catapult" type="Int32" />
+      <property name="Ram" column="ram" type="Int32" />
+      <property name="Noble" column="noble" type="Int32" />
+      <property name="Merchant" column="merchant" type="Int32" />
+      <property name="Clay" column="clay" type="Int32" />
+      <property name="Wood" column="wood" type="Int32" />
+      <property name="Iron" column="iron" type="Int32" />
+    </subclass>
+
+    <subclass discriminator-value="3" name="beans.Support, beans" lazy="true">
+      <property name="Spear" column="spear" type="Int32" />
+      <property name="Sword" column="sword" type="Int32" />
+      <property name="Axe" column="axe" type="Int32" />
+      <property name="Scout" column="scout" type="Int32" />
+      <property name="LightCavalry" column="light" type="Int32" />
+      <property name="HeavyCavalry" column="heavy" type="Int32" />
+      <property name="Catapult" column="catapult" type="Int32" />
+      <property name="Ram" column="ram" type="Int32" />
+      <property name="Noble" column="noble" type="Int32" />
+    </subclass>
+
+    <subclass discriminator-value="1" name="beans.SendResource, beans" lazy="true">
+      <property name="Clay" column="clay" type="Int32" />
+      <property name="Wood" column="wood" type="Int32" />
+      <property name="Iron" column="iron" type="Int32" />
+      <property name="Merchant" column="merchant" type="Int32" />
+    </subclass>
+    
+  </class>
+
+</hibernate-mapping>
