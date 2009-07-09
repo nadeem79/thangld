@@ -26,7 +26,7 @@
         <tbody>
             <tr>
                 <td valign="top">
-                    <table class="vis">
+                    <table class="vis" id="tblMenu" runat="server">
                         <tbody>
                             <tr>
                                 <td width="100">
@@ -44,7 +44,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="selected" width="100">
+                                <td width="100">
                                     <a href="market.aspx?id=<%= this.Village.ID %>&page=merchant_status">Merchant status</a>
                                 </td>
                             </tr>

@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using beans;
 using NHibernate;
+using System.Data;
 
 public partial class workshop : System.Web.UI.Page
 {
@@ -56,7 +57,7 @@ public partial class workshop : System.Web.UI.Page
 
         int.TryParse(this.txtRam.Text, out ram);
         int.TryParse(this.txtCatapult.Text, out catapult);
-
+        ITransaction trans = this.NHibernateSession.BeginTransaction(IsolationLevel.ReadCommitted);
         if (ram > 0)
             if (this.village.BeginRecruit(TroopType.Ram, ram, this.NHibernateSession) == null)
                 lblError.Text = "Không đủ tài nguyên";
@@ -64,7 +65,7 @@ public partial class workshop : System.Web.UI.Page
         if (catapult > 0)
             if (this.village.BeginRecruit(TroopType.Catapult, catapult, this.NHibernateSession) == null)
                 lblError.Text = "Không đủ tài nguyên";
-
+        trans.Commit();
         if (lblError.Text.Equals(string.Empty))
             Response.Redirect("workshop.aspx?id=" + this.village.ID.ToString(), false);
     }

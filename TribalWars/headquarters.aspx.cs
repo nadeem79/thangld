@@ -26,45 +26,35 @@ public partial class headquarters : System.Web.UI.Page
         this.NHibernateSession = master.NHibernateSession;
         village = master.CurrentVillage;
         ITransaction trans = null;
-
-        try
+        if (Request["action"] == "build" && Request["building"] != null && BuildingTypeFactory.GetType(Request["building"]) != BuildingType.NoBuiding)
         {
-            if (Request["action"] == "build" && Request["building"] != null && BuildingTypeFactory.GetType(Request["building"]) != BuildingType.NoBuiding)
+            trans = this.NHibernateSession.BeginTransaction(IsolationLevel.ReadCommitted);
+            BuildableStatus enumBuildStatus = this.village.PrepareBuild(BuildingTypeFactory.GetType(Request["building"]), this.NHibernateSession);
+            if (enumBuildStatus != BuildableStatus.JustDoIt)
+                this.lblError.Text = BuildableStatusFactory.ToString(enumBuildStatus);
+            trans.Commit();
+        }
+
+        if (Request["action"] == "demolish" && Request["building"] != null && BuildingTypeFactory.GetType(Request["building"]) != BuildingType.NoBuiding)
+        {
+            trans = this.NHibernateSession.BeginTransaction(IsolationLevel.ReadCommitted);
+            trans.Commit();
+        }
+
+        if (Request["action"] == "cancel_build" && Request["command"] != null)
+        {
+            int build_id = 0;
+            int.TryParse(Request["command"], out build_id);
+            if (build_id != 0)
             {
-                trans = this.NHibernateSession.BeginTransaction(IsolationLevel.ReadCommitted);
-                BuildableStatus enumBuildStatus = this.village.PrepareBuild(BuildingTypeFactory.GetType(Request["building"]), this.NHibernateSession);
-                if (enumBuildStatus != BuildableStatus.JustDoIt)
-                    this.lblError.Text = BuildableStatusFactory.ToString(enumBuildStatus);
+                trans = this.NHibernateSession.BeginTransaction();
+                this.village.CancelBuild(build_id, this.NHibernateSession);
                 trans.Commit();
             }
-
-            if (Request["action"] == "demolish" && Request["building"] != null && BuildingTypeFactory.GetType(Request["building"]) != BuildingType.NoBuiding)
-            {
-                trans = this.NHibernateSession.BeginTransaction(IsolationLevel.ReadCommitted);
-                trans.Commit();
-            }
-
-            if (Request["action"] == "cancel_build" && Request["command"] != null)
-            {
-                int build_id = 0;
-                int.TryParse(Request["command"], out build_id);
-                if (build_id != 0)
-                {
-
-                    trans = this.NHibernateSession.BeginTransaction(IsolationLevel.ReadCommitted);
-                    this.village.CancelBuild(build_id, this.NHibernateSession);
-                    trans.Commit();
-                }
-            }
-            master.ClayLabel.Text = this.village.VillageResourceData.Clay.ToString();
-            master.WoodLabel.Text = this.village.VillageResourceData.Wood.ToString();
-            master.IronLabel.Text = this.village.VillageResourceData.Iron.ToString();
         }
-        catch (Exception ex)
-        {
-            trans.Rollback();
-            this.lblError.Text = ex.Message;
-        }
+        master.ClayLabel.Text = this.village.VillageResourceData.Clay.ToString();
+        master.WoodLabel.Text = this.village.VillageResourceData.Wood.ToString();
+        master.IronLabel.Text = this.village.VillageResourceData.Iron.ToString();
 
         IList<Build> lstBuild = this.village.GetPendingConstruction(this.NHibernateSession);
         if (lstBuild.Count > 0)
