@@ -156,30 +156,27 @@ namespace beans
         public virtual void CancelBuild(int id, ISession session)
         {
 
-            IList<Build> lstBuild = (from b in session.Linq<Build>()
-                                     where b.ID == id &&
-                                     b.InVillage == this
-                                     select b).ToList<Build>();
+            Build build = (from b in session.Linq<Build>()
+                           where b.ID == id &&
+                           b.InVillage == this
+                           select b).SingleOrDefault<Build>();
 
 
 
-            if (lstBuild.Count == 0)
+            if (build == null)
                 return;
 
-            Build build = lstBuild[0];
             BuildPrice price = Build.GetPrice(build.Building, build.Level, this[BuildingType.Headquarter]);
 
-            session.Evict(build.InVillage);
-            build.InVillage = this;
-
-            this.VillageResourceData.Wood += (int)(price.Wood * 0 / 8);
-            this.VillageResourceData.Clay += (int)(price.Clay * 0 / 8);
-            this.VillageResourceData.Iron += (int)(price.Iron * 0 / 8);
+            this.VillageResourceData.Wood += (int)(price.Wood * 0.8);
+            this.VillageResourceData.Clay += (int)(price.Clay * 0.8);
+            this.VillageResourceData.Iron += (int)(price.Iron * 0.8);
             this.Points -= price.Point;
-            this.Population -= price.Point;
+            this.Population -= price.Population;
 
             session.Delete(build);
-            session.Update(build.InVillage);
+            session.Update(this);
+            session.Update(this.VillageResourceData);
         }
         public virtual double DefenseBonus()
         {
