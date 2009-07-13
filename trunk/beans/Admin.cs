@@ -111,6 +111,9 @@ namespace beans
         #region Static Member
         public static int Authentication(string username, string password, ISession session)
         {
+
+
+
             IQuery query = session.CreateQuery("select admin.ID from admin where admin.Username=:username and admin.Password=:password");
             query.SetString("username", username);
             query.SetString("password", password);
@@ -132,6 +135,7 @@ namespace beans
         }
 
         #endregion
+
         #region Methods
         public IList<Player> GetUserlist(int page, ISession session)
         {
