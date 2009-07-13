@@ -8,6 +8,7 @@
     
     <property name="Username" column="username" length="200" type="String" not-null="true" unique="true"/>
     <property name="Password" column="password" type="String" not-null="true" />
+    <property name="Type" column="type" type="beans.UserType, beans" not-null="true" />
     <property name="Birthdate" column="birthdate" type="date" not-null="false" />
     <property name="Gender" column="sex" type="beans.Sex, beans" not-null="false" />
     <property name="Yahoo" column="yahoo" type="string" length="50" not-null="false" />

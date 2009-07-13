@@ -18,7 +18,7 @@ namespace beans
 
     
 
-    public class Player:IdentityObject
+    public partial class Player:IdentityObject
     {
         #region Variable
         private string username;
@@ -53,7 +53,11 @@ namespace beans
                     throw new ArgumentException("Tên đăng nhập không được rỗng");
             }
         }
-
+        public virtual UserType Type
+        {
+            get;
+            set;
+        }
 
         public virtual string Password
         {
@@ -170,15 +174,9 @@ namespace beans
             return lst[0];
 
         }
-        public static Player GetPlayerID(string Receiver, ISession session)
+        public static Player GetPlayerByID(int id, ISession session)
         {
-            IQuery query = session.CreateQuery("select *.* from Player as user where user.Username=:Receiver");
-            query.SetString("Receiver", Receiver);
-            IList<Player> lst = query.List<Player>();
-            if (lst.Count == 0)
-                return null;
-            return lst[0];
-
+            return session.Load<Player>(id);
         }
 
         public static Village CheckVillage(int user, int village, ISession session)
