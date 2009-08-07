@@ -30,6 +30,7 @@
       <one-to-many class="beans.Village, beans"/>
     </bag>
 
+
   </class>
 
 </hibernate-mapping>
