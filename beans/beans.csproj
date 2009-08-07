@@ -76,11 +76,13 @@
     <Compile Include="BuildingType.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Admin.cs" />
+    <Compile Include="Administrator.Methods.Configuration.cs" />
     <Compile Include="InviteReport.cs" />
     <Compile Include="MovingCommandLandingTimeComparer.cs" />
     <Compile Include="NumericConfiguration.cs" />
     <Compile Include="SendResourceReport.cs" />
     <Compile Include="StringConfiguration.cs" />
+    <Compile Include="TribalWarsEngine.cs" />
     <Compile Include="UserType.cs" />
     <Compile Include="Village.Methods.Building.cs" />
     <Compile Include="Village.Methods.Resources.cs" />
@@ -253,9 +255,6 @@
   <ItemGroup>
     <EmbeddedResource Include="MappingFiles\Mail.hbm.xml" />
     <EmbeddedResource Include="MappingFiles\WriteMail.hbm.xml" />
-    <EmbeddedResource Include="MappingFiles\Admin.hbm.xml">
-      <Generator>nhibernate-mapping.xsd</Generator>
-    </EmbeddedResource>
     <Content Include="Templates\AttackReport.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

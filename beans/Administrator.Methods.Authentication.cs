@@ -7,7 +7,7 @@ using NHibernate.Linq;
 
 namespace beans
 {
-    partial class Player
+    public partial class Player
     {
         public static int StaffAuthentication(string username, string password, ISession session)
         {
