@@ -1,19 +1,45 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="administrator.master.cs" Inherits="administrator_administrator" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="administrator.master.cs"
+    Inherits="administrator_administrator" %>
 
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
-    <asp:ContentPlaceHolder id="head" runat="server">
+    <title>Trang quản trị</title>
+
+    <script type="text/javascript" src="../js/jquery.js"></script>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
     <form id="form1" runat="server">
     <div>
-        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
-        
-        </asp:ContentPlaceHolder>
+        <telerik:RadScriptManager ID="RadScriptManager1" runat="server">
+        </telerik:RadScriptManager>
+        <telerik:RadFormDecorator ID="RadFormDecorator1" runat="server" />
+        <table border="1" width="100%">
+            <tbody>
+                <tr>
+                    <td width="15%"  valign="top">
+                        <center><h1>MENU</h1></center>
+                        <ul>
+                            <li>
+                                Tham số
+                                <ul>
+                                    <li><a href="text_settings.aspx">Text</a></li>
+                                    <li><a href="numeric_settings.aspx">Số</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </td>
+                    <td valign="top">
+                        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                        </asp:ContentPlaceHolder>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     </form>
 </body>

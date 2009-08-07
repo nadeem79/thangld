@@ -33,7 +33,7 @@ public partial class administrator_administrator : System.Web.UI.MasterPage
 
     void administrator_administrator_Init(object sender, EventArgs e)
     {
-        if (object.Equals(Session["user"], null))
+        if (object.Equals(Session["staffID"], null))
         {
             //Response.Redirect("login.aspx", false);
             //return;
@@ -42,9 +42,8 @@ public partial class administrator_administrator : System.Web.UI.MasterPage
 
         this.NHibernateSession = NHibernateHelper.CreateSession();
         this.CurrentPlayer = Player.GetPlayerByID((int)Session["staffID"], this.NHibernateSession);
-        if (this.CurrentPlayer.Type != UserType.Moderator || this.CurrentPlayer.Type != UserType.Administrator)
+        if (this.CurrentPlayer.Type != UserType.Moderator && this.CurrentPlayer.Type != UserType.Administrator)
         {
-            this.NHibernateSession.Close();
             Session.Remove("staffID");
             Response.Redirect("login.aspx", false);
         }
