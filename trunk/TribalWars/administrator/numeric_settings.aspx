@@ -2,6 +2,20 @@
     AutoEventWireup="true" CodeFile="numeric_settings.aspx.cs" Inherits="administrator_numeric_settings" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    <script language=javascript">
+        function validate()
+        {
+            $.facebox($('#<% = this.keyTextBox.ClientID %>').val());
+            return false;
+            
+            if ($('#<% = this.keyTextBox.ClientID %>').val() == '')
+            {
+                $.facebox('Nhập key');
+                return false;
+            }
+            return true;
+        }
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <center>
@@ -9,7 +23,8 @@
             Numeric
         </h1>
     </center>
-    <asp:Repeater ID="numericConfigurationRepeater" runat="server" EnableViewState="true">
+    
+    <asp:Repeater ID="numericConfigurationRepeater" runat="server" >
         <HeaderTemplate>
             <table border="1" width="90%">
                 <tbody>
@@ -60,7 +75,7 @@
                 </tr>
                 <tr>
                     <td colspan="2" ><asp:Button ID="createNewSettingButton" runat="server" Text="Thêm giá trị mới" 
-        onclick="createNewSettingButton_Click" style="height: 26px" /></td>
+        onclick="createNewSettingButton_Click" style="height: 26px" OnClientClick="return validate();" /></td>
                 </tr>
             </tbody>
         </table>

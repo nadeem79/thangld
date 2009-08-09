@@ -60,7 +60,7 @@ public partial class inPage : System.Web.UI.MasterPage
 
     void inPage_Unload(object sender, EventArgs e)
     {
-        this.NHibernateSession.Close();
+        //this.NHibernateSession.Close();
         this.stop = DateTime.Now;
         this.delay.Text = (stop - start).Milliseconds.ToString();
     }
@@ -78,7 +78,7 @@ public partial class inPage : System.Web.UI.MasterPage
         this.start = DateTime.Now;
         int id;
 
-        this.NHibernateSession = NHibernateHelper.CreateSession();
+        this.NHibernateSession = (ISession)Context.Items["NHibernateSession"];
 
 
         this.player = this.NHibernateSession.Load<beans.Player>((int)Session["user"]);

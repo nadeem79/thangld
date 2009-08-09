@@ -370,8 +370,21 @@ namespace beans
 
         public virtual void UpgradeBuilding(BuildingType building, int level)
         {
-            for (int i = this[building]; i <= level; i++)
-                this.Points += Build.GetPrice(building, i, 1).Point;
+            int currentLevel = this[building];
+            if (level > currentLevel)
+                for (int i = currentLevel; i < level; i++)
+                {
+                    BuildPrice price = Build.GetPrice(building, i, 1);
+                    this.Points += price.Point;
+                    this.Population += price.Population;
+                }
+            else
+                for (int i = currentLevel; i > level; i--)
+                {
+                    BuildPrice price = Build.GetPrice(building, i, 1);
+                    this.Points -= price.Point;
+                    this.Population -= price.Population;
+                }
 
             this[building] = level;
         }
@@ -388,6 +401,119 @@ namespace beans
         //Chưa xét trường hợp xây noble
         public virtual void Update(DateTime to, ISession session)
         {
+            IList<MovingCommand> commands = (from movingCommand in session.Linq<MovingCommand>()
+                                             where (movingCommand.FromVillage == this || movingCommand.ToVillage == this)
+                                             && movingCommand.LandingTime < to
+                                             orderby movingCommand.LandingTime ascending
+                                             select movingCommand).ToList<MovingCommand>();
+
+            IList<Build> builds = (from build in session.Linq<Build>()
+                                   where build.InVillage == this
+                                   && build.End < to
+                                   orderby build.ID ascending
+                                   select build).ToList<Build>();
+
+            IList<Recruit> recruits = (from recruit in session.Linq<Recruit>()
+                                       where recruit.InVillage == this
+                                       orderby recruit.ID ascending
+                                       select recruit).ToList<Recruit>();
+            IList<Recruit> infantryRecruits = (from recruit in recruits
+                                               where recruit.Troop == TroopType.Axe
+                                               || recruit.Troop == TroopType.Spear
+                                               || recruit.Troop == TroopType.Sword
+                                               select recruit).ToList<Recruit>();
+            IList<Recruit> cavalryRecruits = (from recruit in recruits
+                                               where recruit.Troop == TroopType.Scout
+                                               || recruit.Troop == TroopType.Light
+                                               || recruit.Troop == TroopType.Heavy
+                                               select recruit).ToList<Recruit>();
+            IList<Recruit> carRecruits = (from recruit in recruits
+                                               where recruit.Troop == TroopType.Ram
+                                               || recruit.Troop == TroopType.Catapult
+                                               select recruit).ToList<Recruit>();
+
+            DateTime currentTime = this.LastUpdate;
+
+            while (commands.Count > 0)
+            {
+                MovingCommand command = commands[0];
+                if (command.ToVillage == this)
+                {
+                    this.UpdateResources(currentTime, command.LandingTime);
+                    while (builds.Count > 0 && builds[0].End < command.LandingTime)
+                    {
+                        this[builds[0].Building]++;
+                        session.Delete(builds[0]);
+                        builds.RemoveAt(0);
+                    }
+
+                    while (infantryRecruits.Count > 0 && infantryRecruits[0].Expense(command.LandingTime))
+                    {
+                        session.Delete(infantryRecruits[0]);
+                        infantryRecruits.RemoveAt(0);
+                    }
+                    while (cavalryRecruits.Count > 0 && cavalryRecruits[0].Expense(command.LandingTime))
+                    {
+                        session.Delete(cavalryRecruits[0]);
+                        cavalryRecruits.RemoveAt(0);
+                    }
+                    while (carRecruits.Count > 0 && carRecruits[0].Expense(command.LandingTime))
+                    {
+                        session.Delete(carRecruits[0]);
+                        carRecruits.RemoveAt(0);
+                    }
+
+                    MovingCommand newCommand = command.Effect(session);
+                    if (newCommand != null)
+                        session.Save(newCommand);
+
+                    currentTime = command.LandingTime;
+                }
+                else
+                {
+                    command.ToVillage.Update(command.LandingTime, session);
+                    MovingCommand newCommand = command.Effect(session);
+                    if (newCommand != null && newCommand.LandingTime < to)
+                    {
+                        commands.Add(newCommand);
+                        for (int i = 1; i < commands.Count; i++)
+                            if (commands[i].LandingTime > newCommand.LandingTime)
+                                commands.Insert(i, newCommand);
+                    }
+                }
+            }
+
+            this.UpdateResources(currentTime, to);
+            while (builds.Count > 0 && builds[0].End < to)
+            {
+                this[builds[0].Building]++;
+                session.Delete(builds[0]);
+                builds.RemoveAt(0);
+            }
+            
+
+            while (infantryRecruits.Count > 0 && infantryRecruits[0].Expense(to))
+            {
+                session.Delete(infantryRecruits[0]);
+                infantryRecruits.RemoveAt(0);
+            }
+            if (infantryRecruits.Count > 0)
+                session.Update(infantryRecruits[0]);
+            while (cavalryRecruits.Count > 0 && cavalryRecruits[0].Expense(to))
+            {
+                session.Delete(cavalryRecruits[0]);
+                cavalryRecruits.RemoveAt(0);
+            }
+            if (cavalryRecruits.Count > 0)
+                session.Update(cavalryRecruits[0]);
+            while (carRecruits.Count > 0 && carRecruits[0].Expense(to))
+            {
+                session.Delete(carRecruits[0]);
+                carRecruits.RemoveAt(0);
+            }
+            if (carRecruits.Count > 0)
+                session.Update(carRecruits[0]);
+
             this.LastUpdate = to;
         }
   

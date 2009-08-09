@@ -36,6 +36,7 @@ namespace beans
             this.VillageResourceData.Clay -= p.Clay * quantity;
             this.VillageResourceData.Wood -= p.Wood * quantity;
             this.VillageResourceData.Iron -= p.Iron * quantity;
+            this.Population += p.Population * quantity;
 
             session.Save(recruit);
             session.Update(this);
@@ -94,7 +95,7 @@ namespace beans
         public virtual void CancelRecruit(int recruit_id, ISession session)
         {
 
-            Recruit recruit = (from Recruit r in session.Linq<Recruit>()
+            Recruit recruit = (from r in session.Linq<Recruit>()
                                where r.ID == recruit_id &&
                                r.InVillage == this
                                select r).SingleOrDefault<Recruit>();
@@ -112,7 +113,7 @@ namespace beans
 
         protected virtual IList<Recruit> GetDependingCarRecruit(ISession session)
         {
-            return (from Recruit recruit in session.Linq<Recruit>()
+            return (from recruit in session.Linq<Recruit>()
                     where recruit.InVillage == this &&
                     (recruit.Troop == TroopType.Ram || recruit.Troop == TroopType.Catapult)
                     orderby recruit.ID ascending
@@ -120,7 +121,7 @@ namespace beans
         }
         protected virtual IList<Recruit> GetDependingNobleRecruit(ISession session)
         {
-            return (from Recruit recruit in session.Linq<Recruit>()
+            return (from recruit in session.Linq<Recruit>()
                     where recruit.InVillage == this &&
                     recruit.Troop == TroopType.Nobleman
                     orderby recruit.ID ascending
@@ -129,7 +130,7 @@ namespace beans
         }
         protected virtual IList<Recruit> GetDependingInfantryRecruit(ISession session)
         {
-            return (from Recruit recruit in session.Linq<Recruit>()
+            return (from recruit in session.Linq<Recruit>()
                     where recruit.InVillage == this &&
                     (recruit.Troop == TroopType.Spear || recruit.Troop == TroopType.Sword || recruit.Troop == TroopType.Axe)
                     orderby recruit.ID ascending
@@ -137,7 +138,7 @@ namespace beans
         }
         protected virtual IList<Recruit> GetDependingCavalryRecruit(ISession session)
         {
-            return (from Recruit recruit in session.Linq<Recruit>()
+            return (from recruit in session.Linq<Recruit>()
                     where recruit.InVillage == this &&
                     (recruit.Troop == TroopType.Scout || recruit.Troop == TroopType.Light || recruit.Troop == TroopType.Heavy)
                     orderby recruit.ID ascending
