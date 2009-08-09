@@ -1,17 +1,16 @@
 ﻿using System;
-using Antlr.StringTemplate;
 
 
 namespace beans
 {
     public abstract class Report:IdentityObject
     {
-        public Player Owner
+        public virtual Player Owner
         {
             get;
             set;
         }
-        public DateTime Time
+        public virtual DateTime Time
         {
             get;
             set;
@@ -20,13 +19,13 @@ namespace beans
         {
             get;
         }
-        public string Title
+        public virtual string Title
         {
             get;
             set;
         }
-        
-        public bool Unread
+
+        public virtual bool Unread
         {
             get;
             set;

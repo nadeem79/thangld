@@ -16,6 +16,7 @@
     <property name="Skype" column="skype" type="string" length="50" not-null="false" />
     <property name="Email" column="email" type="string" length="50" not-null="false" unique="true"/>
     <property name="Description" column="description" type="string" not-null="false" />
+    <property name="Point" column="point" type="double" not-null="false" />
     <property name="Avatar" column="avatar" type="Boolean" not-null="false" />
     <property name="Address" column="address" type="string" length="500" not-null="false" />
     <property name="GraphicalVillage" column="graphics_village" type="Boolean" not-null="false" />
@@ -23,9 +24,9 @@
     <property name="TribePermission" column="tribe_permission" type="beans.TribePermission, beans" not-null="false" />
     <property name="TribeTitle" column="tribe_title" type="String" not-null="false" />
 
-    <many-to-one name="Group" class="beans.Group, beans" column="group_id" not-null="false" fetch="select" cascade="none" lazy="proxy" not-found="ignore" />
+    <many-to-one name="Group" class="beans.Group, beans" column="group_id" not-null="false" fetch="select" cascade="none" lazy="no-proxy" not-found="ignore" />
     
-    <bag name="Villages" table="villages_common" cascade="none" fetch="join" inverse="true" lazy="1">
+    <bag name="Villages" table="villages_common" cascade="none" fetch="join" inverse="true" lazy="true">
       <key column="userid" />
       <one-to-many class="beans.Village, beans"/>
     </bag>

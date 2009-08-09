@@ -16,6 +16,7 @@ namespace beans
             group.Tag = tag;
             group.Name = name;
             group.Description = "";
+            group.Introduction = "";
             this.Group = group;
             this.TribePermission = TribePermission.Duke;
             session.Save(group);
@@ -164,6 +165,11 @@ namespace beans
             session.Save(inviteReport);
 
             return lstError;
+        }
+
+        public bool CheckPrivilage(TribePermission privilage)
+        {
+            return ((this.TribePermission & privilage) == privilage);
         }
     }
 }

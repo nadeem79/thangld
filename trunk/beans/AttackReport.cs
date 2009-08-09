@@ -17,273 +17,273 @@ namespace beans
 
         }
 
-        public  int SpearSent
+        public virtual int SpearSent
         {
             get;
             set;
         }
-        public  int AxeSent
+        public virtual int AxeSent
         {
             get;
             set;
         }
-        public  int SwordSent
+        public virtual int SwordSent
         {
             get;
             set;
         }
-        public  int ScoutSent
+        public virtual int ScoutSent
         {
             get;
             set;
         }
-        public  int LightCavalrySent
+        public virtual int LightCavalrySent
         {
             get;
             set;
         }
-        public int HeavyCavalrySent
+        public virtual int HeavyCavalrySent
         {
             get;
             set;
         }
-        public  int RamSent
+        public virtual int RamSent
         {
             get;
             set;
         }
-        public  int CatapultSent
+        public virtual int CatapultSent
         {
             get;
             set;
         }
-        public  int NobleSent
-        {
-            get;
-            set;
-        }
-
-        public  int SpearAttackDead
-        {
-            get;
-            set;
-        }
-        public  int AxeAttackDead
-        {
-            get;
-            set;
-        }
-        public  int SwordAttackDead
-        {
-            get;
-            set;
-        }
-        public  int ScoutAttackDead
-        {
-            get;
-            set;
-        }
-        public int LightCavalryAttackDead
-        {
-            get;
-            set;
-        }
-        public int HeavyCavalryAttackDead
-        {
-            get;
-            set;
-        }
-        public  int RamAttackDead
-        {
-            get;
-            set;
-        }
-        public  int CatapultAttackDead
-        {
-            get;
-            set;
-        }
-        public  int NobleAttackDead
+        public virtual int NobleSent
         {
             get;
             set;
         }
 
-        public  int SpearDefense
+        public virtual int SpearAttackDead
         {
             get;
             set;
         }
-        public  int AxeDefense
+        public virtual int AxeAttackDead
         {
             get;
             set;
         }
-        public  int SwordDefense
+        public virtual int SwordAttackDead
         {
             get;
             set;
         }
-        public  int ScoutDefense
+        public virtual int ScoutAttackDead
         {
             get;
             set;
         }
-        public int LightCavalryDefense
+        public virtual int LightCavalryAttackDead
         {
             get;
             set;
         }
-        public int HeavyCavalryDefense
+        public virtual int HeavyCavalryAttackDead
         {
             get;
             set;
         }
-        public  int RamDefense
+        public virtual int RamAttackDead
         {
             get;
             set;
         }
-        public  int CatapultDefense
+        public virtual int CatapultAttackDead
         {
             get;
             set;
         }
-        public  int NobleDefense
-        {
-            get;
-            set;
-        }
-
-        public  int SpearDefenseDead
-        {
-            get;
-            set;
-        }
-        public  int AxeDefenseDead
-        {
-            get;
-            set;
-        }
-        public  int SwordDefenseDead
-        {
-            get;
-            set;
-        }
-        public  int ScoutDefenseDead
-        {
-            get;
-            set;
-        }
-        public int LightCavalryDefenseDead
-        {
-            get;
-            set;
-        }
-        public int HeavyCavalryDefenseDead
-        {
-            get;
-            set;
-        }
-        public  int RamDefenseDead
-        {
-            get;
-            set;
-        }
-        public  int CatapultDefenseDead
-        {
-            get;
-            set;
-        }
-        public  int NobleDefenseDead
+        public virtual int NobleAttackDead
         {
             get;
             set;
         }
 
-        public  int Wood
+        public virtual int SpearDefense
         {
             get;
             set;
         }
-        public  int Clay
+        public virtual int AxeDefense
         {
             get;
             set;
         }
-        public  int Iron
+        public virtual int SwordDefense
         {
             get;
             set;
         }
-
-        public  BuildingType Building
+        public virtual int ScoutDefense
         {
             get;
             set;
         }
-        public  int WallAfter
+        public virtual int LightCavalryDefense
         {
             get;
             set;
         }
-        public  int WallBefore
+        public virtual int HeavyCavalryDefense
         {
             get;
             set;
         }
-        public  int BuildingAfter
+        public virtual int RamDefense
         {
             get;
             set;
         }
-        public  int BuildingBefore
+        public virtual int CatapultDefense
         {
             get;
             set;
         }
-        public  double LoyalAfter
-        {
-            get;
-            set;
-        }
-        public double LoyalBefore
-        {
-            get;
-            set;
-        }
-        public  bool SuccessAttack
-        {
-            get;
-            set;
-        }
-        public  double Morale
-        {
-            get;
-            set;
-        }
-        public  double Luck
-        {
-            get;
-            set;
-        }
-        public Village FromVillage
-        {
-            get;
-            set;
-        }
-        public Village ToVillage
+        public virtual int NobleDefense
         {
             get;
             set;
         }
 
-        public Player FromPlayer
+        public virtual int SpearDefenseDead
         {
             get;
             set;
         }
-        public Player ToPlayer
+        public virtual int AxeDefenseDead
+        {
+            get;
+            set;
+        }
+        public virtual int SwordDefenseDead
+        {
+            get;
+            set;
+        }
+        public virtual int ScoutDefenseDead
+        {
+            get;
+            set;
+        }
+        public virtual int LightCavalryDefenseDead
+        {
+            get;
+            set;
+        }
+        public virtual int HeavyCavalryDefenseDead
+        {
+            get;
+            set;
+        }
+        public virtual int RamDefenseDead
+        {
+            get;
+            set;
+        }
+        public virtual int CatapultDefenseDead
+        {
+            get;
+            set;
+        }
+        public virtual int NobleDefenseDead
+        {
+            get;
+            set;
+        }
+
+        public virtual int Wood
+        {
+            get;
+            set;
+        }
+        public virtual int Clay
+        {
+            get;
+            set;
+        }
+        public virtual int Iron
+        {
+            get;
+            set;
+        }
+
+        public virtual BuildingType Building
+        {
+            get;
+            set;
+        }
+        public virtual int WallAfter
+        {
+            get;
+            set;
+        }
+        public virtual int WallBefore
+        {
+            get;
+            set;
+        }
+        public virtual int BuildingAfter
+        {
+            get;
+            set;
+        }
+        public virtual int BuildingBefore
+        {
+            get;
+            set;
+        }
+        public virtual double LoyalAfter
+        {
+            get;
+            set;
+        }
+        public virtual double LoyalBefore
+        {
+            get;
+            set;
+        }
+        public virtual bool SuccessAttack
+        {
+            get;
+            set;
+        }
+        public virtual double Morale
+        {
+            get;
+            set;
+        }
+        public virtual double Luck
+        {
+            get;
+            set;
+        }
+        public virtual Village FromVillage
+        {
+            get;
+            set;
+        }
+        public virtual Village ToVillage
+        {
+            get;
+            set;
+        }
+
+        public virtual Player FromPlayer
+        {
+            get;
+            set;
+        }
+        public virtual Player ToPlayer
         {
             get;
             set;

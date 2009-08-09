@@ -85,14 +85,18 @@
             </ItemTemplate>
         </asp:Repeater>
     </tbody>
+    <asp:Panel ID="Panel1" runat="server">
+    </asp:Panel>
 </table>
+
+<asp:UpdatePanel ID="pDiplomate" runat="server">
+    <ContentTemplate>
 <h3>
     Add relationship</h3>
 <div style="float: left;">
     Tribe tag:
 </div>
-<asp:UpdatePanel ID="AJAX" runat="server">
-    <ContentTemplate>
+
         <div style="float: left; margin-left: 5px;">
             <asp:TextBox ID="txtTag" runat="server">
             </asp:TextBox></div>
