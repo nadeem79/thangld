@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Antlr.StringTemplate;
 using NHibernate;
 using NHibernate.Linq;
 
@@ -136,8 +135,6 @@ namespace beans
             this.ToVillage.Update(this.LandingTime, session);
 
             #region Data Declaration
-            StringTemplateGroup group = new StringTemplateGroup("attack");
-            StringTemplate temp = new StringTemplate(group, reports.Attack);
 
 
             double luck, ratio;

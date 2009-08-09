@@ -9,7 +9,6 @@ using NHibernate.Criterion;
 using System.Text.RegularExpressions;
 using System.Collections;
 using NHibernate.Type;
-using Antlr.StringTemplate;
 using NHibernate.UserTypes;
 using NHibernate.Linq;
 

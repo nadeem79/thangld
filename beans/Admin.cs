@@ -9,7 +9,6 @@ using System.Text.RegularExpressions;
 using System.Collections;
 using System.Linq;
 using NHibernate.Linq;
-using Antlr.StringTemplate;
 
 namespace beans
 {

@@ -33,15 +33,15 @@ public partial class TribeMembers : System.Web.UI.UserControl
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        NHibernate.ISession session = NHibernateHelper.CreateSession();
+        NHibernate.ISession session = (ISession)Context.Items["NHibernateSession"];
         this.Member = session.Get<Player>(Session["user"]);
+        this.Member.Group.GetMembers(session);
         this.drTribeMembers.DataSource = this.Member.Group.Members;
         this.drTribeMembers.DataBind();
 
         if (((this.Member.TribePermission & TribePermission.Inviter) != TribePermission.Inviter) || (this.Tribe != this.Member.Group))
             this.pInviting.Visible = false;
 
-        session.Close();
     }
 
     protected void bttnInvite_Click(object sender, EventArgs e)
@@ -50,7 +50,7 @@ public partial class TribeMembers : System.Web.UI.UserControl
         ITransaction trans = null;
         try
         {
-            session = NHibernateHelper.CreateSession();
+            session = (ISession)Context.Items["NHibernateSession"];
             trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
 
             Player me = session.Load<Player>(Session["user"]);
@@ -71,11 +71,6 @@ public partial class TribeMembers : System.Web.UI.UserControl
             if (trans!=null)
                 trans.Rollback();
             RadScriptManager.RegisterStartupScript(bttnInvite, bttnInvite.GetType(), "ShowException", "jQuery.facebox('" + ex.Message + "');", true);
-        }
-        finally
-        {
-            if (session!=null)
-                session.Close();
         }
 
         

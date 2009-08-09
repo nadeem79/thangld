@@ -38,9 +38,10 @@ public partial class TribeDiplomacy : System.Web.UI.UserControl
         ITransaction trans = null;
         try
         {
-            session = NHibernateHelper.CreateSession();
+            session = (ISession)Context.Items["NHibernateSession"];
             trans = session.BeginTransaction();
             Player p = session.Get<Player>(Session["user"]);
+            p.Group.GetDiplomateInfo(session);
             if (Request["action"] == "diplomacy")
             {
                 int g = 0;
@@ -59,6 +60,7 @@ public partial class TribeDiplomacy : System.Web.UI.UserControl
                 }
             }
 
+            
 
             this.gvAllies.DataSource = p.Group.Allies;
             this.gvEnemies.DataSource = p.Group.Enemies;
@@ -67,16 +69,14 @@ public partial class TribeDiplomacy : System.Web.UI.UserControl
             this.gvEnemies.DataBind();
             this.gvAllies.DataBind();
             trans.Commit();
+
+            this.pDiplomate.Visible = p.CheckPrivilage(TribePermission.DiplomacyInteract);
+
         }
         catch 
         {
             if (trans != null && !trans.WasCommitted)
                 trans.Rollback();
-        }
-        finally
-        {
-            if (session != null)
-                session.Close();
         }
     }
 
@@ -87,7 +87,7 @@ public partial class TribeDiplomacy : System.Web.UI.UserControl
         ITransaction trans = null;
         try
         {
-            session = NHibernateHelper.CreateSession();
+            session = (ISession)Context.Items["NHibernateSession"];
             trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
             Player player = session.Get<Player>(Session["user"]);
             
@@ -115,11 +115,6 @@ public partial class TribeDiplomacy : System.Web.UI.UserControl
             RadScriptManager.RegisterStartupScript(bttnAddRelation, bttnAddRelation.GetType(), "ShowException", "jQuery.facebox('" + ex.Message + " - " + ex.GetType() + "');", true);
             if (trans != null || !trans.WasCommitted)
                 trans.Rollback();
-        }
-        finally
-        {
-            if (session != null)
-                session.Close();
         }
 
     }

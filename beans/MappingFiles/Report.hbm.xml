@@ -2,19 +2,19 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
 
 
-  <class name="beans.Report, beans" table="reports" lazy="false" discriminator-value="0">
+  <class name="beans.Report, beans" table="reports" lazy="true" discriminator-value="0">
 
     <id name="ID" column="id" type="Int32">
       <generator class="identity"/>
     </id>
     <discriminator column="type" type="Int32" />
 
-    <many-to-one name="Owner" class="beans.Player, beans" lazy="proxy" column="owner" not-null="true" cascade="none" />
+    <many-to-one name="Owner" class="beans.Player, beans" column="owner" not-null="true" cascade="none" />
     <property name="Time" column="create_time" type="timestamp"/>
     <property name="Title" column="title" type="String" />
     <property name="Unread" column="unread" type="Boolean" />
 
-    <subclass discriminator-value="1" name="beans.AttackReport, beans" lazy="false">
+    <subclass discriminator-value="1" name="beans.AttackReport, beans" lazy="true">
       <property name="SpearSent" column="spear_attack" type="Int32" />
       <property name="SwordSent" column="sword_attack" type="Int32" />
       <property name="AxeSent" column="axe_attack" type="Int32" />
@@ -69,10 +69,10 @@
       <property name="Luck" column="luck" type="Double" />
       <property name="Morale" column="morale" type="Double" />
 
-      <many-to-one name="FromVillage" class="beans.Village, beans" column="from_village" not-null="true" lazy="proxy" />
-      <many-to-one name="ToVillage" class="beans.Village, beans" column="to_village" not-null="true" lazy="proxy" />
-      <many-to-one name="FromPlayer" class="beans.Player, beans" column="from_player" not-null="true" lazy="proxy" />
-      <many-to-one name="ToPlayer" class="beans.Player, beans" column="to_player" not-null="true" lazy="proxy" />
+      <many-to-one name="FromVillage" class="beans.Village, beans" column="from_village" not-null="true" lazy="no-proxy" />
+      <many-to-one name="ToVillage" class="beans.Village, beans" column="to_village" not-null="true" lazy="no-proxy"  />
+      <many-to-one name="FromPlayer" class="beans.Player, beans" column="from_player" not-null="true" lazy="no-proxy" />
+      <many-to-one name="ToPlayer" class="beans.Player, beans" column="to_player" not-null="true" lazy="no-proxy" />
       <property name="Building" column="building" type="beans.BuildingType, beans" />
 
     </subclass>

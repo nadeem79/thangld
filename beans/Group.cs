@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NHibernate;
+using NHibernate.Linq;
 using NHibernate.Criterion;
 
 namespace beans
@@ -69,6 +70,13 @@ namespace beans
         #endregion
 
         #region Constructors
+        public Group()
+        {
+            this.Enemies = new List<Group>();
+            this.Allies = new List<Group>();
+            this.Naps = new List<Group>();
+            this.Members = new List<Player>();
+        }
         #endregion
 
         #region Static Methods
@@ -88,6 +96,31 @@ namespace beans
         public override string ToString()
         {
             return this.Tag;
+        }
+
+        public void GetDiplomateInfo(ISession session)
+        {
+            IList<TribeRelation> diplomateInfo = (from tribeDiplomate in session.Linq<TribeRelation>()
+                                                  where tribeDiplomate.CurrentTribe == this
+                                                  select tribeDiplomate).ToList<TribeRelation>();
+
+            this.Allies = (from relation in diplomateInfo
+                           where relation.Diplomacy == TribeDiplomate.Ally
+                           select relation.DiplomaticTribe).ToList<Group>();
+            this.Enemies = (from relation in diplomateInfo
+                           where relation.Diplomacy == TribeDiplomate.Enemy
+                           select relation.DiplomaticTribe).ToList<Group>();
+            this.Naps = (from relation in diplomateInfo
+                           where relation.Diplomacy == TribeDiplomate.NAP
+                           select relation.DiplomaticTribe).ToList<Group>();
+
+        }
+        public void GetMembers(ISession session)
+        {
+            this.Members = (from player in session.Linq<Player>()
+                            where player.Group == this
+                            orderby player.Point descending
+                            select player).ToList<Player>();
         }
         #endregion
     }

@@ -24,11 +24,8 @@ public partial class overview : System.Web.UI.Page
         ISession session = ((inPage)this.Master).NHibernateSession;
         beans.Player user = session.Load<beans.Player>(Session["user"]);
         if (user.GetVillageCount(session) <= 1)
-        {
-            session.Close();
-            Response.Redirect("village.aspx", true);
-        }
+            Response.Redirect("village.aspx", false);
+
         System.Collections.Generic.IList<Village> v = user.Villages;
-        session.Close();
     }
 }
