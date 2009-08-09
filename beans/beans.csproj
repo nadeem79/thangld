@@ -80,6 +80,7 @@
     <Compile Include="InviteReport.cs" />
     <Compile Include="MovingCommandLandingTimeComparer.cs" />
     <Compile Include="NumericConfiguration.cs" />
+    <Compile Include="Player.Methods.Tribe.cs" />
     <Compile Include="SendResourceReport.cs" />
     <Compile Include="StringConfiguration.cs" />
     <Compile Include="TribalWarsEngine.cs" />

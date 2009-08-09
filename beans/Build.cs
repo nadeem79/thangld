@@ -227,8 +227,8 @@ namespace beans
 
             BuildPrice basePrice = Build.GetPrice(type);
             int wood = basePrice.Wood, clay = basePrice.Clay, iron = basePrice.Iron, time = basePrice.BuildTime;
-            float point = basePrice.Point;
-            float population = basePrice.Population;
+            double point = basePrice.Point;
+            double population = basePrice.Population;
             for (int i = 1; i < level; i++)
             {
                 clay += (int)(clay * 0.28);
@@ -361,10 +361,10 @@ namespace beans
 
     public class BuildPrice:Price
     {
-        private float _point;
+        private double _point;
         private int _max;
-        
-        public float Point
+
+        public double Point
         {
             get { return this._point; }
         }
@@ -373,7 +373,8 @@ namespace beans
             get { return this._max; }
         }
 
-        public BuildPrice(string name, int time, int wood, int clay, int iron, float population, int max, float point):base(name, time, wood, clay, iron, population)
+        public BuildPrice(string name, int time, int wood, int clay, int iron, double population, int max, double point)
+            : base(name, time, wood, clay, iron, population)
         {
             this._max = max;
             this._point = point;

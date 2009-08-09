@@ -18,6 +18,12 @@ public partial class TribeDiplomacy : System.Web.UI.UserControl
         set { this._village = value; }
     }
 
+    public ISession NHibernateSession
+    {
+        get;
+        set;
+    }
+
     public TribePermission DiplomacyPermission
     {
         get;

@@ -18,6 +18,12 @@ public partial class tribe : System.Web.UI.Page
 
     protected Village village;
     protected Group currentTribe;
+    protected ISession NHibernateSession
+    {
+        get;
+        set;
+    }
+
     public Group Tribe
     {
         get { return this.currentTribe; }
@@ -27,13 +33,10 @@ public partial class tribe : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         this.village = ((inPage)this.Master).CurrentVillage;
-        ISession session = NHibernateHelper.CreateSession();
+        ISession session = (ISession)Context.Items["NHibernateSession"];
         Player player = session.Get<Player>(Session["user"]);
         if (player.Group == null)
-        {
-            session.Close();
-            Response.Redirect("untribe.aspx?id=" + this.village.ID.ToString(), true);
-        }
+            Response.Redirect("untribe.aspx?id=" + this.village.ID.ToString(), false);
         
         
         int page = 0;
@@ -66,6 +69,5 @@ public partial class tribe : System.Web.UI.Page
                 this.pTribePage.Controls.Add(ucProfilePage);
                 break;
         }
-        session.Close();
     }
 }

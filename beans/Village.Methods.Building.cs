@@ -30,7 +30,6 @@ namespace beans
             this.VillageResourceData.Wood -= price.Wood;
             this.VillageResourceData.Clay -= price.Clay;
             this.VillageResourceData.Iron -= price.Iron;
-            this.Points += price.Point;
             this.Population += price.Population;
             session.Save(build);
             session.Update(this);
@@ -171,7 +170,6 @@ namespace beans
             this.VillageResourceData.Wood += (int)(price.Wood * 0.8);
             this.VillageResourceData.Clay += (int)(price.Clay * 0.8);
             this.VillageResourceData.Iron += (int)(price.Iron * 0.8);
-            this.Points -= price.Point;
             this.Population -= price.Population;
 
             session.Delete(build);
