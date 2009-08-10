@@ -83,6 +83,7 @@
     <Compile Include="UserType.cs" />
     <Compile Include="Village.Methods.Building.cs" />
     <Compile Include="Village.Methods.Resources.cs" />
+    <Compile Include="Village.Methods.Transport.cs" />
     <Compile Include="Village.Methods.Troops.cs" />
     <Compile Include="Village.Methods.Recruit.cs" />
     <Compile Include="DatetimeHelper.cs" />

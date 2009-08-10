@@ -69,13 +69,21 @@ public partial class CustomControls_SendResource : System.Web.UI.UserControl
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        this.lblAvailableMerchant.Text = this.Village.MerchantAvailable(this.Session).ToString();
-        IList<MovingCommand> lstIncoming = this.Village.IncomingMerchants(this.Session);
-        this.rMyTransport.DataSource = lstIncoming;
-        this.rMyTransport.DataBind();
-        this.rOutgoings.DataSource = this.Village.GetOutgoingMerchants(this.Session);
-        this.rOutgoings.DataBind();
 
+        this.Village.GetTransportData(this.Session);
+
+        this.lblAvailableMerchant.Text = this.Village.MerchantAvailable(this.Session).ToString();
+
+        if (this.Village.TransportFromMe.Count > 0)
+        {
+            this.rMyTransport.DataSource = this.Village.TransportFromMe;
+            this.rMyTransport.DataBind();
+        }
+        if (this.Village.TransportToMe.Count > 0)
+        {
+            this.rOutgoings.DataSource = this.Village.TransportToMe;
+            this.rOutgoings.DataBind();
+        }
         
 
         if (Request["target"] == null)

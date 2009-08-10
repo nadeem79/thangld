@@ -83,10 +83,11 @@
         </tr>
     </tbody>
 </table>
-<h3>
-    Incoming transports</h3>
+
 <asp:Repeater ID="rMyTransport" runat="server">
     <HeaderTemplate>
+    <h3>
+    Incoming transports</h3>
         <table class="vis">
             <tbody>
                 <tr>
@@ -138,10 +139,12 @@
 </asp:Repeater>
 
 
-<h3>
-    Your transports</h3>
+
 <asp:Repeater ID="rOutgoings" runat="server">
+
     <HeaderTemplate>
+    <h3>
+    Your transports</h3>
         <table class="vis">
             <tbody>
                 <tr>
