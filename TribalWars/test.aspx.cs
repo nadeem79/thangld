@@ -24,35 +24,8 @@ public partial class test : System.Web.UI.Page
         ISession session = NHibernateHelper.CreateSession();
 
         Village v = session.Get<Village>(24);
-        v[BuildingType.Academy] = 0;
-        v[BuildingType.Barracks] = 0;
-        v[BuildingType.ClayPit] = 0;
-        v[BuildingType.Farm] = 0;
-        v[BuildingType.Headquarter] = 0;
-        v[BuildingType.HidingPlace] = 0;
-        v[BuildingType.IronMine] = 0;
-        v[BuildingType.Market] = 0;
-        v[BuildingType.Rally] = 0;
-        v[BuildingType.Smithy] = 0;
-        v[BuildingType.Stable] = 0;
-        v[BuildingType.TimberCamp] = 0;
-        v[BuildingType.Wall] = 0;
-        v[BuildingType.Warehouse] = 0;
-        v[BuildingType.Workshop] = 0;
-        v.Points = 0;
-        v.Population = 0;
 
-        v.UpgradeBuilding(BuildingType.Headquarter, 20);
-        v.UpgradeBuilding(BuildingType.Farm, 20);
-        v.UpgradeBuilding(BuildingType.ClayPit, 20);
-        v.UpgradeBuilding(BuildingType.IronMine, 20);
-        v.UpgradeBuilding(BuildingType.TimberCamp, 20);
-        v.UpgradeBuilding(BuildingType.Rally, 1);
-        v.UpgradeBuilding(BuildingType.Stable, 5);
-        v.UpgradeBuilding(BuildingType.Barracks, 5);
-        v.UpgradeBuilding(BuildingType.Workshop, 5);
-        v.UpgradeBuilding(BuildingType.Smithy, 10);
-        v.UpgradeBuilding(BuildingType.Warehouse, 30);
+        v.UpgradeBuilding(BuildingType.Market, 5);
         
 
         session.Update(v);
