@@ -403,7 +403,7 @@ namespace beans
         public virtual void Update(DateTime to, ISession session)
         {
 
-            using (StreamWriter sw = new StreamWriter("test.txt"))
+            using (StreamWriter sw = new StreamWriter("d:\\test.txt", true))
             {
                 sw.WriteLine(this.Name);
                 sw.Close();
