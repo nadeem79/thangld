@@ -8,39 +8,39 @@ namespace beans
     public class SendResourceReport : Report
     {
 
-        public int Wood
+        public virtual int Wood
         {
             get;
             set;
         }
-        public int Clay
+        public virtual int Clay
         {
             get;
             set;
         }
-        public int Iron
-        {
-            get;
-            set;
-        }
-
-        public Village FromVillage
-        {
-            get;
-            set;
-        }
-        public Player FromPlayer
+        public virtual int Iron
         {
             get;
             set;
         }
 
-        public Village ToVillage
+        public virtual Village FromVillage
         {
             get;
             set;
         }
-        public Player ToPlayer
+        public virtual Player FromPlayer
+        {
+            get;
+            set;
+        }
+
+        public virtual Village ToVillage
+        {
+            get;
+            set;
+        }
+        public virtual Player ToPlayer
         {
             get;
             set;

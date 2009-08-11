@@ -1,5 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="SendResource.ascx.cs"
     Inherits="CustomControls_SendResource" %>
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <table class="vis">
     <tbody>
         <tr>
@@ -71,23 +72,105 @@
                         </tr>
                     </tbody>
                 </table>
-                <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-                    <ContentTemplate>
-                        <asp:Button ID="bttnSend" runat="server" Text="» OK «" OnClick="bttnSend_Click" />
-                    </ContentTemplate>
-                    <Triggers>
-                        <asp:AsyncPostBackTrigger ControlID="bttnSend" EventName="Click" />
-                    </Triggers>
+                <asp:UpdatePanel ID="panel2" runat="server">
+                <ContentTemplate>
+                    <asp:Button ID="bttnSend" runat="server" Text="» OK «" OnClick="bttnSend_Click" />
+                </ContentTemplate>
                 </asp:UpdatePanel>
+                
+                <div>
+                    <div style="display:none;" id="confirmDialog">
+                        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                            <ContentTemplate>
+                                <h2>
+                                    Confirm transport</h2>
+                                <table class="vis" width="350">
+                                    <tbody>
+                                        <tr>
+                                            <th colspan="2">
+                                                Transport
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Destination:
+                                            </td>
+                                            <td>
+                                                <a href='village_info.aspx?id=<% = this.Village.ID %>&village=<asp:Literal runat="server" ID="targetVillageID"></asp:Literal>'>
+                                                    <asp:Literal runat="server" ID="targetVillageName"></asp:Literal></a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Player:
+                                            </td>
+                                            <td>
+                                                <a href='user_info.aspx?id=<% = this.Village.ID %>&village=<asp:Literal runat="server" ID="targetPlayerID"></asp:Literal>'>
+                                                    <asp:Literal runat="server" ID="targetPlayerName"></asp:Literal></a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="150">
+                                                Resources:
+                                            </td>
+                                            <td width="200">
+                                                <asp:Literal runat="server" ID="claySpan"></asp:Literal>
+                                                <asp:Literal runat="server" ID="woodSpan"></asp:Literal>
+                                                <asp:Literal runat="server" ID="ironSpan"></asp:Literal>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Merchants required:
+                                            </td>
+                                            <td>
+                                                <asp:Literal runat="server" ID="merchantRequiredSpan"></asp:Literal>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Duration (each way):
+                                            </td>
+                                            <td>
+                                                <asp:Literal runat="server" ID="durationSpan"></asp:Literal>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Arrival:
+                                            </td>
+                                            <td>
+                                                <asp:Literal runat="server" ID="arrivalSpan"></asp:Literal>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Return:
+                                            </td>
+                                            <td>
+                                                <asp:Literal runat="server" ID="returnSpan"></asp:Literal>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <br>
+                                
+                                <input type="button" value="gg" onclick="__doPostBack('<% = this.bttnConfirmSend.UniqueID%>', '')" />
+                            </ContentTemplate>
+                            <Triggers>
+                                <asp:AsyncPostBackTrigger ControlID="bttnSend" EventName="Click" />
+                            </Triggers>
+                        </asp:UpdatePanel>
+                    </div>
+                </div>
             </td>
         </tr>
     </tbody>
 </table>
-
 <asp:Repeater ID="rMyTransport" runat="server">
     <HeaderTemplate>
-    <h3>
-    Incoming transports</h3>
+        <h3>
+            Incoming transports</h3>
         <table class="vis">
             <tbody>
                 <tr>
@@ -109,42 +192,41 @@
                     <th>
                         Arrival in
                     </th>
-                    <th></th>
+                    <th>
+                    </th>
                 </tr>
     </HeaderTemplate>
     <ItemTemplate>
         <td>
-                <%# TypePrefix((beans.MoveType)DataBinder.Eval(Container.DataItem, "Type")) %> 
-                <a href="<%# String.Format("village_info.aspx?id={0}&village={1}", this.Village.ID, ((beans.Village)(DataBinder.Eval(Container.DataItem, "To"))).ID) %>"><%# ((beans.Village)(DataBinder.Eval(Container.DataItem, "To"))).Name%></a>
-            </td>
-            <td>
-                <%# DisplayResources((beans.MovingCommand)Container.DataItem)%>
-            </td>
-            <td>
-                <%# MerchantCalculation((beans.MovingCommand)Container.DataItem) %>
-            </td>
-            <td>
-                <%# Functions.FormatTime((DateTime)DataBinder.Eval(Container.DataItem, "LandingTime") - (DateTime)DataBinder.Eval(Container.DataItem, "StartTime")) %>
-            </td>
-            <td>
-                <%# ((DateTime)DataBinder.Eval(Container.DataItem, "LandingTime")).ToString("HH:mm:ss:'<span class=\"small inactive\">'fff'</span> ngày' dd:MM:yyyy") %>
-            </td>
-            <td>
-                <span class="timer"><%# Functions.FormatTime((DateTime)DataBinder.Eval(Container.DataItem, "LandingTime") - DateTime.Now) %></span>
-            </td>
+            <%# TypePrefix((beans.MoveType)DataBinder.Eval(Container.DataItem, "Type")) %>
+            <a href="<%# String.Format("village_info.aspx?id={0}&village={1}", this.Village.ID, ((beans.Village)(DataBinder.Eval(Container.DataItem, "ToVillage"))).ID) %>">
+                <%# ((beans.Village)(DataBinder.Eval(Container.DataItem, "ToVillage"))).Name%></a>
+        </td>
+        <td>
+            <%# DisplayResources((beans.MovingCommand)Container.DataItem)%>
+        </td>
+        <td>
+            <%# MerchantCalculation((beans.MovingCommand)Container.DataItem) %>
+        </td>
+        <td>
+            <%# Functions.FormatTime((DateTime)DataBinder.Eval(Container.DataItem, "LandingTime") - (DateTime)DataBinder.Eval(Container.DataItem, "StartingTime"))%>
+        </td>
+        <td>
+            <%# ((DateTime)DataBinder.Eval(Container.DataItem, "LandingTime")).ToString("HH:mm:ss:'<span class=\"small inactive\">'fff'</span> ngày' dd:MM:yyyy") %>
+        </td>
+        <td>
+            <span class="timer">
+                <%# Functions.FormatTime((DateTime)DataBinder.Eval(Container.DataItem, "LandingTime") - DateTime.Now) %></span>
+        </td>
     </ItemTemplate>
     <FooterTemplate>
         </tbody></table>
     </FooterTemplate>
 </asp:Repeater>
-
-
-
 <asp:Repeater ID="rOutgoings" runat="server">
-
     <HeaderTemplate>
-    <h3>
-    Your transports</h3>
+        <h3>
+            Your transports</h3>
         <table class="vis">
             <tbody>
                 <tr>
@@ -166,31 +248,36 @@
                     <th>
                         Arrival in
                     </th>
-                    <th></th>
+                    <th>
+                    </th>
                 </tr>
     </HeaderTemplate>
     <ItemTemplate>
         <td>
-                <%# TypePrefix((beans.MoveType)DataBinder.Eval(Container.DataItem, "Type")) %> 
-                <a href="<%# String.Format("village_info.aspx?id={0}&village={1}", this.Village.ID, ((beans.Village)(DataBinder.Eval(Container.DataItem, "To"))).ID) %>"><%# ((beans.Village)(DataBinder.Eval(Container.DataItem, "To"))).Name%></a>
-            </td>
-            <td>
-                <%# DisplayResources((beans.MovingCommand)Container.DataItem) %>
-            </td>
-            <td>
-                <%# MerchantCalculation((beans.MovingCommand)Container.DataItem) %>
-            </td>
-            <td>
-                <%# Functions.FormatTime((DateTime)DataBinder.Eval(Container.DataItem, "LandingTime") - (DateTime)DataBinder.Eval(Container.DataItem, "StartTime")) %>
-            </td>
-            <td>
-                <%# ((DateTime)DataBinder.Eval(Container.DataItem, "LandingTime")).ToString("HH:mm:ss:'<span class=\"small inactive\">'fff'</span> ngày' dd:MM:yyyy") %>
-            </td>
-            <td>
-                <span class="timer"><%# Functions.FormatTime((DateTime)DataBinder.Eval(Container.DataItem, "LandingTime") - DateTime.Now) %></span>
-            </td>
+            <%# TypePrefix((beans.MoveType)DataBinder.Eval(Container.DataItem, "Type")) %>
+            <a href="<%# String.Format("village_info.aspx?id={0}&village={1}", this.Village.ID, ((beans.Village)(DataBinder.Eval(Container.DataItem, "ToVillage"))).ID) %>">
+                <%# ((beans.Village)(DataBinder.Eval(Container.DataItem, "ToVillage"))).Name%></a>
+        </td>
+        <td>
+            <%# DisplayResources((beans.MovingCommand)Container.DataItem) %>
+        </td>
+        <td>
+            <%# MerchantCalculation((beans.MovingCommand)Container.DataItem) %>
+        </td>
+        <td>
+            <%# Functions.FormatTime((DateTime)DataBinder.Eval(Container.DataItem, "LandingTime") - (DateTime)DataBinder.Eval(Container.DataItem, "StartTime")) %>
+        </td>
+        <td>
+            <%# ((DateTime)DataBinder.Eval(Container.DataItem, "LandingTime")).ToString("HH:mm:ss:'<span class=\"small inactive\">'fff'</span> ngày' dd:MM:yyyy") %>
+        </td>
+        <td>
+            <span class="timer">
+                <%# Functions.FormatTime((DateTime)DataBinder.Eval(Container.DataItem, "LandingTime") - DateTime.Now) %></span>
+        </td>
     </ItemTemplate>
     <FooterTemplate>
         </tbody></table>
     </FooterTemplate>
 </asp:Repeater>
+<asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+<div style="display:none;"><asp:Button ID="bttnConfirmSend" runat="server" Text="Send" OnClick="bttnConfirmSend_Click" /></div>

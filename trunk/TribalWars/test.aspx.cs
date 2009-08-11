@@ -21,16 +21,7 @@ public partial class test : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        ISession session = NHibernateHelper.CreateSession();
 
-        Village v = session.Get<Village>(24);
-
-        v.UpgradeBuilding(BuildingType.Market, 5);
-        
-
-        session.Update(v);
-        session.Flush();
-        session.Close();
     }
 
     protected void bttnSend_Click(object sender, EventArgs e)
@@ -41,5 +32,9 @@ public partial class test : System.Web.UI.Page
     protected void Confirm_Click(object sender, EventArgs e)
     {
         
+    }
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        this.Label1.Text += "gg";
     }
 }

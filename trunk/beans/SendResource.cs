@@ -43,7 +43,6 @@ namespace beans
 
         public override MovingCommand Effect(ISession session)
         {
-            this.ToVillage.Update(this.LandingTime, session);
             this.ToVillage.VillageResourceData.Clay += this.Clay;
             this.ToVillage.VillageResourceData.Wood += this.Wood;
             this.ToVillage.VillageResourceData.Iron += this.Iron;
@@ -59,7 +58,7 @@ namespace beans
             report.Time = this.LandingTime;
             report.Title = String.Format("{0} gửi tài nguyên đến {1} ({2}|{3})", this.FromVillage.Player.Username, this.ToVillage.Name, this.ToVillage.X.ToString("000"), this.ToVillage.Y.ToString("000"));
             report.Unread = true;
-            report.Owner = this.FromVillage.Player;
+            report.Owner = this.ToVillage.Player;
             report.Clay = this.Clay;
             report.Wood = this.Wood;
             report.Iron = this.Iron;
@@ -108,7 +107,7 @@ namespace beans
             if (this.ToVillage == null)
                 throw new Exception("Nhập điểm đến");
 
-            if (this.ToVillage.AvailableMerchant(session) < SendResource.CalculateMerchant(this.Wood, this.Clay, this.Iron))
+            if (this.ToVillage.Merchant < SendResource.CalculateMerchant(this.Wood, this.Clay, this.Iron))
                 throw new Exception("Không đủ thương nhân");
 
             this.FromVillage.VillageResourceData.Clay -= this.Clay;

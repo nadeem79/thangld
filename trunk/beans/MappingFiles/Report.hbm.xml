@@ -77,6 +77,16 @@
 
     </subclass>
 
+    <subclass discriminator-value="4" name="beans.SendResourceReport, beans" lazy="true">
+      <property name="Iron" column="iron" type="Int32" />
+      <property name="Clay" column="clay" type="Int32" />
+      <property name="Wood" column="wood" type="Int32" />
+      <many-to-one name="FromVillage" class="beans.Village, beans" column="from_village" not-null="true" lazy="no-proxy" />
+      <many-to-one name="ToVillage" class="beans.Village, beans" column="to_village" not-null="true" lazy="no-proxy"  />
+      <many-to-one name="FromPlayer" class="beans.Player, beans" column="from_player" not-null="true" lazy="no-proxy" />
+      <many-to-one name="ToPlayer" class="beans.Player, beans" column="to_player" not-null="true" lazy="no-proxy" />
+    </subclass>
+
   </class>
 
 </hibernate-mapping>

@@ -125,7 +125,6 @@ namespace beans
         public override MovingCommand Effect(ISession session)
         {
 
-            this.ToVillage.Update(this.LandingTime, session);
 
             ICriteria criteria = session.CreateCriteria(typeof(Station));
 
