@@ -187,7 +187,7 @@
     $.facebox.settings.imageTypesRegexp = new RegExp('\.' + imageTypes + '$', 'i')
 
     if (settings) $.extend($.facebox.settings, settings)
-    $('body').append($.facebox.settings.faceboxHtml)
+    $('form').append($.facebox.settings.faceboxHtml)
 
     var preload = [ new Image(), new Image() ]
     preload[0].src = $.facebox.settings.closeImage
@@ -286,7 +286,7 @@
 
     $('#facebox_overlay').hide().addClass("facebox_overlayBG")
       .css('opacity', $.facebox.settings.opacity)
-      .click(function() { $(document).trigger('close.facebox') })
+      //.click(function() { $(document).trigger('close.facebox') })
       .fadeIn(200)
     return false
   }

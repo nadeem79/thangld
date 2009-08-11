@@ -11,43 +11,21 @@ namespace beans
 {
     public partial class Village
     {
-        public virtual int MerchantOnTheWay(ISession session)
+        private int merchant;
+        public virtual int Merchant
         {
-
-            return (from sendResource in session.Linq<SendResource>()
-                    where sendResource.FromVillage == this
-                    select sendResource).Sum<SendResource>(sendResource => sendResource.Merchant);
-
-        }
-
-        public virtual int MerchantOnTheWayHome(ISession session)
-        {
-
-            return (from r in session.Linq<Return>()
-                    where r.ToVillage == this
-                    select r).Sum<Return>(r => r.Merchant);
-        }
-
-        public virtual int MerchantAvailable(ISession session)
-        {
-            
-            ICriteria criteria = session.CreateCriteria(typeof(Offer));
-            criteria.Add(Expression.Eq("AtVillage", this));
-
-            int merchantCount = 0;
-
-            foreach (Offer offer in criteria.List<Offer>())
-                if (offer.OfferQuantity < 1000)
-                    merchantCount += offer.OfferNumber;
+            get { return merchant; }
+            set
+            {
+                if (value > MerchantOfVillage)
+                    merchant = MerchantOfVillage;
                 else
-                    merchantCount += (int)Math.Round((double)(offer.OfferQuantity / 1000)) * offer.OfferNumber;
-
-            return this.VillageBuildingData.Merchant - merchantCount - this.MerchantOnTheWay(session) - this.MerchantOnTheWayHome(session);
+                    merchant = value;
+            }
         }
-
-        public virtual int AvailableMerchant(ISession session)
+        public virtual int MerchantOfVillage
         {
-            return this.VillageBuildingData.Merchant - this.MerchantOnTheWay(session) - this.MerchantOnTheWayHome(session);
+            get { return this.VillageBuildingData.Merchant; }
         }
 
         public virtual IList<SendResource> GetDependingResource(DateTime to, ISession session)

@@ -8,7 +8,16 @@
     </head>
 <body>
     <form id="form1" runat="server">
-    <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+    <asp:ScriptManager ID="RadAjaxManager1" runat="server"></asp:ScriptManager>
+    <asp:Button ID="Button1" runat="server" onclick="Button1_Click" Text="Button" />
+    <asp:UpdatePanel ID="panel" runat="server">
+        <ContentTemplate>
+            <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+        </ContentTemplate>
+        <Triggers>
+            <asp:AsyncPostBackTrigger ControlID="Button1" EventName="Click" />
+        </Triggers>
+    </asp:UpdatePanel>
     </form>
 </body>
 </html>

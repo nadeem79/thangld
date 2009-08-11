@@ -33,6 +33,9 @@ public partial class headquarters : System.Web.UI.Page
             if (enumBuildStatus != BuildableStatus.JustDoIt)
                 this.lblError.Text = BuildableStatusFactory.ToString(enumBuildStatus);
             trans.Commit();
+            master.ClayLabel.Text = this.village.VillageResourceData.Clay.ToString();
+            master.IronLabel.Text = this.village.VillageResourceData.Iron.ToString();
+            master.WoodLabel.Text = this.village.VillageResourceData.Wood.ToString();
         }
 
         if (Request["action"] == "demolish" && Request["building"] != null && BuildingTypeFactory.GetType(Request["building"]) != BuildingType.NoBuiding)

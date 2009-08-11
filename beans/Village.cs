@@ -5,6 +5,7 @@ using NHibernate.Linq;
 using System.Text;
 using NHibernate.Criterion;
 using System.Linq;
+using System.IO;
 
 namespace beans
 {
@@ -401,6 +402,13 @@ namespace beans
         //Chưa xét trường hợp xây noble
         public virtual void Update(DateTime to, ISession session)
         {
+
+            using (StreamWriter sw = new StreamWriter("test.txt"))
+            {
+                sw.WriteLine(this.Name);
+                sw.Close();
+            }
+
             IList<MovingCommand> commands = (from movingCommand in session.Linq<MovingCommand>()
                                              where (movingCommand.FromVillage == this || movingCommand.ToVillage == this)
                                              && movingCommand.LandingTime < to

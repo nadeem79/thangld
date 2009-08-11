@@ -12,19 +12,22 @@ using System.Data.Common;
 public partial class CustomControls_SendResource : System.Web.UI.UserControl
 {
 
+    private SendResource PendingCommand
+    {
+        get;
+        set;
+    }
+
     protected string TypePrefix(MoveType type)
     {
         switch (type)
         {
             case MoveType.SendResources:
                 return "Gửi đến";
-                break;
             case MoveType.Return:
                 return "Quay về từ";
-                break;
             default:
                 return "";
-                break;
         }
     }
 
@@ -72,7 +75,7 @@ public partial class CustomControls_SendResource : System.Web.UI.UserControl
 
         this.Village.GetTransportData(this.Session);
 
-        this.lblAvailableMerchant.Text = this.Village.MerchantAvailable(this.Session).ToString();
+        this.lblAvailableMerchant.Text = this.Village.Merchant.ToString();
 
         if (this.Village.TransportFromMe.Count > 0)
         {
@@ -113,25 +116,56 @@ public partial class CustomControls_SendResource : System.Web.UI.UserControl
 
         if (!(int.TryParse(this.txtX.Text, out x) && int.TryParse(this.txtY.Text, out y)))
         {
-            ScriptManager.RegisterStartupScript(bttnSend, bttnSend.GetType(), "ShowException", "jQuery.facebox('Nhập toạ độ thành phố');", true);
+            ScriptManager.RegisterStartupScript(bttnSend, bttnSend.GetType(), "ShowException", "$.facebox('Nhập toạ độ thành phố');", true);
             return;
         }
 
-        ITransaction transaction = null;
         try
         {
-            transaction = this.Session.BeginTransaction(IsolationLevel.ReadCommitted);
-            SendResource sendResource = this.Village.CreateSendResource(this.Session, x, y, wood, clay, iron);
-            transaction.Commit();
-            Response.Redirect(String.Format("market.aspx?id={0}", this.Village.ID), false);
+            this.PendingCommand = this.Village.CreateSendResource(this.Session, x, y, wood, clay, iron);
+            this.targetPlayerID.Text = PendingCommand.ToVillage.Player.ID.ToString();
+            this.targetPlayerName.Text = PendingCommand.ToVillage.Player.Username;
+            this.targetVillageID.Text = PendingCommand.ToVillage.ID.ToString();
+            this.targetVillageName.Text = String.Format("{0} ({1}|{2})", PendingCommand.ToVillage.Name, PendingCommand.ToVillage.X.ToString("000"), PendingCommand.ToVillage.Y.ToString("000"));
+            if (wood > 0)
+                this.woodSpan.Text = string.Format("<img src=\"images/resources/wood.png\"> {0}", wood);
+            if (clay > 0)
+                this.claySpan.Text = string.Format("<img src=\"images/resources/clay.png\"> {0}", clay);
+            if (iron > 0)
+                this.ironSpan.Text = string.Format("<img src=\"images/resources/iron.png\"> {0}", iron);
+            ScriptManager.RegisterStartupScript(bttnSend, bttnSend.GetType(), "Confirm", "$.facebox($('#confirmDialog').html());", true);
         }
         catch (Exception exception)
         {
-            ScriptManager.RegisterStartupScript(bttnSend, bttnSend.GetType(), "ShowException", "jQuery.facebox('" + exception.Message + "');", true);
-            transaction.Rollback();
+            ScriptManager.RegisterStartupScript(bttnSend, bttnSend.GetType(), "ShowException", "$.facebox('" + exception.Message + "');", true);
         }
-         
-
-        
     }
+    
+    protected void bttnConfirmSend_Click(object sender, EventArgs e)
+    {
+        int clay = 0, wood = 0, iron = 0, x = 0, y = 0;
+
+        int.TryParse(this.txtClay.Text, out clay);
+        int.TryParse(this.txtWood.Text, out wood);
+        int.TryParse(this.txtIron.Text, out iron);
+
+        if (!(int.TryParse(this.txtX.Text, out x) && int.TryParse(this.txtY.Text, out y)))
+        {
+            ScriptManager.RegisterStartupScript(bttnSend, bttnSend.GetType(), "ShowException", "$.facebox.close", true);
+            ScriptManager.RegisterStartupScript(bttnSend, bttnSend.GetType(), "ShowException", "$.facebox('Nhập tài nguyên');", true);
+            return;
+        }
+
+        try
+        {
+            this.PendingCommand = this.Village.CreateSendResource(this.Session, x, y, wood, clay, iron);
+            this.PendingCommand.Save(this.Session);
+        }
+        catch (Exception exception)
+        {
+            ScriptManager.RegisterStartupScript(bttnSend, bttnSend.GetType(), "ShowException", "$.facebox.close", true);
+            ScriptManager.RegisterStartupScript(bttnSend, bttnSend.GetType(), "ShowException", "$.facebox('" + exception.Message + "');", true);
+        }
+    }
+
 }

@@ -21,7 +21,7 @@ public partial class CustomControls_MerchantStatus : System.Web.UI.UserControl
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        this.lblMerchantOnTheWay.Text = this.Village.MerchantOnTheWay(this.Session).ToString();
-        this.lblMerchantOnTheWayHome.Text = this.Village.MerchantOnTheWayHome(this.Session).ToString();
+        //this.lblMerchantOnTheWay.Text = (this.Village.MerchantOfVillage - this.Village.Merchant).ToString();
+        //this.lblMerchantOnTheWayHome.Text = this.Village.MerchantOnTheWayHome(this.Session).ToString();
     }
 }

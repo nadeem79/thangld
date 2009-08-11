@@ -132,7 +132,6 @@ namespace beans
         public override MovingCommand Effect(ISession session)
         {
 
-            this.ToVillage.Update(this.LandingTime, session);
 
             #region Data Declaration
 
@@ -203,7 +202,6 @@ namespace beans
             IList<Village> villages;
             #endregion
 
-            this.ToVillage.Update(this.LandingTime, session);
 
             #region Report
             attackReport = new AttackReport();
