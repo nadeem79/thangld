@@ -41,6 +41,8 @@ namespace beans
                     where (movement.FromVillage == this || movement.ToVillage == this)
                     && movement.LandingTime < time
                     && movement.LandingTime > this.LastUpdate
+                    && movement.GetType() != typeof(SendResource)
+                    && (movement.GetType() == typeof(Return) && ((Return)movement).Merchant == 0)
                     orderby movement.LandingTime ascending
                     select movement).ToList();
         }
@@ -83,7 +85,6 @@ namespace beans
             Attack attack = new Attack();
             attack.ToVillage = toVillage;
             attack.FromVillage = this;
-
 
             TroopType type = TroopType.Spear;
             if (scout > 0)

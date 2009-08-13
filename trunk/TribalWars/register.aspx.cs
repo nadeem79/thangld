@@ -48,24 +48,13 @@ public partial class Default2 : System.Web.UI.Page
         user.Msn = "";
 
         NHibernate.ISession session = null;
-        //try
-        //{
-            session = NHibernateHelper.CreateSession();
+            session = (ISession)Context.Items["NHibernateSession"];
             ITransaction trans = session.BeginTransaction();
             session.Save(user);
             trans.Commit();
             Session.RemoveAll();
             Session.Add("user", user.ID);
             Response.Redirect("overview.aspx", true);
-        //}
-        //catch (Exception exc)
-        //{
-        //    this.lblError.Text = exc.Message;
-        //}
-        //finally
-        //{
-            session.Close();
-        //}
 
     }
 }

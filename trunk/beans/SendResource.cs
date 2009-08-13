@@ -11,8 +11,8 @@ namespace beans
 
         public static int CalculateMerchant(int wood, int clay, int iron)
         {
-            double merchant = (wood + clay + iron) / 1000;
-            return Convert.ToInt32(merchant);
+            double result = (double)(wood + clay + iron) / 1000;
+            return (int)Math.Ceiling(result);
         }
 
         public override MoveType Type
@@ -107,15 +107,20 @@ namespace beans
             if (this.ToVillage == null)
                 throw new Exception("Nhập điểm đến");
 
-            if (this.ToVillage.Merchant < SendResource.CalculateMerchant(this.Wood, this.Clay, this.Iron))
+            int merchantNeeded = SendResource.CalculateMerchant(this.Wood, this.Clay, this.Iron);
+
+            if (this.FromVillage.VillageBuildingData.Merchant < merchantNeeded)
                 throw new Exception("Không đủ thương nhân");
 
             this.FromVillage.VillageResourceData.Clay -= this.Clay;
             this.FromVillage.VillageResourceData.Wood -= this.Wood;
             this.FromVillage.VillageResourceData.Iron -= this.Iron;
+            this.FromVillage.VillageBuildingData.Merchant -= merchantNeeded;
+                
 
             session.Save(this);
             session.Update(this.FromVillage.VillageResourceData);
+            session.Update(this.FromVillage.VillageBuildingData);
         }
     }
 }

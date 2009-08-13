@@ -22,11 +22,6 @@ public partial class index : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
 
-        ISession session2 = NHibernateHelper.CreateSession();
-        Village v = session2.Get<Village>(23);
-        session2.Close();
-
-
         if (Request.Cookies["username"] != null)
         {
             ISession session = NHibernateHelper.CreateSession();

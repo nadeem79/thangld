@@ -15,13 +15,14 @@
     <property name="Loyal" column="loyal" type="double" />
     <property name="LastUpdate" column="last_update" type="timestamp" not-null="true" />
     <property name="Population" column="population" type="double" />
-    <one-to-one name="VillageBuildingData" class="beans.VillageBuildingData, beans" cascade="all" />
-    <one-to-one name="VillageResourceData" class="beans.VillageResourcesData, beans" cascade="all" />
-    <one-to-one name="VillageTroopData" class="beans.VillageTroopData, beans" cascade="all" />
+    
+    <one-to-one name="VillageBuildingData" class="beans.VillageBuildingData, beans" cascade="all" lazy="false" />
+    <one-to-one name="VillageResourceData" class="beans.VillageResourcesData, beans" cascade="all" lazy="false" />
+    <one-to-one name="VillageTroopData" class="beans.VillageTroopData, beans" cascade="all" lazy="false" />
     
   </class>
 
-  <class name ="beans.VillageBuildingData, beans" table="villages_building" lazy="true">
+  <class name ="beans.VillageBuildingData, beans" table="villages_building" lazy="false">
     <id name="ID" column="id">
       <generator class="foreign">
         <param name="property">Village</param>
@@ -42,11 +43,12 @@
     <property name="Farm" column="farm" type="Int32" />
     <property name="HidingPlace" column="hide" type="Int32" />
     <property name="Wall" column="wall" type="Int32" />
+    <property name="Merchant" column="merchant" type="Int32" />
 
     <one-to-one name="Village" class="beans.Village, beans" constrained="true" foreign-key="id" />
   </class>
 
-  <class name ="beans.VillageResourcesData, beans" table="villages_resources" lazy="true">
+  <class name ="beans.VillageResourcesData, beans" table="villages_resources" lazy="false">
     <id name="ID" column="id" type="Int32">
       <generator class="foreign">
         <param name="property">Village</param>
@@ -60,7 +62,7 @@
     
   </class>
 
-  <class name ="beans.VillageTroopData, beans" table="villages_troop" lazy="true">
+  <class name ="beans.VillageTroopData, beans" table="villages_troop" lazy="false">
     <id name="ID" column="id" type="Int32">
       <generator class="foreign">
         <param name="property">Village</param>

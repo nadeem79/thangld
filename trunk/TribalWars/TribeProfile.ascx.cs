@@ -76,7 +76,6 @@ public partial class TribeProfile : System.Web.UI.UserControl
             lstExtension.Add(".gif");
             lstExtension.Add(".png");
             lstExtension.Add(".jpeg");
-            System.Drawing.Image avatar = null;
             string filename = fileAvatar.FileName;
             if (!lstExtension.Contains(Path.GetExtension(filename).ToLower()))
                 this.lblAvatarError.Text = "Định dạng file ảnh phải là jpg";
