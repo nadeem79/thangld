@@ -1,0 +1,13 @@
+E:\Documents\Visual Studio 2008\Projects\1280\1280\bin\Debug\1280.exe
+E:\Documents\Visual Studio 2008\Projects\1280\1280\bin\Debug\1280.pdb
+E:\Documents\Visual Studio 2008\Projects\1280\1280\obj\Debug\ResolveAssemblyReference.cache
+E:\Documents\Visual Studio 2008\Projects\1280\1280\obj\Debug\_1280.Form1.resources
+E:\Documents\Visual Studio 2008\Projects\1280\1280\obj\Debug\_1280.Properties.Resources.resources
+E:\Documents\Visual Studio 2008\Projects\1280\1280\obj\Debug\1280.csproj.GenerateResource.Cache
+E:\Documents\Visual Studio 2008\Projects\1280\1280\obj\Debug\1280.exe
+E:\Documents\Visual Studio 2008\Projects\1280\1280\obj\Debug\1280.pdb
+E:\Documents\Visual Studio 2008\Projects\1280\1280\bin\Debug\1280.exe.config
+E:\Documents\Visual Studio 2008\Projects\1280\1280\obj\Debug\_1280.Form2.resources
+E:\Documents\Visual Studio 2008\Projects\1280\1280\bin\Debug\Lib1280.dll
+E:\Documents\Visual Studio 2008\Projects\1280\1280\bin\Debug\Lib1280.pdb
+E:\Documents\Visual Studio 2008\Projects\1280\1280\obj\Debug\_1280.Form3.resources
