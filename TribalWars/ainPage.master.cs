@@ -42,7 +42,6 @@ public partial class ainPage : System.Web.UI.MasterPage
         }
 
         DateTime start = DateTime.Now;
-        int id;
         ISession session;
         ITransaction trans;
 

@@ -11,6 +11,7 @@ namespace beans
         private static Dictionary<int, int> merchantCount = new Dictionary<int, int>();
         private static Dictionary<int, int> basicDefense = new Dictionary<int, int>();
         private static Dictionary<int, double> fortifiedWall = new Dictionary<int, double>();
+        private int merchant;
 
         #region Properties.Building
 
@@ -92,7 +93,7 @@ namespace beans
             set;
         }
 
-        public virtual int Merchant
+        public virtual int MerchantOfVillage
         {
             get
             {
@@ -104,14 +105,25 @@ namespace beans
                 if (VillageBuildingData.merchantCount.ContainsKey(this.Market))
                     return VillageBuildingData.merchantCount[this.Market];
 
-                double merchant = 1;
+                int merchant = 1;
                 for (int i = 1; i <= this.Market; i++)
-                    merchant += merchant * 0.25;
+                    merchant += (int)Math.Ceiling(merchant * 0.25);
 
-                int result = (int)Math.Round(merchant, MidpointRounding.ToEven);
 
-                VillageBuildingData.merchantCount.Add(this.Market, result);
-                return result;
+
+                VillageBuildingData.merchantCount.Add(this.Market, merchant);
+                return merchant;
+            }
+        }
+        public virtual int Merchant
+        {
+            get { return merchant; }
+            set
+            {
+                if (value > MerchantOfVillage)
+                    merchant = MerchantOfVillage;
+                else
+                    merchant = value;
             }
         }
 

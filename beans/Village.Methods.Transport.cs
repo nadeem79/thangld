@@ -9,13 +9,13 @@ namespace beans
 {
     partial class Village
     {
-        public virtual IList<SendResource> ResourceTransporting
+        public virtual IList<MovingCommand> ResourceTransporting
         {
             get;
             set;
         }
 
-        public virtual IList<SendResource> TransportToMe
+        public virtual IList<MovingCommand> TransportToMe
         {
             get;
             set;
@@ -29,18 +29,30 @@ namespace beans
 
         public virtual void GetTransportData(ISession session)
         {
-            this.ResourceTransporting = (from sendResource in session.Linq<SendResource>()
-                                         where (sendResource.FromVillage == this
-                                         || sendResource.ToVillage == this)
-                                         && sendResource.LandingTime > DateTime.Now
-                                         select sendResource).ToList<SendResource>();
+            var query1 = (from sendResource in session.Linq<SendResource>()
+                          where sendResource.FromVillage == this
+                          || sendResource.ToVillage == this
+                          select sendResource).ToList<SendResource>();
+
+            var query2 = (from r in session.Linq<Return>()
+                          where r.ToVillage == this
+                          select r).ToList<Return>();
+
+            this.ResourceTransporting = new List<MovingCommand>();
+            foreach (MovingCommand command in query1)
+                this.ResourceTransporting.Add(command);
+            foreach (MovingCommand command in query2)
+                this.ResourceTransporting.Add(command);
 
             this.TransportFromMe = (from sendResource in this.ResourceTransporting
                                     where sendResource.FromVillage == this
-                                    select sendResource).ToList<SendResource>();
-            this.TransportToMe = (from sendResource in this.ResourceTransporting
-                                  where sendResource.ToVillage == this
-                                  select sendResource).ToList<SendResource>();
+                                    orderby sendResource.LandingTime ascending
+                                    select (SendResource)sendResource).ToList<SendResource>();
+
+            this.TransportToMe = (from movingCommand in this.ResourceTransporting
+                                  where movingCommand.ToVillage == this
+                                  orderby movingCommand.LandingTime ascending
+                                  select movingCommand).ToList<MovingCommand>();
 
         }
 

@@ -115,6 +115,8 @@ namespace beans
             this.ToVillage.VillageResourceData.Clay += this.Clay;
             this.ToVillage.VillageResourceData.Wood += this.Wood;
             this.ToVillage.VillageResourceData.Iron += this.Iron;
+            if (this.Merchant > 0)
+                this.ToVillage.VillageBuildingData.Merchant += this.Merchant;
 
             ITransaction transaction = null;
             try
@@ -122,6 +124,8 @@ namespace beans
                 transaction = session.BeginTransaction();
                 session.Update(this.ToVillage.VillageTroopData);
                 session.Update(this.ToVillage.VillageResourceData);
+                if (this.Merchant > 0)
+                    session.Update(this.ToVillage.VillageBuildingData);
                 session.Delete(this);
                 transaction.Commit();
             }

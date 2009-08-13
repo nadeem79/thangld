@@ -75,7 +75,7 @@ public partial class CustomControls_SendResource : System.Web.UI.UserControl
 
         this.Village.GetTransportData(this.Session);
 
-        this.lblAvailableMerchant.Text = this.Village.Merchant.ToString();
+        this.lblAvailableMerchant.Text = this.Village.VillageBuildingData.Merchant.ToString();
 
         if (this.Village.TransportFromMe.Count > 0)
         {
@@ -160,6 +160,20 @@ public partial class CustomControls_SendResource : System.Web.UI.UserControl
         {
             this.PendingCommand = this.Village.CreateSendResource(this.Session, x, y, wood, clay, iron);
             this.PendingCommand.Save(this.Session);
+            this.lblAvailableMerchant.Text = this.Village.VillageBuildingData.Merchant.ToString();
+
+            int pos = 0;
+            int max = this.Village.TransportFromMe.Count;
+            for (int i = 0; i < max; i++)
+                if (this.Village.TransportFromMe[i].LandingTime > this.PendingCommand.LandingTime)
+                {
+                    pos = i;
+                    break;
+                }
+            this.Village.TransportFromMe.Insert(pos, this.PendingCommand);
+            
+            this.rMyTransport.DataSource = this.Village.TransportFromMe;
+            this.rMyTransport.DataBind();
         }
         catch (Exception exception)
         {

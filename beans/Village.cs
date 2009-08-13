@@ -345,7 +345,8 @@ namespace beans
             village.VillageResourceData.Iron = 2000;
             village.VillageResourceData.Clay = 2000;
             village.VillageResourceData.Wood = 2000;
-            session.Update(config);
+            config.InsertOrUpdateConfiguration(expandCount, session);
+            config.InsertOrUpdateConfiguration(expandTo, session);
             return village;
         }
 
@@ -489,6 +490,7 @@ namespace beans
                                 commands.Insert(i, newCommand);
                     }
                 }
+                commands.RemoveAt(0);
             }
 
             this.UpdateResources(currentTime, to);

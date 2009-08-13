@@ -6,7 +6,7 @@
         <tr>
             <th>
                 Merchants:
-                <asp:Label ID="lblAvailableMerchant" runat="server"></asp:Label>/<% = this.Village.VillageBuildingData.Merchant%>
+                <asp:Label ID="lblAvailableMerchant" runat="server"></asp:Label>/<% = this.Village.VillageBuildingData.MerchantOfVillage %>
             </th>
             <th>
                 Maximum transport amount:
@@ -197,6 +197,7 @@
                 </tr>
     </HeaderTemplate>
     <ItemTemplate>
+    <tr>
         <td>
             <%# TypePrefix((beans.MoveType)DataBinder.Eval(Container.DataItem, "Type")) %>
             <a href="<%# String.Format("village_info.aspx?id={0}&village={1}", this.Village.ID, ((beans.Village)(DataBinder.Eval(Container.DataItem, "ToVillage"))).ID) %>">
@@ -218,6 +219,7 @@
             <span class="timer">
                 <%# Functions.FormatTime((DateTime)DataBinder.Eval(Container.DataItem, "LandingTime") - DateTime.Now) %></span>
         </td>
+        </tr>
     </ItemTemplate>
     <FooterTemplate>
         </tbody></table>
@@ -253,6 +255,7 @@
                 </tr>
     </HeaderTemplate>
     <ItemTemplate>
+    <tr>
         <td>
             <%# TypePrefix((beans.MoveType)DataBinder.Eval(Container.DataItem, "Type")) %>
             <a href="<%# String.Format("village_info.aspx?id={0}&village={1}", this.Village.ID, ((beans.Village)(DataBinder.Eval(Container.DataItem, "ToVillage"))).ID) %>">
@@ -265,7 +268,7 @@
             <%# MerchantCalculation((beans.MovingCommand)Container.DataItem) %>
         </td>
         <td>
-            <%# Functions.FormatTime((DateTime)DataBinder.Eval(Container.DataItem, "LandingTime") - (DateTime)DataBinder.Eval(Container.DataItem, "StartTime")) %>
+            <%# Functions.FormatTime((DateTime)DataBinder.Eval(Container.DataItem, "LandingTime") - (DateTime)DataBinder.Eval(Container.DataItem, "StartingTime")) %>
         </td>
         <td>
             <%# ((DateTime)DataBinder.Eval(Container.DataItem, "LandingTime")).ToString("HH:mm:ss:'<span class=\"small inactive\">'fff'</span> ngày' dd:MM:yyyy") %>
@@ -274,6 +277,7 @@
             <span class="timer">
                 <%# Functions.FormatTime((DateTime)DataBinder.Eval(Container.DataItem, "LandingTime") - DateTime.Now) %></span>
         </td>
+        </tr>
     </ItemTemplate>
     <FooterTemplate>
         </tbody></table>

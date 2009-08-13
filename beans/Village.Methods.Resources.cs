@@ -101,7 +101,7 @@ namespace beans
             if (toVillage == null)
                 throw new Exception("Toạ độ không tồn tại");
 
-            if (this.Merchant < SendResource.CalculateMerchant(wood, clay, iron))
+            if (this.VillageBuildingData.Merchant < SendResource.CalculateMerchant(wood, clay, iron))
                 throw new Exception("Không đủ thương nhân");
 
             SendResource sendResource = new SendResource();

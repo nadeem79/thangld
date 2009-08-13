@@ -11,22 +11,7 @@ namespace beans
 {
     public partial class Village
     {
-        private int merchant;
-        public virtual int Merchant
-        {
-            get { return merchant; }
-            set
-            {
-                if (value > MerchantOfVillage)
-                    merchant = MerchantOfVillage;
-                else
-                    merchant = value;
-            }
-        }
-        public virtual int MerchantOfVillage
-        {
-            get { return this.VillageBuildingData.Merchant; }
-        }
+        
 
         public virtual IList<SendResource> GetDependingResource(DateTime to, ISession session)
         {
