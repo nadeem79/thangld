@@ -18,7 +18,13 @@ namespace _1280
 
         private void Form3_Load(object sender, EventArgs e)
         {
-            MessageBox.Show(LoginUtility.GetTokenKey("DF.thangld@gmail.com", "meocondethuong"));
+            
+            //MessageBox.Show(LoginUtility.GetTokenKey("df.thangld@gmail.com", "meocondethuong"));
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(LoginUtility.Register("edguuofgduefysewaeirfug", "rtgery@grsd.heae", "hytrtrtyr", "grtytrt").ToString());
         }
     }
 }
