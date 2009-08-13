@@ -3,3 +3,9 @@ E:\Documents\Visual Studio 2008\Projects\1280\Lib1280\bin\Debug\Lib1280.pdb
 E:\Documents\Visual Studio 2008\Projects\1280\Lib1280\obj\Debug\ResolveAssemblyReference.cache
 E:\Documents\Visual Studio 2008\Projects\1280\Lib1280\obj\Debug\Lib1280.dll
 E:\Documents\Visual Studio 2008\Projects\1280\Lib1280\obj\Debug\Lib1280.pdb
+D:\My Documents\Projects\linq\1280\Lib1280\bin\Debug\Lib1280.dll.config
+D:\My Documents\Projects\linq\1280\Lib1280\bin\Debug\Lib1280.dll
+D:\My Documents\Projects\linq\1280\Lib1280\bin\Debug\Lib1280.pdb
+D:\My Documents\Projects\linq\1280\Lib1280\obj\Debug\ResolveAssemblyReference.cache
+D:\My Documents\Projects\linq\1280\Lib1280\obj\Debug\Lib1280.dll
+D:\My Documents\Projects\linq\1280\Lib1280\obj\Debug\Lib1280.pdb

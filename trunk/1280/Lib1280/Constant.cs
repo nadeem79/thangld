@@ -23,5 +23,9 @@ namespace Lib1280
         {
             get { return "http://muaban.1280.com"; }
         }
+        public static string CaptchaUrl
+        {
+            get { return "http://login.1280.com/CaptCha.aspx"; }
+        }
     }
 }
