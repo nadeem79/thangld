@@ -108,13 +108,7 @@ namespace Lib1280
 
             string message = Utility.Post(Constant.RegisterUrl, postData, session);
 
-            using (StreamWriter sw = new StreamWriter(@"d:\register.html", false, Encoding.UTF8))
-            {
-                sw.WriteLine(captchaText);
-                sw.WriteLine(postData);
-                sw.Write(message);
-                sw.Close();
-            }
+
 
             #endregion
 

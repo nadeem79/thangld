@@ -125,6 +125,68 @@ namespace Lib1280
             return result;
         }
 
+        public static string Post(string url, string postData, CookieContainer cookieContainer)
+        {
+            byte[] buffer = Encoding.UTF8.GetBytes(postData);
+            int bufferLength = buffer.Length;
+            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
+            request.Method = "POST";
+            request.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";
+            request.UserAgent = "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2";
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.Referer = url;
+
+            if (cookieContainer != null)
+                request.CookieContainer = cookieContainer;
+            else
+                request.CookieContainer = new CookieContainer();    
+
+            request.ProtocolVersion = HttpVersion.Version10;
+            request.Headers.Add("Accept-Language", "en-gb,en;q=0.5");
+            //request.Headers.Add("Cookie", cookie);// string.Format("__utma=95685443.759717589754176000.1250085879.1250085879.1250085879.1; __utmz=95685443.1250085879.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); {0}", sessionIdLine));
+            request.Headers.Add("Accept-Encoding", "gzip,deflate");
+            request.Headers.Add("Accept-Charset", "ISO-8859-1,utf-8;q=0.7,*;q=0.7");
+            request.ContentLength = bufferLength;
+
+            string result;
+
+            using (Stream requestStream = request.GetRequestStream())
+            {
+                requestStream.Write(buffer, 0, bufferLength);
+
+                try
+                {
+                    using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                    {
+                        using (Stream responseStream = response.GetResponseStream())
+                        {
+                            string cookie1 = "";
+                            foreach (Cookie cookieValue in request.CookieContainer.GetCookies(new Uri(url)))
+                            {
+                                cookie1 += string.Format("{0}={1}; ", HttpUtility.UrlEncode(cookieValue.Name), HttpUtility.UrlEncode(cookieValue.Value));
+                            }
+                            using (StreamReader readStream = new StreamReader(responseStream, Encoding.UTF8))
+                            {
+                                result = readStream.ReadToEnd();
+                            }
+                        }
+                    }
+                }
+                catch (WebException wEx)
+                {
+                    using (Stream errorResponseStream = wEx.Response.GetResponseStream())
+                    {
+                        using (StreamReader errorReadStream = new StreamReader(errorResponseStream, Encoding.UTF8))
+                        {
+                            result = errorReadStream.ReadToEnd();
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+
         public static string GetCaptcha(string session)
         {
             string captchaText = "";
