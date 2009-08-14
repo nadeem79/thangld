@@ -197,7 +197,7 @@ namespace Lib1280
                 ocrSettings.ocrZones[0] = ocrZone;  
                 */
 
-                OCRWSResponse ocrResponse = OCRservice.OCRWebServiceRecognize("dreamingfighter", "381CE5F0-4074-4A64-B593-A28EBD1AB968", input_image, ocrSettings);
+                OCRWSResponse ocrResponse = OCRservice.OCRWebServiceRecognize("htwjwterjtw", "381CE5F0-4074-4A64-B593-A28EBD1AB968", input_image, ocrSettings);
 
 
                 if (!String.IsNullOrEmpty(ocrResponse.errorMessage))
