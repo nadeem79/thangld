@@ -9,3 +9,9 @@ D:\My Documents\Projects\linq\1280\Lib1280\bin\Debug\Lib1280.pdb
 D:\My Documents\Projects\linq\1280\Lib1280\obj\Debug\ResolveAssemblyReference.cache
 D:\My Documents\Projects\linq\1280\Lib1280\obj\Debug\Lib1280.dll
 D:\My Documents\Projects\linq\1280\Lib1280\obj\Debug\Lib1280.pdb
+D:\TribalWars\1280\Lib1280\obj\Debug\ResolveAssemblyReference.cache
+D:\TribalWars\1280\Lib1280\obj\Debug\Lib1280.dll
+D:\TribalWars\1280\Lib1280\bin\Debug\Lib1280.dll.config
+D:\TribalWars\1280\Lib1280\bin\Debug\Lib1280.dll
+D:\TribalWars\1280\Lib1280\bin\Debug\Lib1280.pdb
+D:\TribalWars\1280\Lib1280\obj\Debug\Lib1280.pdb

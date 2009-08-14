@@ -24,3 +24,16 @@ D:\My Documents\Projects\linq\1280\1280\obj\Debug\_1280.Form2.resources
 D:\My Documents\Projects\linq\1280\1280\obj\Debug\_1280.Form3.resources
 D:\My Documents\Projects\linq\1280\1280\obj\Debug\_1280.Properties.Resources.resources
 D:\My Documents\Projects\linq\1280\1280\obj\Debug\1280.csproj.GenerateResource.Cache
+D:\TribalWars\1280\1280\bin\Debug\1280.exe.config
+D:\TribalWars\1280\1280\obj\Debug\1280.exe
+D:\TribalWars\1280\1280\obj\Debug\1280.pdb
+D:\TribalWars\1280\1280\bin\Debug\1280.exe
+D:\TribalWars\1280\1280\bin\Debug\1280.pdb
+D:\TribalWars\1280\1280\bin\Debug\Lib1280.dll
+D:\TribalWars\1280\1280\bin\Debug\Lib1280.pdb
+D:\TribalWars\1280\1280\obj\Debug\ResolveAssemblyReference.cache
+D:\TribalWars\1280\1280\obj\Debug\_1280.Form1.resources
+D:\TribalWars\1280\1280\obj\Debug\_1280.Form2.resources
+D:\TribalWars\1280\1280\obj\Debug\_1280.Form3.resources
+D:\TribalWars\1280\1280\obj\Debug\_1280.Properties.Resources.resources
+D:\TribalWars\1280\1280\obj\Debug\1280.csproj.GenerateResource.Cache

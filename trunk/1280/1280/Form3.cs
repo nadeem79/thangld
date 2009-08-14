@@ -24,6 +24,8 @@ namespace _1280
 
         private void button1_Click(object sender, EventArgs e)
         {
+            //MessageBox.Show(LoginUtility.GetTokenKey("DF.thangld@gmail.com", "meocondethuong"));
+            //MessageBox.Show(Utility.GetAspSessionId(Constant.RegisterUrl));
             MessageBox.Show(LoginUtility.Register("edguuofgduefysewaeirfug", "rtgery@grsd.heae", "hytrtrtyr", "grtytrt").ToString());
         }
     }

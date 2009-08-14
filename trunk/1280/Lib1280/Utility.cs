@@ -5,12 +5,13 @@ using System.Text;
 using System.Net;
 using System.IO;
 using Lib1280.com.ocrwebservice.www;
+using System.Web;
 
 namespace Lib1280
 {
-    internal class Utility
+    public class Utility
     {
-        internal static string ExtractViewState(string s)
+        public static string ExtractViewState(string s)
         {
             #region Lấy ViewState
             string viewStateNameDelimiter = "__VIEWSTATE";
@@ -36,7 +37,7 @@ namespace Lib1280
             #endregion
         }
 
-        internal static string ExtractEventValidation(string s)
+        public static string ExtractEventValidation(string s)
         {
             #region Lấy ViewState
             string viewStateNameDelimiter = "__EVENTVALIDATION";
@@ -61,7 +62,7 @@ namespace Lib1280
             #endregion
         }
 
-        internal static string Post(string url, string postData, string sessionIdLine)
+        public static string Post(string url, string postData, string session)
         {
             byte[] buffer = Encoding.UTF8.GetBytes(postData);
             int bufferLength = buffer.Length;
@@ -72,9 +73,15 @@ namespace Lib1280
             request.ContentType = "application/x-www-form-urlencoded";
             request.Referer = url;
             request.CookieContainer = new CookieContainer();
+            Cookie cookie = new Cookie();
+            cookie.Name = Constant.ASPSessionIdName;
+            cookie.Value = session;
+            cookie.Domain = "login.1280.com";
+            cookie.Path = "/";
+            request.CookieContainer.Add(cookie);
             request.ProtocolVersion = HttpVersion.Version10;
             request.Headers.Add("Accept-Language", "en-gb,en;q=0.5");
-            request.Headers.Add("Cookie", string.Format("__utma=95685443.759717589754176000.1250085879.1250085879.1250085879.1; __utmz=95685443.1250085879.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); {0}",sessionIdLine));
+            //request.Headers.Add("Cookie", cookie);// string.Format("__utma=95685443.759717589754176000.1250085879.1250085879.1250085879.1; __utmz=95685443.1250085879.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); {0}", sessionIdLine));
             request.Headers.Add("Accept-Encoding", "gzip,deflate");
             request.Headers.Add("Accept-Charset", "ISO-8859-1,utf-8;q=0.7,*;q=0.7");
             request.ContentLength = bufferLength;
@@ -91,6 +98,11 @@ namespace Lib1280
                     {
                         using (Stream responseStream = response.GetResponseStream())
                         {
+                            string cookie1 = "";
+                            foreach (Cookie cookieValue in request.CookieContainer.GetCookies(new Uri(url)))
+                            {
+                                cookie1 += string.Format("{0}={1}; ", HttpUtility.UrlEncode(cookieValue.Name), HttpUtility.UrlEncode(cookieValue.Value));
+                            }
                             using (StreamReader readStream = new StreamReader(responseStream, Encoding.UTF8))
                             {
                                 result = readStream.ReadToEnd();
@@ -113,7 +125,7 @@ namespace Lib1280
             return result;
         }
 
-        internal static string GetCaptcha(string sessionIdLine)
+        public static string GetCaptcha(string session)
         {
             string captchaText = "";
             #region Lấy captcha thành byte[] có id buffer
@@ -125,7 +137,13 @@ namespace Lib1280
             requestCaptcha.UserAgent = "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2";
             requestCaptcha.Referer = Constant.RegisterUrl;
             requestCaptcha.CookieContainer = new CookieContainer();
-            requestCaptcha.Headers.Add("Cookie", string.Format("__utma=95685443.759717589754176000.1250085879.1250085879.1250085879.1; __utmz=95685443.1250085879.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); {0}", sessionIdLine));
+            Cookie cookie = new Cookie();
+            cookie.Name = Constant.ASPSessionIdName;
+            cookie.Value = session;
+            cookie.Domain = "login.1280.com";
+            cookie.Path = "/";
+            requestCaptcha.CookieContainer.Add(cookie);
+            //requestCaptcha.Headers.Add("Cookie", GetFreshCookie(session));//string.Format("__utma=95685443.759717589754176000.1250085879.1250085879.1250085879.1; __utmz=95685443.1250085879.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); {0}", sessionIdLine));
             HttpWebResponse responseCaptcha = (HttpWebResponse)requestCaptcha.GetResponse();
             Stream captcha = responseCaptcha.GetResponseStream();
             long length = responseCaptcha.ContentLength;
@@ -207,6 +225,26 @@ namespace Lib1280
             }
             return captchaText.Trim();
             #endregion
+        }
+
+        public static string GetAspSessionId(string url)
+        {
+            HttpWebRequest webRequest = WebRequest.Create(url) as HttpWebRequest;
+            webRequest.CookieContainer = new CookieContainer();
+            HttpWebResponse response = (HttpWebResponse)webRequest.GetResponse();
+            foreach (Cookie cookie in webRequest.CookieContainer.GetCookies(new Uri(url)))
+                if (cookie.Name == Constant.ASPSessionIdName)
+                    return cookie.Value;
+            return "";
+        }
+
+        public static string GetFreshCookie(string session)
+        {
+            return string.Format("__utma={0}; __utmz={1}; {2}={3}",
+                                HttpUtility.UrlEncode("95685443.759717589754176000.1250085879.1250085879.1250085879.1"),
+                                HttpUtility.UrlEncode("95685443.1250085879.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none)"),
+                                Constant.ASPSessionIdName,
+                                HttpUtility.UrlEncode(session));
         }
     }
 }

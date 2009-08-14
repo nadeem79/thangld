@@ -11,18 +11,19 @@ namespace Lib1280
 {
     public class LoginUtility
     {
+        
+
+
         public static string GetTokenKey(string username, string password)
         {
+
+            string sessionId = Utility.GetAspSessionId(Constant.LoginUrl);
+
             #region get viewstate
             // first, request the login form to get the viewstate value
             HttpWebRequest webRequest = WebRequest.Create(Constant.LoginUrl) as HttpWebRequest;
 
             HttpWebResponse response = (HttpWebResponse)webRequest.GetResponse();
-
-            string[] cookies1 = response.Headers["Set-Cookie"].Split(';');
-            string sessionIdLine = (from str in cookies1
-                                    where str.Contains("ASP.NET_SessionId")
-                                    select str).SingleOrDefault<string>();
 
             StreamReader responseReader = new StreamReader(
                   response.GetResponseStream()
@@ -40,7 +41,7 @@ namespace Lib1280
                      HttpUtility.UrlEncode(eventValidation), HttpUtility.UrlEncode(viewState), HttpUtility.UrlEncode(username), HttpUtility.UrlEncode(password)
 
                   );
-            string message = Utility.Post(Constant.LoginUrl, textData, sessionIdLine);
+            string message = Utility.Post(Constant.LoginUrl, textData, sessionId);
 
             using (StreamWriter sw = new StreamWriter(@"d:\log.html", false, Encoding.Unicode))
             {
@@ -60,18 +61,14 @@ namespace Lib1280
         {
 
             string captchaText = "";
-            string sessionIdLine = "";
+            string session = Utility.GetAspSessionId(Constant.RegisterUrl);
+            string cookie = Utility.GetFreshCookie(session);
 
             #region get viewstate
             // first, request the login form to get the viewstate value
             HttpWebRequest webRequest = WebRequest.Create(Constant.RegisterUrl) as HttpWebRequest;
             webRequest.CookieContainer = new CookieContainer();
             HttpWebResponse response = (HttpWebResponse)webRequest.GetResponse();
-
-            string[] cookies1 = response.Headers["Set-Cookie"].Split(';');
-            sessionIdLine = (from str in cookies1
-                             where str.Contains("ASP.NET_SessionId")
-                             select str).SingleOrDefault<string>();
 
             StreamReader responseReader = new StreamReader(
                   response.GetResponseStream()
@@ -84,7 +81,7 @@ namespace Lib1280
             string eventValidation = Utility.ExtractEventValidation(responseData);
             #endregion
 
-            captchaText = Utility.GetCaptcha(sessionIdLine);
+            captchaText = Utility.GetCaptcha(session);
 
             #region Bắt đầu đăng ký, yeah
 
@@ -109,7 +106,7 @@ namespace Lib1280
             for (int i=1; i<keys.Count; i++)
                 postData += string.Format("&{0}={1}", keys[i], postValues[keys[i]]);
 
-            string message = Utility.Post(Constant.RegisterUrl, postData, sessionIdLine);
+            string message = Utility.Post(Constant.RegisterUrl, postData, session);
 
             using (StreamWriter sw = new StreamWriter(@"d:\register.html", false, Encoding.UTF8))
             {
