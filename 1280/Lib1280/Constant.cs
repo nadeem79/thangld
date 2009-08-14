@@ -27,5 +27,9 @@ namespace Lib1280
         {
             get { return "http://login.1280.com/CaptCha.aspx"; }
         }
+        public static string ASPSessionIdName
+        {
+            get { return "ASP.NET_SessionId"; }
+        }
     }
 }
