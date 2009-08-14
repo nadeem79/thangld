@@ -56,6 +56,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="RegisterState.cs" />
+    <Compile Include="ShoppingUtility.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Web References\com.ocrwebservice.www\Reference.cs">

@@ -26,9 +26,11 @@ namespace _1280
         {
             //MessageBox.Show(LoginUtility.GetTokenKey("DF.thangld@gmail.com", "meocondethuong"));
             //MessageBox.Show(Utility.GetAspSessionId(Constant.RegisterUrl));
-            MessageBox.Show(LoginUtility.Register("htaejhaehjetas", "aheathaehgri@bthej.heta", "eaghathea", "hethtaehaeoght").ToString());
+            //MessageBox.Show(LoginUtility.Register("htaejhaehjetas", "aheathaehgri@bthej.heta", "eaghathea", "hethtaehaeoght").ToString());
             //LoginUtility.Register(
             //MessageBox.Show(LoginUtility.Register("edguuofgduefysewaeirfug", "rtgery@grsd.heae", "hytrtrtyr", "grtytrt").ToString());
+            ShoppingUtility.test();
+            MessageBox.Show("hr");
         }
     }
 }
