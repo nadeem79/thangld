@@ -177,7 +177,6 @@ public partial class rally : System.Web.UI.Page
             this.lightCavalrySpan.Text = (light > 0) ? light.ToString() : "<span class=\"hidden\">0</span>";
             this.heavyCavalrySpan.Text = (heavy > 0) ? heavy.ToString() : "<span class=\"hidden\">0</span>";
             this.nobleSpan.Text = (noble > 0) ? noble.ToString() : "<span class=\"hidden\">0</span>";
-            //this.buttonSpan.Text = "<input type=\"button\" value=\"Confirm\"";
             this.buttonNameSpan.Text = string.Format("<input type=\"button\" value=\"Confirm\" onclick=\"__doPostBack('{0}', '')\" />", this.confirmSupportButton.UniqueID);
 
             ScriptManager.RegisterStartupScript(bttnSupport, bttnSupport.GetType(), "Confirm", "$.facebox($('#commandPanel').html());", true);

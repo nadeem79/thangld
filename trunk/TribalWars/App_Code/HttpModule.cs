@@ -31,7 +31,7 @@ public class NHibernateHttpModule:IHttpModule
 
     private void context_BeginRequest(object sender, EventArgs e)
     {
-
+        log4net.Config.XmlConfigurator.Configure();
         if (HttpContext.Current.Request.Path.ToLower().IndexOf(".aspx") <= -1)
             return;
 

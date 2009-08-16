@@ -334,10 +334,12 @@ namespace beans
 
                 //station từ thành phố bị tấn công đến nơi khác
                 ITransaction transaction = session.BeginTransaction();
-                villages = (from village in session.Linq<Village>()
-                            join station in session.Linq<Station>() on this.ToVillage equals station.AtVillage
+                //villages = (from village in session.Linq<Village>()
+                //            join station in session.Linq<Station>() on this.ToVillage equals station.AtVillage
+               //             select station.FromVillage).ToList<Village>();
+                villages = (from station in session.Linq<Station>()
+                            where station.AtVillage == this.ToVillage
                             select station.FromVillage).ToList<Village>();
-
                 foreach (Village village in villages)
                     village.Update(this.LandingTime, session);
 

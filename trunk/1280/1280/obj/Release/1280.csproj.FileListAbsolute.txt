@@ -1,0 +1,14 @@
+D:\My Documents\Projects\linq\1280\1280\bin\Release\1280.exe.config
+D:\My Documents\Projects\linq\1280\1280\bin\Release\1280.exe
+D:\My Documents\Projects\linq\1280\1280\bin\Release\1280.XmlSerializers.dll
+D:\My Documents\Projects\linq\1280\1280\bin\Release\1280.pdb
+D:\My Documents\Projects\linq\1280\1280\bin\Release\Lib1280.dll
+D:\My Documents\Projects\linq\1280\1280\bin\Release\Lib1280.pdb
+D:\My Documents\Projects\linq\1280\1280\bin\Release\Lib1280.XmlSerializers.dll
+D:\My Documents\Projects\linq\1280\1280\obj\Release\ResolveAssemblyReference.cache
+D:\My Documents\Projects\linq\1280\1280\obj\Release\_1280.Form3.resources
+D:\My Documents\Projects\linq\1280\1280\obj\Release\_1280.Properties.Resources.resources
+D:\My Documents\Projects\linq\1280\1280\obj\Release\1280.csproj.GenerateResource.Cache
+D:\My Documents\Projects\linq\1280\1280\obj\Release\1280.exe
+D:\My Documents\Projects\linq\1280\1280\obj\Release\1280.pdb
+D:\My Documents\Projects\linq\1280\1280\obj\Release\1280.XmlSerializers.dll

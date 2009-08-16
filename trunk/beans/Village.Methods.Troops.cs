@@ -53,20 +53,20 @@ namespace beans
                                 Expression.And
                                 (
                                     Expression.Sql("this_.type<>1"), // không phải send resource
-                                    Expression.Sql("this_.merchant=0") // có merchant = 0
+                                    Expression.Sql("this_.merchant is null") // có merchant = 0
                                 ),
                                 Expression.Or // đến bất kỳ đâu
                                 (
                                     Expression.Eq("FromVillage", this),
                                     Expression.Eq("ToVillage", this)
-                                 )
+                                )
                             ),
                             Expression.And
                             (
                                 Expression.And
                                 (
                                     Expression.Sql("this_.type=4"), // đối tượng return
-                                    Expression.Sql("this_.merchant=0") // có merchant = 0
+                                    Expression.Sql("this_.merchant is null or this_.merchant=0") // có merchant = 0
                                 ),
                                 Expression.Eq("ToVillage", this) // đến làng this
                             )
