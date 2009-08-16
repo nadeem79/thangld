@@ -31,5 +31,18 @@ namespace Lib1280
         {
             get { return "ASP.NET_SessionId"; }
         }
+        public static string ShoppingFormUrl
+        {
+            get { return "http://muaban.1280.com/Shopping/Sell/"; }
+        }
+        public static string ShoppingPostbackUrl
+        {
+            get { return "http://muaban.1280.com/Shopping/Sell/Default.aspx"; }
+        }
+        public static string ShoppingUploadUrl
+        {
+            get { return "http://muaban.1280.com/Shopping/Sell/ProcessUpload.aspx?type=1"; }
+        }
+
     }
 }

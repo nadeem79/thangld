@@ -39,14 +39,16 @@ namespace Lib1280
 
         public static string ExtractEventValidation(string s)
         {
-            #region Lấy ViewState
             string viewStateNameDelimiter = "__EVENTVALIDATION";
             string valueDelimiter = "value=\"";
 
             int viewStateNamePosition = s.IndexOf(viewStateNameDelimiter);
+            if (viewStateNamePosition < 0)
+                return "";
             int viewStateValuePosition = s.IndexOf(
                   valueDelimiter, viewStateNamePosition
                );
+
 
             int viewStateStartPosition = viewStateValuePosition +
                                          valueDelimiter.Length;
@@ -59,7 +61,6 @@ namespace Lib1280
                      )
                   ;
             return viewState;
-            #endregion
         }
 
         public static string Post(string url, string postData, string session)
