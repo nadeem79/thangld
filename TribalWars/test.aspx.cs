@@ -22,25 +22,9 @@ public partial class test : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         ISession session = (ISession)Context.Items["NHibernateSession"];
-        Village v = session.Get<Village>(23);
-        //IList<MovingCommand> lst = (from movingCommand in session.Linq<MovingCommand>()
-        //                            where (movingCommand.GetType() == typeof(SendResource)
-        //                            && (movingCommand.FromVillage == v
-        //                               || movingCommand.ToVillage == v))
-        //                            || (movingCommand.GetType() == typeof(Return)
-        //                            && movingCommand.ToVillage == v
-        //                            && ((Return)movingCommand).Merchant > 0)
-        //                            && movingCommand.LandingTime > DateTime.Now
-        //                            orderby movingCommand.LandingTime ascending
-        //                            select movingCommand).ToList<MovingCommand>();
+        Village v = session.Get<Village>(24);
 
-        ICriteria criteria = session.CreateCriteria<MovingCommand>();
-        
-
-        var query = from movingCommand in session.Linq<SendResource>()
-                    select movingCommand;
-
-        IList<SendResource> lst1 = query.ToList<SendResource>();
+        v.UpgradeBuilding(BuildingType.Market, 20);
         
     }
 

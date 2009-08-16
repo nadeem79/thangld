@@ -4,7 +4,7 @@
 
   <class name="beans.Report, beans" table="reports" lazy="true" discriminator-value="0">
 
-    <id name="ID" column="id" type="Int32">
+    <id name="ID" column="id" type="Int32" unsaved-value="-1">
       <generator class="identity"/>
     </id>
     <discriminator column="type" type="Int32" />

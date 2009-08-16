@@ -11,6 +11,20 @@ namespace beans
         private static Dictionary<int, int> merchantCount = new Dictionary<int, int>();
         private static Dictionary<int, int> basicDefense = new Dictionary<int, int>();
         private static Dictionary<int, double> fortifiedWall = new Dictionary<int, double>();
+
+        internal static Dictionary<int, int> MerchantCountDictionary
+        {
+            get { return merchantCount; }
+        }
+        internal static Dictionary<int, int> BasicDefenseDictionary
+        {
+            get { return basicDefense; }
+        }
+        internal static Dictionary<int, double> FortifiedWallDictionary
+        {
+            get { return fortifiedWall; }
+        }
+
         private int merchant;
 
         #region Properties.Building
@@ -97,22 +111,7 @@ namespace beans
         {
             get
             {
-                if (this.Market == 0)
-                    return 0;
-                if (this.Market == 1)
-                    return 1;
-
-                if (VillageBuildingData.merchantCount.ContainsKey(this.Market))
-                    return VillageBuildingData.merchantCount[this.Market];
-
-                int merchant = 1;
-                for (int i = 1; i <= this.Market; i++)
-                    merchant += (int)Math.Ceiling(merchant * 0.25);
-
-
-
-                VillageBuildingData.merchantCount.Add(this.Market, merchant);
-                return merchant;
+                return MerchantCountDictionary[this.Market];
             }
         }
         public virtual int Merchant

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using NHibernate;
 using NHibernate.Linq;
+using NHibernate.Criterion;
 
 namespace beans
 {
@@ -29,20 +30,33 @@ namespace beans
 
         public virtual void GetTransportData(ISession session)
         {
-            var query1 = (from sendResource in session.Linq<SendResource>()
-                          where sendResource.FromVillage == this
-                          || sendResource.ToVillage == this
-                          select sendResource).ToList<SendResource>();
+            ICriteria criteria = session.CreateCriteria<MovingCommand>();
+            criteria.Add(Expression.Gt("LandingTime", this.LastUpdate));
+            criteria.Add(Expression.Or
+                        (
+                            Expression.And
+                            (
+                                Expression.Sql("this_.type=1"), // đối tượng SendResource
+                                Expression.Or // đến bất kỳ đâu
+                                (
+                                    Expression.Eq("FromVillage", this),
+                                    Expression.Eq("ToVillage", this)
+                                 )
+                            ),
+                            Expression.And
+                            (
+                                Expression.And
+                                (
+                                    Expression.Sql("this_.type=4"), // đối tượng return
+                                    Expression.Sql("this_.merchant>0") // có merchant >0
+                                ),
+                                Expression.Eq("ToVillage", this) // đến làng this
+                            )
+                        ));
+            
+            criteria.AddOrder(Order.Asc("LandingTime"));
 
-            var query2 = (from r in session.Linq<Return>()
-                          where r.ToVillage == this
-                          select r).ToList<Return>();
-
-            this.ResourceTransporting = new List<MovingCommand>();
-            foreach (MovingCommand command in query1)
-                this.ResourceTransporting.Add(command);
-            foreach (MovingCommand command in query2)
-                this.ResourceTransporting.Add(command);
+            this.ResourceTransporting = criteria.List<MovingCommand>();
 
             this.TransportFromMe = (from sendResource in this.ResourceTransporting
                                     where sendResource.FromVillage == this
@@ -56,6 +70,11 @@ namespace beans
 
         }
 
-
+        public virtual int GetMerchantOnTheWay(ISession session)
+        {
+            return (from sendResource in session.Linq<SendResource>()
+                    where sendResource.FromVillage == this
+                    select sendResource.Merchant).Sum();
+        }
     }
 }

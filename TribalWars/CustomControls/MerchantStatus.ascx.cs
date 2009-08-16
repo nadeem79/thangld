@@ -4,14 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using NHibernate;
 
 public partial class CustomControls_MerchantStatus : System.Web.UI.UserControl
 {
-    public NHibernate.ISession Session
-    {
-        get;
-        set;
-    }
+
     public beans.Village Village
     {
         get;
@@ -21,7 +18,10 @@ public partial class CustomControls_MerchantStatus : System.Web.UI.UserControl
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        //this.lblMerchantOnTheWay.Text = (this.Village.MerchantOfVillage - this.Village.Merchant).ToString();
+        ISession session = (ISession)Context.Items["NHibernateSession"];
+        int merchantOnTheWay = this.Village.GetMerchantOnTheWay(session);
+        this.lblMerchantOnTheWay.Text = merchantOnTheWay.ToString();
+        this.lblMerchantOnTheWayHome.Text = (this.Village.VillageBuildingData.MerchantOfVillage - this.Village.VillageBuildingData.Merchant - merchantOnTheWay).ToString();
         //this.lblMerchantOnTheWayHome.Text = this.Village.MerchantOnTheWayHome(this.Session).ToString();
     }
 }

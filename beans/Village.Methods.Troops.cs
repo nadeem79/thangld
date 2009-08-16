@@ -26,13 +26,101 @@ namespace beans
                     select support).Count();
         }
 
-        public virtual List<MovingCommand> GetTroopMovement(ISession session)
+        public virtual IList<MovingCommand> TroopMovement
         {
-            return (from movement in session.Linq<MovingCommand>()
-                    where (movement.FromVillage == this || movement.ToVillage == this)
-                    && movement.LandingTime > this.LastUpdate
-                    orderby movement.LandingTime ascending
-                    select movement).ToList();
+            get;
+            set;
+        }
+        public virtual IList<MovingCommand> TroopToMe
+        {
+            get;
+            set;
+        }
+        public virtual IList<MovingCommand> TroopFromMe
+        {
+            get;
+            set;
+        }
+
+        public virtual void PrepareTroopData(ISession session)
+        {
+            ICriteria criteria = session.CreateCriteria<MovingCommand>();
+            criteria.Add(Expression.Gt("LandingTime", this.LastUpdate));
+            criteria.Add(Expression.Or
+                        (
+                            Expression.And
+                            (
+                                Expression.And
+                                (
+                                    Expression.Sql("this_.type<>1"), // không phải send resource
+                                    Expression.Sql("this_.merchant=0") // có merchant = 0
+                                ),
+                                Expression.Or // đến bất kỳ đâu
+                                (
+                                    Expression.Eq("FromVillage", this),
+                                    Expression.Eq("ToVillage", this)
+                                 )
+                            ),
+                            Expression.And
+                            (
+                                Expression.And
+                                (
+                                    Expression.Sql("this_.type=4"), // đối tượng return
+                                    Expression.Sql("this_.merchant=0") // có merchant = 0
+                                ),
+                                Expression.Eq("ToVillage", this) // đến làng this
+                            )
+                        ));
+
+            criteria.AddOrder(Order.Asc("LandingTime"));
+
+            this.TroopMovement = criteria.List<MovingCommand>();
+
+            this.TroopFromMe = (from movingCommand in this.TroopMovement
+                                where movingCommand.FromVillage == this
+                                select movingCommand).ToList<MovingCommand>();
+
+            this.TroopToMe = (from movingCommand in this.TroopMovement
+                              where movingCommand.ToVillage == this
+                              select movingCommand).ToList<MovingCommand>();
+
+        }
+
+        public virtual IList<MovingCommand> GetTroopMovement(ISession session)
+        {
+
+            ICriteria criteria = session.CreateCriteria<MovingCommand>();
+            criteria.Add(Expression.Gt("LandingTime", this.LastUpdate));
+            criteria.Add(Expression.Or
+                        (
+                            Expression.And
+                            (
+                                Expression.And
+                                (
+                                    Expression.Sql("this_.type<>1"), // không phải send resource
+                                    Expression.Sql("this_.merchant=0") // có merchant = 0
+                                ),
+                                Expression.Or // đến bất kỳ đâu
+                                (
+                                    Expression.Eq("FromVillage", this),
+                                    Expression.Eq("ToVillage", this)
+                                 )
+                            ),
+                            Expression.And
+                            (
+                                Expression.And
+                                (
+                                    Expression.Sql("this_.type=4"), // đối tượng return
+                                    Expression.Sql("this_.merchant=0") // có merchant = 0
+                                ),
+                                Expression.Eq("ToVillage", this) // đến làng this
+                            )
+                        ));
+
+            criteria.AddOrder(Order.Asc("LandingTime"));
+            
+            return criteria.List<MovingCommand>();
+            
         }
 
         public virtual List<MovingCommand> GetTroopMovement(DateTime time, ISession session)
