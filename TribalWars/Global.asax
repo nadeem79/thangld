@@ -1,16 +1,16 @@
 ﻿<%@ Application Language="C#" %>
 
 <script runat="server">
-
+    
     void Application_Start(object sender, EventArgs e) 
     {
         // Code that runs on application startup
-
+        log4net.Config.XmlConfigurator.Configure();
         NHibernate.ISession session = NHibernateHelper.CreateSession();
         beans.TribalWarsEngine.Start(session);
         session.Close();
         
-        //log4net.Config.XmlConfigurator.Configure();
+        
             
     }
     

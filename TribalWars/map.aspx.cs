@@ -34,7 +34,7 @@ public partial class map : System.Web.UI.Page
         int target = 0;
         int.TryParse(Request["target"], out target);
 
-        session = NHibernateHelper.CreateSession();
+        session = (ISession)Context.Items["NHibernateSession"];
         targetVillage = session.Get<Village>(target);
 
         if (target == 0 || targetVillage == null)
@@ -43,7 +43,6 @@ public partial class map : System.Web.UI.Page
         this.y = targetVillage.Y;
         IList<Village> villages = beans.Map.GetMap(targetVillage, session);
         
-        session.Close();
         Random r = new Random();
         this.tbVillages.Style.Add("border", "1px solid black");
         TableRow cRow = new TableRow();
@@ -53,7 +52,7 @@ public partial class map : System.Web.UI.Page
             rCell.Text = (this.x - 7 + i).ToString();
             //height="38" width="20"
             rCell.Width = 20;
-            rCell.Height = 38;
+            rCell.Height = 34;
             TableRow rRow = new TableRow();
             rRow.Cells.Add(rCell);
             this.tbRows.Rows.Add(rRow);

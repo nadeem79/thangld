@@ -8,25 +8,25 @@ namespace beans
     public class DefenseReport:Report
     {
 
-        public Village FromVillage
+        public virtual Village FromVillage
         {
             get;
             set;
         }
 
-        public Village ToVillage
+        public virtual Village ToVillage
         {
             get;
             set;
         }
 
-        public Player FromPlayer
+        public virtual Player FromPlayer
         {
             get;
             set;
         }
 
-        public Player ToPlayer
+        public virtual Player ToPlayer
         {
             get;
             set;

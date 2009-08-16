@@ -1,10 +1,8 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="ReturnCommand.ascx.cs"
     Inherits="ReturnCommand" %>
 <h2>
-    Hỗ trợ
-    <% if (this.current.ToVillage.Player.ID == (int)Session["user"]) Response.Write("tới "); %>thành
-    phố
-    <% Response.Write(this.current.ToVillage.Name); %></h2>
+    Return from 
+    <% Response.Write(this.current.FromVillage.Name); %></h2>
 <table class="vis" width="400">
     <tbody>
         <tr>
