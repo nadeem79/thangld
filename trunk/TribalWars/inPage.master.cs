@@ -87,9 +87,7 @@ public partial class inPage : System.Web.UI.MasterPage
             this.NHibernateSession.Close();
             Response.Redirect("index.aspx", true);
         }
-        ITransaction trans = this.NHibernateSession.BeginTransaction(IsolationLevel.ReadCommitted);
         this.player.Update(DateTime.Now, this.NHibernateSession);
-        trans.Commit();
 
         if (object.Equals(Request["id"], null) || (!int.TryParse(Request["id"], out id)))
             this.village = this.player.Villages[0];
@@ -99,6 +97,7 @@ public partial class inPage : System.Web.UI.MasterPage
         if (this.village == null)
             this.village = this.player.Villages[0];
 
+        //this.village.VillageResourceData.ResourceChanged+=new ResourceChangeHandler();
 
         int incomingAttackCount = village.GetIncomingAttackCount(this.NHibernateSession);
         int incomingSupportCount = village.GetIncomingSupportCount(this.NHibernateSession);
@@ -130,8 +129,31 @@ public partial class inPage : System.Web.UI.MasterPage
         }
     }
 
+    protected void VillageResourceData_ResourceChanged(ResourcesType type, int value, int max)
+    {
+        switch (type)
+        {
+            case ResourcesType.Clay:
+                this.ClayLabel.Text = value.ToString();
+                //if (value == max)
+                //this.ClayLabel.CssClass
+                break;
+            case ResourcesType.Wood:
+                this.WoodLabel.Text = value.ToString();
+                break;
+            case ResourcesType.Iron:
+                this.IronLabel.Text = value.ToString();
+                break;
+            default:
+                break;
+        }
+        
+    }
+
     protected void Page_Load(object sender, EventArgs e)
     {
 
     }
+
+
 }

@@ -23,7 +23,7 @@ public partial class CustomControls_SendResource : System.Web.UI.UserControl
         switch (type)
         {
             case MoveType.SendResources:
-                return "Gửi đến";
+                return "Gửi từ";
             case MoveType.Return:
                 return "Quay về từ";
             default:
@@ -46,6 +46,9 @@ public partial class CustomControls_SendResource : System.Web.UI.UserControl
         if (command.GetType() != typeof(SendResource))
             return "";
 
+        if (command.FromVillage.Player.ID != (int)Session["user"])
+            return "";
+
         SendResource sendResource = (SendResource)command;
 
         string result = "";
@@ -59,11 +62,6 @@ public partial class CustomControls_SendResource : System.Web.UI.UserControl
         return result;
     }
 
-    public NHibernate.ISession Session
-    {
-        get;
-        set;
-    }
     public beans.Village Village
     {
         get;
@@ -72,20 +70,23 @@ public partial class CustomControls_SendResource : System.Web.UI.UserControl
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
-        this.Village.GetTransportData(this.Session);
+        ISession session = (ISession)Context.Items["NHibernateSession"];
+        this.Village.GetTransportData(session);
 
         this.lblAvailableMerchant.Text = this.Village.VillageBuildingData.Merchant.ToString();
 
+
+
         if (this.Village.TransportFromMe.Count > 0)
         {
-            this.rMyTransport.DataSource = this.Village.TransportFromMe;
-            this.rMyTransport.DataBind();
+            this.rOutgoings.DataSource = this.Village.TransportFromMe;
+            this.rOutgoings.DataBind();
         }
         if (this.Village.TransportToMe.Count > 0)
         {
-            this.rOutgoings.DataSource = this.Village.TransportToMe;
-            this.rOutgoings.DataBind();
+
+            this.rMyTransport.DataSource = this.Village.TransportToMe;
+            this.rMyTransport.DataBind();
         }
         
 
@@ -97,7 +98,7 @@ public partial class CustomControls_SendResource : System.Web.UI.UserControl
         if (village_id == 0)
             return;
 
-        beans.Village target = this.Session.Get<Village>(village_id);
+        beans.Village target = session.Get<Village>(village_id);
         if (target != null)
         {
             this.txtX.Text = target.X.ToString("000");
@@ -108,12 +109,15 @@ public partial class CustomControls_SendResource : System.Web.UI.UserControl
 
     protected void bttnSend_Click(object sender, EventArgs e)
     {
+        ISession session = (ISession)Context.Items["NHibernateSession"];
         int clay = 0, wood = 0, iron = 0, x = 0, y = 0;
 
         int.TryParse(this.txtClay.Text, out clay);
         int.TryParse(this.txtWood.Text, out wood);
         int.TryParse(this.txtIron.Text, out iron);
-
+        this.woodSpan.Text = "";
+        this.claySpan.Text = "";
+        this.ironSpan.Text = "";
         if (!(int.TryParse(this.txtX.Text, out x) && int.TryParse(this.txtY.Text, out y)))
         {
             ScriptManager.RegisterStartupScript(bttnSend, bttnSend.GetType(), "ShowException", "$.facebox('Nhập toạ độ thành phố');", true);
@@ -122,7 +126,7 @@ public partial class CustomControls_SendResource : System.Web.UI.UserControl
 
         try
         {
-            this.PendingCommand = this.Village.CreateSendResource(this.Session, x, y, wood, clay, iron);
+            this.PendingCommand = this.Village.CreateSendResource(session, x, y, clay, wood, iron);
             this.targetPlayerID.Text = PendingCommand.ToVillage.Player.ID.ToString();
             this.targetPlayerName.Text = PendingCommand.ToVillage.Player.Username;
             this.targetVillageID.Text = PendingCommand.ToVillage.ID.ToString();
@@ -133,6 +137,11 @@ public partial class CustomControls_SendResource : System.Web.UI.UserControl
                 this.claySpan.Text = string.Format("<img src=\"images/resources/clay.png\"> {0}", clay);
             if (iron > 0)
                 this.ironSpan.Text = string.Format("<img src=\"images/resources/iron.png\"> {0}", iron);
+
+            this.merchantRequiredSpan.Text = this.PendingCommand.Merchant.ToString();
+            this.durationSpan.Text = Functions.FormatTime(this.PendingCommand.LandingTime - this.PendingCommand.StartingTime);
+            this.arrivalSpan.Text = this.PendingCommand.LandingTime.ToString("HH:mm:ss:'<span class=\"small hidden\">'fff'</span> ngày 'dd/MM");
+            this.returnSpan.Text = (this.PendingCommand.LandingTime + (this.PendingCommand.LandingTime - this.PendingCommand.StartingTime)).ToString("HH:mm:ss:'<span class=\"small hidden\">'fff'</span> ngày 'dd/MM");
             ScriptManager.RegisterStartupScript(bttnSend, bttnSend.GetType(), "Confirm", "$.facebox($('#confirmDialog').html());", true);
         }
         catch (Exception exception)
@@ -143,6 +152,7 @@ public partial class CustomControls_SendResource : System.Web.UI.UserControl
     
     protected void bttnConfirmSend_Click(object sender, EventArgs e)
     {
+        ISession session = (ISession)Context.Items["NHibernateSession"];
         int clay = 0, wood = 0, iron = 0, x = 0, y = 0;
 
         int.TryParse(this.txtClay.Text, out clay);
@@ -158,8 +168,8 @@ public partial class CustomControls_SendResource : System.Web.UI.UserControl
 
         try
         {
-            this.PendingCommand = this.Village.CreateSendResource(this.Session, x, y, wood, clay, iron);
-            this.PendingCommand.Save(this.Session);
+            this.PendingCommand = this.Village.CreateSendResource(session, x, y, clay, wood, iron);
+            this.PendingCommand.Save(session);
             this.lblAvailableMerchant.Text = this.Village.VillageBuildingData.Merchant.ToString();
 
             int pos = 0;
@@ -174,6 +184,12 @@ public partial class CustomControls_SendResource : System.Web.UI.UserControl
             
             this.rMyTransport.DataSource = this.Village.TransportFromMe;
             this.rMyTransport.DataBind();
+            this.txtClay.Text = "";
+            this.txtWood.Text = "";
+            this.txtIron.Text = "";
+
+            
+            
         }
         catch (Exception exception)
         {

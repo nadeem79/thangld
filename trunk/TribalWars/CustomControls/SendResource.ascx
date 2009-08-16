@@ -155,7 +155,7 @@
                                 </table>
                                 <br>
                                 
-                                <input type="button" value="gg" onclick="__doPostBack('<% = this.bttnConfirmSend.UniqueID%>', '')" />
+                                <input type="button" value="Confirm" onclick="__doPostBack('<% = this.bttnConfirmSend.UniqueID%>', '')" />
                             </ContentTemplate>
                             <Triggers>
                                 <asp:AsyncPostBackTrigger ControlID="bttnSend" EventName="Click" />
@@ -181,9 +181,6 @@
                         Goods
                     </th>
                     <th>
-                        Merchants
-                    </th>
-                    <th>
                         Duration
                     </th>
                     <th>
@@ -201,13 +198,10 @@
         <td>
             <%# TypePrefix((beans.MoveType)DataBinder.Eval(Container.DataItem, "Type")) %>
             <a href="<%# String.Format("village_info.aspx?id={0}&village={1}", this.Village.ID, ((beans.Village)(DataBinder.Eval(Container.DataItem, "ToVillage"))).ID) %>">
-                <%# ((beans.Village)(DataBinder.Eval(Container.DataItem, "ToVillage"))).Name%></a>
+                <%# ((beans.Village)(DataBinder.Eval(Container.DataItem, "FromVillage"))).Name%> (<%# ((beans.Village)(DataBinder.Eval(Container.DataItem, "FromVillage"))).X.ToString("000")%>|<%# ((beans.Village)(DataBinder.Eval(Container.DataItem, "FromVillage"))).Y.ToString("000")%>)</a>
         </td>
         <td>
             <%# DisplayResources((beans.MovingCommand)Container.DataItem)%>
-        </td>
-        <td>
-            <%# MerchantCalculation((beans.MovingCommand)Container.DataItem) %>
         </td>
         <td>
             <%# Functions.FormatTime((DateTime)DataBinder.Eval(Container.DataItem, "LandingTime") - (DateTime)DataBinder.Eval(Container.DataItem, "StartingTime"))%>
@@ -257,9 +251,9 @@
     <ItemTemplate>
     <tr>
         <td>
-            <%# TypePrefix((beans.MoveType)DataBinder.Eval(Container.DataItem, "Type")) %>
+            Gửi đến 
             <a href="<%# String.Format("village_info.aspx?id={0}&village={1}", this.Village.ID, ((beans.Village)(DataBinder.Eval(Container.DataItem, "ToVillage"))).ID) %>">
-                <%# ((beans.Village)(DataBinder.Eval(Container.DataItem, "ToVillage"))).Name%></a>
+                <%# ((beans.Village)(DataBinder.Eval(Container.DataItem, "ToVillage"))).Name %> (<%# ((beans.Village)(DataBinder.Eval(Container.DataItem, "ToVillage"))).X.ToString("000")%>|<%# ((beans.Village)(DataBinder.Eval(Container.DataItem, "ToVillage"))).Y.ToString("000")%>)</a>
         </td>
         <td>
             <%# DisplayResources((beans.MovingCommand)Container.DataItem) %>
@@ -283,5 +277,4 @@
         </tbody></table>
     </FooterTemplate>
 </asp:Repeater>
-<asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
 <div style="display:none;"><asp:Button ID="bttnConfirmSend" runat="server" Text="Send" OnClick="bttnConfirmSend_Click" /></div>

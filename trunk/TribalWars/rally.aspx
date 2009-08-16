@@ -3,21 +3,8 @@
 
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-<style type="text/css">
-#<% = this.pAttackConfirm.ClientID %>
-{
-    float:left;
-    margin-left:5px;
-}
-#<% = this.pSupportConfirm.ClientID %>
-{
-    float:left;
-    margin-left:5px;
-}
-</style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
-    
     <table>
         <tbody>
             <tr>
@@ -169,7 +156,9 @@
                             </tr>
                         </tbody>
                     </table>
-                    <table>
+                    <asp:UpdatePanel runat="server" ID="updatePanel">
+        <ContentTemplate>
+        <table>
                         <tbody>
                             <tr>
                                 <td rowspan="2">
@@ -178,68 +167,223 @@
                                     <asp:TextBox ID="y" runat="server" MaxLength="3" Width="50"></asp:TextBox>
                                 </td>
                                 <td valign="top">
+                                <asp:Button ID="bttnAttack" runat="server" Font-Size="10pt" Text="Attack" OnClick="bttnAttack_Click" />
                                 </td>
                                 <td valign="top">
-                                </td>
-                                <td rowspan="2">
-                                </td>
-                                <td rowspan="2">
-                                    <asp:UpdatePanel ID="pAttackConfirm" runat="server">
-                                        <ContentTemplate>
-                                            <asp:Button ID="bttnAttack" runat="server" Font-Size="10pt" Text="Attack" OnClick="bttnAttack_Click" />
-                                        </ContentTemplate>
-                                        <Triggers>
-                                            <asp:AsyncPostBackTrigger ControlID="bttnAttack" EventName="Click" />
-                                        </Triggers>
-                                    </asp:UpdatePanel> 
-                                    <asp:UpdatePanel ID="pSupportConfirm" runat="server">
-                                        <ContentTemplate>
-                                            <asp:Button ID="bttnSupport" runat="server" Font-Size="10pt" Text="Support" OnClick="bttnSupport_Click" />
-                                        </ContentTemplate>
-                                        <Triggers>
-                                            <asp:AsyncPostBackTrigger ControlID="bttnSupport" EventName="Click" />
-                                        </Triggers>
-                                    </asp:UpdatePanel>
+                                <asp:Button ID="bttnSupport" runat="server" Font-Size="10pt" Text="Support" OnClick="bttnSupport_Click" />
                                 </td>
                             </tr>
                         </tbody>
                     </table>
+        <div id="commandPanel" style="display:none;">
+    <h2>
+            <asp:Literal runat="server" ID="commandTypeSpan"></asp:Literal></h2>
+        <table class="vis" width="300">
+            <tbody>
+                <tr>
+                    <th colspan="2">
+                        Đặt lệnh
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <asp:Literal runat="server" ID="typeSpan"></asp:Literal>:
+                    </td>
+                    <td>
+                        <a href='village_info.aspx?id=<% = this.village.ID %>&village=<asp:Literal runat="server" ID="toVillageIdSpan"></asp:Literal>' target="_blank" >
+                            <asp:Literal runat="server" ID="toVillageName"></asp:Literal> (<asp:Literal runat="server" ID="toVillageXSpan"></asp:Literal>|<asp:Literal runat="server" ID="toVillageYSpan"></asp:Literal>)</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Chủ thành:
+                    </td>
+                    <td>
+                        <a href="user_info.aspx?id=<% = this.village.ID %>&player=<asp:Literal runat="server" ID="toVillageOwnerIdSpan"></asp:Literal>">
+                            <asp:Literal runat="server" ID="toVillageOwnerNameSpan"></asp:Literal></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Thời gian:
+                    </td>
+                    <td>
+                        <asp:Literal runat="server" ID="durationSpan"></asp:Literal>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Đến lúc:
+                    </td>
+                    <td id="date_arrival">
+                        <asp:Literal runat="server" ID="landingTimeSpan"></asp:Literal>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+        <table class="vis">
+            <tbody>
+                <tr>
+                    <th width="50">
+                        <img src="images/unit_spear.png" title="Spear fighter" alt="" />
+                    </th>
+                    <th width="50">
+                        <img src="images/unit_sword.png" title="Swordsman" alt="">
+                    </th>
+                    <th width="50">
+                        <img src="images/unit_axe.png" title="Axeman" alt="" />
+                    </th>
+                    <th width="50">
+                        <img src="images/unit_spy.png" title="Scout" alt="" />
+                    </th>
+                    <th width="50">
+                        <img src="images/unit_light.png" title="Light cavalry" alt="" />
+                    </th>
+                    <th width="50">
+                        <img src="images/unit_heavy.png" title="Heavy cavalry" alt="" />
+                    </th>
+                    <th width="50">
+                        <img src="images/unit_ram.png" title="Ram" alt="" />
+                    </th>
+                    <th width="50">
+                        <img src="images/unit_catapult.png" title="Catapult" alt="" />
+                    </th>
+                    <th width="50">
+                        <img src="images/unit_snob.png" title="Nobleman" alt="" style="height: 18px; width: 18px" />
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <asp:Literal runat="server" ID="spearSpan"></asp:Literal>
+                    </td>
+                    <td>
+                        <asp:Literal runat="server" ID="swordSpan"></asp:Literal>
+                    </td>
+                    <td>
+                        <asp:Literal runat="server" ID="axeSpan"></asp:Literal>
+                    </td>
+                    <td>
+                        <asp:Literal runat="server" ID="scoutSpan"></asp:Literal>
+                    </td>
+                    <td>
+                        <asp:Literal runat="server" ID="lightCavalrySpan"></asp:Literal>
+                    </td>
+                    <td>
+                        <asp:Literal runat="server" ID="heavyCavalrySpan"></asp:Literal>
+                    </td>
+                    <td>
+                        <asp:Literal runat="server" ID="ramSpan"></asp:Literal>
+                    </td>
+                    <td>
+                        <asp:Literal runat="server" ID="catapultSpan"></asp:Literal>
+                    </td>
+                    <td>
+                        <asp:Literal runat="server" ID="nobleSpan"></asp:Literal>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="9">
+                        <asp:Literal runat="server" ID="buttonNameSpan"></asp:Literal>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        </ContentTemplate>
+        <Triggers>
+            <asp:AsyncPostBackTrigger ControlID="bttnAttack" EventName="Click" />
+            <asp:AsyncPostBackTrigger ControlID="bttnSupport" EventName="Click" />
+        </Triggers>
+    </asp:UpdatePanel>
+    </div>
+                    
                     <h3>
                         Troop movements</h3>
-                    <table class="vis">
-                        <tbody>
+                    <asp:Repeater ID="outgoingRepeater" runat="server">
+                        <HeaderTemplate>
+                            <table class="vis">
+                                <tbody>
+                                    <tr>
+                                        <th width="250">
+                                            Outgoing
+                                        </th>
+                                        <th width="160">
+                                            Arrival time
+                                        </th>
+                                        <th width="100">
+                                            Arrival in
+                                        </th>
+                                    </tr>
+                        </HeaderTemplate>
+                        <ItemTemplate>
                             <tr>
-                                <th width="250">
-                                    Lệnh đến:
-                                </th>
-                                <th width="160">
-                                    Thời gian
-                                </th>
-                                <th width="100">
-                                    Cập nhật trong
-                                </th>
+                                <td>
+                                    <a href="command.aspx?id=<% = this.village.ID %>&command=<%# DataBinder.Eval(Container.DataItem, "ID") %>">
+                                        Tấn công
+                                        <%# ((beans.Village)DataBinder.Eval(Container.DataItem, "ToVillage")).Name %>
+                                        (<%# ((beans.Village)DataBinder.Eval(Container.DataItem, "ToVillage")).X.ToString("000") %>|<%# ((beans.Village)DataBinder.Eval(Container.DataItem, "ToVillage")).Y.ToString("000") %>)</a>
+                                </td>
+                                <td>
+                                    <%# ((DateTime)DataBinder.Eval(Container.DataItem, "LandingTime")).ToString("HH:mm:ss:'<span class=\"small inactive\">'fff'</span> ngày' dd:MM:yyyy")%>
+                                </td>
+                                <td>
+                                    <span class="timer">
+                                        <%# Functions.FormatTime((DateTime)DataBinder.Eval(Container.DataItem, "LandingTime") - DateTime.Now) %></span>
+                                </td>
                             </tr>
-                            <asp:Label ID="lblInwardsCommand" runat="server"></asp:Label>
-                        </tbody>
-                    </table>
-                    <table class="vis">
-                        <tbody>
+                        </ItemTemplate>
+                        <FooterTemplate>
+                            </tbody> </table>
+                        </FooterTemplate>
+                    </asp:Repeater>
+                    <asp:Repeater ID="incomingRepeater" runat="server">
+                        <HeaderTemplate>
+                            <table class="vis">
+                                <tbody>
+                                    <tr>
+                                        <th width="250">
+                                            Incoming
+                                        </th>
+                                        <th width="160">
+                                            Arrival time
+                                        </th>
+                                        <th width="100">
+                                            Arrival in
+                                        </th>
+                                    </tr>
+                        </HeaderTemplate>
+                        <ItemTemplate>
                             <tr>
-                                <th width="250">
-                                    Lệnh đi:
-                                </th>
-                                <th width="160">
-                                    Thời gian
-                                </th>
-                                <th width="100">
-                                    Cập nhật trong
-                                </th>
+                                <td>
+                                    <a href="command.aspx?id=<% = this.village.ID %>&command=<%# DataBinder.Eval(Container.DataItem, "ID") %>">
+                                        <%# TypePrefix((beans.MoveType)DataBinder.Eval(Container.DataItem, "Type")) %>
+                                        <%# ((beans.Village)DataBinder.Eval(Container.DataItem, "ToVillage")).Name %>
+                                        (<%# ((beans.Village)DataBinder.Eval(Container.DataItem, "ToVillage")).X.ToString("000") %>|<%# ((beans.Village)DataBinder.Eval(Container.DataItem, "ToVillage")).Y.ToString("000") %>)</a>
+                                </td>
+                                <td>
+                                    <%# ((DateTime)DataBinder.Eval(Container.DataItem, "LandingTime")).ToString("HH:mm:ss:'<span class=\"small inactive\">'fff'</span> ngày' dd:MM:yyyy")%>
+                                </td>
+                                <td>
+                                    <span class="timer">
+                                        <%# Functions.FormatTime((DateTime)DataBinder.Eval(Container.DataItem, "LandingTime") - DateTime.Now) %></span>
+                                </td>
                             </tr>
-                            <asp:Label ID="lblOutwardsCommand" runat="server"></asp:Label>
-                        </tbody>
-                    </table>
+                        </ItemTemplate>
+                        <FooterTemplate>
+                            </tbody> </table>
+                        </FooterTemplate>
+                    </asp:Repeater>
                 </td>
             </tr>
+            
         </tbody>
     </table>
+    
+    <div style="display:none;">
+        <asp:Button ID="confirmAttackButton" runat="server" Text="Confirm attack" 
+            onclick="confirmAttackButton_Click" />
+        <asp:Button ID="confirmSupportButton" runat="server" Text="Confirm support" 
+            onclick="confirmSupportButton_Click" />
+    </div>
+    
 </asp:Content>

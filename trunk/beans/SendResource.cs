@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NHibernate;
+using System.Data;
 
 namespace beans
 {
@@ -48,11 +49,11 @@ namespace beans
             this.ToVillage.VillageResourceData.Iron += this.Iron;
 
             Return r = new Return();
-            r.Merchant = (int)Math.Round((double)((this.Clay + this.Wood + this.Iron) / 1000), MidpointRounding.AwayFromZero);
+            r.Merchant = this.Merchant;
             r.FromVillage = this.ToVillage;
             r.ToVillage = this.FromVillage;
-            r.StartingTime = DateTime.Now;
-            r.LandingTime = DateTime.Now + (DateTime.Now - this.StartingTime);
+            r.StartingTime = this.LandingTime;
+            r.LandingTime = Map.LandingTime(TroopType.Merchant, r.FromVillage, r.ToVillage, r.StartingTime);
 
             SendResourceReport report = new SendResourceReport();
             report.Time = this.LandingTime;
@@ -70,7 +71,7 @@ namespace beans
             session.Update(this.ToVillage.VillageResourceData);
             session.Save(r);
             session.Delete(this);
-            session.Save(report);
+            //session.Save(report);
 
             return r;
             
@@ -116,11 +117,12 @@ namespace beans
             this.FromVillage.VillageResourceData.Wood -= this.Wood;
             this.FromVillage.VillageResourceData.Iron -= this.Iron;
             this.FromVillage.VillageBuildingData.Merchant -= merchantNeeded;
-                
 
+            ITransaction trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
             session.Save(this);
             session.Update(this.FromVillage.VillageResourceData);
             session.Update(this.FromVillage.VillageBuildingData);
+            trans.Commit();
         }
     }
 }

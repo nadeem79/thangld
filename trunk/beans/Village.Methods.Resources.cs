@@ -108,6 +108,7 @@ namespace beans
             sendResource.Clay = clay;
             sendResource.Iron = iron;
             sendResource.Wood = wood;
+            sendResource.Merchant = (int)Math.Ceiling((double)(clay + iron + wood)/1000);
 
             sendResource.StartingTime = DateTime.Now;
             sendResource.LandingTime = Map.LandingTime(TroopType.Merchant, this, toVillage, sendResource.StartingTime);

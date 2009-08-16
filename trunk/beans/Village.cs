@@ -373,13 +373,20 @@ namespace beans
         public virtual void UpgradeBuilding(BuildingType building, int level)
         {
             int currentLevel = this[building];
+            this[building] = level;
             if (level > currentLevel)
+            {
                 for (int i = currentLevel; i < level; i++)
                 {
                     BuildPrice price = Build.GetPrice(building, i, 1);
                     this.Points += price.Point;
                     this.Population += price.Population;
                 }
+                if (building == BuildingType.Market)
+                {
+                    this.VillageBuildingData.Merchant += VillageBuildingData.MerchantCountDictionary[level] - VillageBuildingData.MerchantCountDictionary[currentLevel];
+                }
+            }
             else
                 for (int i = currentLevel; i > level; i--)
                 {
@@ -387,8 +394,6 @@ namespace beans
                     this.Points -= price.Point;
                     this.Population -= price.Population;
                 }
-
-            this[building] = level;
         }
 
         public virtual void Save(ISession session)
@@ -404,11 +409,6 @@ namespace beans
         public virtual void Update(DateTime to, ISession session)
         {
 
-            using (StreamWriter sw = new StreamWriter("d:\\test.txt", true))
-            {
-                sw.WriteLine(this.Name);
-                sw.Close();
-            }
 
             IList<MovingCommand> commands = (from movingCommand in session.Linq<MovingCommand>()
                                              where (movingCommand.FromVillage == this || movingCommand.ToVillage == this)

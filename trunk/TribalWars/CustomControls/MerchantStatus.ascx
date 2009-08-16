@@ -24,10 +24,18 @@
         </tr>
         <tr>
             <td>
+                Tổng số thương nhân trong làng
+            </td>
+            <td align="right">
+                <% = this.Village.VillageBuildingData.Merchant %>
+            </td>
+        </tr>
+        <tr>
+            <td>
                 Tổng số thương nhân
             </td>
             <td align="right">
-                <b><% = this.Village.VillageBuildingData.Merchant %></b>
+                <b><% = this.Village.VillageBuildingData.MerchantOfVillage %></b>
             </td>
         </tr>
     </tbody>

@@ -5,10 +5,13 @@ using System.Text;
 
 namespace beans
 {
+    //public delegate void ResourceChangeHandler(Village village, ResourcesType type, int value);
+    public delegate void ResourceChangeHandler(ResourcesType type, int value, int max);
+
     public class VillageResourcesData:IdentityObject
     {
         private int _wood, _clay, _iron;
-
+        public event ResourceChangeHandler ResourceChanged;
         #region Properties.Resources
 
         public virtual int Wood
@@ -16,13 +19,9 @@ namespace beans
             get { return this._wood; }
             set
             {
-                //int max = this.Village.MaxResources;
-                //if (value > max)
-                //    this._wood = max;
-                //else if (value < 0)
-                //    this._wood = 0;
-                //else
-                    this._wood = value;
+                this._wood = value;
+                if (this.ResourceChanged!=null)
+                    this.ResourceChanged(ResourcesType.Wood, value, this.Village.MaxResources);
             }
         }
         public virtual int Clay
@@ -30,13 +29,9 @@ namespace beans
             get { return this._clay; }
             set
             {
-                //int max = this.Village.MaxResources;
-                //if (value > max)
-                //    this._clay = max;
-                //else if (value < 0)
-                //    this._clay = 0;
-                //else
                     this._clay = value;
+                    if (this.ResourceChanged != null)
+                        this.ResourceChanged(ResourcesType.Clay, value, this.Village.MaxResources);
             }
         }
         public virtual int Iron
@@ -44,13 +39,9 @@ namespace beans
             get { return this._iron; }
             set
             {
-                //int max = this.Village.MaxResources;
-                //if (value > max)
-                //    this._iron = max;
-                //else if (value < 0)
-                //    this._iron = 0;
-                //else
                     this._iron = value;
+                    if (this.ResourceChanged != null)
+                        this.ResourceChanged(ResourcesType.Iron, value, this.Village.MaxResources);
             }
         }
 
