@@ -62,10 +62,10 @@ namespace beans
         {
             int quantity = this.OfferQuantity * this.OfferNumber;
             if (this.AtVillage[this.OfferType] < quantity)
-                throw new Exception("Không đủ tài nguyên");
+                throw new TribalWarsException("Không đủ tài nguyên");
             int merchant = (int)Math.Ceiling((double)(this.OfferQuantity / 1000)) * this.OfferNumber;
             if (merchant > this.AtVillage.VillageBuildingData.Merchant)
-                throw new Exception("Không đủ thương nhân");
+                throw new TribalWarsException("Không đủ thương nhân");
 
             this.AtVillage[this.OfferType] -= quantity;
             this.AtVillage.VillageBuildingData.Merchant -= merchant;
@@ -78,49 +78,11 @@ namespace beans
             trans.Commit();
         }
 
-        public virtual Offer IncreaseOffer(int increment, ISession session)
-        {
-            int quantity = this.OfferQuantity * increment;
-            if (this.AtVillage[this.OfferType] < quantity)
-                throw new Exception("Không đủ tài nguyên");
-            int merchant = (int)Math.Ceiling((double)(this.OfferQuantity / 1000)) * quantity;
-            if (merchant > this.AtVillage.VillageBuildingData.Merchant)
-                throw new Exception("Không đủ thương nhân");
-
-            this.OfferNumber += increment;
-            this.AtVillage[this.OfferType] -= quantity;
-            this.AtVillage.VillageBuildingData.Merchant -= merchant;
-
-            ITransaction trans = session.BeginTransaction(IsolationLevel.ReadUncommitted);
-            session.Update(this);
-            session.Update(this.AtVillage.VillageBuildingData);
-            session.Update(this.AtVillage.VillageResourceData);
-            trans.Commit();
-
-            return this;
-        }
-
-        public virtual Offer DecreaseOffer(int increment, ISession session)
-        {
-            int quantity = this.OfferQuantity * increment;
-            int merchant = (int)Math.Ceiling((double)(this.OfferQuantity / 1000)) * increment;
-
-            this.OfferNumber -= increment;
-            this.AtVillage[this.OfferType] += quantity;
-            this.AtVillage.VillageBuildingData.Merchant += merchant;
-
-            ITransaction trans = session.BeginTransaction(IsolationLevel.ReadUncommitted);
-            session.Update(this);
-            session.Update(this.AtVillage.VillageBuildingData);
-            session.Update(this.AtVillage.VillageResourceData);
-            trans.Commit();
-
-            return this;
-        }
-
         
 
-
-
+        public static Offer GetOfferById(int id, ISession session)
+        {
+            return session.Get<Offer>(id);
+        }
     }
 }

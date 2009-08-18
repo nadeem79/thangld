@@ -13,25 +13,16 @@ namespace beans
     public partial class Village
     {
 
-        public virtual ResourcesType OfferType
-        {
-            get;
-            set;
-        }
-
-        public virtual int OfferQuantity
-        {
-            get;
-            set;
-        }
-
         public virtual Offer CreateOffer(ResourcesType offerType, int offerQuantity, ResourcesType forType, int forQuantity, int maxTransportTime, int offerNumber)
         {
             
             if (this[offerType] < offerQuantity * offerNumber)
-                throw new Exception("Không đủ tài nguyên");
+                throw new TribalWarsException("Không đủ tài nguyên");
             if (Math.Ceiling((double)(offerQuantity * offerNumber / 1000)) > this.VillageBuildingData.Merchant)
-                throw new Exception("Không đủ thương nhân");
+                throw new TribalWarsException("Không đủ thương nhân");
+            if (offerType==forType)
+                throw new TribalWarsException("Nhập loại tài nguyên");
+
 
             Offer offer = new Offer();
             offer.AtVillage = this;
@@ -137,5 +128,86 @@ namespace beans
 
         }
 
+        public virtual IList<Offer> GetMyOffers(ISession session)
+        {
+            return (from offer in session.Linq<Offer>()
+                    where offer.AtVillage == this
+                    select offer).ToList<Offer>();
+        }
+
+        public virtual Offer IncreaseOffer(int offerId, int increment, ISession session)
+        {
+
+            Offer offer = Offer.GetOfferById(offerId, session);
+            if (offer == null || offer.AtVillage != this)
+                throw new TribalWarsException("Offer không tồn tại");
+
+
+            int quantity = offer.OfferQuantity * increment;
+            if (this[offer.OfferType] < quantity)
+                throw new TribalWarsException("Không đủ tài nguyên");
+            int merchant = (int)Math.Ceiling((double)(offer.OfferQuantity / 1000)) * increment;
+            if (merchant > this.VillageBuildingData.Merchant)
+                throw new TribalWarsException("Không đủ thương nhân");
+
+            offer.OfferNumber += increment;
+            this[offer.OfferType] -= quantity;
+            this.VillageBuildingData.Merchant -= merchant;
+
+            ITransaction trans = session.BeginTransaction(IsolationLevel.ReadUncommitted);
+            session.Update(offer);
+            session.Update(this.VillageBuildingData);
+            session.Update(this.VillageResourceData);
+            trans.Commit();
+
+            return offer;
+        }
+
+        public virtual Offer DecreaseOffer(int offerId, int decrease, ISession session)
+        {
+            Offer offer = Offer.GetOfferById(offerId, session);
+            if (offer == null || offer.AtVillage != this)
+                throw new TribalWarsException("Offer không tồn tại");
+
+            if (decrease > offer.OfferNumber)
+                decrease = offer.OfferNumber;
+
+            int quantity = offer.OfferQuantity * decrease;
+            int merchant = (int)Math.Ceiling((double)(offer.OfferQuantity / 1000)) * decrease;
+
+            offer.OfferNumber -= decrease;
+            this[offer.OfferType] += quantity;
+            this.VillageBuildingData.Merchant += merchant;
+
+            ITransaction trans = session.BeginTransaction(IsolationLevel.ReadUncommitted);
+            if (offer.OfferNumber > 0)
+                session.Update(offer);
+            else
+                session.Delete(offer);
+            session.Update(this.VillageBuildingData);
+            session.Update(this.VillageResourceData);
+            trans.Commit();
+
+            return offer;
+        }
+
+        public virtual void DeleteOffer(int offerId, ISession session)
+        {
+            Offer offer = Offer.GetOfferById(offerId, session);
+            if (offer == null || offer.AtVillage != this)
+                throw new TribalWarsException("Offer không tồn tại");
+
+            int quantity = offer.OfferQuantity * offer.OfferNumber;
+            int merchant = (int)Math.Ceiling((double)(offer.OfferQuantity / 1000)) * offer.OfferNumber;
+
+            this[offer.OfferType] += quantity;
+            this.VillageBuildingData.Merchant += merchant;
+
+            ITransaction trans = session.BeginTransaction(IsolationLevel.ReadUncommitted);
+            session.Delete(offer);
+            session.Update(this.VillageBuildingData);
+            session.Update(this.VillageResourceData);
+            trans.Commit();
+        }
     }
 }
