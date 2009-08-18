@@ -13,6 +13,7 @@
     <property name="ForQuantity" column="forquantity" type="Int32" />
     <property name="OfferNumber" column="offernumber" type="Int32" />
     <property name="MaxTransportTime" column="maxtransporttime" type="Int32" />
+    <property name="CreateTime" column="time" type="DateTime" />
   </class>
 
 </hibernate-mapping>
