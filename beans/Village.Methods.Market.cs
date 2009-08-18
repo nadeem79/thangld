@@ -6,93 +6,136 @@ using NHibernate;
 using NHibernate.Linq;
 using NHibernate.Criterion;
 using System.Diagnostics;
+using System.Data;
 
 namespace beans
 {
     public partial class Village
     {
-        
 
-        public virtual IList<SendResource> GetDependingResource(DateTime to, ISession session)
+        public virtual ResourcesType OfferType
         {
-
-            return (from sendResource in session.Linq<SendResource>()
-                    where sendResource.ToVillage == this &&
-                    sendResource.LandingTime > this.LastUpdate &&
-                    sendResource.LandingTime < to
-                    orderby sendResource.LandingTime ascending
-                    select sendResource).ToList<SendResource>();
+            get;
+            set;
         }
 
-        public virtual IList<SendResource> GetDependingResource(ISession session)
+        public virtual int OfferQuantity
         {
-
-            return (from sendResource in session.Linq<SendResource>()
-                    where sendResource.ToVillage == this
-                    orderby sendResource.LandingTime ascending
-                    select sendResource).ToList<SendResource>();
+            get;
+            set;
         }
 
-        public virtual IList<SendResource> GetIncomingMerchants(ISession session)
+        public virtual Offer CreateOffer(ResourcesType offerType, int offerQuantity, ResourcesType forType, int forQuantity, int maxTransportTime, int offerNumber)
         {
+            
+            if (this[offerType] < offerQuantity * offerNumber)
+                throw new Exception("Không đủ tài nguyên");
+            if (Math.Ceiling((double)(offerQuantity * offerNumber / 1000)) > this.VillageBuildingData.Merchant)
+                throw new Exception("Không đủ thương nhân");
 
-            return (from sendResource in session.Linq<SendResource>()
-                    where sendResource.ToVillage == this
-                    select sendResource).ToList<SendResource>();
-        }
-        public virtual IList<Return> GetReturnMerchants(ISession session)
-        {
+            Offer offer = new Offer();
+            offer.AtVillage = this;
+            offer.ForQuantity = forQuantity;
+            offer.ForType = forType;
+            offer.MaxTransportTime = maxTransportTime;
+            offer.OfferNumber = offerNumber;
+            offer.OfferQuantity = offerQuantity;
+            offer.OfferType = offerType;
 
-            return (from r in session.Linq<Return>()
-                    where r.ToVillage == this &&
-                    r.Merchant > 0
-                    select r).ToList<Return>();
-
-        }
-        public virtual IList<SendResource> GetOutgoingMerchants(ISession session)
-        {
-
-            return (from sendResource in session.Linq<SendResource>()
-                    where sendResource.FromVillage == this
-                    orderby sendResource.LandingTime ascending
-                    select sendResource).ToList<SendResource>();
+            return offer;
         }
 
-        public virtual IList<SendResource> GetOutgoingMerchants(DateTime to, ISession session)
+        public virtual SendResource AcceptOffer(int offerId, int quantity, ISession session)
         {
+            Offer offer = null;
+            try
+            {
+                offer = session.Load<Offer>(offerId);
+            }
+            catch
+            {
+                throw new Exception("Offer không tồn tại");
+            }
+            
 
-            return (from sendResource in session.Linq<SendResource>()
-                    where sendResource.FromVillage == this &&
-                    sendResource.LandingTime > this.LastUpdate &&
-                    sendResource.LandingTime < to
-                    orderby sendResource.LandingTime ascending
-                    select sendResource).ToList<SendResource>();
+            if (offer.AtVillage == this)
+                return null;
+
+            if (offer.OfferNumber > quantity)
+                throw new Exception("Vượt quá số lượng rao bán");
+
+            int resourceNeeded = offer.ForQuantity * quantity;
+            if (resourceNeeded > this[offer.ForType])
+                throw new Exception("Không đủ tài nguyên");
+
+            int merchantNeeded = (int)Math.Ceiling((double)(offer.ForQuantity / 1000)) * quantity;
+            if (merchantNeeded > this.VillageBuildingData.Merchant)
+                throw new Exception("Không đủ merchant");
+
+            offer.OfferNumber -= quantity;
+
+            SendResource sendToSource = new SendResource();
+            sendToSource.FromVillage = this;
+            sendToSource.ToVillage = offer.AtVillage;
+            sendToSource.StartingTime = DateTime.Now;
+            sendToSource.LandingTime = Map.LandingTime(TroopType.Merchant, this, offer.AtVillage, sendToSource.StartingTime);
+            sendToSource.Merchant = (int)Math.Ceiling((double)resourceNeeded / 1000);
+            switch (offer.ForType)
+            {
+                case ResourcesType.Clay:
+                    sendToSource.Clay = resourceNeeded;
+                    break;
+                case ResourcesType.Wood:
+                    sendToSource.Wood = resourceNeeded;
+                    break;
+                case ResourcesType.Iron:
+                    sendToSource.Iron = resourceNeeded;
+                    break;
+                default:
+                    break;
+            }
+            SendResource sendFromSource = new SendResource();
+            sendFromSource.FromVillage = this;
+            sendFromSource.ToVillage = offer.AtVillage;
+            sendFromSource.StartingTime = DateTime.Now;
+            sendFromSource.LandingTime = Map.LandingTime(TroopType.Merchant, this, offer.AtVillage, sendFromSource.StartingTime);
+            sendFromSource.Merchant = merchantNeeded;
+            switch (offer.ForType)
+            {
+                case ResourcesType.Clay:
+                    sendFromSource.Clay = resourceNeeded;
+                    break;
+                case ResourcesType.Wood:
+                    sendFromSource.Wood = resourceNeeded;
+                    break;
+                case ResourcesType.Iron:
+                    sendFromSource.Iron = resourceNeeded;
+                    break;
+                default:
+                    break;
+            }
+
+            this[offer.ForType] -= resourceNeeded;
+            this.VillageBuildingData.Merchant -= sendToSource.Merchant;
+            offer.AtVillage[offer.OfferType] -= resourceNeeded;
+            offer.AtVillage.VillageBuildingData.Merchant -= sendFromSource.Merchant;
+
+            ITransaction trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
+            session.Save(sendFromSource);
+            session.Save(sendToSource);
+            session.Update(this.VillageBuildingData);
+            session.Update(offer.AtVillage.VillageBuildingData);
+            session.Update(this.VillageResourceData);
+            session.Update(offer.AtVillage.VillageResourceData);
+            if (offer.OfferQuantity == 0)
+                session.Delete(offer);
+            else
+                session.Update(offer);
+            trans.Commit();
+
+            return sendToSource;
+
         }
 
-        public virtual IList<MovingCommand> IncomingMerchants(ISession session)
-        {
-
-            IList<MovingCommand> incomings = new List<MovingCommand>();
-            foreach (MovingCommand command in this.GetIncomingMerchants(session))
-                incomings.Add(command);
-            foreach (MovingCommand command in this.GetReturnMerchants(session))
-                incomings.Add(command);
-            return incomings;
-        }
-
-        public virtual IList<MovingCommand> GetIncomingMerchants(DateTime to, ISession session)
-        {
-            ICriteria criteria = session.CreateCriteria(typeof(Return));
-            criteria.Add(Expression.Gt("Merchant", 0));
-
-            IList<MovingCommand> lstIncomings = criteria.List<MovingCommand>();
-
-
-            foreach (MovingCommand incoming in this.GetDependingResource(session))
-                if (!lstIncomings.Contains(incoming))
-                    lstIncomings.Add(incoming);
-
-            return lstIncomings;
-        }
     }
 }
