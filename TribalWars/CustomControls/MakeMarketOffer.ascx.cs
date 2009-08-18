@@ -16,10 +16,33 @@ public partial class CustomControls_MakeMarketOffer : System.Web.UI.UserControl
         set;
     }
 
+    protected string GetImageUrl(beans.ResourcesType resource)
+    {
+        switch (resource)
+        {
+            case ResourcesType.Clay:
+                return "<img src=\"images/resources/clay.png\" title=\"Clay\" alt=\"\" />";
+            case ResourcesType.Wood:
+                return "<img src=\"images/resources/wood.png\" title=\"Wood\" alt=\"\" />";
+            case ResourcesType.Iron:
+                return "<img src=\"images/resources/iron.png\" title=\"iron\" alt=\"\" />";
+            default:
+                return "";
+        }
+    }
+
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        ISession session = (ISession)Context.Items["NHibernateSession"];
+        IList<Offer> offers = this.Village.GetMyOffers(session);
+        if (offers.Count > 0)
+        {
+            this.myOfferRepeater.DataSource = offers;
+            this.myOfferRepeater.DataBind();
+        }
     }
+
+
     protected void createOfferButton_Click(object sender, EventArgs e)
     {
         int offerQuantity = 0, forQuantity = 0, maxTransportTime = 0, offerNumber = 0;
@@ -49,5 +72,86 @@ public partial class CustomControls_MakeMarketOffer : System.Web.UI.UserControl
         Offer offer = this.Village.CreateOffer(offerType, offerQuantity, forType, forQuantity, maxTransportTime, offerNumber);
         offer.Save(session);
         RadScriptManager.RegisterStartupScript(createOfferButton, createOfferButton.GetType(), "DONE", "reload();", true);
+    }
+
+    protected void deleteOfferButton_Click(object sender, EventArgs e)
+    {
+        for (int cnt = 0; cnt < myOfferRepeater.Items.Count; cnt++)
+        {
+            // your checkbox ; type casting
+            CheckBox cbId = (CheckBox)myOfferRepeater.Items[cnt].FindControl("checkSelectCheckBox");
+
+
+            if (cbId.Checked)
+            {
+                int id = 0;
+                string offerId = ((System.Web.UI.HtmlControls.HtmlInputHidden)myOfferRepeater.Items[cnt].FindControl("offerId")).Value;
+
+                if (!int.TryParse(offerId, out id))
+                    continue;
+
+                ISession session = (ISession)Context.Items["NHibernateSession"];
+                this.Village.DeleteOffer(id, session);
+
+            }
+        }
+
+        Response.Redirect(string.Format("market.aspx?id={0}&page=make_offer", this.Village.ID), false);
+    }
+
+    protected void increaseOfferButton_Click(object sender, EventArgs e)
+    {
+        for (int cnt = 0; cnt < myOfferRepeater.Items.Count; cnt++)
+        {
+            // your checkbox ; type casting
+            CheckBox cbId = (CheckBox)myOfferRepeater.Items[cnt].FindControl("checkSelectCheckBox");
+
+
+            if (cbId.Checked)
+            {
+                int id = 0;
+                int quantity = 0;
+                string offerId = ((System.Web.UI.HtmlControls.HtmlInputHidden)myOfferRepeater.Items[cnt].FindControl("offerId")).Value;
+
+                if (!int.TryParse(offerId, out id))
+                    continue;
+                if (!int.TryParse(quantityTextBox.Text, out quantity) || quantity <= 0)
+                    continue;
+
+                ISession session = (ISession)Context.Items["NHibernateSession"];
+                this.Village.IncreaseOffer(id, quantity, session);
+
+            }
+        }
+
+        Response.Redirect(string.Format("market.aspx?id={0}&page=make_offer", this.Village.ID), false);
+    }
+
+    protected void decreaseOfferButton_Click(object sender, EventArgs e)
+    {
+        for (int cnt = 0; cnt < myOfferRepeater.Items.Count; cnt++)
+        {
+            // your checkbox ; type casting
+            CheckBox cbId = (CheckBox)myOfferRepeater.Items[cnt].FindControl("checkSelectCheckBox");
+
+
+            if (cbId.Checked)
+            {
+                int id = 0;
+                int quantity = 0;
+                string offerId = ((System.Web.UI.HtmlControls.HtmlInputHidden)myOfferRepeater.Items[cnt].FindControl("offerId")).Value;
+
+                if (!int.TryParse(offerId, out id))
+                    continue;
+                if (!int.TryParse(quantityTextBox.Text, out quantity) || quantity <= 0)
+                    continue;
+
+                ISession session = (ISession)Context.Items["NHibernateSession"];
+                this.Village.DecreaseOffer(id, quantity, session);
+
+            }
+        }
+
+        Response.Redirect(string.Format("market.aspx?id={0}&page=make_offer", this.Village.ID), false);
     }
 }

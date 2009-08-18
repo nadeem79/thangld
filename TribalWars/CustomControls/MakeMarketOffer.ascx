@@ -86,6 +86,7 @@
         <table class="vis">
             <tbody>
                 <tr>
+                    <th></th>
                     <th>
                         Offer
                     </th>
@@ -109,21 +110,35 @@
     <ItemTemplate>
         <tr>
             <td>
-                <input name="id_499252" type="checkbox"><img src="/graphic/lehm.png?1" title="Clay"
-                    alt="">1<span class="grey">.</span>000
+                <asp:CheckBox ID="checkSelectCheckBox" runat="server" ToolTip='<%# DataBinder.Eval(Container.DataItem, "ID")  %>' />
+                <input type="hidden" runat="server" id="offerId" value='<%# DataBinder.Eval(Container.DataItem, "ID")  %>' />
             </td>
             <td>
-                <img src="/graphic/eisen.png?1" title="Iron" alt="">1<span class="grey">.</span>000
+                <%# GetImageUrl((beans.ResourcesType)DataBinder.Eval(Container.DataItem, "OfferType")) %> <%# DataBinder.Eval(Container.DataItem, "OfferQuantity")%>
             </td>
             <td>
-                3
+                <%# GetImageUrl((beans.ResourcesType)DataBinder.Eval(Container.DataItem, "ForType")) %> <%# DataBinder.Eval(Container.DataItem, "ForQuantity")%>
             </td>
             <td>
-                today at 05:50
+                <%# DataBinder.Eval(Container.DataItem, "OfferNumber")%>
             </td>
             <td>
-                5 hours
+                <%# ((DateTime)DataBinder.Eval(Container.DataItem, "CreateTime")).ToString("HH:mm:ss 'ngày' dd:MM:yyyy")%>
+            </td>
+            <td>
+                <%# DataBinder.Eval(Container.DataItem, "MaxTransportTime")%> h
             </td>
         </tr>
     </ItemTemplate>
 </asp:Repeater>
+
+<asp:Button ID="deleteOfferButton" runat="server" Text="Delete" 
+    onclick="deleteOfferButton_Click" />&nbsp
+    <asp:TextBox ID="quantityTextBox" runat="server" Text="1">
+    </asp:TextBox> &nbsp
+    
+
+<asp:Button ID="increaseOfferButton" runat="server" Text="Increase offer" 
+    onclick="increaseOfferButton_Click" />&nbsp
+<asp:Button ID="decreaseOfferButton" runat="server" Text="Decrease offer" 
+    onclick="decreaseOfferButton_Click" />

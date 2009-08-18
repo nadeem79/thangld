@@ -8,8 +8,8 @@
     </id>
     <many-to-one name="AtVillage" class="beans.Village, beans" column="village_id" not-null="true" fetch="join" cascade="none" />
     <property name="OfferType" column="offertype" type="beans.ResourcesType, beans" />
-    <property name="OfferQuantity" column="offerquantity" type="beans.ResourcesType, beans" />
-    <property name="ForType" column="fortype" type="Int32" />
+    <property name="OfferQuantity" column="offerquantity" type="Int32" />
+    <property name="ForType" column="fortype" type="beans.ResourcesType, beans" />
     <property name="ForQuantity" column="forquantity" type="Int32" />
     <property name="OfferNumber" column="offernumber" type="Int32" />
     <property name="MaxTransportTime" column="maxtransporttime" type="Int32" />

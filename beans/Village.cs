@@ -273,10 +273,10 @@ namespace beans
                         this.VillageResourceData.Clay = value;
                         break;
                     case ResourcesType.Wood:
-                        this.VillageResourceData.Clay = value;
+                        this.VillageResourceData.Wood = value;
                         break;
                     case ResourcesType.Iron:
-                        this.VillageResourceData.Clay = value;
+                        this.VillageResourceData.Iron = value;
                         break;
                     default:
                         break;
