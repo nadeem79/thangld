@@ -24,11 +24,14 @@ function getPage() {
     var url = location.pathname + "?redirect=1";
     var id = queryString("id");
     var page = queryString("page");
+    var p = queryString("p");
 
     if (id != "")
         url += "&id=" + id;
     if (page != "")
         url += "&page=" + page;
+    if (p != "")
+        url += "&p=" + p;
     return url;
 }
 

@@ -10,7 +10,7 @@ namespace beans
     public class Offer : IdentityObject
     {
 
-        public virtual int MaxTransportTime
+        public virtual double MaxTransportTime
         {
             get;
             set;

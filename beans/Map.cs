@@ -58,6 +58,53 @@ namespace beans
 
             return start.AddMilliseconds(RangeCalculator(sourceX, sourceY, desX, desY) * troopSpeedConfiguration.Value);
         }
+
+        public static double MovingTime(int sourceX, int sourceY, int desX, int desY, TroopType troop)
+        {
+            string type = "Map.merchant_speed";
+            switch (troop)
+            {
+                case TroopType.Axe:
+                    type = "Map.axe_speed";
+                    break;
+                case TroopType.Spear:
+                    type = "Map.spear_speed";
+                    break;
+                case TroopType.Sword:
+                    type = "Map.sword_speed";
+                    break;
+                case TroopType.Heavy:
+                    type = "Map.heavy_cavalry_speed";
+                    break;
+                case TroopType.Light:
+                    type = "Map.light_cavalry_speed";
+                    break;
+                case TroopType.Scout:
+                    type = "Map.scout_speed";
+                    break;
+                case TroopType.Nobleman:
+                    type = "Map.noble_speed";
+                    break;
+                case TroopType.Ram:
+                    type = "Map.ram_speed";
+                    break;
+                case TroopType.Catapult:
+                    type = "Map.catapult_speed";
+                    break;
+                default:
+                    type = "Map.merchant_speed";
+                    break;
+            }
+
+            Configuration config = Configuration.TribalWarsConfiguration;
+            NumericConfiguration troopSpeedConfiguration = config.GetNumericConfigurationItem(type);
+            return RangeCalculator(sourceX, sourceY, desX, desY) * troopSpeedConfiguration.Value;
+        }
+        public static double MovingTime(Village fromVillage, Village toVillage, TroopType troop)
+        {
+            return MovingTime(fromVillage.X, fromVillage.Y, toVillage.X, toVillage.Y, troop);
+        }
+
         public static DateTime LandingTime(TroopType troop, Village from, Village to, DateTime start)
         {
             return Map.LandingTime(troop, from.X, from.Y, to.X, to.Y, start);

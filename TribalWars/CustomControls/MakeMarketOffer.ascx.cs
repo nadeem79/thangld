@@ -16,20 +16,7 @@ public partial class CustomControls_MakeMarketOffer : System.Web.UI.UserControl
         set;
     }
 
-    protected string GetImageUrl(beans.ResourcesType resource)
-    {
-        switch (resource)
-        {
-            case ResourcesType.Clay:
-                return "<img src=\"images/resources/clay.png\" title=\"Clay\" alt=\"\" />";
-            case ResourcesType.Wood:
-                return "<img src=\"images/resources/wood.png\" title=\"Wood\" alt=\"\" />";
-            case ResourcesType.Iron:
-                return "<img src=\"images/resources/iron.png\" title=\"iron\" alt=\"\" />";
-            default:
-                return "";
-        }
-    }
+    
 
     protected void Page_Load(object sender, EventArgs e)
     {

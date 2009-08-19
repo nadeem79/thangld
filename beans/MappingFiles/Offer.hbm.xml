@@ -12,7 +12,7 @@
     <property name="ForType" column="fortype" type="beans.ResourcesType, beans" />
     <property name="ForQuantity" column="forquantity" type="Int32" />
     <property name="OfferNumber" column="offernumber" type="Int32" />
-    <property name="MaxTransportTime" column="maxtransporttime" type="Int32" />
+    <property name="MaxTransportTime" column="maxtransporttime" type="Double" />
     <property name="CreateTime" column="time" type="DateTime" />
   </class>
 

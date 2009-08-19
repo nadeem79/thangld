@@ -52,16 +52,18 @@ namespace beans
             if (offer.AtVillage == this)
                 return null;
 
-            if (offer.OfferNumber > quantity)
-                throw new Exception("Vượt quá số lượng rao bán");
+            
 
             int resourceNeeded = offer.ForQuantity * quantity;
             if (resourceNeeded > this[offer.ForType])
                 throw new Exception("Không đủ tài nguyên");
 
-            int merchantNeeded = (int)Math.Ceiling((double)(offer.ForQuantity / 1000)) * quantity;
+            int merchantNeeded = (int)Math.Ceiling((double)resourceNeeded / 1000);
             if (merchantNeeded > this.VillageBuildingData.Merchant)
                 throw new Exception("Không đủ merchant");
+
+            if (offer.OfferNumber < quantity)
+                quantity = offer.OfferNumber;
 
             offer.OfferNumber -= quantity;
 
@@ -70,7 +72,7 @@ namespace beans
             sendToSource.ToVillage = offer.AtVillage;
             sendToSource.StartingTime = DateTime.Now;
             sendToSource.LandingTime = Map.LandingTime(TroopType.Merchant, this, offer.AtVillage, sendToSource.StartingTime);
-            sendToSource.Merchant = (int)Math.Ceiling((double)resourceNeeded / 1000);
+            sendToSource.Merchant = merchantNeeded;
             switch (offer.ForType)
             {
                 case ResourcesType.Clay:
@@ -86,12 +88,12 @@ namespace beans
                     break;
             }
             SendResource sendFromSource = new SendResource();
-            sendFromSource.FromVillage = this;
-            sendFromSource.ToVillage = offer.AtVillage;
+            sendFromSource.FromVillage = offer.AtVillage;
+            sendFromSource.ToVillage = this;
             sendFromSource.StartingTime = DateTime.Now;
             sendFromSource.LandingTime = Map.LandingTime(TroopType.Merchant, this, offer.AtVillage, sendFromSource.StartingTime);
-            sendFromSource.Merchant = merchantNeeded;
-            switch (offer.ForType)
+            sendFromSource.Merchant = (int)Math.Ceiling((double)offer.OfferQuantity / 1000) * quantity;
+            switch (offer.OfferType)
             {
                 case ResourcesType.Clay:
                     sendFromSource.Clay = resourceNeeded;
@@ -118,7 +120,7 @@ namespace beans
             session.Update(offer.AtVillage.VillageBuildingData);
             session.Update(this.VillageResourceData);
             session.Update(offer.AtVillage.VillageResourceData);
-            if (offer.OfferQuantity == 0)
+            if (offer.OfferNumber == 0)
                 session.Delete(offer);
             else
                 session.Update(offer);
@@ -208,6 +210,29 @@ namespace beans
             session.Update(this.VillageBuildingData);
             session.Update(this.VillageResourceData);
             trans.Commit();
+        }
+
+        public virtual IList<Offer> GetOffers(ResourcesType forType, ResourcesType offerType, double maxDuration, double maxRatio, string orderby, ISession session)
+        {
+            var query = (from offer in session.Linq<Offer>()
+                         where offer.AtVillage != this
+                         select offer);
+
+            if (forType != ResourcesType.Any)
+                query = query.Where<Offer>(offer => offer.ForType == forType);
+            if (offerType != ResourcesType.Any)
+                query = query.Where<Offer>(offer => offer.OfferType == offerType);
+            if (maxDuration >0)
+                query = query.Where<Offer>(offer => offer.MaxTransportTime <= maxDuration && Map.RangeCalculator(this.X, this.Y, offer.AtVillage.X, offer.AtVillage.Y) <= maxDuration);
+            if (maxRatio > 0)
+                query = query.Where<Offer>(offer => offer.OfferQuantity / offer.ForQuantity <= maxRatio);
+
+            if (orderby == "Duration")
+                query = query.OrderBy(offer => Map.RangeCalculator(this.X, this.Y, offer.AtVillage.X, offer.AtVillage.Y));
+            else if (orderby == "Ration")
+                query = query.OrderBy(offer => offer.OfferQuantity / offer.ForQuantity);
+
+            return query.ToList<Offer>();
         }
     }
 }
