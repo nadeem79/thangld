@@ -1,8 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="TroopStat.ascx.cs" Inherits="CustomControls_TroopStat" %>
 <h3>
     Defenses</h3>
-<form action="/game.php?village=51549&amp;screen=place&amp;mode=units&amp;action=command_other&amp;h=6e5a"
-method="post">
 <table class="vis" width="100%">
     <tbody>
         <tr>
@@ -10,31 +8,31 @@ method="post">
                 Origin
             </th>
             <th width="40">
-                <img src="/graphic/unit/unit_spear.png?1" title="Spear fighter" alt="">
+                <img src="images/unit_spear.png" title="Spear fighter" alt="">
             </th>
             <th width="40">
-                <img src="/graphic/unit/unit_sword.png?1" title="Swordsman" alt="">
+                <img src="images/unit_sword.png" title="Swordsman" alt="">
             </th>
             <th width="40">
-                <img src="/graphic/unit/unit_axe.png?1" title="Axeman" alt="">
+                <img src="images/unit_axe.png" title="Axeman" alt="">
             </th>
             <th width="40">
-                <img src="/graphic/unit/unit_spy.png?1" title="Scout" alt="">
+                <img src="images/unit_spy.png" title="Scout" alt="">
             </th>
             <th width="40">
-                <img src="/graphic/unit/unit_light.png?1" title="Light cavalry" alt="">
+                <img src="images/unit_light.png" title="Light cavalry" alt="">
             </th>
             <th width="40">
-                <img src="/graphic/unit/unit_heavy.png?1" title="Heavy cavalry" alt="">
+                <img src="images/unit_heavy.png" title="Heavy cavalry" alt="">
             </th>
             <th width="40">
-                <img src="/graphic/unit/unit_ram.png?1" title="Ram" alt="">
+                <img src="images/unit_ram.png" title="Ram" alt="">
             </th>
             <th width="40">
-                <img src="/graphic/unit/unit_catapult.png?1" title="Catapult" alt="">
+                <img src="images/unit_catapult.png" title="Catapult" alt="">
             </th>
             <th width="40">
-                <img src="/graphic/unit/unit_snob.png?1" title="Nobleman" alt="">
+                <img src="images/unit_snob.png" title="Nobleman" alt="">
             </th>
         </tr>
         <tr>
@@ -119,31 +117,31 @@ method="post">
                 Village
             </th>
             <th width="40">
-                <img src="/graphic/unit/unit_spear.png?1" title="Spear fighter" alt="">
+                <img src="images/unit_spear.png" title="Spear fighter" alt="">
             </th>
             <th width="40">
-                <img src="/graphic/unit/unit_sword.png?1" title="Swordsman" alt="">
+                <img src="images/unit_sword.png" title="Swordsman" alt="">
             </th>
             <th width="40">
-                <img src="/graphic/unit/unit_axe.png?1" title="Axeman" alt="">
+                <img src="images/unit_axe.png" title="Axeman" alt="">
             </th>
             <th width="40">
-                <img src="/graphic/unit/unit_spy.png?1" title="Scout" alt="">
+                <img src="images/unit_spy.png" title="Scout" alt="">
             </th>
             <th width="40">
-                <img src="/graphic/unit/unit_light.png?1" title="Light cavalry" alt="">
+                <img src="images/unit_light.png" title="Light cavalry" alt="">
             </th>
             <th width="40">
-                <img src="/graphic/unit/unit_heavy.png?1" title="Heavy cavalry" alt="">
+                <img src="images/unit_heavy.png" title="Heavy cavalry" alt="">
             </th>
             <th width="40">
-                <img src="/graphic/unit/unit_ram.png?1" title="Ram" alt="">
+                <img src="images/unit_ram.png" title="Ram" alt="">
             </th>
             <th width="40">
-                <img src="/graphic/unit/unit_catapult.png?1" title="Catapult" alt="">
+                <img src="images/unit_catapult.png" title="Catapult" alt="">
             </th>
             <th width="40">
-                <img src="/graphic/unit/unit_snob.png?1" title="Nobleman" alt="">
+                <img src="images/unit_snob.png" title="Nobleman" alt="">
             </th>
             <th>
                 withdraw
