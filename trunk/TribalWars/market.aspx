@@ -4,6 +4,7 @@
 <%@ Reference Control="CustomControls/MerchantStatus.ascx" %>
 <%@ Reference Control="CustomControls/SendResource.ascx" %>
 <%@ Reference Control="CustomControls/MakeMarketOffer.ascx" %>
+<%@ Reference Control="CustomControls/OtherOffers.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>

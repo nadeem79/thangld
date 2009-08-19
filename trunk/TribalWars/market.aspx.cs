@@ -56,6 +56,12 @@ public partial class market : System.Web.UI.Page
                 this.tblMenu.Rows[1].Cells[0].Attributes.Add("class", "selected");
                 this.pMarket.Controls.Add(pMakeMarketOffer);
                 break;
+            case "market":
+                CustomControls_OtherOffers pOtherOffer = (CustomControls_OtherOffers)Page.LoadControl(@"CustomControls/OtherOffers.ascx");
+                pOtherOffer.Village = this.Village;
+                this.tblMenu.Rows[2].Cells[0].Attributes.Add("class", "selected");
+                this.pMarket.Controls.Add(pOtherOffer);
+                break;
             default:
                 CustomControls_SendResource pSendResource = (CustomControls_SendResource)Page.LoadControl(@"CustomControls/SendResource.ascx");
                 pSendResource.Village = this.Village;

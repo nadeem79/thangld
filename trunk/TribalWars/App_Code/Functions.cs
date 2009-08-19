@@ -9,6 +9,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.IO;
 using System.Drawing;
+using beans;
 
 /// <summary>
 /// Summary description for Functions
@@ -68,6 +69,21 @@ public class Functions
         
 
         return true;
+    }
+
+    public static string GetImageUrl(beans.ResourcesType resource)
+    {
+        switch (resource)
+        {
+            case ResourcesType.Clay:
+                return "<img src=\"images/resources/clay.png\" title=\"Clay\" alt=\"\" />";
+            case ResourcesType.Wood:
+                return "<img src=\"images/resources/wood.png\" title=\"Wood\" alt=\"\" />";
+            case ResourcesType.Iron:
+                return "<img src=\"images/resources/iron.png\" title=\"iron\" alt=\"\" />";
+            default:
+                return "";
+        }
     }
 
 }

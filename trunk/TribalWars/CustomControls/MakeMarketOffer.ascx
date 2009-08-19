@@ -114,10 +114,10 @@
                 <input type="hidden" runat="server" id="offerId" value='<%# DataBinder.Eval(Container.DataItem, "ID")  %>' />
             </td>
             <td>
-                <%# GetImageUrl((beans.ResourcesType)DataBinder.Eval(Container.DataItem, "OfferType")) %> <%# DataBinder.Eval(Container.DataItem, "OfferQuantity")%>
+                <%# Functions.GetImageUrl((beans.ResourcesType)DataBinder.Eval(Container.DataItem, "OfferType")) %> <%# DataBinder.Eval(Container.DataItem, "OfferQuantity")%>
             </td>
             <td>
-                <%# GetImageUrl((beans.ResourcesType)DataBinder.Eval(Container.DataItem, "ForType")) %> <%# DataBinder.Eval(Container.DataItem, "ForQuantity")%>
+                <%# Functions.GetImageUrl((beans.ResourcesType)DataBinder.Eval(Container.DataItem, "ForType"))%> <%# DataBinder.Eval(Container.DataItem, "ForQuantity")%>
             </td>
             <td>
                 <%# DataBinder.Eval(Container.DataItem, "OfferNumber")%>
