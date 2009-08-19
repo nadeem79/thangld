@@ -17,7 +17,7 @@ namespace beans
             get;
             set;
         }
-        public Player FromPlayer
+        public virtual Player FromPlayer
         {
             get;
             set;
@@ -28,7 +28,7 @@ namespace beans
             get;
             set;
         }
-        public Player ToPlayer
+        public virtual Player ToPlayer
         {
             get;
             set;

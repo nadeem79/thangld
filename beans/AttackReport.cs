@@ -242,12 +242,12 @@ namespace beans
             get;
             set;
         }
-        public virtual double LoyalAfter
+        public virtual int LoyalAfter
         {
             get;
             set;
         }
-        public virtual double LoyalBefore
+        public virtual int LoyalBefore
         {
             get;
             set;

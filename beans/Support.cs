@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NHibernate;
+using NHibernate.Linq;
 using NHibernate.Criterion;
 
 namespace beans
@@ -126,26 +127,31 @@ namespace beans
         {
 
 
-            ICriteria criteria = session.CreateCriteria(typeof(Station));
+            //ICriteria criteria = session.CreateCriteria(typeof(Station));
 
-            criteria.Add(Expression.Eq("AtVillage", this.ToVillage));
-            criteria.Add(Expression.Eq("FromVillage", this.FromVillage));
-            IList<Station> lstStations = criteria.List<Station>();
+            //criteria.Add(Expression.Eq("AtVillage", this.ToVillage));
+            //criteria.Add(Expression.Eq("FromVillage", this.FromVillage));
+            //IList<Station> lstStations = criteria.List<Station>();
 
-            if (lstStations.Count == 0)
+            Station station = (from s in session.Linq<Station>()
+                               where s.AtVillage == this.ToVillage
+                               && s.FromVillage == this.FromVillage
+                               select s).SingleOrDefault<Station>();
+            bool newStation = (station == null);
+            if (newStation)
             {
-                Station newStation = new Station();
-                newStation.FromVillage = this.FromVillage;
-                newStation.AtVillage = this.ToVillage;
-                newStation.Spear = this.Spear;
-                newStation.Sword = this.Sword;
-                newStation.Axe = this.Axe;
-                newStation.Scout = this.Scout;
-                newStation.LightCavalry = this.LightCavalry;
-                newStation.HeavyCavalry = this.HeavyCavalry;
-                newStation.Ram = this.Ram;
-                newStation.Catapult = this.Catapult;
-                newStation.Noble = this.Noble;
+                station = new Station();
+                station.FromVillage = this.FromVillage;
+                station.AtVillage = this.ToVillage;
+                station.Spear = this.Spear;
+                station.Sword = this.Sword;
+                station.Axe = this.Axe;
+                station.Scout = this.Scout;
+                station.LightCavalry = this.LightCavalry;
+                station.HeavyCavalry = this.HeavyCavalry;
+                station.Ram = this.Ram;
+                station.Catapult = this.Catapult;
+                station.Noble = this.Noble;
 
                 this.ToVillage.VillageTroopData.SpearInVillage += this.Spear;
                 this.ToVillage.VillageTroopData.SwordInVillage += this.Sword;
@@ -158,11 +164,10 @@ namespace beans
                 this.ToVillage.VillageTroopData.NobleInVillage += this.Noble;
 
                 session.Update(this.ToVillage);
-                session.Save(newStation);
+                session.Save(station);
             }
             else
             {
-                Station station = lstStations[0];
                 station.Spear += this.Spear;
                 station.Sword += this.Sword;
                 station.Axe += this.Axe;
@@ -184,7 +189,7 @@ namespace beans
                 this.ToVillage.VillageTroopData.NobleInVillage += this.Noble;
 
                 session.Update(this.ToVillage.VillageTroopData);
-                session.Save(station);
+                session.Update(station);
             }
 
             SupportReport supportReport = new SupportReport();
@@ -202,10 +207,13 @@ namespace beans
             supportReport.Ram = this.Ram;
             supportReport.Catapult = this.Catapult;
             supportReport.Noble = this.Noble;
+            supportReport.FromPlayer = this.FromVillage.Player;
+            supportReport.ToPlayer = this.ToVillage.Player;
 
             session.Save(supportReport);
             supportReport.Owner = this.FromVillage.Player;
             session.Save(supportReport);
+            session.Delete(this);
 
             return null;
         }
