@@ -67,6 +67,10 @@ namespace beans
             set;
         }
 
+        public static Station GetById(int id, ISession session)
+        {
+            return session.Get<Station>(id);
+        }
 
         public Return Return(int spear, 
                             int sword,
@@ -154,5 +158,7 @@ namespace beans
                                 this.Noble,
                                 session);
         }
+        
+
     }
 }

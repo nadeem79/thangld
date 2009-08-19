@@ -35,6 +35,12 @@ public partial class rally : System.Web.UI.Page
 
         switch (Request["page"])
         {
+            case "unit":
+                CustomControls_TroopStat pTroopStat = (CustomControls_TroopStat)Page.LoadControl(@"CustomControls/TroopStat.ascx");
+                pTroopStat.Village = this.village;
+                this.tblMenu.Rows[1].Cells[0].Attributes.Add("class", "selected");
+                this.troopPanel.Controls.Add(pTroopStat);
+                break;
             default:
                 CustomControls_TroopCommand pTroopCommand = (CustomControls_TroopCommand)Page.LoadControl(@"CustomControls/TroopCommand.ascx");
                 pTroopCommand.Village = this.village;

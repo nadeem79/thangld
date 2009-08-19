@@ -86,4 +86,9 @@ public class Functions
         }
     }
 
+    public static string GetTroopQuantity(int quantity)
+    {
+        return (quantity == 0) ? "<span class=\"hidden\">0</span>" : quantity.ToString();
+    }
+
 }

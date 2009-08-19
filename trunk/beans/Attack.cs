@@ -63,6 +63,7 @@ namespace beans
 
         public override void Save(ISession session)
         {
+            
             if ((this.Spear > this.FromVillage.VillageTroopData.Spear) ||
             (this.Sword > this.FromVillage.VillageTroopData.Sword) ||
             (this.Axe > this.FromVillage.VillageTroopData.Axe) ||
@@ -260,7 +261,7 @@ namespace beans
             defenseReport.CatapultDefense = this.ToVillage.VillageTroopData.CatapultInVillage;
             defenseReport.NobleDefense = this.ToVillage.VillageTroopData.NobleInVillage;
 
-            attackReport.LoyalBefore = this.ToVillage.Loyal;
+            attackReport.LoyalBefore = (int)this.ToVillage.Loyal;
             attackReport.Building = this.Building;
             attackReport.BuildingBefore = this.ToVillage[this.Building];
             defenseReport.LoyalBefore = this.ToVillage.Loyal;
@@ -704,7 +705,7 @@ namespace beans
             defenseReport.CatapultDefenseDead = catapultLostInDefenseSide;
             defenseReport.NobleDefenseDead = nobleLostInDefenseSide;
 
-            attackReport.LoyalAfter = this.ToVillage.Loyal;
+            attackReport.LoyalAfter = (int)this.ToVillage.Loyal;
             attackReport.BuildingAfter = this.ToVillage[this.Building];
             defenseReport.LoyalAfter = this.ToVillage.Loyal;
             defenseReport.BuildingAfter = this.ToVillage[this.Building];
