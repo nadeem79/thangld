@@ -5,7 +5,7 @@ using System.Text;
 
 namespace beans
 {
-    class TribalWarsException:Exception
+    public class TribalWarsException:Exception
     {
         public TribalWarsException(string message) : base(message) { }
     }

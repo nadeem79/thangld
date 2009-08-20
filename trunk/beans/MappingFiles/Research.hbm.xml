@@ -7,9 +7,10 @@
       <generator class="identity"/>
     </id>
     <many-to-one name="Village" class="beans.Village, beans" column="village_id" not-null="true" fetch="join" cascade="none" />
-    <property name="Type" column="type" type="beans.TroopType, beans" />
+    <property name="Type" column="type" type="beans.ResearchType, beans" />
     <property name="Start" column="start_time" type="timestamp" />
     <property name="Level" column="upgrade_level" type="Int32" />
+    <property name="End" column="end_time" type="timestamp" />
   </class>
 
 </hibernate-mapping>

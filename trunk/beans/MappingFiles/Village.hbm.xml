@@ -19,7 +19,7 @@
     <one-to-one name="VillageBuildingData" class="beans.VillageBuildingData, beans" cascade="all" lazy="false" />
     <one-to-one name="VillageResourceData" class="beans.VillageResourcesData, beans" cascade="all" lazy="false" />
     <one-to-one name="VillageTroopData" class="beans.VillageTroopData, beans" cascade="all" lazy="false" />
-    
+    <one-to-one name="VillageResearchData" class="beans.VillageResearchData, beans" cascade="all" lazy="false" />
   </class>
 
   <class name ="beans.VillageBuildingData, beans" table="villages_building" lazy="false">
@@ -99,6 +99,20 @@
     <property name="NobleOfVillage" column="total_noble" type="Int32" />
 
     <one-to-one name="Village" class="beans.Village, beans" constrained="true" />
+  </class>
+
+  <class name ="beans.VillageResearchData, beans" table="villages_research" lazy="false">
+    <id name="ID" column="id" type="Int32">
+      <generator class="foreign">
+        <param name="property">Village</param>
+      </generator>
+    </id>
+    <property name="Attack" column="attack" type="Int32" />
+    <property name="Defense" column="defense" type="Int32" />
+    <property name="TroopSpeed" column="unit_speed" type="Int32" />
+
+    <one-to-one name="Village" class="beans.Village, beans" foreign-key="id" constrained="true"/>
+
   </class>
 
 

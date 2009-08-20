@@ -13,7 +13,7 @@ namespace beans
         #region Static Members
 
         protected static Dictionary<int, ResearchPrice> _dictionary = new Dictionary<int,ResearchPrice>();
-        public static Dictionary<int, ResearchPrice> ResearchPrice
+        public static Dictionary<int, ResearchPrice> ResearchPrices
         {
             get { return Research._dictionary; }
         }
@@ -21,7 +21,7 @@ namespace beans
         public static ResearchPrice GetPrice(ResearchType type, int level, int smithy)
         {
             int key = (int)type + (level * 1000) + (smithy * 1000000);
-            return Research.ResearchPrice[key];
+            return Research.ResearchPrices[key];
         }
 
         public static Research GetResearchById(int id, ISession session)
