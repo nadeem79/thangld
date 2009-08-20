@@ -11,6 +11,7 @@ namespace beans
         private int _clay;
         private int _iron;
         private int _time;
+        private int _level;
         private string _name;
 
         public int Wood
@@ -24,6 +25,10 @@ namespace beans
         public int Iron
         {
             get { return this._iron; }
+        }
+        public int Level
+        {
+            get { return this._level; }
         }
         public int Time
         {
@@ -39,13 +44,14 @@ namespace beans
             return this._name;
         }
 
-        public ResearchPrice(string name, int time, int wood, int clay, int iron)
+        public ResearchPrice(string name, int time, int wood, int clay, int iron, int level)
         {
             this._name = name;
             this._time = time;
             this._wood = wood;
             this._clay = clay;
             this._iron = iron;
+            this._level = level;
         }
 
     }

@@ -15,6 +15,21 @@ namespace beans
             get;
             set;
         }
+        public int MaxAttackLevel
+        {
+            get;
+            set;
+        }
+        public int MaxDefenseLevel
+        {
+            get;
+            set;
+        }
+        public int MaxSpeedLevel
+        {
+            get;
+            set;
+        }
 
         public Research CreateResearch(ResearchType type, ISession session)
         {
@@ -27,7 +42,20 @@ namespace beans
             Research research = new Research();
             research.Village = this.Village;
             research.Type = type;
-            research.Level = this.Village[type] + 1;
+            switch (type)
+            {
+                case ResearchType.Speed:
+                    research.Level = this.MaxSpeedLevel + 1;
+                    break;
+                case ResearchType.Attack:
+                    research.Level = this.MaxAttackLevel + 1;
+                    break;
+                case ResearchType.Defense:
+                    research.Level = this.MaxDefenseLevel + 1;
+                    break;
+                default:
+                    break;
+            }
             research.Start = DateTime.Now;
             research.End = research.Start.AddSeconds(price.Time);
 
@@ -47,6 +75,7 @@ namespace beans
             {
                 if (trans != null)
                     trans.Rollback();
+                throw new TribalWarsException("Có lỗi xảy ra trong quá trình truyền dữ liệu. Vui lòng thử lại");
             }
 
             return research;
@@ -72,14 +101,13 @@ namespace beans
 
             ResearchPrice price = Research.GetPrice(research.Type, topResearch.Level, smithyLevel);
 
-            IList<Research> nextResearchs = (from r in researchs
-                                             where r.Type == research.Type
-                                             && r.ID > research.ID
-                                             select r).ToList<Research>();
+            researchs.Remove(research);
 
-            foreach (Research r in nextResearchs)
+            foreach (Research r in researchs)
             {
-                r.Level -= 1;
+                if (r.Type == research.Type)
+                    r.Level -= 1;
+
                 ResearchPrice nextPrice = Research.GetPrice(r.Type, r.Level, smithyLevel);
                 r.End = r.Start.AddSeconds(nextPrice.Time);
             }
@@ -92,7 +120,7 @@ namespace beans
             try
             {
                 trans = session.BeginTransaction(IsolationLevel.ReadUncommitted);
-                foreach (Research r in nextResearchs)
+                foreach (Research r in researchs)
                     session.Update(r);
                 session.Update(this.Village.VillageResourceData);
                 session.Delete(research);
@@ -109,6 +137,36 @@ namespace beans
         {
             Research research = Research.GetResearchById(researchId, session);
             this.CancelResearch(research, session);
+        }
+
+        public IList<Research> GetResearchs(ISession session)
+        {
+            IList<Research> researches = (from research in session.Linq<Research>()
+                                          where research.Village == this.Village
+                                          orderby research.ID ascending
+                                          select research).ToList<Research>();
+            this.MaxAttackLevel = (from research in researches
+                                   where research.Type == ResearchType.Attack
+                                   orderby research.ID descending
+                                   select research.Level).SingleOrDefault<int>();
+            this.MaxDefenseLevel = (from research in researches
+                                    where research.Type == ResearchType.Defense
+                                    orderby research.ID descending
+                                    select research.Level).SingleOrDefault<int>();
+            this.MaxSpeedLevel = (from research in researches
+                                  where research.Type == ResearchType.Speed
+                                  orderby research.ID descending
+                                  select research.Level).SingleOrDefault<int>();
+            return researches;
+        }
+
+        public bool CanResearch(ResearchType type, int level)
+        {
+            if (this.Village[BuildingType.Smithy] == 0)
+                return false;
+            ResearchPrice price = Research.GetPrice(type, level, this.Village[BuildingType.Smithy]);
+
+            return (price.Wood < this.Village[ResourcesType.Wood] && price.Clay < this.Village[ResourcesType.Clay] && price.Iron < this.Village[ResourcesType.Iron]);
         }
     }
 }

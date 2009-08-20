@@ -5,9 +5,8 @@ using System.Text;
 
 namespace beans
 {
-    public class VillageReseachData:IdentityObject
+    public class VillageResearchData : IdentityObject
     {
-        #region Properties.Research
 
         public virtual int Attack
         {
@@ -29,9 +28,6 @@ namespace beans
             get;
             set;
         }
-        
-
-        #endregion
 
         public virtual Village Village
         {

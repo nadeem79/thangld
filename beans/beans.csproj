@@ -260,6 +260,9 @@
   <ItemGroup>
     <EmbeddedResource Include="MappingFiles\Mail.hbm.xml" />
     <EmbeddedResource Include="MappingFiles\WriteMail.hbm.xml" />
+    <EmbeddedResource Include="MappingFiles\Research.hbm.xml">
+      <Generator>nhibernate-mapping.xsd</Generator>
+    </EmbeddedResource>
     <Content Include="Templates\AttackReport.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

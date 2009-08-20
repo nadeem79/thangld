@@ -1,0 +1,21 @@
+2009-08-21 00:02:31,296 ERROR 8 NHibernate.Util.ReflectHelper - Could not load type beans.VillageResearchData, beans.
+System.TypeLoadException: Could not load type 'beans.VillageResearchData' from assembly 'beans, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null'.
+   at System.Reflection.Assembly._GetType(String name, Boolean throwOnError, Boolean ignoreCase)
+   at System.Reflection.Assembly.GetType(String name, Boolean throwOnError)
+   at NHibernate.Util.ReflectHelper.TypeFromAssembly(AssemblyQualifiedTypeName name, Boolean throwOnError)
+2009-08-21 00:02:31,734 ERROR 8 NHibernate.Cfg.Configuration - Could not compile the mapping document: beans.MappingFiles.Village.hbm.xml
+NHibernate.MappingException: Could not compile the mapping document: beans.MappingFiles.Village.hbm.xml ---> NHibernate.MappingException: persistent class beans.VillageResearchData, beans not found ---> System.TypeLoadException: Could not load type 'beans.VillageResearchData' from assembly 'beans, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null'.
+   at System.Reflection.Assembly._GetType(String name, Boolean throwOnError, Boolean ignoreCase)
+   at System.Reflection.Assembly.GetType(String name, Boolean throwOnError)
+   at NHibernate.Util.ReflectHelper.TypeFromAssembly(AssemblyQualifiedTypeName name, Boolean throwOnError)
+   at NHibernate.Util.ReflectHelper.ClassForName(String name)
+   at NHibernate.Cfg.XmlHbmBinding.Binder.ClassForFullNameChecked(String fullName, String errorMessage)
+   --- End of inner exception stack trace ---
+   at NHibernate.Cfg.XmlHbmBinding.Binder.ClassForFullNameChecked(String fullName, String errorMessage)
+   at NHibernate.Cfg.XmlHbmBinding.Binder.ClassForNameChecked(String name, Mappings mappings, String errorMessage)
+   at NHibernate.Cfg.XmlHbmBinding.ClassBinder.BindClass(XmlNode node, IDecoratable classMapping, PersistentClass model, IDictionary`2 inheritedMetas)
+   at NHibernate.Cfg.XmlHbmBinding.RootClassBinder.Bind(XmlNode node, HbmClass classSchema, IDictionary`2 inheritedMetas)
+   at NHibernate.Cfg.XmlHbmBinding.MappingRootBinder.AddRootClasses(XmlNode parentNode, IDictionary`2 inheritedMetas)
+   at NHibernate.Cfg.XmlHbmBinding.MappingRootBinder.Bind(XmlNode node)
+   at NHibernate.Cfg.Configuration.AddValidatedDocument(NamedXmlDocument doc)
+   --- End of inner exception stack trace ---

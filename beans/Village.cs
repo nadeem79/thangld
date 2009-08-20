@@ -140,6 +140,11 @@ namespace beans
             get;
             set;
         }
+        public virtual VillageResearchData VillageResearchData
+        {
+            get;
+            set;
+        }
 
         public virtual VillageResearchMethods VillageResearchMethods
         {
@@ -315,11 +320,11 @@ namespace beans
                 switch (researchType)
                 {
                     case ResearchType.Speed:
-                        return this.Speed;
+                        return this.VillageResearchData.TroopSpeed;
                     case ResearchType.Attack:
-                        return this.Attack;
+                        return this.VillageResearchData.Attack;
                     case ResearchType.Defense:
-                        return this.Defense;
+                        return this.VillageResearchData.Defense;
                     default:
                         return 0;
                 }
@@ -329,13 +334,13 @@ namespace beans
                 switch (researchType)
                 {
                     case ResearchType.Speed:
-                        this.Speed = value;
+                        this.VillageResearchData.TroopSpeed = value;
                         break;
                     case ResearchType.Attack:
-                        this.Attack = value;
+                        this.VillageResearchData.Attack = value;
                         break;
                     case ResearchType.Defense:
-                        this.Defense = value;
+                        this.VillageResearchData.Defense = value;
                         break;
                     default:
                         break;
