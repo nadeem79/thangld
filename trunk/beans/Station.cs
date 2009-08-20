@@ -105,14 +105,14 @@ namespace beans
 
             beans.Return returnTroop = new Return();
             returnTroop.Spear = spear;
-            returnTroop.Spear = sword;
-            returnTroop.Spear = axe;
-            returnTroop.Spear = scout;
-            returnTroop.Spear = lightCavalry;
-            returnTroop.Spear = heavyCavalry;
-            returnTroop.Spear = ram;
-            returnTroop.Spear = catapult;
-            returnTroop.Spear = noble;
+            returnTroop.Sword = sword;
+            returnTroop.Axe = axe;
+            returnTroop.Scout = scout;
+            returnTroop.LightCavalry = lightCavalry;
+            returnTroop.HeavyCavalry = heavyCavalry;
+            returnTroop.Ram = ram;
+            returnTroop.Catapult = catapult;
+            returnTroop.Noble = noble;
             returnTroop.FromVillage = this.AtVillage;
             returnTroop.ToVillage = this.FromVillage;
             returnTroop.StartingTime = DateTime.Now;

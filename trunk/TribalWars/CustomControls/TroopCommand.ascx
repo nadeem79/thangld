@@ -307,11 +307,11 @@
             <td>
                 <a href="command.aspx?id=<% = this.Village.ID %>&command=<%# DataBinder.Eval(Container.DataItem, "ID") %>">
                     <%# TypePrefix((beans.MoveType)DataBinder.Eval(Container.DataItem, "Type")) %>
-                    <%# ((beans.Village)DataBinder.Eval(Container.DataItem, "ToVillage")).Name %>
-                    (<%# ((beans.Village)DataBinder.Eval(Container.DataItem, "ToVillage")).X.ToString("000") %>|<%# ((beans.Village)DataBinder.Eval(Container.DataItem, "ToVillage")).Y.ToString("000") %>)</a>
+                    <%# ((beans.Village)DataBinder.Eval(Container.DataItem, "FromVillage")).Name %>
+                    (<%# ((beans.Village)DataBinder.Eval(Container.DataItem, "FromVillage")).X.ToString("000")%>|<%# ((beans.Village)DataBinder.Eval(Container.DataItem, "FromVillage")).Y.ToString("000")%>)</a>
             </td>
             <td>
-                <%# ((DateTime)DataBinder.Eval(Container.DataItem, "LandingTime")).ToString("HH:mm:ss:'<span class=\"small inactive\">'fff'</span> ngày' dd:MM:yyyy")%>
+                <%# ((DateTime)DataBinder.Eval(Container.DataItem, "LandingTime")).ToString("HH:mm:ss'<span class=\"small inactive\">:'fff'</span> ngày' dd:MM:yyyy")%>
             </td>
             <td>
                 <span class="timer">
