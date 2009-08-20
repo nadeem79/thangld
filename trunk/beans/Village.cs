@@ -16,6 +16,7 @@ namespace beans
 
         private int _maxResources = -1;
         private double loyal;
+        protected VillageResearchMethods villageResearchMethods = new VillageResearchMethods();
         
         private Player _owner;
         public virtual Player Player
@@ -70,6 +71,22 @@ namespace beans
             get;
             set;
         }
+        public virtual int Attack
+        {
+            get;
+            set;
+        }
+        public virtual int Defense
+        {
+            get;
+            set;
+        }
+        public virtual int Speed
+        {
+            get;
+            set;
+        }
+        
         public virtual int MaxResources
         {
             get
@@ -122,6 +139,14 @@ namespace beans
         {
             get;
             set;
+        }
+
+        public virtual VillageResearchMethods VillageResearchMethods
+        {
+            get
+            {
+                return this.villageResearchMethods;
+            }
         }
 
         #endregion
@@ -283,7 +308,40 @@ namespace beans
                 }
             }
         }
-        
+        public virtual int this[ResearchType researchType]
+        {
+            get
+            {
+                switch (researchType)
+                {
+                    case ResearchType.Speed:
+                        return this.Speed;
+                    case ResearchType.Attack:
+                        return this.Attack;
+                    case ResearchType.Defense:
+                        return this.Defense;
+                    default:
+                        return 0;
+                }
+            }
+            set
+            {
+                switch (researchType)
+                {
+                    case ResearchType.Speed:
+                        this.Speed = value;
+                        break;
+                    case ResearchType.Attack:
+                        this.Attack = value;
+                        break;
+                    case ResearchType.Defense:
+                        this.Defense = value;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
         #endregion
 
         #region Static Members
@@ -364,6 +422,11 @@ namespace beans
         }
         
         #endregion
+
+        public Village()
+        {
+            this.villageResearchMethods.Village = this;
+        }
 
         public override string ToString()
         {

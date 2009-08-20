@@ -79,6 +79,8 @@
     <Compile Include="NumericConfiguration.cs" />
     <Compile Include="Player.Methods.Tribe.cs" />
     <Compile Include="Research.cs" />
+    <Compile Include="ResearchableStatus.cs" />
+    <Compile Include="ResearchPrice.cs" />
     <Compile Include="ResearchType.cs" />
     <Compile Include="SendResourceReport.cs" />
     <Compile Include="StringConfiguration.cs" />
@@ -96,6 +98,7 @@
     <Compile Include="Error.cs" />
     <Compile Include="InviteToTribeReport.cs" />
     <Compile Include="Mail.cs" />
+    <Compile Include="VillageResearchMethods.cs" />
     <Compile Include="WriteMail.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="MovingCommand.cs">
