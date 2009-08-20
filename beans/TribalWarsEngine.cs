@@ -8,6 +8,14 @@ namespace beans
 {
     public class TribalWarsEngine
     {
+
+        private static void CalculateResearch()
+        {
+            //ResearchPrice firstAttackResearchPrice = new ResearchPrice("", time wood clay iron)
+            ResearchPrice firstAttackResearchPrice = new ResearchPrice( "Attack",
+                                                                        (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Research.max_market_level").Value
+        }
+
         public static void Start(ISession session)
         {
             Configuration.TribalWarsConfiguration.LoadData(session);
