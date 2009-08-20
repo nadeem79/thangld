@@ -97,7 +97,7 @@ namespace beans
         protected static ResearchPrice rRam = new ResearchPrice("Ram", 25730, 4800, 6400, 3200);
         protected static ResearchPrice rCatapult = new ResearchPrice("Catapult", 38600, 6400, 8000, 4800);
         protected static Dictionary<int, ResearchPrice> _dictionary = new Dictionary<int, ResearchPrice>();
-
+        
         public static ResearchPrice Spear
         {
             get

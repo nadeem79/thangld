@@ -70,6 +70,7 @@
     <Compile Include="AttackReport.cs" />
     <Compile Include="Build.cs" />
     <Compile Include="BuildingType.cs" />
+    <Compile Include="CommonFunctions.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Admin.cs" />
     <Compile Include="Administrator.Methods.Configuration.cs" />
@@ -77,6 +78,8 @@
     <Compile Include="MovingCommandLandingTimeComparer.cs" />
     <Compile Include="NumericConfiguration.cs" />
     <Compile Include="Player.Methods.Tribe.cs" />
+    <Compile Include="Research.cs" />
+    <Compile Include="ResearchType.cs" />
     <Compile Include="SendResourceReport.cs" />
     <Compile Include="StringConfiguration.cs" />
     <Compile Include="TribalWarsEngine.cs" />

@@ -339,5 +339,32 @@ namespace beans
 
             return station.Return(spear, sword, axe, scout, lightCavalry, heavyCavalry, ram, catapult, noble, session);
         }
+
+        public virtual Return WithdrawStation(Station station,
+                                                int spear,
+                                                int sword,
+                                                int axe,
+                                                int scout,
+                                                int lightCavalry,
+                                                int heavyCavalry,
+                                                int ram,
+                                                int catapult,
+                                                int noble,
+                                                ISession session)
+        {
+
+            if (station.AtVillage != this && station.FromVillage != this)
+                throw new TribalWarsException("Không có quân từ thành phố này");
+
+            return station.Return(spear, sword, axe, scout, lightCavalry, heavyCavalry, ram, catapult, noble, session);
+        }
+
+        public virtual Station GetStationById(int stationId, ISession session)
+        {
+            return (from station in session.Linq<Station>()
+                    where station.ID == stationId
+                    && (station.AtVillage == this || station.FromVillage == this)
+                    select station).SingleOrDefault<Station>();
+        }
     }
 }
