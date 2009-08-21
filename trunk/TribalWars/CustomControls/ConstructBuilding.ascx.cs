@@ -43,11 +43,62 @@ public partial class CustomControls_ConstructBuilding : System.Web.UI.UserContro
 
     private string BuildableStatusToString(beans.BuildingType type, ISession session)
     {
-        BuildableStatus enumCanBuild = this.Village.CanBuild(type, session);
+        BuildableStatus enumCanBuild = this.Village.VillageBuildingMethods.CanBuild(type, session);
         string strResult = "";
         if (enumCanBuild == BuildableStatus.JustDoIt)
         {
-            BuildPrice price = beans.Build.GetPrice(type, this.Village.GetTotalBuildingLevel(type, session) + 1, this.Village[beans.BuildingType.Headquarter]);
+            BuildPrice price = null;
+            switch (type)
+            {
+                case BuildingType.Headquarter:
+                    price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopHeadquarterLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    break;
+                case BuildingType.Barracks:
+                    price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopBarrackLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    break;
+                case BuildingType.Stable:
+                    price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopStableLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    break;
+                case BuildingType.Workshop:
+                    price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopWorkshopLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    break;
+                case BuildingType.Academy:
+                    price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopAcademyLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    break;
+                case BuildingType.Smithy:
+                    price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopSmithyLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    break;
+                case BuildingType.Rally:
+                    price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopRallyPointLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    break;
+                case BuildingType.Market:
+                    price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopMarketLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    break;
+                case BuildingType.TimberCamp:
+                    price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopTimberCampLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    break;
+                case BuildingType.ClayPit:
+                    price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopClayPitLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    break;
+                case BuildingType.IronMine:
+                    price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopIronMineLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    break;
+                case BuildingType.Farm:
+                    price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopFarmLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    break;
+                case BuildingType.Warehouse:
+                    price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopWarehouseLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    break;
+                case BuildingType.HidingPlace:
+                    price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopHiddenPlaceLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    break;
+                case BuildingType.Wall:
+                    price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopWallLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    break;
+                default:
+                    break;
+            }
+            
             strResult += "<td><img src=\"images/holz.png\" title=\"Wood\" alt=\"\" />" + price.Wood + "</td>";
             strResult += "<td><img src=\"images/lehm.png\" title=\"Clay\" alt=\"\" />" + price.Clay + "</td>";
             strResult += "<td><img src=\"images/eisen.png\" title=\"Iron\" alt=\"\" />" + price.Iron + "</td>";
@@ -61,7 +112,57 @@ public partial class CustomControls_ConstructBuilding : System.Web.UI.UserContro
         }
         else
         {
-            BuildPrice price = beans.Build.GetPrice(type, this.Village.GetTotalBuildingLevel(type, session) + 1, this.Village[beans.BuildingType.Headquarter]);
+            BuildPrice price = null;
+            switch (type)
+            {
+                case BuildingType.Headquarter:
+                    price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopHeadquarterLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    break;
+                case BuildingType.Barracks:
+                    price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopBarrackLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    break;
+                case BuildingType.Stable:
+                    price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopStableLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    break;
+                case BuildingType.Workshop:
+                    price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopWorkshopLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    break;
+                case BuildingType.Academy:
+                    price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopAcademyLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    break;
+                case BuildingType.Smithy:
+                    price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopSmithyLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    break;
+                case BuildingType.Rally:
+                    price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopRallyPointLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    break;
+                case BuildingType.Market:
+                    price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopMarketLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    break;
+                case BuildingType.TimberCamp:
+                    price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopTimberCampLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    break;
+                case BuildingType.ClayPit:
+                    price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopClayPitLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    break;
+                case BuildingType.IronMine:
+                    price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopIronMineLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    break;
+                case BuildingType.Farm:
+                    price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopFarmLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    break;
+                case BuildingType.Warehouse:
+                    price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopWarehouseLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    break;
+                case BuildingType.HidingPlace:
+                    price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopHiddenPlaceLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    break;
+                case BuildingType.Wall:
+                    price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopWallLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    break;
+                default:
+                    break;
+            }
             strResult += "<td><img src=\"images/holz.png\" title=\"Wood\" alt=\"\" />" + price.Wood + "</td>";
             strResult += "<td><img src=\"images/lehm.png\" title=\"Clay\" alt=\"\" />" + price.Clay + "</td>";
             strResult += "<td><img src=\"images/eisen.png\" title=\"Iron\" alt=\"\" />" + price.Iron + "</td>";

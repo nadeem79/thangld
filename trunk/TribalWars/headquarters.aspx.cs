@@ -28,11 +28,10 @@ public partial class headquarters : System.Web.UI.Page
         ITransaction trans = null;
         if (Request["action"] == "build" && Request["building"] != null && BuildingTypeFactory.GetType(Request["building"]) != BuildingType.NoBuiding)
         {
-            trans = this.NHibernateSession.BeginTransaction(IsolationLevel.ReadCommitted);
-            BuildableStatus enumBuildStatus = this.village.PrepareBuild(BuildingTypeFactory.GetType(Request["building"]), this.NHibernateSession);
+            BuildableStatus enumBuildStatus = this.village.VillageBuildingMethods.PrepareBuild(BuildingTypeFactory.GetType(Request["building"]), this.NHibernateSession);
             if (enumBuildStatus != BuildableStatus.JustDoIt)
                 this.lblError.Text = BuildableStatusFactory.ToString(enumBuildStatus);
-            trans.Commit();
+
             master.ClayLabel.Text = this.village.VillageResourceData.Clay.ToString();
             master.IronLabel.Text = this.village.VillageResourceData.Iron.ToString();
             master.WoodLabel.Text = this.village.VillageResourceData.Wood.ToString();
@@ -50,16 +49,14 @@ public partial class headquarters : System.Web.UI.Page
             int.TryParse(Request["command"], out build_id);
             if (build_id != 0)
             {
-                trans = this.NHibernateSession.BeginTransaction();
-                this.village.CancelBuild(build_id, this.NHibernateSession);
-                trans.Commit();
+                this.village.VillageBuildingMethods.CancelBuild(build_id, this.NHibernateSession);
             }
         }
         master.ClayLabel.Text = this.village.VillageResourceData.Clay.ToString();
         master.WoodLabel.Text = this.village.VillageResourceData.Wood.ToString();
         master.IronLabel.Text = this.village.VillageResourceData.Iron.ToString();
 
-        IList<Build> lstBuild = this.village.GetPendingConstruction(this.NHibernateSession);
+        IList<Build> lstBuild = this.village.VillageBuildingMethods.GetPendingConstruction(this.NHibernateSession);
         if (lstBuild.Count > 0)
             lstBuild[0].Start = DateTime.Now;
         for (int i = 1; i < lstBuild.Count; i++)

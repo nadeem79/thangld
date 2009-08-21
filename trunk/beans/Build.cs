@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Collections;
 using NHibernate;
+using NHibernate.Linq;
+using System.Data;
 
 namespace beans
 {
@@ -199,6 +201,7 @@ namespace beans
             this.InVillage.Player.Point += p.Point;
             return true;
         }
+
         public void Cancel(ISession session)
         {
             BuildPrice price = Build.GetPrice(this.Building, this.Level, this.InVillage[BuildingType.Headquarter]);
@@ -207,10 +210,45 @@ namespace beans
             this.InVillage.VillageResourceData.Clay += (int)(price.Clay * 0.8);
             this.InVillage.VillageResourceData.Iron += (int)(price.Iron * 0.8);
             this.InVillage.Population -= price.Population;
-            this.InVillage.Points -= price.Point;
             
-            session.Update(this.InVillage);
-            session.Delete(this);
+            
+
+            IList<Build> builds = (from build in session.Linq<Build>()
+                                   where build.InVillage == this.InVillage
+                                   && build.ID > this.ID
+                                   orderby build.ID ascending
+                                   select build).ToList<Build>();
+
+            for (int i = 0; i < builds.Count; i++)
+            {
+                Build b = builds[i];
+                if (i == 0)
+                    b.Start = DateTime.Now;
+                else
+                    b.Start = builds[i - 1].End;
+
+                if (b.Building == this.Building)
+                    b.Level--;
+
+                BuildPrice p = Build.GetPrice(b.Building, b.Level, this.InVillage[BuildingType.Headquarter]);
+                b.End = b.Start.AddSeconds(p.BuildTime);
+            }
+
+            ITransaction trans = null;
+            try
+            {
+                trans = session.BeginTransaction(IsolationLevel.ReadUncommitted);
+                session.Update(this.InVillage);
+                session.Delete(this);
+                foreach (Build b in builds)
+                    session.Update(b);
+                trans.Commit();
+            }
+            catch
+            {
+                if (trans != null)
+                    trans.Rollback();
+            }
         }
         #endregion
 

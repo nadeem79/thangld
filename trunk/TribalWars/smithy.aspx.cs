@@ -141,9 +141,13 @@ public partial class smithy : System.Web.UI.Page
     }
     protected void bttnCancelResearch_Click(object sender, EventArgs e)
     {
-        CommandEventArgs commandEventArgs = (CommandEventArgs)e;
+        
+    }
+
+    protected void rptResearches_ItemCommand(object source, RepeaterCommandEventArgs e)
+    {
         int researchId = 0;
-        if (!int.TryParse(commandEventArgs.CommandArgument.ToString(), out researchId))
+        if (!int.TryParse(e.CommandArgument.ToString(), out researchId))
             return;
 
         ISession session = (ISession)Context.Items["NHibernateSession"];

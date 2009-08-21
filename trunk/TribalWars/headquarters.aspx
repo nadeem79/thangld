@@ -75,7 +75,7 @@
                         <ItemTemplate>
                             <tr class="lit">
                                 <td>
-                                    <%# beans.BuildingTypeFactory.ToString((beans.BuildingType)DataBinder.Eval(Container.DataItem, "Building")) %>
+                                    <%# beans.BuildingTypeFactory.ToString((beans.BuildingType)DataBinder.Eval(Container.DataItem, "Building")) %> level <%# Eval("Level") %>
                                 </td>
                                 <td>
                                     <span <%# this.FirstRow(Container.ItemIndex)%>>
