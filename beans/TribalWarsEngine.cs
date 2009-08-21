@@ -11,19 +11,36 @@ namespace beans
 
         protected static void CalculateResearchPrice()
         {
-            ResearchPrice attackResearchPrice = new ResearchPrice( "Attack",
+
+            int baseAttackTime = (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Research.Attack.time").Value;
+            int baseAttackWood = (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Research.Attack.wood").Value;
+            int baseAttackClay = (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Research.Attack.clay").Value;
+            int baseAttackIron = (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Research.Attack.iron").Value;
+
+            int baseDefenseTime = (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Research.Defense.time").Value;
+            int baseDefenseWood = (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Research.Defense.wood").Value;
+            int baseDefenseClay = (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Research.Defense.clay").Value;
+            int baseDefenseIron = (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Research.Defense.iron").Value;
+
+            int baseSpeedTime = (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Research.Speed.time").Value;
+            int baseSpeedWood = (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Research.Speed.wood").Value;
+            int baseSpeedClay = (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Research.Speed.clay").Value;
+            int baseSpeedIron = (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Research.Speed.iron").Value;
+
+
+            ResearchPrice attackResearchPrice = new ResearchPrice("Attack cấp 1 smithy 1",
                                                                         (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Research.Attack.time").Value,
                                                                         (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Research.Attack.wood").Value,
                                                                         (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Research.Attack.clay").Value,
                                                                         (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Research.Attack.iron").Value,
                                                                         1);
-            ResearchPrice defenseResearchPrice = new ResearchPrice("Defense",
+            ResearchPrice defenseResearchPrice = new ResearchPrice("Defense cấp 1 smithy 1",
                                                                         (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Research.Defense.time").Value,
                                                                         (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Research.Defense.wood").Value,
                                                                         (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Research.Defense.clay").Value,
                                                                         (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Research.Defense.iron").Value, 
                                                                         1);
-            ResearchPrice speedResearchPrice = new ResearchPrice("Speed",
+            ResearchPrice speedResearchPrice = new ResearchPrice("Speed cấp 1 smithy 1",
                                                                         (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Research.Speed.time").Value,
                                                                         (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Research.Speed.wood").Value,
                                                                         (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Research.Speed.clay").Value,
@@ -33,41 +50,97 @@ namespace beans
             int maxResearchLevel = (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Research.Common.max_level").Value;
             int maxSmithyLevel = (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Building.Smithy.max_level").Value;
             double percentResourceIncrease = Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Research.Common.percent_resource_increase").Value;
-            double percentTimeIncrease = Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Research.Common.percent_time_decrease").Value;
+            double percentTimeIncrease = Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Research.Common.percent_time_increase").Value;
+            double percentTimeDecrease = Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Research.Common.percent_time_decrease").Value;
             int attackType = (int)ResearchType.Attack, defenseType = (int)ResearchType.Defense, speedType = (int)ResearchType.Speed, key = 0, tmp = 0;
             
             Research.ResearchPrices.Clear();
 
-            for (int researchLevel = 1; researchLevel <= maxResearchLevel; researchLevel++)
+            //Research.ResearchPrices.Add(1001001, attackResearchPrice);
+            //Research.ResearchPrices.Add(1001002, defenseResearchPrice);
+            //Research.ResearchPrices.Add(1001000, speedResearchPrice);
+
+            for (int researchLevel = 1; researchLevel < maxResearchLevel; researchLevel++)
             {
-                int woodForAttack = attackResearchPrice.Wood + (int)(attackResearchPrice.Wood * percentResourceIncrease);
-                int clayForAttack = attackResearchPrice.Clay + (int)(attackResearchPrice.Clay * percentResourceIncrease);
-                int ironForAttack = attackResearchPrice.Iron + (int)(attackResearchPrice.Iron * percentResourceIncrease);
-
-                int woodForDefense = defenseResearchPrice.Wood + (int)(defenseResearchPrice.Wood * percentResourceIncrease);
-                int clayForDefense = defenseResearchPrice.Clay + (int)(defenseResearchPrice.Clay * percentResourceIncrease);
-                int ironForDefense = defenseResearchPrice.Iron + (int)(defenseResearchPrice.Iron * percentResourceIncrease);
-
-                int woodForSpeed = speedResearchPrice.Wood + (int)(speedResearchPrice.Wood * percentResourceIncrease);
-                int clayForSpeed = speedResearchPrice.Clay + (int)(speedResearchPrice.Clay * percentResourceIncrease);
-                int ironForSpeed = speedResearchPrice.Iron + (int)(speedResearchPrice.Iron * percentResourceIncrease);
-
-                for (int smithyLevel = 1; smithyLevel <= maxSmithyLevel; smithyLevel++)
+                if (researchLevel > 1)
                 {
-                     tmp = (researchLevel * 1000) + (smithyLevel * 1000000);
+                    baseAttackTime += (int)(baseAttackTime * percentTimeIncrease);
+                    baseAttackWood += (int)(baseAttackWood * percentResourceIncrease);
+                    baseAttackClay += (int)(baseAttackClay * percentResourceIncrease);
+                    baseAttackIron += (int)(baseAttackIron * percentResourceIncrease);
 
+                    baseDefenseTime += (int)(baseDefenseTime * percentTimeIncrease);
+                    baseDefenseWood += (int)(baseDefenseWood * percentResourceIncrease);
+                    baseDefenseClay += (int)(baseDefenseClay * percentResourceIncrease);
+                    baseDefenseIron += (int)(baseDefenseIron * percentResourceIncrease);
+
+                    baseSpeedTime += (int)(baseSpeedTime * percentTimeIncrease);
+                    baseSpeedWood += (int)(baseSpeedWood * percentResourceIncrease);
+                    baseSpeedClay += (int)(baseSpeedClay * percentResourceIncrease);
+                    baseSpeedIron += (int)(baseSpeedIron * percentResourceIncrease);
+                }
+
+                int speedTime = baseSpeedTime, attackTime = baseAttackTime, defenseTime = baseDefenseTime;
+                for (int smithy = 1; smithy < maxSmithyLevel; smithy++)
+                {
+                    speedTime -= (int)(speedTime * percentTimeDecrease);
+                    attackTime -= (int)(attackTime * percentTimeDecrease);
+                    defenseTime -= (int)(defenseTime * percentTimeDecrease);
+                    attackResearchPrice = new ResearchPrice(string.Format("Attack cấp {0} smithy {1}", researchLevel, smithy), attackTime, baseAttackWood, baseDefenseClay, baseDefenseIron, researchLevel);
+                    defenseResearchPrice = new ResearchPrice(string.Format("Defense cấp {0} smithy {1}", researchLevel, smithy), defenseTime, baseDefenseWood, baseDefenseClay, baseDefenseIron, researchLevel);
+                    speedResearchPrice = new ResearchPrice(string.Format("Speed cấp {0} smithy {1}", researchLevel, smithy), speedTime, baseSpeedWood, baseSpeedClay, baseSpeedIron, researchLevel);
+                    tmp = (researchLevel * 1000) + (smithy * 1000000);
                     key = attackType + tmp;
                     Research.ResearchPrices.Add(key, attackResearchPrice);
                     key = defenseType + tmp;
                     Research.ResearchPrices.Add(key, defenseResearchPrice);
                     key = speedType + tmp;
                     Research.ResearchPrices.Add(key, speedResearchPrice);
-
-                    attackResearchPrice = new ResearchPrice("Attack", attackResearchPrice.Time - (int)(attackResearchPrice.Time * percentTimeIncrease), woodForAttack, clayForAttack, ironForAttack, researchLevel);
-                    defenseResearchPrice = new ResearchPrice("Defense", defenseResearchPrice.Time - (int)(defenseResearchPrice.Time * percentTimeIncrease), woodForDefense, clayForDefense, ironForDefense, researchLevel);
-                    speedResearchPrice = new ResearchPrice("Speed", speedResearchPrice.Time - (int)(speedResearchPrice.Time * percentTimeIncrease), woodForSpeed, clayForSpeed, ironForSpeed, researchLevel);
                 }
             }
+
+            //for (int researchLevel = 1; researchLevel <= maxResearchLevel; researchLevel++)
+            //{
+            //    if (researchLevel > 1)
+            //    {
+            //        attackResearchPrice = Research.GetPrice(ResearchType.Attack, researchLevel - 1, 1);
+            //        defenseResearchPrice = Research.GetPrice(ResearchType.Defense, researchLevel - 1, 1);
+            //        speedResearchPrice = Research.GetPrice(ResearchType.Speed, researchLevel - 1, 1);
+            //    }
+
+            //    int woodForAttack = attackResearchPrice.Wood + (int)(attackResearchPrice.Wood * percentResourceIncrease);
+            //    int clayForAttack = attackResearchPrice.Clay + (int)(attackResearchPrice.Clay * percentResourceIncrease);
+            //    int ironForAttack = attackResearchPrice.Iron + (int)(attackResearchPrice.Iron * percentResourceIncrease);
+            //    int timeForAttack = attackResearchPrice.Time + (int)(attackResearchPrice.Time * percentTimeIncrease);
+
+            //    int woodForDefense = defenseResearchPrice.Wood + (int)(defenseResearchPrice.Wood * percentResourceIncrease);
+            //    int clayForDefense = defenseResearchPrice.Clay + (int)(defenseResearchPrice.Clay * percentResourceIncrease);
+            //    int ironForDefense = defenseResearchPrice.Iron + (int)(defenseResearchPrice.Iron * percentResourceIncrease);
+            //    int timeForDefense = defenseResearchPrice.Time + (int)(defenseResearchPrice.Time * percentTimeIncrease);
+
+            //    int woodForSpeed = speedResearchPrice.Wood + (int)(speedResearchPrice.Wood * percentResourceIncrease);
+            //    int clayForSpeed = speedResearchPrice.Clay + (int)(speedResearchPrice.Clay * percentResourceIncrease);
+            //    int ironForSpeed = speedResearchPrice.Iron + (int)(speedResearchPrice.Iron * percentResourceIncrease);
+            //    int timeForSpeed = speedResearchPrice.Time + (int)(speedResearchPrice.Time * percentTimeIncrease);
+
+            //    for (int smithyLevel = 1; smithyLevel <= maxSmithyLevel; smithyLevel++)
+            //    {
+            //        tmp = (researchLevel * 1000) + (smithyLevel * 1000000);
+            //        if (researchLevel != 1 || smithyLevel != 1)
+            //        {
+            //            key = attackType + tmp;
+            //            Research.ResearchPrices.Add(key, attackResearchPrice);
+            //            key = defenseType + tmp;
+            //            Research.ResearchPrices.Add(key, defenseResearchPrice);
+            //            key = speedType + tmp;
+            //            Research.ResearchPrices.Add(key, speedResearchPrice);
+            //        }
+
+            //        attackResearchPrice = new ResearchPrice(string.Format("Attack cấp {0} smithy {1}", researchLevel, smithyLevel + 1), attackResearchPrice.Time - (int)(timeForAttack * percentTimeDecrease), woodForAttack, clayForAttack, ironForAttack, researchLevel);
+            //        defenseResearchPrice = new ResearchPrice(string.Format("Defense cấp {0} smithy {1}", researchLevel, smithyLevel + 1), defenseResearchPrice.Time - (int)(timeForDefense * percentTimeDecrease), woodForDefense, clayForDefense, ironForDefense, researchLevel);
+            //        speedResearchPrice = new ResearchPrice(string.Format("Speed cấp {0} smithy {1}", researchLevel, smithyLevel + 1), speedResearchPrice.Time - (int)(timeForSpeed * percentTimeDecrease), woodForSpeed, clayForSpeed, ironForSpeed, researchLevel);
+            //    }
+            //}
         }
         protected static void CalculateMerchant()
         {

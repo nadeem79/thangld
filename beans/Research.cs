@@ -61,7 +61,7 @@ namespace beans
         #region Methods
         public virtual bool Expense(DateTime time)
         {
-            return time < this.End;
+            return time > this.End;
 
         }
         #endregion

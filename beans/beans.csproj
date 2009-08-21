@@ -98,6 +98,7 @@
     <Compile Include="Error.cs" />
     <Compile Include="InviteToTribeReport.cs" />
     <Compile Include="Mail.cs" />
+    <Compile Include="VillageBuildingMethods.cs" />
     <Compile Include="VillageResearchMethods.cs" />
     <Compile Include="WriteMail.cs" />
     <Compile Include="Map.cs" />

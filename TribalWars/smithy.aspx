@@ -21,7 +21,8 @@
         </tbody>
     </table>
     <br />
-    <asp:Repeater ID="rptResearches" runat="server">
+    <asp:Repeater ID="rptResearches" runat="server" 
+        onitemcommand="rptResearches_ItemCommand">
         <HeaderTemplate>
             <table class="vis">
                 <tbody>

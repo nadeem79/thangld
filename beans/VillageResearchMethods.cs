@@ -148,15 +148,15 @@ namespace beans
             this.MaxAttackLevel = (from research in researches
                                    where research.Type == ResearchType.Attack
                                    orderby research.ID descending
-                                   select research.Level).SingleOrDefault<int>();
+                                   select research.Level).FirstOrDefault<int>();
             this.MaxDefenseLevel = (from research in researches
                                     where research.Type == ResearchType.Defense
                                     orderby research.ID descending
-                                    select research.Level).SingleOrDefault<int>();
+                                    select research.Level).FirstOrDefault<int>();
             this.MaxSpeedLevel = (from research in researches
                                   where research.Type == ResearchType.Speed
                                   orderby research.ID descending
-                                  select research.Level).SingleOrDefault<int>();
+                                  select research.Level).FirstOrDefault<int>();
             return researches;
         }
 
