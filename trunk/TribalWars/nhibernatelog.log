@@ -1,10 +1,654 @@
-2009-08-21 00:02:31,296 ERROR 8 NHibernate.Util.ReflectHelper - Could not load type beans.VillageResearchData, beans.
-System.TypeLoadException: Could not load type 'beans.VillageResearchData' from assembly 'beans, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null'.
+2009-08-22 10:03:13,843 ERROR 4 NHibernate.Util.ADOExceptionReporter - The given key was not present in the dictionary.
+2009-08-22 10:21:20,859 ERROR 8 NHibernate.Event.Default.AbstractFlushingEventListener - Could not synchronize database state with session
+NHibernate.StaleStateException: Unexpected row count: 0; expected: 1
+   at NHibernate.AdoNet.Expectations.BasicExpectation.VerifyOutcomeNonBatched(Int32 rowCount, IDbCommand statement)
+   at NHibernate.AdoNet.NonBatchingBatcher.AddToBatch(IExpectation expectation)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Delete(Object id, Object version, Int32 j, Object obj, SqlCommandInfo sql, ISessionImplementor session, Object[] loadedState)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Delete(Object id, Object version, Object obj, ISessionImplementor session)
+   at NHibernate.Action.EntityDeleteAction.Execute()
+   at NHibernate.Engine.ActionQueue.Execute(IExecutable executable)
+   at NHibernate.Engine.ActionQueue.ExecuteActions(IList list)
+   at NHibernate.Engine.ActionQueue.ExecuteActions()
+   at NHibernate.Event.Default.AbstractFlushingEventListener.PerformExecutions(IEventSource session)
+2009-08-22 11:56:10,109 ERROR 4 NHibernate.AdoNet.AbstractBatcher - Could not execute query: SELECT this_.id as id2_6_, this_.village_id as village2_2_6_, this_.troop as troop2_6_, this_.quantity as quantity2_6_, this_.start_time as start5_2_6_, village2_.id as id10_0_, village2_.name as name10_0_, village2_.x as x10_0_, village2_.y as y10_0_, village2_.userid as userid10_0_, village2_.points as points10_0_, village2_.loyal as loyal10_0_, village2_.last_update as last8_10_0_, village2_.population as population10_0_, player3_.id as id21_1_, player3_.username as username21_1_, player3_.password as password21_1_, player3_.type as type21_1_, player3_.birthdate as birthdate21_1_, player3_.sex as sex21_1_, player3_.yahoo as yahoo21_1_, player3_.msn as msn21_1_, player3_.skype as skype21_1_, player3_.email as email21_1_, player3_.description as descrip11_21_1_, player3_.point as point21_1_, player3_.avatar as avatar21_1_, player3_.address as address21_1_, player3_.graphics_village as graphics15_21_1_, player3_.building_level as building16_21_1_, player3_.tribe_permission as tribe17_21_1_, player3_.tribe_title as tribe18_21_1_, player3_.group_id as group19_21_1_, villagebui4_.id as id11_2_, villagebui4_.headquarter as headquar2_11_2_, villagebui4_.barracks as barracks11_2_, villagebui4_.stable as stable11_2_, villagebui4_.workshop as workshop11_2_, villagebui4_.academy as academy11_2_, villagebui4_.smithy as smithy11_2_, villagebui4_.rally as rally11_2_, villagebui4_.market as market11_2_, villagebui4_.claypit as claypit11_2_, villagebui4_.ironmine as ironmine11_2_, villagebui4_.timbercamp as timbercamp11_2_, villagebui4_.storage as storage11_2_, villagebui4_.farm as farm11_2_, villagebui4_.hide as hide11_2_, villagebui4_.wall as wall11_2_, villagebui4_.merchant as merchant11_2_, villageres5_.id as id12_3_, villageres5_.clay as clay12_3_, villageres5_.wood as wood12_3_, villageres5_.iron as iron12_3_, villagetro6_.id as id13_4_, villagetro6_.spear as spear13_4_, villagetro6_.sword as sword13_4_, villagetro6_.axe as axe13_4_, villagetro6_.scout as scout13_4_, villagetro6_.light as light13_4_, villagetro6_.heavy as heavy13_4_, villagetro6_.catapult as catapult13_4_, villagetro6_.ram as ram13_4_, villagetro6_.noble as noble13_4_, villagetro6_.in_spear as in11_13_4_, villagetro6_.in_sword as in12_13_4_, villagetro6_.in_axe as in13_13_4_, villagetro6_.in_scout as in14_13_4_, villagetro6_.in_light as in15_13_4_, villagetro6_.in_heavy as in16_13_4_, villagetro6_.in_catapult as in17_13_4_, villagetro6_.in_ram as in18_13_4_, villagetro6_.in_noble as in19_13_4_, villagetro6_.total_spear as total20_13_4_, villagetro6_.total_sword as total21_13_4_, villagetro6_.total_axe as total22_13_4_, villagetro6_.total_scout as total23_13_4_, villagetro6_.total_light as total24_13_4_, villagetro6_.total_heavy as total25_13_4_, villagetro6_.total_catapult as total26_13_4_, villagetro6_.total_ram as total27_13_4_, villagetro6_.total_noble as total28_13_4_, villageres7_.id as id14_5_, villageres7_.attack as attack14_5_, villageres7_.defense as defense14_5_, villageres7_.unit_speed as unit4_14_5_ FROM recruit this_ inner join villages_common village2_ on this_.village_id=village2_.id left outer join users player3_ on village2_.userid=player3_.id left outer join villages_building villagebui4_ on village2_.id=villagebui4_.id left outer join villages_resources villageres5_ on village2_.id=villageres5_.id left outer join villages_troop villagetro6_ on village2_.id=villagetro6_.id left outer join villages_research villageres7_ on village2_.id=villageres7_.id WHERE this_.village_id = @p0 and this_.quantity > @p1 and ((this_.troop = @p2 or this_.troop = @p3) or this_.troop = @p4) ORDER BY this_.id asc
+System.Data.SqlClient.SqlException: Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlDataReader.SetMetaData(_SqlMetaDataSet metaData, Boolean moreInfo)
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlDataReader.ConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd)
+2009-08-22 11:56:10,203 ERROR 4 NHibernate.Util.ADOExceptionReporter - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+2009-08-22 11:56:10,203 ERROR 4 NHibernate.Util.ADOExceptionReporter - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+2009-08-22 12:08:44,984 ERROR 8 NHibernate.AssertionFailure - An AssertionFailure occurred - this may indicate a bug in NHibernate or in your custom types.
+NHibernate.AssertionFailure: null id in beans.DefenseOtherReport entry (don't flush the Session after an exception occurs)
+2009-08-22 12:15:00,406 ERROR 4 NHibernate.AssertionFailure - An AssertionFailure occurred - this may indicate a bug in NHibernate or in your custom types.
+NHibernate.AssertionFailure: null id in beans.DefenseOtherReport entry (don't flush the Session after an exception occurs)
+2009-08-22 12:19:07,531 ERROR 4 NHibernate.AssertionFailure - An AssertionFailure occurred - this may indicate a bug in NHibernate or in your custom types.
+NHibernate.AssertionFailure: null id in beans.DefenseOtherReport entry (don't flush the Session after an exception occurs)
+2009-08-22 12:34:56,343 ERROR 9 NHibernate.AdoNet.AbstractBatcher - Could not execute query: SELECT player0_.id as id21_5_, player0_.username as username21_5_, player0_.password as password21_5_, player0_.type as type21_5_, player0_.birthdate as birthdate21_5_, player0_.sex as sex21_5_, player0_.yahoo as yahoo21_5_, player0_.msn as msn21_5_, player0_.skype as skype21_5_, player0_.email as email21_5_, player0_.description as descrip11_21_5_, player0_.point as point21_5_, player0_.avatar as avatar21_5_, player0_.address as address21_5_, player0_.graphics_village as graphics15_21_5_, player0_.building_level as building16_21_5_, player0_.tribe_permission as tribe17_21_5_, player0_.tribe_title as tribe18_21_5_, player0_.group_id as group19_21_5_, villages1_.userid as userid7_, villages1_.id as id7_, villages1_.id as id10_0_, villages1_.name as name10_0_, villages1_.x as x10_0_, villages1_.y as y10_0_, villages1_.userid as userid10_0_, villages1_.points as points10_0_, villages1_.loyal as loyal10_0_, villages1_.last_update as last8_10_0_, villages1_.population as population10_0_, villagebui2_.id as id11_1_, villagebui2_.headquarter as headquar2_11_1_, villagebui2_.barracks as barracks11_1_, villagebui2_.stable as stable11_1_, villagebui2_.workshop as workshop11_1_, villagebui2_.academy as academy11_1_, villagebui2_.smithy as smithy11_1_, villagebui2_.rally as rally11_1_, villagebui2_.market as market11_1_, villagebui2_.claypit as claypit11_1_, villagebui2_.ironmine as ironmine11_1_, villagebui2_.timbercamp as timbercamp11_1_, villagebui2_.storage as storage11_1_, villagebui2_.farm as farm11_1_, villagebui2_.hide as hide11_1_, villagebui2_.wall as wall11_1_, villagebui2_.merchant as merchant11_1_, villageres3_.id as id12_2_, villageres3_.clay as clay12_2_, villageres3_.wood as wood12_2_, villageres3_.iron as iron12_2_, villagetro4_.id as id13_3_, villagetro4_.spear as spear13_3_, villagetro4_.sword as sword13_3_, villagetro4_.axe as axe13_3_, villagetro4_.scout as scout13_3_, villagetro4_.light as light13_3_, villagetro4_.heavy as heavy13_3_, villagetro4_.catapult as catapult13_3_, villagetro4_.ram as ram13_3_, villagetro4_.noble as noble13_3_, villagetro4_.in_spear as in11_13_3_, villagetro4_.in_sword as in12_13_3_, villagetro4_.in_axe as in13_13_3_, villagetro4_.in_scout as in14_13_3_, villagetro4_.in_light as in15_13_3_, villagetro4_.in_heavy as in16_13_3_, villagetro4_.in_catapult as in17_13_3_, villagetro4_.in_ram as in18_13_3_, villagetro4_.in_noble as in19_13_3_, villagetro4_.total_spear as total20_13_3_, villagetro4_.total_sword as total21_13_3_, villagetro4_.total_axe as total22_13_3_, villagetro4_.total_scout as total23_13_3_, villagetro4_.total_light as total24_13_3_, villagetro4_.total_heavy as total25_13_3_, villagetro4_.total_catapult as total26_13_3_, villagetro4_.total_ram as total27_13_3_, villagetro4_.total_noble as total28_13_3_, villageres5_.id as id14_4_, villageres5_.attack as attack14_4_, villageres5_.defense as defense14_4_, villageres5_.unit_speed as unit4_14_4_ FROM users player0_ left outer join villages_common villages1_ on player0_.id=villages1_.userid left outer join villages_building villagebui2_ on villages1_.id=villagebui2_.id left outer join villages_resources villageres3_ on villages1_.id=villageres3_.id left outer join villages_troop villagetro4_ on villages1_.id=villagetro4_.id left outer join villages_research villageres5_ on villages1_.id=villageres5_.id WHERE player0_.id=@p0
+System.Data.SqlClient.SqlException: Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlDataReader.ConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd)
+2009-08-22 12:34:56,437 ERROR 9 NHibernate.Util.ADOExceptionReporter - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+2009-08-22 12:34:56,468 ERROR 9 NHibernate.Util.ADOExceptionReporter - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+2009-08-22 12:35:43,671 ERROR 9 NHibernate.AdoNet.AbstractBatcher - Could not execute query: SELECT player0_.id as id21_5_, player0_.username as username21_5_, player0_.password as password21_5_, player0_.type as type21_5_, player0_.birthdate as birthdate21_5_, player0_.sex as sex21_5_, player0_.yahoo as yahoo21_5_, player0_.msn as msn21_5_, player0_.skype as skype21_5_, player0_.email as email21_5_, player0_.description as descrip11_21_5_, player0_.point as point21_5_, player0_.avatar as avatar21_5_, player0_.address as address21_5_, player0_.graphics_village as graphics15_21_5_, player0_.building_level as building16_21_5_, player0_.tribe_permission as tribe17_21_5_, player0_.tribe_title as tribe18_21_5_, player0_.group_id as group19_21_5_, villages1_.userid as userid7_, villages1_.id as id7_, villages1_.id as id10_0_, villages1_.name as name10_0_, villages1_.x as x10_0_, villages1_.y as y10_0_, villages1_.userid as userid10_0_, villages1_.points as points10_0_, villages1_.loyal as loyal10_0_, villages1_.last_update as last8_10_0_, villages1_.population as population10_0_, villagebui2_.id as id11_1_, villagebui2_.headquarter as headquar2_11_1_, villagebui2_.barracks as barracks11_1_, villagebui2_.stable as stable11_1_, villagebui2_.workshop as workshop11_1_, villagebui2_.academy as academy11_1_, villagebui2_.smithy as smithy11_1_, villagebui2_.rally as rally11_1_, villagebui2_.market as market11_1_, villagebui2_.claypit as claypit11_1_, villagebui2_.ironmine as ironmine11_1_, villagebui2_.timbercamp as timbercamp11_1_, villagebui2_.storage as storage11_1_, villagebui2_.farm as farm11_1_, villagebui2_.hide as hide11_1_, villagebui2_.wall as wall11_1_, villagebui2_.merchant as merchant11_1_, villageres3_.id as id12_2_, villageres3_.clay as clay12_2_, villageres3_.wood as wood12_2_, villageres3_.iron as iron12_2_, villagetro4_.id as id13_3_, villagetro4_.spear as spear13_3_, villagetro4_.sword as sword13_3_, villagetro4_.axe as axe13_3_, villagetro4_.scout as scout13_3_, villagetro4_.light as light13_3_, villagetro4_.heavy as heavy13_3_, villagetro4_.catapult as catapult13_3_, villagetro4_.ram as ram13_3_, villagetro4_.noble as noble13_3_, villagetro4_.in_spear as in11_13_3_, villagetro4_.in_sword as in12_13_3_, villagetro4_.in_axe as in13_13_3_, villagetro4_.in_scout as in14_13_3_, villagetro4_.in_light as in15_13_3_, villagetro4_.in_heavy as in16_13_3_, villagetro4_.in_catapult as in17_13_3_, villagetro4_.in_ram as in18_13_3_, villagetro4_.in_noble as in19_13_3_, villagetro4_.total_spear as total20_13_3_, villagetro4_.total_sword as total21_13_3_, villagetro4_.total_axe as total22_13_3_, villagetro4_.total_scout as total23_13_3_, villagetro4_.total_light as total24_13_3_, villagetro4_.total_heavy as total25_13_3_, villagetro4_.total_catapult as total26_13_3_, villagetro4_.total_ram as total27_13_3_, villagetro4_.total_noble as total28_13_3_, villageres5_.id as id14_4_, villageres5_.attack as attack14_4_, villageres5_.defense as defense14_4_, villageres5_.unit_speed as unit4_14_4_ FROM users player0_ left outer join villages_common villages1_ on player0_.id=villages1_.userid left outer join villages_building villagebui2_ on villages1_.id=villagebui2_.id left outer join villages_resources villageres3_ on villages1_.id=villageres3_.id left outer join villages_troop villagetro4_ on villages1_.id=villagetro4_.id left outer join villages_research villageres5_ on villages1_.id=villageres5_.id WHERE player0_.id=@p0
+System.Data.SqlClient.SqlException: Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlDataReader.ConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd)
+2009-08-22 12:35:43,703 ERROR 9 NHibernate.Util.ADOExceptionReporter - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+2009-08-22 12:35:43,718 ERROR 9 NHibernate.Util.ADOExceptionReporter - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+2009-08-22 12:36:16,875 ERROR 4 NHibernate.AdoNet.AbstractBatcher - Could not execute query: SELECT player0_.id as id21_5_, player0_.username as username21_5_, player0_.password as password21_5_, player0_.type as type21_5_, player0_.birthdate as birthdate21_5_, player0_.sex as sex21_5_, player0_.yahoo as yahoo21_5_, player0_.msn as msn21_5_, player0_.skype as skype21_5_, player0_.email as email21_5_, player0_.description as descrip11_21_5_, player0_.point as point21_5_, player0_.avatar as avatar21_5_, player0_.address as address21_5_, player0_.graphics_village as graphics15_21_5_, player0_.building_level as building16_21_5_, player0_.tribe_permission as tribe17_21_5_, player0_.tribe_title as tribe18_21_5_, player0_.group_id as group19_21_5_, villages1_.userid as userid7_, villages1_.id as id7_, villages1_.id as id10_0_, villages1_.name as name10_0_, villages1_.x as x10_0_, villages1_.y as y10_0_, villages1_.userid as userid10_0_, villages1_.points as points10_0_, villages1_.loyal as loyal10_0_, villages1_.last_update as last8_10_0_, villages1_.population as population10_0_, villagebui2_.id as id11_1_, villagebui2_.headquarter as headquar2_11_1_, villagebui2_.barracks as barracks11_1_, villagebui2_.stable as stable11_1_, villagebui2_.workshop as workshop11_1_, villagebui2_.academy as academy11_1_, villagebui2_.smithy as smithy11_1_, villagebui2_.rally as rally11_1_, villagebui2_.market as market11_1_, villagebui2_.claypit as claypit11_1_, villagebui2_.ironmine as ironmine11_1_, villagebui2_.timbercamp as timbercamp11_1_, villagebui2_.storage as storage11_1_, villagebui2_.farm as farm11_1_, villagebui2_.hide as hide11_1_, villagebui2_.wall as wall11_1_, villagebui2_.merchant as merchant11_1_, villageres3_.id as id12_2_, villageres3_.clay as clay12_2_, villageres3_.wood as wood12_2_, villageres3_.iron as iron12_2_, villagetro4_.id as id13_3_, villagetro4_.spear as spear13_3_, villagetro4_.sword as sword13_3_, villagetro4_.axe as axe13_3_, villagetro4_.scout as scout13_3_, villagetro4_.light as light13_3_, villagetro4_.heavy as heavy13_3_, villagetro4_.catapult as catapult13_3_, villagetro4_.ram as ram13_3_, villagetro4_.noble as noble13_3_, villagetro4_.in_spear as in11_13_3_, villagetro4_.in_sword as in12_13_3_, villagetro4_.in_axe as in13_13_3_, villagetro4_.in_scout as in14_13_3_, villagetro4_.in_light as in15_13_3_, villagetro4_.in_heavy as in16_13_3_, villagetro4_.in_catapult as in17_13_3_, villagetro4_.in_ram as in18_13_3_, villagetro4_.in_noble as in19_13_3_, villagetro4_.total_spear as total20_13_3_, villagetro4_.total_sword as total21_13_3_, villagetro4_.total_axe as total22_13_3_, villagetro4_.total_scout as total23_13_3_, villagetro4_.total_light as total24_13_3_, villagetro4_.total_heavy as total25_13_3_, villagetro4_.total_catapult as total26_13_3_, villagetro4_.total_ram as total27_13_3_, villagetro4_.total_noble as total28_13_3_, villageres5_.id as id14_4_, villageres5_.attack as attack14_4_, villageres5_.defense as defense14_4_, villageres5_.unit_speed as unit4_14_4_ FROM users player0_ left outer join villages_common villages1_ on player0_.id=villages1_.userid left outer join villages_building villagebui2_ on villages1_.id=villagebui2_.id left outer join villages_resources villageres3_ on villages1_.id=villageres3_.id left outer join villages_troop villagetro4_ on villages1_.id=villagetro4_.id left outer join villages_research villageres5_ on villages1_.id=villageres5_.id WHERE player0_.id=@p0
+System.Data.SqlClient.SqlException: Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlDataReader.ConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd)
+2009-08-22 12:36:16,890 ERROR 4 NHibernate.Util.ADOExceptionReporter - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+2009-08-22 12:36:16,906 ERROR 4 NHibernate.Util.ADOExceptionReporter - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+2009-08-22 12:37:00,968 ERROR 9 NHibernate.AdoNet.AbstractBatcher - Could not execute query: SELECT player0_.id as id21_5_, player0_.username as username21_5_, player0_.password as password21_5_, player0_.type as type21_5_, player0_.birthdate as birthdate21_5_, player0_.sex as sex21_5_, player0_.yahoo as yahoo21_5_, player0_.msn as msn21_5_, player0_.skype as skype21_5_, player0_.email as email21_5_, player0_.description as descrip11_21_5_, player0_.point as point21_5_, player0_.avatar as avatar21_5_, player0_.address as address21_5_, player0_.graphics_village as graphics15_21_5_, player0_.building_level as building16_21_5_, player0_.tribe_permission as tribe17_21_5_, player0_.tribe_title as tribe18_21_5_, player0_.group_id as group19_21_5_, villages1_.userid as userid7_, villages1_.id as id7_, villages1_.id as id10_0_, villages1_.name as name10_0_, villages1_.x as x10_0_, villages1_.y as y10_0_, villages1_.userid as userid10_0_, villages1_.points as points10_0_, villages1_.loyal as loyal10_0_, villages1_.last_update as last8_10_0_, villages1_.population as population10_0_, villagebui2_.id as id11_1_, villagebui2_.headquarter as headquar2_11_1_, villagebui2_.barracks as barracks11_1_, villagebui2_.stable as stable11_1_, villagebui2_.workshop as workshop11_1_, villagebui2_.academy as academy11_1_, villagebui2_.smithy as smithy11_1_, villagebui2_.rally as rally11_1_, villagebui2_.market as market11_1_, villagebui2_.claypit as claypit11_1_, villagebui2_.ironmine as ironmine11_1_, villagebui2_.timbercamp as timbercamp11_1_, villagebui2_.storage as storage11_1_, villagebui2_.farm as farm11_1_, villagebui2_.hide as hide11_1_, villagebui2_.wall as wall11_1_, villagebui2_.merchant as merchant11_1_, villageres3_.id as id12_2_, villageres3_.clay as clay12_2_, villageres3_.wood as wood12_2_, villageres3_.iron as iron12_2_, villagetro4_.id as id13_3_, villagetro4_.spear as spear13_3_, villagetro4_.sword as sword13_3_, villagetro4_.axe as axe13_3_, villagetro4_.scout as scout13_3_, villagetro4_.light as light13_3_, villagetro4_.heavy as heavy13_3_, villagetro4_.catapult as catapult13_3_, villagetro4_.ram as ram13_3_, villagetro4_.noble as noble13_3_, villagetro4_.in_spear as in11_13_3_, villagetro4_.in_sword as in12_13_3_, villagetro4_.in_axe as in13_13_3_, villagetro4_.in_scout as in14_13_3_, villagetro4_.in_light as in15_13_3_, villagetro4_.in_heavy as in16_13_3_, villagetro4_.in_catapult as in17_13_3_, villagetro4_.in_ram as in18_13_3_, villagetro4_.in_noble as in19_13_3_, villagetro4_.total_spear as total20_13_3_, villagetro4_.total_sword as total21_13_3_, villagetro4_.total_axe as total22_13_3_, villagetro4_.total_scout as total23_13_3_, villagetro4_.total_light as total24_13_3_, villagetro4_.total_heavy as total25_13_3_, villagetro4_.total_catapult as total26_13_3_, villagetro4_.total_ram as total27_13_3_, villagetro4_.total_noble as total28_13_3_, villageres5_.id as id14_4_, villageres5_.attack as attack14_4_, villageres5_.defense as defense14_4_, villageres5_.unit_speed as unit4_14_4_ FROM users player0_ left outer join villages_common villages1_ on player0_.id=villages1_.userid left outer join villages_building villagebui2_ on villages1_.id=villagebui2_.id left outer join villages_resources villageres3_ on villages1_.id=villageres3_.id left outer join villages_troop villagetro4_ on villages1_.id=villagetro4_.id left outer join villages_research villageres5_ on villages1_.id=villageres5_.id WHERE player0_.id=@p0
+System.Data.SqlClient.SqlException: Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlDataReader.ConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd)
+2009-08-22 12:37:00,984 ERROR 9 NHibernate.Util.ADOExceptionReporter - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+2009-08-22 12:37:01,000 ERROR 9 NHibernate.Util.ADOExceptionReporter - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+2009-08-22 12:50:00,187 ERROR 4 NHibernate.Util.ADOExceptionReporter - Object reference not set to an instance of an object.
+2009-08-22 12:50:00,234 ERROR 4 NHibernate.Util.ADOExceptionReporter - Object reference not set to an instance of an object.
+2009-08-22 12:50:03,203 ERROR 4 NHibernate.Util.ADOExceptionReporter - Object reference not set to an instance of an object.
+2009-08-22 12:50:03,218 ERROR 4 NHibernate.Util.ADOExceptionReporter - Object reference not set to an instance of an object.
+2009-08-22 12:50:05,734 ERROR 4 NHibernate.Util.ADOExceptionReporter - Object reference not set to an instance of an object.
+2009-08-22 12:50:05,750 ERROR 4 NHibernate.Util.ADOExceptionReporter - Object reference not set to an instance of an object.
+2009-08-22 12:50:08,265 ERROR 36 NHibernate.Util.ADOExceptionReporter - Object reference not set to an instance of an object.
+2009-08-22 12:50:08,281 ERROR 36 NHibernate.Util.ADOExceptionReporter - Object reference not set to an instance of an object.
+2009-08-22 12:50:09,531 ERROR 35 NHibernate.Util.ADOExceptionReporter - Object reference not set to an instance of an object.
+2009-08-22 12:50:09,546 ERROR 35 NHibernate.Util.ADOExceptionReporter - Object reference not set to an instance of an object.
+2009-08-22 12:50:10,796 ERROR 36 NHibernate.Util.ADOExceptionReporter - Object reference not set to an instance of an object.
+2009-08-22 12:50:10,843 ERROR 36 NHibernate.Util.ADOExceptionReporter - Object reference not set to an instance of an object.
+2009-08-22 12:50:12,921 ERROR 36 NHibernate.Util.ADOExceptionReporter - Object reference not set to an instance of an object.
+2009-08-22 12:50:12,937 ERROR 36 NHibernate.Util.ADOExceptionReporter - Object reference not set to an instance of an object.
+2009-08-22 12:50:31,468 ERROR 4 NHibernate.Util.ADOExceptionReporter - Object reference not set to an instance of an object.
+2009-08-22 12:50:31,468 ERROR 4 NHibernate.Util.ADOExceptionReporter - Object reference not set to an instance of an object.
+2009-08-22 12:50:35,437 ERROR 4 NHibernate.Util.ADOExceptionReporter - Object reference not set to an instance of an object.
+2009-08-22 12:50:35,453 ERROR 4 NHibernate.Util.ADOExceptionReporter - Object reference not set to an instance of an object.
+2009-08-22 13:20:07,562 ERROR 4 NHibernate.AdoNet.AbstractBatcher - Could not execute query: SELECT player0_.id as id21_5_, player0_.username as username21_5_, player0_.password as password21_5_, player0_.type as type21_5_, player0_.birthdate as birthdate21_5_, player0_.sex as sex21_5_, player0_.yahoo as yahoo21_5_, player0_.msn as msn21_5_, player0_.skype as skype21_5_, player0_.email as email21_5_, player0_.description as descrip11_21_5_, player0_.point as point21_5_, player0_.avatar as avatar21_5_, player0_.address as address21_5_, player0_.graphics_village as graphics15_21_5_, player0_.building_level as building16_21_5_, player0_.tribe_permission as tribe17_21_5_, player0_.tribe_title as tribe18_21_5_, player0_.group_id as group19_21_5_, villages1_.userid as userid7_, villages1_.id as id7_, villages1_.id as id10_0_, villages1_.name as name10_0_, villages1_.x as x10_0_, villages1_.y as y10_0_, villages1_.userid as userid10_0_, villages1_.points as points10_0_, villages1_.loyal as loyal10_0_, villages1_.last_update as last8_10_0_, villages1_.population as population10_0_, villagebui2_.id as id11_1_, villagebui2_.headquarter as headquar2_11_1_, villagebui2_.barracks as barracks11_1_, villagebui2_.stable as stable11_1_, villagebui2_.workshop as workshop11_1_, villagebui2_.academy as academy11_1_, villagebui2_.smithy as smithy11_1_, villagebui2_.rally as rally11_1_, villagebui2_.market as market11_1_, villagebui2_.claypit as claypit11_1_, villagebui2_.ironmine as ironmine11_1_, villagebui2_.timbercamp as timbercamp11_1_, villagebui2_.storage as storage11_1_, villagebui2_.farm as farm11_1_, villagebui2_.hide as hide11_1_, villagebui2_.wall as wall11_1_, villagebui2_.merchant as merchant11_1_, villageres3_.id as id12_2_, villageres3_.clay as clay12_2_, villageres3_.wood as wood12_2_, villageres3_.iron as iron12_2_, villagetro4_.id as id13_3_, villagetro4_.spear as spear13_3_, villagetro4_.sword as sword13_3_, villagetro4_.axe as axe13_3_, villagetro4_.scout as scout13_3_, villagetro4_.light as light13_3_, villagetro4_.heavy as heavy13_3_, villagetro4_.catapult as catapult13_3_, villagetro4_.ram as ram13_3_, villagetro4_.noble as noble13_3_, villagetro4_.in_spear as in11_13_3_, villagetro4_.in_sword as in12_13_3_, villagetro4_.in_axe as in13_13_3_, villagetro4_.in_scout as in14_13_3_, villagetro4_.in_light as in15_13_3_, villagetro4_.in_heavy as in16_13_3_, villagetro4_.in_catapult as in17_13_3_, villagetro4_.in_ram as in18_13_3_, villagetro4_.in_noble as in19_13_3_, villagetro4_.total_spear as total20_13_3_, villagetro4_.total_sword as total21_13_3_, villagetro4_.total_axe as total22_13_3_, villagetro4_.total_scout as total23_13_3_, villagetro4_.total_light as total24_13_3_, villagetro4_.total_heavy as total25_13_3_, villagetro4_.total_catapult as total26_13_3_, villagetro4_.total_ram as total27_13_3_, villagetro4_.total_noble as total28_13_3_, villageres5_.id as id14_4_, villageres5_.attack as attack14_4_, villageres5_.defense as defense14_4_, villageres5_.unit_speed as unit4_14_4_ FROM users player0_ left outer join villages_common villages1_ on player0_.id=villages1_.userid left outer join villages_building villagebui2_ on villages1_.id=villagebui2_.id left outer join villages_resources villageres3_ on villages1_.id=villageres3_.id left outer join villages_troop villagetro4_ on villages1_.id=villagetro4_.id left outer join villages_research villageres5_ on villages1_.id=villageres5_.id WHERE player0_.id=@p0
+System.Data.SqlClient.SqlException: Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlDataReader.ConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd)
+2009-08-22 13:20:07,687 ERROR 4 NHibernate.Util.ADOExceptionReporter - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+2009-08-22 13:20:07,718 ERROR 4 NHibernate.Util.ADOExceptionReporter - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+2009-08-22 13:35:05,265 ERROR 8 NHibernate.AdoNet.AbstractBatcher - Could not execute query: SELECT player0_.id as id21_5_, player0_.username as username21_5_, player0_.password as password21_5_, player0_.type as type21_5_, player0_.birthdate as birthdate21_5_, player0_.sex as sex21_5_, player0_.yahoo as yahoo21_5_, player0_.msn as msn21_5_, player0_.skype as skype21_5_, player0_.email as email21_5_, player0_.description as descrip11_21_5_, player0_.point as point21_5_, player0_.avatar as avatar21_5_, player0_.address as address21_5_, player0_.graphics_village as graphics15_21_5_, player0_.building_level as building16_21_5_, player0_.tribe_permission as tribe17_21_5_, player0_.tribe_title as tribe18_21_5_, player0_.group_id as group19_21_5_, villages1_.userid as userid7_, villages1_.id as id7_, villages1_.id as id10_0_, villages1_.name as name10_0_, villages1_.x as x10_0_, villages1_.y as y10_0_, villages1_.userid as userid10_0_, villages1_.points as points10_0_, villages1_.loyal as loyal10_0_, villages1_.last_update as last8_10_0_, villages1_.population as population10_0_, villagebui2_.id as id11_1_, villagebui2_.headquarter as headquar2_11_1_, villagebui2_.barracks as barracks11_1_, villagebui2_.stable as stable11_1_, villagebui2_.workshop as workshop11_1_, villagebui2_.academy as academy11_1_, villagebui2_.smithy as smithy11_1_, villagebui2_.rally as rally11_1_, villagebui2_.market as market11_1_, villagebui2_.claypit as claypit11_1_, villagebui2_.ironmine as ironmine11_1_, villagebui2_.timbercamp as timbercamp11_1_, villagebui2_.storage as storage11_1_, villagebui2_.farm as farm11_1_, villagebui2_.hide as hide11_1_, villagebui2_.wall as wall11_1_, villagebui2_.merchant as merchant11_1_, villageres3_.id as id12_2_, villageres3_.clay as clay12_2_, villageres3_.wood as wood12_2_, villageres3_.iron as iron12_2_, villagetro4_.id as id13_3_, villagetro4_.spear as spear13_3_, villagetro4_.sword as sword13_3_, villagetro4_.axe as axe13_3_, villagetro4_.scout as scout13_3_, villagetro4_.light as light13_3_, villagetro4_.heavy as heavy13_3_, villagetro4_.catapult as catapult13_3_, villagetro4_.ram as ram13_3_, villagetro4_.noble as noble13_3_, villagetro4_.in_spear as in11_13_3_, villagetro4_.in_sword as in12_13_3_, villagetro4_.in_axe as in13_13_3_, villagetro4_.in_scout as in14_13_3_, villagetro4_.in_light as in15_13_3_, villagetro4_.in_heavy as in16_13_3_, villagetro4_.in_catapult as in17_13_3_, villagetro4_.in_ram as in18_13_3_, villagetro4_.in_noble as in19_13_3_, villagetro4_.total_spear as total20_13_3_, villagetro4_.total_sword as total21_13_3_, villagetro4_.total_axe as total22_13_3_, villagetro4_.total_scout as total23_13_3_, villagetro4_.total_light as total24_13_3_, villagetro4_.total_heavy as total25_13_3_, villagetro4_.total_catapult as total26_13_3_, villagetro4_.total_ram as total27_13_3_, villagetro4_.total_noble as total28_13_3_, villageres5_.id as id14_4_, villageres5_.attack as attack14_4_, villageres5_.defense as defense14_4_, villageres5_.unit_speed as unit4_14_4_ FROM users player0_ left outer join villages_common villages1_ on player0_.id=villages1_.userid left outer join villages_building villagebui2_ on villages1_.id=villagebui2_.id left outer join villages_resources villageres3_ on villages1_.id=villageres3_.id left outer join villages_troop villagetro4_ on villages1_.id=villagetro4_.id left outer join villages_research villageres5_ on villages1_.id=villageres5_.id WHERE player0_.id=@p0
+System.Data.SqlClient.SqlException: Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlDataReader.ConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd)
+2009-08-22 13:35:05,312 ERROR 8 NHibernate.Util.ADOExceptionReporter - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+2009-08-22 13:35:05,359 ERROR 8 NHibernate.Util.ADOExceptionReporter - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+2009-08-22 13:36:49,546 ERROR 8 NHibernate.AdoNet.AbstractBatcher - Could not execute query: SELECT player0_.id as id21_5_, player0_.username as username21_5_, player0_.password as password21_5_, player0_.type as type21_5_, player0_.birthdate as birthdate21_5_, player0_.sex as sex21_5_, player0_.yahoo as yahoo21_5_, player0_.msn as msn21_5_, player0_.skype as skype21_5_, player0_.email as email21_5_, player0_.description as descrip11_21_5_, player0_.point as point21_5_, player0_.avatar as avatar21_5_, player0_.address as address21_5_, player0_.graphics_village as graphics15_21_5_, player0_.building_level as building16_21_5_, player0_.tribe_permission as tribe17_21_5_, player0_.tribe_title as tribe18_21_5_, player0_.group_id as group19_21_5_, villages1_.userid as userid7_, villages1_.id as id7_, villages1_.id as id10_0_, villages1_.name as name10_0_, villages1_.x as x10_0_, villages1_.y as y10_0_, villages1_.userid as userid10_0_, villages1_.points as points10_0_, villages1_.loyal as loyal10_0_, villages1_.last_update as last8_10_0_, villages1_.population as population10_0_, villagebui2_.id as id11_1_, villagebui2_.headquarter as headquar2_11_1_, villagebui2_.barracks as barracks11_1_, villagebui2_.stable as stable11_1_, villagebui2_.workshop as workshop11_1_, villagebui2_.academy as academy11_1_, villagebui2_.smithy as smithy11_1_, villagebui2_.rally as rally11_1_, villagebui2_.market as market11_1_, villagebui2_.claypit as claypit11_1_, villagebui2_.ironmine as ironmine11_1_, villagebui2_.timbercamp as timbercamp11_1_, villagebui2_.storage as storage11_1_, villagebui2_.farm as farm11_1_, villagebui2_.hide as hide11_1_, villagebui2_.wall as wall11_1_, villagebui2_.merchant as merchant11_1_, villageres3_.id as id12_2_, villageres3_.clay as clay12_2_, villageres3_.wood as wood12_2_, villageres3_.iron as iron12_2_, villagetro4_.id as id13_3_, villagetro4_.spear as spear13_3_, villagetro4_.sword as sword13_3_, villagetro4_.axe as axe13_3_, villagetro4_.scout as scout13_3_, villagetro4_.light as light13_3_, villagetro4_.heavy as heavy13_3_, villagetro4_.catapult as catapult13_3_, villagetro4_.ram as ram13_3_, villagetro4_.noble as noble13_3_, villagetro4_.in_spear as in11_13_3_, villagetro4_.in_sword as in12_13_3_, villagetro4_.in_axe as in13_13_3_, villagetro4_.in_scout as in14_13_3_, villagetro4_.in_light as in15_13_3_, villagetro4_.in_heavy as in16_13_3_, villagetro4_.in_catapult as in17_13_3_, villagetro4_.in_ram as in18_13_3_, villagetro4_.in_noble as in19_13_3_, villagetro4_.total_spear as total20_13_3_, villagetro4_.total_sword as total21_13_3_, villagetro4_.total_axe as total22_13_3_, villagetro4_.total_scout as total23_13_3_, villagetro4_.total_light as total24_13_3_, villagetro4_.total_heavy as total25_13_3_, villagetro4_.total_catapult as total26_13_3_, villagetro4_.total_ram as total27_13_3_, villagetro4_.total_noble as total28_13_3_, villageres5_.id as id14_4_, villageres5_.attack as attack14_4_, villageres5_.defense as defense14_4_, villageres5_.unit_speed as unit4_14_4_ FROM users player0_ left outer join villages_common villages1_ on player0_.id=villages1_.userid left outer join villages_building villagebui2_ on villages1_.id=villagebui2_.id left outer join villages_resources villageres3_ on villages1_.id=villageres3_.id left outer join villages_troop villagetro4_ on villages1_.id=villagetro4_.id left outer join villages_research villageres5_ on villages1_.id=villageres5_.id WHERE player0_.id=@p0
+System.Data.SqlClient.SqlException: Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlDataReader.ConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd)
+2009-08-22 13:36:49,593 ERROR 8 NHibernate.Util.ADOExceptionReporter - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+2009-08-22 13:36:49,640 ERROR 8 NHibernate.Util.ADOExceptionReporter - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+2009-08-22 13:45:35,781 ERROR 8 NHibernate.AdoNet.AbstractBatcher - Could not execute query: SELECT player0_.id as id21_5_, player0_.username as username21_5_, player0_.password as password21_5_, player0_.type as type21_5_, player0_.birthdate as birthdate21_5_, player0_.sex as sex21_5_, player0_.yahoo as yahoo21_5_, player0_.msn as msn21_5_, player0_.skype as skype21_5_, player0_.email as email21_5_, player0_.description as descrip11_21_5_, player0_.point as point21_5_, player0_.avatar as avatar21_5_, player0_.address as address21_5_, player0_.graphics_village as graphics15_21_5_, player0_.building_level as building16_21_5_, player0_.tribe_permission as tribe17_21_5_, player0_.tribe_title as tribe18_21_5_, player0_.group_id as group19_21_5_, villages1_.userid as userid7_, villages1_.id as id7_, villages1_.id as id10_0_, villages1_.name as name10_0_, villages1_.x as x10_0_, villages1_.y as y10_0_, villages1_.userid as userid10_0_, villages1_.points as points10_0_, villages1_.loyal as loyal10_0_, villages1_.last_update as last8_10_0_, villages1_.population as population10_0_, villagebui2_.id as id11_1_, villagebui2_.headquarter as headquar2_11_1_, villagebui2_.barracks as barracks11_1_, villagebui2_.stable as stable11_1_, villagebui2_.workshop as workshop11_1_, villagebui2_.academy as academy11_1_, villagebui2_.smithy as smithy11_1_, villagebui2_.rally as rally11_1_, villagebui2_.market as market11_1_, villagebui2_.claypit as claypit11_1_, villagebui2_.ironmine as ironmine11_1_, villagebui2_.timbercamp as timbercamp11_1_, villagebui2_.storage as storage11_1_, villagebui2_.farm as farm11_1_, villagebui2_.hide as hide11_1_, villagebui2_.wall as wall11_1_, villagebui2_.merchant as merchant11_1_, villageres3_.id as id12_2_, villageres3_.clay as clay12_2_, villageres3_.wood as wood12_2_, villageres3_.iron as iron12_2_, villagetro4_.id as id13_3_, villagetro4_.spear as spear13_3_, villagetro4_.sword as sword13_3_, villagetro4_.axe as axe13_3_, villagetro4_.scout as scout13_3_, villagetro4_.light as light13_3_, villagetro4_.heavy as heavy13_3_, villagetro4_.catapult as catapult13_3_, villagetro4_.ram as ram13_3_, villagetro4_.noble as noble13_3_, villagetro4_.in_spear as in11_13_3_, villagetro4_.in_sword as in12_13_3_, villagetro4_.in_axe as in13_13_3_, villagetro4_.in_scout as in14_13_3_, villagetro4_.in_light as in15_13_3_, villagetro4_.in_heavy as in16_13_3_, villagetro4_.in_catapult as in17_13_3_, villagetro4_.in_ram as in18_13_3_, villagetro4_.in_noble as in19_13_3_, villagetro4_.total_spear as total20_13_3_, villagetro4_.total_sword as total21_13_3_, villagetro4_.total_axe as total22_13_3_, villagetro4_.total_scout as total23_13_3_, villagetro4_.total_light as total24_13_3_, villagetro4_.total_heavy as total25_13_3_, villagetro4_.total_catapult as total26_13_3_, villagetro4_.total_ram as total27_13_3_, villagetro4_.total_noble as total28_13_3_, villageres5_.id as id14_4_, villageres5_.attack as attack14_4_, villageres5_.defense as defense14_4_, villageres5_.unit_speed as unit4_14_4_ FROM users player0_ left outer join villages_common villages1_ on player0_.id=villages1_.userid left outer join villages_building villagebui2_ on villages1_.id=villagebui2_.id left outer join villages_resources villageres3_ on villages1_.id=villageres3_.id left outer join villages_troop villagetro4_ on villages1_.id=villagetro4_.id left outer join villages_research villageres5_ on villages1_.id=villageres5_.id WHERE player0_.id=@p0
+System.Data.SqlClient.SqlException: Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlDataReader.ConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd)
+2009-08-22 13:45:35,796 ERROR 8 NHibernate.Util.ADOExceptionReporter - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+2009-08-22 13:45:35,796 ERROR 8 NHibernate.Util.ADOExceptionReporter - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+2009-08-22 13:46:10,453 ERROR 4 NHibernate.AdoNet.AbstractBatcher - Could not execute query: SELECT player0_.id as id21_5_, player0_.username as username21_5_, player0_.password as password21_5_, player0_.type as type21_5_, player0_.birthdate as birthdate21_5_, player0_.sex as sex21_5_, player0_.yahoo as yahoo21_5_, player0_.msn as msn21_5_, player0_.skype as skype21_5_, player0_.email as email21_5_, player0_.description as descrip11_21_5_, player0_.point as point21_5_, player0_.avatar as avatar21_5_, player0_.address as address21_5_, player0_.graphics_village as graphics15_21_5_, player0_.building_level as building16_21_5_, player0_.tribe_permission as tribe17_21_5_, player0_.tribe_title as tribe18_21_5_, player0_.group_id as group19_21_5_, villages1_.userid as userid7_, villages1_.id as id7_, villages1_.id as id10_0_, villages1_.name as name10_0_, villages1_.x as x10_0_, villages1_.y as y10_0_, villages1_.userid as userid10_0_, villages1_.points as points10_0_, villages1_.loyal as loyal10_0_, villages1_.last_update as last8_10_0_, villages1_.population as population10_0_, villagebui2_.id as id11_1_, villagebui2_.headquarter as headquar2_11_1_, villagebui2_.barracks as barracks11_1_, villagebui2_.stable as stable11_1_, villagebui2_.workshop as workshop11_1_, villagebui2_.academy as academy11_1_, villagebui2_.smithy as smithy11_1_, villagebui2_.rally as rally11_1_, villagebui2_.market as market11_1_, villagebui2_.claypit as claypit11_1_, villagebui2_.ironmine as ironmine11_1_, villagebui2_.timbercamp as timbercamp11_1_, villagebui2_.storage as storage11_1_, villagebui2_.farm as farm11_1_, villagebui2_.hide as hide11_1_, villagebui2_.wall as wall11_1_, villagebui2_.merchant as merchant11_1_, villageres3_.id as id12_2_, villageres3_.clay as clay12_2_, villageres3_.wood as wood12_2_, villageres3_.iron as iron12_2_, villagetro4_.id as id13_3_, villagetro4_.spear as spear13_3_, villagetro4_.sword as sword13_3_, villagetro4_.axe as axe13_3_, villagetro4_.scout as scout13_3_, villagetro4_.light as light13_3_, villagetro4_.heavy as heavy13_3_, villagetro4_.catapult as catapult13_3_, villagetro4_.ram as ram13_3_, villagetro4_.noble as noble13_3_, villagetro4_.in_spear as in11_13_3_, villagetro4_.in_sword as in12_13_3_, villagetro4_.in_axe as in13_13_3_, villagetro4_.in_scout as in14_13_3_, villagetro4_.in_light as in15_13_3_, villagetro4_.in_heavy as in16_13_3_, villagetro4_.in_catapult as in17_13_3_, villagetro4_.in_ram as in18_13_3_, villagetro4_.in_noble as in19_13_3_, villagetro4_.total_spear as total20_13_3_, villagetro4_.total_sword as total21_13_3_, villagetro4_.total_axe as total22_13_3_, villagetro4_.total_scout as total23_13_3_, villagetro4_.total_light as total24_13_3_, villagetro4_.total_heavy as total25_13_3_, villagetro4_.total_catapult as total26_13_3_, villagetro4_.total_ram as total27_13_3_, villagetro4_.total_noble as total28_13_3_, villageres5_.id as id14_4_, villageres5_.attack as attack14_4_, villageres5_.defense as defense14_4_, villageres5_.unit_speed as unit4_14_4_ FROM users player0_ left outer join villages_common villages1_ on player0_.id=villages1_.userid left outer join villages_building villagebui2_ on villages1_.id=villagebui2_.id left outer join villages_resources villageres3_ on villages1_.id=villageres3_.id left outer join villages_troop villagetro4_ on villages1_.id=villagetro4_.id left outer join villages_research villageres5_ on villages1_.id=villageres5_.id WHERE player0_.id=@p0
+System.Data.SqlClient.SqlException: Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlDataReader.ConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd)
+2009-08-22 13:46:10,484 ERROR 4 NHibernate.Util.ADOExceptionReporter - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+2009-08-22 13:46:10,562 ERROR 4 NHibernate.Util.ADOExceptionReporter - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+2009-08-22 14:00:21,531 ERROR 9 NHibernate.AdoNet.AbstractBatcher - Could not execute command: UPDATE stationed SET from_village = @p0, at_village = @p1, spear = @p2, sword = @p3, axe = @p4, scout = @p5, light = @p6, heavy = @p7, catapult = @p8, ram = @p9, noble = @p10 WHERE id = @p11
+System.Data.SqlClient.SqlException: Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(DbAsyncResult result, String methodName, Boolean sendToPipe)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteNonQuery(IDbCommand cmd)
+2009-08-22 14:00:21,609 ERROR 9 NHibernate.Util.ADOExceptionReporter - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+The statement has been terminated.
+2009-08-22 14:00:21,625 ERROR 9 NHibernate.Event.Default.AbstractFlushingEventListener - Could not synchronize database state with session
+NHibernate.Exceptions.GenericADOException: could not update: [beans.Station#24][SQL: UPDATE stationed SET from_village = ?, at_village = ?, spear = ?, sword = ?, axe = ?, scout = ?, light = ?, heavy = ?, catapult = ?, ram = ?, noble = ? WHERE id = ?] ---> System.Data.SqlClient.SqlException: Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(DbAsyncResult result, String methodName, Boolean sendToPipe)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteNonQuery(IDbCommand cmd)
+   at NHibernate.AdoNet.NonBatchingBatcher.AddToBatch(IExpectation expectation)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Update(Object id, Object[] fields, Object[] oldFields, Object rowId, Boolean[] includeProperty, Int32 j, Object oldVersion, Object obj, SqlCommandInfo sql, ISessionImplementor session)
+   --- End of inner exception stack trace ---
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Update(Object id, Object[] fields, Object[] oldFields, Object rowId, Boolean[] includeProperty, Int32 j, Object oldVersion, Object obj, SqlCommandInfo sql, ISessionImplementor session)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.UpdateOrInsert(Object id, Object[] fields, Object[] oldFields, Object rowId, Boolean[] includeProperty, Int32 j, Object oldVersion, Object obj, SqlCommandInfo sql, ISessionImplementor session)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Update(Object id, Object[] fields, Int32[] dirtyFields, Boolean hasDirtyCollection, Object[] oldFields, Object oldVersion, Object obj, Object rowId, ISessionImplementor session)
+   at NHibernate.Action.EntityUpdateAction.Execute()
+   at NHibernate.Engine.ActionQueue.Execute(IExecutable executable)
+   at NHibernate.Engine.ActionQueue.ExecuteActions(IList list)
+   at NHibernate.Engine.ActionQueue.ExecuteActions()
+   at NHibernate.Event.Default.AbstractFlushingEventListener.PerformExecutions(IEventSource session)
+2009-08-22 14:00:51,750 ERROR 9 NHibernate.AdoNet.AbstractBatcher - Could not execute command: UPDATE stationed SET from_village = @p0, at_village = @p1, spear = @p2, sword = @p3, axe = @p4, scout = @p5, light = @p6, heavy = @p7, catapult = @p8, ram = @p9, noble = @p10 WHERE id = @p11
+System.Data.SqlClient.SqlException: Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(DbAsyncResult result, String methodName, Boolean sendToPipe)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteNonQuery(IDbCommand cmd)
+2009-08-22 14:00:51,750 ERROR 9 NHibernate.Util.ADOExceptionReporter - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+The statement has been terminated.
+2009-08-22 14:00:51,750 ERROR 9 NHibernate.Event.Default.AbstractFlushingEventListener - Could not synchronize database state with session
+NHibernate.Exceptions.GenericADOException: could not update: [beans.Station#24][SQL: UPDATE stationed SET from_village = ?, at_village = ?, spear = ?, sword = ?, axe = ?, scout = ?, light = ?, heavy = ?, catapult = ?, ram = ?, noble = ? WHERE id = ?] ---> System.Data.SqlClient.SqlException: Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(DbAsyncResult result, String methodName, Boolean sendToPipe)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteNonQuery(IDbCommand cmd)
+   at NHibernate.AdoNet.NonBatchingBatcher.AddToBatch(IExpectation expectation)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Update(Object id, Object[] fields, Object[] oldFields, Object rowId, Boolean[] includeProperty, Int32 j, Object oldVersion, Object obj, SqlCommandInfo sql, ISessionImplementor session)
+   --- End of inner exception stack trace ---
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Update(Object id, Object[] fields, Object[] oldFields, Object rowId, Boolean[] includeProperty, Int32 j, Object oldVersion, Object obj, SqlCommandInfo sql, ISessionImplementor session)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.UpdateOrInsert(Object id, Object[] fields, Object[] oldFields, Object rowId, Boolean[] includeProperty, Int32 j, Object oldVersion, Object obj, SqlCommandInfo sql, ISessionImplementor session)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Update(Object id, Object[] fields, Int32[] dirtyFields, Boolean hasDirtyCollection, Object[] oldFields, Object oldVersion, Object obj, Object rowId, ISessionImplementor session)
+   at NHibernate.Action.EntityUpdateAction.Execute()
+   at NHibernate.Engine.ActionQueue.Execute(IExecutable executable)
+   at NHibernate.Engine.ActionQueue.ExecuteActions(IList list)
+   at NHibernate.Engine.ActionQueue.ExecuteActions()
+   at NHibernate.Event.Default.AbstractFlushingEventListener.PerformExecutions(IEventSource session)
+2009-08-22 14:01:21,984 ERROR 4 NHibernate.AdoNet.AbstractBatcher - Could not execute command: UPDATE stationed SET from_village = @p0, at_village = @p1, spear = @p2, sword = @p3, axe = @p4, scout = @p5, light = @p6, heavy = @p7, catapult = @p8, ram = @p9, noble = @p10 WHERE id = @p11
+System.Data.SqlClient.SqlException: Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(DbAsyncResult result, String methodName, Boolean sendToPipe)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteNonQuery(IDbCommand cmd)
+2009-08-22 14:01:22,031 ERROR 4 NHibernate.Util.ADOExceptionReporter - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+The statement has been terminated.
+2009-08-22 14:01:22,046 ERROR 4 NHibernate.Event.Default.AbstractFlushingEventListener - Could not synchronize database state with session
+NHibernate.Exceptions.GenericADOException: could not update: [beans.Station#24][SQL: UPDATE stationed SET from_village = ?, at_village = ?, spear = ?, sword = ?, axe = ?, scout = ?, light = ?, heavy = ?, catapult = ?, ram = ?, noble = ? WHERE id = ?] ---> System.Data.SqlClient.SqlException: Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(DbAsyncResult result, String methodName, Boolean sendToPipe)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteNonQuery(IDbCommand cmd)
+   at NHibernate.AdoNet.NonBatchingBatcher.AddToBatch(IExpectation expectation)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Update(Object id, Object[] fields, Object[] oldFields, Object rowId, Boolean[] includeProperty, Int32 j, Object oldVersion, Object obj, SqlCommandInfo sql, ISessionImplementor session)
+   --- End of inner exception stack trace ---
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Update(Object id, Object[] fields, Object[] oldFields, Object rowId, Boolean[] includeProperty, Int32 j, Object oldVersion, Object obj, SqlCommandInfo sql, ISessionImplementor session)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.UpdateOrInsert(Object id, Object[] fields, Object[] oldFields, Object rowId, Boolean[] includeProperty, Int32 j, Object oldVersion, Object obj, SqlCommandInfo sql, ISessionImplementor session)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Update(Object id, Object[] fields, Int32[] dirtyFields, Boolean hasDirtyCollection, Object[] oldFields, Object oldVersion, Object obj, Object rowId, ISessionImplementor session)
+   at NHibernate.Action.EntityUpdateAction.Execute()
+   at NHibernate.Engine.ActionQueue.Execute(IExecutable executable)
+   at NHibernate.Engine.ActionQueue.ExecuteActions(IList list)
+   at NHibernate.Engine.ActionQueue.ExecuteActions()
+   at NHibernate.Event.Default.AbstractFlushingEventListener.PerformExecutions(IEventSource session)
+2009-08-22 14:02:10,671 ERROR 11 NHibernate.AdoNet.AbstractBatcher - Could not execute command: UPDATE stationed SET from_village = @p0, at_village = @p1, spear = @p2, sword = @p3, axe = @p4, scout = @p5, light = @p6, heavy = @p7, catapult = @p8, ram = @p9, noble = @p10 WHERE id = @p11
+System.Data.SqlClient.SqlException: Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(DbAsyncResult result, String methodName, Boolean sendToPipe)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteNonQuery(IDbCommand cmd)
+2009-08-22 14:02:10,703 ERROR 11 NHibernate.Util.ADOExceptionReporter - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+The statement has been terminated.
+2009-08-22 14:02:10,703 ERROR 11 NHibernate.Event.Default.AbstractFlushingEventListener - Could not synchronize database state with session
+NHibernate.Exceptions.GenericADOException: could not update: [beans.Station#24][SQL: UPDATE stationed SET from_village = ?, at_village = ?, spear = ?, sword = ?, axe = ?, scout = ?, light = ?, heavy = ?, catapult = ?, ram = ?, noble = ? WHERE id = ?] ---> System.Data.SqlClient.SqlException: Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(DbAsyncResult result, String methodName, Boolean sendToPipe)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteNonQuery(IDbCommand cmd)
+   at NHibernate.AdoNet.NonBatchingBatcher.AddToBatch(IExpectation expectation)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Update(Object id, Object[] fields, Object[] oldFields, Object rowId, Boolean[] includeProperty, Int32 j, Object oldVersion, Object obj, SqlCommandInfo sql, ISessionImplementor session)
+   --- End of inner exception stack trace ---
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Update(Object id, Object[] fields, Object[] oldFields, Object rowId, Boolean[] includeProperty, Int32 j, Object oldVersion, Object obj, SqlCommandInfo sql, ISessionImplementor session)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.UpdateOrInsert(Object id, Object[] fields, Object[] oldFields, Object rowId, Boolean[] includeProperty, Int32 j, Object oldVersion, Object obj, SqlCommandInfo sql, ISessionImplementor session)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Update(Object id, Object[] fields, Int32[] dirtyFields, Boolean hasDirtyCollection, Object[] oldFields, Object oldVersion, Object obj, Object rowId, ISessionImplementor session)
+   at NHibernate.Action.EntityUpdateAction.Execute()
+   at NHibernate.Engine.ActionQueue.Execute(IExecutable executable)
+   at NHibernate.Engine.ActionQueue.ExecuteActions(IList list)
+   at NHibernate.Engine.ActionQueue.ExecuteActions()
+   at NHibernate.Event.Default.AbstractFlushingEventListener.PerformExecutions(IEventSource session)
+2009-08-22 14:02:47,078 ERROR 9 NHibernate.AdoNet.AbstractBatcher - Could not execute command: UPDATE stationed SET from_village = @p0, at_village = @p1, spear = @p2, sword = @p3, axe = @p4, scout = @p5, light = @p6, heavy = @p7, catapult = @p8, ram = @p9, noble = @p10 WHERE id = @p11
+System.Data.SqlClient.SqlException: Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(DbAsyncResult result, String methodName, Boolean sendToPipe)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteNonQuery(IDbCommand cmd)
+2009-08-22 14:02:47,109 ERROR 9 NHibernate.Util.ADOExceptionReporter - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+The statement has been terminated.
+2009-08-22 14:02:47,140 ERROR 9 NHibernate.Event.Default.AbstractFlushingEventListener - Could not synchronize database state with session
+NHibernate.Exceptions.GenericADOException: could not update: [beans.Station#24][SQL: UPDATE stationed SET from_village = ?, at_village = ?, spear = ?, sword = ?, axe = ?, scout = ?, light = ?, heavy = ?, catapult = ?, ram = ?, noble = ? WHERE id = ?] ---> System.Data.SqlClient.SqlException: Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(DbAsyncResult result, String methodName, Boolean sendToPipe)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteNonQuery(IDbCommand cmd)
+   at NHibernate.AdoNet.NonBatchingBatcher.AddToBatch(IExpectation expectation)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Update(Object id, Object[] fields, Object[] oldFields, Object rowId, Boolean[] includeProperty, Int32 j, Object oldVersion, Object obj, SqlCommandInfo sql, ISessionImplementor session)
+   --- End of inner exception stack trace ---
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Update(Object id, Object[] fields, Object[] oldFields, Object rowId, Boolean[] includeProperty, Int32 j, Object oldVersion, Object obj, SqlCommandInfo sql, ISessionImplementor session)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.UpdateOrInsert(Object id, Object[] fields, Object[] oldFields, Object rowId, Boolean[] includeProperty, Int32 j, Object oldVersion, Object obj, SqlCommandInfo sql, ISessionImplementor session)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Update(Object id, Object[] fields, Int32[] dirtyFields, Boolean hasDirtyCollection, Object[] oldFields, Object oldVersion, Object obj, Object rowId, ISessionImplementor session)
+   at NHibernate.Action.EntityUpdateAction.Execute()
+   at NHibernate.Engine.ActionQueue.Execute(IExecutable executable)
+   at NHibernate.Engine.ActionQueue.ExecuteActions(IList list)
+   at NHibernate.Engine.ActionQueue.ExecuteActions()
+   at NHibernate.Event.Default.AbstractFlushingEventListener.PerformExecutions(IEventSource session)
+2009-08-22 14:03:31,500 ERROR 4 NHibernate.AdoNet.AbstractBatcher - Could not execute command: UPDATE stationed SET from_village = @p0, at_village = @p1, spear = @p2, sword = @p3, axe = @p4, scout = @p5, light = @p6, heavy = @p7, catapult = @p8, ram = @p9, noble = @p10 WHERE id = @p11
+System.Data.SqlClient.SqlException: Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(DbAsyncResult result, String methodName, Boolean sendToPipe)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteNonQuery(IDbCommand cmd)
+2009-08-22 14:03:31,546 ERROR 4 NHibernate.Util.ADOExceptionReporter - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+The statement has been terminated.
+2009-08-22 14:03:31,562 ERROR 4 NHibernate.Event.Default.AbstractFlushingEventListener - Could not synchronize database state with session
+NHibernate.Exceptions.GenericADOException: could not update: [beans.Station#24][SQL: UPDATE stationed SET from_village = ?, at_village = ?, spear = ?, sword = ?, axe = ?, scout = ?, light = ?, heavy = ?, catapult = ?, ram = ?, noble = ? WHERE id = ?] ---> System.Data.SqlClient.SqlException: Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(DbAsyncResult result, String methodName, Boolean sendToPipe)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteNonQuery(IDbCommand cmd)
+   at NHibernate.AdoNet.NonBatchingBatcher.AddToBatch(IExpectation expectation)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Update(Object id, Object[] fields, Object[] oldFields, Object rowId, Boolean[] includeProperty, Int32 j, Object oldVersion, Object obj, SqlCommandInfo sql, ISessionImplementor session)
+   --- End of inner exception stack trace ---
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Update(Object id, Object[] fields, Object[] oldFields, Object rowId, Boolean[] includeProperty, Int32 j, Object oldVersion, Object obj, SqlCommandInfo sql, ISessionImplementor session)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.UpdateOrInsert(Object id, Object[] fields, Object[] oldFields, Object rowId, Boolean[] includeProperty, Int32 j, Object oldVersion, Object obj, SqlCommandInfo sql, ISessionImplementor session)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Update(Object id, Object[] fields, Int32[] dirtyFields, Boolean hasDirtyCollection, Object[] oldFields, Object oldVersion, Object obj, Object rowId, ISessionImplementor session)
+   at NHibernate.Action.EntityUpdateAction.Execute()
+   at NHibernate.Engine.ActionQueue.Execute(IExecutable executable)
+   at NHibernate.Engine.ActionQueue.ExecuteActions(IList list)
+   at NHibernate.Engine.ActionQueue.ExecuteActions()
+   at NHibernate.Event.Default.AbstractFlushingEventListener.PerformExecutions(IEventSource session)
+2009-08-22 14:04:20,750 ERROR 9 NHibernate.AdoNet.AbstractBatcher - Could not execute command: UPDATE stationed SET from_village = @p0, at_village = @p1, spear = @p2, sword = @p3, axe = @p4, scout = @p5, light = @p6, heavy = @p7, catapult = @p8, ram = @p9, noble = @p10 WHERE id = @p11
+System.Data.SqlClient.SqlException: Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(DbAsyncResult result, String methodName, Boolean sendToPipe)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteNonQuery(IDbCommand cmd)
+2009-08-22 14:04:20,796 ERROR 9 NHibernate.Util.ADOExceptionReporter - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+The statement has been terminated.
+2009-08-22 14:04:20,812 ERROR 9 NHibernate.Event.Default.AbstractFlushingEventListener - Could not synchronize database state with session
+NHibernate.Exceptions.GenericADOException: could not update: [beans.Station#24][SQL: UPDATE stationed SET from_village = ?, at_village = ?, spear = ?, sword = ?, axe = ?, scout = ?, light = ?, heavy = ?, catapult = ?, ram = ?, noble = ? WHERE id = ?] ---> System.Data.SqlClient.SqlException: Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(DbAsyncResult result, String methodName, Boolean sendToPipe)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteNonQuery(IDbCommand cmd)
+   at NHibernate.AdoNet.NonBatchingBatcher.AddToBatch(IExpectation expectation)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Update(Object id, Object[] fields, Object[] oldFields, Object rowId, Boolean[] includeProperty, Int32 j, Object oldVersion, Object obj, SqlCommandInfo sql, ISessionImplementor session)
+   --- End of inner exception stack trace ---
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Update(Object id, Object[] fields, Object[] oldFields, Object rowId, Boolean[] includeProperty, Int32 j, Object oldVersion, Object obj, SqlCommandInfo sql, ISessionImplementor session)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.UpdateOrInsert(Object id, Object[] fields, Object[] oldFields, Object rowId, Boolean[] includeProperty, Int32 j, Object oldVersion, Object obj, SqlCommandInfo sql, ISessionImplementor session)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Update(Object id, Object[] fields, Int32[] dirtyFields, Boolean hasDirtyCollection, Object[] oldFields, Object oldVersion, Object obj, Object rowId, ISessionImplementor session)
+   at NHibernate.Action.EntityUpdateAction.Execute()
+   at NHibernate.Engine.ActionQueue.Execute(IExecutable executable)
+   at NHibernate.Engine.ActionQueue.ExecuteActions(IList list)
+   at NHibernate.Engine.ActionQueue.ExecuteActions()
+   at NHibernate.Event.Default.AbstractFlushingEventListener.PerformExecutions(IEventSource session)
+2009-08-22 14:05:15,140 ERROR 11 NHibernate.AdoNet.AbstractBatcher - Could not execute query: select player0_.id as col_0_0_ from users player0_ where player0_.username=@p0 and player0_.password=@p1
+System.Data.SqlClient.SqlException: Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlDataReader.ConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd)
+2009-08-22 14:05:15,203 ERROR 11 NHibernate.Util.ADOExceptionReporter - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+2009-08-22 14:05:15,218 ERROR 11 NHibernate.Util.ADOExceptionReporter - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+2009-08-22 14:05:45,312 ERROR 4 NHibernate.AdoNet.AbstractBatcher - Could not execute command: UPDATE stationed SET from_village = @p0, at_village = @p1, spear = @p2, sword = @p3, axe = @p4, scout = @p5, light = @p6, heavy = @p7, catapult = @p8, ram = @p9, noble = @p10 WHERE id = @p11
+System.Data.SqlClient.SqlException: Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(DbAsyncResult result, String methodName, Boolean sendToPipe)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteNonQuery(IDbCommand cmd)
+2009-08-22 14:05:45,343 ERROR 4 NHibernate.Util.ADOExceptionReporter - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+The statement has been terminated.
+2009-08-22 14:05:45,375 ERROR 4 NHibernate.Event.Default.AbstractFlushingEventListener - Could not synchronize database state with session
+NHibernate.Exceptions.GenericADOException: could not update: [beans.Station#24][SQL: UPDATE stationed SET from_village = ?, at_village = ?, spear = ?, sword = ?, axe = ?, scout = ?, light = ?, heavy = ?, catapult = ?, ram = ?, noble = ? WHERE id = ?] ---> System.Data.SqlClient.SqlException: Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(DbAsyncResult result, String methodName, Boolean sendToPipe)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteNonQuery(IDbCommand cmd)
+   at NHibernate.AdoNet.NonBatchingBatcher.AddToBatch(IExpectation expectation)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Update(Object id, Object[] fields, Object[] oldFields, Object rowId, Boolean[] includeProperty, Int32 j, Object oldVersion, Object obj, SqlCommandInfo sql, ISessionImplementor session)
+   --- End of inner exception stack trace ---
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Update(Object id, Object[] fields, Object[] oldFields, Object rowId, Boolean[] includeProperty, Int32 j, Object oldVersion, Object obj, SqlCommandInfo sql, ISessionImplementor session)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.UpdateOrInsert(Object id, Object[] fields, Object[] oldFields, Object rowId, Boolean[] includeProperty, Int32 j, Object oldVersion, Object obj, SqlCommandInfo sql, ISessionImplementor session)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Update(Object id, Object[] fields, Int32[] dirtyFields, Boolean hasDirtyCollection, Object[] oldFields, Object oldVersion, Object obj, Object rowId, ISessionImplementor session)
+   at NHibernate.Action.EntityUpdateAction.Execute()
+   at NHibernate.Engine.ActionQueue.Execute(IExecutable executable)
+   at NHibernate.Engine.ActionQueue.ExecuteActions(IList list)
+   at NHibernate.Engine.ActionQueue.ExecuteActions()
+   at NHibernate.Event.Default.AbstractFlushingEventListener.PerformExecutions(IEventSource session)
+2009-08-22 14:06:20,296 ERROR 12 NHibernate.AdoNet.AbstractBatcher - Could not execute command: UPDATE stationed SET from_village = @p0, at_village = @p1, spear = @p2, sword = @p3, axe = @p4, scout = @p5, light = @p6, heavy = @p7, catapult = @p8, ram = @p9, noble = @p10 WHERE id = @p11
+System.Data.SqlClient.SqlException: Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(DbAsyncResult result, String methodName, Boolean sendToPipe)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteNonQuery(IDbCommand cmd)
+2009-08-22 14:06:20,312 ERROR 12 NHibernate.Util.ADOExceptionReporter - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+The statement has been terminated.
+2009-08-22 14:06:20,328 ERROR 12 NHibernate.Event.Default.AbstractFlushingEventListener - Could not synchronize database state with session
+NHibernate.Exceptions.GenericADOException: could not update: [beans.Station#24][SQL: UPDATE stationed SET from_village = ?, at_village = ?, spear = ?, sword = ?, axe = ?, scout = ?, light = ?, heavy = ?, catapult = ?, ram = ?, noble = ? WHERE id = ?] ---> System.Data.SqlClient.SqlException: Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(DbAsyncResult result, String methodName, Boolean sendToPipe)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteNonQuery(IDbCommand cmd)
+   at NHibernate.AdoNet.NonBatchingBatcher.AddToBatch(IExpectation expectation)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Update(Object id, Object[] fields, Object[] oldFields, Object rowId, Boolean[] includeProperty, Int32 j, Object oldVersion, Object obj, SqlCommandInfo sql, ISessionImplementor session)
+   --- End of inner exception stack trace ---
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Update(Object id, Object[] fields, Object[] oldFields, Object rowId, Boolean[] includeProperty, Int32 j, Object oldVersion, Object obj, SqlCommandInfo sql, ISessionImplementor session)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.UpdateOrInsert(Object id, Object[] fields, Object[] oldFields, Object rowId, Boolean[] includeProperty, Int32 j, Object oldVersion, Object obj, SqlCommandInfo sql, ISessionImplementor session)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Update(Object id, Object[] fields, Int32[] dirtyFields, Boolean hasDirtyCollection, Object[] oldFields, Object oldVersion, Object obj, Object rowId, ISessionImplementor session)
+   at NHibernate.Action.EntityUpdateAction.Execute()
+   at NHibernate.Engine.ActionQueue.Execute(IExecutable executable)
+   at NHibernate.Engine.ActionQueue.ExecuteActions(IList list)
+   at NHibernate.Engine.ActionQueue.ExecuteActions()
+   at NHibernate.Event.Default.AbstractFlushingEventListener.PerformExecutions(IEventSource session)
+2009-08-22 14:07:31,515 ERROR 4 NHibernate.AdoNet.AbstractBatcher - Could not execute command: UPDATE stationed SET from_village = @p0, at_village = @p1, spear = @p2, sword = @p3, axe = @p4, scout = @p5, light = @p6, heavy = @p7, catapult = @p8, ram = @p9, noble = @p10 WHERE id = @p11
+System.Data.SqlClient.SqlException: Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(DbAsyncResult result, String methodName, Boolean sendToPipe)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteNonQuery(IDbCommand cmd)
+2009-08-22 14:07:31,546 ERROR 4 NHibernate.Util.ADOExceptionReporter - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+The statement has been terminated.
+2009-08-22 14:07:31,562 ERROR 4 NHibernate.Event.Default.AbstractFlushingEventListener - Could not synchronize database state with session
+NHibernate.Exceptions.GenericADOException: could not update: [beans.Station#24][SQL: UPDATE stationed SET from_village = ?, at_village = ?, spear = ?, sword = ?, axe = ?, scout = ?, light = ?, heavy = ?, catapult = ?, ram = ?, noble = ? WHERE id = ?] ---> System.Data.SqlClient.SqlException: Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(DbAsyncResult result, String methodName, Boolean sendToPipe)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteNonQuery(IDbCommand cmd)
+   at NHibernate.AdoNet.NonBatchingBatcher.AddToBatch(IExpectation expectation)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Update(Object id, Object[] fields, Object[] oldFields, Object rowId, Boolean[] includeProperty, Int32 j, Object oldVersion, Object obj, SqlCommandInfo sql, ISessionImplementor session)
+   --- End of inner exception stack trace ---
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Update(Object id, Object[] fields, Object[] oldFields, Object rowId, Boolean[] includeProperty, Int32 j, Object oldVersion, Object obj, SqlCommandInfo sql, ISessionImplementor session)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.UpdateOrInsert(Object id, Object[] fields, Object[] oldFields, Object rowId, Boolean[] includeProperty, Int32 j, Object oldVersion, Object obj, SqlCommandInfo sql, ISessionImplementor session)
+   at NHibernate.Persister.Entity.AbstractEntityPersister.Update(Object id, Object[] fields, Int32[] dirtyFields, Boolean hasDirtyCollection, Object[] oldFields, Object oldVersion, Object obj, Object rowId, ISessionImplementor session)
+   at NHibernate.Action.EntityUpdateAction.Execute()
+   at NHibernate.Engine.ActionQueue.Execute(IExecutable executable)
+   at NHibernate.Engine.ActionQueue.ExecuteActions(IList list)
+   at NHibernate.Engine.ActionQueue.ExecuteActions()
+   at NHibernate.Event.Default.AbstractFlushingEventListener.PerformExecutions(IEventSource session)
+2009-08-22 14:08:02,406 ERROR 8 NHibernate.AdoNet.AbstractBatcher - Could not execute query: select player0_.id as col_0_0_ from users player0_ where player0_.username=@p0 and player0_.password=@p1
+System.Data.SqlClient.SqlException: Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlDataReader.ConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd)
+2009-08-22 14:08:02,421 ERROR 8 NHibernate.Util.ADOExceptionReporter - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+2009-08-22 14:08:02,437 ERROR 8 NHibernate.Util.ADOExceptionReporter - Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+2009-08-22 20:39:33,031 ERROR 5 NHibernate.Util.ReflectHelper - Could not load type beans.SupportSendbackReport, beans.
+System.TypeLoadException: Could not load type 'beans.SupportSendbackReport' from assembly 'beans, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null'.
    at System.Reflection.Assembly._GetType(String name, Boolean throwOnError, Boolean ignoreCase)
    at System.Reflection.Assembly.GetType(String name, Boolean throwOnError)
    at NHibernate.Util.ReflectHelper.TypeFromAssembly(AssemblyQualifiedTypeName name, Boolean throwOnError)
-2009-08-21 00:02:31,734 ERROR 8 NHibernate.Cfg.Configuration - Could not compile the mapping document: beans.MappingFiles.Village.hbm.xml
-NHibernate.MappingException: Could not compile the mapping document: beans.MappingFiles.Village.hbm.xml ---> NHibernate.MappingException: persistent class beans.VillageResearchData, beans not found ---> System.TypeLoadException: Could not load type 'beans.VillageResearchData' from assembly 'beans, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null'.
+2009-08-22 20:39:33,140 ERROR 5 NHibernate.Cfg.Configuration - Could not compile the mapping document: beans.MappingFiles.Report.hbm.xml
+NHibernate.MappingException: Could not compile the mapping document: beans.MappingFiles.Report.hbm.xml ---> NHibernate.MappingException: persistent class beans.SupportSendbackReport, beans not found ---> System.TypeLoadException: Could not load type 'beans.SupportSendbackReport' from assembly 'beans, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null'.
    at System.Reflection.Assembly._GetType(String name, Boolean throwOnError, Boolean ignoreCase)
    at System.Reflection.Assembly.GetType(String name, Boolean throwOnError)
    at NHibernate.Util.ReflectHelper.TypeFromAssembly(AssemblyQualifiedTypeName name, Boolean throwOnError)
@@ -14,6 +658,9 @@ NHibernate.MappingException: Could not compile the mapping document: beans.Mappi
    at NHibernate.Cfg.XmlHbmBinding.Binder.ClassForFullNameChecked(String fullName, String errorMessage)
    at NHibernate.Cfg.XmlHbmBinding.Binder.ClassForNameChecked(String name, Mappings mappings, String errorMessage)
    at NHibernate.Cfg.XmlHbmBinding.ClassBinder.BindClass(XmlNode node, IDecoratable classMapping, PersistentClass model, IDictionary`2 inheritedMetas)
+   at NHibernate.Cfg.XmlHbmBinding.SubclassBinder.HandleSubclass(PersistentClass model, XmlNode subnode, IDictionary`2 inheritedMetas)
+   at NHibernate.Cfg.XmlHbmBinding.ClassBinder.PropertiesFromXML(XmlNode node, PersistentClass model, IDictionary`2 inheritedMetas, UniqueKey uniqueKey, Boolean mutable, Boolean nullable, Boolean naturalId)
+   at NHibernate.Cfg.XmlHbmBinding.ClassBinder.PropertiesFromXML(XmlNode node, PersistentClass model, IDictionary`2 inheritedMetas)
    at NHibernate.Cfg.XmlHbmBinding.RootClassBinder.Bind(XmlNode node, HbmClass classSchema, IDictionary`2 inheritedMetas)
    at NHibernate.Cfg.XmlHbmBinding.MappingRootBinder.AddRootClasses(XmlNode parentNode, IDictionary`2 inheritedMetas)
    at NHibernate.Cfg.XmlHbmBinding.MappingRootBinder.Bind(XmlNode node)

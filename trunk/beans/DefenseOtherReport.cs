@@ -8,24 +8,29 @@ namespace beans
     public class DefenseOtherReport : Report
     {
 
-        #region Properties
 
         public override ReportType Type
         {
             get { return ReportType.DefenseOther; }
         }
 
-        public Village FromVillage
+        public virtual Village FromVillage
         {
             get;
             set;
         }
-        public Village ToVillage
+        public virtual Village ToVillage
         {
             get;
             set;
         }
-        public Player ToPlayer
+
+        public virtual Player FromPlayer
+        {
+            get;
+            set;
+        }
+        public virtual Player ToPlayer
         {
             get;
             set;
@@ -122,6 +127,5 @@ namespace beans
             get;
             set;
         }
-        #endregion
     }
 }

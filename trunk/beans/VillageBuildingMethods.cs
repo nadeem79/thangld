@@ -108,63 +108,107 @@ namespace beans
                                         where b.Building == BuildingType.Headquarter
                                         orderby b.ID descending
                                         select b.Level).FirstOrDefault<int>();
+            if (this.TopHeadquarterLevel == 0)
+                this.TopHeadquarterLevel = this.Village.VillageBuildingData.Headquarter;
+
             this.TopBarrackLevel = (from b in builds
                                     where b.Building == BuildingType.Barracks
                                     orderby b.ID descending
                                     select b.Level).FirstOrDefault<int>();
+            if (this.TopBarrackLevel == 0)
+                this.TopBarrackLevel = this.Village.VillageBuildingData.Barracks;
+
             this.TopStableLevel = (from b in builds
                                    where b.Building == BuildingType.Stable
                                    orderby b.ID descending
                                    select b.Level).FirstOrDefault<int>();
+            if (this.TopStableLevel == 0)
+                this.TopStableLevel = this.Village.VillageBuildingData.Stable;
+
             this.TopWorkshopLevel = (from b in builds
                                      where b.Building == BuildingType.Workshop
                                      orderby b.ID descending
                                      select b.Level).FirstOrDefault<int>();
+            if (this.TopWorkshopLevel == 0)
+                this.TopWorkshopLevel = this.Village.VillageBuildingData.Workshop;
+
             this.TopAcademyLevel = (from b in builds
                                     where b.Building == BuildingType.Academy
                                     orderby b.ID descending
                                     select b.Level).FirstOrDefault<int>();
+            if (this.TopAcademyLevel == 0)
+                this.TopAcademyLevel = this.Village.VillageBuildingData.Academy;
+
             this.TopSmithyLevel = (from b in builds
                                    where b.Building == BuildingType.Smithy
                                    orderby b.ID descending
                                    select b.Level).FirstOrDefault<int>();
+            if (this.TopSmithyLevel == 0)
+                this.TopSmithyLevel = this.Village.VillageBuildingData.Smithy;
+
             this.TopRallyPointLevel = (from b in builds
                                        where b.Building == BuildingType.Rally
                                        orderby b.ID descending
                                        select b.Level).FirstOrDefault<int>();
+            if (this.TopRallyPointLevel == 0)
+                this.TopRallyPointLevel = this.Village.VillageBuildingData.Rally;
+
             this.TopMarketLevel = (from b in builds
                                    where b.Building == BuildingType.Market
                                    orderby b.ID descending
                                    select b.Level).FirstOrDefault<int>();
+            if (this.TopMarketLevel == 0)
+                this.TopMarketLevel = this.Village.VillageBuildingData.Market;
+
             this.TopTimberCampLevel = (from b in builds
                                        where b.Building == BuildingType.TimberCamp
                                        orderby b.ID descending
                                        select b.Level).FirstOrDefault<int>();
+            if (this.TopTimberCampLevel == 0)
+                this.TopTimberCampLevel = this.Village.VillageBuildingData.TimberCamp;
+
             this.TopClayPitLevel = (from b in builds
                                     where b.Building == BuildingType.ClayPit
                                     orderby b.ID descending
                                     select b.Level).FirstOrDefault<int>();
+            if (this.TopClayPitLevel == 0)
+                this.TopClayPitLevel = this.Village.VillageBuildingData.ClayPit;
+
             this.TopIronMineLevel = (from b in builds
                                      where b.Building == BuildingType.IronMine
                                      orderby b.ID descending
                                      select b.Level).FirstOrDefault<int>();
+            if (this.TopIronMineLevel == 0)
+                this.TopIronMineLevel = this.Village.VillageBuildingData.IronMine;
 
             this.TopWarehouseLevel = (from b in builds
                                       where b.Building == BuildingType.Warehouse
                                       orderby b.ID descending
                                       select b.Level).FirstOrDefault<int>();
+            if (this.TopWarehouseLevel == 0)
+                this.TopWarehouseLevel = this.Village.VillageBuildingData.Warehouse;
+
             this.TopFarmLevel = (from b in builds
                                  where b.Building == BuildingType.Farm
                                  orderby b.ID descending
                                  select b.Level).FirstOrDefault<int>();
+            if (this.TopFarmLevel == 0)
+                this.TopFarmLevel = this.Village.VillageBuildingData.Farm;
+
             this.TopHiddenPlaceLevel = (from b in builds
                                         where b.Building == BuildingType.HidingPlace
                                         orderby b.ID descending
                                         select b.Level).FirstOrDefault<int>();
+            if (this.TopHiddenPlaceLevel == 0)
+                this.TopHiddenPlaceLevel = this.Village.VillageBuildingData.HidingPlace;
+
             this.TopWallLevel = (from b in builds
                                  where b.Building == BuildingType.Wall
                                  orderby b.ID descending
                                  select b.Level).FirstOrDefault<int>();
+            if (this.TopWallLevel == 0)
+                this.TopWallLevel = this.Village.VillageBuildingData.Wall;
+
             this.Builds = builds;
             return builds;
         }
@@ -397,7 +441,7 @@ namespace beans
                 session.Update(this.Village);
                 trans.Commit();
             }
-            catch (Exception exc)
+            catch
             {
                 if (trans != null)
                     trans.Rollback();
@@ -408,7 +452,7 @@ namespace beans
 
         public virtual void CancelBuild(int id, ISession session)
         {
-            if (this.Builds != null)
+            if (this.Builds == null)
                 this.GetPendingConstruction(session);
 
             Build build = (from b in this.Builds

@@ -24,11 +24,11 @@ public partial class CustomControls_TroopCommand : System.Web.UI.UserControl
             case MoveType.SendResources:
                 throw new Exception("Hack");
             case MoveType.Attack:
-                return "Tấn công từ";
+                return "Tấn công";
             case MoveType.Support:
-                return "Hỗ trợ từ";
+                return "Hỗ trợ";
             case MoveType.Return:
-                return "Quay về từ";
+                return "Quay về";
             default:
                 break;
         }

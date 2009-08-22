@@ -52,7 +52,7 @@ public class NHibernateHttpModule:IHttpModule
         HttpApplication application = (HttpApplication)sender;
         HttpContext context = application.Context;
 
-        ((ISession)context.Items["NHibernateSession"]).Flush();
+        //((ISession)context.Items["NHibernateSession"]).Flush();
         ((ISession)context.Items["NHibernateSession"]).Close();
         context.Items["NHibernateSession"] = null;
     }

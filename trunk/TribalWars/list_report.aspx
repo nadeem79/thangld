@@ -2,10 +2,22 @@
     Inherits="list_report" Title="Báo cáo" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+
+    <script language='JavaScript'>
+        checked = false;
+        function checkedAll() {
+            if (checked == false) { checked = true } else { checked = false }
+            for (var i = 0; i < document.getElementById('aspnetForm').elements.length; i++) {
+                document.getElementById('aspnetForm').elements[i].checked = checked;
+            }
+        }
+    </script>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
-    <h2>Báo cáo</h2>
-    <table width="100%">
+    <h2>
+        Báo cáo</h2>
+    <table width="100%" class="checkboxPanel">
         <tbody>
             <tr>
                 <td valign="top">
@@ -40,18 +52,47 @@
                     </table>
                 </td>
                 <td valign="top" width="100%">
-                    <asp:GridView ID="gvReports" runat="server" AutoGenerateColumns="False" 
-                        Width="100%" BorderColor="Black" BorderStyle="Solid" BorderWidth="1px">
-                        <Columns>
-                            <asp:HyperLinkField
-                                DataTextField="Title" HeaderText="Tiêu đề" 
-                                DataNavigateUrlFormatString="report_details.aspx?id={0}" 
-                                DataNavigateUrlFields="ID">
-                                <ItemStyle Width="75%" />
-                            </asp:HyperLinkField>
-                            <asp:BoundField DataField="Time" HeaderText="Thời gian" />
-                        </Columns>
-                    </asp:GridView>
+                        <asp:Repeater runat="server" ID="gvReports">
+                            <HeaderTemplate>
+                                <table cellspacing="0" rules="all" border="1" style="border-color: Black; border-width: 1px;
+                                    border-style: Solid; width: 100%; border-collapse: collapse;">
+                                    <tbody>
+                                        <tr>
+                                            <th>
+                                            </th>
+                                            <th>
+                                                <center>
+                                                    Tiêu đề</center>
+                                            </th>
+                                            <th>
+                                                <center>
+                                                    Thời gian</center>
+                                            </th>
+                                        </tr>
+                            </HeaderTemplate>
+                            <FooterTemplate>
+                            <tr>
+                                <th><input type="checkbox" onchange="checkedAll" /></th>
+                                <th></th><th></th>
+                            </tr>
+                                </tbody> </table>
+                            </FooterTemplate>
+                            <ItemTemplate>
+                                <tr>
+                                    <td>
+                                        <asp:CheckBox runat="server" ID="checkReport" /><asp:HiddenField runat="server" ID="hiddenReportID"
+                                            Value='<%# Eval("ID") %>' />
+                                    </td>
+                                    <td>
+                                        <a href="report_details.aspx?id=<% = this.village.ID %>&report=<%# Eval("ID") %>">
+                                            <%# Eval("Title") %> <%# UnreadNotify((bool)Eval("Unread")) %></a>
+                                    </td>
+                                    <td>
+                                        <%# ((DateTime)Eval("Time")).ToString("HH:mm:ss 'ngày' dd/MM/yyyy")%>
+                                    </td>
+                                </tr>
+                            </ItemTemplate>
+                        </asp:Repeater>
                 </td>
             </tr>
         </tbody>

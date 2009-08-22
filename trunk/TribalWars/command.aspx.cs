@@ -32,10 +32,9 @@ public partial class command : System.Web.UI.Page
             return;
         }
 
-        ISession session = NHibernateHelper.CreateSession();
+        ISession session = (ISession)Context.Items["NHibernateSession"];
         Player player = session.Load<Player>(Session["user"]);
         current = player.GetCommand(command_id, session);
-        session.Close();
 
         if (current == null)
         {

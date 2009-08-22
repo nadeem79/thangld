@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using NHibernate;
 using NHibernate.Linq;
+using System.Data;
 
 namespace beans
 {
@@ -73,7 +74,7 @@ namespace beans
             (this.Ram > this.FromVillage.VillageTroopData.Ram) ||
             (this.Catapult > this.FromVillage.VillageTroopData.Catapult) ||
             (this.Noble > this.FromVillage.VillageTroopData.Noble))
-                throw new Exception("Không đủ quân");
+                throw new TribalWarsException("Không đủ quân");
 
             this.FromVillage.VillageTroopData.Spear -= this.Spear;
             this.FromVillage.VillageTroopData.Sword -= this.Sword;
@@ -95,7 +96,19 @@ namespace beans
             this.FromVillage.VillageTroopData.CatapultInVillage -= this.Catapult;
             this.FromVillage.VillageTroopData.NobleInVillage -= this.Noble;
 
-            session.Save(this);
+            ITransaction trans = null;
+            try
+            {
+                trans = session.BeginTransaction(IsolationLevel.ReadUncommitted);
+                session.Update(this.FromVillage.VillageTroopData);
+                session.Save(this);
+                trans.Commit();
+            }
+            catch (Exception ex)
+            {
+                if (trans != null)
+                    trans.Rollback();
+            }
 
         }
 
@@ -115,16 +128,19 @@ namespace beans
             returnTroop.StartingTime = returnTroop.LandingTime = DateTime.Now;
             returnTroop.LandingTime += (DateTime.Now - this.StartingTime);
 
-            ITransaction transaction = session.BeginTransaction();
+            ITransaction transaction = null;
+                
             try
             {
+                transaction = session.BeginTransaction();
                 session.Delete(this);
                 session.Save(returnTroop);
                 transaction.Commit();
             }
             catch
             {
-                transaction.Rollback();
+                if (transaction != null)
+                    transaction.Rollback();
             }
 
             return returnTroop;
@@ -306,14 +322,14 @@ namespace beans
                 catapultLostInAttackSide = (int)Math.Round(this.Catapult * (1 - ratio));
                 nobleLostInAttackSide = (int)Math.Round(this.Noble * (1 - ratio));
 
-                spearLostInDefenseSide = this.FromVillage.VillageTroopData.SpearInVillage;
-                swordLostInDefenseSide = this.FromVillage.VillageTroopData.SwordInVillage;
-                axeLostInDefenseSide = this.FromVillage.VillageTroopData.AxeInVillage;
-                lightCavalryLostInDefenseSide = this.FromVillage.VillageTroopData.LightCavalryInVillage;
-                heavyCavalryLostInDefenseSide = this.FromVillage.VillageTroopData.HeavyCavalryInVillage;
-                ramLostInDefenseSide = this.FromVillage.VillageTroopData.RamInVillage;
-                catapultLostInDefenseSide = this.FromVillage.VillageTroopData.CatapultInVillage;
-                nobleLostInDefenseSide = this.FromVillage.VillageTroopData.NobleInVillage;
+                spearLostInDefenseSide = this.ToVillage.VillageTroopData.SpearInVillage;
+                swordLostInDefenseSide = this.ToVillage.VillageTroopData.SwordInVillage;
+                axeLostInDefenseSide = this.ToVillage.VillageTroopData.AxeInVillage;
+                lightCavalryLostInDefenseSide = this.ToVillage.VillageTroopData.LightCavalryInVillage;
+                heavyCavalryLostInDefenseSide = this.ToVillage.VillageTroopData.HeavyCavalryInVillage;
+                ramLostInDefenseSide = this.ToVillage.VillageTroopData.RamInVillage;
+                catapultLostInDefenseSide = this.ToVillage.VillageTroopData.CatapultInVillage;
+                nobleLostInDefenseSide = this.ToVillage.VillageTroopData.NobleInVillage;
 
                 this.FromVillage.VillageTroopData.SpearOfVillage -= spearLostInAttackSide;
                 this.FromVillage.VillageTroopData.SwordOfVillage -= spearLostInAttackSide;
@@ -334,34 +350,35 @@ namespace beans
                 this.ToVillage.VillageTroopData.NobleOfVillage = this.ToVillage.VillageTroopData.Noble = 0;
 
                 //station từ thành phố bị tấn công đến nơi khác
-                ITransaction transaction = session.BeginTransaction();
                 //villages = (from village in session.Linq<Village>()
                 //            join station in session.Linq<Station>() on this.ToVillage equals station.AtVillage
                //             select station.FromVillage).ToList<Village>();
-                villages = (from station in session.Linq<Station>()
-                            where station.AtVillage == this.ToVillage
-                            select station.FromVillage).ToList<Village>();
-                foreach (Village village in villages)
-                    village.Update(this.LandingTime, session);
 
-                
+                //IQuery query = session.CreateQuery("from Village v, Station s where v in s.AtVillage");
 
-                try
-                {
+                //villages = (from station in session.Linq<Station>()
+                //            from village in session.Linq<Village>()
+                //            where station.AtVillage == village
+                //                && this.ToVillage == village
+                //            select village).ToList<Village>();
+                //foreach (Village village in villages)
+                //    village.Update(this.LandingTime, session);
 
+                    
                     stations = (from station in session.Linq<Station>()
                                 where station.AtVillage == this.ToVillage
                                 select station).ToList<Station>();
 
                     foreach (Station station in stations)
                     {
-
+                        station.AtVillage.VillageCommonMethods.UpdateVillage(this.LandingTime, session, false);
                         DefenseOtherReport defenseOtherReport = new DefenseOtherReport();
                         defenseOtherReport.Owner = station.FromVillage.Player;
                         defenseOtherReport.Time = this.LandingTime;
                         defenseOtherReport.Unread = true;
                         defenseOtherReport.Title = String.Format("Quân hỗ trợ của bạn từ {0} ở {1} bị tấn công", station.FromVillage.Name, station.AtVillage.Name);
                         defenseOtherReport.FromVillage = station.FromVillage;
+                        defenseOtherReport.FromPlayer = this.FromVillage.Player;
                         defenseOtherReport.ToVillage = this.ToVillage;
                         defenseOtherReport.ToPlayer = this.ToVillage.Player;
 
@@ -398,14 +415,10 @@ namespace beans
                         session.Update(station.FromVillage.VillageTroopData);
                         session.Save(defenseOtherReport);
                     }
-                    session.Delete("from Station station where station.AtVillage = :village", this.ToVillage, NHibernate.NHibernateUtil.Entity("Village"));
-
-                    transaction.Commit();
-                }
-                catch
-                {
-                    transaction.Rollback();
-                }
+                    IQuery deleteQuery = session.CreateQuery("delete from Station where AtVillage = :village");
+                    deleteQuery.SetEntity("village", this.ToVillage);
+                    deleteQuery.ExecuteUpdate();
+                    //session.Delete("from Station station where station.AtVillage = :village", this.ToVillage, NHibernate.NHibernateUtil.Entity(typeof(Village)));
 
                 if (this.Noble > 0)
                     this.ToVillage.Loyal -= (r.Next(15) + 20);
@@ -423,7 +436,7 @@ namespace beans
 
                     foreach (Station station in stations)
                     {
-                        station.AtVillage.Update(this.LandingTime, session);
+                        station.AtVillage.VillageCommonMethods.UpdateVillage(this.LandingTime, session, false);
 
                         station.FromVillage.VillageTroopData.SpearOfVillage -= station.Spear;
                         station.FromVillage.VillageTroopData.SwordOfVillage -= station.Sword;
@@ -644,6 +657,21 @@ namespace beans
                         defenseOtherReport.Time = this.LandingTime;
                         defenseOtherReport.Owner = station.FromVillage.Player;
                         defenseOtherReport.Title = "Quân phòng thủ của bạn ở " + this.ToVillage.Name + "(" + this.ToVillage.X.ToString() + "|" + this.ToVillage.Y.ToString() + ") bị tấn công";
+
+                        defenseOtherReport.FromPlayer = station.FromVillage.Player;
+                        defenseOtherReport.FromVillage = station.FromVillage;
+                        defenseOtherReport.ToPlayer = station.AtVillage.Player;
+                        defenseOtherReport.ToVillage = station.AtVillage;
+
+                        defenseOtherReport.SpearDefense = station.Spear;
+                        defenseOtherReport.SwordDefense = station.Sword;
+                        defenseOtherReport.AxeDefense = station.Axe;
+                        defenseOtherReport.ScoutDefense = station.Scout;
+                        defenseOtherReport.LightCavalryDefense = station.LightCavalry;
+                        defenseOtherReport.HeavyCavalryDefense = station.HeavyCavalry;
+                        defenseOtherReport.RamDefense = station.Ram;
+                        defenseOtherReport.CatapultDefense = station.Catapult;
+                        defenseOtherReport.NobleDefense = station.Noble;
 
                         defenseOtherReport.SpearDead = spearDead;
                         defenseOtherReport.SwordDead = swordDead;

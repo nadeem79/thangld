@@ -5,6 +5,7 @@ using System.Text;
 using NHibernate;
 using NHibernate.Linq;
 using NHibernate.Criterion;
+using System.Data;
 
 namespace beans
 {
@@ -119,8 +120,20 @@ namespace beans
             this.FromVillage.VillageTroopData.CatapultInVillage -= this.Catapult;
             this.FromVillage.VillageTroopData.NobleInVillage -= this.Noble;
 
-            session.Save(this);
-            session.Update(this.FromVillage);
+            ITransaction trans = null;
+            try
+            {
+                trans = session.BeginTransaction(IsolationLevel.ReadUncommitted);
+                session.Save(this);
+                session.Update(this.FromVillage);
+                trans.Commit();
+            }
+            catch
+            {
+                if (trans != null)
+                    trans.Rollback();
+            }
+            
         }
 
         public override MovingCommand Effect(ISession session)
@@ -235,10 +248,19 @@ namespace beans
             r.StartingTime = DateTime.Now;
             r.LandingTime = r.StartingTime.Add(this.LandingTime - this.StartingTime);
 
-
-            session.Save(r);
-            session.Delete(this);
-
+            ITransaction trans = null;
+            try
+            {
+                trans = session.BeginTransaction(IsolationLevel.ReadUncommitted);
+                session.Save(r);
+                session.Delete(this);
+                trans.Commit();
+            }
+            catch
+            {
+                if (trans != null)
+                    trans.Rollback();
+            }
             return r;
         }
 

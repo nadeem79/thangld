@@ -10,7 +10,6 @@ namespace beans
     public class Return:MovingCommand
     {
 
-        #region Properties
 
         public virtual int Spear
         {
@@ -81,12 +80,10 @@ namespace beans
         {
             get { return MoveType.Return; }
         }
-        #endregion
 
-        #region Methods
 
         public override void Save(ISession session)
-        {
+        { 
             session.Save(this);
         }
 
@@ -118,21 +115,12 @@ namespace beans
             if (this.Merchant > 0)
                 this.ToVillage.VillageBuildingData.Merchant += this.Merchant;
 
-            ITransaction transaction = null;
-            try
-            {
-                transaction = session.BeginTransaction();
-                session.Update(this.ToVillage.VillageTroopData);
-                session.Update(this.ToVillage.VillageResourceData);
-                if (this.Merchant > 0)
-                    session.Update(this.ToVillage.VillageBuildingData);
-                session.Delete(this);
-                transaction.Commit();
-            }
-            catch
-            {
-                transaction.Rollback();
-            }
+            session.Update(this.ToVillage.VillageTroopData);
+            session.Update(this.ToVillage.VillageResourceData);
+            if (this.Merchant > 0)
+                session.Update(this.ToVillage.VillageBuildingData);
+            session.Delete(this);
+
             return null;
         }
 
@@ -140,6 +128,5 @@ namespace beans
         {
             throw new Exception("HACK!!!");
         }
-        #endregion
     }
 }
