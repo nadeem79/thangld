@@ -91,4 +91,34 @@ public class Functions
         return (quantity == 0) ? "<span class=\"hidden\">0</span>" : quantity.ToString();
     }
 
+    public static bool IsGreaterThenZero(params int[] arguments)
+    {
+        int sum = 0;
+        foreach (int i in arguments)
+        {
+            if (i < 0)
+                return false;
+            sum += i;
+        }
+        return (sum > 0);
+    }
+
+    public static string GetResourceString(beans.ResourcesType type, int quantity)
+    {
+        if (quantity == 0)
+            return "";
+
+        switch (type)
+        {
+            case ResourcesType.Clay:
+                return string.Format("<img src=\"images/resources/clay.png\" title=\"Clay\" />", quantity);
+            case ResourcesType.Wood:
+                return string.Format("<img src=\"images/resources/wood.png\" title=\"Wood\" />", quantity);
+            case ResourcesType.Iron:
+                return string.Format("<img src=\"images/resources/iron.png\" title=\"Iron\" />", quantity);
+            default:
+                return "";
+        }
+
+    }
 }

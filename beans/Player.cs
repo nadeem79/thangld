@@ -301,7 +301,7 @@ namespace beans
                 return;
             }
             foreach (Village village in this.Villages)
-                village.Update(time, session);
+                village.VillageCommonMethods.UpdateVillage(time, session);
         }
 
         public virtual Village GetVillage(int ID)

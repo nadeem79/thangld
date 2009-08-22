@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="TribeMembers.ascx.cs"
     Inherits="TribeMembers" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<telerik:RadWindowManager ID="RadWindowManager1" runat="server"  Modal="true" InitialBehavior="Pin"
+<telerik:RadWindowManager ID="RadWindowManager1" runat="server"  Modal="true"
         Width="700" Height="500" Style="z-index:1000">
     </telerik:RadWindowManager>
 <h2>

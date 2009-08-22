@@ -8,8 +8,6 @@ namespace beans
     public class SupportWithdawalReport : Report
     {
 
-
-
         public override ReportType Type
         {
             get { return ReportType.SupportWithdawal; }
@@ -21,13 +19,19 @@ namespace beans
             set;
         }
 
-        public Player WithdrawPlayer
+        public virtual Player FromPlayer
         {
             get;
             set;
         }
 
-        public virtual Village ToVillage
+        public virtual Village OriginalVillage
+        {
+            get;
+            set;
+        }
+
+        public virtual Player OriginalPlayer
         {
             get;
             set;

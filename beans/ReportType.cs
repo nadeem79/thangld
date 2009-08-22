@@ -15,7 +15,8 @@ namespace beans
         OfferAccepted = 5,
         Support = 6,
         SupportWithdawal = 7,
-        InviteToTribe = 8
+        SupportSendBack = 8,
+        InviteToTribe = 9,
     }
 
     public class ReportTypeFactory

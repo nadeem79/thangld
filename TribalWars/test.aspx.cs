@@ -22,10 +22,14 @@ public partial class test : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         ISession session = (ISession)Context.Items["NHibernateSession"];
-        Village v = session.Get<Village>(24);
 
-        v.UpgradeBuilding(BuildingType.Market, 20);
-        
+
+        ITransaction trans = session.BeginTransaction(IsolationLevel.ReadUncommitted);
+        ITransaction trans2 = session.BeginTransaction(IsolationLevel.ReadUncommitted);
+
+        this.Label1.Text = (trans==trans2).ToString();
+        trans.Commit();
+
     }
 
     protected void bttnSend_Click(object sender, EventArgs e)

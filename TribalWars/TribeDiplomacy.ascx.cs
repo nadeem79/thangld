@@ -106,7 +106,7 @@ public partial class TribeDiplomacy : System.Web.UI.UserControl
         }
         catch (NHibernate.Exceptions.GenericADOException ex)
         {
-            RadScriptManager.RegisterStartupScript(bttnAddRelation, bttnAddRelation.GetType(), "ShowException", "jQuery.facebox('" + Resources.text.relation_already_added + "');", true);
+            RadScriptManager.RegisterStartupScript(bttnAddRelation, bttnAddRelation.GetType(), "ShowException", "jQuery.facebox('" + ex.Message + "');", true);
             if (trans != null || !trans.WasCommitted)
                 trans.Rollback();
         }

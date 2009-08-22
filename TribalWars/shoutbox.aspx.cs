@@ -11,6 +11,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using beans;
+using NHibernate;
 
 public partial class shoutbox : System.Web.UI.Page
 {
@@ -18,9 +19,6 @@ public partial class shoutbox : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
 
-        NHibernate.ISession session = null;
-        try
-        {
 
             if (Request["group_chat"] == null)
             {
@@ -28,17 +26,11 @@ public partial class shoutbox : System.Web.UI.Page
             }
             else
             {
-                session = NHibernateHelper.CreateSession();
+                ISession session = (ISession)Context.Items["NHibernateSession"];
                 currentPlayer = session.Get<Player>(Session["user"]);
                 this.Shoutbox.Group = currentPlayer.Group;
             }
-        }
-        catch (Exception ex) { }
-        finally
-        {
-            if (session != null)
-                session.Close();
-        }
+
  
 
     }

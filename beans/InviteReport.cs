@@ -8,12 +8,12 @@ namespace beans
     public class InviteReport : Report
     {
 
-        public Player Inviter
+        public virtual Player Inviter
         {
             get;
             set;
         }
-        public Group Group
+        public virtual Group Group
         {
             get;
             set;

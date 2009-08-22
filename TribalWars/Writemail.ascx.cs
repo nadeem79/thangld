@@ -18,20 +18,19 @@ public partial class writemail : System.Web.UI.UserControl
 
     protected Player player; 
     protected void Page_Load(object sender, EventArgs e)
-    {   
-        ISession session = NHibernateHelper.CreateSession();
+    {
+        ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
         this.player = session.Load<Player>(Session["user"]);
         this.Receiver.Text =(Request["receiver"]);
         this.Title.Text = (Request["Title"]);
         String temp = (Request["Detail"]);
             if ( temp != null ) this.Detail.Content = temp;
     }
+
     protected void sendmail_Click(object sender, EventArgs e)
     {       
      ISession session = null;
-        try
-        {
-            session = NHibernateHelper.CreateSession();
+            session = (ISession)Context.Items[Constant.NHibernateSessionSign];
             this.player = session.Load<Player>(Session["user"]);
             int temp = beans.WriteMail.GetPlayerID(this.Receiver.Text, session);
             if (temp <0 )
@@ -44,11 +43,6 @@ public partial class writemail : System.Web.UI.UserControl
                 { }  
             
             }      
-        }
-        finally
-        {
-            session.Close();
-        }
             
     }       
 }

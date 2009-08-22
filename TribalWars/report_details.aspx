@@ -1,11 +1,20 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/inPage.master" AutoEventWireup="true" CodeFile="report_details.aspx.cs"
     Inherits="report_details" %>
 
-<%@ Reference Control="AttackReportPanel.ascx" %>
+<%@ Reference Control="CustomControls/AttackReport.ascx" %>
+<%@ Reference Control="CustomControls/InviteReport.ascx" %>
+<%@ Reference Control="CustomControls/ResourceReceive.ascx" %>
+<%@ Reference Control="CustomControls/SendResource.ascx" %>
+<%@ Reference Control="CustomControls/SupportOtherReport.ascx" %>
+<%@ Reference Control="CustomControls/TroopWithdrawal.ascx" %>
+<%@ Reference Control="CustomControls/DefenseOtherReport.ascx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+<script type="text/javascript">
+    
+</script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
-    <asp:Panel ID="pHasReport" runat="server">
+    <asp:Panel ID="pHasReport" runat="server" Visible="false">
         <h2>
             Báo cáo</h2>
         <table>
@@ -42,34 +51,39 @@
                             </tbody>
                         </table>
                     </td>
-                    <td valign="top" width="100%">
-                        <table class="vis">
-                            <th width="140">
-                                Thông báo
-                            </th>
-                            <th width="400">
-                                &nbsp;<span id="label"><span id="labelText"><% = report.Title %>
-                                </span></span>
-                            </th>
-                </tr>
-                <tr>
-                    <td>
-                        Ngày:
-                    </td>
-                    <td>
-                        <% = report.Time.ToString("hh:mm:ss:'<span class=\"small hidden\">'ff'</span> ngày' dd/MM/yyyy") %>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" style="border: 1px solid black; padding: 4px;" valign="top">
-                        <% = report.Description.Description %>
+                    <td valign="top">
+                        <table class="vis" style="border:1px solid black;">
+                            <tbody>
+                                <tr>
+                                    <th width="140">
+                                        Thông báo
+                                    </th>
+                                    <th width="400">
+                                        &nbsp;<span id="label"><span id="labelText"><% = report.Title %>
+                                        </span></span>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Ngày:
+                                    </td>
+                                    <td>
+                                        <% = report.Time.ToString("hh:mm:ss 'ngày' dd/MM/yyyy") %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <asp:PlaceHolder ID="panelReport" runat="server"></asp:PlaceHolder>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </td>
                 </tr>
             </tbody>
         </table>
-        </td> </tr> </tbody> </table>
     </asp:Panel>
-    <asp:Panel ID="pNoReport" runat="server">
+    <asp:Panel ID="pNoReport" runat="server" Visible="false">
         <h2>
             Lỗi: không tìm thấy báo cáo</h2>
     </asp:Panel>

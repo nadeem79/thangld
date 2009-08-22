@@ -13,10 +13,9 @@ public partial class write_mail : System.Web.UI.Page
         this.Page.Form.Attributes.Add("onsubmit", "tinyMCE.triggerSave();");
         this.Page.Form.Enctype = "multipart/form-data";
         this.village = ((inPage)this.Master).CurrentVillage;
-        ISession session = NHibernateHelper.CreateSession();
+        ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
         Player user = session.Load<Player>(Session["user"]);
         this.Pmail.Controls.Add(Page.LoadControl("Writemail.ascx"));
-        session.Close();
 
     
     }
