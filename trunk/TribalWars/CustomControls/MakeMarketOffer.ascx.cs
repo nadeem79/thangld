@@ -21,7 +21,7 @@ public partial class CustomControls_MakeMarketOffer : System.Web.UI.UserControl
     protected void Page_Load(object sender, EventArgs e)
     {
         ISession session = (ISession)Context.Items["NHibernateSession"];
-        IList<Offer> offers = this.Village.GetMyOffers(session);
+        IList<Offer> offers = this.Village.VillageMarketMethods.GetMyOffers(session);
         if (offers.Count > 0)
         {
             this.myOfferRepeater.DataSource = offers;
@@ -56,7 +56,7 @@ public partial class CustomControls_MakeMarketOffer : System.Web.UI.UserControl
 
         ISession session = (ISession)Context.Items["NHibernateSession"];
 
-        Offer offer = this.Village.CreateOffer(offerType, offerQuantity, forType, forQuantity, maxTransportTime, offerNumber);
+        Offer offer = this.Village.VillageMarketMethods.CreateOffer(offerType, offerQuantity, forType, forQuantity, maxTransportTime, offerNumber);
         offer.Save(session);
         RadScriptManager.RegisterStartupScript(createOfferButton, createOfferButton.GetType(), "DONE", "reload();", true);
     }
@@ -78,7 +78,7 @@ public partial class CustomControls_MakeMarketOffer : System.Web.UI.UserControl
                     continue;
 
                 ISession session = (ISession)Context.Items["NHibernateSession"];
-                this.Village.DeleteOffer(id, session);
+                this.Village.VillageMarketMethods.DeleteOffer(id, session);
 
             }
         }
@@ -106,7 +106,7 @@ public partial class CustomControls_MakeMarketOffer : System.Web.UI.UserControl
                     continue;
 
                 ISession session = (ISession)Context.Items["NHibernateSession"];
-                this.Village.IncreaseOffer(id, quantity, session);
+                this.Village.VillageMarketMethods.IncreaseOffer(id, quantity, session);
 
             }
         }
@@ -134,7 +134,7 @@ public partial class CustomControls_MakeMarketOffer : System.Web.UI.UserControl
                     continue;
 
                 ISession session = (ISession)Context.Items["NHibernateSession"];
-                this.Village.DecreaseOffer(id, quantity, session);
+                this.Village.VillageMarketMethods.DecreaseOffer(id, quantity, session);
 
             }
         }

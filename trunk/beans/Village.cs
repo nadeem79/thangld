@@ -12,24 +12,25 @@ namespace beans
     
     public partial class Village:IdentityObject
     {
-        #region Variables
 
         private int _maxResources = -1;
         private double loyal;
         protected VillageResearchMethods villageResearchMethods = new VillageResearchMethods();
         protected VillageBuildingMethods villageBuildingMethods = new VillageBuildingMethods();
         protected VillageCommonMethods villageCommonMethods = new VillageCommonMethods();
+        protected VillageTroopMethods villageTroopMethods = new VillageTroopMethods();
+        protected VillageMarketMethods villageMarketMethods = new VillageMarketMethods();
+        protected VillageRecruitMethods villageRecruitMethods = new VillageRecruitMethods();
+        protected VillageResourceMethods villageResourceMethods = new VillageResourceMethods();
+        protected VillageTransportMethods villageTransportMethods = new VillageTransportMethods();
         private Player _owner;
         public virtual Player Player
         {
             get { return this._owner; }
             set { this._owner = value; }
         }
-        #endregion
 
-        #region Properties
 
-        #region Properties.Common
 
         public virtual int X
         {
@@ -168,8 +169,30 @@ namespace beans
                 return this.villageCommonMethods;
             }
         }
+        public virtual VillageTroopMethods VillageTroopMethods
+        {
+            get
+            {
+                return this.villageTroopMethods;
+            }
+        }
 
-        #endregion
+        public virtual VillageMarketMethods VillageMarketMethods
+        {
+            get {return this.villageMarketMethods;}
+        }
+        public virtual VillageRecruitMethods VillageRecruitMethods
+        {
+            get {return this.villageRecruitMethods;}
+        }
+        public virtual VillageResourceMethods VillageResourceMethods
+        {
+            get { return this.villageResourceMethods; }
+        }
+        public virtual VillageTransportMethods VillageTransportMethods
+        {
+            get { return this.villageTransportMethods; }
+        }
 
         public virtual int this[BuildingType buildType]
         {
@@ -362,7 +385,6 @@ namespace beans
                 }
             }
         }
-        #endregion
 
         #region Static Members
 
@@ -448,6 +470,11 @@ namespace beans
             this.villageResearchMethods.Village = this;
             this.villageBuildingMethods.Village = this;
             this.villageCommonMethods.Village = this;
+            this.villageTroopMethods.Village = this;
+            this.villageMarketMethods.Village = this;
+            this.villageRecruitMethods.Village = this;
+            this.villageResourceMethods.Village = this;
+            this.villageTransportMethods.Village = this;
         }
 
         public override string ToString()
@@ -489,8 +516,6 @@ namespace beans
             //session.Save(this.VillageResearchData);
             session.Save(this.VillageTroopData);
         }
-
-        //Chưa xét trường hợp xây noble
         
   
     }

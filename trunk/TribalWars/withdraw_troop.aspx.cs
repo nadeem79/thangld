@@ -36,7 +36,7 @@ public partial class withdraw_troop : System.Web.UI.Page
 
         NHibernate.ISession session = (NHibernate.ISession)Context.Items["NHibernateSession"];
 
-        this.MyStation = this.Village.GetStationById(stationId, session);
+        this.MyStation = this.Village.VillageTroopMethods.GetStationById(stationId, session);
         if (this.MyStation == null)
         {
             Response.Redirect(string.Format("rally.aspx?id={0}&page=unit", this.Village), false);
@@ -64,7 +64,7 @@ public partial class withdraw_troop : System.Web.UI.Page
 
         ISession session = (ISession)Context.Items["NHibernateSession"];
 
-        this.Village.WithdrawStation(this.MyStation, spear, sword, axe, scout, lightCavalry, heavyCavalry, ram, catapult, noble, session);
+        this.Village.VillageTroopMethods.WithdrawStation(this.MyStation, spear, sword, axe, scout, lightCavalry, heavyCavalry, ram, catapult, noble, session);
 
         Response.Redirect(string.Format("rally.aspx?id={0}&page=unit", this.Village.ID), false);
     }

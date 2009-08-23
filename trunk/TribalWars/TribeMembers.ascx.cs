@@ -47,11 +47,9 @@ public partial class TribeMembers : System.Web.UI.UserControl
     protected void bttnInvite_Click(object sender, EventArgs e)
     {
         ISession session = null;
-        ITransaction trans = null;
         try
         {
             session = (ISession)Context.Items["NHibernateSession"];
-            trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
 
             Player me = session.Load<Player>(Session["user"]);
             IList<beans.Error> lstErrors = me.InvitePlayer(this.txtUser.Text, session);
@@ -64,12 +62,9 @@ public partial class TribeMembers : System.Web.UI.UserControl
             }
 
             ScriptManager.RegisterStartupScript(bttnInvite, bttnInvite.GetType(), "ShowException", "jQuery.facebox('Gửi thư mời gia nhập thành công');", true);
-            trans.Commit();
         }
         catch (Exception ex)
         {
-            if (trans!=null)
-                trans.Rollback();
             RadScriptManager.RegisterStartupScript(bttnInvite, bttnInvite.GetType(), "ShowException", "jQuery.facebox('" + ex.Message + "');", true);
         }
 

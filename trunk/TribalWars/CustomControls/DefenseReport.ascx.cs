@@ -6,9 +6,9 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using beans;
 
-public partial class CustomControls_AttackReport : System.Web.UI.UserControl
+public partial class CustomControls_DefenseReport : System.Web.UI.UserControl
 {
-    protected AttackReport AttackReport
+    protected DefenseReport DefenseReport
     {
         get;
         set;
@@ -21,24 +21,24 @@ public partial class CustomControls_AttackReport : System.Web.UI.UserControl
 
     public Report Report
     {
-        get { return this.AttackReport; }
+        get { return this.DefenseReport; }
         set
         {
-            if (value.Type != ReportType.Attack)
+            if (value.Type != ReportType.Defense)
                 Response.Redirect(string.Format("list_report.aspx?id={0}", this.Village.ID), false);
             else
-                this.AttackReport = (AttackReport)value;
+                this.DefenseReport = (DefenseReport)value;
         }
     }
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Functions.IsGreaterThenZero(this.AttackReport.Clay, this.AttackReport.Wood, this.AttackReport.Iron))
+        if (Functions.IsGreaterThenZero(this.DefenseReport.Clay, this.DefenseReport.Wood, this.DefenseReport.Iron))
         {
             this.pPillaged.Visible = true;
-            this.pClay.Visible = (this.AttackReport.Clay > 0);
-            this.pWood.Visible = (this.AttackReport.Wood > 0);
-            this.pIron.Visible = (this.AttackReport.Iron > 0);
+            this.pClay.Visible = (this.DefenseReport.Clay > 0);
+            this.pWood.Visible = (this.DefenseReport.Wood > 0);
+            this.pIron.Visible = (this.DefenseReport.Iron > 0);
         }
     }
 }

@@ -5,43 +5,61 @@ using System.Text;
 using NHibernate;
 using NHibernate.Linq;
 using NHibernate.Criterion;
+using System.Data;
 
 namespace beans
 {
-    public partial class Village
+    public class VillageRecruitMethods
     {
+        public Village Village
+        {
+            get;
+            set;
+        }
 
         public virtual int MaxRecruit(TroopType troop)
         {
-            return Recruit.MaxRecruit(troop, this.VillageResourceData.Wood, this.VillageResourceData.Clay, this.VillageResourceData.Iron);
+            return Recruit.MaxRecruit(troop, this.Village.VillageResourceData.Wood, this.Village.VillageResourceData.Clay, this.Village.VillageResourceData.Iron);
         }
         public virtual Recruit BeginRecruit(TroopType troop, int quantity, ISession session)
         {
-            if (!Recruit.CanRecruit(troop, quantity, this.VillageResourceData.Wood, this.VillageResourceData.Clay, this.VillageResourceData.Iron))
+            if (!Recruit.CanRecruit(troop, quantity, this.Village.VillageResourceData.Wood, this.Village.VillageResourceData.Clay, this.Village.VillageResourceData.Iron))
                 return null;
 
             int level = 0;
             if ((troop == TroopType.Axe) || (troop == TroopType.Spear) || (troop == TroopType.Sword))
-                level = this[BuildingType.Barracks];
+                level = this.Village[BuildingType.Barracks];
             if ((troop == TroopType.Light) || (troop == TroopType.Scout) || (troop == TroopType.Heavy))
-                level = this[BuildingType.Stable];
+                level = this.Village[BuildingType.Stable];
 
             Recruit recruit = new Recruit();
-            recruit.InVillage = this;
+            recruit.InVillage = this.Village;
             recruit.Quantity = quantity;
             recruit.Troop = troop;
             recruit.LastUpdate = DateTime.Now;
 
             Price p = Recruit.GetPrice(troop);
-            this.VillageResourceData.Clay -= p.Clay * quantity;
-            this.VillageResourceData.Wood -= p.Wood * quantity;
-            this.VillageResourceData.Iron -= p.Iron * quantity;
-            this.Population += p.Population * quantity;
+            this.Village.VillageResourceData.Clay -= p.Clay * quantity;
+            this.Village.VillageResourceData.Wood -= p.Wood * quantity;
+            this.Village.VillageResourceData.Iron -= p.Iron * quantity;
+            this.Village.Population += p.Population * quantity;
 
-            session.Save(recruit);
-            session.Update(this);
-
-            return recruit;
+            ITransaction transaction = null;
+            try
+            {
+                transaction = session.BeginTransaction(IsolationLevel.ReadUncommitted);
+                session.Save(recruit);
+                session.Update(this.Village);
+                transaction.Commit();
+                return recruit;
+            }
+            catch
+            {
+                if (transaction != null)
+                    transaction.Rollback();
+                return null;
+            }
+            
         }
         public virtual IList<Recruit> GetRecruit(ISession session, BuildingType building)
         {
@@ -58,7 +76,7 @@ namespace beans
             }
 
             ICriteria criteria = session.CreateCriteria(typeof(Recruit));
-            criteria.Add(Expression.Eq("InVillage", this));
+            criteria.Add(Expression.Eq("InVillage", this.Village));
             criteria.Add(Expression.Gt("Quantity", 0));
             criteria.AddOrder(new Order("ID", true));
 
@@ -97,24 +115,24 @@ namespace beans
 
             Recruit recruit = (from r in session.Linq<Recruit>()
                                where r.ID == recruit_id &&
-                               r.InVillage == this
+                               r.InVillage == this.Village
                                select r).SingleOrDefault<Recruit>();
             if (recruit == null)
                 return;
 
             Price price = Recruit.GetPrice(recruit.Troop);
-            this.VillageResourceData.Wood += price.Wood * recruit.Quantity;
-            this.VillageResourceData.Clay += price.Clay * recruit.Quantity;
-            this.VillageResourceData.Iron += price.Iron * recruit.Quantity;
-            this.Population -= (int)(price.Population * recruit.Quantity);
-            session.Update(this);
+            this.Village.VillageResourceData.Wood += price.Wood * recruit.Quantity;
+            this.Village.VillageResourceData.Clay += price.Clay * recruit.Quantity;
+            this.Village.VillageResourceData.Iron += price.Iron * recruit.Quantity;
+            this.Village.Population -= (int)(price.Population * recruit.Quantity);
+            session.Update(this.Village);
             session.Delete(recruit);
         }
 
         protected virtual IList<Recruit> GetDependingCarRecruit(ISession session)
         {
             return (from recruit in session.Linq<Recruit>()
-                    where recruit.InVillage == this &&
+                    where recruit.InVillage == this.Village &&
                     (recruit.Troop == TroopType.Ram || recruit.Troop == TroopType.Catapult)
                     orderby recruit.ID ascending
                     select recruit).ToList<Recruit>();
@@ -122,7 +140,7 @@ namespace beans
         protected virtual IList<Recruit> GetDependingNobleRecruit(ISession session)
         {
             return (from recruit in session.Linq<Recruit>()
-                    where recruit.InVillage == this &&
+                    where recruit.InVillage == this.Village &&
                     recruit.Troop == TroopType.Nobleman
                     orderby recruit.ID ascending
                     select recruit).ToList<Recruit>();
@@ -131,7 +149,7 @@ namespace beans
         protected virtual IList<Recruit> GetDependingInfantryRecruit(ISession session)
         {
             return (from recruit in session.Linq<Recruit>()
-                    where recruit.InVillage == this &&
+                    where recruit.InVillage == this.Village &&
                     (recruit.Troop == TroopType.Spear || recruit.Troop == TroopType.Sword || recruit.Troop == TroopType.Axe)
                     orderby recruit.ID ascending
                     select recruit).ToList<Recruit>();
@@ -139,7 +157,7 @@ namespace beans
         protected virtual IList<Recruit> GetDependingCavalryRecruit(ISession session)
         {
             return (from recruit in session.Linq<Recruit>()
-                    where recruit.InVillage == this &&
+                    where recruit.InVillage == this.Village &&
                     (recruit.Troop == TroopType.Scout || recruit.Troop == TroopType.Light || recruit.Troop == TroopType.Heavy)
                     orderby recruit.ID ascending
                     select recruit).ToList<Recruit>();

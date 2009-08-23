@@ -6,22 +6,26 @@ using NHibernate;
 
 namespace beans
 {
-    public partial class Village
+    public class VillageResourceMethods
     {
-
+        public Village Village
+        {
+            get;
+            set;
+        }
         public virtual int ProductPerHour(ResourcesType type)
         {
             int level = 0;
             switch (type)
             {
                 case ResourcesType.Clay:
-                    level = this.VillageBuildingData.ClayPit;
+                    level = this.Village.VillageBuildingData.ClayPit;
                     break;
                 case ResourcesType.Wood:
-                    level = this.VillageBuildingData.TimberCamp;
+                    level = this.Village.VillageBuildingData.TimberCamp;
                     break;
                 case ResourcesType.Iron:
-                    level = this.VillageBuildingData.IronMine;
+                    level = this.Village.VillageBuildingData.IronMine;
                     break;
                 default:
                     break;
@@ -41,13 +45,13 @@ namespace beans
             switch (type)
             {
                 case ResourcesType.Clay:
-                    level = this.VillageBuildingData.ClayPit;
+                    level = this.Village.VillageBuildingData.ClayPit;
                     break;
                 case ResourcesType.Wood:
-                    level = this.VillageBuildingData.TimberCamp;
+                    level = this.Village.VillageBuildingData.TimberCamp;
                     break;
                 case ResourcesType.Iron:
-                    level = this.VillageBuildingData.IronMine;
+                    level = this.Village.VillageBuildingData.IronMine;
                     break;
                 default:
                     break;
@@ -62,20 +66,20 @@ namespace beans
         {
             TimeSpan span = to - from;
             double time = span.TotalHours;
-            this.VillageResourceData.Clay += (int)(time * this.ProductPerHour(ResourcesType.Clay));
-            this.VillageResourceData.Wood += (int)(time * this.ProductPerHour(ResourcesType.Wood));
-            this.VillageResourceData.Iron += (int)(time * this.ProductPerHour(ResourcesType.Iron));
+            this.Village.VillageResourceData.Clay += (int)(time * this.ProductPerHour(ResourcesType.Clay));
+            this.Village.VillageResourceData.Wood += (int)(time * this.ProductPerHour(ResourcesType.Wood));
+            this.Village.VillageResourceData.Iron += (int)(time * this.ProductPerHour(ResourcesType.Iron));
 
-            if (this.VillageResourceData.Clay > this.MaxResources)
-                this.VillageResourceData.Clay = this.MaxResources;
-            if (this.VillageResourceData.Wood > this.MaxResources)
-                this.VillageResourceData.Wood = this.MaxResources;
-            if (this.VillageResourceData.Iron > this.MaxResources)
-                this.VillageResourceData.Iron = this.MaxResources;
+            if (this.Village.VillageResourceData.Clay > this.Village.MaxResources)
+                this.Village.VillageResourceData.Clay = this.Village.MaxResources;
+            if (this.Village.VillageResourceData.Wood > this.Village.MaxResources)
+                this.Village.VillageResourceData.Wood = this.Village.MaxResources;
+            if (this.Village.VillageResourceData.Iron > this.Village.MaxResources)
+                this.Village.VillageResourceData.Iron = this.Village.MaxResources;
         }
         public virtual int TimeTillFullWarehouse(DateTime from, ResourcesType type)
         {
-            int canStore = this.MaxResources - this[type];
+            int canStore = this.Village.MaxResources - this.Village[type];
             return (int)(canStore * this.SecondPerResourceUnit(type));
         }
 
@@ -86,22 +90,22 @@ namespace beans
                                                 int wood,
                                                 int iron)
         {
-            if (x == this.X && y == this.Y)
+            if (x == this.Village.X && y == this.Village.Y)
                 throw new Exception("Nhập toạ độ");
 
             if ((clay + wood + iron) == 0)
                 throw new Exception("Nhập một loại tài nguyên");
 
-            if ((clay > this.VillageResourceData.Clay) ||
-            (wood > this.VillageResourceData.Wood) ||
-            (iron > this.VillageResourceData.Iron))
+            if ((clay > this.Village.VillageResourceData.Clay) ||
+            (wood > this.Village.VillageResourceData.Wood) ||
+            (iron > this.Village.VillageResourceData.Iron))
                 throw new Exception("Không đủ tài nguyên");
 
             Village toVillage = Village.GetVillageByCoordinate(x, y, session);
             if (toVillage == null)
                 throw new Exception("Toạ độ không tồn tại");
 
-            if (this.VillageBuildingData.Merchant < SendResource.CalculateMerchant(wood, clay, iron))
+            if (this.Village.VillageBuildingData.Merchant < SendResource.CalculateMerchant(wood, clay, iron))
                 throw new Exception("Không đủ thương nhân");
 
             SendResource sendResource = new SendResource();
@@ -111,8 +115,8 @@ namespace beans
             sendResource.Merchant = (int)Math.Ceiling((double)(clay + iron + wood)/1000);
 
             sendResource.StartingTime = DateTime.Now;
-            sendResource.LandingTime = Map.LandingTime(TroopType.Merchant, this, toVillage, sendResource.StartingTime);
-            sendResource.FromVillage = this;
+            sendResource.LandingTime = Map.LandingTime(TroopType.Merchant, this.Village, toVillage, sendResource.StartingTime);
+            sendResource.FromVillage = this.Village;
             sendResource.ToVillage = toVillage;
 
             return sendResource;

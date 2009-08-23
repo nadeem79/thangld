@@ -13,25 +13,46 @@ namespace beans
             get { return ReportType.OfferAccepted; }
         }
 
-        public ResourcesType BoughtType
+        public virtual ResourcesType BoughtType
         {
             get;
             set;
         }
 
-        public ResourcesType SoldType
+        public virtual ResourcesType SoldType
         {
             get;
             set;
         }
 
-        public int BoughtQuantity
+        public virtual int BoughtQuantity
         {
             get;
             set;
         }
 
-        public int SoldQuantity
+        public virtual int SoldQuantity
+        {
+            get;
+            set;
+        }
+        public virtual Village FromVillage
+        {
+            get;
+            set;
+        }
+        public virtual Village ToVillage
+        {
+            get;
+            set;
+        }
+
+        public virtual Player FromPlayer
+        {
+            get;
+            set;
+        }
+        public virtual Player ToPlayer
         {
             get;
             set;

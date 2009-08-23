@@ -81,6 +81,7 @@ namespace beans
                             int ram,
                             int catapult,
                             int noble,
+                            bool isSendback,
                             ISession session)
         {
             this.AtVillage.VillageTroopData.SpearInVillage -= spear;
@@ -126,6 +127,51 @@ namespace beans
                 && this.Ram <= 0 && this.Catapult <= 0
                 && this.Noble <= 0);
 
+            Report report = null;
+            if (!isSendback)
+            {
+                report = new SupportWithdawalReport();
+                SupportWithdawalReport supportWithdawalReport = (SupportWithdawalReport)report;
+                supportWithdawalReport.FromPlayer = this.AtVillage.Player;
+                supportWithdawalReport.FromVillage = this.AtVillage;
+                supportWithdawalReport.OriginalPlayer = this.FromVillage.Player;
+                supportWithdawalReport.OriginalVillage = this.FromVillage;
+                supportWithdawalReport.Owner = this.AtVillage.Player;
+                supportWithdawalReport.Title = string.Format("{0} rút quân về từ {1} ({2}|{3})", this.FromVillage.Player.Username, this.AtVillage.Name, this.AtVillage.X.ToString("000"), this.AtVillage.Y.ToString("000"));
+                supportWithdawalReport.Spear = spear;
+                supportWithdawalReport.Sword = sword;
+                supportWithdawalReport.Axe = axe;
+                supportWithdawalReport.Scout = scout;
+                supportWithdawalReport.LightCavalry = lightCavalry;
+                supportWithdawalReport.HeavyCavalry = heavyCavalry;
+                supportWithdawalReport.Ram = ram;
+                supportWithdawalReport.Catapult = catapult;
+                supportWithdawalReport.Noble = noble;
+            }
+            else
+            {
+                report = new SupportSendbackReport();
+                SupportSendbackReport supportSendbackReport = (SupportSendbackReport)report;
+                supportSendbackReport.FromPlayer = this.AtVillage.Player;
+                supportSendbackReport.FromVillage = this.AtVillage;
+                supportSendbackReport.OriginalPlayer = this.FromVillage.Player;
+                supportSendbackReport.OriginalVillage = this.FromVillage;
+                supportSendbackReport.Owner = this.FromVillage.Player;
+                supportSendbackReport.Title = string.Format("{0} gửi quân về từ {1} ({2}|{3})", this.FromVillage.Player.Username, this.AtVillage.Name, this.AtVillage.X.ToString("000"), this.AtVillage.Y.ToString("000"));
+                supportSendbackReport.Spear = spear;
+                supportSendbackReport.Sword = sword;
+                supportSendbackReport.Axe = axe;
+                supportSendbackReport.Scout = scout;
+                supportSendbackReport.LightCavalry = lightCavalry;
+                supportSendbackReport.HeavyCavalry = heavyCavalry;
+                supportSendbackReport.Ram = ram;
+                supportSendbackReport.Catapult = catapult;
+                supportSendbackReport.Noble = noble;
+            }
+            report.Unread = true;
+            report.Time = DateTime.Now;
+            
+
             ITransaction transaction = null;
             try
             {
@@ -136,16 +182,19 @@ namespace beans
                     session.Delete(this);
                 else
                     session.Update(this);
+                session.Save(report);
                 transaction.Commit();
+                return returnTroop;
             }
             catch
             {
                 transaction.Rollback();
+                return null;
             }
-            return returnTroop;
+            
         }
 
-        public Return Return(ISession session)
+        public Return Return(ISession session, bool isSendback)
         {
             return this.Return( this.Spear,
                                 this.Sword,
@@ -156,6 +205,7 @@ namespace beans
                                 this.Ram,
                                 this.Catapult,
                                 this.Noble,
+                                isSendback,
                                 session);
         }
         

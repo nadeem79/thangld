@@ -178,6 +178,17 @@
       <many-to-one name="ToPlayer" class="beans.Player, beans" column="to_player" not-null="true" lazy="no-proxy" />
     </subclass>
 
+    <subclass discriminator-value="5" name="beans.OfferAcceptedReport, beans" lazy="true">
+      <property name="BoughtType" column="bought_type" type="beans.ResourcesType, beans" not-null="false" />
+      <property name="SoldType" column="sold_type" type="beans.ResourcesType, beans" not-null="false" />
+      <property name="BoughtQuantity" column="bought_quantity" type="Int32" />
+      <property name="SoldQuantity" column="sold_quantity" type="Int32" />
+      <many-to-one name="FromVillage" class="beans.Village, beans" column="from_village" not-null="true" lazy="no-proxy" />
+      <many-to-one name="ToVillage" class="beans.Village, beans" column="to_village" not-null="true" lazy="no-proxy"  />
+      <many-to-one name="FromPlayer" class="beans.Player, beans" column="from_player" not-null="true" lazy="no-proxy" />
+      <many-to-one name="ToPlayer" class="beans.Player, beans" column="to_player" not-null="true" lazy="no-proxy" />
+    </subclass>
+
     <subclass discriminator-value="6" name="beans.SupportReport, beans" lazy="true">
       <many-to-one name="FromVillage" class="beans.Village, beans" column="from_village" not-null="true" lazy="no-proxy" />
       <many-to-one name="ToVillage" class="beans.Village, beans" column="to_village" not-null="true" lazy="no-proxy"  />
@@ -210,7 +221,7 @@
       <property name="Noble" column="noble_defense" type="Int32" />
     </subclass>
 
-    <subclass discriminator-value="7" name="beans.SupportSendbackReport, beans" lazy="true">
+    <subclass discriminator-value="8" name="beans.SupportSendbackReport, beans" lazy="true">
       <many-to-one name="FromVillage" class="beans.Village, beans" column="from_village" not-null="true" lazy="no-proxy" />
       <many-to-one name="OriginalVillage" class="beans.Village, beans" column="to_village" not-null="true" lazy="no-proxy"  />
       <many-to-one name="FromPlayer" class="beans.Player, beans" column="from_player" not-null="true" lazy="no-proxy" />

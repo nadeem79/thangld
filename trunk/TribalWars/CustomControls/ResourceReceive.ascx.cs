@@ -9,7 +9,7 @@ using beans;
 public partial class CustomControls_ResourceReceive : System.Web.UI.UserControl
 {
 
-    protected ResourceReceiveReport ResourceReceiveReport
+    protected SendResourceReport ResourceReceiveReport
     {
         get;
         set;
@@ -28,7 +28,7 @@ public partial class CustomControls_ResourceReceive : System.Web.UI.UserControl
             if (value.Type != ReportType.ResourceReceive)
                 Response.Redirect(string.Format("list_report.aspx?id={0}", this.Village.ID), false);
             else
-                this.ResourceReceiveReport = (ResourceReceiveReport)value;
+                this.ResourceReceiveReport = (SendResourceReport)value;
 
         }
     }

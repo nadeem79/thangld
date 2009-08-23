@@ -99,8 +99,8 @@ public partial class inPage : System.Web.UI.MasterPage
 
         //this.village.VillageResourceData.ResourceChanged+=new ResourceChangeHandler();
 
-        int incomingAttackCount = village.GetIncomingAttackCount(this.NHibernateSession);
-        int incomingSupportCount = village.GetIncomingSupportCount(this.NHibernateSession);
+        int incomingAttackCount = this.Player.GetIncomingAttackCount(this.NHibernateSession);
+        int incomingSupportCount = this.Player.GetIncomingSupportCount(this.NHibernateSession);
 
         this.lblClay.Text = this.CurrentVillage.VillageResourceData.Clay.ToString();
         this.lblWood.Text = this.CurrentVillage.VillageResourceData.Wood.ToString();

@@ -210,8 +210,6 @@ namespace beans
             this.InVillage.VillageResourceData.Clay += (int)(price.Clay * 0.8);
             this.InVillage.VillageResourceData.Iron += (int)(price.Iron * 0.8);
             this.InVillage.Population -= price.Population;
-            
-            
 
             IList<Build> builds = (from build in session.Linq<Build>()
                                    where build.InVillage == this.InVillage
@@ -274,7 +272,7 @@ namespace beans
                 iron += (int)(iron * 0.25);
                 time += (int)(time * 0.22);
                 population += (float)(population * 0.1);
-                point += (int)Math.Round(point*0.2, MidpointRounding.AwayFromZero);
+                point += (int)Math.Ceiling(point*0.2);
                 
             }
             for (int i = 1; i < headquarter; i++)

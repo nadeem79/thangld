@@ -47,53 +47,69 @@ public partial class CustomControls_ConstructBuilding : System.Web.UI.UserContro
         string strResult = "";
         if (enumCanBuild == BuildableStatus.JustDoIt)
         {
+            int level = 0;
             BuildPrice price = null;
             switch (type)
             {
                 case BuildingType.Headquarter:
                     price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopHeadquarterLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    level = this.Village.VillageBuildingMethods.TopHeadquarterLevel + 1;
                     break;
                 case BuildingType.Barracks:
                     price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopBarrackLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    level = this.Village.VillageBuildingMethods.TopBarrackLevel + 1;
                     break;
                 case BuildingType.Stable:
                     price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopStableLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    level = this.Village.VillageBuildingMethods.TopStableLevel + 1;
                     break;
                 case BuildingType.Workshop:
                     price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopWorkshopLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    level = this.Village.VillageBuildingMethods.TopWorkshopLevel + 1;
                     break;
                 case BuildingType.Academy:
                     price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopAcademyLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    level = this.Village.VillageBuildingMethods.TopAcademyLevel + 1;
                     break;
                 case BuildingType.Smithy:
                     price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopSmithyLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    level = this.Village.VillageBuildingMethods.TopSmithyLevel + 1;
                     break;
                 case BuildingType.Rally:
                     price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopRallyPointLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    level = this.Village.VillageBuildingMethods.TopRallyPointLevel + 1;
                     break;
                 case BuildingType.Market:
                     price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopMarketLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    level = this.Village.VillageBuildingMethods.TopMarketLevel + 1;
                     break;
                 case BuildingType.TimberCamp:
                     price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopTimberCampLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    level = this.Village.VillageBuildingMethods.TopTimberCampLevel + 1;
                     break;
                 case BuildingType.ClayPit:
                     price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopClayPitLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    level = this.Village.VillageBuildingMethods.TopClayPitLevel + 1;
                     break;
                 case BuildingType.IronMine:
                     price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopIronMineLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    level = this.Village.VillageBuildingMethods.TopIronMineLevel + 1;
                     break;
                 case BuildingType.Farm:
                     price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopFarmLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    level = this.Village.VillageBuildingMethods.TopFarmLevel + 1;
                     break;
                 case BuildingType.Warehouse:
                     price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopWarehouseLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    level = this.Village.VillageBuildingMethods.TopWarehouseLevel + 1;
                     break;
                 case BuildingType.HidingPlace:
                     price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopHiddenPlaceLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    level = this.Village.VillageBuildingMethods.TopHiddenPlaceLevel + 1;
                     break;
                 case BuildingType.Wall:
                     price = beans.Build.GetPrice(type, this.Village.VillageBuildingMethods.TopWallLevel + 1, this.Village[beans.BuildingType.Headquarter]);
+                    level = this.Village.VillageBuildingMethods.TopWallLevel + 1;
                     break;
                 default:
                     break;
@@ -104,7 +120,7 @@ public partial class CustomControls_ConstructBuilding : System.Web.UI.UserContro
             strResult += "<td><img src=\"images/eisen.png\" title=\"Iron\" alt=\"\" />" + price.Iron + "</td>";
             strResult += "<td><img src=\"images/face.png\" title=\"Villagers\" alt=\"\" />" + Math.Round(price.Population, MidpointRounding.AwayFromZero) + "</td>";
             strResult += "<td>" + Functions.FormatTime(price.BuildTime) + "</td>";
-            strResult += "<td align=\"center\"><a href=\"headquarters.aspx?id=" + this.Village.ID + "&action=build&building=" + (int)type + "\">Nâng cấp</td>";
+            strResult += "<td align=\"center\"><a href=\"headquarters.aspx?id=" + this.Village.ID + "&action=build&building=" + (int)type + "\">Nâng cấp lên level " + level.ToString("00") + "</td>";
         }
         else if (enumCanBuild == BuildableStatus.BuildingLevelExceed)
         {

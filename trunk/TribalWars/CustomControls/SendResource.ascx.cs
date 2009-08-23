@@ -71,21 +71,21 @@ public partial class CustomControls_SendResource : System.Web.UI.UserControl
     protected void Page_Load(object sender, EventArgs e)
     {
         ISession session = (ISession)Context.Items["NHibernateSession"];
-        this.Village.GetTransportData(session);
+        this.Village.VillageTransportMethods.GetTransportData(session);
 
         this.lblAvailableMerchant.Text = this.Village.VillageBuildingData.Merchant.ToString();
 
 
 
-        if (this.Village.TransportFromMe.Count > 0)
+        if (this.Village.VillageTransportMethods.TransportFromMe.Count > 0)
         {
-            this.rOutgoings.DataSource = this.Village.TransportFromMe;
+            this.rOutgoings.DataSource = this.Village.VillageTransportMethods.TransportFromMe;
             this.rOutgoings.DataBind();
         }
-        if (this.Village.TransportToMe.Count > 0)
+        if (this.Village.VillageTransportMethods.TransportToMe.Count > 0)
         {
 
-            this.rMyTransport.DataSource = this.Village.TransportToMe;
+            this.rMyTransport.DataSource = this.Village.VillageTransportMethods.TransportToMe;
             this.rMyTransport.DataBind();
         }
         
@@ -126,7 +126,7 @@ public partial class CustomControls_SendResource : System.Web.UI.UserControl
 
         try
         {
-            this.PendingCommand = this.Village.CreateSendResource(session, x, y, clay, wood, iron);
+            this.PendingCommand = this.Village.VillageResourceMethods.CreateSendResource(session, x, y, clay, wood, iron);
             this.targetPlayerID.Text = PendingCommand.ToVillage.Player.ID.ToString();
             this.targetPlayerName.Text = PendingCommand.ToVillage.Player.Username;
             this.targetVillageID.Text = PendingCommand.ToVillage.ID.ToString();
@@ -168,21 +168,21 @@ public partial class CustomControls_SendResource : System.Web.UI.UserControl
 
         try
         {
-            this.PendingCommand = this.Village.CreateSendResource(session, x, y, clay, wood, iron);
+            this.PendingCommand = this.Village.VillageResourceMethods.CreateSendResource(session, x, y, clay, wood, iron);
             this.PendingCommand.Save(session);
             this.lblAvailableMerchant.Text = this.Village.VillageBuildingData.Merchant.ToString();
 
             int pos = 0;
-            int max = this.Village.TransportFromMe.Count;
+            int max = this.Village.VillageTransportMethods.TransportFromMe.Count;
             for (int i = 0; i < max; i++)
-                if (this.Village.TransportFromMe[i].LandingTime > this.PendingCommand.LandingTime)
+                if (this.Village.VillageTransportMethods.TransportFromMe[i].LandingTime > this.PendingCommand.LandingTime)
                 {
                     pos = i;
                     break;
                 }
-            this.Village.TransportFromMe.Insert(pos, this.PendingCommand);
-            
-            this.rMyTransport.DataSource = this.Village.TransportFromMe;
+            this.Village.VillageTransportMethods.TransportFromMe.Insert(pos, this.PendingCommand);
+
+            this.rMyTransport.DataSource = this.Village.VillageTransportMethods.TransportFromMe;
             this.rMyTransport.DataBind();
             this.txtClay.Text = "";
             this.txtWood.Text = "";

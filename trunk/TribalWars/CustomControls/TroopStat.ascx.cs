@@ -23,17 +23,17 @@ public partial class CustomControls_TroopStat : System.Web.UI.UserControl
     {
         ISession session = (ISession)Context.Items["NHibernateSession"];
 
-        this.Village.PrepareStationData(session);
+        this.Village.VillageTroopMethods.PrepareStationData(session);
 
-        if (this.Village.StationsAtMe.Count > 0)
+        if (this.Village.VillageTroopMethods.StationsAtMe.Count > 0)
         {
-            this.stationAtMeRepeater.DataSource = this.Village.StationsAtMe;
+            this.stationAtMeRepeater.DataSource = this.Village.VillageTroopMethods.StationsAtMe;
             this.stationAtMeRepeater.DataBind();
             this.withdrawStationAtMeButton.Visible = true;
         }
-        if (this.Village.StationsFromMe.Count > 0)
+        if (this.Village.VillageTroopMethods.StationsFromMe.Count > 0)
         {
-            this.stationFromMeRepeater.DataSource = this.Village.StationsFromMe;
+            this.stationFromMeRepeater.DataSource = this.Village.VillageTroopMethods.StationsFromMe;
             this.stationFromMeRepeater.DataBind();
         }
 
@@ -51,7 +51,7 @@ public partial class CustomControls_TroopStat : System.Web.UI.UserControl
 
             ISession session = (ISession)Context.Items["NHibernateSession"];
 
-            this.Village.WithdrawStation(stationId, session);
+            this.Village.VillageTroopMethods.WithdrawStation(stationId, session);
         }
     }
 
@@ -70,9 +70,13 @@ public partial class CustomControls_TroopStat : System.Web.UI.UserControl
                     continue;
 
                 ISession session = (ISession)Context.Items["NHibernateSession"];
-                this.Village.WithdrawStation(stationId, session);
+                this.Village.VillageTroopMethods.SendBackStation(stationId, session);
             }
         }
         Response.Redirect(Request.Url.ToString(), false);
+    }
+    protected void stationAtMeRepeater_ItemCommand(object source, RepeaterCommandEventArgs e)
+    {
+
     }
 }

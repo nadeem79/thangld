@@ -10,22 +10,28 @@ using System.Data;
 
 namespace beans
 {
-    public partial class Village
+    public class VillageMarketMethods
     {
+
+        public Village Village
+        {
+            get;
+            set;
+        }
 
         public virtual Offer CreateOffer(ResourcesType offerType, int offerQuantity, ResourcesType forType, int forQuantity, int maxTransportTime, int offerNumber)
         {
             
-            if (this[offerType] < offerQuantity * offerNumber)
+            if (this.Village[offerType] < offerQuantity * offerNumber)
                 throw new TribalWarsException("Không đủ tài nguyên");
-            if (Math.Ceiling((double)(offerQuantity * offerNumber / 1000)) > this.VillageBuildingData.Merchant)
+            if (Math.Ceiling((double)(offerQuantity * offerNumber / 1000)) > this.Village.VillageBuildingData.Merchant)
                 throw new TribalWarsException("Không đủ thương nhân");
             if (offerType==forType)
                 throw new TribalWarsException("Nhập loại tài nguyên");
 
 
             Offer offer = new Offer();
-            offer.AtVillage = this;
+            offer.AtVillage = this.Village;
             offer.ForQuantity = forQuantity;
             offer.ForType = forType;
             offer.MaxTransportTime = maxTransportTime;
@@ -47,19 +53,19 @@ namespace beans
             {
                 throw new Exception("Offer không tồn tại");
             }
-            
 
-            if (offer.AtVillage == this)
+
+            if (offer.AtVillage == this.Village)
                 return null;
 
             
 
             int resourceNeeded = offer.ForQuantity * quantity;
-            if (resourceNeeded > this[offer.ForType])
+            if (resourceNeeded > this.Village[offer.ForType])
                 throw new Exception("Không đủ tài nguyên");
 
             int merchantNeeded = (int)Math.Ceiling((double)resourceNeeded / 1000);
-            if (merchantNeeded > this.VillageBuildingData.Merchant)
+            if (merchantNeeded > this.Village.VillageBuildingData.Merchant)
                 throw new Exception("Không đủ merchant");
 
             if (offer.OfferNumber < quantity)
@@ -68,10 +74,10 @@ namespace beans
             offer.OfferNumber -= quantity;
 
             SendResource sendToSource = new SendResource();
-            sendToSource.FromVillage = this;
+            sendToSource.FromVillage = this.Village;
             sendToSource.ToVillage = offer.AtVillage;
             sendToSource.StartingTime = DateTime.Now;
-            sendToSource.LandingTime = Map.LandingTime(TroopType.Merchant, this, offer.AtVillage, sendToSource.StartingTime);
+            sendToSource.LandingTime = Map.LandingTime(TroopType.Merchant, this.Village, offer.AtVillage, sendToSource.StartingTime);
             sendToSource.Merchant = merchantNeeded;
             switch (offer.ForType)
             {
@@ -89,41 +95,56 @@ namespace beans
             }
             SendResource sendFromSource = new SendResource();
             sendFromSource.FromVillage = offer.AtVillage;
-            sendFromSource.ToVillage = this;
+            sendFromSource.ToVillage = this.Village;
             sendFromSource.StartingTime = DateTime.Now;
-            sendFromSource.LandingTime = Map.LandingTime(TroopType.Merchant, this, offer.AtVillage, sendFromSource.StartingTime);
+            sendFromSource.LandingTime = Map.LandingTime(TroopType.Merchant, this.Village, offer.AtVillage, sendFromSource.StartingTime);
             sendFromSource.Merchant = (int)Math.Ceiling((double)offer.OfferQuantity / 1000) * quantity;
             switch (offer.OfferType)
             {
                 case ResourcesType.Clay:
-                    sendFromSource.Clay = resourceNeeded;
+                    sendFromSource.Clay = offer.OfferQuantity * quantity;
                     break;
                 case ResourcesType.Wood:
-                    sendFromSource.Wood = resourceNeeded;
+                    sendFromSource.Wood = offer.OfferQuantity * quantity;
                     break;
                 case ResourcesType.Iron:
-                    sendFromSource.Iron = resourceNeeded;
+                    sendFromSource.Iron = offer.OfferQuantity * quantity;
                     break;
                 default:
                     break;
             }
 
-            this[offer.ForType] -= resourceNeeded;
-            this.VillageBuildingData.Merchant -= sendToSource.Merchant;
+            this.Village[offer.ForType] -= resourceNeeded;
+            this.Village.VillageBuildingData.Merchant -= sendToSource.Merchant;
             offer.AtVillage[offer.OfferType] -= resourceNeeded;
             offer.AtVillage.VillageBuildingData.Merchant -= sendFromSource.Merchant;
+
+            OfferAcceptedReport report = new OfferAcceptedReport();
+            report.BoughtQuantity = offer.ForQuantity * quantity;
+            report.BoughtType = offer.ForType;
+            report.SoldQuantity = offer.OfferQuantity * quantity;
+            report.SoldType = offer.OfferType;
+            report.FromVillage = offer.AtVillage;
+            report.FromPlayer = offer.AtVillage.Player;
+            report.ToVillage = this.Village;
+            report.ToPlayer = this.Village.Player;
+            report.Owner = offer.AtVillage.Player;
+            report.Time = DateTime.Now;
+            report.Unread = true;
+            report.Title = string.Format("{0} mua tài nguyên ở {1} ({2}|{3}", this.Village.Player.Username, offer.AtVillage.Name, offer.AtVillage.X.ToString("000"), offer.AtVillage.Y.ToString("000"));
 
             ITransaction trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
             session.Save(sendFromSource);
             session.Save(sendToSource);
-            session.Update(this.VillageBuildingData);
+            session.Update(this.Village.VillageBuildingData);
             session.Update(offer.AtVillage.VillageBuildingData);
-            session.Update(this.VillageResourceData);
+            session.Update(this.Village.VillageResourceData);
             session.Update(offer.AtVillage.VillageResourceData);
             if (offer.OfferNumber == 0)
                 session.Delete(offer);
             else
                 session.Update(offer);
+            session.Save(report);
             trans.Commit();
 
             return sendToSource;
@@ -133,7 +154,7 @@ namespace beans
         public virtual IList<Offer> GetMyOffers(ISession session)
         {
             return (from offer in session.Linq<Offer>()
-                    where offer.AtVillage == this
+                    where offer.AtVillage == this.Village
                     select offer).ToList<Offer>();
         }
 
@@ -141,25 +162,25 @@ namespace beans
         {
 
             Offer offer = Offer.GetOfferById(offerId, session);
-            if (offer == null || offer.AtVillage != this)
+            if (offer == null || offer.AtVillage != this.Village)
                 throw new TribalWarsException("Offer không tồn tại");
 
 
             int quantity = offer.OfferQuantity * increment;
-            if (this[offer.OfferType] < quantity)
+            if (this.Village[offer.OfferType] < quantity)
                 throw new TribalWarsException("Không đủ tài nguyên");
             int merchant = (int)Math.Ceiling((double)(offer.OfferQuantity / 1000)) * increment;
-            if (merchant > this.VillageBuildingData.Merchant)
+            if (merchant > this.Village.VillageBuildingData.Merchant)
                 throw new TribalWarsException("Không đủ thương nhân");
 
             offer.OfferNumber += increment;
-            this[offer.OfferType] -= quantity;
-            this.VillageBuildingData.Merchant -= merchant;
+            this.Village[offer.OfferType] -= quantity;
+            this.Village.VillageBuildingData.Merchant -= merchant;
 
             ITransaction trans = session.BeginTransaction(IsolationLevel.ReadUncommitted);
             session.Update(offer);
-            session.Update(this.VillageBuildingData);
-            session.Update(this.VillageResourceData);
+            session.Update(this.Village.VillageBuildingData);
+            session.Update(this.Village.VillageResourceData);
             trans.Commit();
 
             return offer;
@@ -168,7 +189,7 @@ namespace beans
         public virtual Offer DecreaseOffer(int offerId, int decrease, ISession session)
         {
             Offer offer = Offer.GetOfferById(offerId, session);
-            if (offer == null || offer.AtVillage != this)
+            if (offer == null || offer.AtVillage != this.Village)
                 throw new TribalWarsException("Offer không tồn tại");
 
             if (decrease > offer.OfferNumber)
@@ -178,16 +199,16 @@ namespace beans
             int merchant = (int)Math.Ceiling((double)(offer.OfferQuantity / 1000)) * decrease;
 
             offer.OfferNumber -= decrease;
-            this[offer.OfferType] += quantity;
-            this.VillageBuildingData.Merchant += merchant;
+            this.Village[offer.OfferType] += quantity;
+            this.Village.VillageBuildingData.Merchant += merchant;
 
             ITransaction trans = session.BeginTransaction(IsolationLevel.ReadUncommitted);
             if (offer.OfferNumber > 0)
                 session.Update(offer);
             else
                 session.Delete(offer);
-            session.Update(this.VillageBuildingData);
-            session.Update(this.VillageResourceData);
+            session.Update(this.Village.VillageBuildingData);
+            session.Update(this.Village.VillageResourceData);
             trans.Commit();
 
             return offer;
@@ -196,26 +217,26 @@ namespace beans
         public virtual void DeleteOffer(int offerId, ISession session)
         {
             Offer offer = Offer.GetOfferById(offerId, session);
-            if (offer == null || offer.AtVillage != this)
+            if (offer == null || offer.AtVillage != this.Village)
                 throw new TribalWarsException("Offer không tồn tại");
 
             int quantity = offer.OfferQuantity * offer.OfferNumber;
             int merchant = (int)Math.Ceiling((double)(offer.OfferQuantity / 1000)) * offer.OfferNumber;
 
-            this[offer.OfferType] += quantity;
-            this.VillageBuildingData.Merchant += merchant;
+            this.Village[offer.OfferType] += quantity;
+            this.Village.VillageBuildingData.Merchant += merchant;
 
             ITransaction trans = session.BeginTransaction(IsolationLevel.ReadUncommitted);
             session.Delete(offer);
-            session.Update(this.VillageBuildingData);
-            session.Update(this.VillageResourceData);
+            session.Update(this.Village.VillageBuildingData);
+            session.Update(this.Village.VillageResourceData);
             trans.Commit();
         }
 
         public virtual IList<Offer> GetOffers(ResourcesType forType, ResourcesType offerType, double maxDuration, double maxRatio, string orderby, ISession session)
         {
             var query = (from offer in session.Linq<Offer>()
-                         where offer.AtVillage != this
+                         where offer.AtVillage != this.Village
                          select offer);
 
             if (forType != ResourcesType.Any)
@@ -223,12 +244,12 @@ namespace beans
             if (offerType != ResourcesType.Any)
                 query = query.Where<Offer>(offer => offer.OfferType == offerType);
             if (maxDuration >0)
-                query = query.Where<Offer>(offer => offer.MaxTransportTime <= maxDuration && Map.RangeCalculator(this.X, this.Y, offer.AtVillage.X, offer.AtVillage.Y) <= maxDuration);
+                query = query.Where<Offer>(offer => offer.MaxTransportTime <= maxDuration && Map.RangeCalculator(this.Village.X, this.Village.Y, offer.AtVillage.X, offer.AtVillage.Y) <= maxDuration);
             if (maxRatio > 0)
                 query = query.Where<Offer>(offer => offer.OfferQuantity / offer.ForQuantity <= maxRatio);
 
             if (orderby == "Duration")
-                query = query.OrderBy(offer => Map.RangeCalculator(this.X, this.Y, offer.AtVillage.X, offer.AtVillage.Y));
+                query = query.OrderBy(offer => Map.RangeCalculator(this.Village.X, this.Village.Y, offer.AtVillage.X, offer.AtVillage.Y));
             else if (orderby == "Ration")
                 query = query.OrderBy(offer => offer.OfferQuantity / offer.ForQuantity);
 

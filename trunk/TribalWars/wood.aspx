@@ -27,7 +27,7 @@
                 <td width="200">
                     <img src="images/holz.png" title="Wood" alt=""> Sản lượng hiện tại</td>
                 <td>
-                    Tăng <b><% Response.Write(current.ProductPerHour(beans.ResourcesType.Wood).ToString()); %></b>&nbsp;đơn 
+                    Tăng <b><% Response.Write(current.VillageResourceMethods.ProductPerHour(beans.ResourcesType.Wood).ToString()); %></b>&nbsp;đơn 
                     vị gỗ mỗi giờ</td>
             </tr>
         </tbody>

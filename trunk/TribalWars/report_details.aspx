@@ -1,12 +1,15 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/inPage.master" AutoEventWireup="true" CodeFile="report_details.aspx.cs"
     Inherits="report_details" %>
 
+<%@ Reference Control="CustomControls/OfferAcceptedReport.ascx" %>
 <%@ Reference Control="CustomControls/AttackReport.ascx" %>
+<%@ Reference Control="CustomControls/DefenseReport.ascx" %>
 <%@ Reference Control="CustomControls/InviteReport.ascx" %>
 <%@ Reference Control="CustomControls/ResourceReceive.ascx" %>
 <%@ Reference Control="CustomControls/SendResource.ascx" %>
 <%@ Reference Control="CustomControls/SupportOtherReport.ascx" %>
 <%@ Reference Control="CustomControls/TroopWithdrawal.ascx" %>
+<%@ Reference Control="CustomControls/SupportSendBackReport.ascx" %>
 <%@ Reference Control="CustomControls/DefenseOtherReport.ascx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 <script type="text/javascript">
@@ -22,34 +25,39 @@
                 <tr>
                     <td valign="top">
                         <table class="vis" width="100" runat="server" id="navigator">
-                            <tbody>
-                                <tr>
-                                    <td width="100">
-                                        <a href="list_report.aspx?id=<% = this.village.ID %>">Tất cả</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td width="100">
-                                        <a href="list_report.aspx?id=<% = this.village.ID %>&type=1">Tất cả</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td width="100">
-                                        <a href="list_report.aspx?id=<% = this.village.ID %>&type=2">Phòng thủ</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td width="100">
-                                        <a href="list_report.aspx?id=<% = this.village.ID %>&type=3">Hỗ trợ</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td width="100">
-                                        <a href="list_report.aspx?id=<% = this.village.ID %>&type=4">Buôn bán</a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <tbody>
+                            <tr>
+                                <td width="100">
+                                    <a href="list_report.aspx?id=<% = this.village.ID %>">Tất cả</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="100">
+                                    <a href="list_report.aspx?id=<% = this.village.ID %>&type=1">Tấn công</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="100">
+                                    <a href="list_report.aspx?id=<% = this.village.ID %>&type=2">Phòng thủ</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="100">
+                                    <a href="list_report.aspx?id=<% = this.village.ID %>&type=3">Hỗ trợ</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="100">
+                                    <a href="list_report.aspx?id=<% = this.village.ID %>&type=4">Buôn bán</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="100">
+                                    <a href="list_report.aspx?id=<% = this.village.ID %>&type=5">Khác</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                     </td>
                     <td valign="top">
                         <table class="vis" style="border:1px solid black;">
@@ -59,8 +67,7 @@
                                         Thông báo
                                     </th>
                                     <th width="400">
-                                        &nbsp;<span id="label"><span id="labelText"><% = report.Title %>
-                                        </span></span>
+                                        <% = report.Title %>
                                     </th>
                                 </tr>
                                 <tr>

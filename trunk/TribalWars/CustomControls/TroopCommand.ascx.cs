@@ -39,16 +39,16 @@ public partial class CustomControls_TroopCommand : System.Web.UI.UserControl
     {
         ISession session = (ISession)Context.Items["NHibernateSession"];
 
-        this.Village.PrepareTroopData(session);
+        this.Village.VillageTroopMethods.PrepareTroopData(session);
 
-        if (this.Village.TroopFromMe.Count > 0)
+        if (this.Village.VillageTroopMethods.TroopFromMe.Count > 0)
         {
-            this.outgoingRepeater.DataSource = this.Village.TroopFromMe;
+            this.outgoingRepeater.DataSource = this.Village.VillageTroopMethods.TroopFromMe;
             this.outgoingRepeater.DataBind();
         }
-        if (this.Village.TroopToMe.Count > 0)
+        if (this.Village.VillageTroopMethods.TroopToMe.Count > 0)
         {
-            this.incomingRepeater.DataSource = this.Village.TroopToMe;
+            this.incomingRepeater.DataSource = this.Village.VillageTroopMethods.TroopToMe;
             this.incomingRepeater.DataBind();
         }
 
@@ -65,7 +65,7 @@ public partial class CustomControls_TroopCommand : System.Web.UI.UserControl
         else
         {
             beans.Village targetVillage = session.Load<beans.Village>(target);
-            if (target != null)
+            if (targetVillage != null)
             {
                 this.x.Text = targetVillage.X.ToString("000");
                 this.y.Text = targetVillage.Y.ToString("000");
@@ -92,7 +92,7 @@ public partial class CustomControls_TroopCommand : System.Web.UI.UserControl
             x = (int.TryParse(this.x.Text, out i)) ? i : 0;
             y = (int.TryParse(this.y.Text, out i)) ? i : 0;
 
-            Attack attack = this.Village.CreateAttack(session, x, y, spear, sword, axe, scout, light, heavy, ram, catapult, noble, BuildingType.NoBuiding);
+            Attack attack = this.Village.VillageTroopMethods.CreateAttack(session, x, y, spear, sword, axe, scout, light, heavy, ram, catapult, noble, BuildingType.NoBuiding);
 
             this.commandTypeSpan.Text = this.typeSpan.Text = "Tấn công";
 
@@ -143,7 +143,7 @@ public partial class CustomControls_TroopCommand : System.Web.UI.UserControl
             x = (int.TryParse(this.x.Text, out i)) ? i : 0;
             y = (int.TryParse(this.y.Text, out i)) ? i : 0;
 
-            Support support = this.Village.CreateSupport(session, x, y, spear, sword, axe, scout, light, heavy, ram, catapult, noble);
+            Support support = this.Village.VillageTroopMethods.CreateSupport(session, x, y, spear, sword, axe, scout, light, heavy, ram, catapult, noble);
 
             this.commandTypeSpan.Text = this.typeSpan.Text = "Hỗ trợ";
 
@@ -192,7 +192,7 @@ public partial class CustomControls_TroopCommand : System.Web.UI.UserControl
 
         try
         {
-            Attack attack = this.Village.CreateAttack(session, x, y, spear, sword, axe, scout, light, heavy, ram, catapult, noble, BuildingType.NoBuiding);
+            Attack attack = this.Village.VillageTroopMethods.CreateAttack(session, x, y, spear, sword, axe, scout, light, heavy, ram, catapult, noble, BuildingType.NoBuiding);
             attack.Save(session);
             Response.Redirect(string.Format("rally.aspx?id={0}", this.Village.ID), false);
         }
@@ -221,7 +221,7 @@ public partial class CustomControls_TroopCommand : System.Web.UI.UserControl
 
         try
         {
-            Support support = this.Village.CreateSupport(session, x, y, spear, sword, axe, scout, light, heavy, ram, catapult, noble);
+            Support support = this.Village.VillageTroopMethods.CreateSupport(session, x, y, spear, sword, axe, scout, light, heavy, ram, catapult, noble);
             support.Save(session);
             Response.Redirect(string.Format("rally.aspx?id={0}", this.Village.ID), false);
         }

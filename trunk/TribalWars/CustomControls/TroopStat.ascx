@@ -67,7 +67,8 @@
                 <% = Functions.GetTroopQuantity(this.Village.VillageTroopData.Noble) %>
             </td>
         </tr>
-        <asp:Repeater runat="server" ID="stationAtMeRepeater">
+        <asp:Repeater runat="server" ID="stationAtMeRepeater" 
+            onitemcommand="stationAtMeRepeater_ItemCommand">
             <ItemTemplate>
                 <tr>
                     <td>

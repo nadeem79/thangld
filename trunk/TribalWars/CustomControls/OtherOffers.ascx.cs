@@ -28,7 +28,7 @@ public partial class CustomControls_OtherOffers : System.Web.UI.UserControl
         ISession session = (ISession)Context.Items["NHibernateSession"];
 
 
-            IList<Offer> offers = this.Village.GetOffers(ResourcesType.Any, ResourcesType.Any, 0, 0, string.Empty, session);
+        IList<Offer> offers = this.Village.VillageMarketMethods.GetOffers(ResourcesType.Any, ResourcesType.Any, 0, 0, string.Empty, session);
             this.offerRepeater.DataSource = offers;
             this.offerRepeater.DataBind();
 
@@ -79,7 +79,7 @@ public partial class CustomControls_OtherOffers : System.Web.UI.UserControl
 
             ISession session = (ISession)Context.Items["NHibernateSession"];
 
-            this.Village.AcceptOffer(offerId, quantity, session);
+            this.Village.VillageMarketMethods.AcceptOffer(offerId, quantity, session);
             string p = (Request["p"] == null) ? string.Format("&p={0}", Request["p"]) : "";
             Response.Redirect(string.Format("market.aspx?id={0}&page=market{1}", this.Village.ID, p), false);
         }

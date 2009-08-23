@@ -30,7 +30,7 @@
                 </td>
                 <td>
                     Tăng <b>
-                        <% Response.Write(current.ProductPerHour(beans.ResourcesType.Clay).ToString()); %></b>&nbsp;đơn vị gạch
+                        <% Response.Write(current.VillageResourceMethods.ProductPerHour(beans.ResourcesType.Clay).ToString()); %></b>&nbsp;đơn vị gạch
                     mỗi giờ
                 </td>
             </tr>

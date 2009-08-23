@@ -74,6 +74,7 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="Admin.cs" />
     <Compile Include="Administrator.Methods.Configuration.cs" />
+    <Compile Include="SupportSendbackReport.cs" />
     <Compile Include="InviteReport.cs" />
     <Compile Include="MovingCommandLandingTimeComparer.cs" />
     <Compile Include="NumericConfiguration.cs" />
@@ -87,11 +88,9 @@
     <Compile Include="TribalWarsEngine.cs" />
     <Compile Include="TribalWarsException.cs" />
     <Compile Include="UserType.cs" />
-    <Compile Include="Village.Methods.Building.cs" />
-    <Compile Include="Village.Methods.Resources.cs" />
-    <Compile Include="Village.Methods.Transport.cs" />
-    <Compile Include="Village.Methods.Troops.cs" />
-    <Compile Include="Village.Methods.Recruit.cs" />
+    <Compile Include="VillageResourceMethods.cs" />
+    <Compile Include="VillageTransportMethods.cs" />
+    <Compile Include="VillageRecruitMethods.cs" />
     <Compile Include="DatetimeHelper.cs" />
     <Compile Include="DefenseOtherReport.cs" />
     <Compile Include="DefenseReport.cs" />
@@ -101,6 +100,7 @@
     <Compile Include="VillageBuildingMethods.cs" />
     <Compile Include="VillageCommonMethods.cs" />
     <Compile Include="VillageResearchMethods.cs" />
+    <Compile Include="VillageTroopMethods.cs" />
     <Compile Include="WriteMail.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="MovingCommand.cs">
@@ -152,7 +152,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="VillageBuildingData.cs" />
-    <Compile Include="Village.Methods.Market.cs" />
+    <Compile Include="VillageMarketMethods.cs" />
     <Compile Include="VillageReseachData.cs" />
     <Compile Include="VillageResourcesData.cs" />
     <Compile Include="VillageTroopData.cs" />
