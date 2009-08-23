@@ -5,6 +5,7 @@ using System.Text;
 using NHibernate.Criterion;
 using NHibernate;
 using NHibernate.Linq;
+using System.Data;
 
 namespace beans
 {
@@ -158,13 +159,26 @@ namespace beans
             inviteReport.Title = String.Format("{0} mời gia nhập bang hội {1}", this.Username, this.Group.Name);
             inviteReport.Unread = true;
             inviteReport.Owner = player;
+            inviteReport.Group = this.Group;
+            inviteReport.Inviter = this;
             invite.Inviter = this;
             invite.Group = this.Group;
-
-            session.Save(invite);
-            session.Save(inviteReport);
-
-            return lstError;
+            ITransaction trans = null;
+            try
+            {
+                trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
+                session.Save(invite);
+                session.Save(inviteReport);
+                trans.Commit();
+                return lstError;
+            }
+            catch (Exception ex)
+            {
+                if (trans != null)
+                    trans.Rollback();
+                throw ex;
+            }
+            
         }
 
         public bool CheckPrivilage(TribePermission privilage)

@@ -27,8 +27,34 @@ public partial class list_report : System.Web.UI.Page
         int type, page;
         int.TryParse(Request["type"], out type);
         int.TryParse(Request["page"], out page);
-        IList<Report> lstReports = user.GetReport(ReportTypeFactory.GetReportType(type), page, session);
-
+        IList<Report> lstReports = null;// = user.GetReport(page, session);
+        switch (type)
+        {
+            case 1:
+                lstReports = user.GetReports(page, session, ReportType.Attack);
+                navigator.Rows[1].Cells[0].Attributes["class"] = "selected";
+                break;
+            case 2:
+                lstReports = user.GetReports(page, session, ReportType.Defense, ReportType.DefenseOther);
+                navigator.Rows[2].Cells[0].Attributes["class"] = "selected";
+                break;
+            case 3:
+                lstReports = user.GetReports(page, session, ReportType.Support, ReportType.SupportSendBack, ReportType.SupportWithdawal);
+                navigator.Rows[3].Cells[0].Attributes["class"] = "selected";
+                break;
+            case 4:
+                lstReports = user.GetReports(page, session, ReportType.ResourceReceive, ReportType.OfferAccepted);
+                navigator.Rows[4].Cells[0].Attributes["class"] = "selected";
+                break;
+            case 5:
+                lstReports = user.GetReports(page, session, ReportType.InviteToTribe);
+                navigator.Rows[5].Cells[0].Attributes["class"] = "selected";
+                break;
+            default:
+                lstReports = user.GetReports(page, session);
+                navigator.Rows[0].Cells[0].Attributes["class"] = "selected";
+                break;
+        }
         this.gvReports.DataSource = lstReports;
         //System.Web.UI.WebControls.HyperLinkField field = (HyperLinkField)this.gvReports.Columns[0];
         //field.DataNavigateUrlFormatString = "report_details.aspx?id=" + this.village.ID.ToString() + "&report={0}";

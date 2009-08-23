@@ -36,7 +36,7 @@ public partial class stable : System.Web.UI.Page
             if (id != 0)
             {
                 ITransaction trans = this.NHibernateSession.BeginTransaction(IsolationLevel.ReadCommitted);
-                this.village.CancelRecruit(id, this.NHibernateSession);
+                this.village.VillageRecruitMethods.CancelRecruit(id, this.NHibernateSession);
                 trans.Commit();
                 ((inPage)this.Master).WoodLabel.Text = this.village.VillageResourceData.Wood.ToString();
                 ((inPage)this.Master).ClayLabel.Text = this.village.VillageResourceData.Clay.ToString();
@@ -44,7 +44,7 @@ public partial class stable : System.Web.UI.Page
             }
         }
 
-        IList<Recruit> recruits = village.GetRecruit(this.NHibernateSession, BuildingType.Stable);
+        IList<Recruit> recruits = village.VillageRecruitMethods.GetRecruit(this.NHibernateSession, BuildingType.Stable);
         DateTime last_complete = DateTime.Now;
         string sRecruitCommands = "";
         for (int i = 0; i < recruits.Count; i++)
@@ -88,7 +88,6 @@ public partial class stable : System.Web.UI.Page
 
     protected void bttnRecruit_Click(object sender, EventArgs e)
     {
-        ITransaction trans = this.NHibernateSession.BeginTransaction(IsolationLevel.ReadCommitted);
         int scout = 0, light = 0, heavy = 0;
 
         int.TryParse(this.txtScout.Text, out scout);
@@ -96,16 +95,15 @@ public partial class stable : System.Web.UI.Page
         int.TryParse(this.txtHeavy.Text, out heavy);
 
         if (scout > 0)
-            if (this.village.BeginRecruit(TroopType.Scout, scout, this.NHibernateSession) == null)
+            if (this.village.VillageRecruitMethods.BeginRecruit(TroopType.Scout, scout, this.NHibernateSession) == null)
                 lblError.Text = "Không đủ tài nguyên";
 
         if (light > 0)
-            if (this.village.BeginRecruit(TroopType.Light, light, this.NHibernateSession) == null)
+            if (this.village.VillageRecruitMethods.BeginRecruit(TroopType.Light, light, this.NHibernateSession) == null)
                 lblError.Text = "Không đủ tài nguyên";
         if (heavy > 0)
-            if (this.village.BeginRecruit(TroopType.Heavy, heavy, this.NHibernateSession) == null)
+            if (this.village.VillageRecruitMethods.BeginRecruit(TroopType.Heavy, heavy, this.NHibernateSession) == null)
                 lblError.Text = "Không đủ tài nguyên";
-        trans.Commit();
         if (lblError.Text.Equals(string.Empty))
             Response.Redirect("stable.aspx?id=" + this.village.ID.ToString(), false);
     }

@@ -306,7 +306,7 @@
         <tr>
             <td>
                 <a href="command.aspx?id=<% = this.Village.ID %>&command=<%# DataBinder.Eval(Container.DataItem, "ID") %>">
-                    <%# TypePrefix((beans.MoveType)DataBinder.Eval(Container.DataItem, "Type")) %>
+                    <%# TypePrefix((beans.MoveType)DataBinder.Eval(Container.DataItem, "Type")) %> từ
                     <%# ((beans.Village)DataBinder.Eval(Container.DataItem, "FromVillage")).Name %>
                     (<%# ((beans.Village)DataBinder.Eval(Container.DataItem, "FromVillage")).X.ToString("000")%>|<%# ((beans.Village)DataBinder.Eval(Container.DataItem, "FromVillage")).Y.ToString("000")%>)</a>
             </td>

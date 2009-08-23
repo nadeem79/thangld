@@ -84,7 +84,7 @@
                 </td>
                 <td>
                     <asp:TextBox ID="txtRam" runat="server" Width="33px"></asp:TextBox>
-                    &nbsp;(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.txtRam.ClientID); %>', <% Response.Write(this.village.MaxRecruit(beans.TroopType.Ram)); %>)"><%Response.Write(this.village.MaxRecruit(beans.TroopType.Ram)); %></a>)
+                    &nbsp;(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.txtRam.ClientID); %>', <% Response.Write(this.village.VillageRecruitMethods.MaxRecruit(beans.TroopType.Ram)); %>)"><%Response.Write(this.village.VillageRecruitMethods.MaxRecruit(beans.TroopType.Ram)); %></a>)
                 </td>
             </tr>
             <tr class="row_a">
@@ -112,7 +112,7 @@
                 </td>
                 <td>
                     <asp:TextBox ID="txtCatapult" runat="server" Width="33px"></asp:TextBox>
-                    &nbsp;(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.txtCatapult.ClientID); %>', <% Response.Write(this.village.MaxRecruit(beans.TroopType.Catapult)); %>)"><%Response.Write(this.village.MaxRecruit(beans.TroopType.Catapult)); %></a>)
+                    &nbsp;(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.txtCatapult.ClientID); %>', <% Response.Write(this.village.VillageRecruitMethods.MaxRecruit(beans.TroopType.Catapult)); %>)"><%Response.Write(this.village.VillageRecruitMethods.MaxRecruit(beans.TroopType.Catapult)); %></a>)
                 </td>
             </tr>
             <tr>

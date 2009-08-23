@@ -111,11 +111,11 @@ public class Functions
         switch (type)
         {
             case ResourcesType.Clay:
-                return string.Format("<img src=\"images/resources/clay.png\" title=\"Clay\" />", quantity);
+                return string.Format("<img src=\"images/resources/clay.png\" title=\"Clay\" /> {0}", quantity);
             case ResourcesType.Wood:
-                return string.Format("<img src=\"images/resources/wood.png\" title=\"Wood\" />", quantity);
+                return string.Format("<img src=\"images/resources/wood.png\" title=\"Wood\" /> {0}", quantity);
             case ResourcesType.Iron:
-                return string.Format("<img src=\"images/resources/iron.png\" title=\"Iron\" />", quantity);
+                return string.Format("<img src=\"images/resources/iron.png\" title=\"Iron\" /> {0}", quantity);
             default:
                 return "";
         }

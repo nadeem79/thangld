@@ -8,8 +8,14 @@ using NHibernate.Criterion;
 
 namespace beans
 {
-    partial class Village
+    public class VillageTransportMethods
     {
+        public Village Village
+        {
+            get;
+            set;
+        }
+
         public virtual IList<MovingCommand> ResourceTransporting
         {
             get;
@@ -31,7 +37,7 @@ namespace beans
         public virtual void GetTransportData(ISession session)
         {
             ICriteria criteria = session.CreateCriteria<MovingCommand>();
-            criteria.Add(Expression.Gt("LandingTime", this.LastUpdate));
+            criteria.Add(Expression.Gt("LandingTime", this.Village.LastUpdate));
             criteria.Add(Expression.Or
                         (
                             Expression.And
@@ -39,8 +45,8 @@ namespace beans
                                 Expression.Sql("this_.type=1"), // đối tượng SendResource
                                 Expression.Or // đến bất kỳ đâu
                                 (
-                                    Expression.Eq("FromVillage", this),
-                                    Expression.Eq("ToVillage", this)
+                                    Expression.Eq("FromVillage", this.Village),
+                                    Expression.Eq("ToVillage", this.Village)
                                  )
                             ),
                             Expression.And
@@ -50,7 +56,7 @@ namespace beans
                                     Expression.Sql("this_.type=4"), // đối tượng return
                                     Expression.Sql("(this_.merchant is not null and this_.merchant>0)") // có merchant >0
                                 ),
-                                Expression.Eq("ToVillage", this) // đến làng this
+                                Expression.Eq("ToVillage", this.Village) // đến làng this
                             )
                         ));
             
@@ -59,12 +65,12 @@ namespace beans
             this.ResourceTransporting = criteria.List<MovingCommand>();
 
             this.TransportFromMe = (from sendResource in this.ResourceTransporting
-                                    where sendResource.FromVillage == this
+                                    where sendResource.FromVillage == this.Village
                                     orderby sendResource.LandingTime ascending
                                     select (SendResource)sendResource).ToList<SendResource>();
 
             this.TransportToMe = (from movingCommand in this.ResourceTransporting
-                                  where movingCommand.ToVillage == this
+                                  where movingCommand.ToVillage == this.Village
                                   orderby movingCommand.LandingTime ascending
                                   select movingCommand).ToList<MovingCommand>();
 
@@ -73,7 +79,7 @@ namespace beans
         public virtual int GetMerchantOnTheWay(ISession session)
         {
             return (from sendResource in session.Linq<SendResource>()
-                    where sendResource.FromVillage == this
+                    where sendResource.FromVillage == this.Village
                     select sendResource.Merchant).Sum();
         }
     }

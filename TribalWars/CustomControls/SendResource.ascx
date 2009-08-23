@@ -256,7 +256,9 @@
                 <%# ((beans.Village)(DataBinder.Eval(Container.DataItem, "ToVillage"))).Name %> (<%# ((beans.Village)(DataBinder.Eval(Container.DataItem, "ToVillage"))).X.ToString("000")%>|<%# ((beans.Village)(DataBinder.Eval(Container.DataItem, "ToVillage"))).Y.ToString("000")%>)</a>
         </td>
         <td>
-            <%# DisplayResources((beans.MovingCommand)Container.DataItem) %>
+            <%# Functions.GetResourceString(beans.ResourcesType.Clay, (int)Eval("Clay")) %>
+            <%# Functions.GetResourceString(beans.ResourcesType.Wood, (int)Eval("Wood")) %>
+            <%# Functions.GetResourceString(beans.ResourcesType.Iron, (int)Eval("Iron")) %>
         </td>
         <td>
             <%# MerchantCalculation((beans.MovingCommand)Container.DataItem) %>

@@ -29,23 +29,45 @@
                     </table>
                 </td>
                <td valign="top" width="100%">
-                    <asp:GridView ID="gvMail" runat="server" AutoGenerateColumns="False" 
-                        Width="100%" BorderColor="Black" BorderStyle="Solid" BorderWidth="1px">
-                        <Columns>                                                               
-                            <asp:HyperLinkField
-                                DataTextField="Title" HeaderText="Tiêu đề"
-                                DataNavigateUrlFormatString="mail_details.aspx?id={0}" 
-                                DataNavigateUrlFields="Id">
-                            <ItemStyle Width="60%" />   
-                            </asp:HyperLinkField>
-                            <asp:HyperLinkField
-                                DataTextField="From" HeaderText="Người gửi"
-                                DataNavigateUrlFormatString="write_mail.aspx?id={0}" 
-                                DataNavigateUrlFields="From"> 
-                            </asp:HyperLinkField>    
-                            <asp:BoundField DataField="Time" HeaderText="Thời gian" />
-                        </Columns>
-                    </asp:GridView>
+               <asp:Repeater runat="server" ID="rMails">
+                <HeaderTemplate>
+                    <table cellspacing="0" rules="all" border="1" style="border-color: Black; border-width: 1px;
+                                    border-style: Solid; width: 100%; border-collapse: collapse;">
+                                    <tbody>
+                                        <tr>
+                                            <th>
+                                            </th>
+                                            <th>
+                                                <center>
+                                                    Tiêu đề</center>
+                                            </th>
+                                            <th>Người gửi</th>
+                                            <th>
+                                                <center>
+                                                    Thời gian</center>
+                                            </th>
+                                        </tr>
+                </HeaderTemplate>
+                <FooterTemplate>
+                    </tbody></table>
+                </FooterTemplate>
+                <ItemTemplate>
+                    <tr>
+                        <td>
+                            
+                        </td>
+                        <td> 
+                            <a href="mail_detail.aspx?id=<% = this.village.ID %>&mail=<%# Eval("ID") %>"><%# Eval("Title") %> <%# this.UnreadStatus((bool)Eval("Unread")) %></a>
+                        </td>
+                        <td>
+                            <a href="user_info.aspx?id=<% = this.village.ID %>&player=<%# ((beans.Player)Eval("To")).ID %>"><%# ((beans.Player)Eval("To")).Username %></a>
+                        </td>
+                        <td>
+                            <%# ((DateTime)Eval("Time")).ToString("HH:mm:ss 'ngày' dd/MM/yyyy") %>
+                        </td>
+                    </tr>
+                </ItemTemplate>
+               </asp:Repeater>
                 </td>
             </tr>
         </tbody>

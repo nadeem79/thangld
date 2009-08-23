@@ -29,7 +29,7 @@
                         </td>
                         <td>
                             <strong>
-                                <% Response.Write(this.current.ProductPerHour(beans.ResourcesType.Wood).ToString()); %></strong>
+                                <% Response.Write(this.current.VillageResourceMethods.ProductPerHour(beans.ResourcesType.Wood).ToString()); %></strong>
                             mỗi giờ
                         </td>
                     </tr>
@@ -40,7 +40,7 @@
                         </td>
                         <td>
                             <strong>
-                                <% Response.Write(this.current.ProductPerHour(beans.ResourcesType.Clay).ToString()); %></strong>
+                                <% Response.Write(this.current.VillageResourceMethods.ProductPerHour(beans.ResourcesType.Clay).ToString()); %></strong>
                             mỗi giờ
                         </td>
                     </tr>
@@ -52,7 +52,7 @@
                         </td>
                         <td>
                             <strong>
-                                <% Response.Write(this.current.ProductPerHour(beans.ResourcesType.Iron).ToString()); %></strong>
+                                <% Response.Write(this.current.VillageResourceMethods.ProductPerHour(beans.ResourcesType.Iron).ToString()); %></strong>
                             mỗi giờ
                         </td>
                     </tr>

@@ -94,7 +94,7 @@
                 </td>
                 <td>
                     <asp:TextBox ID="txtScout" runat="server" Width="33px"></asp:TextBox>
-                    &nbsp;(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.txtScout.ClientID); %>', <% Response.Write(this.village.MaxRecruit(beans.TroopType.Scout)); %>)"><%Response.Write(this.village.MaxRecruit(beans.TroopType.Scout)); %></a>)
+                    &nbsp;(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.txtScout.ClientID); %>', <% Response.Write(this.village.VillageRecruitMethods.MaxRecruit(beans.TroopType.Scout)); %>)"><%Response.Write(this.village.VillageRecruitMethods.MaxRecruit(beans.TroopType.Scout)); %></a>)
                 </td>
             </tr>
             <tr class="row_a">
@@ -127,7 +127,7 @@
                 </td>
                 <td>
                     <asp:TextBox ID="txtLight" runat="server" Width="33px"></asp:TextBox>
-                    &nbsp;(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.txtLight.ClientID); %>', <% Response.Write(this.village.MaxRecruit(beans.TroopType.Light)); %>)"><%Response.Write(this.village.MaxRecruit(beans.TroopType.Light)); %></a>)
+                    &nbsp;(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.txtLight.ClientID); %>', <% Response.Write(this.village.VillageRecruitMethods.MaxRecruit(beans.TroopType.Light)); %>)"><%Response.Write(this.village.VillageRecruitMethods.MaxRecruit(beans.TroopType.Light)); %></a>)
                 </td>
             </tr>
             <tr class="row_a">
@@ -160,7 +160,7 @@
                 </td>
                 <td>
                     <asp:TextBox ID="txtHeavy" runat="server" Width="33px"></asp:TextBox>
-                    &nbsp;(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.txtHeavy.ClientID); %>', <% Response.Write(this.village.MaxRecruit(beans.TroopType.Heavy)); %>)"><%Response.Write(this.village.MaxRecruit(beans.TroopType.Heavy)); %></a>)
+                    &nbsp;(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.txtHeavy.ClientID); %>', <% Response.Write(this.village.VillageRecruitMethods.MaxRecruit(beans.TroopType.Heavy)); %>)"><%Response.Write(this.village.VillageRecruitMethods.MaxRecruit(beans.TroopType.Heavy)); %></a>)
                 </td>
             </tr>
             <tr>

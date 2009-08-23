@@ -463,6 +463,11 @@ namespace beans
             if (build == null)
                 return;
 
+            IList<Build> builds = (from b in this.Builds
+                                   where b.ID > id &&
+                                   b.InVillage == this.Village
+                                   select b).ToList<Build>();
+
             BuildPrice price = Build.GetPrice(build.Building, build.Level, this.Village[BuildingType.Headquarter]);
 
             this.Village.VillageResourceData.Wood += (int)(price.Wood * 0.8);
@@ -470,9 +475,20 @@ namespace beans
             this.Village.VillageResourceData.Iron += (int)(price.Iron * 0.8);
             this.Village.Population -= price.Population;
 
-            //IList<Build> builds = (from th)
+            for (int i = 0; i < builds.Count; i++)
+            {
+                Build b = builds[i];
+                if (i == 0)
+                    b.Start = DateTime.Now;
+                else
+                    b.Start = builds[i - 1].End;
 
+                if (b.Building == build.Building)
+                    b.Level--;
 
+                BuildPrice p = Build.GetPrice(b.Building, b.Level, this.Village[BuildingType.Headquarter]);
+                b.End = b.Start.AddSeconds(p.BuildTime);
+            }
 
             ITransaction trans = null;
 
@@ -482,6 +498,8 @@ namespace beans
                 session.Delete(build);
                 session.Update(this.Village);
                 session.Update(this.Village.VillageResourceData);
+                foreach (Build b in builds)
+                    session.Update(b);
                 trans.Commit();
             }
             catch

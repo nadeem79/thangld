@@ -82,7 +82,7 @@ namespace beans
                     MovingCommand newCommand = null;
                     if (command.ToVillage == this.Village)
                     {
-                        this.Village.UpdateResources(currentTime, command.LandingTime);
+                        this.Village.VillageResourceMethods.UpdateResources(currentTime, command.LandingTime);
 
                         while (infantryRecruits.Count > 0 && infantryRecruits[0].Expense(command.LandingTime))
                         {
@@ -169,7 +169,7 @@ namespace beans
                         }
                 }
 
-                this.Village.UpdateResources(currentTime, to);
+                this.Village.VillageResourceMethods.UpdateResources(currentTime, to);
 
                 while (infantryRecruits.Count > 0 && infantryRecruits[0].Expense(to))
                 {

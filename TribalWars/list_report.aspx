@@ -30,7 +30,7 @@
                             </tr>
                             <tr>
                                 <td width="100">
-                                    <a href="list_report.aspx?id=<% = this.village.ID %>&type=1">Tất cả</a>
+                                    <a href="list_report.aspx?id=<% = this.village.ID %>&type=1">Tấn công</a>
                                 </td>
                             </tr>
                             <tr>
@@ -46,6 +46,11 @@
                             <tr>
                                 <td width="100">
                                     <a href="list_report.aspx?id=<% = this.village.ID %>&type=4">Buôn bán</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="100">
+                                    <a href="list_report.aspx?id=<% = this.village.ID %>&type=5">Khác</a>
                                 </td>
                             </tr>
                         </tbody>

@@ -2,28 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NHibernate.Criterion;
 using NHibernate;
 using NHibernate.Linq;
-using NHibernate.Criterion;
 
 namespace beans
 {
-    public partial class Village
+    public class VillageTroopMethods
     {
-
-        public virtual int GetIncomingAttackCount(ISession session)
+        public Village Village
         {
-
-            return (from attack in session.Linq<Attack>()
-                    where attack.ToVillage == this
-                    select attack).Count();
-
-        }
-        public virtual int GetIncomingSupportCount(ISession session)
-        {
-            return (from support in session.Linq<Support>()
-                    where support.ToVillage == this
-                    select support).Count();
+            get;
+            set;
         }
 
         public virtual IList<MovingCommand> TroopMovement
@@ -55,7 +45,7 @@ namespace beans
         public virtual void PrepareTroopData(ISession session)
         {
             ICriteria criteria = session.CreateCriteria<MovingCommand>();
-            criteria.Add(Expression.Gt("LandingTime", this.LastUpdate));
+            criteria.Add(Expression.Gt("LandingTime", this.Village.LastUpdate));
             criteria.Add(Expression.Or
                         (
                             Expression.And
@@ -67,8 +57,8 @@ namespace beans
                                 ),
                                 Expression.Or // đến bất kỳ đâu
                                 (
-                                    Expression.Eq("FromVillage", this),
-                                    Expression.Eq("ToVillage", this)
+                                    Expression.Eq("FromVillage", this.Village),
+                                    Expression.Eq("ToVillage", this.Village)
                                 )
                             ),
                             Expression.And
@@ -78,7 +68,7 @@ namespace beans
                                     Expression.Sql("this_.type=4"), // đối tượng return
                                     Expression.Sql("this_.merchant is null or this_.merchant=0") // có merchant = 0
                                 ),
-                                Expression.Eq("ToVillage", this) // đến làng this
+                                Expression.Eq("ToVillage", this.Village) // đến làng this
                             )
                         ));
 
@@ -87,11 +77,11 @@ namespace beans
             this.TroopMovement = criteria.List<MovingCommand>();
 
             this.TroopFromMe = (from movingCommand in this.TroopMovement
-                                where movingCommand.FromVillage == this
+                                where movingCommand.FromVillage == this.Village
                                 select movingCommand).ToList<MovingCommand>();
 
             this.TroopToMe = (from movingCommand in this.TroopMovement
-                              where movingCommand.ToVillage == this
+                              where movingCommand.ToVillage == this.Village
                               select movingCommand).ToList<MovingCommand>();
 
         }
@@ -99,15 +89,15 @@ namespace beans
         public virtual void PrepareStationData(ISession session)
         {
             IList<Station> stations = (from station in session.Linq<Station>()
-                                       where station.AtVillage == this
-                                       || station.FromVillage == this
+                                       where station.AtVillage == this.Village
+                                       || station.FromVillage == this.Village
                                        select station).ToList<Station>();
-            
+
             this.StationsAtMe = (from station in stations
-                                 where station.AtVillage == this
+                                 where station.AtVillage == this.Village
                                  select station).ToList<Station>();
             this.StationsFromMe = (from station in stations
-                                   where station.FromVillage == this
+                                   where station.FromVillage == this.Village
                                    select station).ToList<Station>();
 
         }
@@ -116,7 +106,7 @@ namespace beans
         {
 
             ICriteria criteria = session.CreateCriteria<MovingCommand>();
-            criteria.Add(Expression.Gt("LandingTime", this.LastUpdate));
+            criteria.Add(Expression.Gt("LandingTime", this.Village.LastUpdate));
             criteria.Add(Expression.Or
                         (
                             Expression.And
@@ -144,17 +134,17 @@ namespace beans
                         ));
 
             criteria.AddOrder(Order.Asc("LandingTime"));
-            
+
             return criteria.List<MovingCommand>();
-            
+
         }
 
         public virtual List<MovingCommand> GetTroopMovement(DateTime time, ISession session)
         {
             return (from movement in session.Linq<MovingCommand>()
-                    where (movement.FromVillage == this || movement.ToVillage == this)
+                    where (movement.FromVillage == this.Village || movement.ToVillage == this.Village)
                     && movement.LandingTime < time
-                    && movement.LandingTime > this.LastUpdate
+                    && movement.LandingTime > this.Village.LastUpdate
                     && movement.GetType() != typeof(SendResource)
                     && (movement.GetType() == typeof(Return) && ((Return)movement).Merchant == 0)
                     orderby movement.LandingTime ascending
@@ -175,21 +165,21 @@ namespace beans
                                     int noble,
                                     BuildingType building)
         {
-            if (x == this.X && y == this.Y)
+            if (x == this.Village.X && y == this.Village.Y)
                 throw new Exception("Nhập toạ độ");
 
             if ((spear + sword + axe + scout + light + heavy + ram + catapult + noble) == 0)
                 throw new Exception("Nhập một loại quân");
 
-            if ((spear > this.VillageTroopData.Spear) ||
-            (sword > this.VillageTroopData.Sword) ||
-            (axe > this.VillageTroopData.Axe) ||
-            (scout > this.VillageTroopData.Scout) ||
-            (light > this.VillageTroopData.LightCavalry) ||
-            (heavy > this.VillageTroopData.HeavyCavalry) ||
-            (ram > this.VillageTroopData.Ram) ||
-            (catapult > this.VillageTroopData.Catapult) ||
-            (noble > this.VillageTroopData.Noble))
+            if ((spear > this.Village.VillageTroopData.Spear) ||
+            (sword > this.Village.VillageTroopData.Sword) ||
+            (axe > this.Village.VillageTroopData.Axe) ||
+            (scout > this.Village.VillageTroopData.Scout) ||
+            (light > this.Village.VillageTroopData.LightCavalry) ||
+            (heavy > this.Village.VillageTroopData.HeavyCavalry) ||
+            (ram > this.Village.VillageTroopData.Ram) ||
+            (catapult > this.Village.VillageTroopData.Catapult) ||
+            (noble > this.Village.VillageTroopData.Noble))
                 throw new Exception("Không đủ quân");
 
             Village toVillage = Village.GetVillageByCoordinate(x, y, session);
@@ -198,7 +188,7 @@ namespace beans
 
             Attack attack = new Attack();
             attack.ToVillage = toVillage;
-            attack.FromVillage = this;
+            attack.FromVillage = this.Village;
 
             TroopType type = TroopType.Spear;
             if (scout > 0)
@@ -248,21 +238,21 @@ namespace beans
                                     int catapult,
                                     int noble)
         {
-            if (x == this.X && y == this.Y)
+            if (x == this.Village.X && y == this.Village.Y)
                 throw new Exception("Nhập toạ độ");
 
             if ((spear + sword + axe + scout + light + heavy + ram + catapult + noble) == 0)
                 throw new Exception("Nhập một loại quân");
 
-            if ((spear > this.VillageTroopData.Spear) ||
-            (sword > this.VillageTroopData.Sword) ||
-            (axe > this.VillageTroopData.Axe) ||
-            (scout > this.VillageTroopData.Scout) ||
-            (light > this.VillageTroopData.LightCavalry) ||
-            (heavy > this.VillageTroopData.HeavyCavalry) ||
-            (ram > this.VillageTroopData.Ram) ||
-            (catapult > this.VillageTroopData.Catapult) ||
-            (noble > this.VillageTroopData.Noble))
+            if ((spear > this.Village.VillageTroopData.Spear) ||
+            (sword > this.Village.VillageTroopData.Sword) ||
+            (axe > this.Village.VillageTroopData.Axe) ||
+            (scout > this.Village.VillageTroopData.Scout) ||
+            (light > this.Village.VillageTroopData.LightCavalry) ||
+            (heavy > this.Village.VillageTroopData.HeavyCavalry) ||
+            (ram > this.Village.VillageTroopData.Ram) ||
+            (catapult > this.Village.VillageTroopData.Catapult) ||
+            (noble > this.Village.VillageTroopData.Noble))
                 throw new Exception("Không đủ quân");
 
             Village toVillage = Village.GetVillageByCoordinate(x, y, session);
@@ -271,7 +261,7 @@ namespace beans
 
             Support support = new Support();
             support.ToVillage = toVillage;
-            support.FromVillage = this;
+            support.FromVillage = this.Village;
 
             TroopType type = TroopType.Spear;
             if (scout > 0)
@@ -313,14 +303,14 @@ namespace beans
 
             Station station = Station.GetById(stationId, session);
 
-            if (station.AtVillage != this && station.FromVillage != this)
+            if (station.AtVillage != this.Village && station.FromVillage != this.Village)
                 throw new TribalWarsException("Không có quân từ thành phố này");
 
-            return station.Return(session);
-        }
+            return station.Return(session, false);
 
-        public virtual Return WithdrawStation(  int stationId,
-                                                int spear, 
+        }
+        public virtual Return WithdrawStation(int stationId,
+                                                int spear,
                                                 int sword,
                                                 int axe,
                                                 int scout,
@@ -328,18 +318,17 @@ namespace beans
                                                 int heavyCavalry,
                                                 int ram,
                                                 int catapult,
-                                                int noble,                            
+                                                int noble,
                                                 ISession session)
         {
 
             Station station = Station.GetById(stationId, session);
 
-            if (station.AtVillage != this && station.FromVillage != this)
+            if (station.AtVillage != this.Village && station.FromVillage != this.Village)
                 throw new TribalWarsException("Không có quân từ thành phố này");
 
-            return station.Return(spear, sword, axe, scout, lightCavalry, heavyCavalry, ram, catapult, noble, session);
+            return station.Return(spear, sword, axe, scout, lightCavalry, heavyCavalry, ram, catapult, noble, false, session);
         }
-
         public virtual Return WithdrawStation(Station station,
                                                 int spear,
                                                 int sword,
@@ -353,17 +342,67 @@ namespace beans
                                                 ISession session)
         {
 
-            if (station.AtVillage != this && station.FromVillage != this)
+            if (station.AtVillage != this.Village && station.FromVillage != this.Village)
                 throw new TribalWarsException("Không có quân từ thành phố này");
 
-            return station.Return(spear, sword, axe, scout, lightCavalry, heavyCavalry, ram, catapult, noble, session);
+            return station.Return(spear, sword, axe, scout, lightCavalry, heavyCavalry, ram, catapult, noble, false, session);
+        }
+
+        public virtual Return SendBackStation(int stationId, ISession session)
+        {
+
+            Station station = Station.GetById(stationId, session);
+
+            if (station.AtVillage != this.Village && station.FromVillage != this.Village)
+                throw new TribalWarsException("Không có quân từ thành phố này");
+
+            return station.Return(session, true);
+
+        }
+        public virtual Return SendBackStation(int stationId,
+                                                int spear,
+                                                int sword,
+                                                int axe,
+                                                int scout,
+                                                int lightCavalry,
+                                                int heavyCavalry,
+                                                int ram,
+                                                int catapult,
+                                                int noble,
+                                                ISession session)
+        {
+
+            Station station = Station.GetById(stationId, session);
+
+            if (station.AtVillage != this.Village && station.FromVillage != this.Village)
+                throw new TribalWarsException("Không có quân từ thành phố này");
+
+            return station.Return(spear, sword, axe, scout, lightCavalry, heavyCavalry, ram, catapult, noble, true, session);
+        }
+        public virtual Return SendBackStation(Station station,
+                                                int spear,
+                                                int sword,
+                                                int axe,
+                                                int scout,
+                                                int lightCavalry,
+                                                int heavyCavalry,
+                                                int ram,
+                                                int catapult,
+                                                int noble,
+                                                ISession session)
+        {
+
+            if (station.AtVillage != this.Village && station.FromVillage != this.Village)
+                throw new TribalWarsException("Không có quân từ thành phố này");
+
+            return station.Return(spear, sword, axe, scout, lightCavalry, heavyCavalry, ram, catapult, noble, true, session);
         }
 
         public virtual Station GetStationById(int stationId, ISession session)
         {
             return (from station in session.Linq<Station>()
                     where station.ID == stationId
-                    && (station.AtVillage == this || station.FromVillage == this)
+                    && (station.AtVillage == this.Village || station.FromVillage == this.Village)
                     select station).SingleOrDefault<Station>();
         }
     }

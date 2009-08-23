@@ -5,31 +5,16 @@ using System.Text;
 
 namespace beans
 {
-    public class DefenseReport:Report
+    public class DefenseReport : Report
     {
 
-        public virtual Village FromVillage
+        public override ReportType Type
         {
-            get;
-            set;
-        }
+            get
+            {
+                return ReportType.Defense;
+            }
 
-        public virtual Village ToVillage
-        {
-            get;
-            set;
-        }
-
-        public virtual Player FromPlayer
-        {
-            get;
-            set;
-        }
-
-        public virtual Player ToPlayer
-        {
-            get;
-            set;
         }
 
         public virtual int SpearSent
@@ -257,18 +242,16 @@ namespace beans
             get;
             set;
         }
-
-        public virtual double LoyalAfter
+        public virtual int LoyalAfter
         {
             get;
             set;
         }
-        public virtual double LoyalBefore
+        public virtual int LoyalBefore
         {
             get;
             set;
         }
-
         public virtual bool SuccessAttack
         {
             get;
@@ -284,12 +267,26 @@ namespace beans
             get;
             set;
         }
-
-        public override ReportType Type
+        public virtual Village FromVillage
         {
-            get { return ReportType.Defense; }
+            get;
+            set;
+        }
+        public virtual Village ToVillage
+        {
+            get;
+            set;
         }
 
-
+        public virtual Player FromPlayer
+        {
+            get;
+            set;
+        }
+        public virtual Player ToPlayer
+        {
+            get;
+            set;
+        }
     }
 }

@@ -216,7 +216,7 @@ namespace beans
             DefenseReport defenseReport;
 
             IList<Station> stations;
-            IList<Village> villages;
+            //IList<Village> villages;
             #endregion
 
 
@@ -280,7 +280,7 @@ namespace beans
             attackReport.LoyalBefore = (int)this.ToVillage.Loyal;
             attackReport.Building = this.Building;
             attackReport.BuildingBefore = this.ToVillage[this.Building];
-            defenseReport.LoyalBefore = this.ToVillage.Loyal;
+            defenseReport.LoyalBefore = (int)this.ToVillage.Loyal;
             defenseReport.Building = this.Building;
             defenseReport.BuildingBefore = this.ToVillage[this.Building];
 
@@ -340,31 +340,25 @@ namespace beans
                 this.FromVillage.VillageTroopData.CatapultOfVillage -= catapultLostInAttackSide;
                 this.FromVillage.VillageTroopData.NobleOfVillage -= nobleLostInAttackSide;
 
-                this.ToVillage.VillageTroopData.SpearOfVillage = this.ToVillage.VillageTroopData.Spear = 0;
-                this.ToVillage.VillageTroopData.SwordOfVillage = this.ToVillage.VillageTroopData.Sword = 0;
-                this.ToVillage.VillageTroopData.AxeOfVillage = this.ToVillage.VillageTroopData.Axe = 0;
-                this.ToVillage.VillageTroopData.LightCavalryOfVillage = this.ToVillage.VillageTroopData.LightCavalry = 0;
-                this.ToVillage.VillageTroopData.HeavyCavalryOfVillage = this.ToVillage.VillageTroopData.HeavyCavalry = 0;
-                this.ToVillage.VillageTroopData.RamOfVillage = this.ToVillage.VillageTroopData.Ram = 0;
-                this.ToVillage.VillageTroopData.CatapultOfVillage = this.ToVillage.VillageTroopData.Catapult = 0;
-                this.ToVillage.VillageTroopData.NobleOfVillage = this.ToVillage.VillageTroopData.Noble = 0;
+                this.ToVillage.VillageTroopData.SpearOfVillage -= this.ToVillage.VillageTroopData.Spear;
+                this.ToVillage.VillageTroopData.SwordOfVillage -= this.ToVillage.VillageTroopData.Sword;
+                this.ToVillage.VillageTroopData.AxeOfVillage -= this.ToVillage.VillageTroopData.Axe;
+                this.ToVillage.VillageTroopData.ScoutOfVillage -= this.ToVillage.VillageTroopData.Scout;
+                this.ToVillage.VillageTroopData.LightCavalryOfVillage -= this.ToVillage.VillageTroopData.LightCavalry;
+                this.ToVillage.VillageTroopData.HeavyCavalryOfVillage -= this.ToVillage.VillageTroopData.HeavyCavalry;
+                this.ToVillage.VillageTroopData.RamOfVillage -= this.ToVillage.VillageTroopData.Ram;
+                this.ToVillage.VillageTroopData.CatapultOfVillage -= this.ToVillage.VillageTroopData.Catapult;
+                this.ToVillage.VillageTroopData.NobleOfVillage -= this.ToVillage.VillageTroopData.Noble;
 
-                //station từ thành phố bị tấn công đến nơi khác
-                //villages = (from village in session.Linq<Village>()
-                //            join station in session.Linq<Station>() on this.ToVillage equals station.AtVillage
-               //             select station.FromVillage).ToList<Village>();
-
-                //IQuery query = session.CreateQuery("from Village v, Station s where v in s.AtVillage");
-
-                //villages = (from station in session.Linq<Station>()
-                //            from village in session.Linq<Village>()
-                //            where station.AtVillage == village
-                //                && this.ToVillage == village
-                //            select village).ToList<Village>();
-                //foreach (Village village in villages)
-                //    village.Update(this.LandingTime, session);
-
-                    
+                this.ToVillage.VillageTroopData.SpearInVillage = this.ToVillage.VillageTroopData.Spear = 0;
+                this.ToVillage.VillageTroopData.SwordInVillage = this.ToVillage.VillageTroopData.Sword = 0;
+                this.ToVillage.VillageTroopData.AxeInVillage = this.ToVillage.VillageTroopData.Axe = 0;
+                this.ToVillage.VillageTroopData.LightCavalryInVillage = this.ToVillage.VillageTroopData.LightCavalry = 0;
+                this.ToVillage.VillageTroopData.HeavyCavalryInVillage = this.ToVillage.VillageTroopData.HeavyCavalry = 0;
+                this.ToVillage.VillageTroopData.RamInVillage = this.ToVillage.VillageTroopData.Ram = 0;
+                this.ToVillage.VillageTroopData.CatapultInVillage = this.ToVillage.VillageTroopData.Catapult = 0;
+                this.ToVillage.VillageTroopData.NobleInVillage = this.ToVillage.VillageTroopData.Noble = 0;
+                 
                     stations = (from station in session.Linq<Station>()
                                 where station.AtVillage == this.ToVillage
                                 select station).ToList<Station>();
@@ -551,14 +545,14 @@ namespace beans
                 catapultLostInAttackSide = this.Catapult;
                 nobleLostInAttackSide = this.Noble;
 
-                spearLostInDefenseSide = this.FromVillage.VillageTroopData.SpearInVillage;
-                swordLostInDefenseSide = this.FromVillage.VillageTroopData.SwordInVillage;
-                axeLostInDefenseSide = this.FromVillage.VillageTroopData.AxeInVillage;
-                lightCavalryLostInDefenseSide = this.FromVillage.VillageTroopData.LightCavalryInVillage;
-                heavyCavalryLostInDefenseSide = this.FromVillage.VillageTroopData.HeavyCavalryInVillage;
-                ramLostInDefenseSide = this.FromVillage.VillageTroopData.RamInVillage;
-                catapultLostInDefenseSide = this.FromVillage.VillageTroopData.CatapultInVillage;
-                nobleLostInDefenseSide = this.FromVillage.VillageTroopData.NobleInVillage;
+                spearLostInDefenseSide = (int)(this.FromVillage.VillageTroopData.SpearInVillage * ratio);
+                swordLostInDefenseSide = (int)(this.FromVillage.VillageTroopData.SwordInVillage * ratio);
+                axeLostInDefenseSide = (int)(this.FromVillage.VillageTroopData.AxeInVillage * ratio);
+                lightCavalryLostInDefenseSide = (int)(this.FromVillage.VillageTroopData.LightCavalryInVillage * ratio);
+                heavyCavalryLostInDefenseSide = (int)(this.FromVillage.VillageTroopData.HeavyCavalryInVillage * ratio);
+                ramLostInDefenseSide = (int)(this.FromVillage.VillageTroopData.RamInVillage * ratio);
+                catapultLostInDefenseSide = (int)(this.FromVillage.VillageTroopData.CatapultInVillage * ratio);
+                nobleLostInDefenseSide = (int)(this.FromVillage.VillageTroopData.NobleInVillage * ratio);
 
                 this.FromVillage.VillageTroopData.SpearOfVillage -= this.Spear;
                 this.FromVillage.VillageTroopData.SwordOfVillage -= this.Sword;
@@ -687,8 +681,6 @@ namespace beans
                     }
                     #endregion
 
-
-
                     session.Update(station);
 
                 }
@@ -735,7 +727,7 @@ namespace beans
 
             attackReport.LoyalAfter = (int)this.ToVillage.Loyal;
             attackReport.BuildingAfter = this.ToVillage[this.Building];
-            defenseReport.LoyalAfter = this.ToVillage.Loyal;
+            defenseReport.LoyalAfter = (int)this.ToVillage.Loyal;
             defenseReport.BuildingAfter = this.ToVillage[this.Building];
 
             this.FromVillage.LastUpdate = this.ToVillage.LastUpdate = this.LandingTime;
