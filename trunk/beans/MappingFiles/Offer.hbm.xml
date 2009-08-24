@@ -2,11 +2,11 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
 
   <class name="beans.Offer, beans" table="offers" lazy="false">
-
+    <cache usage="read-write"/>
     <id name="ID" column="id" type="Int32">
       <generator class="identity"/>
     </id>
-    <many-to-one name="AtVillage" class="beans.Village, beans" column="village_id" not-null="true" fetch="join" cascade="none" />
+    <many-to-one name="AtVillage" class="beans.Village, beans" column="village_id" not-null="true" fetch="select" cascade="none" />
     <property name="OfferType" column="offertype" type="beans.ResourcesType, beans" />
     <property name="OfferQuantity" column="offerquantity" type="Int32" />
     <property name="ForType" column="fortype" type="beans.ResourcesType, beans" />

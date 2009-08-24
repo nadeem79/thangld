@@ -8,43 +8,43 @@ namespace beans
 {
     public class Mail : IdentityObject
     {
-        public Player From
+        public virtual Player From
         {
             get;
             set;
         }
-        public Player To
+        public virtual Player To
         {
             get;
             set;
         }
-        public DateTime Time
+        public virtual DateTime Time
         {
             get;
             set;
         }
 
-        public string Title
+        public virtual string Title
         {
             get;
             set;
         }
-        public string Detail
+        public virtual string Detail
         {
             get;
             set;
         }
-        public bool Unread
+        public virtual bool Unread
         {
             get;
             set;
         }
-        public bool SenderDelete
+        public virtual bool SenderDelete
         {
             get;
             set;
         }
-        public bool ReceiverDelete
+        public virtual bool ReceiverDelete
         {
             get;
             set;

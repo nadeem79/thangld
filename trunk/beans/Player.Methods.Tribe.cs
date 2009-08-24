@@ -11,7 +11,7 @@ namespace beans
 {
     partial class Player
     {
-        public void CreateTribe(string tag, string name, ISession session)
+        public virtual void CreateTribe(string tag, string name, ISession session)
         {
             beans.Group group = new Group();
             group.Tag = tag;
@@ -23,7 +23,7 @@ namespace beans
             session.Save(group);
             session.Update(this);
         }
-        public void DisbandTribe(ISession session)
+        public virtual void DisbandTribe(ISession session)
         {
             if (this.Group == null && this.TribePermission != beans.TribePermission.Duke)
                 return;
@@ -36,7 +36,7 @@ namespace beans
             }
             session.Delete(this.Group);
         }
-        public void DismissPlayer(Player player, ISession session)
+        public virtual void DismissPlayer(Player player, ISession session)
         {
             if (player.Group == this.Group || ((this.TribePermission & TribePermission.DismissPlayer) == TribePermission.DismissPlayer))
                 return;
@@ -44,14 +44,14 @@ namespace beans
             player.Group = null;
             session.Update(player);
         }
-        public void ChangeDescription(string description, ISession session)
+        public virtual void ChangeDescription(string description, ISession session)
         {
             if ((this.TribePermission & TribePermission.DiplomateOfficer) == 0)
                 return;
             this.Group.Description = description;
             session.Update(this.Group);
         }
-        public void SetDiplomacy(Group tribe, TribeDiplomate diplomacy, ISession session)
+        public virtual void SetDiplomacy(Group tribe, TribeDiplomate diplomacy, ISession session)
         {
             if ((this.TribePermission & TribePermission.DiplomateOfficer) != TribePermission.DiplomateOfficer)
                 return;
@@ -80,7 +80,7 @@ namespace beans
             relation.Diplomacy = diplomacy;
             session.Save(relation);
         }
-        public IList<Error> SetMemberPrivilageAndTitle(Player player, TribePermission permission, string title, ISession session)
+        public virtual IList<Error> SetMemberPrivilageAndTitle(Player player, TribePermission permission, string title, ISession session)
         {
             IList<Error> lstError = new List<Error>();
             if (this.Group != player.Group)
@@ -111,7 +111,7 @@ namespace beans
             return lstError;
         }
 
-        public IList<Error> InvitePlayer(string name, ISession session)
+        public virtual IList<Error> InvitePlayer(string name, ISession session)
         {
             IList<Error> lstError = new List<Error>();
 
@@ -163,25 +163,13 @@ namespace beans
             inviteReport.Inviter = this;
             invite.Inviter = this;
             invite.Group = this.Group;
-            ITransaction trans = null;
-            try
-            {
-                trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
                 session.Save(invite);
                 session.Save(inviteReport);
-                trans.Commit();
                 return lstError;
-            }
-            catch (Exception ex)
-            {
-                if (trans != null)
-                    trans.Rollback();
-                throw ex;
-            }
             
         }
 
-        public bool CheckPrivilage(TribePermission privilage)
+        public virtual bool CheckPrivilage(TribePermission privilage)
         {
             return ((this.TribePermission & privilage) == privilage);
         }

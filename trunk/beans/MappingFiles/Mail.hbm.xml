@@ -2,12 +2,13 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
 
   
-  <class name="beans.Mail, beans" table="mail" lazy="false">
+  <class name="beans.Mail, beans" table="mail" lazy="true">
+    <cache usage="read-write"/>
     <id name="ID" column="id" type="Int32">
       <generator class="identity"/>
     </id>
-    <many-to-one name="From" class="beans.Player, beans" lazy="no-proxy" column="sender" not-null="true" cascade="none" />
-    <many-to-one name="To" class="beans.Player, beans" lazy="no-proxy" column="receiver" not-null="true" cascade="none" />
+    <many-to-one name="From" class="beans.Player, beans" lazy="no-proxy" column="sender" not-null="true" cascade="none" fetch="select" />
+    <many-to-one name="To" class="beans.Player, beans" lazy="no-proxy" column="receiver" not-null="true" cascade="none" fetch="select" />
     <property name="Time" column="time" type="timestamp"/>
     <property name="Title" column="title" type="String" />
     <property name="Detail" column="detail" type="String" />

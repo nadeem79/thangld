@@ -120,19 +120,8 @@ namespace beans
             this.FromVillage.VillageTroopData.CatapultInVillage -= this.Catapult;
             this.FromVillage.VillageTroopData.NobleInVillage -= this.Noble;
 
-            ITransaction trans = null;
-            try
-            {
-                trans = session.BeginTransaction(IsolationLevel.ReadUncommitted);
                 session.Save(this);
                 session.Update(this.FromVillage);
-                trans.Commit();
-            }
-            catch
-            {
-                if (trans != null)
-                    trans.Rollback();
-            }
             
         }
 
@@ -248,19 +237,8 @@ namespace beans
             r.StartingTime = DateTime.Now;
             r.LandingTime = r.StartingTime.Add(this.LandingTime - this.StartingTime);
 
-            ITransaction trans = null;
-            try
-            {
-                trans = session.BeginTransaction(IsolationLevel.ReadUncommitted);
                 session.Save(r);
                 session.Delete(this);
-                trans.Commit();
-            }
-            catch
-            {
-                if (trans != null)
-                    trans.Rollback();
-            }
             return r;
         }
 

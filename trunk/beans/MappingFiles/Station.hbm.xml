@@ -2,13 +2,13 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
 
   <class name="beans.Station, beans" table="stationed" lazy="false">
-
+    <cache usage="read-write"/>
     <id name="ID" column="id" type="Int32">
       <generator class="identity"/>
     </id>
 
-    <many-to-one name="FromVillage" class="beans.Village, beans" column="from_village" not-null="false" fetch="join" cascade="none" />
-    <many-to-one name="AtVillage" class="beans.Village, beans" column="at_village" not-null="false" fetch="join" cascade="none" />
+    <many-to-one name="FromVillage" class="beans.Village, beans" column="from_village" not-null="false" fetch="select" cascade="none" />
+    <many-to-one name="AtVillage" class="beans.Village, beans" column="at_village" not-null="false" fetch="select" cascade="none" />
     <property name="Spear" column="spear" type="Int32" />
     <property name="Sword" column="sword" type="Int32" />
     <property name="Axe" column="axe" type="Int32" />

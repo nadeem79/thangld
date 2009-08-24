@@ -71,11 +71,9 @@ namespace beans
             this.AtVillage.VillageBuildingData.Merchant -= merchant;
             this.CreateTime = DateTime.Now;
 
-            ITransaction trans = session.BeginTransaction(IsolationLevel.ReadUncommitted);
             session.Save(this);
             session.Update(this.AtVillage.VillageBuildingData);
             session.Update(this.AtVillage.VillageResourceData);
-            trans.Commit();
         }
 
         

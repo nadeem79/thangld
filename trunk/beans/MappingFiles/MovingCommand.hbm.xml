@@ -3,14 +3,14 @@
 
   
   <class name="beans.MovingCommand, beans" table="movement" lazy="true" discriminator-value="0">
-
+    <cache usage="read-write"/>
     <id name="ID" column="id" type="Int32">
       <generator class="identity"/>
     </id>
     <discriminator column="type" type="Int32" />
     
-    <many-to-one name="FromVillage" class="beans.Village, beans" column="from_village" not-null="false" fetch="join" cascade="none" />
-    <many-to-one name="ToVillage" class="beans.Village, beans" column="to_village" not-null="false" fetch="join" cascade="none" />
+    <many-to-one name="FromVillage" class="beans.Village, beans" column="from_village" not-null="false" fetch="select" lazy="no-proxy" />
+    <many-to-one name="ToVillage" class="beans.Village, beans" column="to_village" not-null="false" fetch="select" lazy="no-proxy" />
     <property name="StartingTime" column="starting_time" type="timestamp"/>
     <property name="LandingTime" column="landing_time" type="timestamp"/>
 

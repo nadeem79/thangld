@@ -8,13 +8,18 @@ using NHibernate.Criterion;
 
 namespace beans
 {
-    public partial class Player
+    public class AdminConfigurationMethods
     {
+
+        public Player Player
+        {
+            get;
+            set;
+        }
+
         #region GetTextSettings
         public IList<StringConfiguration> GetTextSettings(int page, int pageSize, string key, ISession session)
         {
-            if (this.Type != UserType.Administrator)
-                throw new Exception("Chỉ admin mới có quyền truy cập chức năng này!!!");
 
             ICriteria criteria = session.CreateCriteria(typeof(StringConfiguration));
             if (key != string.Empty)
@@ -36,8 +41,6 @@ namespace beans
         #region GetNumericSettings
         public IList<NumericConfiguration> GetNumericSettings(int page, int pageSize, string key, ISession session)
         {
-            if (this.Type != UserType.Administrator)
-                throw new Exception("Chỉ admin mới có quyền truy cập chức năng này!!!");
 
             var query = from numericConfiguration in session.Linq<NumericConfiguration>()
                         orderby numericConfiguration.Key descending

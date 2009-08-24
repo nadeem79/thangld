@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using NHibernate;
+using System.Data;
 
 /// <summary>
 /// Summary description for HttpModule
@@ -39,6 +40,7 @@ public class NHibernateHttpModule:IHttpModule
         HttpContext context = application.Context;
 
         ISession session = NHibernateHelper.CreateSession();
+        session.BeginTransaction(IsolationLevel.ReadCommitted);
         context.Items["NHibernateSession"] = session;
     }
 
@@ -53,6 +55,7 @@ public class NHibernateHttpModule:IHttpModule
         HttpContext context = application.Context;
 
         //((ISession)context.Items["NHibernateSession"]).Flush();
+        ((ISession)context.Items["NHibernateSession"]).Transaction.Commit();
         ((ISession)context.Items["NHibernateSession"]).Close();
         context.Items["NHibernateSession"] = null;
     }

@@ -26,24 +26,23 @@ namespace beans
 
             if (to == this.Village.LastUpdate)
                 return;
+            SortedList<DateTime, MovingCommand> commands = new SortedList<DateTime, MovingCommand>();
+            foreach (MovingCommand movingCommand in this.Village.MovingCommandsFromMe)
+                commands.Add(movingCommand.LandingTime, movingCommand);
+            foreach (MovingCommand movingCommand in this.Village.MovingCommandsToMe)
+                commands.Add(movingCommand.LandingTime, movingCommand);
 
-            ITransaction trans = null;
-            try
-            {
-                trans = session.BeginTransaction(IsolationLevel.ReadUncommitted);
-                IList<MovingCommand> commands = (from movingCommand in session.Linq<MovingCommand>()
-                                                 where (movingCommand.FromVillage == this.Village || movingCommand.ToVillage == this.Village)
-                                                 && movingCommand.LandingTime < to
-                                                 orderby movingCommand.LandingTime ascending
-                                                 select movingCommand).ToList<MovingCommand>();
+                //IList<MovingCommand> commands = (from movingCommand in session.Linq<MovingCommand>()
+                //                                 where (movingCommand.FromVillage == this.Village || movingCommand.ToVillage == this.Village)
+                //                                 && movingCommand.LandingTime < to
+                //                                 orderby movingCommand.LandingTime ascending
+                //                                 select movingCommand).ToList<MovingCommand>();
 
-                IList<Build> builds = (from build in session.Linq<Build>()
-                                       where build.InVillage == this.Village
+                IList<Build> builds = (from build in this.Village.Builds
                                        orderby build.ID ascending
                                        select build).ToList<Build>();
 
-                IList<Recruit> recruits = (from recruit in session.Linq<Recruit>()
-                                           where recruit.InVillage == this.Village
+                IList<Recruit> recruits = (from recruit in this.Village.Recruits
                                            orderby recruit.ID ascending
                                            select recruit).ToList<Recruit>();
                 IList<Recruit> infantryRecruits = (from recruit in recruits
@@ -60,8 +59,7 @@ namespace beans
                                               where recruit.Troop == TroopType.Ram
                                               || recruit.Troop == TroopType.Catapult
                                               select recruit).ToList<Recruit>();
-                IList<Research> researches = (from research in session.Linq<Research>()
-                                              where research.Village == this.Village
+                IList<Research> researches = (from research in this.Village.Researches
                                               orderby research.ID ascending
                                               select research).ToList<Research>();
 
@@ -78,7 +76,7 @@ namespace beans
 
                 while (commands.Count > 0)
                 {
-                    MovingCommand command = commands[0];
+                    MovingCommand command = commands.Values[0];
                     MovingCommand newCommand = null;
                     if (command.ToVillage == this.Village)
                     {
@@ -151,22 +149,13 @@ namespace beans
                         command.ToVillage.VillageCommonMethods.UpdateVillage(command.LandingTime, session, false);
                         newCommand = command.Effect(session);
                     }
-                    toDeleteCommandList.Add(commands[0]);
+                    toDeleteCommandList.Add(commands.Values[0]);
                     commands.RemoveAt(0);
                     if (newCommand != null)
                         if (newCommand.LandingTime < to)
-                        {
-                            for (int i = 1; i < commands.Count; i++)
-                                if (commands[i].LandingTime > newCommand.LandingTime)
-                                {
-                                    commands.Insert(i, newCommand);
-                                    break;
-                                }
-                        }
+                            commands.Add(newCommand.LandingTime, newCommand);
                         else
-                        {
                             toInsertCommandList.Add(newCommand);
-                        }
                 }
 
                 this.Village.VillageResourceMethods.UpdateResources(currentTime, to);
@@ -175,6 +164,7 @@ namespace beans
                 {
                     //session.Delete(infantryRecruits[0]);
                     toDeleteRecruitList.Add(infantryRecruits[0]);
+
                     infantryRecruits.RemoveAt(0);
                 }
 
@@ -231,44 +221,39 @@ namespace beans
 
                 this.Village.LastUpdate = to;
 
-                    if (carRecruits.Count > 0)
-                        session.Update(carRecruits[0]);
-                    if (cavalryRecruits.Count > 0)
-                        session.Update(cavalryRecruits[0]);
-                    if (infantryRecruits.Count > 0)
-                        session.Update(infantryRecruits[0]);
-                    foreach (Recruit recruit in toDeleteRecruitList)
-                        session.Delete(recruit);
-                    foreach (Build build in toDeleteBuildList)
-                        session.Delete(build);
-                    foreach (Research research in toDeleteResearchList)
-                        session.Delete(research);
-                    foreach (MovingCommand command in toDeleteCommandList)
-                        session.Delete(command);
-                    foreach (MovingCommand command in toInsertCommandList)
-                        session.Save(command);
+                if (carRecruits.Count > 0)
+                    session.Update(carRecruits[0]);
+                if (cavalryRecruits.Count > 0)
+                    session.Update(cavalryRecruits[0]);
+                if (infantryRecruits.Count > 0)
+                    session.Update(infantryRecruits[0]);
+                foreach (Recruit recruit in toDeleteRecruitList)
+                    session.Delete(recruit);
+                foreach (Build build in toDeleteBuildList)
+                    session.Delete(build);
+                foreach (Research research in toDeleteResearchList)
+                    session.Delete(research);
+                foreach (MovingCommand command in toDeleteCommandList)
+                    session.Delete(command);
+                foreach (MovingCommand command in toInsertCommandList)
+                    session.Save(command);
 
-                    if (toDeleteBuildList.Count > 0)
-                        session.Update(this.Village.VillageBuildingData);
-                    if (toDeleteResearchList.Count > 0)
-                        session.Update(this.Village.VillageResearchData);
-                    if (toDeleteRecruitList.Count > 0 || recruits.Count > 0)
-                        session.Update(this.Village.VillageTroopData);
+                if (toDeleteBuildList.Count > 0)
+                    session.Update(this.Village.VillageBuildingData);
+                if (toDeleteResearchList.Count > 0)
+                    session.Update(this.Village.VillageResearchData);
+                if (toDeleteRecruitList.Count > 0 || recruits.Count > 0)
+                    session.Update(this.Village.VillageTroopData);
 
-                    if (updateBuildList)
-                        foreach (Build build in builds)
-                            session.Update(build);
-                    if (updateResearchList)
-                        foreach (Research research in researches)
-                            session.Update(research);
-                if (commit)
-                    trans.Commit();
-            }
-            catch (Exception ex)
-            {
-                if (trans != null && commit)
-                    trans.Rollback();
-            }
+                if (updateBuildList)
+                    foreach (Build build in builds)
+                        session.Update(build);
+                if (updateResearchList)
+                    foreach (Research research in researches)
+                        session.Update(research);
+
+                session.Update(this.Village);
+
         }
        
     }

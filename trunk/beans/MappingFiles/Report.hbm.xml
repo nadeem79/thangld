@@ -3,13 +3,13 @@
 
 
   <class name="beans.Report, beans" table="reports" lazy="true" discriminator-value="0">
-
+    <cache usage="read-write"/>
     <id name="ID" column="id" type="Int32" unsaved-value="-1">
       <generator class="identity"/>
     </id>
     <discriminator column="type" type="Int32" />
 
-    <many-to-one name="Owner" class="beans.Player, beans" column="owner" not-null="true" cascade="none" />
+    <many-to-one name="Owner" class="beans.Player, beans" column="owner" not-null="true" cascade="none" fetch="select" />
     <property name="Time" column="create_time" type="timestamp"/>
     <property name="Title" column="title" type="String" />
     <property name="Unread" column="unread" type="Boolean" />
@@ -69,10 +69,10 @@
       <property name="Luck" column="luck_attack_side" type="Double" />
       <property name="Morale" column="morale" type="Double" />
 
-      <many-to-one name="FromVillage" class="beans.Village, beans" column="from_village" not-null="true" lazy="no-proxy" />
-      <many-to-one name="ToVillage" class="beans.Village, beans" column="to_village" not-null="true" lazy="no-proxy"  />
-      <many-to-one name="FromPlayer" class="beans.Player, beans" column="from_player" not-null="true" lazy="no-proxy" />
-      <many-to-one name="ToPlayer" class="beans.Player, beans" column="to_player" not-null="true" lazy="no-proxy" />
+      <many-to-one name="FromVillage" class="beans.Village, beans" column="from_village" not-null="true" lazy="no-proxy" fetch="select" />
+      <many-to-one name="ToVillage" class="beans.Village, beans" column="to_village" not-null="true" lazy="no-proxy" fetch="select" />
+      <many-to-one name="FromPlayer" class="beans.Player, beans" column="from_player" not-null="true" lazy="no-proxy" fetch="select" />
+      <many-to-one name="ToPlayer" class="beans.Player, beans" column="to_player" not-null="true" lazy="no-proxy" fetch="select" />
       <property name="Building" column="building" type="beans.BuildingType, beans" />
 
     </subclass>
@@ -132,10 +132,10 @@
       <property name="Luck" column="luck_attack_side" type="Double" />
       <property name="Morale" column="morale" type="Double" />
 
-      <many-to-one name="FromVillage" class="beans.Village, beans" column="from_village" not-null="true" lazy="no-proxy" />
-      <many-to-one name="ToVillage" class="beans.Village, beans" column="to_village" not-null="true" lazy="no-proxy"  />
-      <many-to-one name="FromPlayer" class="beans.Player, beans" column="from_player" not-null="true" lazy="no-proxy" />
-      <many-to-one name="ToPlayer" class="beans.Player, beans" column="to_player" not-null="true" lazy="no-proxy" />
+      <many-to-one name="FromVillage" class="beans.Village, beans" column="from_village" not-null="true" lazy="no-proxy" fetch="select" />
+      <many-to-one name="ToVillage" class="beans.Village, beans" column="to_village" not-null="true" lazy="no-proxy"  fetch="select" />
+      <many-to-one name="FromPlayer" class="beans.Player, beans" column="from_player" not-null="true" lazy="no-proxy" fetch="select" />
+      <many-to-one name="ToPlayer" class="beans.Player, beans" column="to_player" not-null="true" lazy="no-proxy" fetch="select" />
       <property name="Building" column="building" type="beans.BuildingType, beans" />
 
     </subclass>
@@ -161,10 +161,10 @@
       <property name="RamDead" column="ram_defense_dead" type="Int32" />
       <property name="NobleDead" column="noble_defense_dead" type="Int32" />
 
-      <many-to-one name="FromVillage" class="beans.Village, beans" column="from_village" not-null="true" lazy="no-proxy" />
-      <many-to-one name="ToVillage" class="beans.Village, beans" column="to_village" not-null="true" lazy="no-proxy"  />
-      <many-to-one name="FromPlayer" class="beans.Player, beans" column="from_player" not-null="true" lazy="no-proxy" />
-      <many-to-one name="ToPlayer" class="beans.Player, beans" column="to_player" not-null="true" lazy="no-proxy" />
+      <many-to-one name="FromVillage" class="beans.Village, beans" column="from_village" not-null="true" lazy="no-proxy" fetch="select" />
+      <many-to-one name="ToVillage" class="beans.Village, beans" column="to_village" not-null="true" lazy="no-proxy" fetch="select"  />
+      <many-to-one name="FromPlayer" class="beans.Player, beans" column="from_player" not-null="true" lazy="no-proxy" fetch="select" />
+      <many-to-one name="ToPlayer" class="beans.Player, beans" column="to_player" not-null="true" lazy="no-proxy" fetch="select" />
 
     </subclass>
     
@@ -172,10 +172,10 @@
       <property name="Iron" column="iron" type="Int32" />
       <property name="Clay" column="clay" type="Int32" />
       <property name="Wood" column="wood" type="Int32" />
-      <many-to-one name="FromVillage" class="beans.Village, beans" column="from_village" not-null="true" lazy="no-proxy" />
-      <many-to-one name="ToVillage" class="beans.Village, beans" column="to_village" not-null="true" lazy="no-proxy"  />
-      <many-to-one name="FromPlayer" class="beans.Player, beans" column="from_player" not-null="true" lazy="no-proxy" />
-      <many-to-one name="ToPlayer" class="beans.Player, beans" column="to_player" not-null="true" lazy="no-proxy" />
+      <many-to-one name="FromVillage" class="beans.Village, beans" column="from_village" not-null="true" lazy="no-proxy" fetch="select" />
+      <many-to-one name="ToVillage" class="beans.Village, beans" column="to_village" not-null="true" lazy="no-proxy"  fetch="select" />
+      <many-to-one name="FromPlayer" class="beans.Player, beans" column="from_player" not-null="true" lazy="no-proxy" fetch="select" />
+      <many-to-one name="ToPlayer" class="beans.Player, beans" column="to_player" not-null="true" lazy="no-proxy" fetch="select" />
     </subclass>
 
     <subclass discriminator-value="5" name="beans.OfferAcceptedReport, beans" lazy="true">
@@ -183,17 +183,17 @@
       <property name="SoldType" column="sold_type" type="beans.ResourcesType, beans" not-null="false" />
       <property name="BoughtQuantity" column="bought_quantity" type="Int32" />
       <property name="SoldQuantity" column="sold_quantity" type="Int32" />
-      <many-to-one name="FromVillage" class="beans.Village, beans" column="from_village" not-null="true" lazy="no-proxy" />
-      <many-to-one name="ToVillage" class="beans.Village, beans" column="to_village" not-null="true" lazy="no-proxy"  />
-      <many-to-one name="FromPlayer" class="beans.Player, beans" column="from_player" not-null="true" lazy="no-proxy" />
-      <many-to-one name="ToPlayer" class="beans.Player, beans" column="to_player" not-null="true" lazy="no-proxy" />
+      <many-to-one name="FromVillage" class="beans.Village, beans" column="from_village" not-null="true" lazy="no-proxy" fetch="select" />
+      <many-to-one name="ToVillage" class="beans.Village, beans" column="to_village" not-null="true" lazy="no-proxy"  fetch="select" />
+      <many-to-one name="FromPlayer" class="beans.Player, beans" column="from_player" not-null="true" lazy="no-proxy" fetch="select" />
+      <many-to-one name="ToPlayer" class="beans.Player, beans" column="to_player" not-null="true" lazy="no-proxy" fetch="select" />
     </subclass>
 
     <subclass discriminator-value="6" name="beans.SupportReport, beans" lazy="true">
-      <many-to-one name="FromVillage" class="beans.Village, beans" column="from_village" not-null="true" lazy="no-proxy" />
-      <many-to-one name="ToVillage" class="beans.Village, beans" column="to_village" not-null="true" lazy="no-proxy"  />
-      <many-to-one name="FromPlayer" class="beans.Player, beans" column="from_player" not-null="true" lazy="no-proxy" />
-      <many-to-one name="ToPlayer" class="beans.Player, beans" column="to_player" not-null="true" lazy="no-proxy" />
+      <many-to-one name="FromVillage" class="beans.Village, beans" column="from_village" not-null="true" lazy="no-proxy" fetch="select" />
+      <many-to-one name="ToVillage" class="beans.Village, beans" column="to_village" not-null="true" lazy="no-proxy" fetch="select"  />
+      <many-to-one name="FromPlayer" class="beans.Player, beans" column="from_player" not-null="true" lazy="no-proxy" fetch="select" />
+      <many-to-one name="ToPlayer" class="beans.Player, beans" column="to_player" not-null="true" lazy="no-proxy" fetch="select" />
       <property name="Spear" column="spear_defense" type="Int32" />
       <property name="Sword" column="sword_defense" type="Int32" />
       <property name="Axe" column="axe_defense" type="Int32" />
@@ -206,10 +206,10 @@
     </subclass>
 
     <subclass discriminator-value="7" name="beans.SupportWithdawalReport, beans" lazy="true">
-      <many-to-one name="FromVillage" class="beans.Village, beans" column="from_village" not-null="true" lazy="no-proxy" />
-      <many-to-one name="OriginalVillage" class="beans.Village, beans" column="to_village" not-null="true" lazy="no-proxy"  />
-      <many-to-one name="FromPlayer" class="beans.Player, beans" column="from_player" not-null="true" lazy="no-proxy" />
-      <many-to-one name="OriginalPlayer" class="beans.Player, beans" column="to_player" not-null="true" lazy="no-proxy" />
+      <many-to-one name="FromVillage" class="beans.Village, beans" column="from_village" not-null="true" lazy="no-proxy" fetch="select" />
+      <many-to-one name="OriginalVillage" class="beans.Village, beans" column="to_village" not-null="true" lazy="no-proxy" fetch="select"  />
+      <many-to-one name="FromPlayer" class="beans.Player, beans" column="from_player" not-null="true" lazy="no-proxy"  fetch="select"/>
+      <many-to-one name="OriginalPlayer" class="beans.Player, beans" column="to_player" not-null="true" lazy="no-proxy"  fetch="select"/>
       <property name="Spear" column="spear_defense" type="Int32" />
       <property name="Sword" column="sword_defense" type="Int32" />
       <property name="Axe" column="axe_defense" type="Int32" />
@@ -222,10 +222,10 @@
     </subclass>
 
     <subclass discriminator-value="8" name="beans.SupportSendbackReport, beans" lazy="true">
-      <many-to-one name="FromVillage" class="beans.Village, beans" column="from_village" not-null="true" lazy="no-proxy" />
-      <many-to-one name="OriginalVillage" class="beans.Village, beans" column="to_village" not-null="true" lazy="no-proxy"  />
-      <many-to-one name="FromPlayer" class="beans.Player, beans" column="from_player" not-null="true" lazy="no-proxy" />
-      <many-to-one name="OriginalPlayer" class="beans.Player, beans" column="to_player" not-null="true" lazy="no-proxy" />
+      <many-to-one name="FromVillage" class="beans.Village, beans" column="from_village" not-null="true" lazy="no-proxy" fetch="select" />
+      <many-to-one name="OriginalVillage" class="beans.Village, beans" column="to_village" not-null="true" lazy="no-proxy"  fetch="select" />
+      <many-to-one name="FromPlayer" class="beans.Player, beans" column="from_player" not-null="true" lazy="no-proxy" fetch="select" />
+      <many-to-one name="OriginalPlayer" class="beans.Player, beans" column="to_player" not-null="true" lazy="no-proxy" fetch="select" />
       <property name="Spear" column="spear_defense" type="Int32" />
       <property name="Sword" column="sword_defense" type="Int32" />
       <property name="Axe" column="axe_defense" type="Int32" />
@@ -238,8 +238,8 @@
     </subclass>
     
     <subclass discriminator-value="9" name="beans.InviteReport, beans" lazy="true">
-      <many-to-one name="Inviter" class="beans.Player, beans" column="from_player" not-null="true" lazy="no-proxy" />
-      <many-to-one name="Group" class="beans.Group, beans" column="group_id" not-null="true" lazy="no-proxy" />
+      <many-to-one name="Inviter" class="beans.Player, beans" column="from_player" not-null="true" lazy="no-proxy" fetch="select" />
+      <many-to-one name="Group" class="beans.Group, beans" column="group_id" not-null="true" lazy="no-proxy" fetch="select" />
     </subclass>
     
     

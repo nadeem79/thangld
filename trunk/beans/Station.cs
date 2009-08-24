@@ -172,10 +172,6 @@ namespace beans
             report.Time = DateTime.Now;
             
 
-            ITransaction transaction = null;
-            try
-            {
-                transaction = session.BeginTransaction();
                 session.Update(this.AtVillage.VillageTroopData);
                 session.Save(returnTroop);
                 if (delete)
@@ -183,14 +179,7 @@ namespace beans
                 else
                     session.Update(this);
                 session.Save(report);
-                transaction.Commit();
                 return returnTroop;
-            }
-            catch
-            {
-                transaction.Rollback();
-                return null;
-            }
             
         }
 

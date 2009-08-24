@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
 
-  <class name="beans.Research, beans" table="researches" lazy="false">
-
+  <class name="beans.Research, beans" table="researches" lazy="true">
+    <cache usage="read-write"/>
     <id name="ID" column="id" type="Int32">
       <generator class="identity"/>
     </id>
-    <many-to-one name="Village" class="beans.Village, beans" column="village_id" not-null="true" fetch="join" cascade="none" />
+    <many-to-one name="Village" class="beans.Village, beans" column="village_id" not-null="true" fetch="select" cascade="none" lazy="no-proxy" />
     <property name="Type" column="type" type="beans.ResearchType, beans" />
     <property name="Start" column="start_time" type="timestamp" />
     <property name="Level" column="upgrade_level" type="Int32" />

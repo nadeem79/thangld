@@ -44,21 +44,10 @@ namespace beans
             this.Village.VillageResourceData.Iron -= p.Iron * quantity;
             this.Village.Population += p.Population * quantity;
 
-            ITransaction transaction = null;
-            try
-            {
-                transaction = session.BeginTransaction(IsolationLevel.ReadUncommitted);
-                session.Save(recruit);
                 session.Update(this.Village);
-                transaction.Commit();
+                session.Save(recruit);
+                
                 return recruit;
-            }
-            catch
-            {
-                if (transaction != null)
-                    transaction.Rollback();
-                return null;
-            }
             
         }
         public virtual IList<Recruit> GetRecruit(ISession session, BuildingType building)
