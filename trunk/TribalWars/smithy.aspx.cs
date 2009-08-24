@@ -64,17 +64,8 @@ public partial class smithy : System.Web.UI.Page
         this.Village = ((inPage)this.Master).CurrentVillage;
         ISession session = (ISession)Context.Items["NHibernateSession"];
 
-        IList<Research> researches = this.Village.VillageResearchMethods.GetResearchs(session);
+        IList<Research> researches = this.Village.Researches;
 
-
-        if (this.Village.VillageResearchMethods.MaxAttackLevel == 0)
-            this.Village.VillageResearchMethods.MaxAttackLevel = this.Village[ResearchType.Attack];
-        if (this.Village.VillageResearchMethods.MaxDefenseLevel == 0)
-            this.Village.VillageResearchMethods.MaxDefenseLevel = this.Village[ResearchType.Defense];
-        if (this.Village.VillageResearchMethods.MaxSpeedLevel == 0)
-            this.Village.VillageResearchMethods.MaxSpeedLevel = this.Village[ResearchType.Speed];
-
-        
         this.AttackPrice = Research.GetPrice(ResearchType.Attack, this.Village.VillageResearchMethods.MaxAttackLevel, this.Village[BuildingType.Smithy]);
         this.DefensePrice = Research.GetPrice(ResearchType.Defense, this.Village.VillageResearchMethods.MaxDefenseLevel, this.Village[BuildingType.Smithy]);
         this.SpeedPrice = Research.GetPrice(ResearchType.Speed, this.Village.VillageResearchMethods.MaxSpeedLevel, this.Village[BuildingType.Smithy]);

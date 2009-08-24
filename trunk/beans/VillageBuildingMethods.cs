@@ -10,85 +10,278 @@ namespace beans
 {
     public class VillageBuildingMethods
     {
-        public IList<Build> Builds
-        {
-            get;
-            set;
-        }
+
+        private int topHeadquarterLevel = -1, topBarrackLevel = -1, topStableLevel = -1, topWorkshopLevel = -1, topAcademyLevel = -1, topSmithyLevel = -1, topRallyPointLevel = -1;
+        private int topMarketLevel = -1, topTimberCampLevel = -1, topClayPitLevel = -1, topIronMineLevel = -1, topFarmLevel = -1, topWarehouseLevel = -1, topHiddenPlaceLevel = -1, topWallLevel = -1;
         public int TopHeadquarterLevel
         {
-            get;
-            set;
+            get
+            {
+                if (topHeadquarterLevel >= 0)
+                    return topHeadquarterLevel;
+
+                Build maxBuildLevel = (from b in this.Village.Builds
+                                       where b.Building == BuildingType.Headquarter
+                                       orderby b.ID descending
+                                       select b).FirstOrDefault<Build>();
+                if (maxBuildLevel == null)
+                    this.topHeadquarterLevel = this.Village.VillageBuildingData.Headquarter;
+                else
+                    this.topHeadquarterLevel = maxBuildLevel.Level;
+                return topHeadquarterLevel;
+            }
         }
         public int TopBarrackLevel
         {
-            get;
-            set;
+            get
+            {
+                if (topBarrackLevel >= 0)
+                    return topBarrackLevel;
+
+                Build maxBuildLevel = (from b in this.Village.Builds
+                                       where b.Building == BuildingType.Barracks
+                                       orderby b.ID descending
+                                       select b).FirstOrDefault<Build>();
+                if (maxBuildLevel == null)
+                    this.topBarrackLevel = this.Village.VillageBuildingData.Barracks;
+                else
+                    this.topBarrackLevel = maxBuildLevel.Level;
+                return topBarrackLevel;
+            }
         }
         public int TopStableLevel
         {
-            get;
-            set;
+            get
+            {
+                if (topStableLevel >= 0)
+                    return topStableLevel;
+
+                Build maxBuildLevel = (from b in this.Village.Builds
+                                       where b.Building == BuildingType.Stable
+                                       orderby b.ID descending
+                                       select b).FirstOrDefault<Build>();
+                if (maxBuildLevel == null)
+                    this.topStableLevel = this.Village.VillageBuildingData.Stable;
+                else
+                    this.topStableLevel = maxBuildLevel.Level;
+                return topStableLevel;
+            }
         }
         public int TopWorkshopLevel
         {
-            get;
-            set;
+            get
+            {
+                if (topWorkshopLevel >= 0)
+                    return topWorkshopLevel;
+
+                Build maxBuildLevel = (from b in this.Village.Builds
+                                       where b.Building == BuildingType.Workshop
+                                       orderby b.ID descending
+                                       select b).FirstOrDefault<Build>();
+                if (maxBuildLevel == null)
+                    this.topWorkshopLevel = this.Village.VillageBuildingData.Workshop;
+                else
+                    this.topWorkshopLevel = maxBuildLevel.Level;
+                return topWorkshopLevel;
+            }
         }
         public int TopAcademyLevel
         {
-            get;
-            set;
+            get
+            {
+                if (topAcademyLevel >= 0)
+                    return topAcademyLevel;
+
+                Build maxBuildLevel = (from b in this.Village.Builds
+                                       where b.Building == BuildingType.Academy
+                                       orderby b.ID descending
+                                       select b).FirstOrDefault<Build>();
+                if (maxBuildLevel == null)
+                    this.topAcademyLevel = this.Village.VillageBuildingData.Academy;
+                else
+                    this.topAcademyLevel = maxBuildLevel.Level;
+                return topAcademyLevel;
+            }
         }
         public int TopSmithyLevel
         {
-            get;
-            set;
+            get
+            {
+                if (topSmithyLevel >= 0)
+                    return topSmithyLevel;
+
+                Build maxBuildLevel = (from b in this.Village.Builds
+                                       where b.Building == BuildingType.Smithy
+                                       orderby b.ID descending
+                                       select b).FirstOrDefault<Build>();
+                if (maxBuildLevel == null)
+                    this.topSmithyLevel = this.Village.VillageBuildingData.Smithy;
+                else
+                    this.topSmithyLevel = maxBuildLevel.Level;
+                return topSmithyLevel;
+            }
         }
         public int TopRallyPointLevel
         {
-            get;
-            set;
+            get
+            {
+                if (topRallyPointLevel >= 0)
+                    return topRallyPointLevel;
+
+                Build maxBuildLevel = (from b in this.Village.Builds
+                                       where b.Building == BuildingType.Rally
+                                       orderby b.ID descending
+                                       select b).FirstOrDefault<Build>();
+                if (maxBuildLevel == null)
+                    this.topRallyPointLevel = this.Village.VillageBuildingData.Rally;
+                else
+                    this.topRallyPointLevel = maxBuildLevel.Level;
+                return topRallyPointLevel;
+            }
         }
         public int TopMarketLevel
         {
-            get;
-            set;
+            get
+            {
+                if (topMarketLevel >= 0)
+                    return topMarketLevel;
+
+                Build maxBuildLevel = (from b in this.Village.Builds
+                                       where b.Building == BuildingType.Market
+                                       orderby b.ID descending
+                                       select b).FirstOrDefault<Build>();
+                if (maxBuildLevel == null)
+                    this.topMarketLevel = this.Village.VillageBuildingData.Market;
+                else
+                    this.topMarketLevel = maxBuildLevel.Level;
+                return topMarketLevel;
+            }
         }
         public int TopTimberCampLevel
         {
-            get;
-            set;
+            get
+            {
+                if (topTimberCampLevel >= 0)
+                    return topTimberCampLevel;
+
+                Build maxBuildLevel = (from b in this.Village.Builds
+                                       where b.Building == BuildingType.TimberCamp
+                                       orderby b.ID descending
+                                       select b).FirstOrDefault<Build>();
+                if (maxBuildLevel == null)
+                    this.topTimberCampLevel = this.Village.VillageBuildingData.TimberCamp;
+                else
+                    this.topTimberCampLevel = maxBuildLevel.Level;
+                return topTimberCampLevel;
+            }
         }
         public int TopClayPitLevel
         {
-            get;
-            set;
+            get
+            {
+                if (topClayPitLevel >= 0)
+                    return topClayPitLevel;
+
+                Build maxBuildLevel = (from b in this.Village.Builds
+                                       where b.Building == BuildingType.ClayPit
+                                       orderby b.ID descending
+                                       select b).FirstOrDefault<Build>();
+                if (maxBuildLevel == null)
+                    this.topClayPitLevel = this.Village.VillageBuildingData.ClayPit;
+                else
+                    this.topClayPitLevel = maxBuildLevel.Level;
+                return topClayPitLevel;
+            }
         }
         public int TopIronMineLevel
         {
-            get;
-            set;
+            get
+            {
+                if (topIronMineLevel >= 0)
+                    return topIronMineLevel;
+
+                Build maxBuildLevel = (from b in this.Village.Builds
+                                       where b.Building == BuildingType.IronMine
+                                       orderby b.ID descending
+                                       select b).FirstOrDefault<Build>();
+                if (maxBuildLevel == null)
+                    this.topIronMineLevel = this.Village.VillageBuildingData.IronMine;
+                else
+                    this.topIronMineLevel = maxBuildLevel.Level;
+                return topIronMineLevel;
+            }
         }
         public int TopFarmLevel
         {
-            get;
-            set;
+            get
+            {
+                if (topFarmLevel >= 0)
+                    return topFarmLevel;
+
+                Build maxBuildLevel = (from b in this.Village.Builds
+                                       where b.Building == BuildingType.Farm
+                                       orderby b.ID descending
+                                       select b).FirstOrDefault<Build>();
+                if (maxBuildLevel == null)
+                    this.topFarmLevel = this.Village.VillageBuildingData.Farm;
+                else
+                    this.topFarmLevel = maxBuildLevel.Level;
+                return topFarmLevel;
+            }
         }
         public int TopWarehouseLevel
         {
-            get;
-            set;
+            get
+            {
+                if (topWarehouseLevel >= 0)
+                    return topWarehouseLevel;
+
+                Build maxBuildLevel = (from b in this.Village.Builds
+                                       where b.Building == BuildingType.Warehouse
+                                       orderby b.ID descending
+                                       select b).FirstOrDefault<Build>();
+                if (maxBuildLevel == null)
+                    this.topWarehouseLevel = this.Village.VillageBuildingData.Warehouse;
+                else
+                    this.topWarehouseLevel = maxBuildLevel.Level;
+                return topWarehouseLevel;
+            }
         }
         public int TopHiddenPlaceLevel
         {
-            get;
-            set;
+            get
+            {
+                if (topHiddenPlaceLevel >= 0)
+                    return topHiddenPlaceLevel;
+
+                Build maxBuildLevel = (from b in this.Village.Builds
+                                       where b.Building == BuildingType.HidingPlace
+                                       orderby b.ID descending
+                                       select b).FirstOrDefault<Build>();
+                if (maxBuildLevel == null)
+                    this.topHiddenPlaceLevel = this.Village.VillageBuildingData.HidingPlace;
+                else
+                    this.topHiddenPlaceLevel = maxBuildLevel.Level;
+                return topHiddenPlaceLevel;
+            }
         }
         public int TopWallLevel
         {
-            get;
-            set;
+            get
+            {
+                if (topWallLevel >= 0)
+                    return topWallLevel;
+
+                Build maxBuildLevel = (from b in this.Village.Builds
+                                       where b.Building == BuildingType.Wall
+                                       orderby b.ID descending
+                                       select b).FirstOrDefault<Build>();
+                if (maxBuildLevel == null)
+                    this.topWallLevel = this.Village.VillageBuildingData.Wall;
+                else
+                    this.topWallLevel = maxBuildLevel.Level;
+                return topWallLevel;
+            }
         }
 
         public Village Village
@@ -96,126 +289,8 @@ namespace beans
             get;
             set;
         }
-
-        public virtual IList<Build> GetPendingConstruction(ISession session)
-        {
-            IList<Build> builds = (from b in session.Linq<Build>()
-                                   where b.InVillage == this.Village
-                                   orderby b.ID ascending
-                                   select b).ToList<Build>();
-
-            this.TopHeadquarterLevel = (from b in builds
-                                        where b.Building == BuildingType.Headquarter
-                                        orderby b.ID descending
-                                        select b.Level).FirstOrDefault<int>();
-            if (this.TopHeadquarterLevel == 0)
-                this.TopHeadquarterLevel = this.Village.VillageBuildingData.Headquarter;
-
-            this.TopBarrackLevel = (from b in builds
-                                    where b.Building == BuildingType.Barracks
-                                    orderby b.ID descending
-                                    select b.Level).FirstOrDefault<int>();
-            if (this.TopBarrackLevel == 0)
-                this.TopBarrackLevel = this.Village.VillageBuildingData.Barracks;
-
-            this.TopStableLevel = (from b in builds
-                                   where b.Building == BuildingType.Stable
-                                   orderby b.ID descending
-                                   select b.Level).FirstOrDefault<int>();
-            if (this.TopStableLevel == 0)
-                this.TopStableLevel = this.Village.VillageBuildingData.Stable;
-
-            this.TopWorkshopLevel = (from b in builds
-                                     where b.Building == BuildingType.Workshop
-                                     orderby b.ID descending
-                                     select b.Level).FirstOrDefault<int>();
-            if (this.TopWorkshopLevel == 0)
-                this.TopWorkshopLevel = this.Village.VillageBuildingData.Workshop;
-
-            this.TopAcademyLevel = (from b in builds
-                                    where b.Building == BuildingType.Academy
-                                    orderby b.ID descending
-                                    select b.Level).FirstOrDefault<int>();
-            if (this.TopAcademyLevel == 0)
-                this.TopAcademyLevel = this.Village.VillageBuildingData.Academy;
-
-            this.TopSmithyLevel = (from b in builds
-                                   where b.Building == BuildingType.Smithy
-                                   orderby b.ID descending
-                                   select b.Level).FirstOrDefault<int>();
-            if (this.TopSmithyLevel == 0)
-                this.TopSmithyLevel = this.Village.VillageBuildingData.Smithy;
-
-            this.TopRallyPointLevel = (from b in builds
-                                       where b.Building == BuildingType.Rally
-                                       orderby b.ID descending
-                                       select b.Level).FirstOrDefault<int>();
-            if (this.TopRallyPointLevel == 0)
-                this.TopRallyPointLevel = this.Village.VillageBuildingData.Rally;
-
-            this.TopMarketLevel = (from b in builds
-                                   where b.Building == BuildingType.Market
-                                   orderby b.ID descending
-                                   select b.Level).FirstOrDefault<int>();
-            if (this.TopMarketLevel == 0)
-                this.TopMarketLevel = this.Village.VillageBuildingData.Market;
-
-            this.TopTimberCampLevel = (from b in builds
-                                       where b.Building == BuildingType.TimberCamp
-                                       orderby b.ID descending
-                                       select b.Level).FirstOrDefault<int>();
-            if (this.TopTimberCampLevel == 0)
-                this.TopTimberCampLevel = this.Village.VillageBuildingData.TimberCamp;
-
-            this.TopClayPitLevel = (from b in builds
-                                    where b.Building == BuildingType.ClayPit
-                                    orderby b.ID descending
-                                    select b.Level).FirstOrDefault<int>();
-            if (this.TopClayPitLevel == 0)
-                this.TopClayPitLevel = this.Village.VillageBuildingData.ClayPit;
-
-            this.TopIronMineLevel = (from b in builds
-                                     where b.Building == BuildingType.IronMine
-                                     orderby b.ID descending
-                                     select b.Level).FirstOrDefault<int>();
-            if (this.TopIronMineLevel == 0)
-                this.TopIronMineLevel = this.Village.VillageBuildingData.IronMine;
-
-            this.TopWarehouseLevel = (from b in builds
-                                      where b.Building == BuildingType.Warehouse
-                                      orderby b.ID descending
-                                      select b.Level).FirstOrDefault<int>();
-            if (this.TopWarehouseLevel == 0)
-                this.TopWarehouseLevel = this.Village.VillageBuildingData.Warehouse;
-
-            this.TopFarmLevel = (from b in builds
-                                 where b.Building == BuildingType.Farm
-                                 orderby b.ID descending
-                                 select b.Level).FirstOrDefault<int>();
-            if (this.TopFarmLevel == 0)
-                this.TopFarmLevel = this.Village.VillageBuildingData.Farm;
-
-            this.TopHiddenPlaceLevel = (from b in builds
-                                        where b.Building == BuildingType.HidingPlace
-                                        orderby b.ID descending
-                                        select b.Level).FirstOrDefault<int>();
-            if (this.TopHiddenPlaceLevel == 0)
-                this.TopHiddenPlaceLevel = this.Village.VillageBuildingData.HidingPlace;
-
-            this.TopWallLevel = (from b in builds
-                                 where b.Building == BuildingType.Wall
-                                 orderby b.ID descending
-                                 select b.Level).FirstOrDefault<int>();
-            if (this.TopWallLevel == 0)
-                this.TopWallLevel = this.Village.VillageBuildingData.Wall;
-
-            this.Builds = builds;
-            return builds;
-        }
         public virtual BuildableStatus CanBuild(BuildingType type, ISession session)
         {
-            if (this.Builds == null)
-                this.GetPendingConstruction(session);
             if (this.Village[type] == 0)
             {
                 switch (type)
@@ -352,7 +427,7 @@ namespace beans
             if (this.Village.VillageResourceData.Iron < price.Iron)
                 return BuildableStatus.NotEnoughIron;
 
-            if (this.Builds.Count >= 5)
+            if (this.Village.Builds.Count >= 5)
                 return BuildableStatus.BuildNumberExceed;
 
             return BuildableStatus.JustDoIt;
@@ -360,8 +435,6 @@ namespace beans
         }
         public virtual BuildableStatus PrepareBuild(BuildingType building, ISession session)
         {
-            if (this.Builds == null)
-                this.GetPendingConstruction(session);
 
             int level = 0;
             switch (building)
@@ -427,7 +500,7 @@ namespace beans
             build.InVillage = this.Village;
             build.Level = level;
 
-            var lastBuild = (from b in this.Builds
+            var lastBuild = (from b in this.Village.Builds
                              orderby b.ID descending
                              select b).FirstOrDefault<Build>();
 
@@ -441,26 +514,24 @@ namespace beans
             this.Village.VillageResourceData.Clay -= price.Clay;
             this.Village.VillageResourceData.Iron -= price.Iron;
             this.Village.Population += price.Population;
-
-                session.Save(build);
-                session.Update(this.Village);
+            this.Village.Builds.Add(build);
+            session.Save(build);
+            session.Update(this.Village);
 
             return status;
         }
 
         public virtual void CancelBuild(int id, ISession session)
         {
-            if (this.Builds == null)
-                this.GetPendingConstruction(session);
 
-            Build build = (from b in this.Builds
+            Build build = (from b in this.Village.Builds
                            where b.ID == id
                            select b).SingleOrDefault<Build>();
 
             if (build == null)
                 return;
 
-            IList<Build> builds = (from b in this.Builds
+            IList<Build> builds = (from b in this.Village.Builds
                                    where b.ID > id &&
                                    b.InVillage == this.Village
                                    select b).ToList<Build>();
@@ -487,11 +558,12 @@ namespace beans
                 b.End = b.Start.AddSeconds(p.BuildTime);
             }
 
-                session.Delete(build);
-                session.Update(this.Village);
-                session.Update(this.Village.VillageResourceData);
-                foreach (Build b in builds)
-                    session.Update(b);
+            session.Delete(build);
+            this.Village.Builds.Remove(build);
+            session.Update(this.Village);
+            session.Update(this.Village.VillageResourceData);
+            foreach (Build b in builds)
+                session.Update(b);
         }
     }
 }

@@ -133,14 +133,24 @@ namespace beans
             report.Unread = true;
             report.Title = string.Format("{0} mua tài nguyên ở {1} ({2}|{3}", this.Village.Player.Username, offer.AtVillage.Name, offer.AtVillage.X.ToString("000"), offer.AtVillage.Y.ToString("000"));
 
-            session.Save(sendFromSource);
+            offer.AtVillage.MovingCommandsFromMe.Add(sendFromSource);
+            this.Village.MovingCommandsToMe.Add(sendFromSource);
+
+            offer.AtVillage.MovingCommandsToMe.Add(sendToSource);
+            this.Village.MovingCommandsFromMe.Add(sendToSource);
+
             session.Save(sendToSource);
+            session.Save(sendFromSource);
+
             session.Update(this.Village.VillageBuildingData);
             session.Update(offer.AtVillage.VillageBuildingData);
             session.Update(this.Village.VillageResourceData);
             session.Update(offer.AtVillage.VillageResourceData);
             if (offer.OfferNumber == 0)
+            {
+                offer.AtVillage.Offers.Remove(offer);
                 session.Delete(offer);
+            }
             else
                 session.Update(offer);
             session.Save(report);
@@ -149,17 +159,10 @@ namespace beans
 
         }
 
-        public virtual IList<Offer> GetMyOffers(ISession session)
-        {
-            return (from offer in session.Linq<Offer>()
-                    where offer.AtVillage == this.Village
-                    select offer).ToList<Offer>();
-        }
-
         public virtual Offer IncreaseOffer(int offerId, int increment, ISession session)
         {
 
-            Offer offer = Offer.GetOfferById(offerId, session);
+            Offer offer = session.Load<Offer>(offerId);
             if (offer == null || offer.AtVillage != this.Village)
                 throw new TribalWarsException("Offer không tồn tại");
 
@@ -184,7 +187,7 @@ namespace beans
 
         public virtual Offer DecreaseOffer(int offerId, int decrease, ISession session)
         {
-            Offer offer = Offer.GetOfferById(offerId, session);
+            Offer offer = session.Load<Offer>(offerId);
             if (offer == null || offer.AtVillage != this.Village)
                 throw new TribalWarsException("Offer không tồn tại");
 
@@ -201,7 +204,10 @@ namespace beans
             if (offer.OfferNumber > 0)
                 session.Update(offer);
             else
+            {
+                offer.AtVillage.Offers.Remove(offer);
                 session.Delete(offer);
+            }
             session.Update(this.Village.VillageBuildingData);
             session.Update(this.Village.VillageResourceData);
 
@@ -221,6 +227,8 @@ namespace beans
             this.Village.VillageBuildingData.Merchant += merchant;
 
             session.Delete(offer);
+            offer.AtVillage.Offers.Remove(offer);
+
             session.Update(this.Village.VillageBuildingData);
             session.Update(this.Village.VillageResourceData);
         }

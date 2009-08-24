@@ -32,227 +32,184 @@ namespace beans
             foreach (MovingCommand movingCommand in this.Village.MovingCommandsToMe)
                 commands.Add(movingCommand.LandingTime, movingCommand);
 
-                //IList<MovingCommand> commands = (from movingCommand in session.Linq<MovingCommand>()
-                //                                 where (movingCommand.FromVillage == this.Village || movingCommand.ToVillage == this.Village)
-                //                                 && movingCommand.LandingTime < to
-                //                                 orderby movingCommand.LandingTime ascending
-                //                                 select movingCommand).ToList<MovingCommand>();
-
-                IList<Build> builds = (from build in this.Village.Builds
-                                       orderby build.ID ascending
-                                       select build).ToList<Build>();
-
-                IList<Recruit> recruits = (from recruit in this.Village.Recruits
-                                           orderby recruit.ID ascending
-                                           select recruit).ToList<Recruit>();
-                IList<Recruit> infantryRecruits = (from recruit in recruits
-                                                   where recruit.Troop == TroopType.Axe
-                                                   || recruit.Troop == TroopType.Spear
-                                                   || recruit.Troop == TroopType.Sword
-                                                   select recruit).ToList<Recruit>();
-                IList<Recruit> cavalryRecruits = (from recruit in recruits
-                                                  where recruit.Troop == TroopType.Scout
-                                                  || recruit.Troop == TroopType.Light
-                                                  || recruit.Troop == TroopType.Heavy
-                                                  select recruit).ToList<Recruit>();
-                IList<Recruit> carRecruits = (from recruit in recruits
-                                              where recruit.Troop == TroopType.Ram
-                                              || recruit.Troop == TroopType.Catapult
-                                              select recruit).ToList<Recruit>();
-                IList<Research> researches = (from research in this.Village.Researches
-                                              orderby research.ID ascending
-                                              select research).ToList<Research>();
-
-                DateTime currentTime = this.Village.LastUpdate;
-
-                IList<MovingCommand> toDeleteCommandList = new List<MovingCommand>();
-                IList<Research> toDeleteResearchList = new List<Research>();
-                IList<Build> toDeleteBuildList = new List<Build>();
-                IList<Recruit> toDeleteRecruitList = new List<Recruit>();
-                IList<MovingCommand> toInsertCommandList = new List<MovingCommand>();
-                bool updateBuildList = false;
-                bool updateResearchList = false;
-
-
-                while (commands.Count > 0)
+            DateTime currentTime = this.Village.LastUpdate;
+            bool updateResearchList = false, updateBuildList = false;
+            while (commands.Count > 0 && commands.ElementAt(0).Value.LandingTime <= to)
+            {
+                MovingCommand command = commands.ElementAt(0).Value;
+                MovingCommand newCommand = null;
+                if (command.ToVillage == this.Village)
                 {
-                    MovingCommand command = commands.Values[0];
-                    MovingCommand newCommand = null;
-                    if (command.ToVillage == this.Village)
+                    this.Village.VillageResourceMethods.UpdateResources(currentTime, command.LandingTime);
+
+                    while (this.Village.VillageRecruitMethods.InfantryRecruits.Count > 0 && this.Village.VillageRecruitMethods.InfantryRecruits[0].Expense(command.LandingTime))
                     {
-                        this.Village.VillageResourceMethods.UpdateResources(currentTime, command.LandingTime);
-
-                        while (infantryRecruits.Count > 0 && infantryRecruits[0].Expense(command.LandingTime))
-                        {
-                            toDeleteRecruitList.Add(infantryRecruits[0]);
-                            //session.Delete(infantryRecruits[0]);
-                            infantryRecruits.RemoveAt(0);
-                        }
-                        while (cavalryRecruits.Count > 0 && cavalryRecruits[0].Expense(command.LandingTime))
-                        {
-                            toDeleteRecruitList.Add(cavalryRecruits[0]);
-                            //session.Delete(cavalryRecruits[0]);
-                            cavalryRecruits.RemoveAt(0);
-                        }
-                        while (carRecruits.Count > 0 && carRecruits[0].Expense(command.LandingTime))
-                        {
-                            toDeleteRecruitList.Add(carRecruits[0]);
-                            //session.Delete(carRecruits[0]);
-                            carRecruits.RemoveAt(0);
-                        }
-
-                        while (researches.Count > 0 && researches[0].Expense(command.LandingTime))
-                        {
-                            this.Village[researches[0].Type]++;
-                            toDeleteResearchList.Add(researches[0]);
-                            researches.RemoveAt(0);
-                        }
-
-                        while (builds.Count > 0 && builds[0].Expense(command.LandingTime))
-                        {
-                            this.Village[builds[0].Building]++;
-
-                            if (builds[0].Building == BuildingType.Smithy)
-                            {
-                                for (int i = 1; i < researches.Count; i++)
-                                {
-                                    Research research = researches[i];
-                                    research.Start = researches[i - 1].End;
-                                    ResearchPrice price = Research.GetPrice(research.Type, research.Level, this.Village[BuildingType.Smithy]);
-                                    research.End = research.Start.AddSeconds(price.Time);
-                                }
-                                updateResearchList = true;
-                            }
-                            else if (builds[0].Building == BuildingType.Headquarter)
-                            {
-                                for (int i = 1; i < builds.Count; i++)
-                                {
-                                    Build build = builds[i];
-                                    build.Start = builds[i = 1].End;
-                                    BuildPrice price = Build.GetPrice(build.Building, build.Level, this.Village[BuildingType.Headquarter]);
-                                    build.End = build.Start.AddSeconds(price.BuildTime);
-                                }
-                                updateBuildList = true;
-                            }
-
-                            toDeleteBuildList.Add(builds[0]);
-                            builds.RemoveAt(0);
-                        }
-
-
-
-                        newCommand = command.Effect(session);
-                        currentTime = command.LandingTime;
+                        this.Village.VillageRecruitMethods.InfantryRecruits.RemoveAt(0);
+                        this.Village.Recruits.Remove(this.Village.VillageRecruitMethods.InfantryRecruits[0]);
+                        session.Delete(this.Village.VillageRecruitMethods.InfantryRecruits[0]);
                     }
+                    while (this.Village.VillageRecruitMethods.CavalryRecruits.Count > 0 && this.Village.VillageRecruitMethods.CavalryRecruits[0].Expense(command.LandingTime))
+                    {
+                        this.Village.Recruits.Remove(this.Village.VillageRecruitMethods.CavalryRecruits[0]);
+                        this.Village.VillageRecruitMethods.CavalryRecruits.RemoveAt(0);
+                        session.Delete(this.Village.VillageRecruitMethods.CavalryRecruits[0]);
+                    }
+                    while (this.Village.VillageRecruitMethods.CarRecruits.Count > 0 && this.Village.VillageRecruitMethods.CarRecruits[0].Expense(command.LandingTime))
+                    {
+                        this.Village.Recruits.Remove(this.Village.VillageRecruitMethods.CarRecruits[0]);
+                        this.Village.VillageRecruitMethods.CarRecruits.RemoveAt(0);
+                        session.Delete(this.Village.VillageRecruitMethods.CarRecruits[0]);
+                    }
+
+                    while (this.Village.Researches.Count > 0 && this.Village.Researches[0].Expense(command.LandingTime))
+                    {
+                        this.Village[this.Village.Researches[0].Type]++;
+                        session.Delete(this.Village.Researches[0]);
+                        this.Village.Researches.RemoveAt(0);
+                    }
+
+                    while (this.Village.Builds.Count > 0 && this.Village.Builds[0].Expense(command.LandingTime))
+                    {
+                        this.Village[this.Village.Builds[0].Building]++;
+
+                        if (this.Village.Builds[0].Building == BuildingType.Smithy)
+                        {
+                            for (int i = 1; i < this.Village.Researches.Count; i++)
+                            {
+                                Research research = this.Village.Researches[i];
+                                research.Start = this.Village.Researches[i - 1].End;
+                                ResearchPrice price = Research.GetPrice(research.Type, research.Level, this.Village[BuildingType.Smithy]);
+                                research.End = research.Start.AddSeconds(price.Time);
+                            }
+                            updateResearchList = true;
+                        }
+                        else if (this.Village.Builds[0].Building == BuildingType.Headquarter)
+                        {
+                            for (int i = 1; i < this.Village.Builds.Count; i++)
+                            {
+                                Build build = this.Village.Builds[i];
+                                build.Start = this.Village.Builds[i = 1].End;
+                                BuildPrice price = Build.GetPrice(build.Building, build.Level, this.Village[BuildingType.Headquarter]);
+                                build.End = build.Start.AddSeconds(price.BuildTime);
+                            }
+                            updateBuildList = true;
+                        }
+
+                        session.Delete(this.Village.Builds[0]);
+                        this.Village.Builds.RemoveAt(0);
+                    }
+
+                    newCommand = command.Effect(session);
+                    currentTime = command.LandingTime;
+                    commands.RemoveAt(0);
+                    this.Village.MovingCommandsToMe.Remove(command);
+                    session.Delete(command);
+                }
+                else
+                {
+                    command.ToVillage.VillageCommonMethods.UpdateVillage(command.LandingTime, session, false);
+                    newCommand = command.Effect(session);
+                    commands.RemoveAt(0);
+                    this.Village.MovingCommandsFromMe.Remove(command);
+                    session.Delete(command);
+                }
+
+
+                if (newCommand != null)
+                    if (newCommand.LandingTime < to)
+                        commands.Add(newCommand.LandingTime, newCommand);
                     else
                     {
-                        command.ToVillage.VillageCommonMethods.UpdateVillage(command.LandingTime, session, false);
-                        newCommand = command.Effect(session);
-                    }
-                    toDeleteCommandList.Add(commands.Values[0]);
-                    commands.RemoveAt(0);
-                    if (newCommand != null)
-                        if (newCommand.LandingTime < to)
-                            commands.Add(newCommand.LandingTime, newCommand);
+                        if (newCommand.FromVillage == this.Village)
+                            this.Village.MovingCommandsFromMe.Add(newCommand);
                         else
-                            toInsertCommandList.Add(newCommand);
-                }
-
-                this.Village.VillageResourceMethods.UpdateResources(currentTime, to);
-
-                while (infantryRecruits.Count > 0 && infantryRecruits[0].Expense(to))
-                {
-                    //session.Delete(infantryRecruits[0]);
-                    toDeleteRecruitList.Add(infantryRecruits[0]);
-
-                    infantryRecruits.RemoveAt(0);
-                }
-
-                while (cavalryRecruits.Count > 0 && cavalryRecruits[0].Expense(to))
-                {
-                    //session.Delete(cavalryRecruits[0]);
-                    toDeleteRecruitList.Add(cavalryRecruits[0]);
-                    cavalryRecruits.RemoveAt(0);
-                }
-
-                while (carRecruits.Count > 0 && carRecruits[0].Expense(to))
-                {
-                    //session.Delete(carRecruits[0]);
-                    toDeleteRecruitList.Add(carRecruits[0]);
-                    carRecruits.RemoveAt(0);
-                }
-
-                while (researches.Count > 0 && researches[0].Expense(to))
-                {
-                    this.Village[researches[0].Type]++;
-                    toDeleteResearchList.Add(researches[0]);
-                    researches.RemoveAt(0);
-                }
-
-                while (builds.Count > 0 && builds[0].Expense(to))
-                {
-
-                    if (builds[0].Building == BuildingType.Smithy)
-                    {
-                        for (int i = 1; i < researches.Count; i++)
-                        {
-                            Research research = researches[i];
-                            research.Start = researches[i - 1].End;
-                            ResearchPrice price = Research.GetPrice(research.Type, research.Level, this.Village[BuildingType.Smithy]);
-                            research.End = research.Start.AddSeconds(price.Time);
-                        }
-                        updateResearchList = true;
+                            this.Village.MovingCommandsToMe.Add(newCommand);
+                        session.Save(newCommand);
                     }
-                    else if (builds[0].Building == BuildingType.Headquarter)
-                    {
-                        for (int i = 1; i < builds.Count; i++)
-                        {
-                            Build build = builds[i];
-                            build.Start = builds[i = 1].End;
-                            BuildPrice price = Build.GetPrice(build.Building, build.Level, this.Village[BuildingType.Headquarter]);
-                            build.End = build.Start.AddSeconds(price.BuildTime);
-                        }
-                        updateBuildList = true;
-                    }
+            }
 
-                    toDeleteBuildList.Add(builds[0]);
-                    builds.RemoveAt(0);
+            this.Village.VillageResourceMethods.UpdateResources(currentTime, to);
+
+            while (this.Village.VillageRecruitMethods.InfantryRecruits.Count > 0 && this.Village.VillageRecruitMethods.InfantryRecruits[0].Expense(to))
+            {
+                this.Village.VillageRecruitMethods.InfantryRecruits.RemoveAt(0);
+                this.Village.Recruits.Remove(this.Village.VillageRecruitMethods.InfantryRecruits[0]);
+                session.Delete(this.Village.VillageRecruitMethods.InfantryRecruits[0]);
+            }
+            while (this.Village.VillageRecruitMethods.CavalryRecruits.Count > 0 && this.Village.VillageRecruitMethods.CavalryRecruits[0].Expense(to))
+            {
+                this.Village.Recruits.Remove(this.Village.VillageRecruitMethods.CavalryRecruits[0]);
+                this.Village.VillageRecruitMethods.CavalryRecruits.RemoveAt(0);
+                session.Delete(this.Village.VillageRecruitMethods.CavalryRecruits[0]);
+            }
+            while (this.Village.VillageRecruitMethods.CarRecruits.Count > 0 && this.Village.VillageRecruitMethods.CarRecruits[0].Expense(to))
+            {
+                this.Village.Recruits.Remove(this.Village.VillageRecruitMethods.CarRecruits[0]);
+                this.Village.VillageRecruitMethods.CarRecruits.RemoveAt(0);
+                session.Delete(this.Village.VillageRecruitMethods.CarRecruits[0]);
+            }
+
+            while (this.Village.Researches.Count > 0 && this.Village.Researches[0].Expense(to))
+            {
+                this.Village[this.Village.Researches[0].Type]++;
+                session.Delete(this.Village.Researches[0]);
+                this.Village.Researches.RemoveAt(0);
+            }
+
+            while (this.Village.Builds.Count > 0 && this.Village.Builds[0].Expense(to))
+            {
+                this.Village[this.Village.Builds[0].Building]++;
+
+                if (this.Village.Builds[0].Building == BuildingType.Smithy)
+                {
+                    for (int i = 1; i < this.Village.Researches.Count; i++)
+                    {
+                        Research research = this.Village.Researches[i];
+                        research.Start = this.Village.Researches[i - 1].End;
+                        ResearchPrice price = Research.GetPrice(research.Type, research.Level, this.Village[BuildingType.Smithy]);
+                        research.End = research.Start.AddSeconds(price.Time);
+                    }
+                    updateResearchList = true;
+                }
+                else if (this.Village.Builds[0].Building == BuildingType.Headquarter)
+                {
+                    for (int i = 1; i < this.Village.Builds.Count; i++)
+                    {
+                        Build build = this.Village.Builds[i];
+                        build.Start = this.Village.Builds[i = 1].End;
+                        BuildPrice price = Build.GetPrice(build.Building, build.Level, this.Village[BuildingType.Headquarter]);
+                        build.End = build.Start.AddSeconds(price.BuildTime);
+                    }
+                    updateBuildList = true;
                 }
 
-                this.Village.LastUpdate = to;
+                session.Delete(this.Village.Builds[0]);
+                this.Village.Builds.RemoveAt(0);
+            }
 
-                if (carRecruits.Count > 0)
-                    session.Update(carRecruits[0]);
-                if (cavalryRecruits.Count > 0)
-                    session.Update(cavalryRecruits[0]);
-                if (infantryRecruits.Count > 0)
-                    session.Update(infantryRecruits[0]);
-                foreach (Recruit recruit in toDeleteRecruitList)
-                    session.Delete(recruit);
-                foreach (Build build in toDeleteBuildList)
-                    session.Delete(build);
-                foreach (Research research in toDeleteResearchList)
-                    session.Delete(research);
-                foreach (MovingCommand command in toDeleteCommandList)
-                    session.Delete(command);
-                foreach (MovingCommand command in toInsertCommandList)
-                    session.Save(command);
+            this.Village.LastUpdate = to;
 
-                if (toDeleteBuildList.Count > 0)
-                    session.Update(this.Village.VillageBuildingData);
-                if (toDeleteResearchList.Count > 0)
-                    session.Update(this.Village.VillageResearchData);
-                if (toDeleteRecruitList.Count > 0 || recruits.Count > 0)
-                    session.Update(this.Village.VillageTroopData);
+            if (this.Village.VillageRecruitMethods.CarRecruits.Count > 0)
+                session.Update(this.Village.VillageRecruitMethods.CarRecruits[0]);
+            if (this.Village.VillageRecruitMethods.CavalryRecruits.Count > 0)
+                session.Update(this.Village.VillageRecruitMethods.CavalryRecruits[0]);
+            if (this.Village.VillageRecruitMethods.InfantryRecruits.Count > 0)
+                session.Update(this.Village.VillageRecruitMethods.InfantryRecruits[0]);
 
-                if (updateBuildList)
-                    foreach (Build build in builds)
-                        session.Update(build);
-                if (updateResearchList)
-                    foreach (Research research in researches)
-                        session.Update(research);
 
-                session.Update(this.Village);
+
+            if (updateBuildList)
+                foreach (Build build in this.Village.Builds)
+                    session.Update(build);
+            if (updateResearchList)
+                foreach (Research research in this.Village.Researches)
+                    session.Update(research);
+
+            session.Update(this.Village);
+            session.Update(this.Village.VillageResearchData);
+            session.Update(this.Village.VillageTroopData);
+            session.Update(this.Village.VillageResourceData);
+            session.Update(this.Village.VillageBuildingData);
 
         }
        

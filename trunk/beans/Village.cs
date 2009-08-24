@@ -136,6 +136,11 @@ namespace beans
             get;
             set;
         }
+        public virtual IList<Offer> Offers
+        {
+            get;
+            set;
+        }
         public virtual IList<Research> Researches
         {
             get;
@@ -147,6 +152,16 @@ namespace beans
             set;
         }
         public virtual IList<MovingCommand> MovingCommandsToMe
+        {
+            get;
+            set;
+        }
+        public virtual IList<Station> StationsAtMe
+        {
+            get;
+            set;
+        }
+        public virtual IList<Station> StationsFromMe
         {
             get;
             set;

@@ -28,7 +28,7 @@ namespace beans
             set;
         }
 
-        public virtual IList<SendResource> TransportFromMe
+        public virtual IList<MovingCommand> TransportFromMe
         {
             get;
             set;
@@ -36,51 +36,23 @@ namespace beans
 
         public virtual void GetTransportData(ISession session)
         {
-            ICriteria criteria = session.CreateCriteria<MovingCommand>();
-            criteria.Add(Expression.Gt("LandingTime", this.Village.LastUpdate));
-            criteria.Add(Expression.Or
-                        (
-                            Expression.And
-                            (
-                                Expression.Sql("this_.type=1"), // đối tượng SendResource
-                                Expression.Or // đến bất kỳ đâu
-                                (
-                                    Expression.Eq("FromVillage", this.Village),
-                                    Expression.Eq("ToVillage", this.Village)
-                                 )
-                            ),
-                            Expression.And
-                            (
-                                Expression.And
-                                (
-                                    Expression.Sql("this_.type=4"), // đối tượng return
-                                    Expression.Sql("(this_.merchant is not null and this_.merchant>0)") // có merchant >0
-                                ),
-                                Expression.Eq("ToVillage", this.Village) // đến làng this
-                            )
-                        ));
-            
-            criteria.AddOrder(Order.Asc("LandingTime"));
-
-            this.ResourceTransporting = criteria.List<MovingCommand>();
-
-            this.TransportFromMe = (from sendResource in this.ResourceTransporting
-                                    where sendResource.FromVillage == this.Village
-                                    orderby sendResource.LandingTime ascending
-                                    select (SendResource)sendResource).ToList<SendResource>();
-
-            this.TransportToMe = (from movingCommand in this.ResourceTransporting
-                                  where movingCommand.ToVillage == this.Village
+            this.TransportToMe = (from movingCommand in this.Village.MovingCommandsToMe
+                                  where movingCommand.GetType() == typeof(SendResource) ||
+                                  (movingCommand.GetType() == typeof(Return) && ((Return)movingCommand).Merchant > 0)
                                   orderby movingCommand.LandingTime ascending
                                   select movingCommand).ToList<MovingCommand>();
 
+            this.TransportFromMe = (from transport in this.Village.MovingCommandsFromMe
+                                    where transport.GetType() == typeof(SendResource)
+                                    orderby transport.LandingTime ascending
+                                    select transport).ToList<MovingCommand>();
         }
 
         public virtual int GetMerchantOnTheWay(ISession session)
         {
-            return (from sendResource in session.Linq<SendResource>()
-                    where sendResource.FromVillage == this.Village
-                    select sendResource.Merchant).Sum();
+            return (from transport in this.Village.MovingCommandsFromMe
+                    where transport.GetType() == typeof(SendResource)
+                    select ((SendResource)transport).Merchant).Sum();
         }
     }
 }

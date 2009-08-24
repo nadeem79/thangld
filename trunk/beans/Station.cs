@@ -72,7 +72,7 @@ namespace beans
             return session.Get<Station>(id);
         }
 
-        public Return Return(int spear, 
+        public Return Return(int spear,
                             int sword,
                             int axe,
                             int scout,
@@ -117,11 +117,11 @@ namespace beans
             returnTroop.FromVillage = this.AtVillage;
             returnTroop.ToVillage = this.FromVillage;
             returnTroop.StartingTime = DateTime.Now;
-            returnTroop.LandingTime = Map.LandingTime(  Map.SlowestSpeed(spear, sword, axe, scout, lightCavalry, heavyCavalry, ram, catapult, noble), 
-                                                        this.AtVillage, 
-                                                        this.FromVillage, 
+            returnTroop.LandingTime = Map.LandingTime(Map.SlowestSpeed(spear, sword, axe, scout, lightCavalry, heavyCavalry, ram, catapult, noble),
+                                                        this.AtVillage,
+                                                        this.FromVillage,
                                                         returnTroop.StartingTime);
-                
+
             bool delete = (this.Spear <= 0 && this.Sword <= 0 && this.Axe <= 0
                 && this.Scout <= 0 && this.LightCavalry <= 0 && this.HeavyCavalry <= 0
                 && this.Ram <= 0 && this.Catapult <= 0
@@ -170,17 +170,23 @@ namespace beans
             }
             report.Unread = true;
             report.Time = DateTime.Now;
-            
 
-                session.Update(this.AtVillage.VillageTroopData);
-                session.Save(returnTroop);
-                if (delete)
-                    session.Delete(this);
-                else
-                    session.Update(this);
-                session.Save(report);
-                return returnTroop;
-            
+
+            session.Update(this.AtVillage.VillageTroopData);
+            session.Save(returnTroop);
+            this.AtVillage.MovingCommandsFromMe.Add(returnTroop);
+            this.FromVillage.MovingCommandsToMe.Add(returnTroop);
+            if (delete)
+            {
+                session.Delete(this);
+                this.AtVillage.StationsAtMe.Remove(this);
+                this.FromVillage.StationsFromMe.Remove(this);
+            }
+            else
+                session.Update(this);
+            session.Save(report);
+            return returnTroop;
+
         }
 
         public Return Return(ISession session, bool isSendback)
