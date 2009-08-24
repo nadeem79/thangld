@@ -16,17 +16,34 @@ using System.Data;
 namespace beans
 {
 
-    
-
     public partial class Player:IdentityObject
     {
+
+        public Player()
+        {
+            this.adminConfigurationMethods.Player = this;
+        }
+
         #region Variable
         private string username;
         private string password;
         private string email;
+        protected AdminConfigurationMethods adminConfigurationMethods = new AdminConfigurationMethods();
         #endregion
 
         #region Properties
+
+        public virtual AdminConfigurationMethods AdminConfigurationMethods
+        {
+            get
+            {
+                if (this.Type != UserType.Administrator)
+                    throw new TribalWarsException("Chỉ admin mới được phép truy cập chức năng này");
+
+                return this.adminConfigurationMethods;
+            }
+        }
+
         public virtual DateTime Birthdate
         {
             get;
@@ -117,49 +134,46 @@ namespace beans
             get;
             set;
         }
-        public virtual bool Avatar
+        public  virtual bool Avatar
         {
             get;
             set;
         }
-        public bool GraphicalVillage
+        public virtual bool GraphicalVillage
         {
             get;
             set;
         }
-        public bool ShowBuildingLevel
+        public virtual bool ShowBuildingLevel
         {
             get;
             set;
         }
-        public double Point
+        public virtual double Point
         {
             get;
             set;
         }
-        public Group Group
+        public virtual Group Group
         {
             get;
             set;
         }
-        public string TribeTitle
+        public virtual string TribeTitle
         {
             get;
             set;
         }
-        public TribePermission TribePermission
+        public virtual TribePermission TribePermission
         {
             get;
             set;
         }
-        public IList<TribeInvite> Invites
+        public virtual IList<TribeInvite> Invites
         {
             get;
             set;
         }
-        #endregion
-
-        #region Constructors
         #endregion
 
         #region Static Member
@@ -192,6 +206,8 @@ namespace beans
 
         #endregion
 
+
+
         #region Methods
 
         public override string ToString()
@@ -200,7 +216,7 @@ namespace beans
         }
 
         #region Village Methods
-        public MovingCommand GetCommand(int command_id, ISession session)
+        public virtual MovingCommand GetCommand(int command_id, ISession session)
         {
             
             ICriteria criteria = session.CreateCriteria(typeof(MovingCommand));
@@ -217,7 +233,7 @@ namespace beans
             return command;
         }
 
-        public Report GetReport(int report_id, ISession session)
+        public virtual Report GetReport(int report_id, ISession session)
         {
             //ICriteria criteria = session.CreateCriteria(typeof(Report));
             //criteria.Add(Expression.Eq("Owner", this));
@@ -240,7 +256,7 @@ namespace beans
             return report;
         }
 
-        public IList<Report> GetReports(int page, ISession session, params ReportType[] types)
+        public virtual IList<Report> GetReports(int page, ISession session, params ReportType[] types)
         {
 
             ICriteria criteria;
@@ -264,7 +280,7 @@ namespace beans
             return criteria.List<Report>();
         }
 
-        public int GetUnreadReportCount(ISession session)
+        public virtual int GetUnreadReportCount(ISession session)
         {
             return (from report in session.Linq<Report>()
                     where report.Owner == this
@@ -272,7 +288,7 @@ namespace beans
                     select report).Count();
         }
 
-        public Mail GetMailDetail(int Mail_id, ISession session)
+        public virtual Mail GetMailDetail(int Mail_id, ISession session)
         {
             Mail mail = (from m in session.Linq<Mail>()
                          where m.ID==Mail_id
@@ -285,26 +301,15 @@ namespace beans
 
             if (mail.Unread && mail.To == this)
             {
-                ITransaction trans = null;
-                try
-                {
-                    trans = session.BeginTransaction(IsolationLevel.ReadUncommitted);
                     mail.Unread = false;
                     session.Update(mail);
-                    trans.Commit();
-                }
-                catch (Exception ex)
-                {
-                    if (trans != null)
-                        trans.Rollback();
-                }
             }
 
             return mail;
 
         }
 
-        public void DeleteMail(int mailId, ISession session)
+        public virtual void DeleteMail(int mailId, ISession session)
         {
             Mail m = this.GetMailDetail(mailId, session);
             if (m.To == this)
@@ -318,7 +323,7 @@ namespace beans
                 session.Update(m);
         }
 
-        public void DeleteMail(Mail mail, ISession session)
+        public virtual void DeleteMail(Mail mail, ISession session)
         {
             if (mail.From != this && mail.To != this)
                 return;
@@ -333,7 +338,7 @@ namespace beans
                 session.Update(mail);
         }
 
-        public IList<Mail> GetMailFromMe(int page, ISession session)
+        public virtual IList<Mail> GetMailFromMe(int page, ISession session)
         {
             return (from mail in session.Linq<Mail>()
                     where mail.From == this
@@ -341,7 +346,7 @@ namespace beans
                     orderby mail.ID descending
                     select mail).Skip(page * 40).Take(40).ToList<Mail>();
         }
-        public IList<Mail> GetMailToMe(int page, ISession session)
+        public virtual IList<Mail> GetMailToMe(int page, ISession session)
         {
             return (from mail in session.Linq<Mail>()
                     where mail.To == this
@@ -350,7 +355,7 @@ namespace beans
                     select mail).Skip(page * 40).Take(40).ToList<Mail>();
         }
 
-        public Mail SendMail(string receiverName,String title, String detail,  ISession session)
+        public virtual Mail SendMail(string receiverName, String title, String detail, ISession session)
         {
 
             Player receiver = (from player in session.Linq<Player>()
@@ -375,7 +380,7 @@ namespace beans
             return mail;
         }
         
-        public void Update(DateTime time, ISession session)
+        public virtual void Update(DateTime time, ISession session)
         {
             if (this.Villages.Count == 0)
             {
@@ -415,13 +420,13 @@ namespace beans
         #endregion
 
 
-        public int GetIncomingAttackCount(ISession session)
+        public virtual int GetIncomingAttackCount(ISession session)
         {
             return (from attack in session.Linq<Attack>()
                     where attack.ToVillage.Player == this
                     select attack).Count();
         }
-        public int GetIncomingSupportCount(ISession session)
+        public virtual int GetIncomingSupportCount(ISession session)
         {
             return (from support in session.Linq<Support>()
                     where support.ToVillage.Player == this

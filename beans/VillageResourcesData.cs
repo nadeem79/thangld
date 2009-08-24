@@ -11,7 +11,6 @@ namespace beans
     public class VillageResourcesData:IdentityObject
     {
         private int _wood, _clay, _iron;
-        public event ResourceChangeHandler ResourceChanged;
         #region Properties.Resources
 
         public virtual int Wood
@@ -20,8 +19,6 @@ namespace beans
             set
             {
                 this._wood = value;
-                if (this.ResourceChanged!=null)
-                    this.ResourceChanged(ResourcesType.Wood, value, this.Village.MaxResources);
             }
         }
         public virtual int Clay
@@ -30,8 +27,6 @@ namespace beans
             set
             {
                     this._clay = value;
-                    if (this.ResourceChanged != null)
-                        this.ResourceChanged(ResourcesType.Clay, value, this.Village.MaxResources);
             }
         }
         public virtual int Iron
@@ -40,8 +35,6 @@ namespace beans
             set
             {
                     this._iron = value;
-                    if (this.ResourceChanged != null)
-                        this.ResourceChanged(ResourcesType.Iron, value, this.Village.MaxResources);
             }
         }
 

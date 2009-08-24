@@ -21,10 +21,12 @@ public partial class index : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
+        Village v = session.Get<Village>(24);
         if (Request.Cookies["username"] != null)
         {
-            ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
+            
+            
             try
             {
                 int id = beans.Player.Authentication(Request.Cookies["username"].Value, (string)Request.Cookies["password"].Value, session);
@@ -50,8 +52,6 @@ public partial class index : System.Web.UI.Page
                 this.pBox.Controls.Add(login);
                 break;
             default:
-                ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
-                
                 PlayerBox player = (PlayerBox)Page.LoadControl("PlayerBox.ascx");
                 player.Player = session.Get<Player>(Session["user"]);
                 this.pBox.Controls.Add(player);

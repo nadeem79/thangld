@@ -7,17 +7,17 @@ namespace beans
 {
     internal class TribeRelation:IdentityObject
     {
-        public Group CurrentTribe 
+        public virtual Group CurrentTribe 
         {
             get;
             set;
         }
-        public Group DiplomaticTribe
+        public virtual Group DiplomaticTribe
         {
             get;
             set;
         }
-        public TribeDiplomate Diplomacy
+        public virtual TribeDiplomate Diplomacy
         {
             get;
             set;

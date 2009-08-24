@@ -212,7 +212,7 @@ namespace beans
 
         #endregion
 
-        public bool Expense(DateTime to)
+        public virtual bool Expense(DateTime to)
         {
             BuildingType building = BuildingType.NoBuiding;
             int level = 0;
@@ -315,7 +315,7 @@ namespace beans
 
             return false;
         }
-        public void cancel(ISession session)
+        public virtual void cancel(ISession session)
         {
             Price p = Recruit.GetPrice(this.Troop);
             this.InVillage.VillageResourceData.Wood += (int)(this.Quantity * p.Wood * 0.9);

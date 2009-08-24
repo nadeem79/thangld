@@ -15,6 +15,11 @@ namespace beans
             get;
             set;
         }
+        public IList<Research> Researches
+        {
+            get;
+            set;
+        }
         public int MaxAttackLevel
         {
             get;
@@ -33,6 +38,9 @@ namespace beans
 
         public Research CreateResearch(ResearchType type, ISession session)
         {
+            if (this.Researches == null)
+                this.GetResearchs(session);
+
             if (this.Village[BuildingType.Smithy] < 0)
                 throw new TribalWarsException("Chưa xây viện nghiên cứu");
             ResearchPrice price = Research.GetPrice(type, this.Village[type] + 1, this.Village[BuildingType.Smithy]);
@@ -56,28 +64,24 @@ namespace beans
                 default:
                     break;
             }
-            research.Start = DateTime.Now;
+            Research lastResearch = (from r in this.Researches
+                                     orderby r.ID descending
+                                     select r).FirstOrDefault<Research>();
+
+            if (lastResearch == null)
+                research.Start = DateTime.Now;
+            else
+                research.Start = lastResearch.End;
+
             research.End = research.Start.AddSeconds(price.Time);
 
             this.Village[ResourcesType.Wood] -= price.Wood;
             this.Village[ResourcesType.Iron] -= price.Iron;
             this.Village[ResourcesType.Clay] -= price.Clay;
 
-            ITransaction trans = null;
-            try
-            {
-                trans = session.BeginTransaction(IsolationLevel.ReadUncommitted);
                 session.Save(research);
                 session.Update(this.Village.VillageResourceData);
-                trans.Commit();
-            }
-            catch
-            {
-                if (trans != null)
-                    trans.Rollback();
-                throw new TribalWarsException("Có lỗi xảy ra trong quá trình truyền dữ liệu. Vui lòng thử lại");
-            }
-
+            
             return research;
         }
 
@@ -116,21 +120,10 @@ namespace beans
             this.Village[ResourcesType.Clay] += (int)(price.Clay + 0.8);
             this.Village[ResourcesType.Iron] += (int)(price.Iron + 0.8);
 
-            ITransaction trans = null;
-            try
-            {
-                trans = session.BeginTransaction(IsolationLevel.ReadUncommitted);
                 foreach (Research r in researchs)
                     session.Update(r);
                 session.Update(this.Village.VillageResourceData);
                 session.Delete(research);
-                trans.Commit();
-            }
-            catch
-            {
-                if (trans != null)
-                    trans.Rollback();
-            }
         }
 
         public void CancelResearch(int researchId, ISession session)
@@ -157,6 +150,8 @@ namespace beans
                                   where research.Type == ResearchType.Speed
                                   orderby research.ID descending
                                   select research.Level).FirstOrDefault<int>();
+
+            this.Researches = researches;
             return researches;
         }
 

@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
 
-  <class name="beans.Player, beans" table="users" lazy="false">
+  <class name="beans.Player, beans" table="users" lazy="true">
+    <cache usage="read-write"/>
     <id name="ID" column="id" type="Int32">
       <generator class="identity"/>
     </id>
@@ -26,7 +27,8 @@
 
     <many-to-one name="Group" class="beans.Group, beans" column="group_id" not-null="false" fetch="select" cascade="none" lazy="no-proxy" not-found="ignore" />
     
-    <bag name="Villages" table="villages_common" cascade="none" fetch="join" inverse="true" lazy="true">
+    <bag name="Villages" table="villages_common" cascade="none" fetch="select" inverse="true" lazy="true" >
+      <cache usage="read-write"/>
       <key column="userid" />
       <one-to-many class="beans.Village, beans"/>
     </bag>

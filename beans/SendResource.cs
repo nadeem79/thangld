@@ -88,19 +88,8 @@ namespace beans
             r.StartingTime = DateTime.Now;
             r.LandingTime = DateTime.Now + (DateTime.Now - this.StartingTime);
 
-            ITransaction trans = null;
-            try
-            {
-                trans = session.BeginTransaction(IsolationLevel.ReadUncommitted);
                 session.Save(r);
                 session.Delete(this);
-                trans.Commit();
-            }
-            catch
-            {
-                if (trans != null)
-                    trans.Rollback();
-            }
             return r;
         }
 
@@ -128,21 +117,10 @@ namespace beans
             this.FromVillage.VillageResourceData.Iron -= this.Iron;
             this.FromVillage.VillageBuildingData.Merchant -= merchantNeeded;
 
-            ITransaction trans = null;
-            try
-            {
-                trans = session.BeginTransaction(IsolationLevel.ReadUncommitted);
                 session.BeginTransaction(IsolationLevel.ReadCommitted);
                 session.Save(this);
                 session.Update(this.FromVillage.VillageResourceData);
                 session.Update(this.FromVillage.VillageBuildingData);
-                trans.Commit();
-            }
-            catch
-            {
-                if (trans != null)
-                    trans.Rollback();
-            }
         }
     }
 }

@@ -2,7 +2,7 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
 
   <class name ="beans.Village, beans" table="villages_common" lazy="true">
-
+    <cache usage="read-write"/>
     <id name="ID" column="id" type="Int32">
       <generator class="identity"/>
     </id>
@@ -10,19 +10,47 @@
     <property name="Name" column="name" length="100" type="String"/>
     <property name="X" column="x" type="Int32" />
     <property name="Y" column="y" type="Int32" />
-    <many-to-one name="Player" class="beans.Player, beans" column="userid" not-null="false" fetch="join" cascade="none" />
+    <many-to-one name="Player" class="beans.Player, beans" column="userid" not-null="false" lazy="no-proxy" fetch="select"  />
     <property name="Points" column="points" type="double" />
     <property name="Loyal" column="loyal" type="double" />
     <property name="LastUpdate" column="last_update" type="timestamp" not-null="true" />
     <property name="Population" column="population" type="double" />
+
+    <bag name="Builds" table="build" cascade="none" fetch="select" inverse="true" lazy="true" >
+      <cache usage="read-write"/>
+      <key column="village_id" />
+      <one-to-many class="beans.Build, beans"/>
+    </bag>
+    <bag name="Recruits" table="recruit" cascade="none" fetch="select" inverse="true" lazy="true"   >
+      
+      <cache usage="read-write"/>
+      <key column="village_id" />
+      <one-to-many class="beans.Recruit, beans"/>
+    </bag>
+    <bag name="Researches" table="researches" cascade="none" fetch="select" inverse="true" lazy="true" >
+      <cache usage="read-write"/>
+      <key column="village_id" />
+      <one-to-many class="beans.Research, beans"/>
+    </bag>
+    <bag name="MovingCommandsFromMe" table="movement" cascade="none" fetch="select" inverse="true" lazy="true" >
+      <cache usage="read-write"/>
+      <key column="from_village" />
+      <one-to-many class="beans.MovingCommand, beans"/>
+    </bag>
+    <bag name="MovingCommandsToMe" table="movement" cascade="none" fetch="select" inverse="true" lazy="true" >
+      <cache usage="read-write"/>
+      <key column="to_village" />
+      <one-to-many class="beans.MovingCommand, beans"/>
+    </bag>
     
-    <one-to-one name="VillageBuildingData" class="beans.VillageBuildingData, beans" cascade="all" lazy="false" />
-    <one-to-one name="VillageResourceData" class="beans.VillageResourcesData, beans" cascade="all" lazy="false" />
-    <one-to-one name="VillageTroopData" class="beans.VillageTroopData, beans" cascade="all" lazy="false" />
-    <one-to-one name="VillageResearchData" class="beans.VillageResearchData, beans" cascade="all" lazy="false" />
+    <one-to-one name="VillageBuildingData" class="beans.VillageBuildingData, beans" cascade="all" lazy="no-proxy" fetch="select" />
+    <one-to-one name="VillageResourceData" class="beans.VillageResourcesData, beans" cascade="all" lazy="no-proxy" fetch="select" />
+    <one-to-one name="VillageTroopData" class="beans.VillageTroopData, beans" cascade="all" lazy="no-proxy" fetch="select" />
+    <one-to-one name="VillageResearchData" class="beans.VillageResearchData, beans" cascade="all" lazy="no-proxy" fetch="select" />
   </class>
 
-  <class name ="beans.VillageBuildingData, beans" table="villages_building" lazy="false">
+  <class name ="beans.VillageBuildingData, beans" table="villages_building" lazy="true">
+    <cache usage="read-write"/>
     <id name="ID" column="id">
       <generator class="foreign">
         <param name="property">Village</param>
@@ -48,7 +76,8 @@
     <one-to-one name="Village" class="beans.Village, beans" constrained="true" foreign-key="id" />
   </class>
 
-  <class name ="beans.VillageResourcesData, beans" table="villages_resources" lazy="false">
+  <class name ="beans.VillageResourcesData, beans" table="villages_resources" lazy="true">
+    <cache usage="read-write"/>
     <id name="ID" column="id" type="Int32">
       <generator class="foreign">
         <param name="property">Village</param>
@@ -62,7 +91,8 @@
     
   </class>
 
-  <class name ="beans.VillageTroopData, beans" table="villages_troop" lazy="false">
+  <class name ="beans.VillageTroopData, beans" table="villages_troop" lazy="true">
+    <cache usage="read-write"/>
     <id name="ID" column="id" type="Int32">
       <generator class="foreign">
         <param name="property">Village</param>
@@ -101,7 +131,8 @@
     <one-to-one name="Village" class="beans.Village, beans" constrained="true" />
   </class>
 
-  <class name ="beans.VillageResearchData, beans" table="villages_research" lazy="false">
+  <class name ="beans.VillageResearchData, beans" table="villages_research" lazy="true">
+    <cache usage="read-write"/>
     <id name="ID" column="id" type="Int32">
       <generator class="foreign">
         <param name="property">Village</param>

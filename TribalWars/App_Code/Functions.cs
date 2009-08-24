@@ -21,9 +21,10 @@ public class Functions
     {
         return (time.Days * 24 + time.Hours).ToString("00") + ":" + time.Minutes.ToString("00") + ":" + time.Seconds.ToString("00");
     }
-    public static string FormatTime(long seconds)
+    public static string FormatTime(long miliseconds)
     {
-        TimeSpan t = new TimeSpan(TimeSpan.TicksPerSecond * seconds);
+
+        TimeSpan t = TimeSpan.FromMilliseconds(miliseconds);
         return FormatTime(t);
     }
 

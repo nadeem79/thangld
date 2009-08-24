@@ -164,7 +164,7 @@ namespace beans
             get;
             set;
         }
-        public int Level
+        public virtual int Level
         {
             get;
             set;
@@ -173,26 +173,26 @@ namespace beans
         {
             get; set;
         }
-        public int Clay
+        public virtual int Clay
         {
             get; set;
         }
-        public int Iron
+        public virtual int Iron
         {
             get; set;
         }
-        public float Point
+        public virtual float Point
         {
             get; set;
         }
-        public float Population
+        public virtual float Population
         {
             get; set;
         }
         #endregion
 
         #region Methods
-        public bool Expense(DateTime time)
+        public virtual bool Expense(DateTime time)
         {
             if (this.End > time)
                 return false;
@@ -202,7 +202,7 @@ namespace beans
             return true;
         }
 
-        public void Cancel(ISession session)
+        public virtual void Cancel(ISession session)
         {
             BuildPrice price = Build.GetPrice(this.Building, this.Level, this.InVillage[BuildingType.Headquarter]);
             
@@ -232,21 +232,10 @@ namespace beans
                 b.End = b.Start.AddSeconds(p.BuildTime);
             }
 
-            ITransaction trans = null;
-            try
-            {
-                trans = session.BeginTransaction(IsolationLevel.ReadUncommitted);
                 session.Update(this.InVillage);
                 session.Delete(this);
                 foreach (Build b in builds)
                     session.Update(b);
-                trans.Commit();
-            }
-            catch
-            {
-                if (trans != null)
-                    trans.Rollback();
-            }
         }
         #endregion
 

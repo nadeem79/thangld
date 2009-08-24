@@ -30,7 +30,7 @@ public partial class administrator_text_settings : System.Web.UI.Page
         {
             double value = 0;
             if (double.TryParse(Request["value"], out value))
-                this.CurrentPlayer.ChangeNumericSetting(Request["key"], value, this.NHibernateSession);
+                this.CurrentPlayer.AdminConfigurationMethods.ChangeNumericSetting(Request["key"], value, this.NHibernateSession);
         }
 
         if (IsPostBack)
@@ -39,7 +39,7 @@ public partial class administrator_text_settings : System.Web.UI.Page
         if (Request["page"] != null)
             int.TryParse(Request["page"], out page);
 
-        IList<StringConfiguration> numericConfigurations = this.CurrentPlayer.GetTextSettings(this.NHibernateSession);
+        IList<StringConfiguration> numericConfigurations = this.CurrentPlayer.AdminConfigurationMethods.GetTextSettings(this.NHibernateSession);
         this.stringConfigurationRepeater.DataSource = numericConfigurations;
         this.stringConfigurationRepeater.DataBind();
 
@@ -57,7 +57,7 @@ public partial class administrator_text_settings : System.Web.UI.Page
 
             if (cbId.Checked)
             {
-                this.CurrentPlayer.DeleteTextSetting(id, this.NHibernateSession);
+                this.CurrentPlayer.AdminConfigurationMethods.DeleteTextSetting(id, this.NHibernateSession);
                 Response.Redirect(Request.Url.ToString(), false);
             }
         }
@@ -65,7 +65,7 @@ public partial class administrator_text_settings : System.Web.UI.Page
 
     protected void createNewSettingButton_Click(object sender, EventArgs e)
     {
-        this.CurrentPlayer.ChangeTextSetting(this.keyTextBox.Text, this.valueTextBox.Text, this.NHibernateSession);
+        this.CurrentPlayer.AdminConfigurationMethods.ChangeTextSetting(this.keyTextBox.Text, this.valueTextBox.Text, this.NHibernateSession);
         Response.Redirect(Request.Url.ToString(), false);
     }
 }

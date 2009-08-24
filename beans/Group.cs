@@ -15,53 +15,53 @@ namespace beans
         #endregion
 
         #region Properties
-        public IList<Group> Enemies
+        public virtual IList<Group> Enemies
         {
             get;
             set;
         }
-        public IList<Group> Naps
+        public virtual IList<Group> Naps
         {
             get;
             set;
         }
 
-        public IList<Group> Allies
+        public virtual IList<Group> Allies
         {
             get;
             set;
         }
-        public IList<Player> Members
+        public virtual IList<Player> Members
         {
             get;
             set;
         }
-        public string Name
+        public virtual string Name
         {
             get;
             set;
         }
-        public string Tag
+        public virtual string Tag
         {
             get;
             set;
         }
-        public string Description
+        public virtual string Description
         {
             get;
             set;
         }
-        public string Introduction
+        public virtual string Introduction
         {
             get;
             set;
         }
-        public IList<TribeInvite> Invites
+        public virtual IList<TribeInvite> Invites
         {
             get;
             set;
         }
-        public bool Avatar
+        public virtual bool Avatar
         {
             get;
             set;
@@ -98,7 +98,7 @@ namespace beans
             return this.Tag;
         }
 
-        public void GetDiplomateInfo(ISession session)
+        public virtual void GetDiplomateInfo(ISession session)
         {
             IList<TribeRelation> diplomateInfo = (from tribeDiplomate in session.Linq<TribeRelation>()
                                                   where tribeDiplomate.CurrentTribe == this
@@ -115,7 +115,7 @@ namespace beans
                            select relation.DiplomaticTribe).ToList<Group>();
 
         }
-        public void GetMembers(ISession session)
+        public virtual void GetMembers(ISession session)
         {
             this.Members = (from player in session.Linq<Player>()
                             where player.Group == this

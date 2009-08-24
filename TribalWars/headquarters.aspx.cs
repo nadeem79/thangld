@@ -56,15 +56,11 @@ public partial class headquarters : System.Web.UI.Page
         master.WoodLabel.Text = this.village.VillageResourceData.Wood.ToString();
         master.IronLabel.Text = this.village.VillageResourceData.Iron.ToString();
 
-        IList<Build> lstBuild = this.village.VillageBuildingMethods.GetPendingConstruction(this.NHibernateSession);
+        //IList<Build> lstBuild = this.village.VillageBuildingMethods.GetPendingConstruction(this.NHibernateSession);
+        IList<Build> lstBuild = this.village.Builds;
         if (lstBuild.Count > 0)
             lstBuild[0].Start = DateTime.Now;
-        for (int i = 1; i < lstBuild.Count; i++)
-        {
-            TimeSpan time = lstBuild[i].End - lstBuild[i].Start;
-            lstBuild[i].Start = lstBuild[i - 1].End;
-            lstBuild[i].End = lstBuild[i].Start + time;
-        }
+
         if (lstBuild.Count > 0)
         {
             this.rConstructing.DataSource = lstBuild;

@@ -362,6 +362,7 @@ namespace beans
         {
             if (this.Builds == null)
                 this.GetPendingConstruction(session);
+
             int level = 0;
             switch (building)
             {
@@ -424,28 +425,25 @@ namespace beans
             Build build = new Build();
             build.Building = building;
             build.InVillage = this.Village;
-            build.Start = DateTime.Now;
-            build.End = DateTime.Now.AddSeconds(price.BuildTime);
             build.Level = level;
+
+            var lastBuild = (from b in this.Builds
+                             orderby b.ID descending
+                             select b).FirstOrDefault<Build>();
+
+            if (lastBuild == null)
+                build.Start = DateTime.Now;
+            else
+                build.Start = lastBuild.End;
+            build.End = build.Start.AddSeconds(price.BuildTime);
+
             this.Village.VillageResourceData.Wood -= price.Wood;
             this.Village.VillageResourceData.Clay -= price.Clay;
             this.Village.VillageResourceData.Iron -= price.Iron;
             this.Village.Population += price.Population;
 
-            ITransaction trans = null;
-
-            try
-            {
-                trans = session.BeginTransaction(IsolationLevel.ReadUncommitted);
                 session.Save(build);
                 session.Update(this.Village);
-                trans.Commit();
-            }
-            catch
-            {
-                if (trans != null)
-                    trans.Rollback();
-            }
 
             return status;
         }
@@ -456,8 +454,7 @@ namespace beans
                 this.GetPendingConstruction(session);
 
             Build build = (from b in this.Builds
-                           where b.ID == id &&
-                           b.InVillage == this.Village
+                           where b.ID == id
                            select b).SingleOrDefault<Build>();
 
             if (build == null)
@@ -490,23 +487,11 @@ namespace beans
                 b.End = b.Start.AddSeconds(p.BuildTime);
             }
 
-            ITransaction trans = null;
-
-            try
-            {
-                trans = session.BeginTransaction(IsolationLevel.ReadUncommitted);
                 session.Delete(build);
                 session.Update(this.Village);
                 session.Update(this.Village.VillageResourceData);
                 foreach (Build b in builds)
                     session.Update(b);
-                trans.Commit();
-            }
-            catch
-            {
-                if (trans != null)
-                    trans.Rollback();
-            }
         }
     }
 }

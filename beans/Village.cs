@@ -126,6 +126,32 @@ namespace beans
             }
         }
 
+        public virtual IList<Build> Builds
+        {
+            get;
+            set;
+        }
+        public virtual IList<Recruit> Recruits
+        {
+            get;
+            set;
+        }
+        public virtual IList<Research> Researches
+        {
+            get;
+            set;
+        }
+        public virtual IList<MovingCommand> MovingCommandsFromMe
+        {
+            get;
+            set;
+        }
+        public virtual IList<MovingCommand> MovingCommandsToMe
+        {
+            get;
+            set;
+        }
+
         public virtual VillageBuildingData VillageBuildingData
         {
             get;

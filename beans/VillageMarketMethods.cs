@@ -133,7 +133,6 @@ namespace beans
             report.Unread = true;
             report.Title = string.Format("{0} mua tài nguyên ở {1} ({2}|{3}", this.Village.Player.Username, offer.AtVillage.Name, offer.AtVillage.X.ToString("000"), offer.AtVillage.Y.ToString("000"));
 
-            ITransaction trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
             session.Save(sendFromSource);
             session.Save(sendToSource);
             session.Update(this.Village.VillageBuildingData);
@@ -145,7 +144,6 @@ namespace beans
             else
                 session.Update(offer);
             session.Save(report);
-            trans.Commit();
 
             return sendToSource;
 
@@ -177,11 +175,9 @@ namespace beans
             this.Village[offer.OfferType] -= quantity;
             this.Village.VillageBuildingData.Merchant -= merchant;
 
-            ITransaction trans = session.BeginTransaction(IsolationLevel.ReadUncommitted);
             session.Update(offer);
             session.Update(this.Village.VillageBuildingData);
             session.Update(this.Village.VillageResourceData);
-            trans.Commit();
 
             return offer;
         }
@@ -202,14 +198,12 @@ namespace beans
             this.Village[offer.OfferType] += quantity;
             this.Village.VillageBuildingData.Merchant += merchant;
 
-            ITransaction trans = session.BeginTransaction(IsolationLevel.ReadUncommitted);
             if (offer.OfferNumber > 0)
                 session.Update(offer);
             else
                 session.Delete(offer);
             session.Update(this.Village.VillageBuildingData);
             session.Update(this.Village.VillageResourceData);
-            trans.Commit();
 
             return offer;
         }
@@ -226,11 +220,9 @@ namespace beans
             this.Village[offer.OfferType] += quantity;
             this.Village.VillageBuildingData.Merchant += merchant;
 
-            ITransaction trans = session.BeginTransaction(IsolationLevel.ReadUncommitted);
             session.Delete(offer);
             session.Update(this.Village.VillageBuildingData);
             session.Update(this.Village.VillageResourceData);
-            trans.Commit();
         }
 
         public virtual IList<Offer> GetOffers(ResourcesType forType, ResourcesType offerType, double maxDuration, double maxRatio, string orderby, ISession session)
