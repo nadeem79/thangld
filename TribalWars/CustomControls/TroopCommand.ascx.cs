@@ -39,8 +39,6 @@ public partial class CustomControls_TroopCommand : System.Web.UI.UserControl
     {
         ISession session = (ISession)Context.Items["NHibernateSession"];
 
-        this.Village.VillageTroopMethods.PrepareTroopData(session);
-
         if (this.Village.VillageTroopMethods.TroopFromMe.Count > 0)
         {
             this.outgoingRepeater.DataSource = this.Village.VillageTroopMethods.TroopFromMe;

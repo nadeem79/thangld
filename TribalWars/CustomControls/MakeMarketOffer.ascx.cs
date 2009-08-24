@@ -21,7 +21,7 @@ public partial class CustomControls_MakeMarketOffer : System.Web.UI.UserControl
     protected void Page_Load(object sender, EventArgs e)
     {
         ISession session = (ISession)Context.Items["NHibernateSession"];
-        IList<Offer> offers = this.Village.VillageMarketMethods.GetMyOffers(session);
+        IList<Offer> offers = this.Village.Offers;
         if (offers.Count > 0)
         {
             this.myOfferRepeater.DataSource = offers;
