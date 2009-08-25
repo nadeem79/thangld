@@ -84,8 +84,7 @@ public partial class inPage : System.Web.UI.MasterPage
         this.player = this.NHibernateSession.Load<beans.Player>((int)Session["user"]);
         if (this.player == null)
         {
-            this.NHibernateSession.Close();
-            Response.Redirect("index.aspx", true);
+            Response.Redirect("index.aspx", false);
         }
         this.player.Update(DateTime.Now, this.NHibernateSession);
 

@@ -50,7 +50,6 @@ public class NHibernateHttpModule:IHttpModule
         if (HttpContext.Current.Request.Path.ToLower().IndexOf(".aspx") <= -1)
             return;
 
-
         HttpApplication application = (HttpApplication)sender;
         HttpContext context = application.Context;
 

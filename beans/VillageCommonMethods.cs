@@ -95,37 +95,26 @@ namespace beans
                             updateBuildList = true;
                         }
 
-                        session.Delete(this.Village.Builds[0]);
                         this.Village.Builds.RemoveAt(0);
                     }
 
                     newCommand = command.Effect(session);
                     currentTime = command.LandingTime;
                     commands.RemoveAt(0);
-                    this.Village.MovingCommandsToMe.Remove(command);
-                    session.Delete(command);
+                    session.Update(command.FromVillage);
                 }
                 else
                 {
                     command.ToVillage.VillageCommonMethods.UpdateVillage(command.LandingTime, session, false);
                     newCommand = command.Effect(session);
                     commands.RemoveAt(0);
-                    this.Village.MovingCommandsFromMe.Remove(command);
-                    session.Delete(command);
+                    session.Update(command.ToVillage);
                 }
 
 
                 if (newCommand != null)
                     if (newCommand.LandingTime < to)
                         commands.Add(newCommand.LandingTime, newCommand);
-                    else
-                    {
-                        if (newCommand.FromVillage == this.Village)
-                            this.Village.MovingCommandsFromMe.Add(newCommand);
-                        else
-                            this.Village.MovingCommandsToMe.Add(newCommand);
-                        session.Save(newCommand);
-                    }
             }
 
             this.Village.VillageResourceMethods.UpdateResources(currentTime, to);
@@ -183,7 +172,7 @@ namespace beans
                     updateBuildList = true;
                 }
                 this.Village.Builds.RemoveAt(0);
-                session.Delete(this.Village.Builds[0]);
+                //session.Delete(this.Village.Builds[0]);
                 
             }
 

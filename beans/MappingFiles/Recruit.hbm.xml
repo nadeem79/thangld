@@ -11,6 +11,7 @@
     <property name="Troop" column="troop" type="beans.TroopType, beans" not-null="true" />
     <property name="Quantity" column="quantity" type="Int32" not-null="true" />
     <property name="LastUpdate" column="start_time" type="timestamp" not-null="false" />
+    <property name="FinishTime" column="end_time" type="timestamp" not-null="false" />
   </class>
 
 </hibernate-mapping>

@@ -58,16 +58,14 @@ public partial class barrack : System.Web.UI.Page
             int.TryParse(Request["recruit_id"], out id);
             if (id != 0)
             {
-                ITransaction trans = this.NHibernateSession.BeginTransaction(IsolationLevel.ReadCommitted);
                 this.village.VillageRecruitMethods.CancelRecruit(id, this.NHibernateSession);
-                trans.Commit();
                 ((inPage)this.Master).WoodLabel.Text = this.village.VillageResourceData.Wood.ToString();
                 ((inPage)this.Master).ClayLabel.Text = this.village.VillageResourceData.Clay.ToString();
                 ((inPage)this.Master).IronLabel.Text = this.village.VillageResourceData.Iron.ToString();
             }
         }
 
-        IList<Recruit> recruits = village.VillageRecruitMethods.GetRecruit(this.NHibernateSession, BuildingType.Barracks);
+        IList<Recruit> recruits = village.VillageRecruitMethods.InfantryRecruits;
         string sRecruitCommands = "";
         DateTime last_complete = DateTime.Now;
         DateTime complete = DateTime.Now;
