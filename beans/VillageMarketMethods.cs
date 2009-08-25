@@ -179,8 +179,7 @@ namespace beans
             this.Village.VillageBuildingData.Merchant -= merchant;
 
             session.Update(offer);
-            session.Update(this.Village.VillageBuildingData);
-            session.Update(this.Village.VillageResourceData);
+            session.Update(this.Village);
 
             return offer;
         }
@@ -208,8 +207,7 @@ namespace beans
                 offer.AtVillage.Offers.Remove(offer);
                 session.Delete(offer);
             }
-            session.Update(this.Village.VillageBuildingData);
-            session.Update(this.Village.VillageResourceData);
+            session.Update(this.Village);
 
             return offer;
         }

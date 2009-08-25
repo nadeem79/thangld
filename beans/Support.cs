@@ -120,9 +120,12 @@ namespace beans
             this.FromVillage.VillageTroopData.CatapultInVillage -= this.Catapult;
             this.FromVillage.VillageTroopData.NobleInVillage -= this.Noble;
 
-                session.Save(this);
-                session.Update(this.FromVillage);
-            
+            this.FromVillage.MovingCommandsFromMe.Add(this);
+            this.ToVillage.MovingCommandsToMe.Add(this);
+            session.Save(this);
+            session.Update(this.FromVillage);
+            session.Update(this.ToVillage);
+
         }
 
         public override MovingCommand Effect(ISession session)
@@ -135,10 +138,10 @@ namespace beans
             //criteria.Add(Expression.Eq("FromVillage", this.FromVillage));
             //IList<Station> lstStations = criteria.List<Station>();
 
-            Station station = (from s in session.Linq<Station>()
-                               where s.AtVillage == this.ToVillage
-                               && s.FromVillage == this.FromVillage
+            Station station = (from s in this.ToVillage.StationsAtMe
+                               where s.FromVillage == this.FromVillage
                                select s).SingleOrDefault<Station>();
+
             bool newStation = (station == null);
             if (newStation)
             {
@@ -165,7 +168,9 @@ namespace beans
                 this.ToVillage.VillageTroopData.CatapultInVillage += this.Catapult;
                 this.ToVillage.VillageTroopData.NobleInVillage += this.Noble;
 
-                session.Update(this.ToVillage);
+                this.ToVillage.StationsAtMe.Add(station);
+                this.FromVillage.StationsFromMe.Add(station);
+
                 session.Save(station);
             }
             else
@@ -190,7 +195,6 @@ namespace beans
                 this.ToVillage.VillageTroopData.CatapultInVillage += this.Catapult;
                 this.ToVillage.VillageTroopData.NobleInVillage += this.Noble;
 
-                session.Update(this.ToVillage.VillageTroopData);
                 session.Update(station);
             }
 
@@ -217,6 +221,13 @@ namespace beans
             session.Save(supportReport);
             session.Delete(this);
 
+            this.ToVillage.MovingCommandsToMe.Remove(this);
+            this.FromVillage.MovingCommandsFromMe.Remove(this);
+
+            session.Delete(this);
+            session.Update(this.ToVillage);
+            session.Update(this.FromVillage);
+
             return null;
         }
 
@@ -237,8 +248,18 @@ namespace beans
             r.StartingTime = DateTime.Now;
             r.LandingTime = r.StartingTime.Add(this.LandingTime - this.StartingTime);
 
-                session.Save(r);
-                session.Delete(this);
+            this.ToVillage.MovingCommandsToMe.Remove(this);
+            this.ToVillage.MovingCommandsFromMe.Add(r);
+
+            this.FromVillage.MovingCommandsFromMe.Remove(this);
+            this.FromVillage.MovingCommandsToMe.Add(r);
+
+            session.Save(r);
+            session.Delete(this);
+
+            session.Update(this.ToVillage);
+            session.Update(this.FromVillage);
+
             return r;
         }
 

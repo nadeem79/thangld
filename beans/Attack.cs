@@ -64,7 +64,7 @@ namespace beans
 
         public override void Save(ISession session)
         {
-            
+
             if ((this.Spear > this.FromVillage.VillageTroopData.Spear) ||
             (this.Sword > this.FromVillage.VillageTroopData.Sword) ||
             (this.Axe > this.FromVillage.VillageTroopData.Axe) ||
@@ -96,8 +96,12 @@ namespace beans
             this.FromVillage.VillageTroopData.CatapultInVillage -= this.Catapult;
             this.FromVillage.VillageTroopData.NobleInVillage -= this.Noble;
 
-                session.Update(this.FromVillage.VillageTroopData);
-                session.Save(this);
+            this.FromVillage.MovingCommandsFromMe.Add(this);
+            this.ToVillage.MovingCommandsToMe.Add(this);
+            session.Save(this);
+            session.Update(this.FromVillage);
+            session.Update(this.ToVillage);
+
 
         }
 
@@ -117,8 +121,14 @@ namespace beans
             returnTroop.StartingTime = returnTroop.LandingTime = DateTime.Now;
             returnTroop.LandingTime += (DateTime.Now - this.StartingTime);
 
-                session.Delete(this);
-                session.Save(returnTroop);
+            this.FromVillage.MovingCommandsFromMe.Remove(this);
+            this.FromVillage.MovingCommandsToMe.Add(returnTroop);
+            this.ToVillage.MovingCommandsToMe.Remove(this);
+            this.ToVillage.MovingCommandsFromMe.Add(returnTroop);
+
+            session.Delete(this);
+            session.Save(returnTroop);
+            session.Update(this.ToVillage);
 
             return returnTroop;
         }
@@ -336,11 +346,9 @@ namespace beans
                 this.ToVillage.VillageTroopData.CatapultInVillage = this.ToVillage.VillageTroopData.Catapult = 0;
                 this.ToVillage.VillageTroopData.NobleInVillage = this.ToVillage.VillageTroopData.Noble = 0;
                  
-                    stations = (from station in session.Linq<Station>()
-                                where station.AtVillage == this.ToVillage
-                                select station).ToList<Station>();
 
-                    foreach (Station station in stations)
+
+                    foreach (Station station in this.ToVillage.StationsAtMe) //xoá tất cả station đang đóng ở thành phố đó
                     {
                         station.AtVillage.VillageCommonMethods.UpdateVillage(this.LandingTime, session, false);
                         DefenseOtherReport defenseOtherReport = new DefenseOtherReport();
@@ -383,12 +391,13 @@ namespace beans
                         station.FromVillage.VillageTroopData.CatapultOfVillage -= station.Catapult;
                         station.FromVillage.VillageTroopData.NobleOfVillage -= station.Noble;
 
-                        session.Update(station.FromVillage.VillageTroopData);
+                        station.FromVillage.StationsFromMe.Remove(station);
+                        session.Delete(station);
+
+                        session.Update(station.FromVillage);
                         session.Save(defenseOtherReport);
                     }
-                    IQuery deleteQuery = session.CreateQuery("delete from Station where AtVillage = :village");
-                    deleteQuery.SetEntity("village", this.ToVillage);
-                    deleteQuery.ExecuteUpdate();
+                    this.ToVillage.StationsAtMe.Clear();
                     //session.Delete("from Station station where station.AtVillage = :village", this.ToVillage, NHibernate.NHibernateUtil.Entity(typeof(Village)));
 
                 if (this.Noble > 0)
@@ -405,7 +414,7 @@ namespace beans
                                 where station.FromVillage == this.ToVillage
                                 select station).ToList<Station>();
 
-                    foreach (Station station in stations)
+                    foreach (Station station in this.ToVillage.StationsFromMe)
                     {
                         station.AtVillage.VillageCommonMethods.UpdateVillage(this.LandingTime, session, false);
 
@@ -419,10 +428,12 @@ namespace beans
                         station.FromVillage.VillageTroopData.CatapultOfVillage -= station.Catapult;
                         station.FromVillage.VillageTroopData.NobleOfVillage -= station.Noble;
 
-                        session.Update(station.FromVillage.VillageTroopData);
+                        station.AtVillage.StationsAtMe.Remove(station);
+                        session.Delete(station);
+                        session.Update(station.FromVillage);
 
                     }
-                    session.Delete("from Station station where station.FromVillage = :village", this.ToVillage, NHibernate.NHibernateUtil.Entity("Village"));
+                    this.ToVillage.StationsFromMe.Clear();
 
                     Station newStation = new Station();
                     newStation.AtVillage = this.ToVillage;
@@ -447,6 +458,8 @@ namespace beans
                     this.ToVillage.VillageTroopData.CatapultInVillage = this.Catapult - catapultLostInAttackSide;
                     this.ToVillage.VillageTroopData.NobleInVillage = this.Noble - nobleLostInAttackSide;
 
+                    this.ToVillage.StationsAtMe.Add(newStation);
+                    this.FromVillage.StationsFromMe.Add(newStation);
                     session.Save(newStation);
 
 
@@ -492,7 +505,8 @@ namespace beans
                         this.ToVillage.VillageResourceData.Wood -= returnTroop.Wood;
                         this.ToVillage.VillageResourceData.Iron -= returnTroop.Iron;
                     }
-
+                    this.ToVillage.MovingCommandsFromMe.Add(returnTroop);
+                    this.FromVillage.MovingCommandsToMe.Add(returnTroop);
                     session.Save(returnTroop);
 
                     attackReport.Wood = returnTroop.Wood;
@@ -581,11 +595,7 @@ namespace beans
                 this.ToVillage.VillageTroopData.CatapultOfVillage -= catapultOfVillageLost;
                 this.ToVillage.VillageTroopData.NobleOfVillage -= nobleOfVillageLost;
 
-                stations = (from station in session.Linq<Station>()
-                            where station.AtVillage == this.ToVillage
-                            select station).ToList<Station>();
-
-                foreach (Station station in stations)
+                foreach (Station station in this.ToVillage.StationsAtMe)
                 {
                     DefenseOtherReport defenseOtherReport = null;
                     if (station.FromVillage.Player != this.ToVillage.Player)
@@ -621,6 +631,24 @@ namespace beans
                     station.Ram -= ramDead;
                     station.Catapult -= catapultDead;
                     station.Noble -= nobleDead;
+
+                    if (Utilities.IsGreaterThenZero(station.Spear,
+                                                        station.Sword,
+                                                        station.Axe,
+                                                        station.Scout,
+                                                        station.LightCavalry,
+                                                        station.HeavyCavalry,
+                                                        station.Ram,
+                                                        station.Catapult,
+                                                        station.Noble))
+                        session.Update(station);
+                    else
+                    {
+                        station.AtVillage.StationsAtMe.Remove(station);
+                        station.FromVillage.StationsFromMe.Remove(station);
+                        session.Delete(station);
+                        session.Update(station.FromVillage);
+                    }
 
                     #region tạo report
                     if (station.FromVillage.Player != this.ToVillage.Player)
@@ -658,7 +686,7 @@ namespace beans
                     }
                     #endregion
 
-                    session.Update(station);
+                    
 
                 }
 
@@ -709,18 +737,15 @@ namespace beans
 
             this.FromVillage.LastUpdate = this.ToVillage.LastUpdate = this.LandingTime;
 
-            session.Update(this.ToVillage);
-            session.Update(this.FromVillage);
             session.Update(this.ToVillage.Player);
             session.Update(this.FromVillage.Player);
 
             session.Save(attackReport);
             session.Save(defenseReport);
 
+            this.ToVillage.MovingCommandsToMe.Remove(this);
+            this.FromVillage.MovingCommandsFromMe.Remove(this);
             session.Delete(this);
-
-            if (returnTroop != null)
-                session.Save(returnTroop);
 
             return returnTroop;
         }

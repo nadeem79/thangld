@@ -182,34 +182,30 @@ namespace beans
                     }
                     updateBuildList = true;
                 }
-
-                session.Delete(this.Village.Builds[0]);
                 this.Village.Builds.RemoveAt(0);
+                session.Delete(this.Village.Builds[0]);
+                
             }
 
             this.Village.LastUpdate = to;
 
-            if (this.Village.VillageRecruitMethods.CarRecruits.Count > 0)
-                session.Update(this.Village.VillageRecruitMethods.CarRecruits[0]);
-            if (this.Village.VillageRecruitMethods.CavalryRecruits.Count > 0)
-                session.Update(this.Village.VillageRecruitMethods.CavalryRecruits[0]);
-            if (this.Village.VillageRecruitMethods.InfantryRecruits.Count > 0)
-                session.Update(this.Village.VillageRecruitMethods.InfantryRecruits[0]);
+            //if (this.Village.VillageRecruitMethods.CarRecruits.Count > 0)
+            //    session.Update(this.Village.VillageRecruitMethods.CarRecruits[0]);
+            //if (this.Village.VillageRecruitMethods.CavalryRecruits.Count > 0)
+            //    session.Update(this.Village.VillageRecruitMethods.CavalryRecruits[0]);
+            //if (this.Village.VillageRecruitMethods.InfantryRecruits.Count > 0)
+            //    session.Update(this.Village.VillageRecruitMethods.InfantryRecruits[0]);
 
 
 
-            if (updateBuildList)
-                foreach (Build build in this.Village.Builds)
-                    session.Update(build);
-            if (updateResearchList)
-                foreach (Research research in this.Village.Researches)
-                    session.Update(research);
+            //if (updateBuildList)
+            //    foreach (Build build in this.Village.Builds)
+            //        session.Update(build);
+            //if (updateResearchList)
+            //    foreach (Research research in this.Village.Researches)
+            //        session.Update(research);
 
             session.Update(this.Village);
-            session.Update(this.Village.VillageResearchData);
-            session.Update(this.Village.VillageTroopData);
-            session.Update(this.Village.VillageResourceData);
-            session.Update(this.Village.VillageBuildingData);
 
         }
        

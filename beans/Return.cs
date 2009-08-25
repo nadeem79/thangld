@@ -83,8 +83,11 @@ namespace beans
 
 
         public override void Save(ISession session)
-        { 
+        {
+            this.FromVillage.MovingCommandsFromMe.Add(this);
+            this.ToVillage.MovingCommandsToMe.Add(this);
             session.Save(this);
+
         }
 
         public override MovingCommand Effect(ISession session)
@@ -115,11 +118,11 @@ namespace beans
             if (this.Merchant > 0)
                 this.ToVillage.VillageBuildingData.Merchant += this.Merchant;
 
-            session.Update(this.ToVillage.VillageTroopData);
-            session.Update(this.ToVillage.VillageResourceData);
-            if (this.Merchant > 0)
-                session.Update(this.ToVillage.VillageBuildingData);
+            this.ToVillage.MovingCommandsToMe.Remove(this);
+            this.FromVillage.MovingCommandsFromMe.Remove(this);
             session.Delete(this);
+            session.Update(this.ToVillage);
+            session.Update(this.FromVillage);
 
             return null;
         }

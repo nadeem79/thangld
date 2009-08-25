@@ -558,12 +558,10 @@ namespace beans
                 b.End = b.Start.AddSeconds(p.BuildTime);
             }
 
-            session.Delete(build);
             this.Village.Builds.Remove(build);
+            session.Delete(build);
+            
             session.Update(this.Village);
-            session.Update(this.Village.VillageResourceData);
-            foreach (Build b in builds)
-                session.Update(b);
         }
     }
 }
