@@ -45,9 +45,7 @@ namespace beans
             this.Village.Population += p.Population * quantity;
             this.Village.Recruits.Add(recruit);
             session.Update(this.Village);
-            session.Update(this.Village.VillageResourceData);
             session.Save(recruit);
-            this.Village.Recruits.Add(recruit);
             return recruit;
 
         }
@@ -91,9 +89,8 @@ namespace beans
             this.Village.Population -= (int)(price.Population * recruit.Quantity);
             this.Village.Recruits.Remove(recruit);
             session.Update(this.Village);
-            session.Update(this.Village.VillageResourceData);
-            session.Delete(recruit);
             this.Village.Recruits.Remove(recruit);
+
         }
         private IList<Recruit> carRecruits = null, nobleRecruits = null, infantryRecruits = null, cavalryRecruits = null;
         public IList<Recruit> CarRecruits

@@ -109,9 +109,8 @@ namespace beans
             this.Village[ResourcesType.Iron] -= price.Iron;
             this.Village[ResourcesType.Clay] -= price.Clay;
 
-            session.Save(research);
             this.Village.Researches.Add(research);
-            session.Update(this.Village.VillageResourceData);
+            session.Update(this.Village);
 
             return research;
         }
@@ -148,11 +147,8 @@ namespace beans
             this.Village[ResourcesType.Clay] += (int)(price.Clay + 0.8);
             this.Village[ResourcesType.Iron] += (int)(price.Iron + 0.8);
 
-            foreach (Research r in researchs)
-                session.Update(r);
-            session.Update(this.Village.VillageResourceData);
             Village.Researches.Remove(research);
-            session.Delete(research);
+            session.Update(this.Village);
         }
 
         public void CancelResearch(int researchId, ISession session)

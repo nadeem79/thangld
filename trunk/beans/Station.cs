@@ -171,19 +171,19 @@ namespace beans
             report.Unread = true;
             report.Time = DateTime.Now;
 
-
-            session.Update(this.AtVillage.VillageTroopData);
-            session.Save(returnTroop);
             this.AtVillage.MovingCommandsFromMe.Add(returnTroop);
             this.FromVillage.MovingCommandsToMe.Add(returnTroop);
             if (delete)
             {
-                session.Delete(this);
                 this.AtVillage.StationsAtMe.Remove(this);
                 this.FromVillage.StationsFromMe.Remove(this);
             }
             else
                 session.Update(this);
+
+            session.Update(this.FromVillage);
+            session.Update(this.AtVillage);
+
             session.Save(report);
             return returnTroop;
 

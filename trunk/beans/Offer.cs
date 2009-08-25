@@ -71,9 +71,8 @@ namespace beans
             this.AtVillage.VillageBuildingData.Merchant -= merchant;
             this.CreateTime = DateTime.Now;
 
-            session.Save(this);
-            session.Update(this.AtVillage.VillageBuildingData);
-            session.Update(this.AtVillage.VillageResourceData);
+            this.AtVillage.Offers.Add(this);
+            session.Update(this.AtVillage);
         }
 
         

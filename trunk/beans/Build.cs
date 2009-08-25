@@ -205,7 +205,7 @@ namespace beans
         public virtual void Cancel(ISession session)
         {
             BuildPrice price = Build.GetPrice(this.Building, this.Level, this.InVillage[BuildingType.Headquarter]);
-            
+
             this.InVillage.VillageResourceData.Wood += (int)(price.Wood * 0.8);
             this.InVillage.VillageResourceData.Clay += (int)(price.Clay * 0.8);
             this.InVillage.VillageResourceData.Iron += (int)(price.Iron * 0.8);
@@ -232,10 +232,9 @@ namespace beans
                 b.End = b.Start.AddSeconds(p.BuildTime);
             }
 
-                session.Update(this.InVillage);
-                session.Delete(this);
-                foreach (Build b in builds)
-                    session.Update(b);
+            this.InVillage.Builds.Remove(this);
+            session.Delete(this);
+            session.Update(this.InVillage);
         }
         #endregion
 

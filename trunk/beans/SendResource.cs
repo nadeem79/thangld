@@ -68,9 +68,19 @@ namespace beans
             report.ToVillage = this.ToVillage;
             report.ToPlayer = this.ToVillage.Player;
 
-            session.Update(this.ToVillage.VillageResourceData);
+
+            this.ToVillage.MovingCommandsToMe.Remove(this);
+            this.ToVillage.MovingCommandsFromMe.Add(r);
+
+            this.FromVillage.MovingCommandsFromMe.Remove(this);
+            this.FromVillage.MovingCommandsToMe.Add(r);
+
             session.Save(r);
             session.Delete(this);
+
+            session.Update(this.ToVillage);
+            session.Update(this.FromVillage);
+
             session.Save(report);
 
             return r;
@@ -88,8 +98,18 @@ namespace beans
             r.StartingTime = DateTime.Now;
             r.LandingTime = DateTime.Now + (DateTime.Now - this.StartingTime);
 
-                session.Save(r);
-                session.Delete(this);
+            this.ToVillage.MovingCommandsToMe.Remove(this);
+            this.ToVillage.MovingCommandsFromMe.Add(r);
+
+            this.FromVillage.MovingCommandsFromMe.Remove(this);
+            this.FromVillage.MovingCommandsToMe.Add(r);
+
+            session.Save(r);
+            session.Delete(this);
+
+            session.Update(this.ToVillage);
+            session.Update(this.FromVillage);
+
             return r;
         }
 
@@ -117,10 +137,12 @@ namespace beans
             this.FromVillage.VillageResourceData.Iron -= this.Iron;
             this.FromVillage.VillageBuildingData.Merchant -= merchantNeeded;
 
-                session.BeginTransaction(IsolationLevel.ReadCommitted);
-                session.Save(this);
-                session.Update(this.FromVillage.VillageResourceData);
-                session.Update(this.FromVillage.VillageBuildingData);
+            this.FromVillage.MovingCommandsFromMe.Add(this);
+            this.ToVillage.MovingCommandsToMe.Add(this);
+
+            session.Save(this);
+            session.Update(this.FromVillage);
+            session.Update(this.ToVillage);
         }
     }
 }

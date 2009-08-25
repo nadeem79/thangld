@@ -9,8 +9,8 @@
     </id>
     <discriminator column="type" type="Int32" />
     
-    <many-to-one name="FromVillage" class="beans.Village, beans" column="from_village" not-null="false" fetch="select" lazy="no-proxy" />
-    <many-to-one name="ToVillage" class="beans.Village, beans" column="to_village" not-null="false" fetch="select" lazy="no-proxy" />
+    <many-to-one name="FromVillage" class="beans.Village, beans" column="from_village" not-null="true" fetch="select" lazy="no-proxy" />
+    <many-to-one name="ToVillage" class="beans.Village, beans" column="to_village" not-null="true" fetch="select" lazy="no-proxy" />
     <property name="StartingTime" column="starting_time" type="timestamp"/>
     <property name="LandingTime" column="landing_time" type="timestamp"/>
 
