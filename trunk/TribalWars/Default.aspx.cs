@@ -22,7 +22,7 @@ public partial class index : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
-        Village v = session.Get<Village>(24);
+        //Village v = session.Get<Village>(24);
         if (Request.Cookies["username"] != null)
         {
             

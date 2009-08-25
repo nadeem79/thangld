@@ -15,21 +15,21 @@ namespace beans
     {
 
         #region Static Members
-        private static BuildPrice _headquarter = new BuildPrice("Headquarter", 948, 90, 80, 70, 5, 30, 10);
-        private static BuildPrice _barrack = new BuildPrice("Barrack", 1897, 200, 170, 90, 7, 25, 16);
-        private static BuildPrice _stable = new BuildPrice("Stable", 6333, 270, 240, 260, 8, 20, 20);
-        private static BuildPrice _workshop = new BuildPrice("Workshop", 6328, 300, 240, 260, 8, 15, 24);
-        private static BuildPrice _academy = new BuildPrice("Academy", 68112, 25000, 30000, 20000, 80, 3, 512);
-        private static BuildPrice _smithy = new BuildPrice("Smithy", 6300, 220, 180, 240, 20, 20, 19);
-        private static BuildPrice _rally = new BuildPrice("Rally", 1658, 10, 40, 30, 0, 1, 0);
-        private static BuildPrice _market = new BuildPrice("Market", 2848, 100, 100, 100, 20, 25, 10);
-        private static BuildPrice _timber = new BuildPrice("Timber camp", 949, 50, 60, 40, 10, 30, 6);
-        private static BuildPrice _clay = new BuildPrice("Clay pit", 949, 65, 50, 40, 10, 30, 6);
-        private static BuildPrice _iron = new BuildPrice("Iron mine", 1139, 75, 65, 70, 10, 30, 6);
-        private static BuildPrice _farm = new BuildPrice("Farm", 1054, 45, 40, 30, 0, 30, 5);
-        private static BuildPrice _warehouse = new BuildPrice("Warehouse", 1075, 60, 50, 40, 0, 30, 6);
-        private static BuildPrice _hiding = new BuildPrice("Hiding place", 1561, 50, 60, 50, 2, 10, 5);
-        private static BuildPrice _wall = new BuildPrice("Wall", 3801, 50, 100, 20, 5, 20, 8);
+        private static BuildPrice _headquarter = new BuildPrice("Headquarter", 948000, 90, 80, 70, 5, 30, 10);
+        private static BuildPrice _barrack = new BuildPrice("Barrack", 1897000, 200, 170, 90, 7, 25, 16);
+        private static BuildPrice _stable = new BuildPrice("Stable", 6333000, 270, 240, 260, 8, 20, 20);
+        private static BuildPrice _workshop = new BuildPrice("Workshop", 6328000, 300, 240, 260, 8, 15, 24);
+        private static BuildPrice _academy = new BuildPrice("Academy", 68112000, 25000, 30000, 20000, 80, 3, 512);
+        private static BuildPrice _smithy = new BuildPrice("Smithy", 6300000, 220, 180, 240, 20, 20, 19);
+        private static BuildPrice _rally = new BuildPrice("Rally", 1658000, 10, 40, 30, 0, 1, 0);
+        private static BuildPrice _market = new BuildPrice("Market", 2848000, 100, 100, 100, 20, 25, 10);
+        private static BuildPrice _timber = new BuildPrice("Timber camp", 949000, 50, 60, 40, 10, 30, 6);
+        private static BuildPrice _clay = new BuildPrice("Clay pit", 949000, 65, 50, 40, 10, 30, 6);
+        private static BuildPrice _iron = new BuildPrice("Iron mine", 1139000, 75, 65, 70, 10, 30, 6);
+        private static BuildPrice _farm = new BuildPrice("Farm", 1054000, 45, 40, 30, 0, 30, 5);
+        private static BuildPrice _warehouse = new BuildPrice("Warehouse", 1075000, 60, 50, 40, 0, 30, 6);
+        private static BuildPrice _hiding = new BuildPrice("Hiding place", 1561000, 50, 60, 50, 2, 10, 5);
+        private static BuildPrice _wall = new BuildPrice("Wall", 3801000, 50, 100, 20, 5, 20, 8);
         private static Dictionary<int, BuildPrice> _dictionary = new Dictionary<int, BuildPrice>();
 
         public static Dictionary<int, BuildPrice> PriceDictionary

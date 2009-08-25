@@ -58,8 +58,6 @@ public partial class headquarters : System.Web.UI.Page
 
         //IList<Build> lstBuild = this.village.VillageBuildingMethods.GetPendingConstruction(this.NHibernateSession);
         IList<Build> lstBuild = this.village.Builds;
-        if (lstBuild.Count > 0)
-            lstBuild[0].Start = DateTime.Now;
 
         if (lstBuild.Count > 0)
         {

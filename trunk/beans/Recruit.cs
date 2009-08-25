@@ -206,6 +206,11 @@ namespace beans
             get;
             set;
         }
+        public virtual DateTime FinishTime
+        {
+            get;
+            set;
+        }
         #endregion
 
         #region Constructors
@@ -247,7 +252,7 @@ namespace beans
             Price p = Recruit.GetPrice(this.Troop, level);
 
 
-            int total_troop = (int)(t.TotalSeconds / p.BuildTime);
+            int total_troop = (int)(t.TotalMilliseconds / p.BuildTime);
             int totalRecruit = (total_troop < this.Quantity) ? total_troop : this.Quantity;
 
             switch (this.Troop)
@@ -305,12 +310,12 @@ namespace beans
 
             if (totalRecruit == this.Quantity)
             {
-                this.LastUpdate = this.LastUpdate.AddSeconds(totalRecruit * Recruit.GetPrice(this.Troop, this.InVillage[building]).BuildTime);
+                this.LastUpdate = this.LastUpdate.AddMilliseconds(totalRecruit * Recruit.GetPrice(this.Troop, this.InVillage[building]).BuildTime);
                 this.Quantity = 0;
                 return true;
             }
 
-            this.LastUpdate = this.LastUpdate.AddSeconds(totalRecruit * Recruit.GetPrice(this.Troop, this.InVillage[building]).BuildTime);
+            this.LastUpdate = this.LastUpdate.AddMilliseconds(totalRecruit * Recruit.GetPrice(this.Troop, this.InVillage[building]).BuildTime);
             this.Quantity -= totalRecruit;
 
             return false;

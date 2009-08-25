@@ -508,14 +508,13 @@ namespace beans
                 build.Start = DateTime.Now;
             else
                 build.Start = lastBuild.End;
-            build.End = build.Start.AddSeconds(price.BuildTime);
+            build.End = build.Start.AddMilliseconds(price.BuildTime);
 
             this.Village.VillageResourceData.Wood -= price.Wood;
             this.Village.VillageResourceData.Clay -= price.Clay;
             this.Village.VillageResourceData.Iron -= price.Iron;
             this.Village.Population += price.Population;
             this.Village.Builds.Add(build);
-            session.Save(build);
             session.Update(this.Village);
 
             return status;
@@ -559,7 +558,6 @@ namespace beans
             }
 
             this.Village.Builds.Remove(build);
-            session.Delete(build);
             
             session.Update(this.Village);
         }

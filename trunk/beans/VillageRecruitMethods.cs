@@ -25,27 +25,61 @@ namespace beans
         {
             if (!Recruit.CanRecruit(troop, quantity, this.Village.VillageResourceData.Wood, this.Village.VillageResourceData.Clay, this.Village.VillageResourceData.Iron))
                 return null;
-
+            Recruit lastRecruit = null;
             int level = 0;
             if ((troop == TroopType.Axe) || (troop == TroopType.Spear) || (troop == TroopType.Sword))
+            {
                 level = this.Village[BuildingType.Barracks];
-            if ((troop == TroopType.Light) || (troop == TroopType.Scout) || (troop == TroopType.Heavy))
+                lastRecruit = (from r in this.InfantryRecruits
+                               orderby r.ID descending
+                               select r).FirstOrDefault<Recruit>();
+            }
+            else if ((troop == TroopType.Light) || (troop == TroopType.Scout) || (troop == TroopType.Heavy))
+            {
                 level = this.Village[BuildingType.Stable];
+                lastRecruit = (from r in this.CavalryRecruits
+                               orderby r.ID descending
+                               select r).FirstOrDefault<Recruit>();
+            }
+            else if (troop == TroopType.Ram || troop == TroopType.Catapult)
+            {
+                level = this.Village[BuildingType.Workshop];
+                lastRecruit = (from r in this.CarRecruits
+                               orderby r.ID descending
+                               select r).FirstOrDefault<Recruit>();
+            }
 
             Recruit recruit = new Recruit();
             recruit.InVillage = this.Village;
             recruit.Quantity = quantity;
             recruit.Troop = troop;
-            recruit.LastUpdate = DateTime.Now;
+            if (lastRecruit == null)
+                recruit.LastUpdate = DateTime.Now;
+            else
+                recruit.LastUpdate = lastRecruit.FinishTime;
 
             Price p = Recruit.GetPrice(troop);
             this.Village.VillageResourceData.Clay -= p.Clay * quantity;
             this.Village.VillageResourceData.Wood -= p.Wood * quantity;
             this.Village.VillageResourceData.Iron -= p.Iron * quantity;
             this.Village.Population += p.Population * quantity;
+            recruit.FinishTime = recruit.LastUpdate.AddMilliseconds(p.BuildTime * quantity);
             this.Village.Recruits.Add(recruit);
             session.Update(this.Village);
-            session.Save(recruit);
+
+            if ((troop == TroopType.Axe) || (troop == TroopType.Spear) || (troop == TroopType.Sword))
+            {
+                this.InfantryRecruits.Add(recruit);
+            }
+            else if ((troop == TroopType.Light) || (troop == TroopType.Scout) || (troop == TroopType.Heavy))
+            {
+                this.CavalryRecruits.Add(recruit);
+            }
+            else if (troop == TroopType.Ram || troop == TroopType.Catapult)
+            {
+                this.CarRecruits.Add(recruit);
+            }
+
             return recruit;
 
         }
@@ -88,8 +122,43 @@ namespace beans
             this.Village.VillageResourceData.Iron += price.Iron * recruit.Quantity;
             this.Village.Population -= (int)(price.Population * recruit.Quantity);
             this.Village.Recruits.Remove(recruit);
-            session.Update(this.Village);
+
+            IList<Recruit> nextRecruits = null;
+            IList<Recruit> recruits = null;
+
+            if ((recruit.Troop == TroopType.Axe) || (recruit.Troop == TroopType.Spear) || (recruit.Troop == TroopType.Sword))
+            {
+                recruits = this.InfantryRecruits;
+            }
+            else if ((recruit.Troop == TroopType.Light) || (recruit.Troop == TroopType.Scout) || (recruit.Troop == TroopType.Heavy))
+            {
+                recruits = this.CavalryRecruits;
+            }
+            else if (recruit.Troop == TroopType.Ram || recruit.Troop == TroopType.Catapult)
+            {
+                recruits = this.CarRecruits;
+            }
+
+            nextRecruits = (from r in recruits
+                            where r.ID > recruit_id
+                            orderby r.ID ascending
+                            select r).ToList<Recruit>();
+
+            for (int i = 0; i < nextRecruits.Count; i++)
+            {
+                TimeSpan t = nextRecruits[i].FinishTime - nextRecruits[i].LastUpdate;
+                if (i == 0)
+                    nextRecruits[i].LastUpdate = DateTime.Now;
+                else
+                    nextRecruits[i].LastUpdate = nextRecruits[i - 1].FinishTime;
+
+                nextRecruits[i].FinishTime = nextRecruits[i].LastUpdate + t;
+            }
             this.Village.Recruits.Remove(recruit);
+            recruits.Remove(recruit);
+
+            session.Update(this.Village);
+            
 
         }
         private IList<Recruit> carRecruits = null, nobleRecruits = null, infantryRecruits = null, cavalryRecruits = null;
