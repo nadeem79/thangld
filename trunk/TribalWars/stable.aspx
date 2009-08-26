@@ -59,7 +59,7 @@
                     <%# ((DateTime)Eval("FinishTime")).ToString("HH:mm:ss 'ngày' dd/MM/yyyy")%>
                 </td>
                 <td>
-                    <a href="barrack.aspx?id=<% = this.village.ID %>&mode=cancel_recruit&recruit_id=<%# Eval("ID") %>">Huỷ</a>
+                    <a href="stable.aspx?id=<% = this.village.ID %>&mode=cancel_recruit&recruit_id=<%# Eval("ID") %>">Huỷ</a>
                 </td>
             </tr>
         </ItemTemplate>
@@ -92,22 +92,22 @@
                 </td>
                 <td class="nowrap">
                     <img src="images/holz.png" title="Wood" alt="">
-                    50
+                    <% = this.scoutPrice.Wood %>
                 </td>
                 <td class="nowrap">
                     <img src="images/lehm.png" title="Clay" alt="">
-                    50
+                    <% = this.scoutPrice.Clay %>
                 </td>
                 <td class="nowrap">
                     <img src="images/eisen.png" title="Iron" alt="">
-                    20
+                    <% = this.scoutPrice.Iron %>
                 </td>
                 <td class="nowrap">
                     <img src="images/face.png" title="Villagers" alt="">
-                    2
+                    <% = this.scoutPrice.Population %>
                 </td>
                 <td>
-                    <% = Functions.FormatTime(beans.Recruit.GetPrice(beans.TroopType.Scout, this.village.VillageBuildingData.Stable).BuildTime)%>
+                    <% = Functions.FormatTime(scoutPrice.BuildTime) %>
                 </td>
                 <td>
                     <% Response.Write(this.village.VillageTroopData.Scout.ToString()); %>/<%Response.Write(this.village.VillageTroopData.ScoutOfVillage.ToString()); %>
@@ -125,22 +125,22 @@
                 </td>
                 <td class="nowrap">
                     <img src="images/holz.png" title="Wood" alt="">
-                    125
+                    <% = this.lightCavalryPrice.Wood %>
                 </td>
                 <td class="nowrap">
                     <img src="images/lehm.png" title="Clay" alt="">
-                    100
+                    <% = this.lightCavalryPrice.Clay %>
                 </td>
                 <td class="nowrap">
                     <img src="images/eisen.png" title="Iron" alt="">
-                    250
+                    <% = this.lightCavalryPrice.Iron %>
                 </td>
                 <td class="nowrap">
                     <img src="images/face.png" title="Villagers" alt="">
-                    4
+                    <% = this.lightCavalryPrice.Population %>
                 </td>
                 <td>
-                    <% = Functions.FormatTime(beans.Recruit.GetPrice(beans.TroopType.Light, this.village.VillageBuildingData.Stable).BuildTime)%>
+                    <% = Functions.FormatTime(this.lightCavalryPrice.BuildTime)%>
                 </td>
                 <td>
                     <% Response.Write(this.village.VillageTroopData.LightCavalry.ToString()); %>/<%Response.Write(this.village.VillageTroopData.LightCavalryOfVillage.ToString()); %>
@@ -158,22 +158,22 @@
                 </td>
                 <td class="nowrap">
                     <img src="images/holz.png" title="Wood" alt="">
-                    200
+                    <% = this.heavyCavalryPrice.Wood %>
                 </td>
                 <td class="nowrap">
                     <img src="images/lehm.png" title="Clay" alt="">
-                    150
+                    <% = this.heavyCavalryPrice.Clay %>
                 </td>
                 <td class="nowrap">
                     <img src="images/eisen.png" title="Iron" alt="">
-                    600
+                    <% = this.heavyCavalryPrice.Iron %>
                 </td>
                 <td class="nowrap">
                     <img src="images/face.png" title="Villagers" alt="">
-                    6
+                    <% = this.heavyCavalryPrice.Population %>
                 </td>
                 <td>
-                    <% = Functions.FormatTime(beans.Recruit.GetPrice(beans.TroopType.Heavy, this.village.VillageBuildingData.Stable).BuildTime)%>
+                    <% = Functions.FormatTime(heavyCavalryPrice.BuildTime)%>
                 </td>
                 <td>
                     <% Response.Write(this.village.VillageTroopData.HeavyCavalry.ToString()); %>/<%Response.Write(this.village.VillageTroopData.HeavyCavalryOfVillage.ToString()); %>

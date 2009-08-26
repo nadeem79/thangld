@@ -23,7 +23,7 @@ public partial class LoginBox : System.Web.UI.UserControl
 
     protected void login_Click(object sender, ImageClickEventArgs e)
     {
-        ISession session = NHibernateHelper.CreateSession();
+        ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
         try
         {
             int id = beans.Player.Authentication(this.username.Text, this.password.Text, session);
@@ -54,10 +54,6 @@ public partial class LoginBox : System.Web.UI.UserControl
         catch (Exception exc)
         {
             this.error.Text = exc.Message;
-        }
-        finally
-        {
-            session.Close();
         }
     }
 }

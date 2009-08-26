@@ -161,7 +161,6 @@ namespace beans
             {
 
                 if (this.Village.Builds[0].Building == BuildingType.Smithy)
-                {
                     for (int i = 1; i < this.Village.Researches.Count; i++)
                     {
                         Research research = this.Village.Researches[i];
@@ -169,9 +168,7 @@ namespace beans
                         ResearchPrice price = Research.GetPrice(research.Type, research.Level, this.Village[BuildingType.Smithy]);
                         research.End = research.Start.AddSeconds(price.Time);
                     }
-                }
                 else if (this.Village.Builds[0].Building == BuildingType.Headquarter)
-                {
                     for (int i = 1; i < this.Village.Builds.Count; i++)
                     {
                         Build build = this.Village.Builds[i];
@@ -179,11 +176,35 @@ namespace beans
                         BuildPrice price = Build.GetPrice(build.Building, build.Level, this.Village[BuildingType.Headquarter]);
                         build.End = build.Start.AddSeconds(price.BuildTime);
                     }
-                }
+                else if (this.Village.Builds[0].Building == BuildingType.Barracks)
+                    for (int i = 0; i < this.Village.VillageRecruitMethods.InfantryRecruits.Count; i++)
+                    {
+                        Recruit r = this.Village.VillageRecruitMethods.InfantryRecruits[i];
+                        if (i != 0)
+                            r.LastUpdate = this.Village.VillageRecruitMethods.InfantryRecruits[i].FinishTime;
+                        Price p = Recruit.GetPrice(r.Troop, this.Village[BuildingType.Barracks]);
+                        r.FinishTime = r.LastUpdate.AddMilliseconds(p.BuildTime * r.Quantity);
+                    }
+                else if (this.Village.Builds[0].Building == BuildingType.Stable)
+                    for (int i = 0; i < this.Village.VillageRecruitMethods.CavalryRecruits.Count; i++)
+                    {
+                        Recruit r = this.Village.VillageRecruitMethods.CavalryRecruits[i];
+                        if (i != 0)
+                            r.LastUpdate = this.Village.VillageRecruitMethods.CavalryRecruits[i].FinishTime;
+                        Price p = Recruit.GetPrice(r.Troop, this.Village[BuildingType.Stable]);
+                        r.FinishTime = r.LastUpdate.AddMilliseconds(p.BuildTime * r.Quantity);
+                    }
+                else if (this.Village.Builds[0].Building == BuildingType.Workshop)
+                    for (int i = 0; i < this.Village.VillageRecruitMethods.CarRecruits.Count; i++)
+                    {
+                        Recruit r = this.Village.VillageRecruitMethods.CarRecruits[i];
+                        if (i != 0)
+                            r.LastUpdate = this.Village.VillageRecruitMethods.CarRecruits[i].FinishTime;
+                        Price p = Recruit.GetPrice(r.Troop, this.Village[BuildingType.Workshop]);
+                        r.FinishTime = r.LastUpdate.AddMilliseconds(p.BuildTime * r.Quantity);
+                    }
                 session.Delete(this.Village.Builds[0]);
                 this.Village.Builds.RemoveAt(0);
-                
-                
             }
 
             this.Village.LastUpdate = to;

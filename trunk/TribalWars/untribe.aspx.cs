@@ -24,13 +24,12 @@ public partial class untribe : System.Web.UI.Page
     {
         this.village = ((inPage)this.Master).CurrentVillage;
 
-        ISession session = NHibernateHelper.CreateSession();
+        ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
         Player player = session.Get<Player>(Session["user"]);
 
 
         if (player.Group != null)
         {
-            session.Close();
             Response.Redirect("tribe.aspx?ID=" + this.village.ID.ToString(), true);
         }
         if (player.Group == null)
@@ -40,15 +39,13 @@ public partial class untribe : System.Web.UI.Page
 
             this.gvInvite.DataBind();
         }
-        session.Close();
     }
 
 
     protected void gvInvite_RowCommand(object sender, GridViewCommandEventArgs e)
     {
 
-        ISession session = NHibernateHelper.CreateSession();
-        ITransaction trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
+        ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
         if (e.CommandName == "cmdAgree")
         {
             Player currentPlayer = session.Get<Player>(Session["user"]);
@@ -56,15 +53,11 @@ public partial class untribe : System.Web.UI.Page
             currentPlayer.TribePermission = TribePermission.Member;
             session.Update(currentPlayer);
             session.Delete(this.invites[int.Parse((string)e.CommandArgument)]);
-            trans.Commit();
-            session.Close();
             Response.Redirect("tribe.aspx?id=" + this.village.ID.ToString(), true);
         }
         else if (e.CommandName == "cmdReject")
         {
             session.Delete(this.invites[int.Parse((string)e.CommandArgument)]);
-            trans.Commit();
-            session.Close();
             Response.Redirect("untribe.aspx?id=" + this.village.ID.ToString(), true);
         }
     }
@@ -76,15 +69,12 @@ public partial class untribe : System.Web.UI.Page
         group.Name = this.txtTribeName.Text;
         group.Description = "";
 
-        ISession session = NHibernateHelper.CreateSession();
+        ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
         Player player = session.Get<Player>(Session["user"]);
-        ITransaction trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
         session.Save(group);
         player.Group = group;
         player.TribePermission = TribePermission.Duke;
         session.Update(player);
-        trans.Commit();
-        session.Close();
         Response.Redirect("tribe.aspx?id=" + this.village.ID.ToString(), true);
     }
 }

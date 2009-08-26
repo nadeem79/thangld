@@ -26,14 +26,13 @@ public partial class change_tribe_info : System.Web.UI.Page
             return;
         }
 
-        ISession session = NHibernateHelper.CreateSession();
+        ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
 
         Player player = session.Get<Player>(Session["user"]);
         if ((player.TribePermission & TribePermission.ChangeTribeDescription) != TribePermission.ChangeTribeDescription)
         {
             this.pCannotChange.Visible = true;
             this.pCanChange.Visible = false;
-            session.Close();
             return;
         }
         this.pCannotChange.Visible = false;
@@ -46,7 +45,6 @@ public partial class change_tribe_info : System.Web.UI.Page
             this.aDeleteAvatar.Visible = true;
             this.imgAvatar.ImageUrl = @"~/data/images/tribe/" + this.group.ID.ToString() + ".jpg";
         }
-        session.Close();
 
         if (!IsPostBack)
         {
@@ -64,11 +62,8 @@ public partial class change_tribe_info : System.Web.UI.Page
             this.group.Avatar = false;
             if (File.Exists(Server.MapPath("~/data/images/tribe/") + this.group.ID.ToString() + ".jpg"))
                 File.Delete(Server.MapPath("~/data/images/tribe/") + this.group.ID.ToString() + ".jpg");
-            ISession session = NHibernateHelper.CreateSession();
-            ITransaction trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
+            ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
             session.Update(this.group);
-            trans.Commit();
-            session.Close();
             this.imgAvatar.ImageUrl = "";
             this.aDeleteAvatar.Visible = false;
         }
@@ -117,11 +112,8 @@ public partial class change_tribe_info : System.Web.UI.Page
 
             }
 
-            ISession session = NHibernateHelper.CreateSession();
-            ITransaction trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
+            ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
             session.Update(this.group);
-            trans.Commit();
-            session.Close();
         }
         catch (Exception ex)
         {

@@ -20,9 +20,8 @@ public partial class ChangePassword : System.Web.UI.UserControl
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        ISession session = NHibernateHelper.CreateSession();
+        ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
         this.player = session.Load<Player>(Session["user"]);
-        session.Close();
     }
 
     protected void bttnChangePassword_Click(object sender, EventArgs e)
@@ -31,24 +30,17 @@ public partial class ChangePassword : System.Web.UI.UserControl
         ITransaction trans = null;
         try
         {
-            session = NHibernateHelper.CreateSession();
+            session = (ISession)Context.Items[Constant.NHibernateSessionSign];
             this.player = session.Load<Player>(Session["user"]);
             if (this.txtOldPassword.Text == this.player.Password)
             {
                 this.player.Password = this.txtNewPassword.Text;
-                trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
                 session.Update(this.player);
-                trans.Commit();
             }
         }
         catch (Exception exc)
         {
             this.lblError.Text = exc.Message;
-            trans.Rollback();
-        }
-        finally
-        {
-            session.Close();
         }
     }
 }

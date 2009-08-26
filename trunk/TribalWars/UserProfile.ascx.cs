@@ -25,9 +25,8 @@ public partial class UserProfile : System.Web.UI.UserControl
         this.Page.Form.Attributes.Add("onsubmit", "tinyMCE.triggerSave();");
         this.Page.Form.Enctype = "multipart/form-data";
 
-        ISession session = NHibernateHelper.CreateSession();
+        ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
         this.player = session.Load<Player>(Session["user"]);
-        session.Close();
 
         this.aDeleteAvatar.Visible = this.player.Avatar;
         if (!Page.IsPostBack)
@@ -48,21 +47,19 @@ public partial class UserProfile : System.Web.UI.UserControl
 
     protected void aDeleteAvatar_Click(object sender, EventArgs e)
     {
-        ISession session = NHibernateHelper.CreateSession();
+        ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
         this.player = session.Load<Player>(Session["user"]);
         this.player.Avatar = false;
         if (File.Exists(Server.MapPath("~/data/images/members/") + this.player.ID.ToString() + ".jpg"))
             File.Delete(Server.MapPath("~/data/images/members/") + this.player.ID.ToString() + ".jpg");
         ITransaction trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
         session.Update(this.player);
-        trans.Commit();
-        session.Close();
         this.aDeleteAvatar.Visible = false;
     }
 
     protected void bttnChangePlayerProfile_Click(object sender, EventArgs e)
     {
-        ISession session = NHibernateHelper.CreateSession();
+        ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
         this.player = session.Load<Player>(Session["user"]);
 
         this.player.Yahoo = this.txtYahoo.Text;
@@ -103,9 +100,6 @@ public partial class UserProfile : System.Web.UI.UserControl
             }
         }
 
-        ITransaction trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
         session.Update(this.player);
-        trans.Commit();
-        session.Close();
     }
 }

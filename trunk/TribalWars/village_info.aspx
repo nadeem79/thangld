@@ -29,7 +29,7 @@
                 <tr>
                     <td>
                         Chủ thành:
-                    </td>
+                    </td>5
                     <td>
                         <a href='user_info.aspx?id=<% Response.Write(this.village.ID); %>&player=<% Response.Write(this.target.Player.ID); %>'><% Response.Write(this.target.Player.Username); %></a>
                     </td>

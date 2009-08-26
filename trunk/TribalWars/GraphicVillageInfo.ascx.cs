@@ -43,39 +43,27 @@ public partial class GraphicVillageInfo : System.Web.UI.UserControl
         ITransaction trans = null;
         try
         {
-            session = NHibernateHelper.CreateSession();
+            session = (ISession)Context.Items[Constant.NHibernateSessionSign];
             Player player = session.Load<Player>(Session["user"]);
             player.GraphicalVillage = false;
-            trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
             session.Update(player);
-            trans.Commit();
             Response.Redirect("village.aspx?id=" + this.CurrentVillage.ID.ToString(), false);
         }
         catch (Exception exc)
         {
             this.lblError.Text = exc.Message;
-            if (trans != null)
-                trans.Rollback();
-        }
-        finally
-        {
-            if (session != null)
-                session.Close();
         }
     }
 
     protected void bttnHideBuildingLevel_Click(object sender, EventArgs e)
     {
         ISession session = null;
-        ITransaction trans = null;
         try
         {
-            session = NHibernateHelper.CreateSession();
+            session = (ISession)Context.Items[Constant.NHibernateSessionSign];
             Player player = session.Load<Player>(Session["user"]);
             player.ShowBuildingLevel = !player.ShowBuildingLevel;
-            trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
             session.Update(player);
-            trans.Commit();
 
             if (player.ShowBuildingLevel)
             {
@@ -92,13 +80,6 @@ public partial class GraphicVillageInfo : System.Web.UI.UserControl
         catch (Exception exc)
         {
             this.lblError.Text = exc.Message;
-            if (trans.WasRolledBack || trans != null)
-                trans.Rollback();
-        }
-        finally
-        {
-            if (session != null)
-                session.Close();
         }
     }
 }
