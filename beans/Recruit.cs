@@ -177,7 +177,7 @@ namespace beans
 
             for (int i = 1; i < level; i++)
                 time -= (int)(time * 0.05);
-            Price price = new Price(basePrice.Name, basePrice.BuildTime, basePrice.Wood, basePrice.Clay, basePrice.Iron, basePrice.Population);
+            Price price = new Price(basePrice.Name, time, basePrice.Wood, basePrice.Clay, basePrice.Iron, basePrice.Population);
             Recruit.PriceDictionary.Add(key, price);
             return price;
         }

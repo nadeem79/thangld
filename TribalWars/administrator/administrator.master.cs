@@ -20,18 +20,7 @@ public partial class administrator_administrator : System.Web.UI.MasterPage
         set;
     }
 
-    public administrator_administrator()
-    {
-        this.Init += new EventHandler(administrator_administrator_Init);
-        this.PreRender += new EventHandler(administrator_administrator_PreRender);
-    }
-
-    void administrator_administrator_PreRender(object sender, EventArgs e)
-    {
-        this.NHibernateSession.Close();
-    }
-
-    void administrator_administrator_Init(object sender, EventArgs e)
+    protected void Page_Load(object sender, EventArgs e)
     {
         if (object.Equals(Session["staffID"], null))
         {
@@ -40,18 +29,12 @@ public partial class administrator_administrator : System.Web.UI.MasterPage
             Session["staffID"] = 1;
         }
 
-        this.NHibernateSession = NHibernateHelper.CreateSession();
+        this.NHibernateSession = (ISession)Context.Items[Constant.NHibernateSessionSign];
         this.CurrentPlayer = Player.GetPlayerByID((int)Session["staffID"], this.NHibernateSession);
         if (this.CurrentPlayer.Type != UserType.Moderator && this.CurrentPlayer.Type != UserType.Administrator)
         {
             Session.Remove("staffID");
             Response.Redirect("login.aspx", false);
         }
-
-    }
-
-    protected void Page_Load(object sender, EventArgs e)
-    {
-        
     }
 }

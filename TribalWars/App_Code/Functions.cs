@@ -23,8 +23,12 @@ public class Functions
     }
     public static string FormatTime(long miliseconds)
     {
+        return FormatTime(miliseconds, true);
+    }
+    public static string FormatTime(long value, bool isMilisecond)
+    {
 
-        TimeSpan t = TimeSpan.FromMilliseconds(miliseconds);
+        TimeSpan t = isMilisecond ? TimeSpan.FromMilliseconds(value) : TimeSpan.FromSeconds(value);
         return FormatTime(t);
     }
 

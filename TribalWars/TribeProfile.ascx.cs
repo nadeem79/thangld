@@ -37,17 +37,15 @@ public partial class TribeProfile : System.Web.UI.UserControl
     protected void Page_Load(object sender, EventArgs e)
     {
 
-        ISession session = NHibernateHelper.CreateSession();
+        ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
         Player player = session.Get<Player>(Session["user"]);
         if ((player.TribePermission & TribePermission.ChangeTribeDescription) != TribePermission.ChangeTribeDescription)
         {
             this.pChangeDescription.Visible = false;
             this.pChangeInfo.Visible = false;
-            session.Close();
             return;
         }
         
-        session.Close();
         this.tribe = player.Group;
         if (!IsPostBack)
         {
@@ -85,11 +83,8 @@ public partial class TribeProfile : System.Web.UI.UserControl
                 this.tribe.Avatar = true;
         }
 
-        ISession session = NHibernateHelper.CreateSession();
-        ITransaction trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
+        ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
         session.Update(this.tribe);
-        trans.Commit();
-        session.Close();
         Response.Redirect("tribe.aspx?id=" + this.village.ID.ToString(), true);
     }
 
@@ -98,11 +93,8 @@ public partial class TribeProfile : System.Web.UI.UserControl
         this.tribe.Avatar = false;
         if (File.Exists(Server.MapPath("~/data/images/tribe/") + this.tribe.ID.ToString() + ".jpg"))
             File.Delete(Server.MapPath("~/data/images/tribe/") + this.tribe.ID.ToString() + ".jpg");
-        ISession session = NHibernateHelper.CreateSession();
-        ITransaction trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
+        ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
         session.Update(this.tribe);
-        trans.Commit();
-        session.Close();
         Response.Redirect("tribe.aspx?id=" + this.village.ID.ToString(), true);
     }
 

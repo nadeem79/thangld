@@ -10,7 +10,7 @@
     <property name="Name" column="name" length="100" type="String"/>
     <property name="X" column="x" type="Int32" />
     <property name="Y" column="y" type="Int32" />
-    <many-to-one name="Player" class="beans.Player, beans" column="userid" not-null="false" lazy="no-proxy" fetch="select"  />
+    <many-to-one name="Player" class="beans.Player, beans" column="userid" not-null="false" lazy="proxy" fetch="join"  />
     <property name="Points" column="points" type="double" />
     <property name="Loyal" column="loyal" type="double" />
     <property name="LastUpdate" column="last_update" type="timestamp" not-null="true" />

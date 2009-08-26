@@ -26,6 +26,7 @@ namespace beans
             if (!Recruit.CanRecruit(troop, quantity, this.Village.VillageResourceData.Wood, this.Village.VillageResourceData.Clay, this.Village.VillageResourceData.Iron))
                 return null;
             Recruit lastRecruit = null;
+            BuildingType building = BuildingType.Barracks;
             int level = 0;
             if ((troop == TroopType.Axe) || (troop == TroopType.Spear) || (troop == TroopType.Sword))
             {
@@ -37,12 +38,14 @@ namespace beans
             else if ((troop == TroopType.Light) || (troop == TroopType.Scout) || (troop == TroopType.Heavy))
             {
                 level = this.Village[BuildingType.Stable];
+                building = BuildingType.Stable;
                 lastRecruit = (from r in this.CavalryRecruits
                                orderby r.ID descending
                                select r).FirstOrDefault<Recruit>();
             }
             else if (troop == TroopType.Ram || troop == TroopType.Catapult)
             {
+                building = BuildingType.Workshop;
                 level = this.Village[BuildingType.Workshop];
                 lastRecruit = (from r in this.CarRecruits
                                orderby r.ID descending
@@ -58,7 +61,7 @@ namespace beans
             else
                 recruit.LastUpdate = lastRecruit.FinishTime;
 
-            Price p = Recruit.GetPrice(troop);
+            Price p = Recruit.GetPrice(troop, this.Village[building]);
             this.Village.VillageResourceData.Clay -= p.Clay * quantity;
             this.Village.VillageResourceData.Wood -= p.Wood * quantity;
             this.Village.VillageResourceData.Iron -= p.Iron * quantity;
@@ -204,12 +207,12 @@ namespace beans
         {
             get
             {
-                if (this.infantryRecruits == null)
-                    this.infantryRecruits = (from recruit in this.Village.Recruits
+                if (this.cavalryRecruits == null)
+                    this.cavalryRecruits = (from recruit in this.Village.Recruits
                                              where recruit.Troop == TroopType.Scout || recruit.Troop == TroopType.Light || recruit.Troop == TroopType.Heavy
                                              orderby recruit.ID ascending
                                              select recruit).ToList<Recruit>();
-                return this.infantryRecruits;
+                return this.cavalryRecruits;
             }
         }
     }

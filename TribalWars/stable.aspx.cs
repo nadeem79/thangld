@@ -50,9 +50,16 @@ public partial class stable : System.Web.UI.Page
         return Functions.FormatTime(recruit.FinishTime - recruit.LastUpdate);
     }
 
+    protected Price scoutPrice, lightCavalryPrice, heavyCavalryPrice;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         village = ((inPage)this.Master).CurrentVillage;
+
+        this.scoutPrice = Recruit.GetPrice(TroopType.Scout, this.village[BuildingType.Stable]);
+        this.lightCavalryPrice = Recruit.GetPrice(TroopType.Light, this.village[BuildingType.Stable]);
+        this.heavyCavalryPrice = Recruit.GetPrice(TroopType.Heavy, this.village[BuildingType.Stable]);
+
         this.NHibernateSession = ((inPage)this.Master).NHibernateSession;
         if (Request["mode"] != null && Request["mode"] == "cancel_recruit")
         {

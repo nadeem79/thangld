@@ -24,7 +24,7 @@ public partial class index : System.Web.UI.Page
 
         if (Request.Cookies["username"] != null)
         {
-            ISession session = NHibernateHelper.CreateSession();
+            ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
             try
             {
                 int id = beans.Player.Authentication(Request.Cookies["username"].Value, (string)Request.Cookies["password"].Value, session);
@@ -41,10 +41,6 @@ public partial class index : System.Web.UI.Page
             catch (Exception exc)
             {
             }
-            finally
-            {
-                session.Close();
-            }
         }
 
         switch (Session["user"]==null)
@@ -54,11 +50,10 @@ public partial class index : System.Web.UI.Page
                 this.pBox.Controls.Add(login);
                 break;
             default:
-                ISession session = NHibernateHelper.CreateSession();
+                ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
                 
                 PlayerBox player = (PlayerBox)Page.LoadControl("PlayerBox.ascx");
                 player.Player = session.Get<Player>(Session["user"]);
-                session.Close();
                 this.pBox.Controls.Add(player);
                 break;
         }

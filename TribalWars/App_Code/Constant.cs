@@ -13,6 +13,10 @@ public class Constant
     {
         get { return "NHibernateSession"; }
     }
+    public static string NormalUserSessionSign
+    {
+        get { return "user"; }
+    }
 
     public Constant()
     {

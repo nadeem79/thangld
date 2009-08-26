@@ -33,9 +33,8 @@ public partial class village_info : System.Web.UI.Page
             return;
         }
 
-        ISession session = NHibernateHelper.CreateSession();
+        ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
         target = session.Get<Village>(village_id);
-        session.Close();
 
         if (target == null)
         {

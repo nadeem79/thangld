@@ -29,7 +29,7 @@ public partial class administrator_login : System.Web.UI.Page
             return;
         }
 
-        ISession session = NHibernateHelper.CreateSession();
+        ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
 
         int staffID = Admin.StaffAuthentication(this.usernameTextBox.Text, this.passwordTextBox.Text, session);
         if (staffID == 0)
@@ -40,7 +40,6 @@ public partial class administrator_login : System.Web.UI.Page
         }
 
         Session["staffID"] = staffID;
-        session.Close();
         Response.Redirect("index.aspx", false);
     }
 }

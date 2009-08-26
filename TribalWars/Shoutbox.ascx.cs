@@ -42,7 +42,7 @@ public partial class Shoutbox : System.Web.UI.UserControl
         try
         {
             ViewState["last_send"] = DateTime.Now.AddSeconds(-10);
-            ISession session = NHibernateHelper.CreateSession();
+            ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
             string strData = "";
             List<ShoutboxData> lst = (List<ShoutboxData>)ShoutboxData.GetShoutbox(this.Group, 15, false, session);
             lst.Reverse();
@@ -57,7 +57,6 @@ public partial class Shoutbox : System.Web.UI.UserControl
                 strData += data.Text;
                 strData += "</div>";
             }
-            session.Close();
             this.lblShoutboxData.Text = strData;
         }
         catch (Exception ex)
@@ -80,7 +79,7 @@ public partial class Shoutbox : System.Web.UI.UserControl
         try
         {
             ViewState["last_send"] = DateTime.Now;
-            ISession session = NHibernateHelper.CreateSession();
+            ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
             
             Player player = session.Get<Player>(Session["user"]);
             ShoutboxData data = new ShoutboxData();
@@ -89,7 +88,6 @@ public partial class Shoutbox : System.Web.UI.UserControl
             data.Group = this.Group;
             data.Player = player;
             session.Save(data);
-            session.Close();
             string strData = "<div><img src='images/chat_icon.gif'> [" + data.Time.ToString("hh:mm") + "] ";
             strData += "<span class='username'><a href='user_info.aspx?player=" + data.Player.ID.ToString() + "' title='" + data.Player.Username + "'>" + data.Player.Username + "</a></span>: ";
             strData += data.Text;
@@ -113,7 +111,7 @@ public partial class Shoutbox : System.Web.UI.UserControl
         try
         {
             this.txtShoutboxInput.AutoCompleteType = AutoCompleteType.None;
-            ISession session = NHibernateHelper.CreateSession();
+            ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
             string strData = "";
             List<ShoutboxData> lst = (List<ShoutboxData>)ShoutboxData.GetShoutbox(this.Group, 15, false, session);
             lst.Reverse();
@@ -128,7 +126,6 @@ public partial class Shoutbox : System.Web.UI.UserControl
                 strData += data.Text;
                 strData += "</div>";
             }
-            session.Close();
             this.lblShoutboxData.Text = strData;
         }
         catch (Exception ex)

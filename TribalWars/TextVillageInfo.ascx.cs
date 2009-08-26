@@ -33,24 +33,15 @@ public partial class TextVillageInfo : System.Web.UI.UserControl
         ITransaction trans = null;
         try
         {
-            session = NHibernateHelper.CreateSession();
+            session = (ISession)Context.Items[Constant.NHibernateSessionSign];
             Player player = session.Load<Player>(Session["user"]);
             player.GraphicalVillage = true;
-            trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
             session.Update(player);
-            trans.Commit();
             Response.Redirect("village.aspx?id=" + this.CurrentVillage.ID.ToString(), false);
         }
         catch (Exception exc)
         {
             this.lblError.Text = exc.Message;
-            if (trans != null && !trans.WasCommitted)
-                trans.Rollback();
-        }
-        finally
-        {
-            if (session != null)
-                session.Close();
         }
     }
 }

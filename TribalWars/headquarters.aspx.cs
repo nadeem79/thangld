@@ -93,11 +93,9 @@ public partial class headquarters : System.Web.UI.Page
         ITransaction trans = null;
         try
         {
-            session = NHibernateHelper.CreateSession();
-            trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
+            session = (ISession)Context.Items[Constant.NHibernateSessionSign];
             this.village.Name = this.txtName.Text;
             session.Update(this.village);
-            trans.Commit();
             RadScriptManager.RegisterStartupScript(bttnChangeVillageName, bttnChangeVillageName.GetType(), "ChangeVillageName", "$('#city_name').html('" + this.village.Name + "');jQuery.facebox('Đổi tên thành phố: " + this.village.Name + "')", true);
         }
         catch(Exception ex)
@@ -106,11 +104,6 @@ public partial class headquarters : System.Web.UI.Page
             if (trans != null && !trans.WasCommitted)
                 trans.Rollback();
             ScriptManager.RegisterStartupScript(bttnChangeVillageName, bttnChangeVillageName.GetType(), "ShowException", "jQuery.facebox('" + ex.Message + "')", true);
-        }
-        finally
-        {
-            if (session!=null)
-                session.Close();
         }
     }
 

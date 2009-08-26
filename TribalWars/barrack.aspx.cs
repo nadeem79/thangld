@@ -47,11 +47,11 @@ public partial class barrack : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        
         this.NHibernateSession = (ISession)Context.Items[Constant.NHibernateSessionSign];
 
         village = ((inPage)this.Master).CurrentVillage;
-
+        Price p = Recruit.GetPrice(TroopType.Axe, this.village[BuildingType.Barracks]);
         if (Request["mode"] != null && Request["mode"] == "cancel_recruit")
         {
             int id = 0;

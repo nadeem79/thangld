@@ -19,28 +19,9 @@ public partial class dialogs_tribe_member : System.Web.UI.Page
     private ISession session = null;
     private ITransaction transaction = null;
 
-    public dialogs_tribe_member()
-    {
-        this.PreInit += new EventHandler(dialogs_tribe_member_PreInit);
-        this.LoadComplete += new EventHandler(dialogs_tribe_member_LoadComplete);
-    }
-
-    void dialogs_tribe_member_LoadComplete(object sender, EventArgs e)
-    {
-        if (transaction!=null)
-            transaction.Commit();
-        if (session!= null)
-        this.session.Close();
-    }
-
-    void dialogs_tribe_member_PreInit(object sender, EventArgs e)
-    {
-        this.session = NHibernateHelper.CreateSession();
-        this.transaction = session.BeginTransaction(IsolationLevel.ReadCommitted);
-    }
-
     protected void Page_Load(object sender, EventArgs e)
     {
+        this.session = (ISession)Context.Items[Constant.NHibernateSessionSign];
         int member_id = 0;
         int.TryParse(Request["member"], out member_id);
         if (member_id <= 0)
