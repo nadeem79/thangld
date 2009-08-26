@@ -65,6 +65,7 @@ namespace beans
             this.Village.Population += p.Population * quantity;
             recruit.FinishTime = recruit.LastUpdate.AddMilliseconds(p.BuildTime * quantity);
             this.Village.Recruits.Add(recruit);
+            session.Save(recruit);
             session.Update(this.Village);
 
             if ((troop == TroopType.Axe) || (troop == TroopType.Spear) || (troop == TroopType.Sword))
@@ -122,8 +123,7 @@ namespace beans
             this.Village.VillageResourceData.Iron += price.Iron * recruit.Quantity;
             this.Village.Population -= (int)(price.Population * recruit.Quantity);
             this.Village.Recruits.Remove(recruit);
-
-            IList<Recruit> nextRecruits = null;
+            
             IList<Recruit> recruits = null;
 
             if ((recruit.Troop == TroopType.Axe) || (recruit.Troop == TroopType.Spear) || (recruit.Troop == TroopType.Sword))
@@ -139,24 +139,22 @@ namespace beans
                 recruits = this.CarRecruits;
             }
 
-            nextRecruits = (from r in recruits
-                            where r.ID > recruit_id
-                            orderby r.ID ascending
-                            select r).ToList<Recruit>();
-
-            for (int i = 0; i < nextRecruits.Count; i++)
-            {
-                TimeSpan t = nextRecruits[i].FinishTime - nextRecruits[i].LastUpdate;
-                if (i == 0)
-                    nextRecruits[i].LastUpdate = DateTime.Now;
-                else
-                    nextRecruits[i].LastUpdate = nextRecruits[i - 1].FinishTime;
-
-                nextRecruits[i].FinishTime = nextRecruits[i].LastUpdate + t;
-            }
-            this.Village.Recruits.Remove(recruit);
             recruits.Remove(recruit);
 
+            for (int i = 0; i < recruits.Count; i++)
+            {
+                TimeSpan t = recruits[i].FinishTime - recruits[i].LastUpdate;
+                if (i == 0)
+                    recruits[i].LastUpdate = DateTime.Now;
+                else
+                    recruits[i].LastUpdate = recruits[i - 1].FinishTime;
+
+                recruits[i].FinishTime = recruits[i].LastUpdate + t;
+                session.Update(recruits[i]);
+            }
+
+            
+            session.Delete(recruit);
             session.Update(this.Village);
             
 

@@ -66,19 +66,19 @@ public partial class smithy : System.Web.UI.Page
 
         IList<Research> researches = this.Village.Researches;
 
-        this.AttackPrice = Research.GetPrice(ResearchType.Attack, this.Village.VillageResearchMethods.MaxAttackLevel, this.Village[BuildingType.Smithy]);
-        this.DefensePrice = Research.GetPrice(ResearchType.Defense, this.Village.VillageResearchMethods.MaxDefenseLevel, this.Village[BuildingType.Smithy]);
-        this.SpeedPrice = Research.GetPrice(ResearchType.Speed, this.Village.VillageResearchMethods.MaxSpeedLevel, this.Village[BuildingType.Smithy]);
+        this.AttackPrice = Research.GetPrice(ResearchType.Attack, this.Village.VillageResearchMethods.MaxAttackLevel + 1, this.Village[BuildingType.Smithy]);
+        this.DefensePrice = Research.GetPrice(ResearchType.Defense, this.Village.VillageResearchMethods.MaxDefenseLevel + 1, this.Village[BuildingType.Smithy]);
+        this.SpeedPrice = Research.GetPrice(ResearchType.Speed, this.Village.VillageResearchMethods.MaxSpeedLevel + 1, this.Village[BuildingType.Smithy]);
 
-        if (this.Village.VillageResearchMethods.CanResearch(ResearchType.Attack, this.Village.VillageResearchMethods.MaxAttackLevel))
+        if (this.Village.VillageResearchMethods.CanResearch(ResearchType.Attack, this.Village.VillageResearchMethods.MaxAttackLevel + 1))
             this.panelUpgradeAttack.Visible = true;
         else
             this.cannotUpgradeAttack.Visible = true;
-        if (this.Village.VillageResearchMethods.CanResearch(ResearchType.Defense, this.Village.VillageResearchMethods.MaxDefenseLevel))
+        if (this.Village.VillageResearchMethods.CanResearch(ResearchType.Defense, this.Village.VillageResearchMethods.MaxDefenseLevel + 1))
             this.panelUpgradeDefense.Visible = true;
         else
             this.cannotUpgradeDefense.Visible = true;
-        if (this.Village.VillageResearchMethods.CanResearch(ResearchType.Speed, this.Village.VillageResearchMethods.MaxSpeedLevel))
+        if (this.Village.VillageResearchMethods.CanResearch(ResearchType.Speed, this.Village.VillageResearchMethods.MaxSpeedLevel + 1))
             this.panelUpgradeSpeed.Visible = true;
         else
             this.cannotUpgradeSpeed.Visible = true;

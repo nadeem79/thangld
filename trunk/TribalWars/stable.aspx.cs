@@ -25,6 +25,31 @@ public partial class stable : System.Web.UI.Page
         set;
     }
 
+    protected string TroopTypeString(TroopType type)
+    {
+        switch (type)
+        {
+            case TroopType.Scout:
+                return "siêu điệp viên";
+            case TroopType.Light:
+                return "kỵ binh";
+            case TroopType.Heavy:
+                return "hiệp sỹ";
+        }
+        return "";
+    }
+
+    protected string FirstRow(int index)
+    {
+        return (index == 0) ? "class=\"timer\"" : "";
+    }
+    protected string FirstRowTime(int index, Recruit recruit)
+    {
+        if (index == 0)
+            return Functions.FormatTime(recruit.FinishTime - DateTime.Now);
+        return Functions.FormatTime(recruit.FinishTime - recruit.LastUpdate);
+    }
+
     protected void Page_Load(object sender, EventArgs e)
     {
         village = ((inPage)this.Master).CurrentVillage;
@@ -42,45 +67,13 @@ public partial class stable : System.Web.UI.Page
             }
         }
 
-        IList<Recruit> recruits = village.VillageRecruitMethods.GetRecruit(this.NHibernateSession, BuildingType.Stable);
-        DateTime last_complete = DateTime.Now;
-        string sRecruitCommands = "";
-        for (int i = 0; i < recruits.Count; i++)
+        IList<Recruit> recruits = this.village.VillageRecruitMethods.CavalryRecruits;
+        if (recruits.Count > 0)
         {
-            sRecruitCommands += "<tr class='lit'>";
-            sRecruitCommands += "<td>" + recruits[i].Quantity.ToString();
-            switch (recruits[i].Troop)
-            {
-                case TroopType.Scout:
-                    sRecruitCommands += " siêu điệp viên</td>";
-                    break;
-                case TroopType.Light:
-                    sRecruitCommands += " kỵ binh</td>";
-                    break;
-                case TroopType.Heavy:
-                    sRecruitCommands += " hiệp sỹ</td>";
-                    break;
-                default:
-                    break;
-            }
-            sRecruitCommands += "<td>";
-            if (i == 0)
-            {
-                sRecruitCommands += "<span class='timer'>";
-                last_complete = recruits[i].LastUpdate;
-            }
-            else
-            {
-                last_complete = last_complete.AddSeconds(Recruit.RecruitTime(recruits[i - 1].Troop, recruits[i - 1].Quantity, this.village.VillageBuildingData.Stable));
-            }
-
-            sRecruitCommands += Functions.FormatTime(Recruit.RecruitTime(recruits[i].Troop, recruits[i].Quantity, this.village.VillageBuildingData.Stable)) + "</span></td>";
-            sRecruitCommands += "<td>" + last_complete.AddSeconds(Recruit.RecruitTime(recruits[i].Troop, recruits[i].Quantity, this.village.VillageBuildingData.Stable)).ToString("HH:mm:ss 'ngày' dd/MM/yyyy ") + "</td>";
-            sRecruitCommands += String.Format("<td><a href=\"stable.aspx?id={0}&mode=cancel_recruit&recruit_id={1}\">Hủy</a></td>", this.village.ID, recruits[i].ID);
-            sRecruitCommands += "</tr>";
+            this.rCavalryRecruits.DataSource = recruits;
+            this.rCavalryRecruits.DataBind();
         }
-        this.lblRecruiting.Text = sRecruitCommands;
-        string s = Functions.FormatTime(beans.Recruit.GetPrice(beans.TroopType.Heavy, this.village.VillageBuildingData.Stable).BuildTime);
+        
         
     }
 

@@ -18,36 +18,41 @@ public partial class workshop : System.Web.UI.Page
         set;
     }
 
+    protected string FirstRow(int index)
+    {
+        return (index == 0) ? "class=\"timer\"" : "";
+    }
+    protected string FirstRowTime(int index, Recruit recruit)
+    {
+        if (index == 0)
+            return Functions.FormatTime(recruit.FinishTime - DateTime.Now);
+        return Functions.FormatTime(recruit.FinishTime - recruit.LastUpdate);
+    }
+    protected string TroopTypeString(TroopType type)
+    {
+        switch (type)
+        {
+            case TroopType.Ram:
+                return "lính giáo";
+            case TroopType.Catapult:
+                return "lính kiếm";
+            default:
+                return "";
+        }
+    }
+
     protected void Page_Load(object sender, EventArgs e)
     {
         village = ((inPage)this.Master).CurrentVillage;
         this.NHibernateSession = ((inPage)this.Master).NHibernateSession;
-        IList<Recruit> recruits = village.VillageRecruitMethods.GetRecruit(this.NHibernateSession, BuildingType.Workshop);
-
-        string sRecruitCommands = "";
-        for (int i = 0; i < recruits.Count; i++)
+        IList<Recruit> recruits = village.VillageRecruitMethods.CarRecruits;
+        if (recruits.Count > 0)
         {
-            sRecruitCommands += "<tr class='lit'>";
-            sRecruitCommands += "<td>" + recruits[i].Quantity.ToString();
-            switch (recruits[i].Troop)
-            {
-                case TroopType.Ram:
-                    sRecruitCommands += " xe phá tường</td>";
-                    break;
-                case TroopType.Catapult:
-                    sRecruitCommands += " máy ném đá</td>";
-                    break;
-                default:
-                    break;
-            }
-            sRecruitCommands += "<td>";
-            if (i == 0)
-                sRecruitCommands += "<span class='timer'>";
-
-            sRecruitCommands += (Functions.FormatTime(recruits[i].LastUpdate.AddSeconds(Recruit.RecruitTime(recruits[i].Troop, recruits[i].Quantity, this.village.VillageBuildingData.Barracks)) - DateTime.Now)).ToString() + "</span></td>";
-            sRecruitCommands += "<td>" + recruits[i].LastUpdate.AddSeconds(Recruit.RecruitTime(recruits[i].Troop, recruits[i].Quantity, this.village.VillageBuildingData.Barracks)) + "</td>";
+            this.rCarRecruits.DataSource = recruits;
+            this.rCarRecruits.DataBind();
         }
-        this.lblRecruiting.Text = sRecruitCommands;
+
+        
     }
 
 

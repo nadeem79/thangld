@@ -47,23 +47,13 @@ public partial class test : System.Web.UI.Page
         //this.Label1.Text += command.FromVillage.MovingCommandsFromMe.Count.ToString();
         //command.ToVillage.MovingCommandsToMe.Remove(command);
 
-        Village v = session.Load<Village>(23);
-        for (int i = 0; i < v.MovingCommandsFromMe.Count; i++)
-        {
-            MovingCommand command = v.MovingCommandsFromMe[i];
-            command.ToVillage.MovingCommandsToMe.Remove(command);
-            v.MovingCommandsFromMe.Remove(command);
-            session.Delete(command);
-            session.Update(command.ToVillage);
-        }
-
+        Village v = session.Load<Village>(29);
+        Build b = session.Load<Build>(32771);
+        
+        v.Builds.Remove(b);
+        session.Delete(b);
+        
         session.Update(v);
-
-        //this.Label1.Text = (command.FromVillage.MovingCommandsFromMe[0] == command).ToString();
-        //command.FromVillage = null;
-        //command.ToVillage = null;
-        //session.Delete(command);
-        this.Label1.Text = "";
         //session.Update(command.FromVillage);
         //session.Update(command.ToVillage);
         

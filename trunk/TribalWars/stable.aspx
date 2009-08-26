@@ -25,25 +25,45 @@
     <asp:Label ID="lblError" runat="server" Font-Size="14pt" ForeColor="Red"></asp:Label>
    <br />
     <br />
-    <table class="vis">
+    <asp:Repeater runat="server" ID="rCavalryRecruits">
+        <HeaderTemplate>
+            <table class="vis">
         <tbody>
             <tr>
                 <th width="150">
-                    Training
+                    <asp:Literal ID="Literal2" runat="server" Text="<%$ Resources:text, training %>" />
                 </th>
                 <th width="120">
-                    Duration
+                    <asp:Literal ID="Literal3" runat="server" Text="<%$ Resources:text, duration %>" />
                 </th>
-                <th width="200">
-                    Completion
+                <th width="300">
+                    <asp:Literal ID="Literal4" runat="server" Text="<%$ Resources:text, completion %>" />
                 </th>
-                <th width="200">
-                    Hủy
+                <th width="120">
+                    <asp:Literal ID="Literal5" runat="server" Text="<%$ Resources:text, cancel %>" />
                 </th>
             </tr>
-            <asp:Label ID="lblRecruiting" runat="server"></asp:Label>
-        </tbody>
-    </table>
+        </HeaderTemplate>
+        <FooterTemplate>
+            </tbody></table>
+        </FooterTemplate>
+        <ItemTemplate>
+            <tr class='lit'>
+                <td>
+                    <%# Eval("Quantity") %> <%# TroopTypeString((beans.TroopType)Eval("Troop")) %>
+                </td>
+                <td>
+                    <span <%# this.FirstRow(Container.ItemIndex) %>><%# this.FirstRowTime(Container.ItemIndex, (beans.Recruit)Container.DataItem)%></span>
+                </td>
+                <td>
+                    <%# ((DateTime)Eval("FinishTime")).ToString("HH:mm:ss 'ngày' dd/MM/yyyy")%>
+                </td>
+                <td>
+                    <a href="barrack.aspx?id=<% = this.village.ID %>&mode=cancel_recruit&recruit_id=<%# Eval("ID") %>">Huỷ</a>
+                </td>
+            </tr>
+        </ItemTemplate>
+    </asp:Repeater>
     <br />
     <table class="vis">
         <tbody>

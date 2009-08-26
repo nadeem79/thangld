@@ -129,6 +129,7 @@ namespace beans
             session.Delete(this);
             session.Save(returnTroop);
             session.Update(this.ToVillage);
+            session.Update(this.FromVillage);
 
             return returnTroop;
         }
@@ -345,61 +346,60 @@ namespace beans
                 this.ToVillage.VillageTroopData.RamInVillage = this.ToVillage.VillageTroopData.Ram = 0;
                 this.ToVillage.VillageTroopData.CatapultInVillage = this.ToVillage.VillageTroopData.Catapult = 0;
                 this.ToVillage.VillageTroopData.NobleInVillage = this.ToVillage.VillageTroopData.Noble = 0;
-                 
 
+                foreach (Station station in this.ToVillage.StationsAtMe) //xoá tất cả station đang đóng ở thành phố đó
+                {
+                    station.AtVillage.VillageCommonMethods.UpdateVillage(this.LandingTime, session, false);
+                    DefenseOtherReport defenseOtherReport = new DefenseOtherReport();
+                    defenseOtherReport.Owner = station.FromVillage.Player;
+                    defenseOtherReport.Time = this.LandingTime;
+                    defenseOtherReport.Unread = true;
+                    defenseOtherReport.Title = String.Format("Quân hỗ trợ của bạn từ {0} ở {1} bị tấn công", station.FromVillage.Name, station.AtVillage.Name);
+                    defenseOtherReport.FromVillage = station.FromVillage;
+                    defenseOtherReport.FromPlayer = this.FromVillage.Player;
+                    defenseOtherReport.ToVillage = this.ToVillage;
+                    defenseOtherReport.ToPlayer = this.ToVillage.Player;
 
-                    foreach (Station station in this.ToVillage.StationsAtMe) //xoá tất cả station đang đóng ở thành phố đó
-                    {
-                        station.AtVillage.VillageCommonMethods.UpdateVillage(this.LandingTime, session, false);
-                        DefenseOtherReport defenseOtherReport = new DefenseOtherReport();
-                        defenseOtherReport.Owner = station.FromVillage.Player;
-                        defenseOtherReport.Time = this.LandingTime;
-                        defenseOtherReport.Unread = true;
-                        defenseOtherReport.Title = String.Format("Quân hỗ trợ của bạn từ {0} ở {1} bị tấn công", station.FromVillage.Name, station.AtVillage.Name);
-                        defenseOtherReport.FromVillage = station.FromVillage;
-                        defenseOtherReport.FromPlayer = this.FromVillage.Player;
-                        defenseOtherReport.ToVillage = this.ToVillage;
-                        defenseOtherReport.ToPlayer = this.ToVillage.Player;
+                    defenseOtherReport.SpearDefense = station.Spear;
+                    defenseOtherReport.SwordDefense = station.Sword;
+                    defenseOtherReport.AxeDefense = station.Axe;
+                    defenseOtherReport.ScoutDefense = station.Scout;
+                    defenseOtherReport.LightCavalryDefense = station.LightCavalry;
+                    defenseOtherReport.HeavyCavalryDefense = station.HeavyCavalry;
+                    defenseOtherReport.RamDefense = station.Ram;
+                    defenseOtherReport.CatapultDefense = station.Catapult;
+                    defenseOtherReport.NobleDefense = station.Noble;
 
-                        defenseOtherReport.SpearDefense = station.Spear;
-                        defenseOtherReport.SwordDefense = station.Sword;
-                        defenseOtherReport.AxeDefense = station.Axe;
-                        defenseOtherReport.ScoutDefense = station.Scout;
-                        defenseOtherReport.LightCavalryDefense = station.LightCavalry;
-                        defenseOtherReport.HeavyCavalryDefense = station.HeavyCavalry;
-                        defenseOtherReport.RamDefense = station.Ram;
-                        defenseOtherReport.CatapultDefense = station.Catapult;
-                        defenseOtherReport.NobleDefense = station.Noble;
+                    defenseOtherReport.SpearDead = station.Spear;
+                    defenseOtherReport.SwordDead = station.Sword;
+                    defenseOtherReport.AxeDead = station.Axe;
+                    defenseOtherReport.ScoutDead = station.Scout;
+                    defenseOtherReport.LightCavalryDead = station.LightCavalry;
+                    defenseOtherReport.HeavyCavalryDead = station.HeavyCavalry;
+                    defenseOtherReport.RamDead = station.Ram;
+                    defenseOtherReport.CatapultDead = station.Catapult;
+                    defenseOtherReport.NobleDead = station.Noble;
 
-                        defenseOtherReport.SpearDead = station.Spear;
-                        defenseOtherReport.SwordDead = station.Sword;
-                        defenseOtherReport.AxeDead = station.Axe;
-                        defenseOtherReport.ScoutDead = station.Scout;
-                        defenseOtherReport.LightCavalryDead = station.LightCavalry;
-                        defenseOtherReport.HeavyCavalryDead = station.HeavyCavalry;
-                        defenseOtherReport.RamDead = station.Ram;
-                        defenseOtherReport.CatapultDead = station.Catapult;
-                        defenseOtherReport.NobleDead = station.Noble;
+                    station.FromVillage.VillageTroopData.SpearOfVillage -= station.Spear;
+                    station.FromVillage.VillageTroopData.SwordOfVillage -= station.Sword;
+                    station.FromVillage.VillageTroopData.AxeOfVillage -= station.Axe;
+                    station.FromVillage.VillageTroopData.ScoutOfVillage -= station.Scout;
+                    station.FromVillage.VillageTroopData.LightCavalryOfVillage -= station.LightCavalry;
+                    station.FromVillage.VillageTroopData.HeavyCavalryOfVillage -= station.HeavyCavalry;
+                    station.FromVillage.VillageTroopData.RamOfVillage -= station.Ram;
+                    station.FromVillage.VillageTroopData.CatapultOfVillage -= station.Catapult;
+                    station.FromVillage.VillageTroopData.NobleOfVillage -= station.Noble;
 
-                        station.FromVillage.VillageTroopData.SpearOfVillage -= station.Spear;
-                        station.FromVillage.VillageTroopData.SwordOfVillage -= station.Sword;
-                        station.FromVillage.VillageTroopData.AxeOfVillage -= station.Axe;
-                        station.FromVillage.VillageTroopData.ScoutOfVillage -= station.Scout;
-                        station.FromVillage.VillageTroopData.LightCavalryOfVillage -= station.LightCavalry;
-                        station.FromVillage.VillageTroopData.HeavyCavalryOfVillage -= station.HeavyCavalry;
-                        station.FromVillage.VillageTroopData.RamOfVillage -= station.Ram;
-                        station.FromVillage.VillageTroopData.CatapultOfVillage -= station.Catapult;
-                        station.FromVillage.VillageTroopData.NobleOfVillage -= station.Noble;
+                    station.FromVillage.StationsFromMe.Remove(station);
 
-                        station.FromVillage.StationsFromMe.Remove(station);
-                        session.Delete(station);
-
-                        session.Update(station.FromVillage);
-                        session.Save(defenseOtherReport);
-                    }
-                    this.ToVillage.StationsAtMe.Clear();
-                    //session.Delete("from Station station where station.AtVillage = :village", this.ToVillage, NHibernate.NHibernateUtil.Entity(typeof(Village)));
-
+                    session.Update(station.FromVillage);
+                    session.Save(defenseOtherReport);
+                }
+                this.ToVillage.StationsAtMe.Clear();
+                //session.Delete("from Station station where station.AtVillage = :village", this.ToVillage, NHibernate.NHibernateUtil.Entity(typeof(Village)));
+                IQuery queryDeleteStationAtMe = session.CreateQuery("delete from Station station where station.AtVillage = :village");
+                queryDeleteStationAtMe.SetEntity("village", this.ToVillage);
+                queryDeleteStationAtMe.ExecuteUpdate();
                 if (this.Noble > 0)
                     this.ToVillage.Loyal -= (r.Next(15) + 20);
 
@@ -429,11 +429,13 @@ namespace beans
                         station.FromVillage.VillageTroopData.NobleOfVillage -= station.Noble;
 
                         station.AtVillage.StationsAtMe.Remove(station);
-                        session.Delete(station);
                         session.Update(station.FromVillage);
 
                     }
                     this.ToVillage.StationsFromMe.Clear();
+                    IQuery queryDeleteStationFromMe = session.CreateQuery("delete from Station station where station.FromVillage = :village");
+                    queryDeleteStationFromMe.SetEntity("village", this.ToVillage);
+                    queryDeleteStationFromMe.ExecuteUpdate();
 
                     Station newStation = new Station();
                     newStation.AtVillage = this.ToVillage;
@@ -686,7 +688,7 @@ namespace beans
                     }
                     #endregion
 
-                    
+
 
                 }
 

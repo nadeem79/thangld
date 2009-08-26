@@ -103,7 +103,7 @@
                 <td>
                     <span class="hidden">
                         <asp:Literal runat="server" ID="cannotUpgradeAttack" Visible="false">Thiếu tài nguyên</asp:Literal></span>
-                    <asp:UpdatePanel runat="server" ID="panelUpgradeAttack">
+                    <asp:UpdatePanel runat="server" ID="panelUpgradeAttack" Visible="false">
                         <ContentTemplate>
                             <asp:LinkButton runat="server" ID="bttnUpgradeAttack" Text="Nâng cấp" 
                                 OnClick="bttnUpgradeAttack_Click">Nâng cấp</asp:LinkButton>
@@ -116,7 +116,7 @@
             </tr>
             <tr>
                 <td>
-                    Upgrade attack to level
+                    Upgrade defense to level
                     <% = this.DefensePrice.Level %>
                 </td>
                 <td>
@@ -133,7 +133,7 @@
                 <td>
                     <span class="hidden">
                         <asp:Literal runat="server" ID="cannotUpgradeDefense" Visible="false">Thiếu tài nguyên</asp:Literal></span>
-                    <asp:UpdatePanel runat="server" ID="panelUpgradeDefense">
+                    <asp:UpdatePanel runat="server" ID="panelUpgradeDefense" Visible="false">
                         <ContentTemplate>
                             <asp:LinkButton runat="server" ID="bttnUpgradeDefense" Text="Nâng cấp" 
                                 OnClick="bttnUpgradeDefense_Click">Nâng cấp</asp:LinkButton>
@@ -146,7 +146,7 @@
             </tr>
             <tr>
                 <td>
-                    Upgrade attack to level
+                    Upgrade speed to level
                     <% = this.SpeedPrice.Level %>
                 </td>
                 <td>
@@ -163,7 +163,7 @@
                 <td>
                     <span class="hidden">
                         <asp:Literal runat="server" ID="cannotUpgradeSpeed" Visible="false">Thiếu tài nguyên</asp:Literal></span>
-                    <asp:UpdatePanel runat="server" ID="panelUpgradeSpeed">
+                    <asp:UpdatePanel runat="server" ID="panelUpgradeSpeed" Visible="false">
                         <ContentTemplate>
                             <asp:LinkButton runat="server" ID="bttnUpgradeSpeed" Text="Nâng cấp" 
                                 OnClick="bttnUpgradeSpeed_Click">Nâng cấp</asp:LinkButton>

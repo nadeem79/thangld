@@ -16,54 +16,53 @@
     <property name="LastUpdate" column="last_update" type="timestamp" not-null="true" />
     <property name="Population" column="population" type="double" />
 
-    <bag name="Builds" table="build" cascade="all" fetch="select" inverse="true" lazy="true" >
+    <bag name="Builds" table="build" cascade="none" fetch="select" inverse="true" lazy="true" >
       <cache usage="read-write"/>
       <key column="village_id" />
       <one-to-many class="beans.Build, beans"/>
     </bag>
-    <bag name="Recruits" table="recruit" cascade="all" fetch="select" inverse="true" lazy="true"   >
+    <bag name="Recruits" table="recruit" cascade="none" fetch="select" inverse="true" lazy="true"   >
       
       <cache usage="read-write"/>
       <key column="village_id" />
       <one-to-many class="beans.Recruit, beans"/>
     </bag>
-    <bag name="Researches" table="researches" cascade="all" fetch="select" inverse="true" lazy="true" >
+    <bag name="Researches" table="researches" cascade="none" fetch="select" inverse="true" lazy="true" >
       <cache usage="read-write"/>
       <key column="village_id" />
       <one-to-many class="beans.Research, beans"/>
     </bag>
-    <bag name="MovingCommandsFromMe" table="movement" cascade="all" fetch="select" inverse="false" lazy="true"  >
+    <bag name="MovingCommandsFromMe" table="movement" cascade="none" fetch="select" inverse="false" lazy="true"  >
       <cache usage="read-write"/>
       <key column="from_village" />
       <one-to-many class="beans.MovingCommand, beans"/>
     </bag>
-    <bag name="MovingCommandsToMe" table="movement" cascade="all" fetch="select" inverse="true" lazy="true" >
+    <bag name="MovingCommandsToMe" table="movement" cascade="none" fetch="select" inverse="true" lazy="true" >
       <cache usage="read-write"/>
       <key column="to_village" />
       <one-to-many class="beans.MovingCommand, beans"/>
     </bag>
-    <bag name="Offers" table="offers" cascade="all" fetch="select" inverse="true" lazy="true" >
-
+    <bag name="Offers" table="offers" cascade="none" fetch="select" inverse="true" lazy="true" >
       <cache usage="read-write"/>
       <key column="village_id" />
       <one-to-many class="beans.Offer, beans"/>
       
     </bag>
-    <bag name="StationsAtMe" table="stationed" cascade="all" fetch="select" inverse="true" lazy="true" >
+    <bag name="StationsAtMe" table="stationed" cascade="none" fetch="select" inverse="true" lazy="true" >
       <cache usage="read-write"/>
       <key column="at_village" />
       <one-to-many class="beans.Station, beans"/>
     </bag>
-    <bag name="StationsFromMe" table="stationed" cascade="all" fetch="select" inverse="true" lazy="true" >
+    <bag name="StationsFromMe" table="stationed" cascade="none" fetch="select" inverse="true" lazy="true" >
       <cache usage="read-write"/>
       <key column="from_village" />
       <one-to-many class="beans.Station, beans"/>
     </bag>
     
-    <one-to-one name="VillageBuildingData" class="beans.VillageBuildingData, beans" cascade="all" lazy="no-proxy" fetch="select" />
-    <one-to-one name="VillageResourceData" class="beans.VillageResourcesData, beans" cascade="all" lazy="no-proxy" fetch="select" />
-    <one-to-one name="VillageTroopData" class="beans.VillageTroopData, beans" cascade="all" lazy="no-proxy" fetch="select" />
-    <one-to-one name="VillageResearchData" class="beans.VillageResearchData, beans" cascade="all" lazy="no-proxy" fetch="select" />
+    <one-to-one name="VillageBuildingData" class="beans.VillageBuildingData, beans" cascade="all" lazy="false" fetch="select" />
+    <one-to-one name="VillageResourceData" class="beans.VillageResourcesData, beans" cascade="all" lazy="false" fetch="select" />
+    <one-to-one name="VillageTroopData" class="beans.VillageTroopData, beans" cascade="all" lazy="false" fetch="select" />
+    <one-to-one name="VillageResearchData" class="beans.VillageResearchData, beans" cascade="all" lazy="false" fetch="select" />
   </class>
 
   <class name ="beans.VillageBuildingData, beans" table="villages_building" lazy="true">

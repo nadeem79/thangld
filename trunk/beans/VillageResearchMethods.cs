@@ -103,13 +103,14 @@ namespace beans
             else
                 research.Start = lastResearch.End;
 
-            research.End = research.Start.AddSeconds(price.Time);
+            research.End = research.Start.AddMilliseconds(price.Time);
 
             this.Village[ResourcesType.Wood] -= price.Wood;
             this.Village[ResourcesType.Iron] -= price.Iron;
             this.Village[ResourcesType.Clay] -= price.Clay;
 
             this.Village.Researches.Add(research);
+            session.Save(research);
             session.Update(this.Village);
 
             return research;
@@ -120,27 +121,28 @@ namespace beans
 
             int smithyLevel = this.Village[BuildingType.Smithy];
 
-            IList<Research> researchs = (from r in this.Village.Researches
-                                         where r.ID >= research.ID
-                                         orderby r.ID ascending
-                                         select r).ToList<Research>();
-
-            Research topResearch = (from r in researchs
+            Research topResearch = (from r in this.Village.Researches
                                     where r.Type == research.Type
                                     orderby r.ID descending
                                     select r).FirstOrDefault<Research>();
 
             ResearchPrice price = Research.GetPrice(research.Type, topResearch.Level, smithyLevel);
 
-            researchs.Remove(research);
-
-            foreach (Research r in researchs)
+            for(int i=0; i<this.Village.Researches.Count; i++)
             {
-                if (r.Type == research.Type)
+                Research r = this.Village.Researches[i];
+                if (r.Type == research.Type && r.ID > research.ID)
                     r.Level -= 1;
 
+                if (i == 0)
+                    r.Start = DateTime.Now;
+                else
+                    r.Start = this.Village.Researches[i - 1].End;
+
                 ResearchPrice nextPrice = Research.GetPrice(r.Type, r.Level, smithyLevel);
-                r.End = r.Start.AddSeconds(nextPrice.Time);
+                
+                r.End = r.Start.AddMilliseconds(nextPrice.Time);
+                session.Update(research);
             }
 
             this.Village[ResourcesType.Wood] += (int)(price.Wood + 0.8);
@@ -148,6 +150,7 @@ namespace beans
             this.Village[ResourcesType.Iron] += (int)(price.Iron + 0.8);
 
             Village.Researches.Remove(research);
+            session.Delete(research);
             session.Update(this.Village);
         }
 

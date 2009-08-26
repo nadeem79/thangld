@@ -441,48 +441,63 @@ namespace beans
             {
                 case BuildingType.Headquarter:
                     level = this.TopHeadquarterLevel + 1;
+                    this.topHeadquarterLevel++;
                     break;
                 case BuildingType.Barracks:
                     level = this.TopBarrackLevel + 1;
+                    this.topBarrackLevel++;
                     break;
                 case BuildingType.Stable:
                     level = this.TopStableLevel + 1;
+                    this.topStableLevel++;
                     break;
                 case BuildingType.Workshop:
                     level = this.TopWorkshopLevel + 1;
+                    this.topWorkshopLevel++;
                     break;
                 case BuildingType.Academy:
                     level = this.TopAcademyLevel + 1;
+                    this.topAcademyLevel++;
                     break;
                 case BuildingType.Smithy:
                     level = this.TopSmithyLevel + 1;
+                    this.topSmithyLevel++;
                     break;
                 case BuildingType.Rally:
                     level = this.TopRallyPointLevel + 1;
+                    this.topRallyPointLevel++;
                     break;
                 case BuildingType.Market:
                     level = this.TopMarketLevel + 1;
+                    this.topMarketLevel++;
                     break;
                 case BuildingType.TimberCamp:
                     level = this.TopTimberCampLevel + 1;
+                    this.topTimberCampLevel++;
                     break;
                 case BuildingType.ClayPit:
                     level = this.TopClayPitLevel + 1;
+                    this.topClayPitLevel++;
                     break;
                 case BuildingType.IronMine:
                     level = this.TopIronMineLevel + 1;
+                    this.topIronMineLevel++;
                     break;
                 case BuildingType.Farm:
                     level = this.TopFarmLevel + 1;
+                    this.topFarmLevel++;
                     break;
                 case BuildingType.Warehouse:
                     level = this.TopWarehouseLevel + 1;
+                    this.topWorkshopLevel++;
                     break;
                 case BuildingType.HidingPlace:
                     level = this.TopHiddenPlaceLevel + 1;
+                    this.topHiddenPlaceLevel++;
                     break;
                 case BuildingType.Wall:
                     level = this.TopWallLevel + 1;
+                    this.topWallLevel++;
                     break;
                 default:
                     break;
@@ -515,6 +530,7 @@ namespace beans
             this.Village.VillageResourceData.Iron -= price.Iron;
             this.Village.Population += price.Population;
             this.Village.Builds.Add(build);
+            session.Save(build);
             session.Update(this.Village);
 
             return status;
@@ -530,10 +546,8 @@ namespace beans
             if (build == null)
                 return;
 
-            IList<Build> builds = (from b in this.Village.Builds
-                                   where b.ID > id &&
-                                   b.InVillage == this.Village
-                                   select b).ToList<Build>();
+            this.Village.Builds.Remove(build);
+            session.Delete(build);
 
             BuildPrice price = Build.GetPrice(build.Building, build.Level, this.Village[BuildingType.Headquarter]);
 
@@ -542,22 +556,72 @@ namespace beans
             this.Village.VillageResourceData.Iron += (int)(price.Iron * 0.8);
             this.Village.Population -= price.Population;
 
-            for (int i = 0; i < builds.Count; i++)
+            for (int i = 0; i < this.Village.Builds.Count; i++)
             {
-                Build b = builds[i];
+                Build b = this.Village.Builds[i];
                 if (i == 0)
                     b.Start = DateTime.Now;
                 else
-                    b.Start = builds[i - 1].End;
+                    b.Start = this.Village.Builds[i - 1].End;
 
-                if (b.Building == build.Building)
+                if (b.Building == build.Building && b.ID > build.ID)
                     b.Level--;
 
                 BuildPrice p = Build.GetPrice(b.Building, b.Level, this.Village[BuildingType.Headquarter]);
-                b.End = b.Start.AddSeconds(p.BuildTime);
+                b.End = b.Start.AddMilliseconds(p.BuildTime);
+                session.Update(b);
             }
 
-            this.Village.Builds.Remove(build);
+            switch (build.Building)
+            {
+                case BuildingType.Headquarter:
+                    this.topHeadquarterLevel--;
+                    break;
+                case BuildingType.Barracks:
+                    this.topBarrackLevel--;
+                    break;
+                case BuildingType.Stable:
+                    this.topStableLevel--;
+                    break;
+                case BuildingType.Workshop:
+                    this.topWorkshopLevel--;
+                    break;
+                case BuildingType.Academy:
+                    this.topAcademyLevel--;
+                    break;
+                case BuildingType.Smithy:
+                    this.topSmithyLevel--;
+                    break;
+                case BuildingType.Rally:
+                    this.topRallyPointLevel--;
+                    break;
+                case BuildingType.Market:
+                    this.topMarketLevel--;
+                    break;
+                case BuildingType.TimberCamp:
+                    this.topTimberCampLevel--;
+                    break;
+                case BuildingType.ClayPit:
+                    this.topClayPitLevel--;
+                    break;
+                case BuildingType.IronMine:
+                    this.topIronMineLevel--;
+                    break;
+                case BuildingType.Farm:
+                    this.topFarmLevel--;
+                    break;
+                case BuildingType.Warehouse:
+                    this.topWorkshopLevel--;
+                    break;
+                case BuildingType.HidingPlace:
+                    this.topHiddenPlaceLevel--;
+                    break;
+                case BuildingType.Wall:
+                    this.topWallLevel--;
+                    break;
+                default:
+                    break;
+            }
             
             session.Update(this.Village);
         }

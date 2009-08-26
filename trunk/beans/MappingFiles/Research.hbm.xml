@@ -4,7 +4,11 @@
   <class name="beans.Research, beans" table="researches" lazy="true">
     <cache usage="read-write"/>
     <id name="ID" column="id" type="Int32">
-      <generator class="identity"/>
+      <generator class="hilo">
+        <param name="table">hi_value</param>
+        <param name="column">next_value</param>
+        <param name="where">id='research'</param>
+      </generator>
     </id>
     <many-to-one name="Village" class="beans.Village, beans" column="village_id" not-null="true" fetch="select" cascade="none" lazy="no-proxy" />
     <property name="Type" column="type" type="beans.ResearchType, beans" />

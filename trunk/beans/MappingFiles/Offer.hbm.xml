@@ -4,9 +4,14 @@
   <class name="beans.Offer, beans" table="offers" lazy="false">
     <cache usage="read-write"/>
     <id name="ID" column="id" type="Int32">
-      <generator class="identity"/>
+      <generator class="hilo">
+        <param name="table">hi_value</param>
+        <param name="column">next_value</param>
+        <param name="where">id='offer'</param>
+      </generator>
     </id>
-    <many-to-one name="AtVillage" class="beans.Village, beans" column="village_id" not-null="true" fetch="select" cascade="none" />
+    <many-to-one name="AtVillage" class="beans.Village, beans" column="village_id" not-null="true" fetch="select" cascade="all" />
+
     <property name="OfferType" column="offertype" type="beans.ResourcesType, beans" />
     <property name="OfferQuantity" column="offerquantity" type="Int32" />
     <property name="ForType" column="fortype" type="beans.ResourcesType, beans" />

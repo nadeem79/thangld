@@ -72,6 +72,7 @@ namespace beans
             this.CreateTime = DateTime.Now;
 
             this.AtVillage.Offers.Add(this);
+            session.Save(this);
             session.Update(this.AtVillage);
         }
 
