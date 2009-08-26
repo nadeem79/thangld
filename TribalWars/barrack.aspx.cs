@@ -66,46 +66,38 @@ public partial class barrack : System.Web.UI.Page
         }
 
         IList<Recruit> recruits = village.VillageRecruitMethods.InfantryRecruits;
-        string sRecruitCommands = "";
-        DateTime last_complete = DateTime.Now;
-        DateTime complete = DateTime.Now;
-        for (int i=0; i<recruits.Count; i++)
+        if (recruits.Count > 0)
         {
-            sRecruitCommands += "<tr class='lit'>";
-            sRecruitCommands += "<td>" + recruits[i].Quantity.ToString();
-            switch (recruits[i].Troop)
-            {
-                case TroopType.Spear:
-                    sRecruitCommands += " lính giáo</td>";
-                    break;
-                case TroopType.Sword:
-                    sRecruitCommands += " lính kiếm</td>";
-                    break;
-                case TroopType.Axe:
-                    sRecruitCommands += " lính rìu</td>";
-                    break;
-                default:
-                    break;
-            }
-            sRecruitCommands += "<td>";
-
-            if (i == 0)
-            {
-                sRecruitCommands += "<span class='timer'>";
-                last_complete = recruits[i].LastUpdate;
-            }
-            else
-                last_complete = complete;
-            complete = last_complete + TimeSpan.FromSeconds(beans.Recruit.GetPrice(recruits[i].Troop, this.village[beans.BuildingType.Barracks]).BuildTime * recruits[i].Quantity);
-            sRecruitCommands += Functions.FormatTime(beans.Recruit.GetPrice(recruits[i].Troop, this.village[beans.BuildingType.Barracks]).BuildTime * recruits[i].Quantity) + "</span></td>";
-            sRecruitCommands += String.Format("<td>{0}</td>", complete.ToString("HH:mm:ss 'ngày' dd/MM/yyyy"));
-
-            sRecruitCommands += "<td><a href=\"barrack.aspx?id=" + this.village.ID.ToString() + "&mode=cancel_recruit&recruit_id=" + recruits[i].ID.ToString() + "\">Huỷ</a></td>";
+            this.rInfantryRecruits.DataSource = recruits;
+            this.rInfantryRecruits.DataBind();
         }
-        this.lblRecruiting.Text = sRecruitCommands;
     }
 
+    protected string TroopTypeString(TroopType type)
+    {
+        switch (type)
+        {
+            case TroopType.Spear:
+                return "lính giáo";
+            case TroopType.Sword:
+                return "lính kiếm";
+            case TroopType.Axe:
+                return "lính rìu";
+            default:
+                return "";
+        }
+    }
 
+    protected string FirstRow(int index)
+    {
+        return (index == 0) ? "class=\"timer\"" : "";
+    }
+    protected string FirstRowTime(int index, Recruit recruit)
+    {
+        if (index == 0)
+            return Functions.FormatTime(recruit.FinishTime - DateTime.Now);
+        return Functions.FormatTime(recruit.FinishTime - recruit.LastUpdate);
+    }
 
     protected void bttnRecruit_Click(object sender, EventArgs e)
     {

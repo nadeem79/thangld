@@ -142,10 +142,6 @@ namespace beans
             session.Save(sendToSource);
             session.Save(sendFromSource);
 
-            session.Update(this.Village.VillageBuildingData);
-            session.Update(offer.AtVillage.VillageBuildingData);
-            session.Update(this.Village.VillageResourceData);
-            session.Update(offer.AtVillage.VillageResourceData);
             if (offer.OfferNumber == 0)
             {
                 offer.AtVillage.Offers.Remove(offer);
@@ -153,6 +149,10 @@ namespace beans
             }
             else
                 session.Update(offer);
+
+            session.Update(offer.AtVillage);
+            session.Update(this.Village);
+
             session.Save(report);
 
             return sendToSource;
@@ -200,13 +200,13 @@ namespace beans
             this.Village[offer.OfferType] += quantity;
             this.Village.VillageBuildingData.Merchant += merchant;
 
-            if (offer.OfferNumber > 0)
-                session.Update(offer);
-            else
+            if (offer.OfferNumber == 0)
             {
                 offer.AtVillage.Offers.Remove(offer);
                 session.Delete(offer);
             }
+            else
+                session.Update(offer);
             session.Update(this.Village);
 
             return offer;
@@ -224,11 +224,11 @@ namespace beans
             this.Village[offer.OfferType] += quantity;
             this.Village.VillageBuildingData.Merchant += merchant;
 
-            session.Delete(offer);
+            
             offer.AtVillage.Offers.Remove(offer);
+            session.Delete(offer);
 
-            session.Update(this.Village.VillageBuildingData);
-            session.Update(this.Village.VillageResourceData);
+            session.Update(this.Village);
         }
 
         public virtual IList<Offer> GetOffers(ResourcesType forType, ResourcesType offerType, double maxDuration, double maxRatio, string orderby, ISession session)

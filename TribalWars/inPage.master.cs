@@ -72,13 +72,14 @@ public partial class inPage : System.Web.UI.MasterPage
         {
             //Response.Redirect("session_expired.aspx", true);
             //return;
-            Session["user"] = 1;
+            Session["user"] = 3;
         }
 
         this.start = DateTime.Now;
         int id;
 
         this.NHibernateSession = (ISession)Context.Items["NHibernateSession"];
+
 
 
         this.player = this.NHibernateSession.Load<beans.Player>((int)Session["user"]);

@@ -5,7 +5,11 @@
   <class name="beans.MovingCommand, beans" table="movement" lazy="true" discriminator-value="0">
     <cache usage="read-write"/>
     <id name="ID" column="id" type="Int32">
-      <generator class="identity"/>
+      <generator class="hilo">
+        <param name="table">hi_value</param>
+        <param name="column">next_value</param>
+        <param name="where">id='command'</param>
+      </generator>
     </id>
     <discriminator column="type" type="Int32" />
     

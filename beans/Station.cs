@@ -177,6 +177,7 @@ namespace beans
             {
                 this.AtVillage.StationsAtMe.Remove(this);
                 this.FromVillage.StationsFromMe.Remove(this);
+                session.Delete(this);
             }
             else
                 session.Update(this);

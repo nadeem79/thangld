@@ -79,7 +79,7 @@
                                 </td>
                                 <td>
                                     <span <%# this.FirstRow(Container.ItemIndex)%>>
-                                        <%# Functions.FormatTime((DateTime)DataBinder.Eval(Container.DataItem, "End") - (DateTime)DataBinder.Eval(Container.DataItem, "Start"))%></span>
+                                    <%# this.FirstRowTime(Container.ItemIndex, (beans.Build)Container.DataItem)%></span>
                                 </td>
                                 <td>
                                     <%# ((DateTime)DataBinder.Eval(Container.DataItem, "End")).ToString("lúc HH:mm:ss 'ngày' dd/MM/yyyy") %>

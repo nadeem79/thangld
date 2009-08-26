@@ -118,4 +118,12 @@ public partial class headquarters : System.Web.UI.Page
     {
         return (index == 0) ? "class='timer'" : "";
     }
+
+    protected string FirstRowTime(int index, Build build)
+    {
+        if (index == 0)
+            return Functions.FormatTime(build.End - DateTime.Now);
+        return Functions.FormatTime(build.End - build.Start);
+    }
+
 }
