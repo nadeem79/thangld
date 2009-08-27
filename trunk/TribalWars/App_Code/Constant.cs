@@ -17,6 +17,10 @@ public class Constant
     {
         get { return "user"; }
     }
+    public static string StaffUserSessionSign
+    {
+        get { return "staffID"; }
+    }
 
     public Constant()
     {

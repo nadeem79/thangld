@@ -254,10 +254,10 @@
         <table class="vis">
             <tbody>
                 <tr>
-                    <th width="250">
+                    <th width="350">
                         Outgoing
                     </th>
-                    <th width="160">
+                    <th width="200">
                         Arrival time
                     </th>
                     <th width="100">
@@ -274,7 +274,7 @@
                     (<%# ((beans.Village)DataBinder.Eval(Container.DataItem, "ToVillage")).X.ToString("000") %>|<%# ((beans.Village)DataBinder.Eval(Container.DataItem, "ToVillage")).Y.ToString("000") %>)</a>
             </td>
             <td>
-                <%# ((DateTime)DataBinder.Eval(Container.DataItem, "LandingTime")).ToString("HH:mm:ss:'<span class=\"small inactive\">'fff'</span> ngày' dd:MM:yyyy")%>
+                <%# ((DateTime)DataBinder.Eval(Container.DataItem, "LandingTime")).ToString("HH:mm:ss:'<span class=\"small inactive\">'fff'</span> ngày' dd/MM")%>
             </td>
             <td>
                 <span class="timer">
@@ -291,10 +291,10 @@
         <table class="vis">
             <tbody>
                 <tr>
-                    <th width="250">
+                    <th width="350">
                         Incoming
                     </th>
-                    <th width="160">
+                    <th width="200">
                         Arrival time
                     </th>
                     <th width="100">
@@ -311,7 +311,7 @@
                     (<%# ((beans.Village)DataBinder.Eval(Container.DataItem, "FromVillage")).X.ToString("000")%>|<%# ((beans.Village)DataBinder.Eval(Container.DataItem, "FromVillage")).Y.ToString("000")%>)</a>
             </td>
             <td>
-                <%# ((DateTime)DataBinder.Eval(Container.DataItem, "LandingTime")).ToString("HH:mm:ss'<span class=\"small inactive\">:'fff'</span> ngày' dd:MM:yyyy")%>
+                <%# ((DateTime)DataBinder.Eval(Container.DataItem, "LandingTime")).ToString("HH:mm:ss'<span class=\"small inactive\">:'fff'</span> ngày' dd/MM")%>
             </td>
             <td>
                 <span class="timer">

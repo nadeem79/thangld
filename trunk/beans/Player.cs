@@ -269,15 +269,30 @@ namespace beans
             {
                 //Expression firstExpression = Re
                 AbstractCriterion restrictions = Expression.Sql(string.Format("this_.type={0}", (int)types[0]));
-                for (int i = 1; i < types.Length; i++)
-                    restrictions = Expression.Sql(string.Format("this_.type={0}", (int)types[i]));
                 criteria.Add(restrictions);
+                for (int i = 1; i < types.Length; i++)
+                {
+                    restrictions = Expression.Sql(string.Format("this_.type={0}", (int)types[i]));
+                    criteria.Add(restrictions);
+                }
             }
 
             criteria.AddOrder(Order.Desc("ID"));
             criteria.SetMaxResults(40);
             criteria.SetFirstResult(page * 40);
             return criteria.List<Report>();
+        }
+
+        public virtual void DeleteReport(int reportId, ISession session)
+        {
+            Report report = session.Get<Report>(reportId);
+            if (report == null)
+                return;
+
+            if (report.Owner != this)
+                return;
+
+            session.Delete(report);
         }
 
         public virtual int GetUnreadReportCount(ISession session)

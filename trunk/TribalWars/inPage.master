@@ -36,7 +36,7 @@
         Skin="Vista" />
     <telerik:RadWindowManager ID="RadWindowManager1" runat="server">
         <Windows>
-            <telerik:RadWindow ID="ConfirmAttack" Modal="true" InitialBehavior="Pin" Width="500"
+            <telerik:RadWindow ID="ConfirmAttack" Modal="true" InitialBehavior="Pin" Width="500" runat="server"
                 Style="z-index: 1;">
             </telerik:RadWindow>
         </Windows>

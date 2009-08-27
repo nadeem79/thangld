@@ -287,8 +287,12 @@ namespace beans
             double cavalryDefense = this.ToVillage.VillageTroopData.SpearInVillage * spearCavalryDefense + this.ToVillage.VillageTroopData.SwordInVillage * swordCavalryDefense + this.ToVillage.VillageTroopData.AxeInVillage * axeCavalryDefense + this.ToVillage.VillageTroopData.LightCavalryInVillage * lightCavalryCavalryDefense + this.ToVillage.VillageTroopData.HeavyCavalryInVillage * heavyCavalryCavalryDefense + this.ToVillage.VillageTroopData.NobleInVillage * nobleCavalryDefense;
             double totalDefense = (long)(infantryDefense * pInfantry + cavalryDefense * pCavalry) + 100;
 
-            totalAttack = (totalAttack / totalDefense) * totalAttack;
             totalAttack += (long)(totalAttack * luck);
+            if (totalAttack > totalDefense)
+                totalAttack = ((totalAttack - totalDefense) / (totalAttack * 4) + 1) * totalAttack;
+            else
+                totalDefense = ((totalDefense - totalAttack) / (totalDefense * 4) + 1) * totalDefense;
+            //totalAttack = (totalAttack / totalDefense) * totalAttack;
 
             bool successAttack = (totalAttack > totalDefense);
 
