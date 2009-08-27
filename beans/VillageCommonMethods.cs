@@ -10,6 +10,10 @@ namespace beans
 {
     public class VillageCommonMethods
     {
+
+        public static int Count = 0;
+        public static List<string> UpdatedVillage = new List<string>();
+
         public Village Village
         {
             get;
@@ -23,19 +27,21 @@ namespace beans
 
         public virtual void UpdateVillage(DateTime to, ISession session, bool commit)
         {
-
+            UpdatedVillage.Add(this.Village.Name);
             if (to == this.Village.LastUpdate)
                 return;
+
             SortedList<DateTime, MovingCommand> commands = new SortedList<DateTime, MovingCommand>();
             foreach (MovingCommand movingCommand in this.Village.MovingCommandsFromMe)
                 commands.Add(movingCommand.LandingTime, movingCommand);
             foreach (MovingCommand movingCommand in this.Village.MovingCommandsToMe)
                 commands.Add(movingCommand.LandingTime, movingCommand);
-
             DateTime currentTime = this.Village.LastUpdate;
-            while (commands.Count > 0 && commands.ElementAt(0).Value.LandingTime <= to)
+            while (commands.Count > 0 && commands.ElementAt(0).Value.LandingTime < to)
             {
+                
                 MovingCommand command = commands.ElementAt(0).Value;
+                this.Village.LastUpdate = command.LandingTime;
                 MovingCommand newCommand = null;
                 if (command.ToVillage == this.Village)
                 {
@@ -97,26 +103,18 @@ namespace beans
                         session.Delete(this.Village.Builds[0]);
                         this.Village.Builds.RemoveAt(0);
                     }
-
                     newCommand = command.Effect(session);
                     currentTime = command.LandingTime;
                     commands.RemoveAt(0);
-                    this.Village.MovingCommandsToMe.Remove(command);
-                    command.FromVillage.MovingCommandsFromMe.Remove(command);
-                    session.Update(command.FromVillage);
                 }
                 else
                 {
                     command.ToVillage.VillageCommonMethods.UpdateVillage(command.LandingTime, session, false);
                     newCommand = command.Effect(session);
                     commands.RemoveAt(0);
-                    this.Village.MovingCommandsFromMe.Remove(command);
-                    command.ToVillage.MovingCommandsToMe.Remove(command);
-                    
-                    session.Update(command.ToVillage);
                 }
 
-                session.Delete(command);
+                //session.Delete(command);
                 if (newCommand != null)
                     if (newCommand.LandingTime < to)
                         commands.Add(newCommand.LandingTime, newCommand);

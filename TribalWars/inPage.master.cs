@@ -72,7 +72,7 @@ public partial class inPage : System.Web.UI.MasterPage
         {
             //Response.Redirect("session_expired.aspx", true);
             //return;
-            Session["user"] = 3;
+            Session["user"] = 1;
         }
 
         this.start = DateTime.Now;
