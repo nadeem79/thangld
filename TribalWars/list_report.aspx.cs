@@ -20,7 +20,7 @@ public partial class list_report : System.Web.UI.Page
     protected Village village;
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        
         this.village = ((inPage)this.Master).CurrentVillage;
         ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
         Player user = session.Load<Player>(Session["user"]);
@@ -64,9 +64,61 @@ public partial class list_report : System.Web.UI.Page
 
     }
 
-    protected void Button1_Click(object sender, EventArgs e)
+    protected void bttnDeleteReports_Clicked(object sender, EventArgs e)
     {
-        
+        ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
+        Player player = session.Load<Player>(Session[Constant.NormalUserSessionSign]);
+
+        for (int cnt = 0; cnt < gvReports.Items.Count; cnt++)
+        {
+            // your checkbox ; type casting
+            CheckBox cbId = ((CheckBox)gvReports.Items[cnt].FindControl("checkReport"));
+
+            if (cbId.Checked)
+            {
+                HiddenField hiddenFieldId = ((HiddenField)gvReports.Items[cnt].FindControl("hiddenReportID"));
+                int reportId = 0;
+                if (int.TryParse(hiddenFieldId.Value, out reportId))
+                    player.DeleteReport(reportId, session);
+            }
+
+        }
+        int type = 0, page = 0;
+
+        int.TryParse(Request["type"], out type);
+        int.TryParse(Request["page"], out page);
+        IList<Report> lstReports = null;// = user.GetReport(page, session);
+        switch (type)
+        {
+            case 1:
+                lstReports = player.GetReports(page, session, ReportType.Attack);
+                navigator.Rows[1].Cells[0].Attributes["class"] = "selected";
+                break;
+            case 2:
+                lstReports = player.GetReports(page, session, ReportType.Defense, ReportType.DefenseOther);
+                navigator.Rows[2].Cells[0].Attributes["class"] = "selected";
+                break;
+            case 3:
+                lstReports = player.GetReports(page, session, ReportType.Support, ReportType.SupportSendBack, ReportType.SupportWithdawal);
+                navigator.Rows[3].Cells[0].Attributes["class"] = "selected";
+                break;
+            case 4:
+                lstReports = player.GetReports(page, session, ReportType.ResourceReceive, ReportType.OfferAccepted);
+                navigator.Rows[4].Cells[0].Attributes["class"] = "selected";
+                break;
+            case 5:
+                lstReports = player.GetReports(page, session, ReportType.InviteToTribe);
+                navigator.Rows[5].Cells[0].Attributes["class"] = "selected";
+                break;
+            default:
+                lstReports = player.GetReports(page, session);
+                navigator.Rows[0].Cells[0].Attributes["class"] = "selected";
+                break;
+        }
+        this.gvReports.DataSource = lstReports;
+        //System.Web.UI.WebControls.HyperLinkField field = (HyperLinkField)this.gvReports.Columns[0];
+        //field.DataNavigateUrlFormatString = "report_details.aspx?id=" + this.village.ID.ToString() + "&report={0}";
+        this.gvReports.DataBind();
     }
 
     public string UnreadNotify(bool unread)
@@ -74,5 +126,9 @@ public partial class list_report : System.Web.UI.Page
         if (unread)
             return "(chưa đọc)";
         return "";
+    }
+    protected void gvReports_ItemCommand(object source, RepeaterCommandEventArgs e)
+    {
+        
     }
 }

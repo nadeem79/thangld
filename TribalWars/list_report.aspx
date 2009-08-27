@@ -57,9 +57,7 @@
                     </table>
                 </td>
                 <td valign="top" width="100%">
-                        <asp:Repeater runat="server" ID="gvReports">
-                            <HeaderTemplate>
-                                <table cellspacing="0" rules="all" border="1" style="border-color: Black; border-width: 1px;
+                <table cellspacing="0" rules="all" border="1" style="border-color: Black; border-width: 1px;
                                     border-style: Solid; width: 100%; border-collapse: collapse;">
                                     <tbody>
                                         <tr>
@@ -69,20 +67,15 @@
                                                 <center>
                                                     Tiêu đề</center>
                                             </th>
-                                            <th>
+                                            <th width="160">
                                                 <center>
                                                     Thời gian</center>
                                             </th>
                                         </tr>
-                            </HeaderTemplate>
-                            <FooterTemplate>
-                            <tr>
-                                <th><input type="checkbox" onchange="checkedAll" /></th>
-                                <th></th><th></th>
-                            </tr>
-                                </tbody> </table>
-                            </FooterTemplate>
+                        <asp:Repeater runat="server" ID="gvReports" 
+                            onitemcommand="gvReports_ItemCommand" EnableViewState="true">
                             <ItemTemplate>
+                            <form method="post" action="<% = Request.Url.ToString() %>">
                                 <tr>
                                     <td>
                                         <asp:CheckBox runat="server" ID="checkReport" /><asp:HiddenField runat="server" ID="hiddenReportID"
@@ -93,11 +86,19 @@
                                             <%# Eval("Title") %> <%# UnreadNotify((bool)Eval("Unread")) %></a>
                                     </td>
                                     <td>
-                                        <%# ((DateTime)Eval("Time")).ToString("HH:mm:ss 'ngày' dd/MM/yyyy")%>
+                                        <%# ((DateTime)Eval("Time")).ToString("HH:mm:ss 'ngày' dd/MM")%>
                                     </td>
                                 </tr>
+                                </form>
                             </ItemTemplate>
                         </asp:Repeater>
+                        <tr>
+                                <th><input type="checkbox" onchange="checkedAll" /></th>
+                                <th>
+                                    <asp:Button ID="bttnDeleteReports" runat="server" Text="Xoá" OnClick="bttnDeleteReports_Clicked" /></th>
+                                <th></th>
+                            </tr>
+                                </tbody> </table>
                 </td>
             </tr>
         </tbody>
