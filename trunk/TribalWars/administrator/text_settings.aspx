@@ -1,6 +1,9 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/administrator/administrator.master" AutoEventWireup="true" CodeFile="text_settings.aspx.cs" Inherits="administrator_text_settings" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/administrator/administrator.master" AutoEventWireup="true" CodeFile="text_settings.aspx.cs" Inherits="administrator_text_settings" ValidateRequest="false" %>
+
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+        
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 <center>
@@ -36,8 +39,8 @@
                 </td>
                 <td>
                     <form method="post" action="<% = Request.Url.ToString() %>">
-                    <textarea name="value"><%# DataBinder.Eval(Container.DataItem, "Value")  %></textarea><br />
-                    <input type="hidden" name="key" value='<%# DataBinder.Eval(Container.DataItem, "Key")  %>' />
+                    <textarea name="value"><%# Eval("Value")  %></textarea><br />
+                    <input type="hidden" name="key" value='<%# Eval("Key")  %>' />
                     <input type="submit" value="Thay đổi" />
                     </form>
                 </td>
@@ -55,7 +58,7 @@
                 </tr>
                 <tr>
                     <td>Giá trị:</td>
-                    <td><asp:TextBox ID="valueTextBox" runat="server" TextMode="MultiLine"></asp:TextBox></td>
+                    <td><telerik:RadEditor ID="valueTextBox" Runat=server></telerik:RadEditor></asp:TextBox></td>
                 </tr>
                 <tr>
                     <td colspan="2" ><asp:Button ID="createNewSettingButton" runat="server" Text="Thêm giá trị mới" 

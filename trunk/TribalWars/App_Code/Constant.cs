@@ -21,8 +21,12 @@ public class Constant
     {
         get { return "staffID"; }
     }
+    public static string UserLoginCount
+    {
+        get { return "UserCount"; }
+    }
 
-    public Constant()
+    protected Constant()
     {
         
     }

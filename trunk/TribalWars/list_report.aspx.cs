@@ -24,9 +24,16 @@ public partial class list_report : System.Web.UI.Page
         this.village = ((inPage)this.Master).CurrentVillage;
         ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
         Player user = session.Load<Player>(Session["user"]);
+
+        int delete = 0;
+        if (int.TryParse(Request["delete"], out delete))
+            user.DeleteReport(delete, session);
+
         int type, page;
         int.TryParse(Request["type"], out type);
         int.TryParse(Request["page"], out page);
+        if (IsPostBack)
+            return;
         IList<Report> lstReports = null;// = user.GetReport(page, session);
         switch (type)
         {
@@ -66,6 +73,7 @@ public partial class list_report : System.Web.UI.Page
 
     protected void bttnDeleteReports_Clicked(object sender, EventArgs e)
     {
+
         ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
         Player player = session.Load<Player>(Session[Constant.NormalUserSessionSign]);
 
@@ -78,7 +86,7 @@ public partial class list_report : System.Web.UI.Page
             {
                 HiddenField hiddenFieldId = ((HiddenField)gvReports.Items[cnt].FindControl("hiddenReportID"));
                 int reportId = 0;
-                if (int.TryParse(hiddenFieldId.Value, out reportId))
+                if (int.TryParse(cbId.Attributes["value"], out reportId))
                     player.DeleteReport(reportId, session);
             }
 

@@ -74,7 +74,6 @@ namespace beans
                 config1.Value = value;
                 config.Value = value;
                 session.Update(config1);
-                session.Flush();
             }
             else
             {
@@ -83,7 +82,6 @@ namespace beans
                 config.Value = value;
                 Configuration.TribalWarsConfiguration.StringConfiguration.Add(key, config);
                 session.Save(config);
-                session.Flush();
             }
         }
 
@@ -118,7 +116,6 @@ namespace beans
             NumericConfiguration config = Configuration.TribalWarsConfiguration.NumericConfiguration[key];
             Configuration.TribalWarsConfiguration.NumericConfiguration.Remove(key);
             session.Delete(config);
-            session.Flush();
         }
 
         public void DeleteTextSetting(string key, ISession session)
@@ -126,10 +123,9 @@ namespace beans
             if (!Configuration.TribalWarsConfiguration.StringConfiguration.ContainsKey(key))
                 return;
 
-            StringConfiguration config = Configuration.TribalWarsConfiguration.StringConfiguration[key];
+            StringConfiguration config = session.Load<StringConfiguration>(key);
             Configuration.TribalWarsConfiguration.StringConfiguration.Remove(key);
             session.Delete(config);
-            session.Flush();
         }
     }
 }

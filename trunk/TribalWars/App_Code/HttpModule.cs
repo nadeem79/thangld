@@ -32,7 +32,6 @@ public class NHibernateHttpModule:IHttpModule
 
     private void context_BeginRequest(object sender, EventArgs e)
     {
-        log4net.Config.XmlConfigurator.Configure();
         if (HttpContext.Current.Request.Path.ToLower().IndexOf(".aspx") <= -1)
             return;
 
@@ -53,7 +52,6 @@ public class NHibernateHttpModule:IHttpModule
         HttpApplication application = (HttpApplication)sender;
         HttpContext context = application.Context;
 
-        //((ISession)context.Items["NHibernateSession"]).Flush();
         ((ISession)context.Items["NHibernateSession"]).Transaction.Commit();
         ((ISession)context.Items["NHibernateSession"]).Close();
         context.Items["NHibernateSession"] = null;

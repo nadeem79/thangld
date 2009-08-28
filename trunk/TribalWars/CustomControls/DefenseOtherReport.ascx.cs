@@ -34,6 +34,6 @@ public partial class CustomControls_DefenseOtherReport : System.Web.UI.UserContr
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        //this.DefenseOtherReport.
     }
 }

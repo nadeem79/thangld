@@ -8,6 +8,29 @@ namespace beans
 {
     public class TribalWarsEngine
     {
+        protected static void CalculateResearchValue()
+        {
+            Research.AttackValuesDictionary.Clear();
+            Research.DefenseValuesDictionary.Clear();
+            Research.SpeedValuesDictionary.Clear();
+
+            double percentAttackIncrease = Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Research.percent_attack_increase").Value;
+            double percentDefenseIncrease = Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Research.percent_defense_increase").Value;
+            double percentSpeedIncrease = Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Research.percent_speed_increase").Value;
+            int maxResearchLevel = (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Research.Common.max_level").Value;
+
+            double attackIncrease = percentAttackIncrease, defenseIncrease = percentDefenseIncrease, speedIncrease = percentSpeedIncrease;
+            
+            for (int i = 1; i <= maxResearchLevel; i++)
+            {
+                attackIncrease += attackIncrease * percentAttackIncrease;
+                defenseIncrease += defenseIncrease * percentDefenseIncrease;
+                speedIncrease += speedIncrease * percentSpeedIncrease;
+                Research.AttackValuesDictionary.Add(i, attackIncrease);
+                Research.DefenseValuesDictionary.Add(i, defenseIncrease);
+                Research.SpeedValuesDictionary.Add(i, speedIncrease);
+            }
+        }
 
         protected static void CalculateResearchPrice()
         {
@@ -56,10 +79,6 @@ namespace beans
             
             Research.ResearchPrices.Clear();
 
-            //Research.ResearchPrices.Add(1001001, attackResearchPrice);
-            //Research.ResearchPrices.Add(1001002, defenseResearchPrice);
-            //Research.ResearchPrices.Add(1001000, speedResearchPrice);
-
             for (int researchLevel = 1; researchLevel < maxResearchLevel; researchLevel++)
             {
                 if (researchLevel > 1)
@@ -98,49 +117,6 @@ namespace beans
                     Research.ResearchPrices.Add(key, speedResearchPrice);
                 }
             }
-
-            //for (int researchLevel = 1; researchLevel <= maxResearchLevel; researchLevel++)
-            //{
-            //    if (researchLevel > 1)
-            //    {
-            //        attackResearchPrice = Research.GetPrice(ResearchType.Attack, researchLevel - 1, 1);
-            //        defenseResearchPrice = Research.GetPrice(ResearchType.Defense, researchLevel - 1, 1);
-            //        speedResearchPrice = Research.GetPrice(ResearchType.Speed, researchLevel - 1, 1);
-            //    }
-
-            //    int woodForAttack = attackResearchPrice.Wood + (int)(attackResearchPrice.Wood * percentResourceIncrease);
-            //    int clayForAttack = attackResearchPrice.Clay + (int)(attackResearchPrice.Clay * percentResourceIncrease);
-            //    int ironForAttack = attackResearchPrice.Iron + (int)(attackResearchPrice.Iron * percentResourceIncrease);
-            //    int timeForAttack = attackResearchPrice.Time + (int)(attackResearchPrice.Time * percentTimeIncrease);
-
-            //    int woodForDefense = defenseResearchPrice.Wood + (int)(defenseResearchPrice.Wood * percentResourceIncrease);
-            //    int clayForDefense = defenseResearchPrice.Clay + (int)(defenseResearchPrice.Clay * percentResourceIncrease);
-            //    int ironForDefense = defenseResearchPrice.Iron + (int)(defenseResearchPrice.Iron * percentResourceIncrease);
-            //    int timeForDefense = defenseResearchPrice.Time + (int)(defenseResearchPrice.Time * percentTimeIncrease);
-
-            //    int woodForSpeed = speedResearchPrice.Wood + (int)(speedResearchPrice.Wood * percentResourceIncrease);
-            //    int clayForSpeed = speedResearchPrice.Clay + (int)(speedResearchPrice.Clay * percentResourceIncrease);
-            //    int ironForSpeed = speedResearchPrice.Iron + (int)(speedResearchPrice.Iron * percentResourceIncrease);
-            //    int timeForSpeed = speedResearchPrice.Time + (int)(speedResearchPrice.Time * percentTimeIncrease);
-
-            //    for (int smithyLevel = 1; smithyLevel <= maxSmithyLevel; smithyLevel++)
-            //    {
-            //        tmp = (researchLevel * 1000) + (smithyLevel * 1000000);
-            //        if (researchLevel != 1 || smithyLevel != 1)
-            //        {
-            //            key = attackType + tmp;
-            //            Research.ResearchPrices.Add(key, attackResearchPrice);
-            //            key = defenseType + tmp;
-            //            Research.ResearchPrices.Add(key, defenseResearchPrice);
-            //            key = speedType + tmp;
-            //            Research.ResearchPrices.Add(key, speedResearchPrice);
-            //        }
-
-            //        attackResearchPrice = new ResearchPrice(string.Format("Attack cấp {0} smithy {1}", researchLevel, smithyLevel + 1), attackResearchPrice.Time - (int)(timeForAttack * percentTimeDecrease), woodForAttack, clayForAttack, ironForAttack, researchLevel);
-            //        defenseResearchPrice = new ResearchPrice(string.Format("Defense cấp {0} smithy {1}", researchLevel, smithyLevel + 1), defenseResearchPrice.Time - (int)(timeForDefense * percentTimeDecrease), woodForDefense, clayForDefense, ironForDefense, researchLevel);
-            //        speedResearchPrice = new ResearchPrice(string.Format("Speed cấp {0} smithy {1}", researchLevel, smithyLevel + 1), speedResearchPrice.Time - (int)(timeForSpeed * percentTimeDecrease), woodForSpeed, clayForSpeed, ironForSpeed, researchLevel);
-            //    }
-            //}
         }
         protected static void CalculateMerchant()
         {
@@ -220,6 +196,7 @@ namespace beans
             CalculateMerchant();
             CalculateResearchPrice();
             CalculateTroopPrice();
+            CalculateResearchValue();
         }
 
         public static void Stop()
