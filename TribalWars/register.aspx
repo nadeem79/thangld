@@ -65,7 +65,7 @@
                     <label for="agb">
                         <asp:CheckBox ID="chkAgreement" runat="server" Text="Tôi đồng ý với các điều khoản đăng ký" />
                     </label>
-                    &nbsp;<a href="javascript:popup_scroll('rules.php', 600, 480)">(Các điều khoản đăng
+                    &nbsp;<a href="agreement.aspx">(Các điều khoản đăng
                         ký)</a><br />
                     <asp:Button ID="bttnRegister" runat="server" Text="Đăng ký" OnClick="bttnRegister_Click" />
                 </div>

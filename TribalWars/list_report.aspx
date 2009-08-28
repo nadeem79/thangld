@@ -75,11 +75,9 @@
                         <asp:Repeater runat="server" ID="gvReports" 
                             onitemcommand="gvReports_ItemCommand" EnableViewState="true">
                             <ItemTemplate>
-                            <form method="post" action="<% = Request.Url.ToString() %>">
                                 <tr>
                                     <td>
-                                        <asp:CheckBox runat="server" ID="checkReport" /><asp:HiddenField runat="server" ID="hiddenReportID"
-                                            Value='<%# Eval("ID") %>' />
+                                        <asp:CheckBox ID="checkReport" runat="server" value='<%# Eval("ID") %>' />
                                     </td>
                                     <td>
                                         <a href="report_details.aspx?id=<% = this.village.ID %>&report=<%# Eval("ID") %>">
@@ -89,7 +87,6 @@
                                         <%# ((DateTime)Eval("Time")).ToString("HH:mm:ss 'ngày' dd/MM")%>
                                     </td>
                                 </tr>
-                                </form>
                             </ItemTemplate>
                         </asp:Repeater>
                         <tr>

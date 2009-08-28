@@ -11,11 +11,25 @@ namespace beans
     public class Research:IdentityObject
     {
         #region Static Members
-
+        protected static Dictionary<int, double> attackValuesDictionary = new Dictionary<int, double>();
+        protected static Dictionary<int, double> defenseValuesDictionary = new Dictionary<int, double>();
+        protected static Dictionary<int, double> speedValuesDictionary = new Dictionary<int, double>();
         protected static Dictionary<int, ResearchPrice> _dictionary = new Dictionary<int,ResearchPrice>();
         public static Dictionary<int, ResearchPrice> ResearchPrices
         {
             get { return Research._dictionary; }
+        }
+        public static Dictionary<int, double> AttackValuesDictionary
+        {
+            get { return attackValuesDictionary; }
+        }
+        public static Dictionary<int, double> DefenseValuesDictionary
+        {
+            get { return defenseValuesDictionary; }
+        }
+        public static Dictionary<int, double> SpeedValuesDictionary
+        {
+            get { return speedValuesDictionary; }
         }
 
         public static ResearchPrice GetPrice(ResearchType type, int level, int smithy)

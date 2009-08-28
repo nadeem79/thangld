@@ -463,12 +463,12 @@ namespace beans
             village.VillageBuildingData = new VillageBuildingData();
             village.VillageTroopData = new VillageTroopData();
             village.VillageResourceData = new VillageResourcesData();
-            //village.VillageResearchData = new VillageReseachData();
+            village.VillageResearchData = new VillageResearchData();
 
             village.VillageBuildingData.Village = village;
             village.VillageTroopData.Village = village;
             village.VillageResourceData.Village = village;
-            //village.VillageResearchData.Village = village;
+            village.VillageResearchData.Village = village;
 
             village.X = X;
             village.Y = Y;
@@ -486,6 +486,11 @@ namespace beans
             village.VillageResourceData.Iron = 2000;
             village.VillageResourceData.Clay = 2000;
             village.VillageResourceData.Wood = 2000;
+
+            village.VillageResearchData.Attack = 1;
+            village.VillageResearchData.Defense = 1;
+            village.VillageResearchData.TroopSpeed = 1;
+
             config.InsertOrUpdateConfiguration(expandCount, session);
             config.InsertOrUpdateConfiguration(expandTo, session);
             return village;

@@ -9,11 +9,7 @@ using beans;
 
 public partial class administrator_text_settings : System.Web.UI.Page
 {
-    protected ISession NHibernateSession
-    {
-        get;
-        set;
-    }
+
     protected Player CurrentPlayer
     {
         get;
@@ -22,16 +18,13 @@ public partial class administrator_text_settings : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        this.NHibernateSession = ((administrator_administrator)(this.Master)).NHibernateSession;
-        this.CurrentPlayer = ((administrator_administrator)(this.Master)).CurrentPlayer;
+        ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
+        object s = Session[Constant.StaffUserSessionSign];
+        this.CurrentPlayer = session.Load<Player>(Session[Constant.StaffUserSessionSign]);
         int page = 0;
 
         if (Request["key"] != null)
-        {
-            double value = 0;
-            if (double.TryParse(Request["value"], out value))
-                this.CurrentPlayer.AdminConfigurationMethods.ChangeNumericSetting(Request["key"], value, this.NHibernateSession);
-        }
+            this.CurrentPlayer.AdminConfigurationMethods.ChangeTextSetting(Request["key"], Request["value"], session);
 
         if (IsPostBack)
             return;
@@ -39,13 +32,14 @@ public partial class administrator_text_settings : System.Web.UI.Page
         if (Request["page"] != null)
             int.TryParse(Request["page"], out page);
 
-        IList<StringConfiguration> numericConfigurations = this.CurrentPlayer.AdminConfigurationMethods.GetTextSettings(this.NHibernateSession);
-        this.stringConfigurationRepeater.DataSource = numericConfigurations;
+        IList<StringConfiguration> stringConfigurations = this.CurrentPlayer.AdminConfigurationMethods.GetTextSettings(session);
+        this.stringConfigurationRepeater.DataSource = stringConfigurations;
         this.stringConfigurationRepeater.DataBind();
 
     }
     protected void deleteSettingButton_Click(object sender, EventArgs e)
     {
+        ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
         for (int cnt = 0; cnt < stringConfigurationRepeater.Items.Count; cnt++)
         {
             // your checkbox ; type casting
@@ -57,7 +51,7 @@ public partial class administrator_text_settings : System.Web.UI.Page
 
             if (cbId.Checked)
             {
-                this.CurrentPlayer.AdminConfigurationMethods.DeleteTextSetting(id, this.NHibernateSession);
+                this.CurrentPlayer.AdminConfigurationMethods.DeleteTextSetting(id, session);
                 Response.Redirect(Request.Url.ToString(), false);
             }
         }
@@ -65,7 +59,8 @@ public partial class administrator_text_settings : System.Web.UI.Page
 
     protected void createNewSettingButton_Click(object sender, EventArgs e)
     {
-        this.CurrentPlayer.AdminConfigurationMethods.ChangeTextSetting(this.keyTextBox.Text, this.valueTextBox.Text, this.NHibernateSession);
+        ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
+        this.CurrentPlayer.AdminConfigurationMethods.ChangeTextSetting(this.keyTextBox.Text, this.valueTextBox.Content, session);
         Response.Redirect(Request.Url.ToString(), false);
     }
 }

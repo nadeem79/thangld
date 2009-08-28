@@ -15,8 +15,11 @@ namespace beans
         {
             return Math.Sqrt(Math.Pow(sourceX - desX, 2) + Math.Pow(sourceY - desY, 2));
         }
-
-        public static DateTime LandingTime (TroopType troop, int sourceX, int sourceY, int desX, int desY, DateTime start)
+        public static DateTime LandingTime(TroopType troop, int sourceX, int sourceY, int desX, int desY, DateTime start)
+        {
+            return LandingTime(troop, sourceX, sourceY, desX, desY, start, 0);
+        }
+        public static DateTime LandingTime (TroopType troop, int sourceX, int sourceY, int desX, int desY, DateTime start, double speedIncrease)
         {
             string type = "Map.merchant_speed";
             switch (troop)
@@ -56,7 +59,7 @@ namespace beans
             Configuration config = Configuration.TribalWarsConfiguration;
             NumericConfiguration troopSpeedConfiguration = config.GetNumericConfigurationItem(type);
 
-            return start.AddMilliseconds(RangeCalculator(sourceX, sourceY, desX, desY) * troopSpeedConfiguration.Value);
+            return start.AddMilliseconds(RangeCalculator(sourceX, sourceY, desX, desY) * (troopSpeedConfiguration.Value - troopSpeedConfiguration.Value * speedIncrease));
         }
 
         public static double MovingTime(int sourceX, int sourceY, int desX, int desY, TroopType troop)
@@ -107,7 +110,15 @@ namespace beans
 
         public static DateTime LandingTime(TroopType troop, Village from, Village to, DateTime start)
         {
-            return Map.LandingTime(troop, from.X, from.Y, to.X, to.Y, start);
+            return Map.LandingTime(troop, from.X, from.Y, to.X, to.Y, start, 0);
+        }
+        public static DateTime LandingTime(TroopType troop, Village from, Village to, DateTime start, double speedIncrease)
+        {
+            return Map.LandingTime(troop, from.X, from.Y, to.X, to.Y, start, speedIncrease);
+        }
+        public static DateTime LandingTime(int speed, Village from, Village to, DateTime start, double speedIncrease)
+        {
+            return start.AddMilliseconds(RangeCalculator(from.X, from.Y, to.X, to.Y) * (speed + speed * speedIncrease));
         }
         public static DateTime LandingTime(int speed, Village from, Village to, DateTime start)
         {

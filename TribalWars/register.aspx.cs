@@ -47,14 +47,11 @@ public partial class Default2 : System.Web.UI.Page
         user.Skype = "";
         user.Msn = "";
 
-        NHibernate.ISession session = null;
-            session = (ISession)Context.Items["NHibernateSession"];
-            ITransaction trans = session.BeginTransaction();
-            session.Save(user);
-            trans.Commit();
-            Session.RemoveAll();
-            Session.Add("user", user.ID);
-            Response.Redirect("overview.aspx", true);
+        ISession session = (ISession)Context.Items["NHibernateSession"];
+        session.Save(user);
+        Session.RemoveAll();
+        Session.Add("user", user.ID);
+        Response.Redirect("overview.aspx", true);
 
     }
 }

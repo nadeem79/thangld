@@ -77,7 +77,8 @@ namespace beans
             sendToSource.FromVillage = this.Village;
             sendToSource.ToVillage = offer.AtVillage;
             sendToSource.StartingTime = DateTime.Now;
-            sendToSource.LandingTime = Map.LandingTime(TroopType.Merchant, this.Village, offer.AtVillage, sendToSource.StartingTime);
+
+            sendToSource.LandingTime = Map.LandingTime(TroopType.Merchant, this.Village, offer.AtVillage, sendToSource.StartingTime, Research.SpeedValuesDictionary[this.Village[ResearchType.Speed]]);
             sendToSource.Merchant = merchantNeeded;
             switch (offer.ForType)
             {

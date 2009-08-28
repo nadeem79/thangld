@@ -274,11 +274,15 @@ namespace beans
 
             #endregion
 
+            int attackBonus = this.FromVillage.VillageResearchData.Attack;
+            int defenseBonus = this.ToVillage.VillageResearchData.Defense;
+
             Random r = new Random();
             luck = 0.3 * (2 * r.NextDouble() - 1);
             double infantryAttack = this.Spear * spearDamage + this.Sword * swordDamage + this.Axe * axeDamage + this.Noble * nobleDamage;
             double cavalryAttack = this.LightCavalry * lightCavalryDamage + this.HeavyCavalry * heavyCavalryDamage;
             double totalAttack = infantryAttack + cavalryAttack;
+            totalAttack += totalAttack * Research.AttackValuesDictionary[this.FromVillage.VillageResearchData.Attack];
 
             double pInfantry = (double)infantryAttack / (double)totalAttack;
             double pCavalry = (double)cavalryAttack / (double)totalAttack;
@@ -286,6 +290,7 @@ namespace beans
             double infantryDefense = this.ToVillage.VillageTroopData.SpearInVillage * spearInfantryDefense + this.ToVillage.VillageTroopData.SwordInVillage * swordInfantryDefense + this.ToVillage.VillageTroopData.AxeInVillage * axeInfantryDefense + this.ToVillage.VillageTroopData.LightCavalryInVillage * lightCavalryInfantryDefense + this.ToVillage.VillageTroopData.HeavyCavalryInVillage * heavyCavalryInfantryDefense + this.ToVillage.VillageTroopData.NobleInVillage * nobleInfantryDefense;
             double cavalryDefense = this.ToVillage.VillageTroopData.SpearInVillage * spearCavalryDefense + this.ToVillage.VillageTroopData.SwordInVillage * swordCavalryDefense + this.ToVillage.VillageTroopData.AxeInVillage * axeCavalryDefense + this.ToVillage.VillageTroopData.LightCavalryInVillage * lightCavalryCavalryDefense + this.ToVillage.VillageTroopData.HeavyCavalryInVillage * heavyCavalryCavalryDefense + this.ToVillage.VillageTroopData.NobleInVillage * nobleCavalryDefense;
             double totalDefense = (long)(infantryDefense * pInfantry + cavalryDefense * pCavalry) + 100;
+            totalDefense += totalDefense * Research.DefenseValuesDictionary[this.ToVillage.VillageResearchData.Defense];
 
             totalAttack += (long)(totalAttack * luck);
             if (totalAttack > totalDefense)

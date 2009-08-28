@@ -23,6 +23,14 @@ public partial class test : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         ISession session = (ISession)Context.Items["NHibernateSession"];
+
+        double b = 0.2;
+        for (int i = 0; i < 200; i++)
+        {
+            b += b * 0.05;
+            this.Label1.Text += i.ToString() + " - " + b.ToString() + "<br>";
+        }
+
         //Village v1 = session.Load<Village>(23);
         //Village v2 = session.Load<Village>(24);
         //Attack a = new Attack();
@@ -47,13 +55,13 @@ public partial class test : System.Web.UI.Page
         //this.Label1.Text += command.FromVillage.MovingCommandsFromMe.Count.ToString();
         //command.ToVillage.MovingCommandsToMe.Remove(command);
 
-        Village v = session.Load<Village>(29);
-        Build b = session.Load<Build>(32771);
+        //Village v = session.Load<Village>(29);
+        //Build b = session.Load<Build>(32771);
         
-        v.Builds.Remove(b);
-        session.Delete(b);
+        //v.Builds.Remove(b);
+        //session.Delete(b);
         
-        session.Update(v);
+        //session.Update(v);
         //session.Update(command.FromVillage);
         //session.Update(command.ToVillage);
         

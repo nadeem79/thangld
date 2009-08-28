@@ -10,7 +10,7 @@
     <script type="text/javascript" src="../js/jquery.js"></script>
     <script type="text/javascript" src="../js/facebox.js"></script>
     <link rel="stylesheet" type="text/css" href="../css/facebox.css" /> 
-
+    
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -32,6 +32,10 @@
                                     <li><a href="text_settings.aspx">Text</a></li>
                                     <li><a href="numeric_settings.aspx">Số</a></li>
                                 </ul>
+                            </li>
+                            <li>
+                                <asp:LinkButton ID="bttnRestartServer" runat="server" 
+                                    onclick="bttnRestartServer_Click">Restart</asp:LinkButton>
                             </li>
                         </ul>
                     </td>

@@ -120,7 +120,8 @@ namespace beans
             returnTroop.LandingTime = Map.LandingTime(Map.SlowestSpeed(spear, sword, axe, scout, lightCavalry, heavyCavalry, ram, catapult, noble),
                                                         this.AtVillage,
                                                         this.FromVillage,
-                                                        returnTroop.StartingTime);
+                                                        returnTroop.StartingTime,
+                                                        Research.SpeedValuesDictionary[this.FromVillage[ResearchType.Speed]]);
 
             bool delete = (this.Spear <= 0 && this.Sword <= 0 && this.Axe <= 0
                 && this.Scout <= 0 && this.LightCavalry <= 0 && this.HeavyCavalry <= 0

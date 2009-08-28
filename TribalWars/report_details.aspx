@@ -83,6 +83,9 @@
                                         <asp:PlaceHolder ID="panelReport" runat="server"></asp:PlaceHolder>
                                     </td>
                                 </tr>
+                                <tr align="center">
+                                    <td colspan="2"><a href="list_report.aspx?id=<% = this.village.ID %>&type=<% = (int)this.report.Type %>&delete=<% = this.report.ID %>">Xoá</a></td>
+                                </tr>
                             </tbody>
                         </table>
                     </td>

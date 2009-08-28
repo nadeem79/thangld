@@ -114,8 +114,7 @@ namespace beans
             attack.Catapult = catapult;
             attack.Noble = noble;
             attack.StartingTime = DateTime.Now;
-            attack.LandingTime = Map.LandingTime(type, attack.FromVillage.X, attack.FromVillage.Y, attack.ToVillage.X, attack.ToVillage.Y, attack.StartingTime);
-
+            attack.LandingTime = Map.LandingTime(type, attack.FromVillage.X, attack.FromVillage.Y, attack.ToVillage.X, attack.ToVillage.Y, attack.StartingTime, Research.SpeedValuesDictionary[this.Village[ResearchType.Speed]]);
             return attack;
         }
 
@@ -187,7 +186,7 @@ namespace beans
             support.Catapult = catapult;
             support.Noble = noble;
             support.StartingTime = DateTime.Now;
-            support.LandingTime = Map.LandingTime(type, support.FromVillage.X, support.FromVillage.Y, support.ToVillage.X, support.ToVillage.Y, support.StartingTime);
+            support.LandingTime = Map.LandingTime(type, support.FromVillage.X, support.FromVillage.Y, support.ToVillage.X, support.ToVillage.Y, support.StartingTime, Research.SpeedValuesDictionary[this.Village[ResearchType.Speed]]);
 
             return support;
         }
