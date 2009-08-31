@@ -20,5 +20,10 @@ public partial class clay : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         current = ((inPage)(this.Master)).CurrentVillage;
+        if (this.current[BuildingType.ClayPit] > 0)
+            this.pConstructed.Visible = true;
+        else
+            this.pNotConstruct.Visible = true;
+
     }
 }

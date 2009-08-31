@@ -21,6 +21,7 @@ public partial class Default2 : System.Web.UI.Page
 
     protected void bttnRegister_Click(object sender, EventArgs e)
     {
+        
         if (!this.chkAgreement.Checked)
         {
             this.lblError.Text = "Bạn phải chấp nhận các điều khoản thoả thuận trước để có thể đăng ký";
@@ -39,7 +40,7 @@ public partial class Default2 : System.Web.UI.Page
 
         beans.Player user = new beans.Player();
         user.Username = this.username.Text;
-        user.Password = this.password.Text;
+        user.Password = beans.Utilities.Encrypt(this.password.Text);
         user.Birthdate = dt;
         user.Email = this.email.Text; ;
         user.Description = "";

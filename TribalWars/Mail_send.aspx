@@ -12,17 +12,17 @@
                         <tbody>
                             <tr>
                                 <td width="100">
-                                    <asp:HyperLink ID="urlMailReviece" runat="server" NavigateUrl="~/list_mail.aspx">Thư đến</asp:HyperLink>
+                                    <a href="list_mail.aspx?id=<% = this.village.ID %>">Thư đến</a>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="selected" width="100" >
-                                    <asp:HyperLink ID="urlMailSend" runat="server" NavigateUrl="~/write_mail.aspx">Thư đi</asp:HyperLink>
+                                    <a href="mail_send.aspx?id=<% = this.village.ID %>">Thư đi</a>
                                 </td>
                             </tr>
                             <tr>
                                 <td width="100">
-                                    <asp:HyperLink ID="urlComposeMail" runat="server" NavigateUrl="~/write_mail.aspx">Viết thư</asp:HyperLink>
+                                    <a href="write_mail.aspx?id=<% = this.village.ID %>">Viết thư</a>
                                 </td>
                             </tr>
                         </tbody>

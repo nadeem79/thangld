@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using NHibernate;
+using beans;
 
 public partial class market : System.Web.UI.Page
 {
@@ -38,6 +39,15 @@ public partial class market : System.Web.UI.Page
     {
         this.Village = ((inPage)this.Master).CurrentVillage;
         this.NHibernateSession = (ISession)Context.Items["NHibernateSession"];
+
+        if (this.Village[BuildingType.Market] > 0)
+            this.pConstructed.Visible = true;
+        else
+        {
+            this.pNotConstruct.Visible = true;
+            return;
+        }
+
         string page = "";
         if (!object.Equals(Request["page"], null))
             page = Request["page"];

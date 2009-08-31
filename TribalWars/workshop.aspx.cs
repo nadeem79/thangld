@@ -45,6 +45,13 @@ public partial class workshop : System.Web.UI.Page
     {
         village = ((inPage)this.Master).CurrentVillage;
         this.NHibernateSession = ((inPage)this.Master).NHibernateSession;
+        if (this.village[BuildingType.Workshop] > 0)
+            this.pConstructed.Visible = true;
+        else
+        {
+            this.pNotConstruct.Visible = true;
+            return;
+        }
         IList<Recruit> recruits = village.VillageRecruitMethods.CarRecruits;
         if (recruits.Count > 0)
         {

@@ -55,7 +55,13 @@ public partial class stable : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         village = ((inPage)this.Master).CurrentVillage;
-
+        if (this.village[BuildingType.Stable] > 0)
+            this.pConstructed.Visible = true;
+        else
+        {
+            this.pNotConstruct.Visible = true;
+            return;
+        }
         this.scoutPrice = Recruit.GetPrice(TroopType.Scout, this.village[BuildingType.Stable]);
         this.lightCavalryPrice = Recruit.GetPrice(TroopType.Light, this.village[BuildingType.Stable]);
         this.heavyCavalryPrice = Recruit.GetPrice(TroopType.Heavy, this.village[BuildingType.Stable]);

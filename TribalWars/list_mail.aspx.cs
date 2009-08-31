@@ -20,6 +20,10 @@ public partial class list_mail : System.Web.UI.Page
         this.village = ((inPage)this.Master).CurrentVillage;
         ISession session = (ISession)Context.Items["NHibernateSession"];
         Player user = session.Load<Player>(Session["user"]);
+        int deleteId = 0;
+        if (int.TryParse(Request["delete"], out deleteId))
+            user.DeleteMail(deleteId, session);
+
         int page;
         int.TryParse(Request["page"], out page);
         IList<Mail> lstMail = user.GetMailToMe(page, session);

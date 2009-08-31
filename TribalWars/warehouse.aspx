@@ -1,9 +1,13 @@
-<%@ Page Title="" Language="C#" MasterPageFile="~/inPage.master" AutoEventWireup="true"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/inPage.master" AutoEventWireup="true"
     CodeFile="warehouse.aspx.cs" Inherits="warehouse" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
+<asp:Panel ID="pNotConstruct" runat="server" Visible="false">
+        <h1>Công trình chưa được xây dựng</h1>
+    </asp:Panel>
+    <asp:Panel ID="pConstructed" runat="server" Visible="false">
     <table>
         <tbody>
             <tr>
@@ -58,7 +62,7 @@
             <tr>
                 <td width="250">
                     <img src="images/holz.png" title="Wood" alt="" />
-                    <% = (DateTime.Now + TimeSpan.FromSeconds(this.Village.VillageResourceMethods.TimeTillFullWarehouse(DateTime.Now, beans.ResourcesType.Wood))).ToString("'ng�y' dd/MM/yyyy 'l�c' HH:mm:ss") %>
+                    <% = (DateTime.Now + TimeSpan.FromSeconds(this.Village.VillageResourceMethods.TimeTillFullWarehouse(DateTime.Now, beans.ResourcesType.Wood))).ToString("'ngày' dd/MM/yyyy 'lúc' HH:mm:ss") %>
                 </td>
                 <td>
                     <span class="timer">
@@ -68,7 +72,7 @@
             <tr>
                 <td width="250">
                     <img src="images/lehm.png" title="Clay" alt="" />
-                    <% = (DateTime.Now + TimeSpan.FromSeconds(this.Village.VillageResourceMethods.TimeTillFullWarehouse(DateTime.Now, beans.ResourcesType.Clay))).ToString("'ng�y' dd/MM/yyyy 'l�c' HH:mm:ss")%>
+                    <% = (DateTime.Now + TimeSpan.FromSeconds(this.Village.VillageResourceMethods.TimeTillFullWarehouse(DateTime.Now, beans.ResourcesType.Clay))).ToString("'ngày' dd/MM/yyyy 'lúc' HH:mm:ss")%>
                 </td>
                 <td>
                     <span class="timer">
@@ -78,7 +82,7 @@
             <tr>
                 <td width="250">
                     <img src="images/eisen.png" title="Iron" alt="" />
-                    <% = (DateTime.Now + TimeSpan.FromSeconds(this.Village.VillageResourceMethods.TimeTillFullWarehouse(DateTime.Now, beans.ResourcesType.Iron))).ToString("'ng�y' dd/MM/yyyy 'l�c' HH:mm:ss")%>
+                    <% = (DateTime.Now + TimeSpan.FromSeconds(this.Village.VillageResourceMethods.TimeTillFullWarehouse(DateTime.Now, beans.ResourcesType.Iron))).ToString("'ngày' dd/MM/yyyy 'lúc' HH:mm:ss")%>
                 </td>
                 <td>
                     <span class="timer">
@@ -87,4 +91,5 @@
             </tr>
         </tbody>
     </table>
+    </asp:Panel>
 </asp:Content>

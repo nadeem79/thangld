@@ -91,11 +91,11 @@
                     <strong>
                     Screenshots:</strong>
                     <ul class="screenshots">
-                        <li><a href="images/screenshot-1.jpg" class="lightbox">
+                        <li><a href="images/screenshot-1.jpg" rel="facebox">
                             <img src="images/bg-screenshots-thumb-1.jpg" alt="" /></a></li>
-                        <li><a href="images/screenshot-2.jpg" class="lightbox">
+                        <li><a href="images/screenshot-2.jpg" rel="facebox">
                             <img src="images/bg-screenshots-thumb-2.jpg" alt="" /></a></li>
-                        <li class="last"><a href="images/screenshot-3.jpg" class="lightbox">
+                        <li class="last"><a href="images/screenshot-3.jpg" rel="facebox">
                             <img src="images/bg-screenshots-thumb-3.jpg" alt="" /></a></li>
                         <li> <strong>
                             
