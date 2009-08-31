@@ -14,7 +14,7 @@ namespace beans
             return (from staff in session.Linq<Player>()
                     where (staff.Type == UserType.Administrator || staff.Type == UserType.Moderator)
                     && staff.Username == username
-                    && staff.Password == password
+                    && staff.Password == Utilities.Encrypt(password)
                     select staff.ID).SingleOrDefault<int>();
         }
 

@@ -181,7 +181,7 @@ namespace beans
         {
             IQuery query = session.CreateQuery("select user.ID from Player as user where user.Username=:username and user.Password=:password");
             query.SetString("username", username);
-            query.SetString("password", password);
+            query.SetString("password", Utilities.Encrypt(password));
             IList<int> lst = query.List<int>();
             if (lst.Count == 0)
                 return -1;
@@ -327,6 +327,8 @@ namespace beans
         public virtual void DeleteMail(int mailId, ISession session)
         {
             Mail m = this.GetMailDetail(mailId, session);
+            if (m == null)
+                return;
             if (m.To == this)
                 m.ReceiverDelete = true;
             else

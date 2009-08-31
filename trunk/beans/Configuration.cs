@@ -65,6 +65,10 @@ namespace beans
 
         public void LoadData(ISession session)
         {
+
+            this.StringConfiguration.Clear();
+            this.NumericConfiguration.Clear();
+
             IList<StringConfiguration> stringConfigurations = (from stringConfiguration in session.Linq<StringConfiguration>()
                                                                select stringConfiguration).ToList<StringConfiguration>();
             foreach (StringConfiguration stringConfiguration in stringConfigurations)
