@@ -29,11 +29,11 @@ public partial class administrator_administrator : System.Web.UI.MasterPage
     {
         if (object.Equals(Session[Constant.StaffUserSessionSign], null))
         {
-            //Response.Redirect("login.aspx", false);
-            //return;
-            Session[Constant.StaffUserSessionSign] = 1;
+            Response.Redirect("login.aspx", false);
+            return;
+            //Session[Constant.StaffUserSessionSign] = 1;
         }
-
+        
         this.NHibernateSession = (ISession)Context.Items[Constant.NHibernateSessionSign];
         this.CurrentPlayer = Player.GetPlayerByID((int)Session["staffID"], this.NHibernateSession);
         if (this.CurrentPlayer.Type != UserType.Moderator && this.CurrentPlayer.Type != UserType.Administrator)

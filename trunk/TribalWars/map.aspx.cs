@@ -24,6 +24,7 @@ public partial class map : System.Web.UI.Page
     protected int x = 0, y = 0;
     protected Village village;
     protected Village targetVillage;
+    private IList<Point> villageCoordinates;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -76,18 +77,45 @@ public partial class map : System.Web.UI.Page
         ViewState["x"] = this.x;
         ViewState["y"] = this.y;
 
-        this.FillMap(villages);
+        IList<Point> villageCoordinates = new List<Point>(villages.Count);
+        foreach (Village v in villages)
+            villageCoordinates.Add(new Point(7 + v.X - this.x, 7 + v.Y - this.y));
+        this.FillMap(villages, villageCoordinates);
 
     }
 
     private void FillMap(IList<Village> villages)
     {
+        this.FillMap(villages, (IList<Point>)ViewState["villageCoordinates"]);
+    }
+
+    private void FillMap(IList<Village> villages, IList<Point> villageCoordinates)
+    {
         Random r = new Random();
         this.tbRows.Rows.Clear();
         this.tbColumns.Rows.Clear();
 
-        this.tbVillages.Rows.Clear();
+        //IList<Point> villageCoordinates = (IList<Point>)ViewState["villageCoordinates"];
         
+
+        this.tbVillages.Rows.Clear();
+        for (int i = 0; i < 15; i++)
+        {
+            TableRow row = new TableRow();
+            for (int j = 0; j < 15; j++)
+            {
+                TableCell cell = new TableCell();
+                //cell.Style.Add("background", "black");
+                cell.CssClass = "space-left-new space-bottom-new background" + (r.Next(4) + 1 + 17).ToString();
+                //cell.Style.Clear();
+                row.Cells.Add(cell);
+            }
+            this.tbVillages.Rows.Add(row);
+        }
+
+        foreach (Point p in villageCoordinates)
+            this.tbVillages.Rows[p.X].Cells[p.Y].Style.Add("background", "url('images/back19.png') no-repeat;");
+
         TableRow cRow = new TableRow();
         for (int i = 0; i < 15; i++)
         {
@@ -104,17 +132,6 @@ public partial class map : System.Web.UI.Page
             cCell.Text = (this.y - 7 + i).ToString();
             cCell.Width = 49;
             cRow.Cells.Add(cCell);
-
-            TableRow row = new TableRow();
-            for (int j = 0; j < 15; j++)
-            {
-                TableCell cell = new TableCell();
-                
-                cell.CssClass = "space-left-new space-bottom-new background" + (r.Next(4) + 1 + 17).ToString();
-                cell.Style.Clear();
-                row.Cells.Add(cell);
-            }
-            this.tbVillages.Rows.Add(row);
         }
         this.tbColumns.Rows.Add(cRow);
 
@@ -139,6 +156,11 @@ public partial class map : System.Web.UI.Page
             link.ToolTip += "Chủ thành: " + v.Player.Username;
             cell.Controls.Add(link);
         }
+
+        this.villageCoordinates = new List<Point>(villages.Count);
+        foreach (Village v in villages)
+            villageCoordinates.Add(new Point(7 + v.X - this.x, 7 + v.Y - this.y));
+        ViewState["villageCoordinates"] = villageCoordinates;
     }
 
     protected void moveNorthButton_Click(object sender, ImageClickEventArgs e)

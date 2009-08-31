@@ -128,7 +128,7 @@
                         <telerik:RadToolBar ID="menu" runat="server">
                             <Items>
                                 <telerik:RadToolBarButton runat="server" ImageUrl="~/images/main.png" NavigateUrl="~/headquarters.aspx"
-                                    Text="Nhà chính">
+                                    Text="Nhà chính" >
                                 </telerik:RadToolBarButton>
                                 <telerik:RadToolBarButton runat="server" ImageUrl="~/images/barracks.png" NavigateUrl="~/barrack.aspx"
                                     Text="Bộ binh">

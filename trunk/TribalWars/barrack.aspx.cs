@@ -48,9 +48,18 @@ public partial class barrack : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         
+
         this.NHibernateSession = (ISession)Context.Items[Constant.NHibernateSessionSign];
 
         village = ((inPage)this.Master).CurrentVillage;
+
+        if (this.village[BuildingType.Barracks] > 0)
+            this.pConstructed.Visible = true;
+        else
+        {
+            this.pNotConstruct.Visible = true;
+            return;
+        }
         Price p = Recruit.GetPrice(TroopType.Axe, this.village[BuildingType.Barracks]);
         if (Request["mode"] != null && Request["mode"] == "cancel_recruit")
         {
@@ -102,7 +111,6 @@ public partial class barrack : System.Web.UI.Page
     protected void bttnRecruit_Click(object sender, EventArgs e)
     {
         
-
         int spear = 0, sword = 0, axe = 0;
 
         int.TryParse(this.txtSpear.Text, out spear);

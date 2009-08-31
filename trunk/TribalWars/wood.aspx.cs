@@ -9,6 +9,7 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
+using beans;
 
 
 public partial class wood : System.Web.UI.Page
@@ -19,5 +20,12 @@ public partial class wood : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         current = ((inPage)(this.Master)).CurrentVillage;
+        if (this.current[BuildingType.TimberCamp] > 0)
+            this.pConstructed.Visible = true;
+        else
+        {
+            this.pNotConstruct.Visible = true;
+            return;
+        }
     }
 }

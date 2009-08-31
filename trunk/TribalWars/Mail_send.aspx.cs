@@ -14,6 +14,11 @@ public partial class Mail_send : System.Web.UI.Page
         this.village = ((inPage)this.Master).CurrentVillage;
         ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
         Player user = session.Load<Player>(Session["user"]);
+
+        int deleteId = 0;
+        if (int.TryParse(Request["delete"], out deleteId))
+            user.DeleteMail(deleteId, session);
+
         int page;
         int.TryParse(Request["page"], out page);
 

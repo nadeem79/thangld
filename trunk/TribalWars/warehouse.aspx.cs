@@ -18,6 +18,12 @@ public partial class warehouse : System.Web.UI.Page
     {
         inPage p = (inPage)this.Master;
         this.Village = p.CurrentVillage;
-        
+        if (this.Village[BuildingType.Warehouse] > 0)
+            this.pConstructed.Visible = true;
+        else
+        {
+            this.pNotConstruct.Visible = true;
+            return;
+        }
     }
 }

@@ -6,7 +6,10 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
-    <telerik:RadFormDecorator ID="RadFormDecorator1" runat="server" DecoratedControls="All" Skin="Vista" />
+    <asp:Panel ID="pNotConstruct" runat="server" Visible="false">
+        <h1>Công trình chưa được xây dựng</h1>
+    </asp:Panel>
+    <asp:Panel ID="pConstructed" runat="server" Visible="false">
     <table>
         <tbody>
             <tr>
@@ -192,4 +195,5 @@
             </tr>
         </tbody>
     </table>
+    </asp:Panel>
 </asp:Content>

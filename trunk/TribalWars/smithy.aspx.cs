@@ -63,7 +63,13 @@ public partial class smithy : System.Web.UI.Page
     {
         this.Village = ((inPage)this.Master).CurrentVillage;
         ISession session = (ISession)Context.Items["NHibernateSession"];
-
+        if (this.Village[BuildingType.Smithy] > 0)
+            this.pConstructed.Visible = true;
+        else
+        {
+            this.pNotConstruct.Visible = true;
+            return;
+        }
         IList<Research> researches = this.Village.Researches;
 
         this.AttackPrice = Research.GetPrice(ResearchType.Attack, this.Village.VillageResearchMethods.MaxAttackLevel + 1, this.Village[BuildingType.Smithy]);

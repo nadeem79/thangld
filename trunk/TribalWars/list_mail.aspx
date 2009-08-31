@@ -11,18 +11,18 @@
                     <table class="vis" width="100" runat="server" id="Mail" visible="True">
                         <tbody>
                             <tr>
-                                <td class="selected" width="100">
-                                    <asp:HyperLink ID="urlMailReviece" runat="server" NavigateUrl="~/list_mail.aspx">Thư đến</asp:HyperLink>
+                                <td width="100" class="selected">
+                                    <a href="list_mail.aspx?id=<% = this.village.ID %>">Thư đến</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="100" >
+                                    <a href="mail_send.aspx?id=<% = this.village.ID %>">Thư đi</a>
                                 </td>
                             </tr>
                             <tr>
                                 <td width="100">
-                                    <asp:HyperLink ID="urlMailSend" runat="server" NavigateUrl="~/Mail_send.aspx">Thư đi</asp:HyperLink>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="100">
-                                    <asp:HyperLink ID="urlComposeMail" runat="server" NavigateUrl="~/write_mail.aspx">Viết thư</asp:HyperLink>
+                                    <a href="write_mail.aspx?id=<% = this.village.ID %>">Viết thư</a>
                                 </td>
                             </tr>
                         </tbody>

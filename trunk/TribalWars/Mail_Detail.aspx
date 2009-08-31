@@ -7,21 +7,21 @@
         <tbody>
             <tr>
                 <td valign="top">
-                    <table class="vis" width="100" runat="server" id="Mail" visible="True">
+                    <table class="vis" width="100" id="Mail" visible="True">
                         <tbody>
                             <tr>
-                                <td width="100">
-                                    <asp:HyperLink ID="urlMailReviece" runat="server" NavigateUrl="~/list_mail.aspx">Thư đến</asp:HyperLink>
+                                <td <% if (this.Detail.To == this.village.Player) Response.Write( "class=\"selected\""); %> width="100">
+                                    <a href="list_mail.aspx?id=<% = this.village.ID %>" >Thư đến</a>
                                 </td>
                             </tr>
                             <tr>
-                                <td width="100" >
-                                    <asp:HyperLink ID="urlMailSend" runat="server" NavigateUrl="~/Mail_send.aspx">Thư đi</asp:HyperLink>
+                                <td <% if (this.Detail.From == this.village.Player) Response.Write( "class=\"selected\""); %> width="100" >
+                                    <a href="mail_send.aspx?id=<% = this.village.ID %>" >Thư đi</a>
                                 </td>
                             </tr>
                             <tr>
                                 <td width="100">
-                                    <asp:HyperLink ID="urlComposeMail" runat="server" NavigateUrl="~/write_mail.aspx">Viết thư</asp:HyperLink>
+                                    <a href="write_mail.aspx?id=<% = this.village.ID %>">Viết thư</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -57,9 +57,7 @@
                                             Forward</a>
                                </td>
                            <td class="style1" >
-                               <a href='list_mail.aspx' id="delete" onclick='delete_click()'>
-                                            Delete</a>
-                               <asp:LinkButton ID="LinkButton1" runat="server" onclick="LinkButton1_Click">LinkButton</asp:LinkButton>
+                                <a href=<% = string.Format("{0}.aspx?id={1}&delete={2}", (this.Detail.From==this.village.Player)?"list_mail":"write_mail", this.village.ID, this.Detail.ID) %>>Xoá thư</a>
                                </td>
                            <td class="style1">
                                </td>
@@ -76,8 +74,9 @@
                            <td align="center">
                               <a href='write_mail.aspx?Detail=<% Response.Write(Detail.Detail); %>'>
                                             Forward</a></td>
-                           <td align="center" >
-                               &nbsp;</td>
+                           <td class="style1" align="center" >
+                                <a href=<% = string.Format("{0}.aspx?id={1}&delete={2}", (this.Detail.From==this.village.Player)?"list_mail":"write_mail", this.village.ID, this.Detail.ID) %>>Xoá thư</a>
+                               </td>
                            <td align="center">
                                &nbsp;</td>
                        </tr>

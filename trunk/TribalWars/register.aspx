@@ -60,11 +60,19 @@
                         <telerik:RadDateInput ID="txtBirthdate" DisplayDateFormat="d/M/yyyy" Width="192px"
                             MinDate="1950-01-01" DateFormat="d/M/yyyy" runat="server" EmptyMessage="Nhập ngày sinh">
                         </telerik:RadDateInput>
-                    </label>
                     <br />
+                    </label>
+                    <label>
+                        Mã bảo vệ:
+                    </label>
+                    <telerik:RadCaptcha ID="RadCaptcha1" Runat="server" CaptchaTextBoxLabel="" 
+                        ErrorMessage="Nhập mã bảo vệ" InvisibleTextBoxLabel="" Width="289px" >
+                    </telerik:RadCaptcha>
+                    <br />
+                        
                     <label for="agb">
                         <asp:CheckBox ID="chkAgreement" runat="server" Text="Tôi đồng ý với các điều khoản đăng ký" />
-                    </label>
+                    </label><br />
                     &nbsp;<a href="agreement.aspx">(Các điều khoản đăng
                         ký)</a><br />
                     <asp:Button ID="bttnRegister" runat="server" Text="Đăng ký" OnClick="bttnRegister_Click" />

@@ -33,6 +33,14 @@ public partial class rally : System.Web.UI.Page
         inPage p = (inPage)this.Master;
         village = p.CurrentVillage;
 
+        if (this.village[BuildingType.Rally] > 0)
+            this.pConstructed.Visible = true;
+        else
+        {
+            this.pNotConstruct.Visible = true;
+            return;
+        }
+
         switch (Request["page"])
         {
             case "unit":

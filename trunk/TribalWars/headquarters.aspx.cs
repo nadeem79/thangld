@@ -23,8 +23,17 @@ public partial class headquarters : System.Web.UI.Page
     {
         
         inPage master = (inPage)this.Master;
-        this.NHibernateSession = master.NHibernateSession;
+        this.NHibernateSession = (ISession)Context.Items[Constant.NHibernateSessionSign];
         village = master.CurrentVillage;
+
+        if (this.village[BuildingType.Headquarter] > 0)
+            this.pConstructed.Visible = true;
+        else
+        {
+            this.pNotConstruct.Visible = true;
+            return;
+        }
+
         ITransaction trans = null;
         if (Request["action"] == "build" && Request["building"] != null && BuildingTypeFactory.GetType(Request["building"]) != BuildingType.NoBuiding)
         {
