@@ -52,16 +52,32 @@ namespace beans
             if (this.NumericConfiguration.ContainsKey(key))
                 return this.NumericConfiguration[key];
 
-            return null;
+            NumericConfiguration config = new NumericConfiguration();
+            config.Key = key;
+            config.Value = 0;
+
+            return config;
 
         }
         public StringConfiguration GetStringConfigurationItem(string key)
         {
+            return this.GetStringConfigurationItem(key, false);
+        }
+        public StringConfiguration GetStringConfigurationItem(string key, bool isDebugging)
+        {
             if (this.StringConfiguration.ContainsKey(key))
                 return this.StringConfiguration[key];
 
-            return null;
-        }
+            StringConfiguration config = new StringConfiguration();
+            config.Key = key;
+
+            if (isDebugging)
+                config.Value = string.Format("Không tìm thấy key {0}", key);
+            else
+                config.Value = "";
+
+            return config;
+        } 
 
         public void LoadData(ISession session)
         {

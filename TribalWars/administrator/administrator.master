@@ -20,6 +20,24 @@
         <telerik:RadScriptManager ID="RadScriptManager1" runat="server">
         </telerik:RadScriptManager>
         <telerik:RadFormDecorator ID="RadFormDecorator1" runat="server" />
+        <telerik:RadMenu ID="menu" runat="server" Flow="Vertical" ClickToOpen="true" Width="200px">
+            <Items>
+       <Telerik:RadMenuItem Text="Root Item 1" >
+           <Items>
+            
+               <Telerik:RadMenuItem Text="Child Item 1" NavigateUrl="~/Page11.aspx" />
+               <Telerik:RadMenuItem Text="Child Item 2" NavigateUrl="~/Page12.aspx" />
+           </Items>
+       </Telerik:RadMenuItem>
+       <Telerik:RadMenuItem Text="Root Item 2" >
+           <Items>
+               <Telerik:RadMenuItem Text="Child Item 1" NavigateUrl="~/Page21.aspx" />
+               <Telerik:RadMenuItem Text="Child Item 2" NavigateUrl="~/Page22.aspx" />
+           </Items>
+       </Telerik:RadMenuItem>
+       <Telerik:RadMenuItem Enabled="False" Text="Root Item 3" NavigateUrl="~/Page3.aspx" />
+   </Items>
+        </telerik:RadMenu>
         <table border="1" width="100%">
             <tbody>
                 <tr>
@@ -27,11 +45,19 @@
                         <center><h1>MENU</h1></center>
                         <ul>
                             <li>
-                                Tham số
+                                Text setting
                                 <ul>
-                                    <li><a href="text_settings.aspx">Text</a></li>
-                                    <li><a href="numeric_settings.aspx">Số</a></li>
+                                    <li><a href="text_settings.aspx">Danh sách text</a></li>
+                                    <li><a href="create_text">Tạo mới</a></li>
                                 </ul>
+                                Numeric setting
+                                <ul>
+                                    <li><a href="numeric_settings.aspx">Danh sách numeric</a></li>
+                                    <li><a href="create_numeric">Tạo mới</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                
                             </li>
                             <li>
                                 <asp:LinkButton ID="bttnRestartServer" runat="server" 
@@ -43,9 +69,12 @@
                         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                         </asp:ContentPlaceHolder>
                     </td>
+                    
                 </tr>
             </tbody>
         </table>
+        
+        
     </div>
     </form>
 </body>

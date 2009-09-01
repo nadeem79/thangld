@@ -35,7 +35,6 @@ public partial class administrator_login : System.Web.UI.Page
         if (staffID == 0)
         {
             this.errorLabel.Text = "Tên đăng nhập hoặc mật khẩu không tồn tại";
-            session.Close();
             return;
         }
 

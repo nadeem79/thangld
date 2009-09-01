@@ -63,4 +63,9 @@ public partial class administrator_text_settings : System.Web.UI.Page
         this.CurrentPlayer.AdminConfigurationMethods.ChangeTextSetting(this.keyTextBox.Text, this.valueTextBox.Content, session);
         Response.Redirect(Request.Url.ToString(), false);
     }
+
+    protected void stringConfigurationRepeater_ItemCommand(object source, RepeaterCommandEventArgs e)
+    {
+
+    }
 }

@@ -177,7 +177,14 @@ public class Functions
     //                        sToEmail,
     //                        sHeader,
     //                        sMessage, 
-    //                        true); 
+    //                        true);
     //}
 
+    public static StringConfiguration GetConfig(string key)
+    {
+        if (HttpContext.Current.Session[Constant.DebugMode] == null)
+            return beans.Configuration.TribalWarsConfiguration.GetStringConfigurationItem(key);
+
+        return beans.Configuration.TribalWarsConfiguration.GetStringConfigurationItem(key, true);
+    }
 }
