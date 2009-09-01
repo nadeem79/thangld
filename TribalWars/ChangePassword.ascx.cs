@@ -32,9 +32,9 @@ public partial class ChangePassword : System.Web.UI.UserControl
         {
             session = (ISession)Context.Items[Constant.NHibernateSessionSign];
             this.player = session.Load<Player>(Session["user"]);
-            if (this.txtOldPassword.Text == this.player.Password)
+            if (beans.Utilities.Encrypt(this.txtOldPassword.Text) == this.player.Password)
             {
-                this.player.Password = this.txtNewPassword.Text;
+                this.player.Password = beans.Utilities.Encrypt(this.txtNewPassword.Text);
                 session.Update(this.player);
             }
         }

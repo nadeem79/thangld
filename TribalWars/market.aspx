@@ -1,10 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/inPage.master" AutoEventWireup="true"
     CodeFile="market.aspx.cs" Inherits="market" %>
     
-<%@ Reference Control="CustomControls/MerchantStatus.ascx" %>
-<%@ Reference Control="CustomControls/SendResource.ascx" %>
-<%@ Reference Control="CustomControls/MakeMarketOffer.ascx" %>
-<%@ Reference Control="CustomControls/OtherOffers.ascx" %>
+<%@ Reference Control="MerchantStatus.ascx" %>
+<%@ Reference Control="SendResource.ascx" %>
+<%@ Reference Control="MakeMarketOffer.ascx" %>
+<%@ Reference Control="OtherOffers.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>

@@ -1,8 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/inPage.master" AutoEventWireup="true"
     CodeFile="headquarters.aspx.cs" Inherits="headquarters" %>
 
-<%@ Reference Control="CustomControls/ConstructBuilding.ascx" %>
-<%@ Reference Control="CustomControls/DemolishBuilding.ascx" %>
+<%@ Reference Control="ConstructBuilding.ascx" %>
+<%@ Reference Control="DemolishBuilding.ascx" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <style type="text/css">

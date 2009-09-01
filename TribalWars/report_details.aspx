@@ -1,16 +1,16 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/inPage.master" AutoEventWireup="true" CodeFile="report_details.aspx.cs"
     Inherits="report_details" %>
 
-<%@ Reference Control="CustomControls/OfferAcceptedReport.ascx" %>
-<%@ Reference Control="CustomControls/AttackReport.ascx" %>
-<%@ Reference Control="CustomControls/DefenseReport.ascx" %>
-<%@ Reference Control="CustomControls/InviteReport.ascx" %>
-<%@ Reference Control="CustomControls/ResourceReceive.ascx" %>
-<%@ Reference Control="CustomControls/SendResource.ascx" %>
-<%@ Reference Control="CustomControls/SupportOtherReport.ascx" %>
-<%@ Reference Control="CustomControls/TroopWithdrawal.ascx" %>
-<%@ Reference Control="CustomControls/SupportSendBackReport.ascx" %>
-<%@ Reference Control="CustomControls/DefenseOtherReport.ascx" %>
+<%@ Reference Control="OfferAcceptedReport.ascx" %>
+<%@ Reference Control="AttackReport.ascx" %>
+<%@ Reference Control="DefenseReport.ascx" %>
+<%@ Reference Control="InviteReport.ascx" %>
+<%@ Reference Control="ResourceReceive.ascx" %>
+<%@ Reference Control="SendResource.ascx" %>
+<%@ Reference Control="SupportOtherReport.ascx" %>
+<%@ Reference Control="TroopWithdrawal.ascx" %>
+<%@ Reference Control="SupportSendBackReport.ascx" %>
+<%@ Reference Control="DefenseOtherReport.ascx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 <script type="text/javascript">
     
