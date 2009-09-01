@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using NHibernate;
-using beans;
 
 public partial class market : System.Web.UI.Page
 {
@@ -40,7 +39,7 @@ public partial class market : System.Web.UI.Page
         this.Village = ((inPage)this.Master).CurrentVillage;
         this.NHibernateSession = (ISession)Context.Items["NHibernateSession"];
 
-        if (this.Village[BuildingType.Market] > 0)
+        if (this.Village[beans.BuildingType.Market] > 0)
             this.pConstructed.Visible = true;
         else
         {
@@ -55,25 +54,25 @@ public partial class market : System.Web.UI.Page
         switch (page)
         {
             case "merchant_status":
-                CustomControls_MerchantStatus pMerchantStatus = (CustomControls_MerchantStatus)Page.LoadControl(@"CustomControls/MerchantStatus.ascx");
+                MerchantStatus pMerchantStatus = (MerchantStatus)Page.LoadControl(@"MerchantStatus.ascx");
                 pMerchantStatus.Village = this.Village;
                 this.tblMenu.Rows[3].Cells[0].Attributes.Add("class", "selected");
                 this.pMarket.Controls.Add(pMerchantStatus);
                 break;
             case "make_offer":
-                CustomControls_MakeMarketOffer pMakeMarketOffer = (CustomControls_MakeMarketOffer)Page.LoadControl(@"CustomControls/MakeMarketOffer.ascx");
+                MakeMarketOffer pMakeMarketOffer = (MakeMarketOffer)Page.LoadControl(@"MakeMarketOffer.ascx");
                 pMakeMarketOffer.Village = this.Village;
                 this.tblMenu.Rows[1].Cells[0].Attributes.Add("class", "selected");
                 this.pMarket.Controls.Add(pMakeMarketOffer);
                 break;
             case "market":
-                CustomControls_OtherOffers pOtherOffer = (CustomControls_OtherOffers)Page.LoadControl(@"CustomControls/OtherOffers.ascx");
+                OtherOffers pOtherOffer = (OtherOffers)Page.LoadControl(@"OtherOffers.ascx");
                 pOtherOffer.Village = this.Village;
                 this.tblMenu.Rows[2].Cells[0].Attributes.Add("class", "selected");
                 this.pMarket.Controls.Add(pOtherOffer);
                 break;
             default:
-                CustomControls_SendResource pSendResource = (CustomControls_SendResource)Page.LoadControl(@"CustomControls/SendResource.ascx");
+                SendResource pSendResource = (SendResource)Page.LoadControl(@"SendResource.ascx");
                 pSendResource.Village = this.Village;
                 this.tblMenu.Rows[0].Cells[0].Attributes.Add("class", "selected");
                 this.pMarket.Controls.Add(pSendResource);

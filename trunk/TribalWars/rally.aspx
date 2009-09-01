@@ -3,8 +3,8 @@
 
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 
-<%@ Reference Control="CustomControls/TroopCommand.ascx" %>
-<%@ Reference Control="CustomControls/TroopStat.ascx" %>
+<%@ Reference Control="TroopCommand.ascx" %>
+<%@ Reference Control="TroopStat.ascx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">

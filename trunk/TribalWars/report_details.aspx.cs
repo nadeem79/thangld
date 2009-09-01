@@ -2,22 +2,19 @@
 using System.Collections;
 using System.Configuration;
 using System.Data;
-
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
-
 using System.Data.SqlClient;
-using beans;
 using NHibernate;
 
 public partial class report_details : System.Web.UI.Page
 {
-    protected Village village;
-    protected Report report;
+    protected beans.Village village;
+    protected beans.Report report;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -27,7 +24,7 @@ public partial class report_details : System.Web.UI.Page
         ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
 
         int.TryParse(Request["report"], out report_id);
-        Player user = session.Load<Player>(Session["user"]);
+        beans.Player user = session.Load<beans.Player>(Session["user"]);
         report = user.GetReport(report_id, session);
 
         if (report != null)
@@ -35,64 +32,64 @@ public partial class report_details : System.Web.UI.Page
             pHasReport.Visible = true;
             switch (report.Type)
             {
-                case ReportType.Attack:
-                    CustomControls_AttackReport pAttackReport = (CustomControls_AttackReport)Page.LoadControl(@"CustomControls/AttackReport.ascx");
+                case beans.ReportType.Attack:
+                    AttackReport pAttackReport = (AttackReport)Page.LoadControl(@"AttackReport.ascx");
                     pAttackReport.Village = this.village;
                     pAttackReport.Report = report;
                     this.panelReport.Controls.Add(pAttackReport);
                     navigator.Rows[1].Cells[0].Attributes["class"] = "selected";
                     break;
-                case ReportType.Defense:
-                    CustomControls_DefenseReport pDefenseReport = (CustomControls_DefenseReport)Page.LoadControl(@"CustomControls/DefenseReport.ascx");
+                case beans.ReportType.Defense:
+                    DefenseReport pDefenseReport = (DefenseReport)Page.LoadControl(@"DefenseReport.ascx");
                     pDefenseReport.Village = this.village;
                     pDefenseReport.Report = report;
                     this.panelReport.Controls.Add(pDefenseReport);
                     navigator.Rows[2].Cells[0].Attributes["class"] = "selected";
                     break;
-                case ReportType.InviteToTribe:
-                    CustomControls_InviteReport pInviteReport = (CustomControls_InviteReport)Page.LoadControl(@"CustomControls/InviteReport.ascx");
+                case beans.ReportType.InviteToTribe:
+                    InviteReport pInviteReport = (InviteReport)Page.LoadControl(@"InviteReport.ascx");
                     pInviteReport.Village = this.village;
                     pInviteReport.Report = report;
                     this.panelReport.Controls.Add(pInviteReport);
                     navigator.Rows[5].Cells[0].Attributes["class"] = "selected";
                     break;
-                case ReportType.DefenseOther:
-                    CustomControls_DefenseOtherReport pDefenseOther = (CustomControls_DefenseOtherReport)Page.LoadControl(@"CustomControls/DefenseOtherReport.ascx");
+                case beans.ReportType.DefenseOther:
+                    DefenseOtherReport pDefenseOther = (DefenseOtherReport)Page.LoadControl(@"DefenseOtherReport.ascx");
                     pDefenseOther.Village = this.village;
                     pDefenseOther.Report = report;
                     this.panelReport.Controls.Add(pDefenseOther);
                     navigator.Rows[2].Cells[0].Attributes["class"] = "selected";
                     break;
-                case ReportType.OfferAccepted:
-                    CustomControls_OfferAcceptedReport pOfferAcceptedReport = (CustomControls_OfferAcceptedReport)Page.LoadControl(@"CustomControls/OfferAcceptedReport.ascx");
+                case beans.ReportType.OfferAccepted:
+                    OfferAcceptedReport pOfferAcceptedReport = (OfferAcceptedReport)Page.LoadControl(@"OfferAcceptedReport.ascx");
                     pOfferAcceptedReport.Village = this.village;
                     pOfferAcceptedReport.Report = report;
                     this.panelReport.Controls.Add(pOfferAcceptedReport);
                     navigator.Rows[3].Cells[0].Attributes["class"] = "selected";
                     break;
-                case ReportType.ResourceReceive:
-                    CustomControls_ResourceReceive pResourceReceive = (CustomControls_ResourceReceive)Page.LoadControl(@"CustomControls/ResourceReceive.ascx");
+                case beans.ReportType.ResourceReceive:
+                    ResourceReceive pResourceReceive = (ResourceReceive)Page.LoadControl(@"ResourceReceive.ascx");
                     pResourceReceive.Village = this.village;
                     pResourceReceive.Report = report;
                     this.panelReport.Controls.Add(pResourceReceive);
                     navigator.Rows[3].Cells[0].Attributes["class"] = "selected";
                     break;
-                case ReportType.Support:
-                    CustomControls_SupportOtherReport pSupport = (CustomControls_SupportOtherReport)Page.LoadControl(@"CustomControls/SupportOtherReport.ascx");
+                case beans.ReportType.Support:
+                    SupportOtherReport pSupport = (SupportOtherReport)Page.LoadControl(@"SupportOtherReport.ascx");
                     pSupport.Village = this.village;
                     pSupport.Report = report;
                     this.panelReport.Controls.Add(pSupport);
                     navigator.Rows[2].Cells[0].Attributes["class"] = "selected";
                     break;
-                case ReportType.SupportSendBack:
-                    CustomControls_SupportSendBackReport pSupportSendBack = (CustomControls_SupportSendBackReport)Page.LoadControl(@"CustomControls/SupportSendBackReport.ascx");
+                case beans.ReportType.SupportSendBack:
+                    SupportSendBackReport pSupportSendBack = (SupportSendBackReport)Page.LoadControl(@"SupportSendBackReport.ascx");
                     pSupportSendBack.Village = this.village;
                     pSupportSendBack.Report = report;
                     this.panelReport.Controls.Add(pSupportSendBack);
                     navigator.Rows[2].Cells[0].Attributes["class"] = "selected";
                     break;
-                case ReportType.SupportWithdawal:
-                    CustomControls_TroopWithdrawal pTroopWithdrawal = (CustomControls_TroopWithdrawal)Page.LoadControl(@"CustomControls/TroopWithdrawal.ascx");
+                case beans.ReportType.SupportWithdawal:
+                    TroopWithdrawal pTroopWithdrawal = (TroopWithdrawal)Page.LoadControl(@"TroopWithdrawal.ascx");
                     pTroopWithdrawal.Village = this.village;
                     pTroopWithdrawal.Report = report;
                     this.panelReport.Controls.Add(pTroopWithdrawal);

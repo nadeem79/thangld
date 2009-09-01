@@ -57,7 +57,7 @@ public partial class tribe : System.Web.UI.Page
                 this.pTribePage.Controls.Add(ucDiplomacyPage);
                 break;
             case TribePageType.ForumPage:
-                CustomControls_TribeShoutbox shoutbox = (CustomControls_TribeShoutbox)Page.LoadControl("CustomControls/TribeShoutbox.ascx");
+                TribeShoutbox shoutbox = (TribeShoutbox)Page.LoadControl("TribeShoutbox.ascx");
                 shoutbox.Group = player.Group;
                 shoutbox.Size = 30;
                 this.pTribePage.Controls.Add(shoutbox);

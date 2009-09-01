@@ -79,11 +79,11 @@ public partial class headquarters : System.Web.UI.Page
         switch (Request["page"])
         {
             case "destroy":
-                CustomControls_DemolishBuilding pDemolishing = (CustomControls_DemolishBuilding)Page.LoadControl("CustomControls/DemolishBuilding.ascx");
+                DemolishBuilding pDemolishing = (DemolishBuilding)Page.LoadControl("DemolishBuilding.ascx");
                 this.phConstructing.Controls.Add(pDemolishing);
                 break;
             default:
-                CustomControls_ConstructBuilding pConstructing = (CustomControls_ConstructBuilding)Page.LoadControl("CustomControls/ConstructBuilding.ascx");
+                ConstructBuilding pConstructing = (ConstructBuilding)Page.LoadControl("ConstructBuilding.ascx");
                 pConstructing.Village = this.village;
                 pConstructing.NHibernateSession = this.NHibernateSession;
                 this.phConstructing.Controls.Add(pConstructing);
