@@ -59,10 +59,10 @@
       <one-to-many class="beans.Station, beans"/>
     </bag>
     
-    <one-to-one name="VillageBuildingData" class="beans.VillageBuildingData, beans" cascade="all" lazy="false" fetch="select" />
-    <one-to-one name="VillageResourceData" class="beans.VillageResourcesData, beans" cascade="all" lazy="false" fetch="select" />
-    <one-to-one name="VillageTroopData" class="beans.VillageTroopData, beans" cascade="all" lazy="false" fetch="select" />
-    <one-to-one name="VillageResearchData" class="beans.VillageResearchData, beans" cascade="all" lazy="false" fetch="select" />
+    <one-to-one name="VillageBuildingData" class="beans.VillageBuildingData, beans" cascade="all" lazy="false" fetch="join" />
+    <one-to-one name="VillageResourceData" class="beans.VillageResourcesData, beans" cascade="all" lazy="false" fetch="join" />
+    <one-to-one name="VillageTroopData" class="beans.VillageTroopData, beans" cascade="all" lazy="false" fetch="join" />
+    <one-to-one name="VillageResearchData" class="beans.VillageResearchData, beans" cascade="all" lazy="false" fetch="join" />
   </class>
 
   <class name ="beans.VillageBuildingData, beans" table="villages_building" lazy="true">
