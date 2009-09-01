@@ -48,10 +48,10 @@ public class NHibernateHttpModule:IHttpModule
 
         if (HttpContext.Current.Request.Path.ToLower().IndexOf(".aspx") <= -1)
             return;
-
+        
         HttpApplication application = (HttpApplication)sender;
         HttpContext context = application.Context;
-
+        
         ((ISession)context.Items["NHibernateSession"]).Transaction.Commit();
         ((ISession)context.Items["NHibernateSession"]).Close();
         context.Items["NHibernateSession"] = null;

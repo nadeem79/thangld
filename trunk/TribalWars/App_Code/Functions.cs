@@ -126,4 +126,58 @@ public class Functions
         }
 
     }
+
+
+    //protected static void SendMail(string sHost, int nPort, string sUserName, string sPassword, string sFromName, string sFromEmail,
+    //    string sToName, string sToEmail, string sHeader, string sMessage, bool fSSL)
+    //{
+    //    if (sToName.Length == 0)
+    //        sToName = sToEmail;
+    //    if (sFromName.Length == 0)
+    //        sFromName = sFromEmail;
+
+    //    System.Web.Mail.MailMessage Mail = new System.Web.Mail.MailMessage();
+    //    Mail.Fields["http://schemas.microsoft.com/cdo/configuration/smtpserver"] = sHost;
+    //    Mail.Fields["http://schemas.microsoft.com/cdo/configuration/sendusing"] = 2;
+
+    //    Mail.Fields["http://schemas.microsoft.com/cdo/configuration/smtpserverport"] = nPort.ToString();
+    //    if (fSSL)
+    //        Mail.Fields["http://schemas.microsoft.com/cdo/configuration/smtpusessl"] = "true";
+
+    //    if (sUserName.Length == 0)
+    //    {
+    //        //Ingen auth 
+    //    }
+    //    else
+    //    {
+    //        Mail.Fields["http://schemas.microsoft.com/cdo/configuration/smtpauthenticate"] = 1;
+    //        Mail.Fields["http://schemas.microsoft.com/cdo/configuration/sendusername"] = sUserName;
+    //        Mail.Fields["http://schemas.microsoft.com/cdo/configuration/sendpassword"] = sPassword;
+    //    }
+
+    //    Mail.To = sToEmail;
+    //    Mail.From = sFromEmail;
+    //    Mail.Subject = sHeader;
+    //    Mail.Body = sMessage;
+    //    Mail.BodyFormat = System.Web.Mail.MailFormat.Html;
+
+    //    System.Web.Mail.SmtpMail.SmtpServer = sHost;
+    //    System.Web.Mail.SmtpMail.Send(Mail);
+    //}
+
+    //public static void SendGmailFromDreamingFighter(string sToName, string sToEmail, string sHeader, string sMessage)
+    //{
+    //    Functions.SendMail("smtp.gmail.com", 
+    //                        465, 
+    //                        "df.thangld@gmail.com", 
+    //                        "meocondethuong", 
+    //                        "DreamingFighter",
+    //                        "df.thangld@gmail.com",
+    //                        sToName,
+    //                        sToEmail,
+    //                        sHeader,
+    //                        sMessage, 
+    //                        true); 
+    //}
+
 }
