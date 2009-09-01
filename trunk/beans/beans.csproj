@@ -90,6 +90,15 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="Admin.cs" />
     <Compile Include="AdminConfigurationMethods.cs" />
+    <Compile Include="JobEnum.cs" />
+    <Compile Include="Permission.cs" />
+    <Compile Include="SecurityException.cs" />
+    <Compile Include="ServicesList.cs" />
+    <Compile Include="Services\ConfigurationService.cs" />
+    <Compile Include="Services\SecurityService.cs" />
+    <Compile Include="Services\StaffManagementService.cs" />
+    <Compile Include="StaffGroup.cs" />
+    <Compile Include="Job.cs" />
     <Compile Include="SupportSendbackReport.cs" />
     <Compile Include="InviteReport.cs" />
     <Compile Include="MovingCommandLandingTimeComparer.cs" />
@@ -282,6 +291,9 @@
     <EmbeddedResource Include="MappingFiles\Research.hbm.xml">
       <Generator>nhibernate-mapping.xsd</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="MappingFiles\Job.hbm.xml" />
+    <EmbeddedResource Include="MappingFiles\Permission.hbm.xml" />
+    <EmbeddedResource Include="MappingFiles\StaffGroup.hbm.xml" />
     <Content Include="Templates\AttackReport.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

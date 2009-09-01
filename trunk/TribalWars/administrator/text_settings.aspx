@@ -6,12 +6,13 @@
         
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-<center>
+    <center>
         <h1>
-            Numeric
+            Text Settings
         </h1>
     </center>
-    <asp:Repeater ID="stringConfigurationRepeater" runat="server" EnableViewState="true">
+    <asp:Repeater ID="stringConfigurationRepeater" runat="server" 
+    EnableViewState="true" onitemcommand="stringConfigurationRepeater_ItemCommand">
         <HeaderTemplate>
             <table border="1" width="90%">
                 <tbody>

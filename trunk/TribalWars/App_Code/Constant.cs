@@ -26,6 +26,11 @@ public class Constant
         get { return "UserCount"; }
     }
 
+    public static string DebugMode
+    {
+        get { return "DebugMode"; }
+    }
+
     protected Constant()
     {
         

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+
+  <class name="beans.Permission, beans" table="permission" lazy="false">
+    <cache usage="read-write"/>
+    <id name="ID" column="id" type="Int32">
+      <generator class="identity"/>
+    </id>
+    <property name="Privilage" column="privilage" type="String"></property>
+    <many-to-one name="Job" class="beans.Job, beans" column="job" not-null="false" fetch="join" lazy="proxy" not-found="ignore" />
+    <many-to-one name="StaffGroup" class="beans.StaffGroup, beans" column="staff_group_id" not-null="true"></many-to-one>  
+  </class>
+
+</hibernate-mapping>

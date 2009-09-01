@@ -3,23 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NHibernate;
-using NHibernate.Linq;
 using NHibernate.Criterion;
+using NHibernate.Linq;
 
-namespace beans
+namespace beans.Services
 {
-    public class AdminConfigurationMethods
+    public class ConfigurationService
     {
 
-        public Player Player
-        {
-            get;
-            set;
-        }
+        internal ConfigurationService() { }
+
 
         #region GetTextSettings
-        public IList<StringConfiguration> GetTextSettings(int page, int pageSize, string key, ISession session)
+        public IList<StringConfiguration> GetTextSettings(Player staff, int page, int pageSize, string key, ISession session)
         {
+            ServicesList.SecurityService.CheckPermission(staff, new Job(JobEnum.TextSettings.ToString()), "read");
 
             ICriteria criteria = session.CreateCriteria(typeof(StringConfiguration));
             if (key != string.Empty)
@@ -28,19 +26,21 @@ namespace beans
             criteria.AddOrder(Order.Desc("Key"));
             return criteria.List<StringConfiguration>();
         }
-        public IList<StringConfiguration> GetTextSettings(int page, int pageSize, ISession session)
+        public IList<StringConfiguration> GetTextSettings(Player staff, int page, int pageSize, ISession session)
         {
-            return this.GetTextSettings(page, pageSize, "", session);
+            return this.GetTextSettings(staff, page, pageSize, "", session);
         }
-        public IList<StringConfiguration> GetTextSettings(ISession session)
+        public IList<StringConfiguration> GetTextSettings(Player staff, ISession session)
         {
-            return this.GetTextSettings(0, 0, "", session);
+            return this.GetTextSettings(staff, 0, 0, "", session);
         }
         #endregion
 
         #region GetNumericSettings
-        public IList<NumericConfiguration> GetNumericSettings(int page, int pageSize, string key, ISession session)
+        public IList<NumericConfiguration> GetNumericSettings(Player staff, int page, int pageSize, string key, ISession session)
         {
+
+            ServicesList.SecurityService.CheckPermission(staff, new Job(JobEnum.NumericSettings.ToString()), "read");
 
             var query = from numericConfiguration in session.Linq<NumericConfiguration>()
                         orderby numericConfiguration.Key descending
@@ -54,18 +54,21 @@ namespace beans
 
             return query.ToList<NumericConfiguration>();
         }
-        public IList<NumericConfiguration> GetNumericSettings(int page, int pageSize, ISession session)
+        public IList<NumericConfiguration> GetNumericSettings(Player staff, int page, int pageSize, ISession session)
         {
-            return this.GetNumericSettings(page, pageSize, "", session);
+            return this.GetNumericSettings(staff, page, pageSize, "", session);
         }
-        public IList<NumericConfiguration> GetNumericSettings(ISession session)
+        public IList<NumericConfiguration> GetNumericSettings(Player staff, ISession session)
         {
-            return this.GetNumericSettings(0, 0, "", session);
+            return this.GetNumericSettings(staff, 0, 0, "", session);
         }
         #endregion
 
-        public void ChangeTextSetting(string key, string value, ISession session)
+        public void ChangeTextSetting(Player staff, string key, string value, ISession session)
         {
+
+            ServicesList.SecurityService.CheckPermission(staff, new Job(JobEnum.TextSettings.ToString()), "write");
+
             if (Configuration.TribalWarsConfiguration.StringConfiguration.ContainsKey(key))
             {
                 StringConfiguration config = Configuration.TribalWarsConfiguration.StringConfiguration[key];
@@ -85,8 +88,10 @@ namespace beans
             }
         }
 
-        public void ChangeNumericSetting(string key, double value, ISession session)
+        public void ChangeNumericSetting(Player staff, string key, double value, ISession session)
         {
+            ServicesList.SecurityService.CheckPermission(staff, new Job(JobEnum.NumericSettings.ToString()), "write");
+
             if (Configuration.TribalWarsConfiguration.NumericConfiguration.ContainsKey(key))
             {
                 NumericConfiguration config = Configuration.TribalWarsConfiguration.NumericConfiguration[key];
@@ -108,8 +113,9 @@ namespace beans
             }
         }
 
-        public void DeleteNumericSetting(string key, ISession session)
+        public void DeleteNumericSetting(Player staff, string key, ISession session)
         {
+            ServicesList.SecurityService.CheckPermission(staff, new Job(JobEnum.NumericSettings.ToString()), "write");
             if (!Configuration.TribalWarsConfiguration.NumericConfiguration.ContainsKey(key))
                 return;
 
@@ -118,8 +124,9 @@ namespace beans
             session.Delete(config);
         }
 
-        public void DeleteTextSetting(string key, ISession session)
+        public void DeleteTextSetting(Player staff, string key, ISession session)
         {
+            ServicesList.SecurityService.CheckPermission(staff, new Job(JobEnum.TextSettings.ToString()), "write");
             if (!Configuration.TribalWarsConfiguration.StringConfiguration.ContainsKey(key))
                 return;
 
@@ -128,6 +135,11 @@ namespace beans
             session.Delete(config);
         }
 
-        
+        public void RestartServer(Player staff, ISession session)
+        {
+            ServicesList.SecurityService.CheckPermission(staff, new Job(JobEnum.RestartServer.ToString()), "");
+
+            TribalWarsEngine.Start(session);
+        }
     }
 }

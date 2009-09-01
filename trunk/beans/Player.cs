@@ -174,6 +174,11 @@ namespace beans
             get;
             set;
         }
+        public virtual IList<StaffGroup> StaffGroups
+        {
+            get;
+            set;
+        }
         #endregion
 
         #region Static Member
