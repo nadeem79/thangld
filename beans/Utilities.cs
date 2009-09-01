@@ -10,13 +10,13 @@ namespace beans
     public class Utilities
     {
 
-        protected static string EncryptKey = "Thu Hương dễ thương";
+        protected static string EncryptKey = "ThuTrang";
 
         public static string Decrypt(string text)
         {
 
             byte[] encodedkey;
-            byte[] iv = { 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
+            byte[] iv = { 0x1F, 0x2E, 0x3D, 0x4C, 0x5B, 0x6A, 0x78, 0xA7 };
             byte[] bytes;
 
             encodedkey = Encoding.UTF8.GetBytes(EncryptKey);
@@ -45,7 +45,7 @@ namespace beans
         {
 
             byte[] encodedkey;
-            byte[] iv = { 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
+            byte[] iv = { 0x1F, 0x2E, 0x3D, 0x4C, 0x5B, 0x6A, 0x78, 0xA7 };
             byte[] bytes;
 
             encodedkey = Encoding.UTF8.GetBytes(EncryptKey);
@@ -64,7 +64,7 @@ namespace beans
             }
             catch (Exception ex)
             {
-                
+                return "";
             }
 
             return Convert.ToBase64String(ms.ToArray());
