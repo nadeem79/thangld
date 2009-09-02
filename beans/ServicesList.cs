@@ -13,11 +13,11 @@ namespace beans
 
         public static SecurityService SecurityService
         {
-            get { return ServicesList.SecurityService; }
+            get { return ServicesList.securityService; }
         }
         public static ConfigurationService ConfigurationService
         {
-            get { return ServicesList.ConfigurationService; }
+            get { return ServicesList.configurationService; }
         }
     }
 }
