@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using NHibernate;
 using beans;
+using Telerik.Web.UI;
 
 public partial class administrator_text_settings : System.Web.UI.Page
 {
@@ -18,9 +19,10 @@ public partial class administrator_text_settings : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        
         ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
         object s = Session[Constant.StaffUserSessionSign];
-        this.CurrentPlayer = session.Load<Player>(Session[Constant.StaffUserSessionSign]);
+        this.CurrentPlayer = session.Get<Player>(Session[Constant.StaffUserSessionSign]);
         int page = 0;
 
         if (Request["key"] != null)
@@ -35,6 +37,11 @@ public partial class administrator_text_settings : System.Web.UI.Page
         IList<StringConfiguration> stringConfigurations = this.CurrentPlayer.AdminConfigurationMethods.GetTextSettings(session);
         this.stringConfigurationRepeater.DataSource = stringConfigurations;
         this.stringConfigurationRepeater.DataBind();
+        RadTreeNode parentNode = ((administrator_administrator)this.Master).Menu.FindNodeByValue(beans.JobEnum.TextSettings.ToString());
+        parentNode.Expanded = true;
+        RadTreeNode childNode = parentNode.Nodes.FindNodeByValue("list");
+        if (childNode != null)
+            childNode.ImageUrl = "../images/map_e.png";
 
     }
     protected void deleteSettingButton_Click(object sender, EventArgs e)
