@@ -31,7 +31,7 @@ public partial class administrator_login : System.Web.UI.Page
 
         ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
 
-        int staffID = Admin.StaffAuthentication(this.usernameTextBox.Text, this.passwordTextBox.Text, session);
+        int staffID = ServicesList.SecurityService.Authentication(this.usernameTextBox.Text, this.passwordTextBox.Text, true, session); //Admin.StaffAuthentication(this.usernameTextBox.Text, this.passwordTextBox.Text, session);
         if (staffID == 0)
         {
             this.errorLabel.Text = "Tên đăng nhập hoặc mật khẩu không tồn tại";

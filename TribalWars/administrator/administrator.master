@@ -1,5 +1,5 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="administrator.master.cs" 
-    Inherits="administrator_administrator"%>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="administrator.master.cs"
+    Inherits="administrator_administrator" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -8,9 +8,10 @@
     <title>Trang quản trị</title>
 
     <script type="text/javascript" src="../js/jquery.js"></script>
+
     <script type="text/javascript" src="../js/facebox.js"></script>
-    <link rel="stylesheet" type="text/css" href="../css/facebox.css" /> 
-    
+
+    <link rel="stylesheet" type="text/css" href="../css/facebox.css" />
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -20,61 +21,45 @@
         <telerik:RadScriptManager ID="RadScriptManager1" runat="server">
         </telerik:RadScriptManager>
         <telerik:RadFormDecorator ID="RadFormDecorator1" runat="server" />
-        <telerik:RadMenu ID="menu" runat="server" Flow="Vertical" ClickToOpen="true" Width="200px">
-            <Items>
-       <Telerik:RadMenuItem Text="Root Item 1" >
-           <Items>
-            
-               <Telerik:RadMenuItem Text="Child Item 1" NavigateUrl="~/Page11.aspx" />
-               <Telerik:RadMenuItem Text="Child Item 2" NavigateUrl="~/Page12.aspx" />
-           </Items>
-       </Telerik:RadMenuItem>
-       <Telerik:RadMenuItem Text="Root Item 2" >
-           <Items>
-               <Telerik:RadMenuItem Text="Child Item 1" NavigateUrl="~/Page21.aspx" />
-               <Telerik:RadMenuItem Text="Child Item 2" NavigateUrl="~/Page22.aspx" />
-           </Items>
-       </Telerik:RadMenuItem>
-       <Telerik:RadMenuItem Enabled="False" Text="Root Item 3" NavigateUrl="~/Page3.aspx" />
-   </Items>
-        </telerik:RadMenu>
         <table border="1" width="100%">
             <tbody>
                 <tr>
-                    <td width="15%"  valign="top">
-                        <center><h1>MENU</h1></center>
-                        <ul>
-                            <li>
-                                Text setting
-                                <ul>
-                                    <li><a href="text_settings.aspx">Danh sách text</a></li>
-                                    <li><a href="create_text">Tạo mới</a></li>
-                                </ul>
-                                Numeric setting
-                                <ul>
-                                    <li><a href="numeric_settings.aspx">Danh sách numeric</a></li>
-                                    <li><a href="create_numeric">Tạo mới</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                
-                            </li>
-                            <li>
-                                <asp:LinkButton ID="bttnRestartServer" runat="server" 
-                                    onclick="bttnRestartServer_Click">Restart</asp:LinkButton>
-                            </li>
-                        </ul>
+                    <td width="15%" valign="top">
+                        <center>
+                            <h1>
+                                MENU</h1>
+                        </center>
+                        <telerik:RadTreeView runat="Server" ID="menu" Skin="Vista">
+                            <Nodes>
+                                <telerik:RadTreeNode runat="server" Value="TextSettings" Text="Text setting">
+                                    <Nodes>
+                                        <telerik:RadTreeNode runat="server" Value="list" Text="Danh sách text" NavigateUrl="text_settings.aspx">
+                                        </telerik:RadTreeNode>
+                                        <telerik:RadTreeNode runat="server" Text="Tạo mới" NavigateUrl="create_text.aspx">
+                                        </telerik:RadTreeNode>
+                                    </Nodes>
+                                </telerik:RadTreeNode>
+                            </Nodes>
+                            <Nodes>
+                                <telerik:RadTreeNode runat="server" Value="NumericSettings" Text="Numeric setting">
+                                    <Nodes>
+                                        <telerik:RadTreeNode runat="server" Text="Danh sách numeric" NavigateUrl="numeric_settings.aspx">
+                                        </telerik:RadTreeNode>
+                                        <telerik:RadTreeNode runat="server" Text="Tạo mới" NavigateUrl="create_numeric.aspx">
+                                        </telerik:RadTreeNode>
+                                    </Nodes>
+                                </telerik:RadTreeNode>
+                            </Nodes>
+                        </telerik:RadTreeView>
+                        <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
                     </td>
                     <td valign="top">
                         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                         </asp:ContentPlaceHolder>
                     </td>
-                    
                 </tr>
             </tbody>
         </table>
-        
-        
     </div>
     </form>
 </body>
