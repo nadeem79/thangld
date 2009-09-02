@@ -1,0 +1,262 @@
+﻿<h3>
+    $winning$ thắng trận</h3>
+May mắn (phía tấn công): $luck$
+<br />
+<br />
+<table style="border: 1px solid rgb(222, 211, 185);" width="100%">
+    <tbody>
+        <tr>
+            <th width="100">
+                Tấn công:
+            </th>
+            <th>
+                <a href='user_info.aspx?player=$attacker_id$'>$attacker_name$</a>
+            </th>
+        </tr>
+        <tr>
+            <td>
+                Thành phố:
+            </td>
+            <td>
+                <a href='village_info.aspx?village=$attacker_village_id$'>$attacker_village_name$ ($attacker_village_x$|$attacker_village_y$)</a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <table class="vis">
+                    <tbody>
+                        <tr class="center">
+                            <td>
+                            </td>
+                            <td width="35">
+                                <img src="images/unit_spear.png" title="Spear fighter" alt="">
+                            </td>
+                            <td width="35">
+                                <img src="images/unit_sword.png" title="Swordsman" alt="">
+                            </td>
+                            <td width="35">
+                                <img src="images/unit_axe.png" title="Axeman" alt="">
+                            </td>
+                            <td width="35">
+                                <img src="images/unit_spy.png" title="Scout" alt="">
+                            </td>
+                            <td width="35">
+                                <img src="images/unit_light.png" title="Light cavalry" alt="">
+                            </td>
+                            <td width="35">
+                                <img src="images/unit_heavy.png" title="Heavy cavalry" alt="">
+                            </td>
+                            <td width="35">
+                                <img src="images/unit_ram.png" title="Ram" alt="">
+                            </td>
+                            <td width="35">
+                                <img src="images/unit_catapult.png" title="Catapult" alt="">
+                            </td>
+                            <td width="35">
+                                <img src="images/unit_snob.png" title="Nobleman" alt="">
+                            </td>
+                        </tr>
+                        <tr class="center">
+                            <td>
+                                Số lượng:
+                            </td>
+                            <td>
+                                $SpearSent$
+                            </td>
+                            <td>
+                                $SwordSent$
+                            </td>
+                            <td>
+                                $AxeSent$
+                            </td>
+                            <td>
+                                $ScoutSent$
+                            </td>
+                            <td>
+                                $LightSent$
+                            </td>
+                            <td>
+                                $HeavySent$
+                            </td>
+                            <td>
+                                $RamSent$
+                            </td>
+                            <td>
+                                $CatapultSent$
+                            </td>
+                            <td>
+                                $NobleSent$
+                            </td>
+                        </tr>
+                        <tr class="center">
+                            <td>
+                                Còn lại:
+                            </td>
+                            <td>
+                                $SpearRemaint$
+                            </td>
+                            <td>
+                                $SwordRemaint$
+                            </td>
+                            <td>
+                                $AxeRemaint$
+                            </td>
+                            <td>
+                                $ScoutRemaint$
+                            </td>
+                            <td>
+                                $LightRemaint$
+                            </td>
+                            <td>
+                                $HeavyRemaint$
+                            </td>
+                            <td>
+                                $RamRemaint$
+                            </td>
+                            <td>
+                                $CatapultRemaint$
+                            </td>
+                            <td>
+                                $NobleRemaint$
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+            </td>
+        </tr>
+    </tbody>
+</table>
+<br>
+<table style="border: 1px solid rgb(222, 211, 185);" width="100%">
+    <tbody>
+        <tr>
+            <th width="100">
+                Phòng thủ:
+            </th>
+            <th>
+                <a href='user_info.aspx?player=$defender_id$'>$defender_name$</a>
+            </th>
+        </tr>
+        <tr>
+            <td>
+                Thành phố:
+            </td>
+            <td>
+                <a href='village_info.aspx?village=$defender_village_id$'>$defender_village_name$ ($defender_village_x$|$defender_village_y$)</a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <table class="vis">
+                    <tbody>
+                        <tr class="center">
+                            <td>
+                            </td>
+                            <td width="35">
+                                <img src="images/unit_spear.png" title="Spear fighter" alt="">
+                            </td>
+                            <td width="35">
+                                <img src="images/unit_sword.png" title="Swordsman" alt="">
+                            </td>
+                            <td width="35">
+                                <img src="images/unit_axe.png" title="Axeman" alt="">
+                            </td>
+                            <td width="35">
+                                <img src="images/unit_spy.png" title="Scout" alt="">
+                            </td>
+                            <td width="35">
+                                <img src="images/unit_light.png" title="Light cavalry" alt="">
+                            </td>
+                            <td width="35">
+                                <img src="images/unit_heavy.png" title="Heavy cavalry" alt="">
+                            </td>
+                            <td width="35">
+                                <img src="images/unit_ram.png" title="Ram" alt="">
+                            </td>
+                            <td width="35">
+                                <img src="images/unit_catapult.png" title="Catapult" alt="">
+                            </td>
+                            <td width="35">
+                                <img src="images/unit_snob.png" title="Nobleman" alt="">
+                            </td>
+                        </tr>
+                        <tr class="center">
+                            <td>
+                                Số lượng:
+                            </td>
+                            <td>
+                                $SpearDefense$
+                            </td>
+                            <td>
+                                $SwordDefense$
+                            </td>
+                            <td>
+                                $AxeDefense$
+                            </td>
+                            <td>
+                                $ScoutDefense$
+                            </td>
+                            <td>
+                                $LightDefense$
+                            </td>
+                            <td>
+                                $HeavyDefense$
+                            </td>
+                            <td>
+                                $RamDefense$
+                            </td>
+                            <td>
+                                $CatapultDefense$
+                            </td>
+                            <td>
+                                $NobleDefense$
+                            </td>
+                        </tr>
+                        <tr class="center">
+                            <td>
+                                Thiệt hại:
+                            </td>
+                            <td>
+                                $SpearSurvived$
+                            </td>
+                            <td>
+                                $SwordSurvived$
+                            </td>
+                            <td>
+                                $AxeSurvived$
+                            </td>
+                            <td>
+                                $ScoutSurvived$
+                            </td>
+                            <td>
+                                $LightSurvived$
+                            </td>
+                            <td>
+                                $HeavySurvived$
+                            </td>
+                            <td>
+                                $RamSurvived$
+                            </td>
+                            <td>
+                                $CatapultSurvived$
+                            </td>
+                            <td>
+                                $NobleSurvived$
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<br />
+<h5>
+    Cướp bóc:</h5>
+<img src="images/lehm.png" />$Clay$
+<img src="images/holz.png" />$Wood$
+<img src="images/eisen.png" />$Iron$ 
