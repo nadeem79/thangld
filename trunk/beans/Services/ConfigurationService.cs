@@ -17,7 +17,7 @@ namespace beans.Services
         #region GetTextSettings
         public IList<StringConfiguration> GetTextSettings(Player staff, int page, int pageSize, string key, ISession session)
         {
-            ServicesList.SecurityService.CheckPermission(staff, new Job(JobEnum.TextSettings.ToString()), "read");
+            ServicesList.SecurityService.CheckPermission(staff, new Job(JobEnum.TextSettings.ToString()), "");
 
             ICriteria criteria = session.CreateCriteria(typeof(StringConfiguration));
             if (key != string.Empty)
@@ -40,7 +40,7 @@ namespace beans.Services
         public IList<NumericConfiguration> GetNumericSettings(Player staff, int page, int pageSize, string key, ISession session)
         {
 
-            ServicesList.SecurityService.CheckPermission(staff, new Job(JobEnum.NumericSettings.ToString()), "read");
+            ServicesList.SecurityService.CheckPermission(staff, new Job(JobEnum.NumericSettings.ToString()), "");
 
             var query = from numericConfiguration in session.Linq<NumericConfiguration>()
                         orderby numericConfiguration.Key descending
@@ -67,7 +67,7 @@ namespace beans.Services
         public void ChangeTextSetting(Player staff, string key, string value, ISession session)
         {
 
-            ServicesList.SecurityService.CheckPermission(staff, new Job(JobEnum.TextSettings.ToString()), "write");
+            ServicesList.SecurityService.CheckPermission(staff, new Job(JobEnum.TextSettings.ToString()), "");
 
             if (Configuration.TribalWarsConfiguration.StringConfiguration.ContainsKey(key))
             {
@@ -90,7 +90,7 @@ namespace beans.Services
 
         public void ChangeNumericSetting(Player staff, string key, double value, ISession session)
         {
-            ServicesList.SecurityService.CheckPermission(staff, new Job(JobEnum.NumericSettings.ToString()), "write");
+            ServicesList.SecurityService.CheckPermission(staff, new Job(JobEnum.NumericSettings.ToString()), "");
 
             if (Configuration.TribalWarsConfiguration.NumericConfiguration.ContainsKey(key))
             {
@@ -115,7 +115,7 @@ namespace beans.Services
 
         public void DeleteNumericSetting(Player staff, string key, ISession session)
         {
-            ServicesList.SecurityService.CheckPermission(staff, new Job(JobEnum.NumericSettings.ToString()), "write");
+            ServicesList.SecurityService.CheckPermission(staff, new Job(JobEnum.NumericSettings.ToString()), "");
             if (!Configuration.TribalWarsConfiguration.NumericConfiguration.ContainsKey(key))
                 return;
 
@@ -126,7 +126,7 @@ namespace beans.Services
 
         public void DeleteTextSetting(Player staff, string key, ISession session)
         {
-            ServicesList.SecurityService.CheckPermission(staff, new Job(JobEnum.TextSettings.ToString()), "write");
+            ServicesList.SecurityService.CheckPermission(staff, new Job(JobEnum.TextSettings.ToString()), "");
             if (!Configuration.TribalWarsConfiguration.StringConfiguration.ContainsKey(key))
                 return;
 
