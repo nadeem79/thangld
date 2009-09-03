@@ -24,10 +24,6 @@ public partial class administrator_text_settings : System.Web.UI.Page
         this.CurrentPlayer = session.Load<Player>(Session[Constant.StaffUserSessionSign]);
         int page = 0;
 
-        if (Request["key"] != null)
-        {
-            this.CurrentPlayer.AdminConfigurationMethods.ChangeTextSetting(Request["key"], Request["value"], session);
-        }
 
         if (IsPostBack)
             return;
@@ -75,7 +71,16 @@ public partial class administrator_text_settings : System.Web.UI.Page
 
     protected void stringConfigurationRepeater_ItemCommand(object source, RepeaterCommandEventArgs e)
     {
-        
+        if (e.CommandName == "DeleteConfig")
+        {
+            ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
+            string key = e.CommandArgument.ToString();
+
+            Player p = session.Load<Player>(Session[Constant.StaffUserSessionSign]);
+
+            ServicesList.ConfigurationService.DeleteTextSetting(p, key, session);
+
+        }
     }
     protected void ValueChanged(object sender, EventArgs e)
     {
@@ -85,8 +90,9 @@ public partial class administrator_text_settings : System.Web.UI.Page
         {
             ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
             string key = txtValue.Attributes["TextID"];
+            Player p = session.Load<Player>(Session[Constant.StaffUserSessionSign]);
 
-            this.CurrentPlayer.AdminConfigurationMethods.ChangeTextSetting(key, txtValue.Text, session);
+            ServicesList.ConfigurationService.ChangeTextSetting(p, key, txtValue.Text, session);
         }
     }
 

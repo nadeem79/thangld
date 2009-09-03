@@ -4,43 +4,24 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Telerik.Web.UI;
 using NHibernate;
+using Telerik.Web.UI;
 using beans;
 
-public partial class administrator_change_text : System.Web.UI.Page
+public partial class administrator_create_text : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
 
-        if (IsPostBack)
-            return;
-
-        if (Request["key"] == null)
-        {
-            Response.Redirect("text_settings.aspx", false);
-            return;
-        }
-
-        StringConfiguration config = beans.Configuration.TribalWarsConfiguration.GetStringConfigurationItem(Request["key"]);
-        if (config.Value==string.Empty)
-        {
-            Response.Redirect("text_settings.aspx", false);
-            return;
-        }
-
-        this.txtKey.Text = config.Key;
-        this.txtValue.Content = config.Value;
-
         RadTreeNode parentNode = ((administrator_administrator)this.Master).Menu.FindNodeByValue(beans.JobEnum.TextSettings.ToString());
         parentNode.Expanded = true;
-        RadTreeNode childNode = parentNode.Nodes.FindNodeByValue("list");
+        RadTreeNode childNode = parentNode.Nodes.FindNodeByValue("create");
 
         if (childNode != null)
             childNode.ImageUrl = "images/map_e.png";
 
     }
-
+    
     protected void bttnChangeText_Click(object sender, EventArgs e)
     {
         ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];

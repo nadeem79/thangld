@@ -40,7 +40,9 @@
                 </td>
                 <td>
                     <asp:TextBox runat="server" ID="txtValue" Width="95%" Height="50px" TextMode="MultiLine" OnTextChanged="ValueChanged" AutoPostBack="false" TextID='<%# Eval("Key")  %>'  Text='<%# Eval("Value")  %>'></asp:TextBox><br />
-                    <asp:Button runat="server" ID="bttnChangeValue" Text="Sửa" CommandArgument='<%# Eval("Key")  %>' />
+                    <asp:Button runat="server" ID="bttnChangeValue" Text="Sửa" CommandName="EditConfig" OnClientClick="return confirm('Sửa biến text?');" CommandArgument='<%# Eval("Key")  %>' />
+                    <input type="button" value="Sửa chi tiết" onclick="javascript:window.location='change_text.aspx?key=<%# Eval("Key")  %>'" />
+                    <asp:Button runat="server" ID="bttnDelete" Text="Xoá" CommandName="DeleteConfig" OnClientClick="return confirm('Bạn muốn xoá biến text này?');" CommandArgument='<%# Eval("Key")  %>' />
                 </td>
             </tr>
         </ItemTemplate>

@@ -52,7 +52,7 @@ public partial class administrator_administrator : System.Web.UI.MasterPage
 
     public RadTreeView Menu
     {
-        get { return this.RadTreeView1; }
+        get { return this.menu; }
     }
 
     protected void bttnRestartServer_Click(object sender, EventArgs e)
