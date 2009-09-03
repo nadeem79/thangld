@@ -14,12 +14,12 @@
     <asp:Repeater ID="stringConfigurationRepeater" runat="server" 
     EnableViewState="true" onitemcommand="stringConfigurationRepeater_ItemCommand">
         <HeaderTemplate>
-            <table border="1" width="90%">
+            <table border="1" width="95%">
                 <tbody>
                     <tr>
-                        <th>
+                        <th width="30px;">
                         </th>
-                        <th>
+                        <th width="250px;">
                             Tên biến
                         </th>
                         <th>
@@ -39,11 +39,8 @@
                     <%# DataBinder.Eval(Container.DataItem, "Key")  %>
                 </td>
                 <td>
-                    <form method="post" action="<% = Request.Url.ToString() %>">
-                    <textarea name="value"><%# Eval("Value")  %></textarea><br />
-                    <input type="hidden" name="key" value='<%# Eval("Key")  %>' />
-                    <input type="submit" value="Thay đổi" />
-                    </form>
+                    <asp:TextBox runat="server" ID="txtValue" Width="95%" Height="50px" TextMode="MultiLine" OnTextChanged="ValueChanged" AutoPostBack="false" TextID='<%# Eval("Key")  %>'  Text='<%# Eval("Value")  %>'></asp:TextBox><br />
+                    <asp:Button runat="server" ID="bttnChangeValue" Text="Sửa" CommandArgument='<%# Eval("Key")  %>' />
                 </td>
             </tr>
         </ItemTemplate>
