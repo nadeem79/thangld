@@ -7,20 +7,18 @@
 <head runat="server">
     <title>Trang quản trị</title>
 
-    <script type="text/javascript" src="../js/jquery.js"></script>
+    
 
-    <script type="text/javascript" src="../js/facebox.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="../css/facebox.css" />
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
+    
 </head>
 <body>
     <form id="form1" runat="server">
     <div>
-        <telerik:RadScriptManager ID="RadScriptManager1" runat="server">
+        <telerik:RadScriptManager ID="RadScriptManager1" Runat="server">
         </telerik:RadScriptManager>
-        <telerik:RadFormDecorator ID="RadFormDecorator1" runat="server" />
+        
         <table border="1" width="100%">
             <tbody>
                 <tr>
@@ -29,29 +27,7 @@
                             <h1>
                                 MENU</h1>
                         </center>
-                        <telerik:RadTreeView runat="Server" ID="menu" Skin="Vista">
-                            <Nodes>
-                                <telerik:RadTreeNode runat="server" Value="TextSettings" Text="Text setting">
-                                    <Nodes>
-                                        <telerik:RadTreeNode runat="server" Value="list" Text="Danh sách text" NavigateUrl="text_settings.aspx">
-                                        </telerik:RadTreeNode>
-                                        <telerik:RadTreeNode runat="server" Text="Tạo mới" NavigateUrl="create_text.aspx">
-                                        </telerik:RadTreeNode>
-                                    </Nodes>
-                                </telerik:RadTreeNode>
-                            </Nodes>
-                            <Nodes>
-                                <telerik:RadTreeNode runat="server" Value="NumericSettings" Text="Numeric setting">
-                                    <Nodes>
-                                        <telerik:RadTreeNode runat="server" Text="Danh sách numeric" NavigateUrl="numeric_settings.aspx">
-                                        </telerik:RadTreeNode>
-                                        <telerik:RadTreeNode runat="server" Text="Tạo mới" NavigateUrl="create_numeric.aspx">
-                                        </telerik:RadTreeNode>
-                                    </Nodes>
-                                </telerik:RadTreeNode>
-                            </Nodes>
-                        </telerik:RadTreeView>
-                        <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+                        
                     </td>
                     <td valign="top">
                         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
@@ -61,6 +37,36 @@
             </tbody>
         </table>
     </div>
+    <telerik:RadTreeView ID="RadTreeView1" Runat="server">
+        <Nodes>
+            <telerik:RadTreeNode runat="server" Text="Root RadTreeNode1">
+                <Nodes>
+                    <telerik:RadTreeNode runat="server" Text="Child RadTreeNode 1">
+                        <Nodes>
+                            <telerik:RadTreeNode runat="server" Text="Child RadTreeNode 1">
+                            </telerik:RadTreeNode>
+                            <telerik:RadTreeNode runat="server" Text="Child RadTreeNode 2">
+                            </telerik:RadTreeNode>
+                            <telerik:RadTreeNode runat="server" Text="Child RadTreeNode 3">
+                            </telerik:RadTreeNode>
+                            <telerik:RadTreeNode runat="server" Text="Child RadTreeNode 4">
+                            </telerik:RadTreeNode>
+                        </Nodes>
+                    </telerik:RadTreeNode>
+                </Nodes>
+            </telerik:RadTreeNode>
+            <telerik:RadTreeNode runat="server" Text="Root RadTreeNode2">
+            </telerik:RadTreeNode>
+            <telerik:RadTreeNode runat="server" Text="Root RadTreeNode3">
+            </telerik:RadTreeNode>
+            <telerik:RadTreeNode runat="server" Text="Root RadTreeNode4">
+            </telerik:RadTreeNode>
+            <telerik:RadTreeNode runat="server" Text="Root RadTreeNode5">
+            </telerik:RadTreeNode>
+            <telerik:RadTreeNode runat="server" Text="Root RadTreeNode6">
+            </telerik:RadTreeNode>
+        </Nodes>
+    </telerik:RadTreeView>
     </form>
 </body>
 </html>

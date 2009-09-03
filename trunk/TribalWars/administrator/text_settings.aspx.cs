@@ -21,12 +21,13 @@ public partial class administrator_text_settings : System.Web.UI.Page
     {
         
         ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
-        object s = Session[Constant.StaffUserSessionSign];
-        this.CurrentPlayer = session.Get<Player>(Session[Constant.StaffUserSessionSign]);
+        this.CurrentPlayer = session.Load<Player>(Session[Constant.StaffUserSessionSign]);
         int page = 0;
 
         if (Request["key"] != null)
+        {
             this.CurrentPlayer.AdminConfigurationMethods.ChangeTextSetting(Request["key"], Request["value"], session);
+        }
 
         if (IsPostBack)
             return;
@@ -40,8 +41,9 @@ public partial class administrator_text_settings : System.Web.UI.Page
         RadTreeNode parentNode = ((administrator_administrator)this.Master).Menu.FindNodeByValue(beans.JobEnum.TextSettings.ToString());
         parentNode.Expanded = true;
         RadTreeNode childNode = parentNode.Nodes.FindNodeByValue("list");
+
         if (childNode != null)
-            childNode.ImageUrl = "../images/map_e.png";
+            childNode.ImageUrl = "images/map_e.png";
 
     }
     protected void deleteSettingButton_Click(object sender, EventArgs e)
@@ -73,6 +75,20 @@ public partial class administrator_text_settings : System.Web.UI.Page
 
     protected void stringConfigurationRepeater_ItemCommand(object source, RepeaterCommandEventArgs e)
     {
-
+        
     }
+    protected void ValueChanged(object sender, EventArgs e)
+    {
+        TextBox txtValue = (TextBox)sender;
+
+        if (txtValue.Attributes["TextID"] != null)
+        {
+            ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
+            string key = txtValue.Attributes["TextID"];
+
+            this.CurrentPlayer.AdminConfigurationMethods.ChangeTextSetting(key, txtValue.Text, session);
+        }
+    }
+
+
 }
