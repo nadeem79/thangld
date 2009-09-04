@@ -14,6 +14,6 @@
       <one-to-many class="beans.Permission, beans"/>
     </bag>
 
-  </class>
+  </class> 
 
 </hibernate-mapping>
