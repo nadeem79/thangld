@@ -6,7 +6,7 @@
     <id name="JobName" column="job" type="String">
       <generator class="assigned">
       </generator>
-    </id>
+    </id> 
   </class>
 
 </hibernate-mapping> 
