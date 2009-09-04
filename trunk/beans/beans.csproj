@@ -114,6 +114,7 @@
     <Compile Include="TribalWarsException.cs" />
     <Compile Include="UserType.cs" />
     <Compile Include="Utilities.cs" />
+    <Compile Include="Util\Pager.cs" />
     <Compile Include="VillageResourceMethods.cs" />
     <Compile Include="VillageTransportMethods.cs" />
     <Compile Include="VillageRecruitMethods.cs" />

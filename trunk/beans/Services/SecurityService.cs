@@ -11,10 +11,11 @@ namespace beans.Services
     {
         internal SecurityService() { }
 
-        public void CheckPermission(Player staff, Job job, string privilage)
+        public void CheckPermission(Player staff, string job, string privilage)
         {
-            if (staff.StaffGroups == null)
+            if (staff.StaffGroups == null || staff.StaffGroups.Count == 0)
                 throw new SecurityException();
+
 
             IList<Permission> permissions = new List<Permission>();
             foreach (StaffGroup staffGroup in staff.StaffGroups)
@@ -25,6 +26,7 @@ namespace beans.Services
                          where permission.Job == job
                          && permission.Privilage.Contains(privilage)
                          select permission).Count<Permission>();
+            permissions.Clear();
             if (count == 0)
                 throw new SecurityException();
         }
