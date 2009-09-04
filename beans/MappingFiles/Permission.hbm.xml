@@ -10,5 +10,5 @@
     <many-to-one name="Job" class="beans.Job, beans" column="job" not-null="false" fetch="join" lazy="proxy" not-found="ignore" />
     <many-to-one name="StaffGroup" class="beans.StaffGroup, beans" column="staff_group_id" not-null="true"></many-to-one>  
   </class>
-
+ 
 </hibernate-mapping>
