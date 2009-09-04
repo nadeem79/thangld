@@ -29,33 +29,42 @@
                             <h1>
                                 MENU</h1>
                         </center>
-                        <telerik:RadTreeView runat="Server" ID="menu" Skin="Vista">
+                        <telerik:RadTreeView ID="menu" runat="server">
                             <Nodes>
-                                <telerik:RadTreeNode runat="server" Value="TextSettings" Text="Text setting">
+                                <telerik:RadTreeNode runat="server" Text="Text Settings" Value="TextSettings" PostBack="false">
                                     <Nodes>
-                                        <telerik:RadTreeNode runat="server" Value="list" Text="Danh sách text" NavigateUrl="text_settings.aspx">
+                                        <telerik:RadTreeNode runat="server" NavigateUrl="~/administrator/text_settings.aspx"
+                                            Text="Danh sách text" Value="list">
                                         </telerik:RadTreeNode>
-                                        <telerik:RadTreeNode runat="server" Value="create" Text="Tạo mới" NavigateUrl="create_text.aspx">
+                                        <telerik:RadTreeNode runat="server" Text="Create Text" Value="create" NavigateUrl="~/administrator/create_text.aspx">
                                         </telerik:RadTreeNode>
                                     </Nodes>
                                 </telerik:RadTreeNode>
-                            </Nodes>
-                            <Nodes>
-                                <telerik:RadTreeNode runat="server" Value="NumericSettings" Text="Numeric setting">
+                                <telerik:RadTreeNode runat="server" Text="Numeric Settings" Value="NumericSettings"
+                                    PostBack="false">
                                     <Nodes>
-                                        <telerik:RadTreeNode runat="server" Text="Danh sách numeric" NavigateUrl="numeric_settings.aspx">
+                                        <telerik:RadTreeNode runat="server" NavigateUrl="~/administrator/numeric_settings.aspx"
+                                            Text="Danh sách numeric" Value="list">
                                         </telerik:RadTreeNode>
-                                        <telerik:RadTreeNode runat="server" Text="Tạo mới" NavigateUrl="create_numeric.aspx">
+                                    </Nodes>
+                                </telerik:RadTreeNode>
+                                <telerik:RadTreeNode runat="server" Text="Quản lý thành viên" Value="StaffGroupManagement"
+                                    PostBack="false">
+                                    <Nodes>
+                                        <telerik:RadTreeNode runat="server" NavigateUrl="~/administrator/staff_groups.aspx"
+                                            Text="Danh sách nhóm quyền" Value="List">
+                                        </telerik:RadTreeNode>
+                                        <telerik:RadTreeNode runat="server" NavigateUrl="~/administrator/create_staff_groups.aspx"
+                                            Text="Thêm nhóm mới" Value="Create">
                                         </telerik:RadTreeNode>
                                     </Nodes>
                                 </telerik:RadTreeNode>
                             </Nodes>
                         </telerik:RadTreeView>
-                    </td>
-                    <td valign="top">
-                        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-                        </asp:ContentPlaceHolder>
-                    </td>
+                        <td valign="top">
+                            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                            </asp:ContentPlaceHolder>
+                        </td>
                 </tr>
             </tbody>
         </table>

@@ -12,7 +12,7 @@ public partial class administrator_change_text : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        
         if (IsPostBack)
             return;
 

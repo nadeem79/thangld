@@ -2,20 +2,7 @@
     AutoEventWireup="true" CodeFile="numeric_settings.aspx.cs" Inherits="administrator_numeric_settings" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-    <script language=javascript">
-        function validate()
-        {
-            $.facebox($('#<% = this.keyTextBox.ClientID %>').val());
-            return false;
-            
-            if ($('#<% = this.keyTextBox.ClientID %>').val() == '')
-            {
-                $.facebox('Nhập key');
-                return false;
-            }
-            return true;
-        }
-    </script>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <center>
@@ -23,6 +10,23 @@
             Numeric
         </h1>
     </center>
+    
+    <fieldset style="margin-bottom:20px;">
+        <legend>Tìm kiếm</legend>
+        <table>
+            <tbody>
+                <tr>
+                    <td>Key:</td>
+                    <td>
+                        <asp:TextBox runat="server" ID="txtKey" Width="500px"></asp:TextBox>
+                        <asp:Button runat="server" Text="Tìm kiếm" ID="bttnSearchNumeric" onclick="bttnSearchNumeric_Click" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+    
+    <asp:Label ID="lblPaging" runat="server"></asp:Label>
     
     <asp:Repeater ID="numericConfigurationRepeater" runat="server" >
         <HeaderTemplate>

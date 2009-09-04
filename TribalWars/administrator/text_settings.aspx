@@ -11,10 +11,37 @@
             Text Settings
         </h1>
     </center>
+    
+    <fieldset style="margin-bottom:20px;">
+        <legend>Tìm kiếm</legend>
+        <table>
+            <tbody>
+                <tr>
+                    <td>Text:</td>
+                    <td>
+                        <asp:TextBox runat="server" ID="txtKey" Width="500px"></asp:TextBox>
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><asp:CheckBox runat="server" ID="chkSearchByValue" Text="Tìm kiếm theo value" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><center><asp:Button runat="server" Text="Tìm kiếm" ID="bttnSearchText" 
+                            onclick="bttnSearchText_Click" /></center></td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+    
+    
+    <asp:Label ID="lblPaging" runat="server"></asp:Label>
+    
     <asp:Repeater ID="stringConfigurationRepeater" runat="server" 
     EnableViewState="true" onitemcommand="stringConfigurationRepeater_ItemCommand">
         <HeaderTemplate>
-            <table border="1" width="95%">
+            <table border="1" width="100%">
                 <tbody>
                     <tr>
                         <th width="30px;">
@@ -33,7 +60,7 @@
         <ItemTemplate>
             <tr>
                 <td width="3%">
-                    <asp:CheckBox ID="checkDeleteCheckBox" runat="server" ToolTip='<%# DataBinder.Eval(Container.DataItem, "Key")  %>' />
+                    <asp:CheckBox ID="checkDeleteCheckBox" Value='<%# DataBinder.Eval(Container.DataItem, "Key")  %>' runat="server" ToolTip='<%# DataBinder.Eval(Container.DataItem, "Key")  %>' />
                 </td>
                 <td>
                     <%# DataBinder.Eval(Container.DataItem, "Key")  %>
@@ -48,25 +75,5 @@
         </ItemTemplate>
     </asp:Repeater>
     <asp:Button ID="deleteSettingButton" runat="server" Text="Xoá phần được chọn" OnClick="deleteSettingButton_Click" />
-    <input type="button" value="Thêm giá trị mới" onclick="$('#new_value').toggle('slow');" />
-    <div id="new_value" style="display:none;">
-        <table>
-            <tbody>
-                <tr>
-                    <td>Key:</td>
-                    <td><asp:TextBox ID="keyTextBox" runat="server"></asp:TextBox></td>
-                </tr>
-                <tr>
-                    <td>Giá trị:</td>
-                    <td><telerik:RadEditor ID="valueTextBox" Runat=server></telerik:RadEditor></asp:TextBox></td>
-                </tr>
-                <tr>
-                    <td colspan="2" ><asp:Button ID="createNewSettingButton" runat="server" Text="Thêm giá trị mới" 
-        onclick="createNewSettingButton_Click" style="height: 26px" /></td>
-                </tr>
-            </tbody>
-        </table>
-        
-    </div>
 </asp:Content>
 
