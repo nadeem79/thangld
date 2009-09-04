@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using beans;
 using NHibernate;
+using Telerik.Web.UI;
 
 public partial class administrator_numeric_settings : System.Web.UI.Page
 {
@@ -18,6 +19,12 @@ public partial class administrator_numeric_settings : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        RadTreeNode parentNode = ((administrator_administrator)this.Master).Menu.FindNodeByValue(beans.JobEnum.NumericSettings.ToString());
+        parentNode.Expanded = true;
+        RadTreeNode childNode = parentNode.Nodes.FindNodeByValue("list");
+        if (childNode != null)
+            childNode.ImageUrl = "images/map_e.png";
+
         ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
         this.CurrentPlayer = session.Load<Player>(Session[Constant.StaffUserSessionSign]);
         int page = 0;
@@ -26,20 +33,23 @@ public partial class administrator_numeric_settings : System.Web.UI.Page
         {
             double value = 0;
             if (double.TryParse(Request["value"], out value))
-                this.CurrentPlayer.AdminConfigurationMethods.ChangeNumericSetting(Request["key"], value, session);
+                ServicesList.ConfigurationService.ChangeNumericSetting(this.CurrentPlayer, Request["key"], value, session);
         }
 
         if (IsPostBack)
             return;
 
-        if (Request["page"] != null)
-            int.TryParse(Request["page"], out page);
+        if (Request["p"] != null)
+            int.TryParse(Request["p"], out page);
+        int count = 0;
 
-        IList<NumericConfiguration> numericConfigurations = this.CurrentPlayer.AdminConfigurationMethods.GetNumericSettings(session);
+        IList<NumericConfiguration> numericConfigurations = ServicesList.ConfigurationService.GetNumericSettings(this.CurrentPlayer, page, out count, session);
         this.numericConfigurationRepeater.DataSource = numericConfigurations;
         this.numericConfigurationRepeater.DataBind();
-        
+        Pager pager = new Pager(count, page);
+        this.lblPaging.Text = pager.GetInfo(Request.Url.AbsolutePath).ToString();
     }
+
     protected void deleteSettingButton_Click(object sender, EventArgs e)
     {
         ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
@@ -53,7 +63,8 @@ public partial class administrator_numeric_settings : System.Web.UI.Page
             // or the other option; value from hidden field
 
             if (cbId.Checked)
-                this.CurrentPlayer.AdminConfigurationMethods.DeleteNumericSetting(id, session);
+                ServicesList.ConfigurationService.DeleteNumericSetting(this.CurrentPlayer, id, session);
+                //this.CurrentPlayer.AdminConfigurationMethods.DeleteNumericSetting(id, session);
 
             
         }
@@ -65,7 +76,19 @@ public partial class administrator_numeric_settings : System.Web.UI.Page
         ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
         double value = 0;
         double.TryParse(this.valueTextBox.Text, out value);
-        this.CurrentPlayer.AdminConfigurationMethods.ChangeNumericSetting(this.keyTextBox.Text, value, session);
+        ServicesList.ConfigurationService.ChangeNumericSetting(this.CurrentPlayer, this.keyTextBox.Text, value, session);
+        //this.CurrentPlayer.AdminConfigurationMethods.ChangeNumericSetting(this.keyTextBox.Text, value, session);
         Response.Redirect(Request.Url.ToString(), false);
+    }
+
+    protected void bttnSearchNumeric_Click(object sender, EventArgs e)
+    {
+        this.lblPaging.Text = "";
+        int count = 0;
+        ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
+        //IList<StringConfiguration> stringConfigurations = ServicesList.ConfigurationService.GetTextSettings(this.CurrentPlayer, 0, 0, this.txtKey.Text, this.rdoSearchByKey.Checked, out count, session);
+        IList<NumericConfiguration> numericConfigurations = ServicesList.ConfigurationService.GetNumericSettings(this.CurrentPlayer, 0, 0, this.txtKey.Text, out count, session);
+        this.numericConfigurationRepeater.DataSource = numericConfigurations;
+        this.numericConfigurationRepeater.DataBind();
     }
 }
