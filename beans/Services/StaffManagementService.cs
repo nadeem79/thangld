@@ -12,7 +12,7 @@ namespace beans.Services
 
         public void AddMemberToStaffGroup(Player currentStaff, Player member, StaffGroup group, ISession session)
         {
-            ServicesList.SecurityService.CheckPermission(currentStaff, new Job(JobEnum.MemberManagement.ToString()), "write");
+            ServicesList.SecurityService.CheckPermission(currentStaff, JobEnum.MemberManagement.ToString(), "write");
 
             if (member.StaffGroups.Contains(group))
                 return;
@@ -22,7 +22,7 @@ namespace beans.Services
 
         public void RemoveMemberFromStaffGroup(Player currentStaff, Player member, StaffGroup group, ISession session)
         {
-            ServicesList.SecurityService.CheckPermission(currentStaff, new Job(JobEnum.MemberManagement.ToString()), "write");
+            ServicesList.SecurityService.CheckPermission(currentStaff, JobEnum.MemberManagement.ToString(), "write");
 
             if (!member.StaffGroups.Contains(group))
                 return;
@@ -34,16 +34,18 @@ namespace beans.Services
 
         public IList<StaffGroup> GetStaffGroups(Player staff, ISession session)
         {
-            ServicesList.SecurityService.CheckPermission(staff, new Job(JobEnum.StaffGroupManagement.ToString()), "read");
+            ServicesList.SecurityService.CheckPermission(staff, JobEnum.StaffGroupManagement.ToString(), "read");
 
-            return (from staffGroup in session.Linq<StaffGroup>()
-                    select staffGroup).ToList<StaffGroup>();
+            ICriteria criteria = session.CreateCriteria<StaffGroup>();
+            return criteria.List<StaffGroup>();
+
+            
 
         }
 
         public void CreateStaffGroup(Player staff, string name, IList<Permission> permissions, ISession session)
         {
-            ServicesList.SecurityService.CheckPermission(staff, new Job(JobEnum.StaffGroupManagement.ToString()), "write");
+            ServicesList.SecurityService.CheckPermission(staff, JobEnum.StaffGroupManagement.ToString(), "write");
 
             StaffGroup staffGroup = new StaffGroup();
             staffGroup.Name = name;
@@ -53,7 +55,7 @@ namespace beans.Services
 
         public void DeleteStaffGroup(Player staff, int staffGroupId, ISession session)
         {
-            ServicesList.SecurityService.CheckPermission(staff, new Job(JobEnum.StaffGroupManagement.ToString()), "write");
+            ServicesList.SecurityService.CheckPermission(staff, JobEnum.StaffGroupManagement.ToString(), "write");
 
             try
             {
@@ -67,12 +69,16 @@ namespace beans.Services
 
         public void SetStaffGroupPermission(Player staff, int staffGroupId, IList<Permission> permissions, ISession session)
         {
-            ServicesList.SecurityService.CheckPermission(staff, new Job(JobEnum.StaffGroupManagement.ToString()), "write");
+            ServicesList.SecurityService.CheckPermission(staff, JobEnum.StaffGroupManagement.ToString(), "write");
 
             try
             {
                 StaffGroup staffGroup = session.Load<StaffGroup>(staffGroupId);
 
+
+
+                foreach (Permission permission in permissions)
+                    permission.StaffGroup = staffGroup;
                 staffGroup.Permissions = permissions;
 
                 session.Update(staffGroup);

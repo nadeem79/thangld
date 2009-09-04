@@ -7,7 +7,7 @@ namespace beans
 {
     public class Permission:IdentityObject
     {
-        public virtual Job Job
+        public virtual string Job
         {
             get;
             set;
@@ -23,6 +23,16 @@ namespace beans
         {
             get;
             set;
+        }
+
+        public Permission()
+        {
+            
+        }
+        public Permission(JobEnum job, string privilage)
+        {
+            this.Job = job.ToString();
+            this.Privilage = privilage;
         }
     }
 }
