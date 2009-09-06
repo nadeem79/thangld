@@ -22,6 +22,7 @@ namespace beans
         public Player()
         {
             this.adminConfigurationMethods.Player = this;
+            this.StaffGroups = new List<StaffGroup>();
         }
 
         #region Variable

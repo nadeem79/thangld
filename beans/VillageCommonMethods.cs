@@ -11,8 +11,8 @@ namespace beans
     public class VillageCommonMethods
     {
 
-        public static int Count = 0;
-        public static List<string> UpdatedVillage = new List<string>();
+        //public static int Count = 0;
+        //public static List<string> UpdatedVillage = new List<string>();
 
         public Village Village
         {
@@ -27,7 +27,7 @@ namespace beans
 
         public virtual void UpdateVillage(DateTime to, ISession session, bool commit)
         {
-            UpdatedVillage.Add(this.Village.Name);
+            //UpdatedVillage.Add(this.Village.Name);
             if (to == this.Village.LastUpdate)
                 return;
 
@@ -170,7 +170,7 @@ namespace beans
                     for (int i = 1; i < this.Village.Builds.Count; i++)
                     {
                         Build build = this.Village.Builds[i];
-                        build.Start = this.Village.Builds[i = 1].End;
+                        build.Start = this.Village.Builds[i - 1].End;
                         BuildPrice price = Build.GetPrice(build.Building, build.Level, this.Village[BuildingType.Headquarter]);
                         build.End = build.Start.AddSeconds(price.BuildTime);
                     }
