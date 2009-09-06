@@ -28,7 +28,6 @@
     <many-to-one name="Group" class="beans.Group, beans" column="group_id" not-null="false" fetch="join" cascade="none" lazy="proxy" not-found="ignore" />
     
     <bag name="Villages" table="villages_common" cascade="none" fetch="select" inverse="true" lazy="true" >
-      <cache usage="read-write"/>
       <key column="userid" />
       <one-to-many class="beans.Village, beans"/>
     </bag>
