@@ -4,7 +4,11 @@
   <class name="beans.Permission, beans" table="permission" lazy="true">
     <cache usage="read-write"/>
     <id name="ID" column="id" type="Int32">
-      <generator class="identity"/>
+      <generator class="hilo">
+        <param name="table">hi_value</param>
+        <param name="column">next_value</param>
+        <param name="where">id='group_permission'</param>
+      </generator>
     </id>
     <property name="Privilage" column="privilage" type="String"></property>
     <property name="Job" column="job" type="String" />
