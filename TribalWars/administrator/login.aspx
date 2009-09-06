@@ -17,7 +17,7 @@
     <div>
         <center>
 
-            <telerik:RadScriptManager ID="RadScriptManager1" runat="server"></telerik:RadScriptManager>
+            <telerik:RadScriptManager ID="RadScriptManager1" runat="server" OutputCompression="Forced"></telerik:RadScriptManager>
             <telerik:RadFormDecorator runat="server" RegisterWithScriptManager="true" />
             <h1>
                 Đăng nhập<telerik:RadFormDecorator ID="RadFormDecorator1" Runat="server" />

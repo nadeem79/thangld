@@ -38,21 +38,21 @@ public partial class administrator_administrator : System.Web.UI.MasterPage
         this.NHibernateSession = (ISession)Context.Items[Constant.NHibernateSessionSign];
         this.CurrentPlayer = Player.GetPlayerByID((int)Session[Constant.StaffUserSessionSign], this.NHibernateSession);
 
-        if (this.CurrentPlayer.Username == "thangld")
-        {
-            this.CurrentPlayer.StaffGroups.Add(new StaffGroup());
-            this.CurrentPlayer.StaffGroups[0].Permissions = new List<Permission>();
-            this.CurrentPlayer.StaffGroups[0].Permissions.Add(new Permission(JobEnum.MemberManagement, "read write"));
-            this.CurrentPlayer.StaffGroups[0].Permissions.Add(new Permission(JobEnum.StaffGroupManagement, "read write"));
-            this.CurrentPlayer.StaffGroups[0].Permissions.Add(new Permission(JobEnum.NumericSettings, ""));
-            this.CurrentPlayer.StaffGroups[0].Permissions.Add(new Permission(JobEnum.RestartServer, ""));
-            this.CurrentPlayer.StaffGroups[0].Permissions.Add(new Permission(JobEnum.TextSettings, ""));
-        }
+        //if (this.CurrentPlayer.Username == "thangld")
+        //{
+        //    this.CurrentPlayer.StaffGroups.Add(new StaffGroup());
+        //    this.CurrentPlayer.StaffGroups[0].Permissions = new List<Permission>();
+        //    this.CurrentPlayer.StaffGroups[0].Permissions.Add(new Permission(JobEnum.MemberManagement, "read write"));
+        //    this.CurrentPlayer.StaffGroups[0].Permissions.Add(new Permission(JobEnum.StaffGroupManagement, "read write"));
+        //    this.CurrentPlayer.StaffGroups[0].Permissions.Add(new Permission(JobEnum.NumericSettings, ""));
+        //    this.CurrentPlayer.StaffGroups[0].Permissions.Add(new Permission(JobEnum.RestartServer, ""));
+        //    this.CurrentPlayer.StaffGroups[0].Permissions.Add(new Permission(JobEnum.TextSettings, ""));
+        //}
 
         if (this.CurrentPlayer.StaffGroups.Count == 0)
         {
             Session.Remove(Constant.StaffUserSessionSign);
-            Response.Redirect("login.aspx", true);
+            Response.Redirect("login.aspx", false);
         }
 
         

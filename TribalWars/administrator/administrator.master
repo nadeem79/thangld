@@ -18,7 +18,8 @@
 <body>
     <form id="form1" runat="server">
     <div>
-        <telerik:RadScriptManager ID="RadScriptManager1" runat="server">
+        <telerik:RadScriptManager ID="RadScriptManager1" runat="server" 
+            EnableViewState="False" OutputCompression="Forced">
         </telerik:RadScriptManager>
         <telerik:RadFormDecorator ID="RadFormDecorator1" runat="server" Skin="Vista" />
         <table border="1" width="100%">
