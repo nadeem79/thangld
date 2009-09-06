@@ -37,7 +37,8 @@ public partial class LoginBox : System.Web.UI.UserControl
                 Session.Add("user", id);
                 if (this.chkRemember.Checked)
                 {
-                    Request.Cookies.Clear();
+                    Request.Cookies.Remove("username");
+                    Request.Cookies.Remove("password");
                     HttpCookie cookieUsername = new HttpCookie("username", this.username.Text);
                     cookieUsername.Expires = DateTime.Now.AddYears(2);
                     HttpCookie cookiePassword = new HttpCookie("password", this.password.Text);
@@ -46,9 +47,9 @@ public partial class LoginBox : System.Web.UI.UserControl
                     Request.Cookies.Add(cookiePassword);
                 }
                 if (this.chkPlayGame.Checked)
-                    Response.Redirect("overview.aspx", true);
+                    Response.Redirect("overview.aspx", false);
                 else
-                    Response.Redirect("index.aspx", true);
+                    Response.Redirect("index.aspx", false);
             }
         }
         catch (Exception exc)

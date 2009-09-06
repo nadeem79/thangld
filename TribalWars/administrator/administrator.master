@@ -29,7 +29,7 @@
                             <h1>
                                 MENU</h1>
                         </center>
-                        <telerik:RadTreeView ID="menu" runat="server">
+                        <telerik:RadTreeView ID="menu" runat="server" onnodeclick="menu_NodeClick">
                             <Nodes>
                                 <telerik:RadTreeNode runat="server" Text="Text Settings" Value="TextSettings" PostBack="false">
                                     <Nodes>
@@ -46,16 +46,18 @@
                                         <telerik:RadTreeNode runat="server" NavigateUrl="~/administrator/numeric_settings.aspx"
                                             Text="Danh sách numeric" Value="list">
                                         </telerik:RadTreeNode>
+                                        <telerik:RadTreeNode runat="server" PostBack="true" Value="RestartServer"
+                                            Text="Restart Server"></telerik:RadTreeNode>
                                     </Nodes>
                                 </telerik:RadTreeNode>
                                 <telerik:RadTreeNode runat="server" Text="Quản lý thành viên" Value="StaffGroupManagement"
                                     PostBack="false">
                                     <Nodes>
                                         <telerik:RadTreeNode runat="server" NavigateUrl="~/administrator/staff_groups.aspx"
-                                            Text="Danh sách nhóm quyền" Value="List">
+                                            Text="Danh sách nhóm quyền" Value="List" PostBack="false">
                                         </telerik:RadTreeNode>
                                         <telerik:RadTreeNode runat="server" NavigateUrl="~/administrator/create_staff_groups.aspx"
-                                            Text="Thêm nhóm mới" Value="Create">
+                                            Text="Thêm nhóm mới" Value="Create" PostBack="false">
                                         </telerik:RadTreeNode>
                                     </Nodes>
                                 </telerik:RadTreeNode>
