@@ -41,7 +41,10 @@
             <td></td>
             <td><asp:Button runat="server" ID="bttnChange" Text="Thay đổi" 
                     OnClientClick="return confirm('Thay đổi quyền nhóm?');" 
-                    onclick="bttnChange_Click" /></td>
+                    onclick="bttnChange_Click" />
+                    
+                    <input type="button" value="Thành viên" onclick="window.location='staff_group_member.aspx?group=<% = this.StaffGroup.ID %>'" />
+                    </td>
         </tr>
     </tbody>
 </table>

@@ -19,14 +19,6 @@ public partial class administrator_change_staff_permission : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (IsPostBack)
-            return;
-
-        RadTreeNode parentNode = ((administrator_administrator)this.Master).Menu.FindNodeByValue(beans.JobEnum.StaffGroupManagement.ToString());
-        parentNode.Expanded = true;
-        RadTreeNode childNode = parentNode.Nodes.FindNodeByValue("List");
-        if (childNode != null)
-            childNode.ImageUrl = "images/map_e.png";
 
         ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
         Player staff = session.Load<Player>(Session[Constant.StaffUserSessionSign]);
@@ -44,6 +36,19 @@ public partial class administrator_change_staff_permission : System.Web.UI.Page
             Response.Redirect("staff_groups.aspx", true);
             return;
         }
+
+        if (IsPostBack)
+            return;
+
+        RadTreeNode parentNode = ((administrator_administrator)this.Master).Menu.FindNodeByValue(beans.JobEnum.StaffGroupManagement.ToString());
+        parentNode.Expanded = true;
+        RadTreeNode childNode = parentNode.Nodes.FindNodeByValue("List");
+        if (childNode != null)
+            childNode.ImageUrl = "images/map_e.png";
+
+        
+
+        
 
         this.txtGroupName.Text = this.StaffGroup.Name;
 
@@ -82,7 +87,6 @@ public partial class administrator_change_staff_permission : System.Web.UI.Page
         Player staff = session.Load<Player>(Session[Constant.StaffUserSessionSign]);
         int groupId = int.Parse(Request["group"]);
         
-
         IList<Permission> permissions = new List<Permission>();
 
         if (this.chkNumeric.Checked)
@@ -93,9 +97,10 @@ public partial class administrator_change_staff_permission : System.Web.UI.Page
             permissions.Add(new Permission(JobEnum.RestartServer, ""));
         if (this.chkStaffManagement.Checked)
             permissions.Add(new Permission(JobEnum.StaffGroupManagement, this.txtStaffPrivilege.Text));
-        if (this.chkStaffManagement.Checked)
+        if (this.chkMemberManagement.Checked)
             permissions.Add(new Permission(JobEnum.MemberManagement, this.txtMemberPrivilege.Text));
 
+        ServicesList.StaffManagementService.SetStaffGroupName(staff, groupId, this.txtGroupName.Text, session);
         ServicesList.StaffManagementService.SetStaffGroupPermission(staff, groupId, permissions, session);
 
     }

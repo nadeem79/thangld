@@ -70,7 +70,7 @@ public partial class inPage : System.Web.UI.MasterPage
 
         if (object.Equals(Session["user"], null))
         {
-            Response.Redirect("session_expired.aspx", true);
+            Response.Redirect("session_expired.aspx", false);
             return;
             //Session["user"] = 1;
         }

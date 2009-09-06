@@ -11,14 +11,26 @@
     <asp:ScriptManager ID="RadAjaxManager1" runat="server"></asp:ScriptManager>
     <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
     
-    <asp:UpdatePanel ID="panel" runat="server">
-        <ContentTemplate>
-            <asp:Button ID="Button1" runat="server" onclick="Button1_Click" Text="Button" />
-        </ContentTemplate>
-        <Triggers>
-            <asp:AsyncPostBackTrigger ControlID="Button1" EventName="Click" />
-        </Triggers>
-    </asp:UpdatePanel>
+    
+    
+    <br />
+    <telerik:RadGrid ID="RadGrid1" runat="server" GridLines="None">
+<MasterTableView>
+<RowIndicatorColumn>
+<HeaderStyle Width="20px"></HeaderStyle>
+</RowIndicatorColumn>
+
+<ExpandCollapseColumn>
+<HeaderStyle Width="20px"></HeaderStyle>
+</ExpandCollapseColumn>
+</MasterTableView>
+        <ClientSettings AllowColumnsReorder="True" ReorderColumnsOnClient="True">
+            <Selecting AllowRowSelect="True" />
+        </ClientSettings>
+    </telerik:RadGrid>
+    
+    
+    
     </form>
 </body>
 </html>
