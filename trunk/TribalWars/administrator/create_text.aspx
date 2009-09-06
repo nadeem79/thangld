@@ -1,6 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/administrator/administrator.master"
     AutoEventWireup="true" CodeFile="create_text.aspx.cs" Inherits="administrator_create_text" %>
 
+<%@ Register assembly="Telerik.Web.UI" namespace="Telerik.Web.UI" tagprefix="telerik" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
@@ -27,7 +29,7 @@
                     Value:
                 </div>
                 <div style="float: left;">
-                    <telerik:RadEditor Width="800px" ID="txtValue" runat="server">
+                    <telerik:radeditor Width="800px" ID="txtValue" runat="server">
                     </telerik:RadEditor>
                     <br />
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" ControlToValidate="txtValue"
@@ -43,4 +45,5 @@
             <asp:AsyncPostBackTrigger ControlID="bttnChangeText" EventName="Click" />
         </Triggers>
     </asp:UpdatePanel>
+    
 </asp:Content>
