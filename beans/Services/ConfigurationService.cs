@@ -19,16 +19,16 @@ namespace beans.Services
         {
             ServicesList.SecurityService.CheckPermission(staff, JobEnum.TextSettings.ToString(), "");
 
-            var query = from stringConfiguration in session.Linq<StringConfiguration>()
+            var query = from stringConfiguration in Configuration.TribalWarsConfiguration.StringConfiguration.Values
                         orderby stringConfiguration.Key descending
                         select stringConfiguration;
 
             if (key != string.Empty)
             {
                 if (searchByKey)
-                    query = (IOrderedQueryable<StringConfiguration>)query.Where<StringConfiguration>(stringConfiguration => stringConfiguration.Key.Contains(key));
+                    query = (IOrderedEnumerable<StringConfiguration>)query.Where<StringConfiguration>(stringConfiguration => stringConfiguration.Key.Contains(key));
                 else
-                    query = (IOrderedQueryable<StringConfiguration>)query.Where<StringConfiguration>(stringConfiguration => stringConfiguration.Value.Contains(key));
+                    query = (IOrderedEnumerable<StringConfiguration>)query.Where<StringConfiguration>(stringConfiguration => stringConfiguration.Value.Contains(key));
             }
             if (pageSize == 0)
                 pageSize = (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Common.PageSize").Value;
@@ -58,12 +58,12 @@ namespace beans.Services
 
             ServicesList.SecurityService.CheckPermission(staff, JobEnum.NumericSettings.ToString(), "");
 
-            var query = from numericConfiguration in session.Linq<NumericConfiguration>()
+            var query = from numericConfiguration in Configuration.TribalWarsConfiguration.NumericConfiguration.Values
                         orderby numericConfiguration.Key descending
                         select numericConfiguration;
 
             if (key != string.Empty)
-                query = (IOrderedQueryable<NumericConfiguration>)(query.Where<NumericConfiguration>(numericConfiguration => numericConfiguration.Key.Contains(key)));
+                query = (IOrderedEnumerable<NumericConfiguration>)(query.Where<NumericConfiguration>(numericConfiguration => numericConfiguration.Key.Contains(key)));
 
             if (pageSize == 0)
                 pageSize = (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Common.PageSize").Value;
@@ -94,6 +94,8 @@ namespace beans.Services
             if (Configuration.TribalWarsConfiguration.StringConfiguration.ContainsKey(key))
             {
                 StringConfiguration config = Configuration.TribalWarsConfiguration.StringConfiguration[key];
+                if (config.Value.Equals(value))
+                    return;
 
                 StringConfiguration config1 = session.Get<StringConfiguration>(key);
                 config1.Value = value;
@@ -117,6 +119,9 @@ namespace beans.Services
             if (Configuration.TribalWarsConfiguration.NumericConfiguration.ContainsKey(key))
             {
                 NumericConfiguration config = Configuration.TribalWarsConfiguration.NumericConfiguration[key];
+                if (config.Value == value)
+                    return;
+
                 config.Value = value;
 
                 NumericConfiguration config1 = session.Get<NumericConfiguration>(key);

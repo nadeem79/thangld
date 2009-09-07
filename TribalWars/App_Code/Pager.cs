@@ -88,12 +88,22 @@ public class Pager
         get;
         set;
     }
+    public int Start
+    {
+        get;
+        protected set;
+    }
+    public int End
+    {
+        get;
+        protected set;
+    }
 
     public Pager(int row, int page, int pageSize, int frameSize)
     {
         this.RowCount = Math.Max(row, 0);
         this.PageSize = pageSize;
-        this.PageCount = (int)Math.Ceiling((double)this.RowCount / (double)this.PageSize) - 1;
+        this.PageCount = (int)Math.Ceiling((double)this.RowCount / (double)this.PageSize);
         this.CurrentPage = Math.Max(1, Math.Min(this.PageCount, page));
         this.FirstRow = this.PageSize * (this.CurrentPage - 1);
         this.LastRow = Math.Min(this.FirstRow + this.PageSize, this.RowCount);
@@ -118,17 +128,17 @@ public class Pager
             this.PreviousUrl = this.Url + string.Format("&p={0}", this.PreviousPage);
         }
 
-        int start = 1;
+        this.Start = 1;
         if ((this.CurrentPage - this.FrameSize / 2) > 0)
         {
             if ((this.CurrentPage + this.FrameSize / 2) > this.PageCount)
-                start = ((this.PageCount - this.FrameSize) > 0) ? (this.PageCount - this.FrameSize + 1) : 1;
+                this.Start = ((this.PageCount - this.FrameSize) > 0) ? (this.PageCount - this.FrameSize + 1) : 1;
             else
-                start = this.CurrentPage - (int)Math.Floor((double)this.FrameSize / 2);
+                this.Start = this.CurrentPage - (int)Math.Floor((double)this.FrameSize / 2);
         }
-        int end = ((start + this.FrameSize - 1) < this.PageCount) ? (start + this.FrameSize - 1) : this.PageCount;
+        this.End = ((this.Start + this.FrameSize - 1) < this.PageCount) ? (this.Start + this.FrameSize - 1) : this.PageCount;
         this.Urls = new Dictionary<int, string>();
-        for (int i = start; i <= end; ++i)
+        for (int i = this.Start; i <= this.End; ++i)
         {
             if (i == this.CurrentPage)
                 this.Urls.Add(i, string.Empty);
@@ -148,9 +158,11 @@ public class Pager
 
     public override string ToString()
     {
+        StringBuilder str = new StringBuilder();
+        str.AppendLine(string.Format("Hiển thị {0} đến {1} - Tổng số {2}<br>", this.FirstRow, this.LastRow, this.RowCount));
         if (this.PageCount > 1)
         {
-            StringBuilder str = new StringBuilder();
+            
             if (this.FirstUrl != string.Empty)
                 str.Append(string.Format("<a href=\"{0}\"><< Về đầu</a>  ", this.FirstUrl));
             if (this.PreviousUrl != string.Empty)
@@ -163,12 +175,12 @@ public class Pager
                     str.Append(string.Format("<b>{0}</b> |", index));
             }
             if (this.NextUrl != string.Empty)
-                str.Append(string.Format("<a href=\"{0}\">< Sau</a>", this.NextUrl));
+                str.Append(string.Format("<a href=\"{0}\">< Sau</a> ", this.NextUrl));
             if (this.LastUrl != string.Empty)
                 str.Append(string.Format("<a href=\"{0}\">Về cuối >></a>  ", this.LastUrl));
             return str.ToString();
         }
 
-        return "";
+        return str.ToString();
     }
 }

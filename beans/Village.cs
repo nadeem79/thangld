@@ -475,21 +475,27 @@ namespace beans
             village.Loyal = 100;
             village.LastUpdate = DateTime.Now;
 
-            village.UpgradeBuilding(BuildingType.Headquarter, 1);
-            village.UpgradeBuilding(BuildingType.Rally, 1);
-            village.UpgradeBuilding(BuildingType.Farm, 5);
-            village.UpgradeBuilding(BuildingType.ClayPit, 5);
-            village.UpgradeBuilding(BuildingType.IronMine, 5);
-            village.UpgradeBuilding(BuildingType.TimberCamp, 5);
-            village.UpgradeBuilding(BuildingType.Warehouse, 5);
+            village.UpgradeBuilding(BuildingType.Headquarter, (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Village.InitHeadquarterLevel").Value);
+            village.UpgradeBuilding(BuildingType.Rally, (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Village.InitRallyLevel").Value);
+            village.UpgradeBuilding(BuildingType.Farm, (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Village.InitFarmLevel").Value);
+            village.UpgradeBuilding(BuildingType.ClayPit, (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Village.InitClayPitLevel").Value);
+            village.UpgradeBuilding(BuildingType.IronMine, (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Village.InitIronMineLevel").Value);
+            village.UpgradeBuilding(BuildingType.TimberCamp, (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Village.InitTimberCampLevel").Value);
+            village.UpgradeBuilding(BuildingType.Warehouse, (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Village.InitWarehouseLevel").Value);
+            village.UpgradeBuilding(BuildingType.Barracks, (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Village.InitBarracksLevel").Value);
+            village.UpgradeBuilding(BuildingType.Market, (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Village.InitMarketLevel").Value);
+            village.UpgradeBuilding(BuildingType.Smithy, (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Village.InitSmithyLevel").Value);
+            village.UpgradeBuilding(BuildingType.Stable, (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Village.InitStableLevel").Value);
+            village.UpgradeBuilding(BuildingType.Workshop, (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Village.InitWorkshopLevel").Value);
+            village.UpgradeBuilding(BuildingType.Wall, (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Village.InitWallLevel").Value);
 
-            village.VillageResourceData.Iron = 2000;
-            village.VillageResourceData.Clay = 2000;
-            village.VillageResourceData.Wood = 2000;
+            village.VillageResourceData.Iron = (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Village.InitIronCount").Value;
+            village.VillageResourceData.Clay = (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Village.InitClayCount").Value;
+            village.VillageResourceData.Wood = (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Village.InitWoodCount").Value;
 
-            village.VillageResearchData.Attack = 1;
-            village.VillageResearchData.Defense = 1;
-            village.VillageResearchData.TroopSpeed = 1;
+            village.VillageResearchData.Attack = (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Village.InitAttackLevel").Value; ;
+            village.VillageResearchData.Defense = (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Village.InitDefenseLevel").Value; ;
+            village.VillageResearchData.TroopSpeed = (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Village.InitSpeedLevel").Value; ;
 
             config.InsertOrUpdateConfiguration(expandCount, session);
             config.InsertOrUpdateConfiguration(expandTo, session);

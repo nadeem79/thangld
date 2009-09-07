@@ -20,7 +20,9 @@
             <telerik:RadScriptManager ID="RadScriptManager1" runat="server" OutputCompression="Forced"></telerik:RadScriptManager>
             <telerik:RadFormDecorator runat="server" RegisterWithScriptManager="true" />
             <h1>
-                Đăng nhập<telerik:RadFormDecorator ID="RadFormDecorator1" Runat="server" />
+                Đăng nhập</h1>
+                <h1>
+                    <telerik:RadFormDecorator ID="RadFormDecorator1" Runat="server" />
             </h1>
                 <asp:UpdatePanel runat="server" ID="panel1">
                     <ContentTemplate>

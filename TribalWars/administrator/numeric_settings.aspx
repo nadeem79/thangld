@@ -86,4 +86,11 @@
         
     </div>
     
+    <asp:Button ID="bttnExport" runat="server" Text="Export" 
+        onclick="bttnExport_Click" style="height: 26px" />
+    
+    <br />
+    <asp:FileUpload ID="FileUpload1" runat="server" />
+    <asp:Button ID="bttnImport" runat="server" onclick="bttnImport_Click" Text="Import" />
+    
 </asp:Content>

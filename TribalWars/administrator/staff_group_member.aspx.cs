@@ -66,6 +66,8 @@ public partial class administrator_staff_group_member : System.Web.UI.Page
             Player currentStaff = session.Load<Player>(staffID);
 
             ServicesList.StaffManagementService.RemoveMemberFromStaffGroup(staff, currentStaff, this.StaffGroup, session);
+            this.rptGroupStaffs.DataSource = ServicesList.StaffManagementService.GetStaffGroupMembers(staff, this.StaffGroup, session);
+            this.rptGroupStaffs.DataBind();
         }
     }
 

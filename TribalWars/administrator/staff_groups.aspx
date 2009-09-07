@@ -8,9 +8,9 @@
         <h1>
             Nhóm quản trị</h1>
     </center>
-    <asp:UpdatePanel runat="server" ID="updatePanel">
-        <ContentTemplate>
-            <asp:Repeater ID="rptStaffGroups" runat="server">
+    <asp:Label runat="server" ID="lblError" ForeColor="Red"></asp:Label>
+            <asp:Repeater ID="rptStaffGroups" runat="server" 
+                onitemcommand="rptStaffGroups_ItemCommand">
                 <HeaderTemplate>
                     <table border="1" width="90%">
                         <tbody>
@@ -20,6 +20,12 @@
                                 </th>
                                 <th>
                                     Tên
+                                </th>
+                                <th>
+                                    Danh sách thành viên
+                                </th>
+                                <th>
+                                    Xoá
                                 </th>
                             </tr>
                 </HeaderTemplate>
@@ -35,6 +41,13 @@
                             <a href="change_staff_permission.aspx?group=<%# Eval("ID") %>">
                                 <%# Eval("Name") %></a>
                         </td>
+                        <td>
+                            <a href="staff_group_member.aspx?group=<%# Eval("ID") %>">
+                                <%# Eval("Name") %></a>
+                        </td>
+                        <td>
+                            <asp:LinkButton runat="server" ID="bttnDeleteStaffGroup" CommandName="DeleteStaffGroup" CommandArgument='<%# Eval("ID") %>' Text="Xoá" OnClientClick="return confirm('Xoá nhóm?');"></asp:LinkButton>
+                        </td>
                     </tr>
                 </ItemTemplate>
             </asp:Repeater>
@@ -44,9 +57,4 @@
                 <asp:Button OnClientClick="return confirm('Tạo nhóm?');" Text="Nhóm mới" runat="server"
                     ID="bttnCreateNewStaffGroup" OnClick="bttnCreateNewStaffGroup_Click" />
             </fieldset>
-        </ContentTemplate>
-        <Triggers>
-            <asp:AsyncPostBackTrigger ControlID="bttnCreateNewStaffGroup" EventName="Click" />
-        </Triggers>
-    </asp:UpdatePanel>
 </asp:Content>
