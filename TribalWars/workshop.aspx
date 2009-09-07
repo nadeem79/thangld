@@ -122,7 +122,7 @@
                 </td>
                 <td class="nowrap">
                     <img src="images/holz.png" title="Wood" alt="">
-                    320
+                    
                 </td>
                 <td class="nowrap">
                     <img src="images/lehm.png" title="Clay" alt=""> 400

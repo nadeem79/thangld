@@ -19,6 +19,21 @@ public partial class barrack : System.Web.UI.Page
 {
 
     protected beans.Village village;
+    protected Price SpearPrice
+    {
+        get;
+        set;
+    }
+    protected Price SwordPrice
+    {
+        get;
+        set;
+    }
+    protected Price AxePrice
+    {
+        get;
+        set;
+    }
     private ISession NHibernateSession
     {
         get;
@@ -60,7 +75,11 @@ public partial class barrack : System.Web.UI.Page
             this.pNotConstruct.Visible = true;
             return;
         }
-        Price p = Recruit.GetPrice(TroopType.Axe, this.village[BuildingType.Barracks]);
+
+        this.AxePrice = Recruit.GetPrice(TroopType.Axe, this.village[BuildingType.Barracks]);
+        this.SpearPrice = Recruit.GetPrice(TroopType.Spear, this.village[BuildingType.Barracks]);
+        this.SwordPrice = Recruit.GetPrice(TroopType.Sword, this.village[BuildingType.Barracks]);
+
         if (Request["mode"] != null && Request["mode"] == "cancel_recruit")
         {
             int id = 0;
@@ -73,6 +92,9 @@ public partial class barrack : System.Web.UI.Page
                 ((inPage)this.Master).IronLabel.Text = this.village.VillageResourceData.Iron.ToString();
             }
         }
+
+        if (IsPostBack)
+            return;
 
         IList<Recruit> recruits = village.VillageRecruitMethods.InfantryRecruits;
         if (recruits.Count > 0)
@@ -127,7 +149,11 @@ public partial class barrack : System.Web.UI.Page
             if (this.village.VillageRecruitMethods.BeginRecruit(TroopType.Axe, axe, this.NHibernateSession) == null)
                 lblError.Text = "Không đủ tài nguyên";
 
-        if (lblError.Text.Equals(string.Empty))
-            Response.Redirect("barrack.aspx?id=" + this.village.ID.ToString(), true);
+        IList<Recruit> recruits = village.VillageRecruitMethods.InfantryRecruits;
+        if (recruits.Count > 0)
+        {
+            this.rInfantryRecruits.DataSource = recruits;
+            this.rInfantryRecruits.DataBind();
+        }
     }
 }
