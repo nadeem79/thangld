@@ -75,5 +75,11 @@
         </ItemTemplate>
     </asp:Repeater>
     <asp:Button ID="deleteSettingButton" runat="server" Text="Xoá phần được chọn" OnClick="deleteSettingButton_Click" />
+    <asp:Button ID="bttnExport" runat="server" Text="Export" 
+        onclick="bttnExport_Click" />
+    <br />
+    <asp:FileUpload ID="FileUpload1" runat="server" />
+    <asp:Button ID="bttnImport" runat="server" Text="Import" 
+        onclick="bttnImport_Click" />
 </asp:Content>
 

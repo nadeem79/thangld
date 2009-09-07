@@ -96,19 +96,19 @@
                 </td>
                 <td class="nowrap">
                     <img src="images/holz.png" title="Wood" alt="" />
-                    50
+                    <% = this.SpearPrice.Wood %>
                 </td>
                 <td class="nowrap">
                     <img src="images/lehm.png" title="Clay" alt="" />
-                    30
+                    <% = this.SpearPrice.Clay %>
                 </td>
                 <td class="nowrap">
                     <img src="images/eisen.png" title="Iron" alt="" />
-                    10
+                    <% = this.SpearPrice.Iron %>
                 </td>
                 <td class="nowrap">
                     <img src="images/face.png" title="Villagers" alt="" />
-                    1
+                    <% = this.SpearPrice.Population.ToString("00") %>
                 </td>
                 <td>
                     <% = Functions.FormatTime(beans.Recruit.GetPrice(beans.TroopType.Spear, this.village[beans.BuildingType.Barracks]).BuildTime) %>
@@ -129,19 +129,19 @@
                 </td>
                 <td class="nowrap">
                     <img src="images/holz.png" title="Wood" alt="">
-                    30
+                    <% = this.SwordPrice.Wood %>
                 </td>
                 <td class="nowrap">
                     <img src="images/lehm.png" title="Clay" alt="">
-                    30
+                    <% = this.SwordPrice.Clay%>
                 </td>
                 <td class="nowrap">
                     <img src="images/eisen.png" title="Iron" alt="">
-                    70
+                    <% = this.SwordPrice.Iron%>
                 </td>
                 <td class="nowrap">
                     <img src="images/face.png" title="Villagers" alt="">
-                    1
+                    <% = this.SwordPrice.Population.ToString("00")%>
                 </td>
                 <td>
                     <% = Functions.FormatTime(beans.Recruit.GetPrice(beans.TroopType.Sword, this.village[beans.BuildingType.Barracks]).BuildTime) %>
@@ -162,19 +162,19 @@
                 </td>
                 <td class="nowrap">
                     <img src="images/holz.png" title="Wood" alt="">
-                    60
+                    <% = this.AxePrice.Wood %>
                 </td>
                 <td class="nowrap">
                     <img src="images/lehm.png" title="Clay" alt="">
-                    30
+                    <% = this.AxePrice.Clay %>
                 </td>
                 <td class="nowrap">
                     <img src="images/eisen.png" title="Iron" alt="">
-                    40
+                    <% = this.AxePrice.Iron %>
                 </td>
                 <td class="nowrap">
                     <img src="images/face.png" title="Villagers" alt="">
-                    1
+                    <% = this.AxePrice.Population.ToString("00") %>
                 </td>
                 <td>
                     <% = Functions.FormatTime(beans.Recruit.GetPrice(beans.TroopType.Axe, this.village[beans.BuildingType.Barracks]).BuildTime) %>

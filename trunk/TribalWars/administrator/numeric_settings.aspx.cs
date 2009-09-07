@@ -105,8 +105,7 @@ public partial class administrator_numeric_settings : System.Web.UI.Page
 
 
         IList<NumericConfiguration> numericConfigurations = ServicesList.ConfigurationService.GetNumericSettings(this.CurrentPlayer, out count, session);
-        XDocument doc = new XDocument(
-            new XDeclaration("1.0", "utf-16", "true"),
+        XDocument doc = new XDocument(new XDeclaration("1.0", "utf-16", "true"),
             new XElement("numerics",
                         from c in numericConfigurations
                         orderby c.Key //descending 
@@ -115,7 +114,6 @@ public partial class administrator_numeric_settings : System.Web.UI.Page
                             new XElement("value", c.Value)
                                             )
                                     ));
-        //XmlWriter
         
         System.Text.UnicodeEncoding  encoding = new System.Text.UnicodeEncoding();
         Byte[] bytes = encoding.GetBytes(doc.ToString());
@@ -128,10 +126,15 @@ public partial class administrator_numeric_settings : System.Web.UI.Page
         XmlReader reader = XmlReader.Create(this.FileUpload1.PostedFile.InputStream);
         XDocument xmlDoc = XDocument.Load(reader);
         ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
-        
-        foreach (XElement x in xmlDoc.Elements("numerics"))
+
+        var numerics = from n in xmlDoc.Elements("numerics")
+                    select n;
+
+        foreach (var numeric in numerics)
         {
-            //ServicesList.ConfigurationService.ChangeNumericSetting(this.CurrentPlayer, x.Element("").FirstNode.va, x.Elements(""), session);
+            double value = 0;
+            double.TryParse(numeric.Element("value").Value, out value);
+            ServicesList.ConfigurationService.ChangeNumericSetting(this.CurrentPlayer, numeric.Element("key").Value, value, session);
         }
     }
 }

@@ -164,7 +164,7 @@ namespace beans
                         Research research = this.Village.Researches[i];
                         research.Start = this.Village.Researches[i - 1].End;
                         ResearchPrice price = Research.GetPrice(research.Type, research.Level, this.Village[BuildingType.Smithy]);
-                        research.End = research.Start.AddSeconds(price.Time);
+                        research.End = research.Start.AddMilliseconds(price.Time);
                     }
                 else if (this.Village.Builds[0].Building == BuildingType.Headquarter)
                     for (int i = 1; i < this.Village.Builds.Count; i++)
@@ -172,7 +172,7 @@ namespace beans
                         Build build = this.Village.Builds[i];
                         build.Start = this.Village.Builds[i - 1].End;
                         BuildPrice price = Build.GetPrice(build.Building, build.Level, this.Village[BuildingType.Headquarter]);
-                        build.End = build.Start.AddSeconds(price.BuildTime);
+                        build.End = build.Start.AddMilliseconds(price.BuildTime);
                     }
                 else if (this.Village.Builds[0].Building == BuildingType.Barracks)
                     for (int i = 0; i < this.Village.VillageRecruitMethods.InfantryRecruits.Count; i++)

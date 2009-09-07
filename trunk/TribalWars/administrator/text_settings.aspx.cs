@@ -7,6 +7,8 @@ using System.Web.UI.WebControls;
 using NHibernate;
 using beans;
 using Telerik.Web.UI;
+using System.Xml.Linq;
+using System.Xml;
 
 public partial class administrator_text_settings : System.Web.UI.Page
 {
@@ -114,8 +116,45 @@ public partial class administrator_text_settings : System.Web.UI.Page
         this.stringConfigurationRepeater.DataBind();
     }
 
-    protected void bttnPaging_Click(object sender, EventArgs e)
+    protected void bttnExport_Click(object sender, EventArgs e)
     {
-        //this.Label1.Text = "gregrsyfgisugrsgsrg";
+        ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
+
+        Response.AddHeader("Content-disposition", "attachment; filename=text_settings.xml");
+        Response.ContentType = "text/xml";
+        int count = 0;
+
+
+        IList<StringConfiguration> textConfigurations = ServicesList.ConfigurationService.GetTextSettings(this.CurrentPlayer, out count, session);
+        XDocument doc = new XDocument();
+        doc.Add(new XDeclaration("1.0", "utf-16", "true"));
+        doc.Add(new XElement("texts",
+                        from c in textConfigurations
+                        orderby c.Key //descending 
+                        select new XElement("text",
+                            new XElement("key", c.Key),
+                            new XElement("value", new XCData(c.Value))
+                                            )
+                                    ));
+        //XmlWriter
+
+        System.Text.UnicodeEncoding encoding = new System.Text.UnicodeEncoding();
+        Byte[] bytes = encoding.GetBytes(doc.ToString());
+        Response.BinaryWrite(bytes);
+        Response.End();
+    }
+    protected void bttnImport_Click(object sender, EventArgs e)
+    {
+        XmlReader reader = XmlReader.Create(this.FileUpload1.PostedFile.InputStream);
+        XDocument xmlDoc = XDocument.Load(reader);
+        ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
+
+        var texts = from t in xmlDoc.Elements("texts")
+                       select t;
+
+        foreach (var text in texts)
+        {
+            ServicesList.ConfigurationService.ChangeTextSetting(this.CurrentPlayer, text.Element("key").Value, text.Element("value").Value, session);
+        }
     }
 }

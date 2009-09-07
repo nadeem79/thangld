@@ -32,9 +32,12 @@ namespace beans.Services
             }
             if (pageSize == 0)
                 pageSize = (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Common.PageSize").Value;
+            if (page <= 0)
+                page = 1;
+
             count = query.Count<StringConfiguration>();
 
-            return query.Skip(page*pageSize).Take(pageSize).ToList<StringConfiguration>();
+            return query.Skip((page - 1) * pageSize).Take(pageSize).ToList<StringConfiguration>();
 
         }
 
@@ -67,9 +70,11 @@ namespace beans.Services
 
             if (pageSize == 0)
                 pageSize = (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Common.PageSize").Value;
+            if (page <= 0)
+                page = 1;
 
             count = query.Count<NumericConfiguration>();
-            return query.Skip(page * pageSize).Take(pageSize).ToList<NumericConfiguration>();
+            return query.Skip((page - 1) * pageSize).Take(pageSize).ToList<NumericConfiguration>();
         }
 
         public IList<NumericConfiguration> GetNumericSettings(Player staff, int page, int pageSize, out int count, ISession session)
