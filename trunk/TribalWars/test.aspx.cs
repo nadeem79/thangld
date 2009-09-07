@@ -24,12 +24,12 @@ public partial class test : System.Web.UI.Page
     {
         ISession session = (ISession)Context.Items["NHibernateSession"];
 
-        var villageInfo = (from village in session.Linq<Village>()
-                     select new MyType { Name=village.Name, X= village.X,Y=village.Y, Username= village.Player.Username });
-        this.RadGrid1.DataSource = villageInfo;
-        this.RadGrid1.DataBind();
-        foreach (MyType t in villageInfo)
-            this.Label1.Text += t.Name;
+        //var villageInfo = (from village in session.Linq<Village>()
+        //             select new MyType { Name=village.Name, X= village.X,Y=village.Y, Username= village.Player.Username });
+        //this.RadGrid1.DataSource = villageInfo;
+        //this.RadGrid1.DataBind();
+        //foreach (MyType t in villageInfo)
+        //    this.Label1.Text += t.Name;
     }
 
     protected void bttnSend_Click(object sender, EventArgs e)

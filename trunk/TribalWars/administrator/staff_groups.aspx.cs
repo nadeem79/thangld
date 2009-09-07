@@ -50,10 +50,32 @@ public partial class administrator_staff_groups : System.Web.UI.Page
             IList<StaffGroup> staffGroups = ServicesList.StaffManagementService.GetStaffGroups(staff, session);
             this.rptStaffGroups.DataSource = staffGroups;
             this.rptStaffGroups.DataBind();
+            this.lblError.Text = "";
         }
         catch (Exception ex)
         {
-            RadScriptManager.RegisterStartupScript(bttnCreateNewStaffGroup, bttnCreateNewStaffGroup.GetType(), "ShowException", "jQuery.facebox('" + ex.Message + "');", true);
+            this.lblError.Text = ex.Message;
+        }
+    }
+    protected void rptStaffGroups_ItemCommand(object source, RepeaterCommandEventArgs e)
+    {
+        if (e.CommandName == "DeleteStaffGroup")
+        {
+            int staffGroupId = 0;
+            if (!int.TryParse(e.CommandArgument.ToString(), out staffGroupId))
+                return;
+
+            ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
+            try
+            {
+                Player staff = session.Load<Player>(Session[Constant.StaffUserSessionSign]);
+                ServicesList.StaffManagementService.DeleteStaffGroup(staff, staffGroupId, session);
+                this.lblError.Text = "";
+            }
+            catch (Exception ex)
+            {
+                this.lblError.Text = ex.Message;
+            }
         }
     }
 }

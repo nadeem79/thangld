@@ -57,9 +57,6 @@
                                         <telerik:RadTreeNode runat="server" NavigateUrl="~/administrator/staff_groups.aspx"
                                             Text="Danh sách nhóm quyền" Value="List" PostBack="false">
                                         </telerik:RadTreeNode>
-                                        <telerik:RadTreeNode runat="server" NavigateUrl="~/administrator/create_staff_groups.aspx"
-                                            Text="Thêm nhóm mới" Value="Create" PostBack="false">
-                                        </telerik:RadTreeNode>
                                     </Nodes>
                                 </telerik:RadTreeNode>
                             </Nodes>

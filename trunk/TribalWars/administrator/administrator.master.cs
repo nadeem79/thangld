@@ -28,6 +28,7 @@ public partial class administrator_administrator : System.Web.UI.MasterPage
 
     void administrator_administrator_Init(object sender, EventArgs e)
     {
+        
         if (object.Equals(Session[Constant.StaffUserSessionSign], null))
         {
             Response.Redirect("login.aspx", true);

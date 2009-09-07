@@ -7,6 +7,8 @@ using System.Web.UI.WebControls;
 using beans;
 using NHibernate;
 using Telerik.Web.UI;
+using System.Xml.Linq;
+using System.Xml;
 
 public partial class administrator_numeric_settings : System.Web.UI.Page
 {
@@ -90,5 +92,46 @@ public partial class administrator_numeric_settings : System.Web.UI.Page
         IList<NumericConfiguration> numericConfigurations = ServicesList.ConfigurationService.GetNumericSettings(this.CurrentPlayer, 0, 0, this.txtKey.Text, out count, session);
         this.numericConfigurationRepeater.DataSource = numericConfigurations;
         this.numericConfigurationRepeater.DataBind();
+    }
+
+    protected void bttnExport_Click(object sender, EventArgs e)
+    {
+
+        ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
+
+        Response.AddHeader("Content-disposition", "attachment; filename=numeric_settings.xml");
+        Response.ContentType = "text/xml";
+        int count = 0;
+
+
+        IList<NumericConfiguration> numericConfigurations = ServicesList.ConfigurationService.GetNumericSettings(this.CurrentPlayer, out count, session);
+        XDocument doc = new XDocument(
+            new XDeclaration("1.0", "utf-16", "true"),
+            new XElement("numerics",
+                        from c in numericConfigurations
+                        orderby c.Key //descending 
+                        select new XElement("numeric",
+                            new XElement("key", c.Key),
+                            new XElement("value", c.Value)
+                                            )
+                                    ));
+        //XmlWriter
+        
+        System.Text.UnicodeEncoding  encoding = new System.Text.UnicodeEncoding();
+        Byte[] bytes = encoding.GetBytes(doc.ToString());
+        Response.BinaryWrite(bytes);
+        Response.End();
+    }
+
+    protected void bttnImport_Click(object sender, EventArgs e)
+    {
+        XmlReader reader = XmlReader.Create(this.FileUpload1.PostedFile.InputStream);
+        XDocument xmlDoc = XDocument.Load(reader);
+        ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
+        
+        foreach (XElement x in xmlDoc.Elements("numerics"))
+        {
+            //ServicesList.ConfigurationService.ChangeNumericSetting(this.CurrentPlayer, x.Element("").FirstNode.va, x.Elements(""), session);
+        }
     }
 }
