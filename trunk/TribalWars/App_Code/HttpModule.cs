@@ -40,7 +40,7 @@ public class NHibernateHttpModule:IHttpModule
 
         ISession session = NHibernateHelper.CreateSession();
         session.BeginTransaction(IsolationLevel.ReadCommitted);
-        context.Items["NHibernateSession"] = session;
+        context.Items[Constant.NHibernateSessionSign] = session;
     }
 
     private void context_EndRequest(object sender, EventArgs e)
@@ -51,10 +51,10 @@ public class NHibernateHttpModule:IHttpModule
         
         HttpApplication application = (HttpApplication)sender;
         HttpContext context = application.Context;
-        
-        ((ISession)context.Items["NHibernateSession"]).Transaction.Commit();
-        ((ISession)context.Items["NHibernateSession"]).Close();
-        context.Items["NHibernateSession"] = null;
+
+        ((ISession)context.Items[Constant.NHibernateSessionSign]).Transaction.Commit();
+        ((ISession)context.Items[Constant.NHibernateSessionSign]).Close();
+        context.Items[Constant.NHibernateSessionSign] = null;
     }
 
     #endregion
