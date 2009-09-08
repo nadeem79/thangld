@@ -30,6 +30,10 @@ public class Constant
     {
         get { return "DebugMode"; }
     }
+    public static string Username
+    {
+        get { return "Username"; }
+    }
 
     protected Constant()
     {
