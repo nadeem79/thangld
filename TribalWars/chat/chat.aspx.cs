@@ -46,7 +46,7 @@ public partial class chat_chat : System.Web.UI.Page
         string items = "";
         IDbCommand cmdGetChatHistory = session.Connection.CreateCommand();
         
-        cmdGetChatHistory.CommandText = "SELECT * FROM chat where (chat.to=@username AND recd = 0) order by id ASC";
+        cmdGetChatHistory.CommandText = "SELECT * FROM chat where ([to]=@username AND recd = 0) order by id ASC";
         IDataParameter param = cmdGetChatHistory.CreateParameter();
         param.DbType = DbType.String;
         param.ParameterName = "@username";
@@ -98,7 +98,7 @@ public partial class chat_chat : System.Web.UI.Page
         }
 
         IDbCommand cmdUpdateRead = session.Connection.CreateCommand();
-        cmdUpdateRead.CommandText = "update chat set recd = 1 where chat.to = @username and recd = 0";
+        cmdUpdateRead.CommandText = "update chat set recd = 1 where [to] = @username and recd = 0";
         IDataParameter paramUsername = cmdUpdateRead.CreateParameter();
         paramUsername.DbType = DbType.String;
         paramUsername.ParameterName = "@username";
@@ -115,12 +115,59 @@ public partial class chat_chat : System.Web.UI.Page
 
     protected void SendChat()
     {
+        ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
+        string from = (string)Session[Constant.Username];
+	    string to = Request["to"];
+	    string message = Request["message"];
+        Dictionary<string, DateTime> openChatBoxes = Session["openChatBoxes"] as Dictionary<string, DateTime>;
+        Dictionary<string, string> chatHistory = Session["chatHistory"] as Dictionary<string, string>;
+        Dictionary<string, bool> tsChatBoxes = Session["tsChatBoxes"] as Dictionary<string, bool>;
 
+        openChatBoxes[to] = DateTime.Now;
+        string messagesan = this.Sanitize(message);
+        if (chatHistory.ContainsKey(to))
+            chatHistory[to] = "";
+
+        chatHistory[to] += string.Format("{			\"s\": \"1\",			\"f\": \"{{0}}\",			\"m\": \"{{1}}\"	   },", to, messagesan);
+        tsChatBoxes.Remove(to);
+
+        IDbCommand cmdInsertChat = session.Connection.CreateCommand();
+        cmdInsertChat.CommandText = "insert into chat ([from],[to],message,sent) values (@from, @to, @message, @time)";
+
+        IDataParameter paramFrom = cmdInsertChat.CreateParameter();
+        paramFrom.DbType = DbType.String;
+        paramFrom.ParameterName = "@from";
+        paramFrom.Value = from;
+        cmdInsertChat.Parameters.Add(paramFrom);
+
+        IDataParameter paramTo = cmdInsertChat.CreateParameter();
+        paramTo.DbType = DbType.String;
+        paramTo.ParameterName = "@to";
+        paramTo.Value = to;
+        cmdInsertChat.Parameters.Add(paramTo);
+
+        IDataParameter paramMessage = cmdInsertChat.CreateParameter();
+        paramMessage.DbType = DbType.String;
+        paramMessage.ParameterName = "@message";
+        paramMessage.Value = message;
+        cmdInsertChat.Parameters.Add(paramMessage);
+
+        IDataParameter paramTime = cmdInsertChat.CreateParameter();
+        paramTime.DbType = DbType.DateTime;
+        paramTime.ParameterName = "@time";
+        paramTime.Value = DateTime.Now;
+        cmdInsertChat.Parameters.Add(paramTime);
+
+        cmdInsertChat.ExecuteNonQuery();
+
+        Response.End();
     }
 
     protected void CloseChat()
     {
-
+        Dictionary<string, DateTime> openChatBoxes = Session["openChatBoxes"] as Dictionary<string, DateTime>;
+        openChatBoxes.Remove(Request["chatbox"]);
+        Response.End();
     }
 
     protected string ChatBoxSession(string chatbox)
