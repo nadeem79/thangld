@@ -61,6 +61,7 @@ namespace beans
             get;
             set;
         }
+        
 
         public override void Save(ISession session)
         {
@@ -76,6 +77,13 @@ namespace beans
             (this.Noble > this.FromVillage.VillageTroopData.Noble))
                 throw new TribalWarsException("Không đủ quân");
 
+            if (this.Hero != null)
+            {
+                if (!this.FromVillage.Heroes.Contains(this.Hero))
+                    throw new TribalWarsException("Không tồn tại hero trong thành phố");
+                else if (this.FromVillage.MainHero == this.Hero)
+                    throw new TribalWarsException("Không thể đưa chủ thành đi tấn công");
+            }
             this.FromVillage.VillageTroopData.Spear -= this.Spear;
             this.FromVillage.VillageTroopData.Sword -= this.Sword;
             this.FromVillage.VillageTroopData.Axe -= this.Axe;
@@ -95,9 +103,17 @@ namespace beans
             this.FromVillage.VillageTroopData.RamInVillage -= this.Ram;
             this.FromVillage.VillageTroopData.CatapultInVillage -= this.Catapult;
             this.FromVillage.VillageTroopData.NobleInVillage -= this.Noble;
-
+            if (this.Hero != null)
+            {
+                this.FromVillage.Heroes.Remove(this.Hero);
+                this.Hero.InVillage = null;
+                this.Hero.InMovingCommand = this;
+                session.Update(this.Hero);
+            }
+            
             this.FromVillage.MovingCommandsFromMe.Add(this);
             this.ToVillage.MovingCommandsToMe.Add(this);
+            
             session.Save(this);
             session.Update(this.FromVillage);
             session.Update(this.ToVillage);
@@ -125,6 +141,13 @@ namespace beans
             this.FromVillage.MovingCommandsToMe.Add(returnTroop);
             this.ToVillage.MovingCommandsToMe.Remove(this);
             this.ToVillage.MovingCommandsFromMe.Add(returnTroop);
+            if (this.Hero != null)
+            {
+                this.Hero.InMovingCommand = returnTroop;
+                returnTroop.Hero = this.Hero;
+                session.Update(this.Hero);
+                this.Hero = null;
+            }
 
             session.Delete(this);
             session.Save(returnTroop);
@@ -134,6 +157,12 @@ namespace beans
             return returnTroop;
         }
 
+        ///<summary>
+        /// Chưa xử lý trường hợp có hero
+        ///</summary>
+        ///<remarks>
+        /// This is a test.
+        ///</remarks>
         public override MovingCommand Effect(ISession session)
         {
 
@@ -273,7 +302,6 @@ namespace beans
             defenseReport.BuildingBefore = this.ToVillage[this.Building];
 
             #endregion
-
             int attackBonus = this.FromVillage.VillageResearchData.Attack;
             int defenseBonus = this.ToVillage.VillageResearchData.Defense;
 
@@ -282,7 +310,7 @@ namespace beans
             double infantryAttack = this.Spear * spearDamage + this.Sword * swordDamage + this.Axe * axeDamage + this.Noble * nobleDamage;
             double cavalryAttack = this.LightCavalry * lightCavalryDamage + this.HeavyCavalry * heavyCavalryDamage;
             double totalAttack = infantryAttack + cavalryAttack;
-            totalAttack += totalAttack * Research.AttackValuesDictionary[this.FromVillage.VillageResearchData.Attack];
+            totalAttack += totalAttack * Research.AttackValuesDictionary[this.FromVillage.VillageResearchData.Attack + this.Hero.Attack];
 
             double pInfantry = (double)infantryAttack / (double)totalAttack;
             double pCavalry = (double)cavalryAttack / (double)totalAttack;
@@ -290,9 +318,14 @@ namespace beans
             double infantryDefense = this.ToVillage.VillageTroopData.SpearInVillage * spearInfantryDefense + this.ToVillage.VillageTroopData.SwordInVillage * swordInfantryDefense + this.ToVillage.VillageTroopData.AxeInVillage * axeInfantryDefense + this.ToVillage.VillageTroopData.LightCavalryInVillage * lightCavalryInfantryDefense + this.ToVillage.VillageTroopData.HeavyCavalryInVillage * heavyCavalryInfantryDefense + this.ToVillage.VillageTroopData.NobleInVillage * nobleInfantryDefense;
             double cavalryDefense = this.ToVillage.VillageTroopData.SpearInVillage * spearCavalryDefense + this.ToVillage.VillageTroopData.SwordInVillage * swordCavalryDefense + this.ToVillage.VillageTroopData.AxeInVillage * axeCavalryDefense + this.ToVillage.VillageTroopData.LightCavalryInVillage * lightCavalryCavalryDefense + this.ToVillage.VillageTroopData.HeavyCavalryInVillage * heavyCavalryCavalryDefense + this.ToVillage.VillageTroopData.NobleInVillage * nobleCavalryDefense;
             double totalDefense = (long)(infantryDefense * pInfantry + cavalryDefense * pCavalry) + 100;
-            totalDefense += totalDefense * Research.DefenseValuesDictionary[this.ToVillage.VillageResearchData.Defense];
+            totalDefense += totalDefense * Research.DefenseValuesDictionary[this.ToVillage.VillageResearchData.Defense + this.ToVillage.MainHero.Defense];
+            double luckHeroes = luck;
+            if (this.Hero != null)
+                luckHeroes += 0.001 * this.Hero.Luck;
+            if (this.ToVillage.MainHero != null)
+                luckHeroes -= 0.001 * this.ToVillage.MainHero.Luck;
 
-            totalAttack += (long)(totalAttack * luck);
+            totalAttack += (long)(totalAttack * luckHeroes);
             if (totalAttack > totalDefense)
                 totalAttack = ((totalAttack - totalDefense) / (totalAttack * 4) + 1) * totalAttack;
             else

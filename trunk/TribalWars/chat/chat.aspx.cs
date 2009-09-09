@@ -6,23 +6,26 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using NHibernate;
 using System.Data;
+using System.Data.SqlClient;
 
 public partial class chat_chat : System.Web.UI.Page
 {
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Request["action"] == "chatheartbeat") { ChatHeartbeat(); }
-        if (Request["action"] == "sendchat") { SendChat(); }
-        if (Request["action"] == "closechat") { CloseChat(); }
-        if (Request["action"] == "startchatsession") { StartChatSession(); }
-
         if (Session["chatHistory"] == null)
             Session["chatHistory"] = new Dictionary<string, string>();
         if (Session["openChatBoxes"] == null)
             Session["openChatBoxes"] = new Dictionary<string, DateTime>();
         if (Session["tsChatBoxes"] == null)
             Session["tsChatBoxes"] = new Dictionary<string, bool>();
+
+        if (Request["action"] == "chatheartbeat") { ChatHeartbeat(); }
+        if (Request["action"] == "sendchat") { SendChat(); }
+        if (Request["action"] == "closechat") { CloseChat(); }
+        if (Request["action"] == "startchatsession") { StartChatSession(); }
+
+        
     }
 
     protected string Sanitize(string message)
@@ -53,25 +56,28 @@ public partial class chat_chat : System.Web.UI.Page
         param.Value = Session[Constant.Username];
         cmdGetChatHistory.Parameters.Add(param);
 
-        IDataReader rdrChatHistory = cmdGetChatHistory.ExecuteReader();
-        while (rdrChatHistory.Read())
+        session.Transaction.Enlist(cmdGetChatHistory);
+
+        IDataReader row = cmdGetChatHistory.ExecuteReader();
+        while (row.Read())
         {
-            string message = Sanitize((string)rdrChatHistory["message"]);
-            string from = (string)rdrChatHistory["from"];
+            string message = Sanitize((string)row["message"]);
+            string from = (string)row["from"];
             
             if (!openChatBoxes.ContainsKey(from) && chatHistory.ContainsKey(from))
                 items = chatHistory[from];
-            
-            items += string.Format("{\"s\": \"0\", \"f\":\"{{0}}\", \"m\": \"{{1}}\"},", (string)rdrChatHistory["from"], message);
+
+            items += string.Format("&DFDF\"s\": \"0\", \"f\":\"{0}\", \"m\": \"{1}\"&FDFD,", (string)row["from"], message).Replace("&DFDF", "{").Replace("&FDFD", "}");
 
             if (!chatHistory.ContainsKey(from))
                 chatHistory.Add(from, "");
-            chatHistory[from] += string.Format("{\"s\": \"0\", \"f\": \"{{0}}\", \"m\": \"{{1}}\"},", from, message);
+            chatHistory[from] += string.Format("&DFDF\"s\": \"0\", \"f\": \"{0}\", \"m\": \"{1}\"&FDFD,", from, message).Replace("&DFDF", "{").Replace("&FDFD", "}");
 
             tsChatBoxes.Remove(from);
-            openChatBoxes[from] = (DateTime)rdrChatHistory["sent"];
+            openChatBoxes[from] = (DateTime)row["sent"];
         }
-        rdrChatHistory.Close();
+        row.Close();
+        
 
         if (openChatBoxes.Count > 0)
         {
@@ -85,11 +91,11 @@ public partial class chat_chat : System.Web.UI.Page
 
                     if (t > TimeSpan.FromMinutes(3))
                     {
-                        items += string.Format("{\"s\": \"2\",\"f\": \"{0}\", \"m\": \"{{1}}\"},", chatbox, message);
+                        items += string.Format("&DFDF\"s\": \"2\",\"f\": \"{0}\", \"m\": \"{1}\"&FDFD,", chatbox, message).Replace("&DFDF", "{").Replace("&FDFD", "}");
                         if (chatHistory.ContainsKey(chatbox))
                             chatHistory.Add(chatbox, "");
 
-                        chatHistory[chatbox] += string.Format("{\"s\": \"2\", \"f\": \"{0}\", \"m\": \"{{1}}\"},", chatbox, message);
+                        chatHistory[chatbox] += string.Format("&DFDF\"s\": \"2\", \"f\": \"{0}\", \"m\": \"{1}\"&FDFD,", chatbox, message).Replace("&DFDF", "{").Replace("&FDFD", "}");
 
                         tsChatBoxes[chatbox] = true;
                     }
@@ -104,10 +110,11 @@ public partial class chat_chat : System.Web.UI.Page
         paramUsername.ParameterName = "@username";
         paramUsername.Value = Session[Constant.Username];
         cmdUpdateRead.Parameters.Add(paramUsername);
+        session.Transaction.Enlist(cmdUpdateRead);
         cmdUpdateRead.ExecuteNonQuery();
 
         Response.ContentType = "application/json";
-        Response.Write(string.Format("{		\"items\": [			{0}        ]}", items));
+        Response.Write(string.Format("&DFDF		\"items\": [			{0}        ]&FDFD", items).Replace("&DFDF", "{").Replace("&FDFD", "}"));
         Response.End();
     }
 
@@ -128,7 +135,7 @@ public partial class chat_chat : System.Web.UI.Page
         if (chatHistory.ContainsKey(to))
             chatHistory[to] = "";
 
-        chatHistory[to] += string.Format("{			\"s\": \"1\",			\"f\": \"{{0}}\",			\"m\": \"{{1}}\"	   },", to, messagesan);
+        chatHistory[to] += string.Format("&DFDF			\"s\": \"1\",			\"f\": \"{0}\",			\"m\": \"{1}\"	   &FDFD,", to, messagesan).Replace("&DFDF", "{").Replace("&FDFD", "}");
         tsChatBoxes.Remove(to);
 
         IDbCommand cmdInsertChat = session.Connection.CreateCommand();
@@ -158,6 +165,7 @@ public partial class chat_chat : System.Web.UI.Page
         paramTime.Value = DateTime.Now;
         cmdInsertChat.Parameters.Add(paramTime);
 
+        session.Transaction.Enlist(cmdInsertChat);
         cmdInsertChat.ExecuteNonQuery();
 
         Response.End();
@@ -191,7 +199,7 @@ public partial class chat_chat : System.Web.UI.Page
                 items += ChatBoxSession(chatbox);
 
         Response.ContentType = "application/json";
-        Response.Write(string.Format("{		\"username\": \"{0}\",		\"items\": [			{1}        ]}", Session[Constant.Username], items));
+        Response.Write("{" + string.Format("\r\n		\"username\": \"{0}\",\r\n		\"items\": [\r\n			{1}\r\n        ]", Session[Constant.Username], items) + "}");
         Response.End();
 
     }

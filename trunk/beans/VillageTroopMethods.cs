@@ -56,13 +56,13 @@ namespace beans
                                     int heavy,
                                     int ram,
                                     int catapult,
-                                    int noble,
+                                    Hero hero,
                                     BuildingType building)
         {
             if (x == this.Village.X && y == this.Village.Y)
                 throw new Exception("Nhập toạ độ");
 
-            if ((spear + sword + axe + scout + light + heavy + ram + catapult + noble) == 0)
+            if ((spear + sword + axe + scout + light + heavy + ram + catapult) == 0)
                 throw new Exception("Nhập một loại quân");
 
             if ((spear > this.Village.VillageTroopData.Spear) ||
@@ -72,13 +72,20 @@ namespace beans
             (light > this.Village.VillageTroopData.LightCavalry) ||
             (heavy > this.Village.VillageTroopData.HeavyCavalry) ||
             (ram > this.Village.VillageTroopData.Ram) ||
-            (catapult > this.Village.VillageTroopData.Catapult) ||
-            (noble > this.Village.VillageTroopData.Noble))
+            (catapult > this.Village.VillageTroopData.Catapult))
                 throw new Exception("Không đủ quân");
 
             Village toVillage = Village.GetVillageByCoordinate(x, y, session);
             if (toVillage == null)
                 throw new Exception("Toạ độ không tồn tại");
+
+            if (hero != null)
+            {
+                if (!this.Village.Heroes.Contains(hero))
+                    throw new TribalWarsException("Không tồn tại hero trong thành phố");
+                else if (this.Village.MainHero == hero)
+                    throw new TribalWarsException("Không thể đưa chủ thành đi tấn công");
+            }
 
             Attack attack = new Attack();
             attack.ToVillage = toVillage;
@@ -101,8 +108,6 @@ namespace beans
                 type = TroopType.Ram;
             if (catapult > 0)
                 type = TroopType.Catapult;
-            if (noble > 0)
-                type = TroopType.Nobleman;
 
             attack.Spear = spear;
             attack.Sword = sword;
@@ -112,7 +117,6 @@ namespace beans
             attack.HeavyCavalry = heavy;
             attack.Ram = ram;
             attack.Catapult = catapult;
-            attack.Noble = noble;
             attack.StartingTime = DateTime.Now;
             attack.LandingTime = Map.LandingTime(type, attack.FromVillage.X, attack.FromVillage.Y, attack.ToVillage.X, attack.ToVillage.Y, attack.StartingTime, Research.SpeedValuesDictionary[this.Village[ResearchType.Speed]]);
             return attack;

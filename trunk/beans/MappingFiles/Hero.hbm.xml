@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+
+  <class name="beans.Hero, beans" table="heroes" lazy="true">
+    <cache usage="read-write"/>
+    <id name="ID" column="id" type="Int32">
+      <generator class="hilo">
+        <param name="table">hi_value</param>
+        <param name="column">next_value</param>
+        <param name="where">id='hero'</param>
+      </generator>
+    </id>
+    
+    <one-to-one name="InMovingCommand" class="beans.MovingCommand, beans" constrained="0" lazy="proxy" fetch="select" foreign-key="in_moving_command"></one-to-one>
+    <many-to-one name="InVillage" class="beans.Village, beans" column="in_village" fetch="select" lazy="no-proxy" />
+    <property name="Attack" column="attack" type="Int32" />
+    <property name="Defense" column="defense" type="Int32" />
+    <property name="Speed" column="speed" type="Int32" />
+    <property name="Luck" column="luck" type="Int32" />
+    <property name="Level" column="[level]" type="Int32" />
+    <property name="Experience" column="experience" type="double" />
+    <property name="Name" column="name" type="String"></property>
+    <property name="Biography" column="biography" length="2000" lazy="true" type="String"></property>
+    <property name="Avatar" column="avatar" type="Boolean"></property>
+  </class>
+
+</hibernate-mapping>

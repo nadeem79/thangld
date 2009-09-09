@@ -30,6 +30,11 @@ namespace beans
             get;
             set;
         }
+        public virtual Hero Hero
+        {
+            get;
+            set;
+        }
         public abstract MoveType Type
         {
             get;

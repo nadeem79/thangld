@@ -34,7 +34,8 @@ public partial class LoginBox : System.Web.UI.UserControl
             }
             else
             {
-                Session.Add("user", id);
+                Session.Add(Constant.NormalUserSessionSign, id);
+                Session.Add(Constant.Username, this.username.Text);
                 if (this.chkRemember.Checked)
                 {
                     Request.Cookies.Remove("username");
