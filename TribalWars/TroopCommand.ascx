@@ -1,4 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="TroopCommand.ascx.cs" Inherits="TroopCommand" %>
+<%@ Register assembly="Telerik.Web.UI" namespace="Telerik.Web.UI" tagprefix="telerik" %>
 <h3>
     Give commands</h3>
 <p>
@@ -93,10 +94,12 @@
                     <tbody>
                         <tr>
                             <td>
-                                <img src="images/unit_snob.png" title="Nobleman" alt="" />
-                                <asp:TextBox ID="noble" runat="server" Width="50px">
-                                </asp:TextBox>
-                                <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.noble.ClientID); %>', <% Response.Write(this.Village.VillageTroopData.Noble.ToString()); %>)"><% Response.Write(this.Village.VillageTroopData.Noble.ToString()); %></a>)</span>
+                                <img alt="Hero" src="images/units/hero.png" style="width: 33px; height: 33px" />
+                                <telerik:RadComboBox ID="cbHeroes" Runat="server">
+                                <Items>
+                                <telerik:RadComboBoxItem Value="0" Text="Chọn hero" />
+                                </Items>
+                                </telerik:RadComboBox>
                             </td>
                         </tr>
                     </tbody>

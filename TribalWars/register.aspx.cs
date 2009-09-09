@@ -51,8 +51,9 @@ public partial class Default2 : System.Web.UI.Page
         ISession session = (ISession)Context.Items["NHibernateSession"];
         session.Save(user);
         Session.RemoveAll();
-        Session.Add("user", user.ID);
-        Response.Redirect("overview.aspx", true);
+        Session.Add(Constant.NormalUserSessionSign, user.ID);
+        Session.Add(Constant.Username, user.Username);
+        Response.Redirect("village.aspx", true);
 
     }
 }

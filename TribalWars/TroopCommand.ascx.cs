@@ -38,6 +38,15 @@ public partial class TroopCommand : System.Web.UI.UserControl
     protected void Page_Load(object sender, EventArgs e)
     {
         ISession session = (ISession)Context.Items["NHibernateSession"];
+        if (IsPostBack)
+            return;
+
+        if (this.Village.Heroes.Count > 0)
+        {
+            this.cbHeroes.DataSource = this.Village.Heroes;
+            this.cbHeroes.DataBind();
+        }
+        
 
         if (this.Village.VillageTroopMethods.TroopFromMe.Count > 0)
         {
@@ -49,9 +58,6 @@ public partial class TroopCommand : System.Web.UI.UserControl
             this.incomingRepeater.DataSource = this.Village.VillageTroopMethods.TroopToMe;
             this.incomingRepeater.DataBind();
         }
-
-        if (IsPostBack)
-            return;
 
         int target;
 
@@ -74,7 +80,7 @@ public partial class TroopCommand : System.Web.UI.UserControl
     protected void bttnAttack_Click(object sender, EventArgs e)
     {
 
-        int spear, sword, axe, scout, light, heavy, ram, catapult, noble, x, y, i;
+        int spear, sword, axe, scout, light, heavy, ram, catapult, x, y, i;
         ISession session = (ISession)Context.Items["NHibernateSession"];
         try
         {
@@ -86,11 +92,10 @@ public partial class TroopCommand : System.Web.UI.UserControl
             heavy = (int.TryParse(this.heavy.Text, out i)) ? i : 0;
             ram = (int.TryParse(this.ram.Text, out i)) ? i : 0;
             catapult = (int.TryParse(this.catapult.Text, out i)) ? i : 0;
-            noble = (int.TryParse(this.noble.Text, out i)) ? i : 0;
             x = (int.TryParse(this.x.Text, out i)) ? i : 0;
             y = (int.TryParse(this.y.Text, out i)) ? i : 0;
 
-            Attack attack = this.Village.VillageTroopMethods.CreateAttack(session, x, y, spear, sword, axe, scout, light, heavy, ram, catapult, noble, BuildingType.NoBuiding);
+            Attack attack = this.Village.VillageTroopMethods.CreateAttack(session, x, y, spear, sword, axe, scout, light, heavy, ram, catapult, null, BuildingType.NoBuiding);
 
             this.commandTypeSpan.Text = this.typeSpan.Text = "Tấn công";
 
@@ -110,7 +115,6 @@ public partial class TroopCommand : System.Web.UI.UserControl
             this.catapultSpan.Text = (catapult > 0) ? catapult.ToString() : "<span class=\"hidden\">0</span>";
             this.lightCavalrySpan.Text = (light > 0) ? light.ToString() : "<span class=\"hidden\">0</span>";
             this.heavyCavalrySpan.Text = (heavy > 0) ? heavy.ToString() : "<span class=\"hidden\">0</span>";
-            this.nobleSpan.Text = (noble > 0) ? noble.ToString() : "<span class=\"hidden\">0</span>";
             //this.buttonNameSpan.Text = this.confirmAttackButton.UniqueID;
             this.buttonNameSpan.Text = string.Format("<input type=\"button\"  value=\"Confirm\" onclick=\"__doPostBack('{0}', '')\" />", this.confirmAttackButton.UniqueID);
             ScriptManager.RegisterStartupScript(bttnAttack, bttnAttack.GetType(), "Confirm", "$.facebox($('#commandPanel').html());", true);
@@ -125,7 +129,7 @@ public partial class TroopCommand : System.Web.UI.UserControl
 
     protected void bttnSupport_Click(object sender, EventArgs e)
     {
-        int spear, sword, axe, scout, light, heavy, ram, catapult, noble, x, y, i;
+        int spear, sword, axe, scout, light, heavy, ram, catapult, x, y, i;
         ISession session = (ISession)Context.Items["NHibernateSession"];
         try
         {
@@ -137,11 +141,10 @@ public partial class TroopCommand : System.Web.UI.UserControl
             heavy = (int.TryParse(this.heavy.Text, out i)) ? i : 0;
             ram = (int.TryParse(this.ram.Text, out i)) ? i : 0;
             catapult = (int.TryParse(this.catapult.Text, out i)) ? i : 0;
-            noble = (int.TryParse(this.noble.Text, out i)) ? i : 0;
             x = (int.TryParse(this.x.Text, out i)) ? i : 0;
             y = (int.TryParse(this.y.Text, out i)) ? i : 0;
 
-            Support support = this.Village.VillageTroopMethods.CreateSupport(session, x, y, spear, sword, axe, scout, light, heavy, ram, catapult, noble);
+            Support support = this.Village.VillageTroopMethods.CreateSupport(session, x, y, spear, sword, axe, scout, light, heavy, ram, catapult, 0);
 
             this.commandTypeSpan.Text = this.typeSpan.Text = "Hỗ trợ";
 
@@ -161,7 +164,6 @@ public partial class TroopCommand : System.Web.UI.UserControl
             this.catapultSpan.Text = (catapult > 0) ? catapult.ToString() : "<span class=\"hidden\">0</span>";
             this.lightCavalrySpan.Text = (light > 0) ? light.ToString() : "<span class=\"hidden\">0</span>";
             this.heavyCavalrySpan.Text = (heavy > 0) ? heavy.ToString() : "<span class=\"hidden\">0</span>";
-            this.nobleSpan.Text = (noble > 0) ? noble.ToString() : "<span class=\"hidden\">0</span>";
             this.buttonNameSpan.Text = string.Format("<input type=\"button\" value=\"Confirm\" onclick=\"__doPostBack('{0}', '')\" />", this.confirmSupportButton.UniqueID);
 
             ScriptManager.RegisterStartupScript(bttnSupport, bttnSupport.GetType(), "Confirm", "$.facebox($('#commandPanel').html());", true);
@@ -174,7 +176,7 @@ public partial class TroopCommand : System.Web.UI.UserControl
     }
     protected void confirmAttackButton_Click(object sender, EventArgs e)
     {
-        int spear, sword, axe, scout, light, heavy, ram, catapult, noble, x, y, i;
+        int spear, sword, axe, scout, light, heavy, ram, catapult, x, y, i;
         ISession session = (ISession)Context.Items["NHibernateSession"];
         spear = (int.TryParse(this.spear.Text, out i)) ? i : 0;
         sword = (int.TryParse(this.sword.Text, out i)) ? i : 0;
@@ -184,13 +186,12 @@ public partial class TroopCommand : System.Web.UI.UserControl
         heavy = (int.TryParse(this.heavy.Text, out i)) ? i : 0;
         ram = (int.TryParse(this.ram.Text, out i)) ? i : 0;
         catapult = (int.TryParse(this.catapult.Text, out i)) ? i : 0;
-        noble = (int.TryParse(this.noble.Text, out i)) ? i : 0;
         x = (int.TryParse(this.x.Text, out i)) ? i : 0;
         y = (int.TryParse(this.y.Text, out i)) ? i : 0;
 
         try
         {
-            Attack attack = this.Village.VillageTroopMethods.CreateAttack(session, x, y, spear, sword, axe, scout, light, heavy, ram, catapult, noble, BuildingType.NoBuiding);
+            Attack attack = this.Village.VillageTroopMethods.CreateAttack(session, x, y, spear, sword, axe, scout, light, heavy, ram, catapult, null, BuildingType.NoBuiding);
             attack.Save(session);
             Response.Redirect(string.Format("rally.aspx?id={0}", this.Village.ID), false);
         }
@@ -203,7 +204,7 @@ public partial class TroopCommand : System.Web.UI.UserControl
     protected void confirmSupportButton_Click(object sender, EventArgs e)
     {
 
-        int spear, sword, axe, scout, light, heavy, ram, catapult, noble, x, y, i;
+        int spear, sword, axe, scout, light, heavy, ram, catapult, x, y, i;
         ISession session = (ISession)Context.Items["NHibernateSession"];
         spear = (int.TryParse(this.spear.Text, out i)) ? i : 0;
         sword = (int.TryParse(this.sword.Text, out i)) ? i : 0;
@@ -213,13 +214,12 @@ public partial class TroopCommand : System.Web.UI.UserControl
         heavy = (int.TryParse(this.heavy.Text, out i)) ? i : 0;
         ram = (int.TryParse(this.ram.Text, out i)) ? i : 0;
         catapult = (int.TryParse(this.catapult.Text, out i)) ? i : 0;
-        noble = (int.TryParse(this.noble.Text, out i)) ? i : 0;
         x = (int.TryParse(this.x.Text, out i)) ? i : 0;
         y = (int.TryParse(this.y.Text, out i)) ? i : 0;
 
         try
         {
-            Support support = this.Village.VillageTroopMethods.CreateSupport(session, x, y, spear, sword, axe, scout, light, heavy, ram, catapult, noble);
+            Support support = this.Village.VillageTroopMethods.CreateSupport(session, x, y, spear, sword, axe, scout, light, heavy, ram, catapult, 0);
             support.Save(session);
             Response.Redirect(string.Format("rally.aspx?id={0}", this.Village.ID), false);
         }

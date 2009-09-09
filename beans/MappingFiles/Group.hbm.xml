@@ -9,8 +9,8 @@
 
     <property name="Name" column="name" length="200" type="String" not-null="true"/>
     <property name="Tag" column="tag" type="string" length="10" not-null="true" unique="true" />
-    <property name="Description" column="description" type="string" length="10000" not-null="false" />
-    <property name="Introduction" column="introduction" type="string" length="10000" not-null="false" />
+    <property name="Description" column="description" type="string" length="10000" not-null="false" lazy="true" />
+    <property name="Introduction" column="introduction" type="string" length="10000" not-null="false" lazy="true" />
     <property name="Avatar" column="avatar" type="Boolean" not-null="false" />
 
   </class>

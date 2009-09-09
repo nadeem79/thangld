@@ -40,6 +40,11 @@ namespace beans
             get;
             set;
         }
+        public override Hero Hero
+        {
+            get;
+            set;
+        }
 
 
         public override MovingCommand Effect(ISession session)

@@ -177,6 +177,16 @@ namespace beans
             get;
             set;
         }
+        public virtual IList<Hero> Heroes
+        {
+            get;
+            set;
+        }
+        public virtual Hero MainHero
+        {
+            get;
+            set;
+        }
 
         public virtual VillageTroopData VillageTroopData
         {

@@ -16,7 +16,7 @@
     <property name="Msn" column="msn" type="string" length="50" not-null="false" />
     <property name="Skype" column="skype" type="string" length="50" not-null="false" />
     <property name="Email" column="email" type="string" length="50" not-null="false" unique="true"/>
-    <property name="Description" column="description" type="string" not-null="false" />
+    <property name="Description" column="description" type="string" not-null="false" lazy="true" />
     <property name="Point" column="point" type="double" not-null="false" />
     <property name="Avatar" column="avatar" type="Boolean" not-null="false" />
     <property name="Address" column="address" type="string" length="500" not-null="false" />

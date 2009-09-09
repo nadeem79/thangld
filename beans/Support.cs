@@ -61,7 +61,11 @@ namespace beans
         {
             get { return MoveType.Support; }
         }
-
+        public override Hero Hero
+        {
+            get;
+            set;
+        }
 
 
         public override void Save(ISession session)
