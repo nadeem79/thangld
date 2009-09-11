@@ -1,5 +1,18 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="TroopCommand.ascx.cs" Inherits="TroopCommand" %>
 <%@ Register assembly="Telerik.Web.UI" namespace="Telerik.Web.UI" tagprefix="telerik" %>
+
+<script type="text/javascript">
+    function OnClientSelectedIndexChangedEventHandler(sender, args) {
+        //sender represents the combobox that has fired the event
+        //the code below obtains the item that has been changed
+        var item = args.get_item();
+        if (sender.get_value() != 0)
+            $("#imgHero").html(String.format("<img src='data/images/heroes/{0}.jpg' class='hero_image' title='{1}' />", sender.get_value(), sender.get_text()));
+        else
+            $("#imgHero").html("");
+    }
+</script>
+
 <h3>
     Give commands</h3>
 <p>
@@ -89,22 +102,15 @@
                     </tbody>
                 </table>
             </td>
-            <td valign="top" width="150">
-                <table class="vis" width="100%">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <img alt="Hero" src="images/units/hero.png" style="width: 33px; height: 33px" />
-                                <telerik:RadComboBox ID="cbHeroes" Runat="server">
-                                <Items>
-                                <telerik:RadComboBoxItem Value="0" Text="Chọn hero" />
-                                </Items>
-                                </telerik:RadComboBox>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </td>
+            <!--<td valign="top" width="150" align="center">
+                <div id="imgHero"></div>
+                <telerik:RadComboBox ID="cbHeroes" runat="server" OnClientSelectedIndexChanged = "OnClientSelectedIndexChangedEventHandler">
+                    <Items>
+                        <telerik:RadComboBoxItem Value="0" Text="Chọn hero" />
+                        <telerik:RadComboBoxItem Value="1" Text="Hero1" />
+                    </Items>
+                </telerik:RadComboBox>
+            </td>-->
         </tr>
     </tbody>
 </table>
