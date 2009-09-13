@@ -9,6 +9,8 @@ using NHibernate;
 using Telerik.Web.UI;
 using System.Xml.Linq;
 using System.Xml;
+using System.Xml.Schema;
+using System.Data;
 
 public partial class administrator_numeric_settings : System.Web.UI.Page
 {
@@ -105,36 +107,98 @@ public partial class administrator_numeric_settings : System.Web.UI.Page
 
 
         IList<NumericConfiguration> numericConfigurations = ServicesList.ConfigurationService.GetNumericSettings(this.CurrentPlayer, out count, session);
-        XDocument doc = new XDocument(new XDeclaration("1.0", "utf-16", "true"),
-            new XElement("numerics",
-                        from c in numericConfigurations
-                        orderby c.Key //descending 
-                        select new XElement("numeric",
-                            new XElement("key", c.Key),
-                            new XElement("value", c.Value)
-                                            )
-                                    ));
+
+        XmlDocument document = new XmlDocument();
         
-        System.Text.UnicodeEncoding  encoding = new System.Text.UnicodeEncoding();
-        Byte[] bytes = encoding.GetBytes(doc.ToString());
-        Response.BinaryWrite(bytes);
+        document.AppendChild(document.CreateXmlDeclaration("1.0", "utf-8", "yes"));
+        XmlNode numerics = document.AppendChild(document.CreateNode(XmlNodeType.Element, "numerics", null));
+
+        foreach (NumericConfiguration config in Configuration.TribalWarsConfiguration.NumericConfiguration.Values)
+        {
+            XmlNode parentNode = numerics.AppendChild(document.CreateNode(XmlNodeType.Element, "numeric", null));
+            XmlNode keyNode = parentNode.AppendChild(document.CreateNode(XmlNodeType.Element, "key", null));
+            keyNode.AppendChild(document.CreateNode(XmlNodeType.Text, "key", null)).Value = config.Key;
+            XmlNode valueNode = parentNode.AppendChild(document.CreateNode(XmlNodeType.Element, "value", null));
+            valueNode.AppendChild(document.CreateNode(XmlNodeType.Text, "value", null)).Value = config.Value.ToString();
+        }
+
+        //document.createend
+
+        //XDocument doc = new XDocument(new XDeclaration("1.0", "utf-16", "true"),
+        //    new XElement("numerics",
+        //                from c in numericConfigurations
+        //                orderby c.Key //descending 
+        //                select new XElement("numeric",
+        //                    new XElement("key", c.Key),
+        //                    new XElement("value", c.Value)
+        //                                    )
+        //                            ));
+        
+        //System.Text.UnicodeEncoding  encoding = new System.Text.UnicodeEncoding();
+        //Byte[] bytes = encoding.GetBytes(doc.ToString());
+        //XmlWriter writer = XmlWriter.Create(Response.s
+        //document.for
+
+        System.IO.TextWriter sw = new System.IO.StringWriter();
+        XmlTextWriter xtw = new XmlTextWriter(sw);
+        xtw.Formatting = Formatting.Indented;
+        document.WriteTo(xtw);
+
+        Response.Write(sw.ToString());
         Response.End();
+    }
+
+    static void ValidationCallback(object sender, ValidationEventArgs args)
+    {
+        if (args.Severity == XmlSeverityType.Warning)
+            Console.Write("WARNING: ");
+        else if (args.Severity == XmlSeverityType.Error)
+            Console.Write("ERROR: ");
+
+        Console.WriteLine(args.Message);
     }
 
     protected void bttnImport_Click(object sender, EventArgs e)
     {
-        XmlReader reader = XmlReader.Create(this.FileUpload1.PostedFile.InputStream);
-        XDocument xmlDoc = XDocument.Load(reader);
+        XmlReader reader = XmlReader.Create(this.FileUpload1.PostedFile.InputStream, new XmlReaderSettings());
+        //reader.Settings = new XmlReaderSettings();
+        
+        //XDocument xmlDoc = XDocument.Load(reader);
         ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
 
-        var numerics = from n in xmlDoc.Elements("numerics")
-                    select n;
 
-        foreach (var numeric in numerics)
+        XmlDocument document = new XmlDocument();
+        //document.Load(reader);
+
+        
+
+        DataSet vdDataSet = new DataSet();
+        //string database = "vd.xml";
+        //Application.StartupPath
+        //string schema = Application.StartupPath + "\\vd.xsd";
+
+        XmlTextReader schemaXML = new XmlTextReader(Server.MapPath("~/administrator/numeric.xsd"));
+
+        System.Xml.Schema.XmlSchema schema = System.Xml.Schema.XmlSchema.Read(schemaXML,ValidationCallback);
+        vdDataSet.ReadXmlSchema(schemaXML);
+        vdDataSet.ReadXml(reader);
+        Response.Write(vdDataSet.Tables["numeric"].Rows.Count);
+        foreach (DataRow dr in vdDataSet.Tables["numeric"].Rows)
         {
             double value = 0;
-            double.TryParse(numeric.Element("value").Value, out value);
-            ServicesList.ConfigurationService.ChangeNumericSetting(this.CurrentPlayer, numeric.Element("key").Value, value, session);
+            double.TryParse(dr["value"].ToString(), out value);
+            //Console.WriteLine(dr["MS"].ToString() + "\t" + dr["HT"].ToString() + "\t" + dr["DIEM"].ToString());
+            ServicesList.ConfigurationService.ChangeNumericSetting(this.CurrentPlayer, (string)dr["key"], value, session);
         }
+
+        //var numerics = from n in xmlDoc.Elements("numerics")
+        //            select n;
+
+        //foreach (var numeric in numerics)
+        //{
+        //    double value = 0;
+        //    double.TryParse(numeric.Element("value").Value, out value);
+        //    ServicesList.ConfigurationService.ChangeNumericSetting(this.CurrentPlayer, numeric.Element("key").Value, value, session);
+        //}
     }
 }

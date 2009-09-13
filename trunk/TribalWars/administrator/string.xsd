@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="numeric"
+    targetNamespace="http://tempuri.org/numeric.xsd"
+    elementFormDefault="qualified"
+    xmlns="http://tempuri.org/numeric.xsd"
+    xmlns:mstns="http://tempuri.org/numeric.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+
+  <xs:element name="texts">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="text" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="text">
+    <xs:complexType>
+      <xs:attribute name="key" type="xs:string" use="required"/>
+      <xs:attribute name="value" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>
