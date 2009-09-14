@@ -10,6 +10,8 @@ using System.Web.UI.WebControls.WebParts;
 using System.IO;
 using System.Drawing;
 using beans;
+using System.Xml.Linq;
+using System.Linq;
 
 /// <summary>
 /// Summary description for Functions
@@ -126,6 +128,27 @@ public class Functions
         }
 
     }
+
+    public static String SanitizeText(string text)
+  {
+    try
+    {
+        XElement doc = XElement.Parse("<span>" + text + "</span>");
+
+        doc.Descendants().Where(elem => elem.Name == "script" || elem.Name=="object")
+           .ToList().ForEach(elem =>
+           {
+               elem.AddAfterSelf(new XText((String)elem));
+              elem.Remove();
+          });
+       String retvalue = doc.ToString();
+       return retvalue;
+   }
+   catch (System.Xml.XmlException)
+   {
+       return Microsoft.Security.Application.AntiXss.HtmlEncode(text);
+   }
+ }
 
 
     //protected static void SendMail(string sHost, int nPort, string sUserName, string sPassword, string sFromName, string sFromEmail,

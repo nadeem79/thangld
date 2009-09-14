@@ -192,11 +192,12 @@ namespace beans
         public static void Start(ISession session)
         {
             Configuration.TribalWarsConfiguration.LoadData(session);
-
+            
             CalculateMerchant();
             CalculateResearchPrice();
             CalculateTroopPrice();
             CalculateResearchValue();
+            ServicesList.LogService.Log("", "Hệ thống start");
         }
 
         public static void Stop()

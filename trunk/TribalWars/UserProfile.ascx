@@ -82,11 +82,15 @@
             </th>
         </tr>
         <tr>
+        
             <td colspan="2">
-                <telerik:RadEditor ID="txtPersonalText" runat="server" Skin="Office2007" BackColor="White">
-                    <Content>
-</Content>
-                </telerik:RadEditor> 
+                <script type="text/javascript">
+                    window.onload = function() {
+                    CKEDITOR.replace('<% = this.txtPersonalText.UniqueID %>');
+                    };
+                </script>
+                <asp:TextBox ID="txtPersonalText" runat="server" TextMode="MultiLine">
+                </asp:TextBox> 
                 
             </td>
         </tr>

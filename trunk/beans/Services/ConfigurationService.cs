@@ -106,6 +106,8 @@ namespace beans.Services
                 config1.Value = value;
                 config.Value = value;
                 session.Update(config1);
+
+                ServicesList.LogService.Log(staff.Username, string.Format("Thay đổi giá trị text setting {0}", config.Key));
             }
             else
             {
@@ -114,6 +116,8 @@ namespace beans.Services
                 config.Value = value;
                 Configuration.TribalWarsConfiguration.StringConfiguration.Add(key, config);
                 session.Save(config);
+
+                ServicesList.LogService.Log(staff.Username, string.Format("Tạo mới text setting {0}", config.Key));
             }
         }
 
@@ -127,12 +131,13 @@ namespace beans.Services
                 if (config.Value == value)
                     return;
 
+                ServicesList.LogService.Log(staff.Username, string.Format("Thay đổi numeric setting '{0}' từ {1} sang {2}", config.Key, config.Value, value));
+
                 config.Value = value;
 
                 NumericConfiguration config1 = session.Get<NumericConfiguration>(key);
                 config1.Value = value;
                 session.Update(config1);
-                session.Flush();
             }
             else
             {
@@ -141,7 +146,8 @@ namespace beans.Services
                 config.Value = value;
                 Configuration.TribalWarsConfiguration.NumericConfiguration.Add(key, config);
                 session.Save(config);
-                session.Flush();
+
+                ServicesList.LogService.Log(staff.Username, string.Format("Tạo mới numeric setting '{0}' giá trị {1}", config.Key, config.Value));
             }
         }
 
@@ -154,6 +160,8 @@ namespace beans.Services
             NumericConfiguration config = Configuration.TribalWarsConfiguration.NumericConfiguration[key];
             Configuration.TribalWarsConfiguration.NumericConfiguration.Remove(key);
             session.Delete(config);
+
+            ServicesList.LogService.Log(staff.Username, string.Format("Xoá numeric setting '{0}'", config.Key));
         }
 
         public void DeleteTextSetting(Player staff, string key, ISession session)
@@ -165,6 +173,8 @@ namespace beans.Services
             StringConfiguration config = session.Load<StringConfiguration>(key);
             Configuration.TribalWarsConfiguration.StringConfiguration.Remove(key);
             session.Delete(config);
+
+            ServicesList.LogService.Log(staff.Username, string.Format("Xoá text setting '{0}'", config.Key));
         }
 
         public void RestartServer(Player staff, ISession session)
@@ -172,6 +182,8 @@ namespace beans.Services
             ServicesList.SecurityService.CheckPermission(staff, JobEnum.RestartServer.ToString(), "");
 
             TribalWarsEngine.Start(session);
+
+            ServicesList.LogService.Log(staff.Username, string.Format("Restart server"));
         }
     }
 }

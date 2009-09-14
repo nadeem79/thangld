@@ -123,24 +123,28 @@ public partial class administrator_text_settings : System.Web.UI.Page
         Response.AddHeader("Content-disposition", "attachment; filename=text_settings.xml");
         Response.ContentType = "text/xml";
         int count = 0;
+        //IList<StringConfiguration> textConfigurations = ServicesList.ConfigurationService.GetTextSettings(this.CurrentPlayer, out count, session);
 
+        XmlDocument document = new XmlDocument();
 
-        IList<StringConfiguration> textConfigurations = ServicesList.ConfigurationService.GetTextSettings(this.CurrentPlayer, out count, session);
-        XDocument doc = new XDocument();
-        doc.Add(new XDeclaration("1.0", "utf-16", "true"));
-        doc.Add(new XElement("texts",
-                        from c in textConfigurations
-                        orderby c.Key //descending 
-                        select new XElement("text",
-                            new XElement("key", c.Key),
-                            new XElement("value", new XCData(c.Value))
-                                            )
-                                    ));
-        //XmlWriter
+        document.AppendChild(document.CreateXmlDeclaration("1.0", "utf-8", "yes"));
+        XmlNode numerics = document.AppendChild(document.CreateNode(XmlNodeType.Element, "texts", null));
 
-        System.Text.UnicodeEncoding encoding = new System.Text.UnicodeEncoding();
-        Byte[] bytes = encoding.GetBytes(doc.ToString());
-        Response.BinaryWrite(bytes);
+        foreach (StringConfiguration config in Configuration.TribalWarsConfiguration.StringConfiguration.Values)
+        {
+            XmlNode parentNode = numerics.AppendChild(document.CreateNode(XmlNodeType.Element, "text", null));
+            XmlNode keyNode = parentNode.AppendChild(document.CreateNode(XmlNodeType.Element, "key", null));
+            keyNode.AppendChild(document.CreateNode(XmlNodeType.Text, "key", null)).Value = config.Key;
+            XmlNode valueNode = parentNode.AppendChild(document.CreateNode(XmlNodeType.Element, "value", null));
+            valueNode.AppendChild(document.CreateNode(XmlNodeType.CDATA, "value", null)).Value = config.Value.ToString();
+        }
+
+        System.IO.TextWriter sw = new System.IO.StringWriter();
+        XmlTextWriter xtw = new XmlTextWriter(sw);
+        xtw.Formatting = Formatting.Indented;
+        document.WriteTo(xtw);
+
+        Response.Write(sw.ToString());
         Response.End();
     }
     protected void bttnImport_Click(object sender, EventArgs e)

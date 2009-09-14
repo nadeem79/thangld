@@ -19,7 +19,7 @@
                 <div style="float: left;">
                     <asp:TextBox Width="800px" ID="txtKey" runat="server"></asp:TextBox>
                     <br />
-                    <asp:RequiredFieldValidator SetFocusOnError="true" ID="RequiredFieldValidator1" ControlToValidate="txtKey"
+                    <asp:RequiredFieldValidator SetFocusOnError="true" ID="RequiredFieldValidator1" ControlToValidate="txtKey" ValidationGroup="Form"
                         runat="server" ErrorMessage="Nhập key"></asp:RequiredFieldValidator></div>
                 <div style="clear: both">
                 </div>
@@ -33,16 +33,16 @@
                     </telerik:RadEditor>
                     <br />
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" ControlToValidate="txtValue"
-                        runat="server" SetFocusOnError="true" ErrorMessage="Nhập value"></asp:RequiredFieldValidator>
+                        runat="server" SetFocusOnError="true" ErrorMessage="Nhập value" ValidationGroup="Form"></asp:RequiredFieldValidator>
                 </div>
                 <div style="clear: both">
                 </div>
             </div>
             <center>
-                <asp:Button ID="bttnChangeText" runat="server" Text="Thay đổi" OnClick="bttnChangeText_Click" /></center>
+                <asp:Button ID="bttnChangeText" runat="server" Text="Thay đổi" OnClick="bttnChangeText_Click" ValidationGroup="Form" /></center>
         </ContentTemplate>
         <Triggers>
-            <asp:AsyncPostBackTrigger ControlID="bttnChangeText" EventName="Click" />
+            <asp:AsyncPostBackTrigger ControlID="bttnChangeText" EventName="Click"  />
         </Triggers>
     </asp:UpdatePanel>
     

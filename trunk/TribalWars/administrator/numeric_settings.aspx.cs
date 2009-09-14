@@ -104,9 +104,7 @@ public partial class administrator_numeric_settings : System.Web.UI.Page
         Response.AddHeader("Content-disposition", "attachment; filename=numeric_settings.xml");
         Response.ContentType = "text/xml";
         int count = 0;
-
-
-        IList<NumericConfiguration> numericConfigurations = ServicesList.ConfigurationService.GetNumericSettings(this.CurrentPlayer, out count, session);
+        //IList<NumericConfiguration> numericConfigurations = ServicesList.ConfigurationService.GetNumericSettings(this.CurrentPlayer, out count, session);
 
         XmlDocument document = new XmlDocument();
         
@@ -122,23 +120,6 @@ public partial class administrator_numeric_settings : System.Web.UI.Page
             valueNode.AppendChild(document.CreateNode(XmlNodeType.Text, "value", null)).Value = config.Value.ToString();
         }
 
-        //document.createend
-
-        //XDocument doc = new XDocument(new XDeclaration("1.0", "utf-16", "true"),
-        //    new XElement("numerics",
-        //                from c in numericConfigurations
-        //                orderby c.Key //descending 
-        //                select new XElement("numeric",
-        //                    new XElement("key", c.Key),
-        //                    new XElement("value", c.Value)
-        //                                    )
-        //                            ));
-        
-        //System.Text.UnicodeEncoding  encoding = new System.Text.UnicodeEncoding();
-        //Byte[] bytes = encoding.GetBytes(doc.ToString());
-        //XmlWriter writer = XmlWriter.Create(Response.s
-        //document.for
-
         System.IO.TextWriter sw = new System.IO.StringWriter();
         XmlTextWriter xtw = new XmlTextWriter(sw);
         xtw.Formatting = Formatting.Indented;
@@ -146,6 +127,7 @@ public partial class administrator_numeric_settings : System.Web.UI.Page
 
         Response.Write(sw.ToString());
         Response.End();
+        
     }
 
     static void ValidationCallback(object sender, ValidationEventArgs args)

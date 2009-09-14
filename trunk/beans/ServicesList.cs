@@ -11,6 +11,7 @@ namespace beans
         protected static SecurityService securityService = new SecurityService();
         protected static ConfigurationService configurationService = new ConfigurationService();
         protected static StaffManagementService staffManagementService = new StaffManagementService();
+        protected static LogService logService = new LogService();
 
         public static SecurityService SecurityService
         {
@@ -26,6 +27,10 @@ namespace beans
             {
                 return ServicesList.staffManagementService;
             }
+        }
+        public static LogService LogService
+        {
+            get { return logService; }
         }
     }
 }
