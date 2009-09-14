@@ -12,7 +12,9 @@
         beans.TribalWarsEngine.Start(session);
         session.Close();
 
-        
+        beans.ISystemLogger fileLog = new FileLog(Server.MapPath("~/systemlog.txt"));
+
+        beans.ServicesList.LogService.SystemLoggers.Add(fileLog);
             
     }
     

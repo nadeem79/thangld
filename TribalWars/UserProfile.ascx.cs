@@ -22,8 +22,9 @@ public partial class UserProfile : System.Web.UI.UserControl
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        this.Page.Form.Attributes.Add("onsubmit", "tinyMCE.triggerSave();");
-        this.Page.Form.Enctype = "multipart/form-data";
+        //this.txtPersonalText.ContentFilters = Telerik.Web.UI.EditorFilters.MakeUrlsAbsolute | Telerik.Web.UI.EditorFilters.RemoveScripts;
+        //this.txtPersonalText.ImageManager.EnableImageEditor = false;
+        
 
         ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
         this.player = session.Load<Player>(Session["user"]);
@@ -33,7 +34,7 @@ public partial class UserProfile : System.Web.UI.UserControl
         {
             //this.txtBirthdate = this.player.Birthdate;
             this.txtAddress.Text = this.player.Address;
-            this.txtPersonalText.Content = this.player.Description;
+            this.txtPersonalText.Text = this.player.Description;
             if (this.player.Gender == Sex.Nam)
                 this.rdoMale.Checked = true;
             else
@@ -65,7 +66,7 @@ public partial class UserProfile : System.Web.UI.UserControl
         this.player.Yahoo = this.txtYahoo.Text;
         this.player.Skype = this.txtSkype.Text;
         this.player.Address = this.txtAddress.Text;
-        this.player.Description = this.txtPersonalText.Content;
+        this.player.Description = Functions.SanitizeText(this.txtPersonalText.Text);
         //if (this.txtBirthdate.IsEmpty)
             //this.player.Birthdate = DateTime.;
         //else

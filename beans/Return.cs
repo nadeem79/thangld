@@ -117,6 +117,14 @@ namespace beans
             this.ToVillage.VillageResourceData.Iron += this.Iron;
             if (this.Merchant > 0)
                 this.ToVillage.VillageBuildingData.Merchant += this.Merchant;
+            if (this.Hero != null)
+            {
+                this.Hero.InMovingCommand = null;
+                this.Hero.InVillage = this.ToVillage;
+                this.ToVillage.Heroes.Add(this.Hero);
+                session.Update(this.Hero);
+                this.Hero = null;
+            }
 
             this.ToVillage.MovingCommandsToMe.Remove(this);
             this.FromVillage.MovingCommandsFromMe.Remove(this);
