@@ -61,12 +61,12 @@ namespace beans.Services
 
             ServicesList.SecurityService.CheckPermission(staff, JobEnum.NumericSettings.ToString(), "");
 
-            var query = from numericConfiguration in Configuration.TribalWarsConfiguration.NumericConfiguration.Values
-                        orderby numericConfiguration.Key descending
-                        select numericConfiguration;
+            IEnumerable<NumericConfiguration> query = from numericConfiguration in Configuration.TribalWarsConfiguration.NumericConfiguration.Values
+                                                      orderby numericConfiguration.Key descending
+                                                      select numericConfiguration;
 
             if (key != string.Empty)
-                query = (IOrderedEnumerable<NumericConfiguration>)(query.Where<NumericConfiguration>(numericConfiguration => numericConfiguration.Key.Contains(key)));
+                query = query.Where<NumericConfiguration>(numericConfiguration => numericConfiguration.Key.Contains(key));
 
             if (pageSize == 0)
                 pageSize = (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Common.PageSize").Value;

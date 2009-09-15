@@ -288,5 +288,15 @@ namespace beans
             get;
             set;
         }
+        public virtual bool ShowTroop
+        {
+            get;
+            set;
+        }
+        public virtual bool ShowBuilding
+        {
+            get;
+            set;
+        }
     }
 }
