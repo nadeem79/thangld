@@ -76,10 +76,7 @@ function attackTimer()
             hour--;
             minute = 59;
         }
-        if (hour < 0) {
-            setTimeout("reload()", 2000);
-            return;
-        }
+        
         if (second == 0 && minute == 0 && hour == 0) {
             setTimeout("reload()", 2000);
             return;

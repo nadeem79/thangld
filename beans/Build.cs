@@ -241,7 +241,7 @@ namespace beans
         #region Static Methods
         public static BuildPrice GetPrice(BuildingType type, int level, int headquarter)
         {
-            if (headquarter <= 1)
+            if (headquarter < 1)
                 return Build.GetPrice(type);
 
             //int key = (int)type + (headquarter * 100) + level;

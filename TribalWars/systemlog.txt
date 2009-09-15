@@ -1,2 +1,13 @@
 ﻿Hệ thống start lúc 14:46 ngày 14/09/2009
 Hệ thống start lúc 14:47 ngày 14/09/2009
+15/09/2009 09:44 - thangldThay đổi numeric setting 'Unit.scout_damage' từ 0 sang 2
+15/09/2009 09:44 - thangldThay đổi numeric setting 'Unit.scout_cavalry_defense' từ 0 sang 1
+15/09/2009 10:39 - thangldThay đổi numeric setting 'Unit.ram_damage' từ 0 sang 2
+15/09/2009 10:39 - thangldThay đổi numeric setting 'Unit.ram_cavalry_defense' từ 0 sang 20
+15/09/2009 10:39 - thangldThay đổi numeric setting 'Unit.ram_infantry_defense' từ 0 sang 50
+15/09/2009 10:40 - thangldThay đổi numeric setting 'Unit.ram_infantry_defense' từ 50 sang 0
+15/09/2009 10:40 - thangldThay đổi numeric setting 'Unit.ram_infantry_defense' từ 0 sang 20
+15/09/2009 10:40 - thangldThay đổi numeric setting 'Unit.ram_cavalry_defense' từ 20 sang 50
+15/09/2009 10:40 - thangldThay đổi numeric setting 'Unit.catapult_damage' từ 0 sang 100
+15/09/2009 10:41 - thangldThay đổi numeric setting 'Unit.catapult_infantry_defense' từ 0 sang 100
+15/09/2009 10:41 - thangldThay đổi numeric setting 'Unit.catapult_cavalry_defense' từ 0 sang 50

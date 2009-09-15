@@ -22,9 +22,15 @@ public partial class test : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        ISession session = (ISession)Context.Items["NHibernateSession"];
-
-        this.Label1.Text = session.Get<Player>(1).Username;
+        int time = 0;
+        this.Label1.Text = "";
+        for (int i = 0; i < 20; i++)
+        {
+            Price p = Build.GetPrice(BuildingType.Wall, i, 1);
+            time += p.BuildTime;
+            this.Label1.Text += string.Format("{0}: {1} - {2}<br />", i, p.BuildTime, time);
+        }
+        //this.Label1.Text = time.ToString();
     }
 
     protected void bttnSend_Click(object sender, EventArgs e)
