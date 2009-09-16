@@ -40,5 +40,7 @@ public partial class AttackReport : System.Web.UI.UserControl
             this.pWood.Visible = (this.AttackReportEntity.Wood > 0);
             this.pIron.Visible = (this.AttackReportEntity.Iron > 0);
         }
+        if (this.AttackReportEntity.WallAfter == this.AttackReportEntity.WallBefore)
+            this.pWallDamaged.Visible = false;
     }
 }
