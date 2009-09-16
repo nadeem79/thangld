@@ -265,6 +265,9 @@ May mắn (phía tấn công):
     </tbody>
 </table>
 <br />
+<asp:Panel runat="server" ID="pWallDamaged">
+    Tường bị phá từ level <b><% = this.AttackReportEntity.WallBefore %></b> xuống level <b><% = this.AttackReportEntity.WallAfter %></b>
+</asp:Panel>
 <asp:Panel runat="server" ID="pPillaged" Visible="false">
     <h5>
         Cướp bóc:</h5>

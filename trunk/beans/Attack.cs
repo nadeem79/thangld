@@ -312,16 +312,17 @@ namespace beans
             Random r = new Random();
             luck = 0.3 * (2 * r.NextDouble() - 1);
             double infantryAttack = this.Spear * spearDamage + this.Sword * swordDamage + this.Axe * axeDamage + this.Noble * nobleDamage;
+            infantryAttack += infantryAttack * Research.AttackValuesDictionary[attackLevel];
             double cavalryAttack = this.LightCavalry * lightCavalryDamage + this.HeavyCavalry * heavyCavalryDamage;
+            cavalryAttack += cavalryAttack * Research.AttackValuesDictionary[attackLevel];
             double totalAttack = infantryAttack + cavalryAttack;
-            totalAttack += totalAttack * Research.AttackValuesDictionary[attackLevel];
             double scoutAttack = this.Scout * scoutDamage;
             scoutAttack += scoutAttack * Research.AttackValuesDictionary[attackLevel];
             double ramAttack = this.Ram * ramDamage;
             ramAttack += ramAttack * Research.AttackValuesDictionary[attackLevel];
 
-            double pInfantry = (double)infantryAttack / (double)totalAttack;
-            double pCavalry = (double)cavalryAttack / (double)totalAttack;
+            double pInfantry = (double)infantryAttack / (double)(totalAttack + 1);
+            double pCavalry = (double)cavalryAttack / (double)(totalAttack + 1);
             
 
             double infantryDefense = this.ToVillage.VillageTroopData.SpearInVillage * spearInfantryDefense + this.ToVillage.VillageTroopData.SwordInVillage * swordInfantryDefense + this.ToVillage.VillageTroopData.AxeInVillage * axeInfantryDefense + this.ToVillage.VillageTroopData.LightCavalryInVillage * lightCavalryInfantryDefense + this.ToVillage.VillageTroopData.HeavyCavalryInVillage * heavyCavalryInfantryDefense + this.ToVillage.VillageTroopData.NobleInVillage * nobleInfantryDefense;
@@ -330,10 +331,9 @@ namespace beans
             scoutDefense += scoutDefense * Research.DefenseValuesDictionary[defenseLevel];
             double wallDefense = 0;
             for (int i = 1; i <= this.ToVillage.VillageBuildingData.Wall; i++)
-            {
                 wallDefense += Build.GetPrice(BuildingType.Wall, i, 1).BuildTime;
-                wallDefense /= 100000;
-            }
+            wallDefense /= 50000;
+            
             wallDefense += wallDefense * Research.DefenseValuesDictionary[defenseLevel];
             double totalDefense = (long)(infantryDefense * pInfantry + cavalryDefense * pCavalry) + this.ToVillage.VillageBuildingData.BasicDefense + 1;
             totalDefense += totalDefense * this.ToVillage.VillageBuildingData.Fortified;
@@ -351,12 +351,12 @@ namespace beans
             if (totalAttack > totalDefense)
             {
                 totalAttack = ((totalAttack - totalDefense) / (totalAttack) + 1) * totalAttack;
-                ramDamage = ((totalAttack - totalDefense) / (totalAttack) + 1) * ramDamage;
+                ramAttack = ((totalAttack - totalDefense) / (totalAttack) + 1) * ramDamage;
             }
             else
             {
                 totalDefense = ((totalDefense - totalAttack) / (totalDefense) + 1) * totalDefense;
-                ramDamage = ((totalDefense - totalAttack) / (totalDefense) + 1) * ramDamage;
+                ramAttack = ((totalDefense - totalAttack) / (totalDefense) + 1) * ramDamage;
             }
             //totalAttack = (totalAttack / totalDefense) * totalAttack;
 
@@ -367,7 +367,7 @@ namespace beans
                 double hp = 0;
                 for (int i = 1; i <= this.ToVillage[BuildingType.Wall]; i++)
                 {
-                    hp += Build.GetPrice(BuildingType.Wall, i, 1).BuildTime;
+                    hp += Build.GetPrice(BuildingType.Wall, i, 1).BuildTime / 50000;
                     if (hp > damaged)
                     {
                         if (this.ToVillage.VillageBuildingData.Wall != (i - 1))
@@ -408,9 +408,9 @@ namespace beans
             defenseReport.SuccessAttack = successAttack;
 
             if (scoutAttack > scoutDefense)
-                scoutLostInAttackSide = (int)Math.Round(this.Scout * ((scoutAttack - scoutDefense) / scoutAttack));
+                scoutLostInAttackSide = this.Scout - (int)Math.Round(this.Scout * ((scoutAttack - scoutDefense) / scoutAttack));
             else if (scoutAttack < scoutDefense)
-                scoutLostInAttackSide = this.Scout - (int)Math.Round(this.Scout * ((scoutDefense - scoutAttack) / scoutDefense));
+                scoutLostInAttackSide =(int)Math.Round(this.Scout * ((scoutDefense - scoutAttack) / scoutDefense));
             else
                 scoutLostInAttackSide = (int)Math.Round(0.5 * this.Scout);
 
@@ -432,6 +432,7 @@ namespace beans
                 spearLostInDefenseSide = this.ToVillage.VillageTroopData.SpearInVillage;
                 swordLostInDefenseSide = this.ToVillage.VillageTroopData.SwordInVillage;
                 axeLostInDefenseSide = this.ToVillage.VillageTroopData.AxeInVillage;
+                scoutLostInDefenseSide = this.ToVillage.VillageTroopData.ScoutInVillage;
                 lightCavalryLostInDefenseSide = this.ToVillage.VillageTroopData.LightCavalryInVillage;
                 heavyCavalryLostInDefenseSide = this.ToVillage.VillageTroopData.HeavyCavalryInVillage;
                 ramLostInDefenseSide = this.ToVillage.VillageTroopData.RamInVillage;
@@ -575,7 +576,7 @@ namespace beans
                     this.ToVillage.VillageTroopData.SpearInVillage = this.Spear - spearLostInAttackSide;
                     this.ToVillage.VillageTroopData.SwordInVillage = this.Sword - swordLostInAttackSide;
                     this.ToVillage.VillageTroopData.AxeInVillage = this.Axe - axeLostInAttackSide;
-                    //this.ToVillage.VillageTroopData.ScoutInVillage = this.Scout - scoutLostInAttackSide;
+                    this.ToVillage.VillageTroopData.ScoutInVillage = this.Scout - scoutLostInAttackSide;
                     this.ToVillage.VillageTroopData.LightCavalryInVillage = this.LightCavalry - lightCavalryLostInAttackSide;
                     this.ToVillage.VillageTroopData.HeavyCavalryInVillage = this.HeavyCavalry - heavyCavalryLostInAttackSide;
                     this.ToVillage.VillageTroopData.RamInVillage = this.Ram - ramLostInAttackSide;
@@ -604,34 +605,46 @@ namespace beans
                     returnTroop.Ram = this.Ram - ramLostInAttackSide;
                     returnTroop.Catapult = this.Catapult - catapultLostInAttackSide;
                     returnTroop.Noble = this.Noble - nobleLostInAttackSide;
-                    returnTroop.StartingTime = this.LandingTime;
 
-                    returnTroop.LandingTime = this.LandingTime + (this.LandingTime - this.StartingTime);
 
-                    int intCanHaul = (int)(this.Spear * spearHaul + this.Sword * swordHaul + this.Axe * axeHaul + this.LightCavalry * lightCavalryHaul + this.HeavyCavalry * heavyCavalryHaul);
-                    int intTotalResource = this.ToVillage.VillageResourceData.Iron + this.ToVillage.VillageResourceData.Clay + this.ToVillage.VillageResourceData.Wood;
-
-                    if (intTotalResource <= intCanHaul)
+                    if (Utilities.IsGreaterThenZero(returnTroop.Spear, 
+                                                    returnTroop.Sword,
+                                                    returnTroop.Axe,
+                                                    returnTroop.Scout,
+                                                    returnTroop.LightCavalry,
+                                                    returnTroop.HeavyCavalry,
+                                                    returnTroop.Ram,
+                                                    returnTroop.Catapult,
+                                                    returnTroop.Noble))
                     {
-                        returnTroop.Clay = this.ToVillage.VillageResourceData.Clay;
-                        returnTroop.Wood = this.ToVillage.VillageResourceData.Wood;
-                        returnTroop.Iron = this.ToVillage.VillageResourceData.Iron;
+                        returnTroop.StartingTime = this.LandingTime;
+                        returnTroop.LandingTime = this.LandingTime + (this.LandingTime - this.StartingTime);
 
-                        this.ToVillage.VillageResourceData.Clay = this.ToVillage.VillageResourceData.Wood = this.ToVillage.VillageResourceData.Iron = 0;
-                    }
-                    else
-                    {
-                        returnTroop.Clay = (int)((double)this.ToVillage.VillageResourceData.Clay * (double)intCanHaul / (double)intTotalResource);
-                        returnTroop.Wood = (int)((double)this.ToVillage.VillageResourceData.Wood * (double)intCanHaul / (double)intTotalResource);
-                        returnTroop.Iron = (int)((double)this.ToVillage.VillageResourceData.Iron * (double)intCanHaul / (double)intTotalResource);
+                        int intCanHaul = (int)(this.Spear * spearHaul + this.Sword * swordHaul + this.Axe * axeHaul + this.LightCavalry * lightCavalryHaul + this.HeavyCavalry * heavyCavalryHaul);
+                        int intTotalResource = this.ToVillage.VillageResourceData.Iron + this.ToVillage.VillageResourceData.Clay + this.ToVillage.VillageResourceData.Wood;
 
-                        this.ToVillage.VillageResourceData.Clay -= returnTroop.Clay;
-                        this.ToVillage.VillageResourceData.Wood -= returnTroop.Wood;
-                        this.ToVillage.VillageResourceData.Iron -= returnTroop.Iron;
+                        if (intTotalResource <= intCanHaul)
+                        {
+                            returnTroop.Clay = this.ToVillage.VillageResourceData.Clay;
+                            returnTroop.Wood = this.ToVillage.VillageResourceData.Wood;
+                            returnTroop.Iron = this.ToVillage.VillageResourceData.Iron;
+
+                            this.ToVillage.VillageResourceData.Clay = this.ToVillage.VillageResourceData.Wood = this.ToVillage.VillageResourceData.Iron = 0;
+                        }
+                        else
+                        {
+                            returnTroop.Clay = (int)((double)this.ToVillage.VillageResourceData.Clay * (double)intCanHaul / (double)intTotalResource);
+                            returnTroop.Wood = (int)((double)this.ToVillage.VillageResourceData.Wood * (double)intCanHaul / (double)intTotalResource);
+                            returnTroop.Iron = (int)((double)this.ToVillage.VillageResourceData.Iron * (double)intCanHaul / (double)intTotalResource);
+
+                            this.ToVillage.VillageResourceData.Clay -= returnTroop.Clay;
+                            this.ToVillage.VillageResourceData.Wood -= returnTroop.Wood;
+                            this.ToVillage.VillageResourceData.Iron -= returnTroop.Iron;
+                        }
+                        this.ToVillage.MovingCommandsFromMe.Add(returnTroop);
+                        this.FromVillage.MovingCommandsToMe.Add(returnTroop);
+                        session.Save(returnTroop);
                     }
-                    this.ToVillage.MovingCommandsFromMe.Add(returnTroop);
-                    this.FromVillage.MovingCommandsToMe.Add(returnTroop);
-                    session.Save(returnTroop);
 
                     attackReport.Wood = returnTroop.Wood;
                     attackReport.Clay = returnTroop.Clay;
@@ -649,7 +662,7 @@ namespace beans
                 #region Quân tấn công thua
                 if (totalAttack == 0)
                     totalAttack = 1;
-                ratio = 1 - ((double)totalAttack / (double)totalDefense);
+                ratio = (double)totalAttack / (double)totalDefense;
 
                 spearLostInAttackSide = this.Spear;
                 swordLostInAttackSide = this.Sword;
@@ -661,15 +674,15 @@ namespace beans
                 catapultLostInAttackSide = this.Catapult;
                 nobleLostInAttackSide = this.Noble;
 
-                spearLostInDefenseSide = (int)(this.FromVillage.VillageTroopData.SpearInVillage * ratio);
-                swordLostInDefenseSide = (int)(this.FromVillage.VillageTroopData.SwordInVillage * ratio);
-                axeLostInDefenseSide = (int)(this.FromVillage.VillageTroopData.AxeInVillage * ratio);
-                scoutLostInDefenseSide = (int)(this.FromVillage.VillageTroopData.ScoutInVillage * ratio);
-                lightCavalryLostInDefenseSide = (int)(this.FromVillage.VillageTroopData.LightCavalryInVillage * ratio);
-                heavyCavalryLostInDefenseSide = (int)(this.FromVillage.VillageTroopData.HeavyCavalryInVillage * ratio);
-                ramLostInDefenseSide = (int)(this.FromVillage.VillageTroopData.RamInVillage * ratio);
-                catapultLostInDefenseSide = (int)(this.FromVillage.VillageTroopData.CatapultInVillage * ratio);
-                nobleLostInDefenseSide = (int)(this.FromVillage.VillageTroopData.NobleInVillage * ratio);
+                spearLostInDefenseSide = (int)(this.ToVillage.VillageTroopData.SpearInVillage * ratio);
+                swordLostInDefenseSide = (int)(this.ToVillage.VillageTroopData.SwordInVillage * ratio);
+                axeLostInDefenseSide = (int)(this.ToVillage.VillageTroopData.AxeInVillage * ratio);
+                scoutLostInDefenseSide = (int)(this.ToVillage.VillageTroopData.ScoutInVillage * ratio);
+                lightCavalryLostInDefenseSide = (int)(this.ToVillage.VillageTroopData.LightCavalryInVillage * ratio);
+                heavyCavalryLostInDefenseSide = (int)(this.ToVillage.VillageTroopData.HeavyCavalryInVillage * ratio);
+                ramLostInDefenseSide = (int)(this.ToVillage.VillageTroopData.RamInVillage * ratio);
+                catapultLostInDefenseSide = (int)(this.ToVillage.VillageTroopData.CatapultInVillage * ratio);
+                nobleLostInDefenseSide = (int)(this.ToVillage.VillageTroopData.NobleInVillage * ratio);
 
                 this.FromVillage.VillageTroopData.SpearOfVillage -= this.Spear;
                 this.FromVillage.VillageTroopData.SwordOfVillage -= this.Sword;
@@ -691,15 +704,15 @@ namespace beans
                 this.ToVillage.VillageTroopData.CatapultInVillage -= catapultLostInDefenseSide;
                 this.ToVillage.VillageTroopData.NobleInVillage -= nobleLostInDefenseSide;
 
-                int spearOfVillageLost = (int)Math.Round(this.ToVillage.VillageTroopData.Spear * (1 - ratio));
-                int swordOfVillageLost = (int)Math.Round(this.ToVillage.VillageTroopData.Sword * (1 - ratio));
-                int axeOfVillageLost = (int)Math.Round(this.ToVillage.VillageTroopData.Axe * (1 - ratio));
-                int scoutOfVillageLost = (int)Math.Round(this.ToVillage.VillageTroopData.Scout * (1 - ratio));
-                int lightCavalryOfVillageLost = (int)Math.Round(this.ToVillage.VillageTroopData.LightCavalry * (1 - ratio));
-                int heavyCavalryOfVillageLost = (int)Math.Round(this.ToVillage.VillageTroopData.HeavyCavalry * (1 - ratio));
-                int ramOfVillageLost = (int)Math.Round(this.ToVillage.VillageTroopData.Ram * (1 - ratio));
-                int catapultOfVillageLost = (int)Math.Round(this.ToVillage.VillageTroopData.Catapult * (1 - ratio));
-                int nobleOfVillageLost = (int)Math.Round(this.ToVillage.VillageTroopData.Noble * (1 - ratio));
+                int spearOfVillageLost = (int)Math.Round(this.ToVillage.VillageTroopData.Spear * ratio);
+                int swordOfVillageLost = (int)Math.Round(this.ToVillage.VillageTroopData.Sword * ratio);
+                int axeOfVillageLost = (int)Math.Round(this.ToVillage.VillageTroopData.Axe * ratio);
+                int scoutOfVillageLost = (int)Math.Round(this.ToVillage.VillageTroopData.Scout * ratio);
+                int lightCavalryOfVillageLost = (int)Math.Round(this.ToVillage.VillageTroopData.LightCavalry * ratio);
+                int heavyCavalryOfVillageLost = (int)Math.Round(this.ToVillage.VillageTroopData.HeavyCavalry * ratio);
+                int ramOfVillageLost = (int)Math.Round(this.ToVillage.VillageTroopData.Ram * ratio);
+                int catapultOfVillageLost = (int)Math.Round(this.ToVillage.VillageTroopData.Catapult * ratio);
+                int nobleOfVillageLost = (int)Math.Round(this.ToVillage.VillageTroopData.Noble * ratio);
 
                 this.ToVillage.VillageTroopData.Spear -= spearOfVillageLost;
                 this.ToVillage.VillageTroopData.Sword -= swordOfVillageLost;
@@ -835,7 +848,7 @@ namespace beans
             attackReport.SpearAttackDead = spearLostInAttackSide;
             attackReport.SwordAttackDead = swordLostInAttackSide;
             attackReport.AxeAttackDead = axeLostInAttackSide;
-            //attackReport.ScoutAttackDead = scoutLostInAttackSide;
+            attackReport.ScoutAttackDead = scoutLostInAttackSide;
             attackReport.LightCavalryAttackDead = lightCavalryLostInAttackSide;
             attackReport.HeavyCavalryAttackDead = heavyCavalryLostInAttackSide;
             attackReport.RamAttackDead = ramLostInAttackSide;
@@ -854,7 +867,7 @@ namespace beans
             defenseReport.SpearAttackDead = spearLostInAttackSide;
             defenseReport.SwordAttackDead = swordLostInAttackSide;
             defenseReport.AxeAttackDead = axeLostInAttackSide;
-            //defenseReport.ScoutAttackDead = scoutLostInAttackSide;
+            defenseReport.ScoutAttackDead = scoutLostInAttackSide;
             defenseReport.LightCavalryAttackDead = lightCavalryLostInAttackSide;
             defenseReport.HeavyCavalryAttackDead = heavyCavalryLostInAttackSide;
             defenseReport.RamAttackDead = ramLostInAttackSide;
