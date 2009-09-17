@@ -5,8 +5,67 @@ using System.Text;
 
 namespace beans
 {
-    public class Hero:IdentityObject
+    public abstract class Hero:IdentityObject
     {
+
+        protected static Dictionary<int, double> heroLevel = new Dictionary<int, double>();
+
+        internal static Dictionary<int, double> HeroLevel
+        {
+            get { return heroLevel; }
+        }
+
+        protected void CalculateHeroAtribute()
+        {
+            Random r = new Random();
+            switch (this.Type)
+            {
+                case HeroType.Intelligent:
+                    this.Intelligent += 4 + r.Next(1);
+                    this.Attack += 1 + r.Next(1);
+                    this.Defense += 1 + r.Next(1);
+                    this.Luck += 1 + r.Next(1);
+                    this.Speed += 1 + r.Next(1);
+                    break;
+                case HeroType.Attack:
+                    this.Attack += 4 + r.Next(1);
+                    this.Intelligent += 1 + r.Next(1);
+                    this.Defense += 1 + r.Next(1);
+                    this.Luck += 1 + r.Next(1);
+                    this.Speed += 1 + r.Next(1);
+                    break;
+                case HeroType.Defense:
+                    this.Defense += 4 + r.Next(1);
+                    this.Attack += 1 + r.Next(1);
+                    this.Intelligent += 1 + r.Next(1);
+                    this.Luck += 1 + r.Next(1);
+                    this.Speed += 1 + r.Next(1);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public HeroType Type
+        {
+            get;
+            set;
+        }
+
+        public void LevelUp(double experience)
+        {
+            double nextExperience = HeroLevel[this.Level + 1];
+
+            if (experience > nextExperience)
+            {
+                this.Level++;
+                this.CalculateHeroAtribute();
+                this.LevelUp(experience);
+            }
+
+            this.Experience = experience;
+        }
+
         public virtual string Name
         {
             get;
@@ -33,6 +92,11 @@ namespace beans
             set;
         }
         public virtual int Speed
+        {
+            get;
+            set;
+        }
+        public virtual int Intelligent
         {
             get;
             set;

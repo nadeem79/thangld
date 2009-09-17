@@ -59,6 +59,23 @@ public partial class TroopCommand : System.Web.UI.UserControl
             this.incomingRepeater.DataBind();
         }
 
+        if (IsPostBack)
+            return;
+
+        this.cbBuildings.Items.Add(new ListItem(Configuration.TribalWarsConfiguration.GetStringConfigurationItem("Building.capital_headquarter").Value, ((int)(BuildingType.Headquarter)).ToString()));
+        this.cbBuildings.Items.Add(new ListItem(Configuration.TribalWarsConfiguration.GetStringConfigurationItem("Building.capital_barrack").Value, ((int)(BuildingType.Barracks)).ToString()));
+        this.cbBuildings.Items.Add(new ListItem(Configuration.TribalWarsConfiguration.GetStringConfigurationItem("Building.capital_stable").Value, ((int)(BuildingType.Stable)).ToString()));
+        this.cbBuildings.Items.Add(new ListItem(Configuration.TribalWarsConfiguration.GetStringConfigurationItem("Building.capital_workshop").Value, ((int)(BuildingType.Workshop)).ToString()));
+        this.cbBuildings.Items.Add(new ListItem(Configuration.TribalWarsConfiguration.GetStringConfigurationItem("Building.capital_smithy").Value, ((int)(BuildingType.Smithy)).ToString()));
+        this.cbBuildings.Items.Add(new ListItem(Configuration.TribalWarsConfiguration.GetStringConfigurationItem("Building.capital_rally").Value, ((int)(BuildingType.Rally)).ToString()));
+        this.cbBuildings.Items.Add(new ListItem(Configuration.TribalWarsConfiguration.GetStringConfigurationItem("Building.capital_market").Value, ((int)(BuildingType.Market)).ToString()));
+        this.cbBuildings.Items.Add(new ListItem(Configuration.TribalWarsConfiguration.GetStringConfigurationItem("Building.capital_timber_camp").Value, ((int)(BuildingType.TimberCamp)).ToString()));
+        this.cbBuildings.Items.Add(new ListItem(Configuration.TribalWarsConfiguration.GetStringConfigurationItem("Building.capital_clay_pit").Value, ((int)(BuildingType.ClayPit)).ToString()));
+        this.cbBuildings.Items.Add(new ListItem(Configuration.TribalWarsConfiguration.GetStringConfigurationItem("Building.capital_iron_mine").Value, ((int)(BuildingType.IronMine)).ToString()));
+        this.cbBuildings.Items.Add(new ListItem(Configuration.TribalWarsConfiguration.GetStringConfigurationItem("Building.capital_farm").Value, ((int)(BuildingType.Farm)).ToString()));
+        this.cbBuildings.Items.Add(new ListItem(Configuration.TribalWarsConfiguration.GetStringConfigurationItem("Building.capital_warehouse").Value, ((int)(BuildingType.Warehouse)).ToString()));
+        this.cbBuildings.Items.Add(new ListItem(Configuration.TribalWarsConfiguration.GetStringConfigurationItem("Building.capital_wall").Value, ((int)(BuildingType.Wall)).ToString()));
+
         int target;
 
         if (object.Equals(Request["target"], null) || !int.TryParse(Request["target"], out target))
@@ -82,6 +99,7 @@ public partial class TroopCommand : System.Web.UI.UserControl
 
         int spear, sword, axe, scout, light, heavy, ram, catapult, x, y, i;
         ISession session = (ISession)Context.Items["NHibernateSession"];
+        int building;
         try
         {
             spear = (int.TryParse(this.spear.Text, out i)) ? i : 0;
@@ -94,8 +112,9 @@ public partial class TroopCommand : System.Web.UI.UserControl
             catapult = (int.TryParse(this.catapult.Text, out i)) ? i : 0;
             x = (int.TryParse(this.x.Text, out i)) ? i : 0;
             y = (int.TryParse(this.y.Text, out i)) ? i : 0;
+            int.TryParse(this.cbBuildings.SelectedValue, out building);
 
-            Attack attack = this.Village.VillageTroopMethods.CreateAttack(session, x, y, spear, sword, axe, scout, light, heavy, ram, catapult, null, BuildingType.NoBuiding);
+            Attack attack = this.Village.VillageTroopMethods.CreateAttack(session, x, y, spear, sword, axe, scout, light, heavy, ram, catapult, null, (BuildingType)building);
 
             this.commandTypeSpan.Text = this.typeSpan.Text = "Tấn công";
 
@@ -116,6 +135,7 @@ public partial class TroopCommand : System.Web.UI.UserControl
             this.lightCavalrySpan.Text = (light > 0) ? light.ToString() : "<span class=\"hidden\">0</span>";
             this.heavyCavalrySpan.Text = (heavy > 0) ? heavy.ToString() : "<span class=\"hidden\">0</span>";
             //this.buttonNameSpan.Text = this.confirmAttackButton.UniqueID;
+            this.buildingSpan.Text = LanguageFunctions.BuildingToString(attack.Building);
             this.buttonNameSpan.Text = string.Format("<input type=\"button\"  value=\"Confirm\" onclick=\"__doPostBack('{0}', '')\" />", this.confirmAttackButton.UniqueID);
             ScriptManager.RegisterStartupScript(bttnAttack, bttnAttack.GetType(), "Confirm", "$.facebox($('#commandPanel').html());", true);
             //RadScriptManager.RegisterStartupScript(bttnAttack, bttnAttack.GetType(), "DisplayAttack", "window.radopen('dialogs/attack_confirm.aspx?id=" + this.village.ID.ToString() + "&command=" + this.attack.ID.ToString() + "', 'ConfirmAttack');", true);
@@ -177,6 +197,7 @@ public partial class TroopCommand : System.Web.UI.UserControl
     protected void confirmAttackButton_Click(object sender, EventArgs e)
     {
         int spear, sword, axe, scout, light, heavy, ram, catapult, x, y, i;
+        int building;
         ISession session = (ISession)Context.Items["NHibernateSession"];
         spear = (int.TryParse(this.spear.Text, out i)) ? i : 0;
         sword = (int.TryParse(this.sword.Text, out i)) ? i : 0;
@@ -188,10 +209,10 @@ public partial class TroopCommand : System.Web.UI.UserControl
         catapult = (int.TryParse(this.catapult.Text, out i)) ? i : 0;
         x = (int.TryParse(this.x.Text, out i)) ? i : 0;
         y = (int.TryParse(this.y.Text, out i)) ? i : 0;
-
+        int.TryParse(this.cbBuildings.SelectedValue, out building);
         try
         {
-            Attack attack = this.Village.VillageTroopMethods.CreateAttack(session, x, y, spear, sword, axe, scout, light, heavy, ram, catapult, null, BuildingType.NoBuiding);
+            Attack attack = this.Village.VillageTroopMethods.CreateAttack(session, x, y, spear, sword, axe, scout, light, heavy, ram, catapult, null, (BuildingType)building);
             attack.Save(session);
             Response.Redirect(string.Format("rally.aspx?id={0}", this.Village.ID), false);
         }

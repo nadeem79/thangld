@@ -268,6 +268,9 @@ May mắn (phía tấn công):
 <asp:Panel runat="server" ID="pWallDamaged">
     Tường bị phá từ level <b><% = this.AttackReportEntity.WallBefore %></b> xuống level <b><% = this.AttackReportEntity.WallAfter %></b>
 </asp:Panel>
+<asp:Panel runat="server" ID="pBuildingDamaged">
+    Công trình <b><% = LanguageFunctions.BuildingToString(this.AttackReportEntity.Building) %></b> bị phá từ level <b><% = this.AttackReportEntity.BuildingBefore %></b> xuống level <b><% = this.AttackReportEntity.BuildingAfter %></b>
+</asp:Panel>
 <asp:Panel runat="server" ID="pPillaged" Visible="false">
     <h5>
         Cướp bóc:</h5>

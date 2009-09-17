@@ -228,6 +228,8 @@ namespace beans
             double lightCavalryHaul = config.GetNumericConfigurationItem("Unit.light_cavalry_can_haul").Value;
             double heavyCavalryHaul = config.GetNumericConfigurationItem("Unit.heavy_cavalry_can_haul").Value;
 
+            double catapultBuldingDamage = config.GetNumericConfigurationItem("Unit.catapult_damage_building").Value;
+
             Return returnTroop = null;
             AttackReport attackReport;
             DefenseReport defenseReport;
@@ -332,7 +334,7 @@ namespace beans
             double wallDefense = 0;
             for (int i = 1; i <= this.ToVillage.VillageBuildingData.Wall; i++)
                 wallDefense += Build.GetPrice(BuildingType.Wall, i, 1).BuildTime;
-            wallDefense /= 50000;
+            wallDefense /= 75000;
             
             wallDefense += wallDefense * Research.DefenseValuesDictionary[defenseLevel];
             double totalDefense = (long)(infantryDefense * pInfantry + cavalryDefense * pCavalry) + this.ToVillage.VillageBuildingData.BasicDefense + 1;
@@ -351,12 +353,12 @@ namespace beans
             if (totalAttack > totalDefense)
             {
                 totalAttack = ((totalAttack - totalDefense) / (totalAttack) + 1) * totalAttack;
-                ramAttack = ((totalAttack - totalDefense) / (totalAttack) + 1) * ramDamage;
+                ramAttack = ((totalAttack - totalDefense) / (totalAttack) + 1) * ramAttack;
             }
             else
             {
                 totalDefense = ((totalDefense - totalAttack) / (totalDefense) + 1) * totalDefense;
-                ramAttack = ((totalDefense - totalAttack) / (totalDefense) + 1) * ramDamage;
+                ramAttack = ((totalDefense - totalAttack) / (totalDefense) + 1) * ramAttack;
             }
             //totalAttack = (totalAttack / totalDefense) * totalAttack;
 
@@ -367,12 +369,13 @@ namespace beans
                 double hp = 0;
                 for (int i = 1; i <= this.ToVillage[BuildingType.Wall]; i++)
                 {
-                    hp += Build.GetPrice(BuildingType.Wall, i, 1).BuildTime / 50000;
+                    hp += Build.GetPrice(BuildingType.Wall, i, 1).BuildTime / 75000;
                     if (hp > damaged)
                     {
                         if (this.ToVillage.VillageBuildingData.Wall != (i - 1))
                         {
-                            this.ToVillage.VillageBuildingData.Wall = i - 1;
+                            this.ToVillage.UpgradeBuilding(BuildingType.Wall, i - 1);
+                            //this.ToVillage.VillageBuildingData.Wall = i - 1;
                             change = true;
                         }
                         break;
@@ -401,6 +404,45 @@ namespace beans
             }
 
             bool successAttack = (totalAttack > totalDefense);
+
+            if (this.Catapult > 0)
+            {
+                double catapultAttack = this.Catapult * catapultBuldingDamage;
+                catapultAttack += catapultAttack * Research.AttackValuesDictionary[attackLevel];
+
+                double buildingDefense = 0;
+                for (int i = 1; i <= this.ToVillage[this.Building]; i++)
+                    buildingDefense += Build.GetPrice(this.Building, i, 1).BuildTime;
+                buildingDefense /= 75000;
+
+                buildingDefense += buildingDefense * Research.DefenseValuesDictionary[defenseLevel];
+
+                catapultAttack += (long)(catapultAttack * luckHeroes);
+
+                if (totalAttack > totalDefense)
+                    catapultAttack = ((totalAttack - totalDefense) / (totalAttack) + 1) * catapultAttack;
+                else
+                    catapultAttack = ((totalDefense - totalAttack) / (totalDefense) + 1) * catapultAttack;
+
+                //bool change = false;
+                double damaged = buildingDefense - catapultAttack;
+                double hp = 0;
+                for (int i = 1; i <= this.ToVillage[this.Building]; i++)
+                {
+                    hp += Build.GetPrice(this.Building, i, 1).BuildTime / 75000;
+                    if (hp > damaged)
+                    {
+                        if (this.ToVillage[this.Building] != (i - 1))
+                            this.ToVillage.UpgradeBuilding(this.Building, i - 1);
+
+                        break;
+                    }
+                    //if (this.)
+                }
+
+                defenseReport.BuildingAfter = this.ToVillage[this.Building];
+                attackReport.BuildingAfter = this.ToVillage[this.Building];
+            }
 
             attackReport.Luck = luck;
             attackReport.SuccessAttack = successAttack;
@@ -844,6 +886,8 @@ namespace beans
                 }
                 #endregion
             }
+
+            
 
             attackReport.SpearAttackDead = spearLostInAttackSide;
             attackReport.SwordAttackDead = swordLostInAttackSide;

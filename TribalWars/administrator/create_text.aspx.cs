@@ -30,6 +30,9 @@ public partial class administrator_create_text : System.Web.UI.Page
         try
         {
             ServicesList.ConfigurationService.ChangeTextSetting(p, this.txtKey.Text, this.txtValue.Content, session);
+            this.txtKey.Text = "";
+            this.txtValue.Content = "";
+            RadScriptManager.RegisterStartupScript(bttnChangeText, bttnChangeText.GetType(), "ShowException", "jQuery.facebox('Thêm text thành công');", true);
         }
         catch (TribalWarsException ex)
         {
@@ -38,6 +41,11 @@ public partial class administrator_create_text : System.Web.UI.Page
         catch (Exception ex)
         {
             RadScriptManager.RegisterStartupScript(bttnChangeText, bttnChangeText.GetType(), "ShowException", "jQuery.facebox('" + ex.Message + "');", true);
+            string message = ex.Message;
+            message += Environment.NewLine;
+            message += ex.StackTrace;
+            message += Environment.NewLine + "============================================" + Environment.NewLine;
+            beans.ServicesList.LogService.Log(p.Username, message);
         }
     }
 }
