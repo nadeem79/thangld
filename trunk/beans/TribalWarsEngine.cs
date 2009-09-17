@@ -188,6 +188,17 @@ namespace beans
                                             Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Recruit.catapult_population").Value);
             Recruit.pNoble = new Price("Noble", 9860, 28000, 30000, 25000, 100);
         }
+        protected static void CalculateHeroLevel()
+        {
+            double experience = 1000;
+            Hero.HeroLevel.Clear();
+            for (int i = 1; i < 100; i++)
+            {
+                Hero.HeroLevel.Add(i, experience);
+                experience += experience * 0.2;
+            }
+            
+        }
 
         public static void Start(ISession session)
         {

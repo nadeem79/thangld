@@ -91,6 +91,8 @@
     <Compile Include="Admin.cs" />
     <Compile Include="AdminConfigurationMethods.cs" />
     <Compile Include="Hero.cs" />
+    <Compile Include="HeroType.cs" />
+    <Compile Include="IntelligentHero.cs" />
     <Compile Include="ISystemLogger.cs" />
     <Compile Include="JobEnum.cs" />
     <Compile Include="Permission.cs" />

@@ -16,6 +16,7 @@
     <property name="Attack" column="attack" type="Int32" />
     <property name="Defense" column="defense" type="Int32" />
     <property name="Speed" column="speed" type="Int32" />
+    <property name="Intelligent" column="intelligent" type="Int32" />
     <property name="Luck" column="luck" type="Int32" />
     <property name="Level" column="[level]" type="Int32" />
     <property name="Experience" column="experience" type="double" />

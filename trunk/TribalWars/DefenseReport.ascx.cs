@@ -40,5 +40,9 @@ public partial class DefenseReport : System.Web.UI.UserControl
             this.pWood.Visible = (this.DefenseReportEntity.Wood > 0);
             this.pIron.Visible = (this.DefenseReportEntity.Iron > 0);
         }
+        if (this.DefenseReportEntity.WallAfter == this.DefenseReportEntity.WallBefore)
+            this.pWallDamaged.Visible = false;
+        if (this.DefenseReportEntity.BuildingAfter == this.DefenseReportEntity.BuildingBefore)
+            this.pWallDamaged.Visible = false;
     }
 }

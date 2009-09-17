@@ -108,7 +108,7 @@ namespace beans
                 type = TroopType.Ram;
             if (catapult > 0)
                 type = TroopType.Catapult;
-
+            attack.Building = building;
             attack.Spear = spear;
             attack.Sword = sword;
             attack.Axe = axe;

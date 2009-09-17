@@ -22,13 +22,15 @@ public partial class test : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        int time = 0;
+        double time = 1000;
         this.Label1.Text = "";
-        for (int i = 0; i < 20; i++)
+
+        for (int i = 1; i < 100; i++)
         {
-            Price p = Build.GetPrice(BuildingType.Wall, i, 1);
-            time += p.BuildTime;
-            this.Label1.Text += string.Format("{0}: {1} - {2}<br />", i, p.BuildTime, time);
+            //Price p = Build.GetPrice(BuildingType.Wall, i, 1);
+            //time += p.BuildTime;
+            this.Label1.Text += string.Format("{0}: {1}<br />", i, time);
+            time += time * 0.2;
         }
         //this.Label1.Text = time.ToString();
     }

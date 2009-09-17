@@ -1,5 +1,6 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="TroopCommand.ascx.cs" Inherits="TroopCommand" %>
-<%@ Register assembly="Telerik.Web.UI" namespace="Telerik.Web.UI" tagprefix="telerik" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="TroopCommand.ascx.cs"
+    Inherits="TroopCommand" %>
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 
 <script type="text/javascript">
     function OnClientSelectedIndexChangedEventHandler(sender, args) {
@@ -11,10 +12,27 @@
         else
             $("#imgHero").html("");
     }
+
+    function checkCatapult() {
+        var catapult;
+        catapult = parseInt($("#<% = this.catapult.ClientID %>").val());
+        if (catapult == NaN) {
+            catapult = 0;
+        }
+
+        //$('#elementsToOperateOn :input').attr('disabled', true);
+        if (catapult > 0) {
+            $("#toggler").css("display","inline");
+        }
+        else {
+            $("#toggler").css("display", "none");
+        }
+
+    }
 </script>
 
 <h3>
-    Give commands</h3>
+    Give commanGive commands</h3>
 <p>
     <asp:Label ID="lblError" runat="server" ForeColor="Red"></asp:Label></p>
 <table>
@@ -94,9 +112,15 @@
                         <tr>
                             <td>
                                 <img src="images/unit_catapult.png" title="Catapult" alt="" />
-                                <asp:TextBox ID="catapult" runat="server" Width="50px">
+                                <asp:TextBox ID="catapult" runat="server" Width="50px" onblur="checkCatapult();">
                                 </asp:TextBox>
-                                <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.catapult.ClientID); %>', <% Response.Write(this.Village.VillageTroopData.Catapult.ToString()); %>)"><% Response.Write(this.Village.VillageTroopData.Catapult.ToString()); %></a>)</span>
+                                <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.catapult.ClientID); %>', <% Response.Write(this.Village.VillageTroopData.Catapult.ToString()); %>);checkCatapult();"><% Response.Write(this.Village.VillageTroopData.Catapult.ToString()); %></a>)</span>
+           
+                                <br />
+                                <div id="toggler" style="display:none;" >
+                                <asp:DropDownList ID="cbBuildings" runat="server" Height="16px" Width="150px">
+                                </asp:DropDownList>
+                                </div>
                             </td>
                         </tr>
                     </tbody>
@@ -120,8 +144,7 @@
             <tbody>
                 <tr>
                     <td rowspan="2">
-                        X:<asp:TextBox ID="x" runat="server" MaxLength="3" Width="50"></asp:TextBox>
-                        Y:
+                        X:<asp:TextBox ID="x" runat="server" MaxLength="3" Width="50"></asp:TextBox>Y:
                         <asp:TextBox ID="y" runat="server" MaxLength="3" Width="50"></asp:TextBox>
                     </td>
                     <td valign="top">
@@ -136,49 +159,58 @@
         <div id="commandPanel" style="display:none;">
             <h2>
                 <asp:Literal runat="server" ID="commandTypeSpan"></asp:Literal></h2>
-        <table class="vis" width="300">
-            <tbody>
-                <tr>
-                    <th colspan="2">
-                        Đặt lệnh
-                    </th>
-                </tr>
-                <tr>
-                    <td>
-                        <asp:Literal runat="server" ID="typeSpan"></asp:Literal>:
-                    </td>
-                    <td>
-                        <a href='village_info.aspx?id=<% = this.Village.ID %>&village=<asp:Literal runat="server" ID="toVillageIdSpan"></asp:Literal>' target="_blank" >
-                            <asp:Literal runat="server" ID="toVillageName"></asp:Literal> (<asp:Literal runat="server" ID="toVillageXSpan"></asp:Literal>|<asp:Literal runat="server" ID="toVillageYSpan"></asp:Literal>)</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Chủ thành:
-                    </td>
-                    <td>
-                        <a href='user_info.aspx?id=<% = this.Village.ID %>&player=<asp:Literal runat="server" ID="toVillageOwnerIdSpan"></asp:Literal>'>
-                            <asp:Literal runat="server" ID="toVillageOwnerNameSpan"></asp:Literal></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Thời gian:
-                    </td>
-                    <td>
-                        <asp:Literal runat="server" ID="durationSpan"></asp:Literal>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Đến lúc:
-                    </td>
-                    <td id="date_arrival">
-                        <asp:Literal runat="server" ID="landingTimeSpan"></asp:Literal>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+            <table class="vis" width="300">
+                <tbody>
+                    <tr>
+                        <th colspan="2">
+                            Đặt lệnh
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <asp:Literal runat="server" ID="typeSpan"></asp:Literal>:
+                        </td>
+                        <td>
+                            <a href='village_info.aspx?id=<% = this.Village.ID %>&village=<asp:Literal runat="server" ID="toVillageIdSpan"></asp:Literal>'
+                                target="_blank">
+                                <asp:Literal runat="server" ID="toVillageName"></asp:Literal>(<asp:Literal runat="server"
+                                    ID="toVillageXSpan"></asp:Literal>|<asp:Literal runat="server" ID="toVillageYSpan"></asp:Literal>)</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Chủ thành:
+                        </td>
+                        <td>
+                            <a href='user_info.aspx?id=<% = this.Village.ID %>&player=<asp:Literal runat="server" ID="toVillageOwnerIdSpan"></asp:Literal>'>
+                                <asp:Literal runat="server" ID="toVillageOwnerNameSpan"></asp:Literal></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Thời gian:
+                        </td>
+                        <td>
+                            <asp:Literal runat="server" ID="durationSpan"></asp:Literal>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Đến lúc:
+                        </td>
+                        <td id="date_arrival">
+                            <asp:Literal runat="server" ID="landingTimeSpan"></asp:Literal>
+                        </td>
+                    </tr>
+                    <asp:Panel runat="server" ID="pDestructBuilding">
+                    <tr>
+                        <td colspan="2">
+                            Phá huỷ công trình: <b><asp:Literal runat="server" ID="buildingSpan"></asp:Literal></b>
+                        </td>
+                    </tr>
+                    </asp:Panel>
+                </tbody>
+            </table>
             <br />
             <table class="vis">
                 <tbody>
@@ -254,8 +286,6 @@
         <asp:AsyncPostBackTrigger ControlID="bttnSupport" EventName="Click" />
     </Triggers>
 </asp:UpdatePanel>
-    
-                    
 <h3>
     Troop movements</h3>
 <asp:Repeater ID="outgoingRepeater" runat="server">
@@ -315,7 +345,8 @@
         <tr>
             <td>
                 <a href="command.aspx?id=<% = this.Village.ID %>&command=<%# DataBinder.Eval(Container.DataItem, "ID") %>">
-                    <%# TypePrefix((beans.MoveType)DataBinder.Eval(Container.DataItem, "Type")) %> từ
+                    <%# TypePrefix((beans.MoveType)DataBinder.Eval(Container.DataItem, "Type")) %>
+                    từ
                     <%# ((beans.Village)DataBinder.Eval(Container.DataItem, "FromVillage")).Name %>
                     (<%# ((beans.Village)DataBinder.Eval(Container.DataItem, "FromVillage")).X.ToString("000")%>|<%# ((beans.Village)DataBinder.Eval(Container.DataItem, "FromVillage")).Y.ToString("000")%>)</a>
             </td>
