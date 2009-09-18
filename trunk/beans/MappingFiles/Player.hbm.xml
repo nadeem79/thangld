@@ -32,6 +32,11 @@
       <one-to-many class="beans.Village, beans"/>
     </bag>
 
+    <bag name="Heroes" table="heroes" cascade="none" fetch="select" inverse="true" lazy="true" >
+      <key column="owner" />
+      <one-to-many class="beans.Hero, beans"/>
+    </bag>
+
     <idbag name="StaffGroups" table="user_group" lazy="true" cascade="save-update">
       <collection-id type="Int32" column="user_group_id">
         <generator class="identity"></generator>

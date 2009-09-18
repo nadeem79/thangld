@@ -92,7 +92,6 @@
     <Compile Include="AdminConfigurationMethods.cs" />
     <Compile Include="Hero.cs" />
     <Compile Include="HeroType.cs" />
-    <Compile Include="IntelligentHero.cs" />
     <Compile Include="ISystemLogger.cs" />
     <Compile Include="JobEnum.cs" />
     <Compile Include="Permission.cs" />
@@ -119,6 +118,7 @@
     <Compile Include="TribalWarsException.cs" />
     <Compile Include="UserType.cs" />
     <Compile Include="Utilities.cs" />
+    <Compile Include="VillageHeroMethods.cs" />
     <Compile Include="VillageResourceMethods.cs" />
     <Compile Include="VillageTransportMethods.cs" />
     <Compile Include="VillageRecruitMethods.cs" />

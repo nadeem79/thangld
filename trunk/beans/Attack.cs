@@ -347,6 +347,9 @@ namespace beans
             if (this.ToVillage.MainHero != null)
                 luckHeroes -= 0.001 * this.ToVillage.MainHero.Luck;
 
+            double experienceAttackingHero = totalDefense;
+            double experienceDefendingHero = totalAttack;
+
             scoutAttack += (long)(scoutAttack * luckHeroes);
             totalAttack += (long)(totalAttack * luckHeroes);
             ramAttack += (long)(ramAttack * luckHeroes);
@@ -455,6 +458,13 @@ namespace beans
                 scoutLostInAttackSide =(int)Math.Round(this.Scout * ((scoutDefense - scoutAttack) / scoutDefense));
             else
                 scoutLostInAttackSide = (int)Math.Round(0.5 * this.Scout);
+
+            attackReport.AttackingHero = this.Hero;
+            attackReport.DefendingHero = this.ToVillage.MainHero;
+            attackReport.LevelBefore = this.Hero.Level;
+            defenseReport.AttackingHero = this.Hero;
+            defenseReport.DefendingHero = this.ToVillage.MainHero;
+            defenseReport.LevelBefore = this.ToVillage.MainHero.Level;
 
             if (successAttack) // quân tấn công thắng
             {
@@ -698,6 +708,14 @@ namespace beans
                     #endregion
                 }
                 #endregion
+
+                if (this.Hero != null)
+                    this.Hero.LevelUp(this.Hero.Experience + experienceAttackingHero);
+                attackReport.LevelAfter = this.Hero.Level;
+                defenseReport.LevelAfter = defenseReport.LevelBefore;
+                this.ToVillage.MainHero.IsDead = true;
+                this.ToVillage.MainHero = null;
+                
             }
             else // quân tấn công thua
             {
@@ -885,9 +903,49 @@ namespace beans
 
                 }
                 #endregion
+
+                if (this.ToVillage.MainHero != null)
+                    this.ToVillage.MainHero.LevelUp(this.ToVillage.MainHero.Experience + experienceDefendingHero);
+                this.Hero.IsDead = true;
+
+                attackReport.LevelAfter = attackReport.LevelBefore;
+                defenseReport.LevelAfter = this.ToVillage.MainHero.Level;
             }
 
-            
+            if (returnTroop != null)
+            {
+                if (returnTroop.Scout > 0)
+                {
+                    attackReport.ShowTroop = true;
+                    attackReport.ShowBuilding = true;
+                    attackReport.ShowResource = true;
+                }
+                else
+                {
+                    attackReport.ShowTroop = true;
+                    attackReport.ShowBuilding = true;
+                }
+            }
+            else
+            {
+                if (totalAttack / totalDefense > 0.5)
+                    attackReport.ShowTroop = true;
+            }
+
+            attackReport.Headquarter = this.ToVillage[BuildingType.Headquarter];
+            attackReport.Barracks = this.ToVillage[BuildingType.Barracks];
+            attackReport.Stable = this.ToVillage[BuildingType.Stable];
+            attackReport.Workshop = this.ToVillage[BuildingType.Workshop];
+            attackReport.Smithy = this.ToVillage[BuildingType.Smithy];
+            attackReport.Market = this.ToVillage[BuildingType.Market];
+            attackReport.Rally = this.ToVillage[BuildingType.Rally];
+            attackReport.Academy = this.ToVillage[BuildingType.Academy];
+            attackReport.Farm = this.ToVillage[BuildingType.Farm];
+            attackReport.Warehouse = this.ToVillage[BuildingType.Warehouse];
+            attackReport.IronMine = this.ToVillage[BuildingType.IronMine];
+            attackReport.ClayPit = this.ToVillage[BuildingType.ClayPit];
+            attackReport.TimberCamp = this.ToVillage[BuildingType.TimberCamp];
+            attackReport.Wall = this.ToVillage[BuildingType.Wall];
 
             attackReport.SpearAttackDead = spearLostInAttackSide;
             attackReport.SwordAttackDead = swordLostInAttackSide;

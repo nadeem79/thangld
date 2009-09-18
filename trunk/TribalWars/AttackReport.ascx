@@ -161,6 +161,10 @@ May mắn (phía tấn công):
         </tr>
         <tr>
             <td colspan="2">
+            <asp:Panel runat="server" ID="pHideDefendingTroop">
+                Quân bạn bị thiệt hại đến người cuối cùng và không thể mang thông tin gì về quân đối phương
+            </asp:Panel>
+                <asp:Panel runat="server" ID="pShowDefendingTroop">
                 <table class="vis">
                     <tbody>
                         <tr class="center">
@@ -260,6 +264,7 @@ May mắn (phía tấn công):
                         </tr>
                     </tbody>
                 </table>
+                </asp:Panel>
             </td>
         </tr>
     </tbody>
@@ -270,6 +275,26 @@ May mắn (phía tấn công):
 </asp:Panel>
 <asp:Panel runat="server" ID="pBuildingDamaged">
     Công trình <b><% = LanguageFunctions.BuildingToString(this.AttackReportEntity.Building) %></b> bị phá từ level <b><% = this.AttackReportEntity.BuildingBefore %></b> xuống level <b><% = this.AttackReportEntity.BuildingAfter %></b>
+</asp:Panel>
+<asp:Panel runat="server" ID="pShowResource">
+    Tài nguyên có trong thành: 
+    <div style="float: left;">
+            <img src="images/resources/clay.png" title="Clay" />
+            <% = this.AttackReportEntity.ClayInVillage%>
+    </div> &nbsp;&nbsp;
+    <div style="float: left;margin-left:5px;">
+            <img src="images/resources/wood.png" title="Wood" />
+            <% = this.AttackReportEntity.WoodInVillage%>
+    </div> &nbsp;&nbsp;
+    <div style="float: left;margin-left:5px;">
+            <img src="images/resources/iron.png" title="Iron" />
+            <% = this.AttackReportEntity.IronInVillage %>
+    </div> &nbsp;&nbsp;
+    <div style="clear: both">
+    </div>
+</asp:Panel>
+<asp:Panel runat="server" ID="pShowBuilding">
+    
 </asp:Panel>
 <asp:Panel runat="server" ID="pPillaged" Visible="false">
     <h5>

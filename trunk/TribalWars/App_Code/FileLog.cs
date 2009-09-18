@@ -43,5 +43,19 @@ public class FileLog:beans.ISystemLogger
         fileStream.Close();
     }
 
+    public void LogException(Exception exc)
+    {
+        FileStream fileStream = new FileStream(this.Filename, FileMode.Append, FileAccess.Write);
+
+        StreamWriter writer = new StreamWriter(fileStream, System.Text.Encoding.UTF8);
+
+        writer.WriteLine("=================================");
+        writer.WriteLine(DateTime.Now.ToString("dd/MM/yyyy hh:mm") + " - " + exc.Message);
+        writer.WriteLine(exc.StackTrace);
+        writer.WriteLine("=================================");
+        writer.Close();
+        fileStream.Close();
+    }
+
     #endregion
 }

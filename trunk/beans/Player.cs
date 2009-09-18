@@ -180,6 +180,11 @@ namespace beans
             get;
             set;
         }
+        public virtual IList<Hero> Heroes
+        {
+            get;
+            set;
+        }
         #endregion
 
         #region Static Member

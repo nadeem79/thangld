@@ -8,5 +8,6 @@ namespace beans
     public interface ISystemLogger
     {
         void Log(string username, string message);
+        void LogException(Exception exc);
     }
 }
