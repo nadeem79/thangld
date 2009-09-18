@@ -23,5 +23,10 @@ namespace beans.Services
             foreach (ISystemLogger logger in this.SystemLoggers)
                 logger.Log(username, message);
         }
+        public void LogException(Exception ex)
+        {
+            foreach (ISystemLogger logger in this.SystemLoggers)
+                logger.LogException(ex);
+        }
     }
 }

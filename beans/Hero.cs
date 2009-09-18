@@ -5,7 +5,7 @@ using System.Text;
 
 namespace beans
 {
-    public abstract class Hero:IdentityObject
+    public class Hero:IdentityObject
     {
 
         protected static Dictionary<int, double> heroLevel = new Dictionary<int, double>();
@@ -15,56 +15,14 @@ namespace beans
             get { return heroLevel; }
         }
 
-        protected void CalculateHeroAtribute()
-        {
-            Random r = new Random();
-            switch (this.Type)
-            {
-                case HeroType.Intelligent:
-                    this.Intelligent += 4 + r.Next(1);
-                    this.Attack += 1 + r.Next(1);
-                    this.Defense += 1 + r.Next(1);
-                    this.Luck += 1 + r.Next(1);
-                    this.Speed += 1 + r.Next(1);
-                    break;
-                case HeroType.Attack:
-                    this.Attack += 4 + r.Next(1);
-                    this.Intelligent += 1 + r.Next(1);
-                    this.Defense += 1 + r.Next(1);
-                    this.Luck += 1 + r.Next(1);
-                    this.Speed += 1 + r.Next(1);
-                    break;
-                case HeroType.Defense:
-                    this.Defense += 4 + r.Next(1);
-                    this.Attack += 1 + r.Next(1);
-                    this.Intelligent += 1 + r.Next(1);
-                    this.Luck += 1 + r.Next(1);
-                    this.Speed += 1 + r.Next(1);
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        public HeroType Type
+        
+        public virtual HeroType Type
         {
             get;
             set;
         }
 
-        public void LevelUp(double experience)
-        {
-            double nextExperience = HeroLevel[this.Level + 1];
-
-            if (experience > nextExperience)
-            {
-                this.Level++;
-                this.CalculateHeroAtribute();
-                this.LevelUp(experience);
-            }
-
-            this.Experience = experience;
-        }
+        
 
         public virtual string Name
         {
@@ -127,6 +85,60 @@ namespace beans
         {
             get;
             set;
+        }
+        public virtual bool IsDead
+        {
+            get;
+            set;
+        }
+        public virtual Player Owner
+        {
+            get;
+            set;
+        }
+
+        protected void CalculateHeroAtribute()
+        {
+            Random r = new Random();
+            switch (this.Type)
+            {
+                case HeroType.Intelligent:
+                    this.Intelligent += 4 + r.Next(2);
+                    this.Attack += 1 + r.Next(2);
+                    this.Defense += 1 + r.Next(2);
+                    this.Luck += 1 + r.Next(2);
+                    this.Speed += 1 + r.Next(2);
+                    break;
+                case HeroType.Attack:
+                    this.Attack += 4 + r.Next(2);
+                    this.Intelligent += 1 + r.Next(2);
+                    this.Defense += 1 + r.Next(2);
+                    this.Luck += 1 + r.Next(2);
+                    this.Speed += 1 + r.Next(2);
+                    break;
+                case HeroType.Defense:
+                    this.Defense += 4 + r.Next(2);
+                    this.Attack += 1 + r.Next(2);
+                    this.Intelligent += 1 + r.Next(2);
+                    this.Luck += 1 + r.Next(2);
+                    this.Speed += 1 + r.Next(2);
+                    break;
+                default:
+                    break;
+            }
+        }
+        public virtual void LevelUp(double experience)
+        {
+            double nextExperience = HeroLevel[this.Level + 1];
+
+            if (experience > nextExperience)
+            {
+                this.Level++;
+                this.CalculateHeroAtribute();
+                this.LevelUp(experience);
+            }
+
+            this.Experience = experience;
         }
     }
 }

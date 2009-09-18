@@ -58,22 +58,46 @@
       <property name="Iron" column="iron" type="Int32" />
       <property name="Clay" column="clay" type="Int32" />
       <property name="Wood" column="wood" type="Int32" />
+      <property name="IronInVillage" column="iron_in_village" type="Int32" />
+      <property name="ClayInVillage" column="clay_in_village" type="Int32" />
+      <property name="WoodInVillage" column="wood_in_village" type="Int32" />
       <property name="LoyalBefore" column="loyal_before" type="Int32" />
       <property name="WallBefore" column="wall_before" type="Int32" />
       <property name="BuildingBefore" column="building_before" type="Int32" />
       <property name="LoyalAfter" column="loyal_after" type="Int32" />
       <property name="WallAfter" column="wall_after" type="Int32" />
       <property name="BuildingAfter" column="building_after" type="Int32" />
+      <property name="ShowTroop" column="show_troop" type="Boolean" />
+      <property name="ShowBuilding" column="show_building" type="Boolean" />
 
       <property name="SuccessAttack" column="attack_success" type="Boolean" />
       <property name="Luck" column="luck_attack_side" type="Double" />
       <property name="Morale" column="morale" type="Double" />
+
+      <many-to-one name="AttackingHero" class="beans.Hero, beans" column="attacking_hero" not-null="false" lazy="no-proxy" fetch="join" />
+      <many-to-one name="DefendingHero" class="beans.Hero, beans" column="defending_hero" not-null="false" lazy="no-proxy" fetch="join" />
 
       <many-to-one name="FromVillage" class="beans.Village, beans" column="from_village" not-null="true" lazy="no-proxy" fetch="select" />
       <many-to-one name="ToVillage" class="beans.Village, beans" column="to_village" not-null="true" lazy="no-proxy" fetch="select" />
       <many-to-one name="FromPlayer" class="beans.Player, beans" column="from_player" not-null="true" lazy="no-proxy" fetch="select" />
       <many-to-one name="ToPlayer" class="beans.Player, beans" column="to_player" not-null="true" lazy="no-proxy" fetch="select" />
       <property name="Building" column="building" type="beans.BuildingType, beans" />
+
+      <property name="Headquarter" column="headquarter" type="Int32" />
+      <property name="Barracks" column="barracks" type="Int32" />
+      <property name="Stable" column="stable" type="Int32" />
+      <property name="Workshop" column="workshop" type="Int32" />
+      <property name="Academy" column="academy" type="Int32" />
+      <property name="Smithy" column="smithy" type="Int32" />
+      <property name="Rally" column="rally" type="Int32" />
+      <property name="Market" column="market" type="Int32" />
+      <property name="ClayPit" column="claypit" type="Int32" />
+      <property name="IronMine" column="ironmine" type="Int32" />
+      <property name="TimberCamp" column="timbercamp" type="Int32" />
+      <property name="Warehouse" column="storage" type="Int32" />
+      <property name="Farm" column="farm" type="Int32" />
+      <property name="HidingPlace" column="hide" type="Int32" />
+      <property name="Wall" column="wall" type="Int32" />
 
     </subclass>
 

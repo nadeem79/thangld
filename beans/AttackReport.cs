@@ -288,12 +288,127 @@ namespace beans
             get;
             set;
         }
+        public virtual Hero AttackingHero
+        {
+            get;
+            set;
+        }
+        public virtual Hero DefendingHero
+        {
+            get;
+            set;
+        }
+        public virtual int LevelBefore
+        {
+            get;
+            set;
+        }
+        public virtual int LevelAfter
+        {
+            get;
+            set;
+        }
         public virtual bool ShowTroop
         {
             get;
             set;
         }
         public virtual bool ShowBuilding
+        {
+            get;
+            set;
+        }
+        public virtual bool ShowResource
+        {
+            get;
+            set;
+        }
+        public virtual int ClayInVillage
+        {
+            get;
+            set;
+        }
+        public virtual int WoodInVillage
+        {
+            get;
+            set;
+        }
+        public virtual int IronInVillage
+        {
+            get;
+            set;
+        }
+        public virtual int Headquarter
+        {
+            get;
+            set;
+        }
+        public virtual int Barracks
+        {
+            get;
+            set;
+        }
+        public virtual int Stable
+        {
+            get;
+            set;
+        }
+        public virtual int Wall
+        {
+            get;
+            set;
+        }
+        public virtual int HidingPlace
+        {
+            get;
+            set;
+        }
+        public virtual int Warehouse
+        {
+            get;
+            set;
+        }
+        public virtual int Farm
+        {
+            get;
+            set;
+        }
+        public virtual int IronMine
+        {
+            get;
+            set;
+        }
+        public virtual int ClayPit
+        {
+            get;
+            set;
+        }
+        public virtual int TimberCamp
+        {
+            get;
+            set;
+        }
+        public virtual int Market
+        {
+            get;
+            set;
+        }
+        public virtual int Rally
+        {
+            get;
+            set;
+        }
+        public virtual int Smithy
+        {
+            get;
+            set;
+        }
+        public virtual int Academy
+        {
+            get;
+            set;
+        }
+        public virtual int Workshop
         {
             get;
             set;

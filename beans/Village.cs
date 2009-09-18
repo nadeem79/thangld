@@ -23,6 +23,7 @@ namespace beans
         protected VillageRecruitMethods villageRecruitMethods = new VillageRecruitMethods();
         protected VillageResourceMethods villageResourceMethods = new VillageResourceMethods();
         protected VillageTransportMethods villageTransportMethods = new VillageTransportMethods();
+        protected VillageHeroMethods villageHeroMethods = new VillageHeroMethods();
         private Player _owner;
         public virtual Player Player
         {
@@ -243,6 +244,10 @@ namespace beans
         public virtual VillageTransportMethods VillageTransportMethods
         {
             get { return this.villageTransportMethods; }
+        }
+        public virtual VillageHeroMethods VillageHeroMethods
+        {
+            get { return this.villageHeroMethods; }
         }
 
         public virtual int this[BuildingType buildType]
@@ -537,6 +542,7 @@ namespace beans
             this.villageRecruitMethods.Village = this;
             this.villageResourceMethods.Village = this;
             this.villageTransportMethods.Village = this;
+            this.villageHeroMethods.Village = this;
         }
 
         public override string ToString()
@@ -579,6 +585,5 @@ namespace beans
             session.Save(this.VillageTroopData);
         }
         
-  
     }
 }

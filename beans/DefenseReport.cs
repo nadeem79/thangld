@@ -288,5 +288,25 @@ namespace beans
             get;
             set;
         }
+        public virtual Hero AttackingHero
+        {
+            get;
+            set;
+        }
+        public virtual Hero DefendingHero
+        {
+            get;
+            set;
+        }
+        public virtual int LevelBefore
+        {
+            get;
+            set;
+        }
+        public virtual int LevelAfter
+        {
+            get;
+            set;
+        }
     }
 }

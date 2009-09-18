@@ -22,7 +22,12 @@ public partial class inPage : System.Web.UI.MasterPage
         set;
     }
 
-    DateTime start, stop;
+    System.Diagnostics.Stopwatch Stopwatch
+    {
+        get;
+        set;
+    }
+
     private Player player;
     private beans.Village village;
     public beans.Village CurrentVillage
@@ -56,18 +61,20 @@ public partial class inPage : System.Web.UI.MasterPage
     {
         this.Init += new EventHandler(inPage_Init);
         this.PreRender += new EventHandler(inPage_Unload);
+        this.Stopwatch = new System.Diagnostics.Stopwatch();
     }
 
     void inPage_Unload(object sender, EventArgs e)
     {
         //this.NHibernateSession.Close();
-        this.stop = DateTime.Now;
-        this.delay.Text = (stop - start).Milliseconds.ToString();
+        this.Stopwatch.Stop();
+        this.delay.Text = this.Stopwatch.ElapsedMilliseconds.ToString();
+            //(stop - start).Milliseconds.ToString();
     }
 
     void inPage_Init(object sender, EventArgs e)
     {
-
+        this.Stopwatch.Start();
         if (object.Equals(Session["user"], null))
         {
             Response.Redirect("session_expired.aspx", true);
@@ -75,7 +82,6 @@ public partial class inPage : System.Web.UI.MasterPage
             //Session["user"] = 1;
         }
 
-        this.start = DateTime.Now;
         int id;
 
         this.NHibernateSession = (ISession)Context.Items["NHibernateSession"];
