@@ -16,15 +16,38 @@ namespace beans
             set;
         }
 
-        public Hero CreateHero(string name, ISession session)
+        public Hero CreateHero(string name, HeroType type, ISession session)
         {
+            Random r = new Random();
             try
             {
                 Hero hero = new Hero();
+                hero.Type = type;
                 hero.Name = name;
+                switch (type)
+                {
+                    case HeroType.Intelligent:
+                        hero.Intelligent = 15 + r.Next(10);
+                        hero.Attack = 10 + r.Next(10);
+                        hero.Defense = 10 + r.Next(10);
+                        break;
+                    case HeroType.Attack:
+                        hero.Attack = 15 + r.Next(10);
+                        hero.Intelligent = 10 + r.Next(10);
+                        hero.Defense = 10 + r.Next(10);
+                        break;
+                    case HeroType.Defense:
+                        hero.Defense = 15 + r.Next(10);
+                        hero.Attack = 10 + r.Next(10);
+                        hero.Intelligent = 10 + r.Next(10);
+                        break;
+                    default:
+                        break;
+                }
 
                 Price price = Recruit.GetPrice(TroopType.Nobleman, 1);
                 int heroCount = this.Village.Player.Heroes.Count + 1;
+                hero.Biography = "";
 
                 int clay = price.Clay * heroCount, wood = price.Wood * heroCount, iron = price.Iron * heroCount;
                 if (this.Village[ResourcesType.Wood] < wood || this.Village[ResourcesType.Clay] < clay || this.Village[ResourcesType.Iron] < iron)
@@ -33,7 +56,7 @@ namespace beans
                 if ((this.Village.Population + price.Population)>this.Village.MaxPopulation)
                     throw new TribalWarsException("Không đủ farm xây dựng hero");
 
-                if (this.Village[BuildingType.Academy] <= heroCount)
+                if (this.Village[BuildingType.Academy] < heroCount)
                     throw new TribalWarsException("Số hero không được vượt quá công trình academy");
 
                 this.Village.Heroes.Add(hero);

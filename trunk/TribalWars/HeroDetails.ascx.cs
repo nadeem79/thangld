@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using NHibernate;
 
 public partial class HeroDetails : System.Web.UI.UserControl
 {
@@ -12,9 +13,14 @@ public partial class HeroDetails : System.Web.UI.UserControl
         get;
         set;
     }
+    protected beans.Hero Hero
+    {
+        get;
+        set;
+    }
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        ISession sessiob
     }
 }

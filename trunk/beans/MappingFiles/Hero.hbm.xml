@@ -11,7 +11,7 @@
       </generator>
     </id>
 
-    <many-to-one name="InMovingCommand" class="beans.MovingCommand, beans" lazy="proxy" fetch="select"></many-to-one>
+    <many-to-one name="InMovingCommand" class="beans.MovingCommand, beans" column="in_moving_command" lazy="proxy" fetch="select"></many-to-one>
     <many-to-one name="InVillage" class="beans.Village, beans" column="in_village" fetch="select" lazy="no-proxy" />
     <many-to-one name="Owner" class="beans.Player, beans" column="owner" fetch="select" lazy="no-proxy" not-null="false" />
     <property name="Attack" column="attack" type="Int32" />
@@ -25,6 +25,7 @@
     <property name="Biography" column="biography" length="2000" lazy="true" type="String"></property>
     <property name="Avatar" column="avatar" type="Boolean"></property>
     <property name="IsDead" column="is_dead" type="Boolean"></property>
+    <property name="Type" column="hero_type" type="beans.HeroType, beans"></property>
   </class>
 
 </hibernate-mapping>
