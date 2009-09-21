@@ -38,7 +38,7 @@
                             </tr>
                             <tr>
                                 <td width="100">
-                                    <a href="academy.aspx?id=<%=this.Village.ID %>&page=unit">Đào tạo hero</a>
+                                    <a href="academy.aspx?id=<%=this.Village.ID %>&page=create">Đào tạo hero</a>
                                 </td>
                             </tr>
                         </tbody>

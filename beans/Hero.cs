@@ -103,25 +103,25 @@ namespace beans
             switch (this.Type)
             {
                 case HeroType.Intelligent:
-                    this.Intelligent += 4 + r.Next(2);
-                    this.Attack += 1 + r.Next(2);
-                    this.Defense += 1 + r.Next(2);
-                    this.Luck += 1 + r.Next(2);
-                    this.Speed += 1 + r.Next(2);
+                    this.Intelligent += 3 + r.Next(4);
+                    this.Attack += r.Next(4);
+                    this.Defense += r.Next(4);
+                    this.Luck += r.Next(4);
+                    this.Speed += r.Next(4);
                     break;
                 case HeroType.Attack:
-                    this.Attack += 4 + r.Next(2);
-                    this.Intelligent += 1 + r.Next(2);
-                    this.Defense += 1 + r.Next(2);
-                    this.Luck += 1 + r.Next(2);
-                    this.Speed += 1 + r.Next(2);
+                    this.Attack += 3 + r.Next(4);
+                    this.Intelligent += r.Next(4);
+                    this.Defense += r.Next(4);
+                    this.Luck += r.Next(4);
+                    this.Speed += r.Next(4);
                     break;
                 case HeroType.Defense:
-                    this.Defense += 4 + r.Next(2);
-                    this.Attack += 1 + r.Next(2);
-                    this.Intelligent += 1 + r.Next(2);
-                    this.Luck += 1 + r.Next(2);
-                    this.Speed += 1 + r.Next(2);
+                    this.Defense += 3 + r.Next(4);
+                    this.Attack += r.Next(4);
+                    this.Intelligent += r.Next(4);
+                    this.Luck += r.Next(4);
+                    this.Speed += r.Next(4);
                     break;
                 default:
                     break;
