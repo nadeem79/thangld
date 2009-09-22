@@ -53,7 +53,6 @@ public partial class UserProfile : System.Web.UI.UserControl
         this.player.Avatar = false;
         if (File.Exists(Server.MapPath("~/data/images/members/") + this.player.ID.ToString() + ".jpg"))
             File.Delete(Server.MapPath("~/data/images/members/") + this.player.ID.ToString() + ".jpg");
-        ITransaction trans = session.BeginTransaction(IsolationLevel.ReadCommitted);
         session.Update(this.player);
         this.aDeleteAvatar.Visible = false;
     }

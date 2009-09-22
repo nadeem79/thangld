@@ -61,6 +61,11 @@ namespace beans
             get;
             set;
         }
+        public virtual Hero Hero
+        {
+            get;
+            set;
+        }
         
 
         public override void Save(ISession session)
@@ -461,10 +466,10 @@ namespace beans
 
             attackReport.AttackingHero = this.Hero;
             attackReport.DefendingHero = this.ToVillage.MainHero;
-            attackReport.LevelBefore = this.Hero.Level;
+            attackReport.LevelBefore = (this.Hero != null) ? this.Hero.Level : 0;
             defenseReport.AttackingHero = this.Hero;
             defenseReport.DefendingHero = this.ToVillage.MainHero;
-            defenseReport.LevelBefore = this.ToVillage.MainHero.Level;
+            defenseReport.LevelBefore = (this.ToVillage.MainHero == null) ? 0 : this.ToVillage.MainHero.Level;
 
             if (successAttack) // quân tấn công thắng
             {
@@ -693,6 +698,8 @@ namespace beans
                             this.ToVillage.VillageResourceData.Wood -= returnTroop.Wood;
                             this.ToVillage.VillageResourceData.Iron -= returnTroop.Iron;
                         }
+                        returnTroop.Hero = this.Hero;
+                        this.Hero.InMovingCommand = returnTroop;
                         this.ToVillage.MovingCommandsFromMe.Add(returnTroop);
                         this.FromVillage.MovingCommandsToMe.Add(returnTroop);
                         session.Save(returnTroop);
@@ -711,9 +718,14 @@ namespace beans
 
                 if (this.Hero != null)
                     this.Hero.LevelUp(this.Hero.Experience + experienceAttackingHero);
-                attackReport.LevelAfter = this.Hero.Level;
+                attackReport.LevelAfter = (this.Hero != null) ? this.Hero.Level : 0;
                 defenseReport.LevelAfter = defenseReport.LevelBefore;
-                this.ToVillage.MainHero.IsDead = true;
+                if (this.ToVillage.MainHero != null)
+                {
+                    this.ToVillage.MainHero.IsDead = true;
+                    session.Update(this.ToVillage.MainHero);
+                }
+                
                 this.ToVillage.MainHero = null;
                 
             }
@@ -906,10 +918,14 @@ namespace beans
 
                 if (this.ToVillage.MainHero != null)
                     this.ToVillage.MainHero.LevelUp(this.ToVillage.MainHero.Experience + experienceDefendingHero);
-                this.Hero.IsDead = true;
+                if (this.Hero != null)
+                {
+                    this.Hero.IsDead = true;
+                    session.Update(this.Hero);
+                }
 
                 attackReport.LevelAfter = attackReport.LevelBefore;
-                defenseReport.LevelAfter = this.ToVillage.MainHero.Level;
+                defenseReport.LevelAfter = (this.ToVillage.MainHero == null) ? 0 : this.ToVillage.MainHero.Level;
             }
 
             if (returnTroop != null)

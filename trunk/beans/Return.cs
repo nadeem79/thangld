@@ -76,6 +76,11 @@ namespace beans
             get;
             set;
         }
+        public virtual Hero Hero
+        {
+            get;
+            set;
+        }
         public override MoveType Type
         {
             get { return MoveType.Return; }

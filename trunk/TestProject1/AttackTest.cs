@@ -73,7 +73,7 @@ namespace TestProject1
             Attack target = new Attack(); // TODO: Initialize to an appropriate value
             ISession session = NHibernateHelper.CreateSession(); // TODO: Initialize to an appropriate value
             TribalWarsEngine.Start(session);
-            Attack a = session.Get<Attack>(1048577);
+            Attack a = session.Get<Attack>(1310720);
             MovingCommand expected = null; // TODO: Initialize to an appropriate value
             MovingCommand actual;
             actual = a.Effect(session);

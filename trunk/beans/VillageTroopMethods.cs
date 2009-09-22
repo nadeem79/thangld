@@ -81,7 +81,9 @@ namespace beans
 
             if (hero != null)
             {
-                if (!this.Village.Heroes.Contains(hero))
+                if ((from h in this.Village.Heroes
+                     where h == hero
+                     select h).Count<Hero>() == 0)
                     throw new TribalWarsException("Không tồn tại hero trong thành phố");
                 else if (this.Village.MainHero == hero)
                     throw new TribalWarsException("Không thể đưa chủ thành đi tấn công");
@@ -108,6 +110,15 @@ namespace beans
                 type = TroopType.Ram;
             if (catapult > 0)
                 type = TroopType.Catapult;
+
+            if (hero != null)
+            {
+                attack.Hero = hero;
+                hero.InMovingCommand = attack;
+                hero.InVillage = null;
+                session.Update(hero);
+            }
+
             attack.Building = building;
             attack.Spear = spear;
             attack.Sword = sword;

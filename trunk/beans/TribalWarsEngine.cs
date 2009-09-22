@@ -208,6 +208,7 @@ namespace beans
             CalculateResearchPrice();
             CalculateTroopPrice();
             CalculateResearchValue();
+            CalculateHeroLevel();
             ServicesList.LogService.Log("", "Hệ thống start");
         }
 

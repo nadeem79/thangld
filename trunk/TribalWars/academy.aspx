@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/inPage.master" AutoEventWireup="true"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/inPage.master" AutoEventWireup="true" ValidateRequest="false"
     CodeFile="academy.aspx.cs" Inherits="academy" %>
 <%@ Reference Control="CreateHero.ascx" %>
 <%@ Reference Control="HeroDetails.ascx" %>

@@ -29,6 +29,7 @@
       <property name="Ram" column="ram" type="Int32" />
       <property name="Noble" column="noble" type="Int32" />
       <property name="Building" column="building" type="beans.BuildingType, beans" />
+      <many-to-one name="Hero" class="beans.Hero, beans" column="hero" not-null="false" fetch="join" lazy="no-proxy" />
     </subclass>
 
     <subclass discriminator-value="4" name="beans.Return, beans" lazy="true">
@@ -45,6 +46,7 @@
       <property name="Clay" column="clay" type="Int32" />
       <property name="Wood" column="wood" type="Int32" />
       <property name="Iron" column="iron" type="Int32" />
+      <many-to-one name="Hero" class="beans.Hero, beans" column="hero" not-null="false" fetch="join" lazy="no-proxy" />
     </subclass>
 
     <subclass discriminator-value="3" name="beans.Support, beans" lazy="true">
@@ -57,6 +59,7 @@
       <property name="Catapult" column="catapult" type="Int32" />
       <property name="Ram" column="ram" type="Int32" />
       <property name="Noble" column="noble" type="Int32" />
+      
     </subclass>
 
     <subclass discriminator-value="1" name="beans.SendResource, beans" lazy="true">

@@ -15,7 +15,7 @@
     <property name="Loyal" column="loyal" type="double" />
     <property name="LastUpdate" column="last_update" type="timestamp" not-null="true" />
     <property name="Population" column="population" type="double" />
-    <one-to-one name="MainHero" class="beans.Hero, beans" cascade="none" fetch="select" lazy="proxy" property-ref="InVillage"></one-to-one>
+    <many-to-one name="MainHero" class="beans.Hero, beans" column="hero" not-null="false" lazy="proxy" fetch="select"  />
 
     <bag name="Builds" table="build" cascade="none" fetch="select" inverse="true" lazy="true" >
       <key column="village_id" />
