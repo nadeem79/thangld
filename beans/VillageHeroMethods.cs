@@ -21,9 +21,26 @@ namespace beans
             Random r = new Random();
             try
             {
+
+                Price price = Recruit.GetPrice(TroopType.Nobleman, 1);
+                int heroCount = this.Village.Player.Heroes.Count + 1;
+                
+
+                int clay = price.Clay * heroCount, wood = price.Wood * heroCount, iron = price.Iron * heroCount;
+                if (this.Village[ResourcesType.Wood] < wood || this.Village[ResourcesType.Clay] < clay || this.Village[ResourcesType.Iron] < iron)
+                    throw new TribalWarsException("Không đủ tài nguyên");
+
+                if ((this.Village.Population + price.Population) > this.Village.MaxPopulation)
+                    throw new TribalWarsException("Không đủ farm xây dựng hero");
+
+                if (this.Village[BuildingType.Academy] < heroCount)
+                    throw new TribalWarsException("Số hero không được vượt quá công trình academy");
+
                 Hero hero = new Hero();
                 hero.Type = type;
                 hero.Name = name;
+                hero.Biography = "";
+                hero.Avatar = false;
                 switch (type)
                 {
                     case HeroType.Intelligent:
@@ -45,22 +62,11 @@ namespace beans
                         break;
                 }
 
-                Price price = Recruit.GetPrice(TroopType.Nobleman, 1);
-                int heroCount = this.Village.Player.Heroes.Count + 1;
-                hero.Biography = "";
-
-                int clay = price.Clay * heroCount, wood = price.Wood * heroCount, iron = price.Iron * heroCount;
-                if (this.Village[ResourcesType.Wood] < wood || this.Village[ResourcesType.Clay] < clay || this.Village[ResourcesType.Iron] < iron)
-                    throw new TribalWarsException("Không đủ tài nguyên");
-
-                if ((this.Village.Population + price.Population)>this.Village.MaxPopulation)
-                    throw new TribalWarsException("Không đủ farm xây dựng hero");
-
-                if (this.Village[BuildingType.Academy] < heroCount)
-                    throw new TribalWarsException("Số hero không được vượt quá công trình academy");
+                
 
                 this.Village.Heroes.Add(hero);
                 this.Village.Player.Heroes.Add(hero);
+                
                 hero.InVillage = this.Village;
                 hero.Owner = this.Village.Player;
 

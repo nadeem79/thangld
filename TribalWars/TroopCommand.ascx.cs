@@ -41,12 +41,14 @@ public partial class TroopCommand : System.Web.UI.UserControl
         if (IsPostBack)
             return;
 
-        if (this.Village.Heroes.Count > 0)
-        {
-            this.cbHeroes.DataSource = this.Village.Heroes;
-            this.cbHeroes.DataBind();
-        }
-        
+        //this.cbHeroes.Items.Add(new RadComboBoxItem(;
+        //if (this.Village.Heroes.Count > 0)
+        //{
+        //    this.cbHeroes.DataSource = this.Village.Heroes;
+        //    this.cbHeroes.DataBind();
+        //}
+        foreach (Hero hero in this.Village.Heroes)
+            this.cbHeroes.Items.Add(new RadComboBoxItem(hero.Name, hero.ID.ToString()));
 
         if (this.Village.VillageTroopMethods.TroopFromMe.Count > 0)
         {
@@ -56,6 +58,7 @@ public partial class TroopCommand : System.Web.UI.UserControl
         if (this.Village.VillageTroopMethods.TroopToMe.Count > 0)
         {
             this.incomingRepeater.DataSource = this.Village.VillageTroopMethods.TroopToMe;
+            
             this.incomingRepeater.DataBind();
         }
 
@@ -97,7 +100,7 @@ public partial class TroopCommand : System.Web.UI.UserControl
     protected void bttnAttack_Click(object sender, EventArgs e)
     {
 
-        int spear, sword, axe, scout, light, heavy, ram, catapult, x, y, i;
+        int spear, sword, axe, scout, light, heavy, ram, catapult, x, y, i, heroId;
         ISession session = (ISession)Context.Items["NHibernateSession"];
         int building;
         try
@@ -112,10 +115,20 @@ public partial class TroopCommand : System.Web.UI.UserControl
             catapult = (int.TryParse(this.catapult.Text, out i)) ? i : 0;
             x = (int.TryParse(this.x.Text, out i)) ? i : 0;
             y = (int.TryParse(this.y.Text, out i)) ? i : 0;
+
+
+            int.TryParse(this.cbHeroes.SelectedValue, out heroId);
+
             int.TryParse(this.cbBuildings.SelectedValue, out building);
-
-            Attack attack = this.Village.VillageTroopMethods.CreateAttack(session, x, y, spear, sword, axe, scout, light, heavy, ram, catapult, null, (BuildingType)building);
-
+            Attack attack;
+            try
+            {
+                attack = this.Village.VillageTroopMethods.CreateAttack(session, x, y, spear, sword, axe, scout, light, heavy, ram, catapult, session.Load<Hero>(heroId), (BuildingType)building);
+            }
+            catch
+            {
+                attack = this.Village.VillageTroopMethods.CreateAttack(session, x, y, spear, sword, axe, scout, light, heavy, ram, catapult, null, (BuildingType)building);
+            }
             this.commandTypeSpan.Text = this.typeSpan.Text = "Tấn công";
 
             this.toVillageIdSpan.Text = attack.ToVillage.ID.ToString();
@@ -196,7 +209,7 @@ public partial class TroopCommand : System.Web.UI.UserControl
     }
     protected void confirmAttackButton_Click(object sender, EventArgs e)
     {
-        int spear, sword, axe, scout, light, heavy, ram, catapult, x, y, i;
+        int spear, sword, axe, scout, light, heavy, ram, catapult, x, y, i, heroId;
         int building;
         ISession session = (ISession)Context.Items["NHibernateSession"];
         spear = (int.TryParse(this.spear.Text, out i)) ? i : 0;
@@ -209,10 +222,19 @@ public partial class TroopCommand : System.Web.UI.UserControl
         catapult = (int.TryParse(this.catapult.Text, out i)) ? i : 0;
         x = (int.TryParse(this.x.Text, out i)) ? i : 0;
         y = (int.TryParse(this.y.Text, out i)) ? i : 0;
+        int.TryParse(this.cbHeroes.SelectedValue, out heroId);
         int.TryParse(this.cbBuildings.SelectedValue, out building);
         try
         {
-            Attack attack = this.Village.VillageTroopMethods.CreateAttack(session, x, y, spear, sword, axe, scout, light, heavy, ram, catapult, null, (BuildingType)building);
+            Attack attack;
+            try
+            {
+                attack = this.Village.VillageTroopMethods.CreateAttack(session, x, y, spear, sword, axe, scout, light, heavy, ram, catapult, session.Load<Hero>(heroId), (BuildingType)building);
+            }
+            catch
+            {
+                attack = this.Village.VillageTroopMethods.CreateAttack(session, x, y, spear, sword, axe, scout, light, heavy, ram, catapult, null, (BuildingType)building);
+            }
             attack.Save(session);
             Response.Redirect(string.Format("rally.aspx?id={0}", this.Village.ID), false);
         }

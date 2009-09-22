@@ -4,7 +4,6 @@
     <tbody>
         <tr>
             <th colspan="2" class="style1">
-                
                 Thông tin cá nhân
             </th>
         </tr>

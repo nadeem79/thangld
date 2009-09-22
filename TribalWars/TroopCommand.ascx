@@ -126,15 +126,14 @@
                     </tbody>
                 </table>
             </td>
-            <!--<td valign="top" width="150" align="center">
+            <td valign="top" width="150" align="center">
                 <div id="imgHero"></div>
                 <telerik:RadComboBox ID="cbHeroes" runat="server" OnClientSelectedIndexChanged = "OnClientSelectedIndexChangedEventHandler">
                     <Items>
                         <telerik:RadComboBoxItem Value="0" Text="Chọn hero" />
-                        <telerik:RadComboBoxItem Value="1" Text="Hero1" />
                     </Items>
                 </telerik:RadComboBox>
-            </td>-->
+            </td>
         </tr>
     </tbody>
 </table>

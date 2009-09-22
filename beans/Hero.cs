@@ -140,5 +140,10 @@ namespace beans
 
             this.Experience = experience;
         }
+
+        public override string ToString()
+        {
+            return this.Name;
+        }
     }
 }
