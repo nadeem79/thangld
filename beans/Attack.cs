@@ -84,7 +84,9 @@ namespace beans
 
             if (this.Hero != null)
             {
-                if (!this.FromVillage.Heroes.Contains(this.Hero))
+                if ((from h in this.FromVillage.Heroes
+                     where h == this.Hero
+                     select h).Count<Hero>() == 0)
                     throw new TribalWarsException("Không tồn tại hero trong thành phố");
                 else if (this.FromVillage.MainHero == this.Hero)
                     throw new TribalWarsException("Không thể đưa chủ thành đi tấn công");
@@ -699,7 +701,8 @@ namespace beans
                             this.ToVillage.VillageResourceData.Iron -= returnTroop.Iron;
                         }
                         returnTroop.Hero = this.Hero;
-                        this.Hero.InMovingCommand = returnTroop;
+                        if (this.Hero != null)
+                            this.Hero.InMovingCommand = returnTroop;
                         this.ToVillage.MovingCommandsFromMe.Add(returnTroop);
                         this.FromVillage.MovingCommandsToMe.Add(returnTroop);
                         session.Save(returnTroop);
