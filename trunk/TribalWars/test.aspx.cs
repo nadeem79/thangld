@@ -16,12 +16,18 @@ using beans;
 using Telerik.Web.UI;
 using System.Collections.Generic;
 using Iesi.Collections;
+using System.Collections.Specialized;
 
 public partial class test : System.Web.UI.Page
 {
 
     protected void Page_Load(object sender, EventArgs e)
     {
+
+        ListDictionary l = new ListDictionary();
+        l["aha"] = "haehaeshets";
+        this.Label1.Text = l["aha"].ToString();
+        return;
         double time = 1000;
         this.Label1.Text = "";
         Random r = new Random();

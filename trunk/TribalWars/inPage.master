@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="css/overview.css" />
     <link rel="stylesheet" type="text/css" href="css/facebox.css" />
     <link rel="stylesheet" type="text/css" href="css/game.css" />
-    <link type="text/css" rel="stylesheet" media="all" href="css/chat.css" />
+    <link type="text/css" rel="stylesheet" media="all" href="css/cometchat.css" /> 
 
     <script src="js/jquery.js" type="text/javascript"></script>
 
@@ -561,6 +561,6 @@
             </tbody>
         </table>
     </div>
-    <script type="text/javascript" src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" mce_src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php"> </script>
+    <script type="text/javascript" src="js/cometchat.js"></script> 
 </body>
 </html>
