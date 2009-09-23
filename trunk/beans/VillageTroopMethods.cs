@@ -110,14 +110,7 @@ namespace beans
                 type = TroopType.Ram;
             if (catapult > 0)
                 type = TroopType.Catapult;
-
-            if (hero != null)
-            {
-                attack.Hero = hero;
-                hero.InMovingCommand = attack;
-                hero.InVillage = null;
-                session.Update(hero);
-            }
+            attack.Hero = hero;
 
             attack.Building = building;
             attack.Spear = spear;
