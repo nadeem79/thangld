@@ -91,6 +91,12 @@ namespace beans
             get;
             set;
         }
+        public virtual bool IsRecruiting
+        {
+            get;
+            set;
+        }
+
         public virtual Player Owner
         {
             get;

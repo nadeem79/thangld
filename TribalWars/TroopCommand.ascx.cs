@@ -48,7 +48,8 @@ public partial class TroopCommand : System.Web.UI.UserControl
         //    this.cbHeroes.DataBind();
         //}
         foreach (Hero hero in this.Village.Heroes)
-            this.cbHeroes.Items.Add(new RadComboBoxItem(hero.Name, hero.ID.ToString()));
+            this.cbHeroes.Items.Add(new ListItem(hero.Name, hero.ID.ToString()));
+
 
         if (this.Village.VillageTroopMethods.TroopFromMe.Count > 0)
         {
