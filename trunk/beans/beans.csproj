@@ -95,6 +95,7 @@
     <Compile Include="ISystemLogger.cs" />
     <Compile Include="JobEnum.cs" />
     <Compile Include="Permission.cs" />
+    <Compile Include="RecruitHero.cs" />
     <Compile Include="SecurityException.cs" />
     <Compile Include="ServicesList.cs" />
     <Compile Include="Services\ConfigurationService.cs" />

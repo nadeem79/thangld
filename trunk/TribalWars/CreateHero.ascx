@@ -40,7 +40,7 @@
                                         <td>
                                             <asp:TextBox ID="txtName" runat="server" Width="116px"></asp:TextBox><br />
                                             <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Nhập tên"
-                                                ControlToValidate="txtName"></asp:RequiredFieldValidator>
+                                                ControlToValidate="txtName" ValidationGroup="CreatHero"></asp:RequiredFieldValidator>
                                         </td>
                                     </tr>
                                     <tr>
@@ -51,7 +51,7 @@
                                                 <asp:ListItem Text="Phòng thủ" Value="3"></asp:ListItem>
                                             </asp:RadioButtonList>
                                             <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Chọn kiểu hero"
-                                                ControlToValidate="rdoHeroType"></asp:RequiredFieldValidator>
+                                                ControlToValidate="rdoHeroType"  ValidationGroup="CreatHero"></asp:RequiredFieldValidator>
                                         </td>
                                     </tr>
                                     <tr>

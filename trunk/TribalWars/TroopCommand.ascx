@@ -3,12 +3,15 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 
 <script type="text/javascript">
-    function OnClientSelectedIndexChangedEventHandler(sender, args) {
+    function OnClientSelectedIndexChangedEventHandler() {
         //sender represents the combobox that has fired the event
         //the code below obtains the item that has been changed
-        var item = args.get_item();
-        if (sender.get_value() != 0)
-            $("#imgHero").html(String.format("<img src='data/images/heroes/{0}.jpg' class='hero_image' title='{1}' />", sender.get_value(), sender.get_text()));
+        var id = $('#<% = this.cbHeroes.ClientID %>').val();
+        var name = $('#<% = this.cbHeroes.ClientID %> :selected').text();
+        if ($('#<% = this.cbHeroes.ClientID %>').val() != 0) {
+            $("#imgHero").html(String.format("<img src='data/images/heroes/{0}.jpg' class='hero_image' title='{1}' />", id, name));
+            
+        }
         else
             $("#imgHero").html("");
     }
@@ -32,7 +35,7 @@
 </script>
 
 <h3>
-    Give commanGive commands</h3>
+    Give commands</h3>
 <p>
     <asp:Label ID="lblError" runat="server" ForeColor="Red"></asp:Label></p>
 <table>
@@ -116,6 +119,8 @@
                                 </asp:TextBox>
                                 <span>(<a href="javascript:void(0);" onclick="insertUnit('<% Response.Write(this.catapult.ClientID); %>', <% Response.Write(this.Village.VillageTroopData.Catapult.ToString()); %>);checkCatapult();"><% Response.Write(this.Village.VillageTroopData.Catapult.ToString()); %></a>)</span>
            
+                    
+           
                                 <br />
                                 <div id="toggler" style="display:none;" >
                                 <asp:DropDownList ID="cbBuildings" runat="server" Height="16px" Width="150px">
@@ -128,11 +133,11 @@
             </td>
             <td valign="top" width="150" align="center">
                 <div id="imgHero"></div>
-                <telerik:RadComboBox ID="cbHeroes" runat="server" OnClientSelectedIndexChanged = "OnClientSelectedIndexChangedEventHandler">
-                    <Items>
-                        <telerik:RadComboBoxItem Value="0" Text="Chọn hero" />
-                    </Items>
-                </telerik:RadComboBox>
+                
+                <asp:DropDownList ID="cbHeroes" runat="server" Width="150px" onchange="OnClientSelectedIndexChangedEventHandler();"  >
+                    <asp:ListItem Value="0" Text="Chọn hero"></asp:ListItem>
+                </asp:DropDownList>
+                <br />
             </td>
         </tr>
     </tbody>

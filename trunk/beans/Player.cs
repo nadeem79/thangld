@@ -185,6 +185,11 @@ namespace beans
             get;
             set;
         }
+        public virtual Village MainVillage
+        {
+            get;
+            set;
+        }
         #endregion
 
         #region Static Member
@@ -410,15 +415,17 @@ namespace beans
         
         public virtual void Update(DateTime time, ISession session)
         {
-            if (this.Villages.Count == 0)
+            if (this.MainVillage==null)
             {
                 Village village = Village.CreateVillage(session);
                 village.Player = this;
                 this.Villages.Add(village);
+                this.MainVillage = village;
                 village.LastUpdate = time;
                 village.Name = "Thành phố " + this.Username;
                 //session.Save(village);
                 village.Save(session);
+                session.Update(this);
                 return;
             }
             foreach (Village village in this.Villages)

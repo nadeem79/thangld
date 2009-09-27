@@ -25,6 +25,7 @@
     <property name="Biography" column="biography" length="2000" lazy="true" type="String"></property>
     <property name="Avatar" column="avatar" type="Boolean"></property>
     <property name="IsDead" column="is_dead" type="Boolean"></property>
+    <property name="IsRecruiting" column="is_recruiting" type="Boolean"></property>
     <property name="Type" column="hero_type" type="beans.HeroType, beans"></property>
   </class>
 
