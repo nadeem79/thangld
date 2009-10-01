@@ -5,7 +5,11 @@
   <class name="beans.Report, beans" table="reports" lazy="true" discriminator-value="0">
     <cache usage="read-write"/>
     <id name="ID" column="id" type="Int32" unsaved-value="-1">
-      <generator class="identity"/>
+      <generator class="hilo">
+        <param name="table">hi_value</param>
+        <param name="column">next_value</param>
+        <param name="where">id='report'</param>
+      </generator>
     </id>
     <discriminator column="type" type="Int32" />
 

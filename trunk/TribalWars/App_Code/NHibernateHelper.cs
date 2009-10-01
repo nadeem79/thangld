@@ -35,6 +35,7 @@ using NHibernate.Engine;
             session.EnableFilter("NapFilter");
             session.EnableFilter("EnemyFilter");
             session.EnableFilter("AllyFilter");
+            session.EnableFilter("HeroIsNotRecruiting");
             
             return session;
         }
