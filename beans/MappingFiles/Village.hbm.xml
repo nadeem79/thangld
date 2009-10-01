@@ -4,7 +4,11 @@
   <class name ="beans.Village, beans" table="villages_common" lazy="true">
     <cache usage="read-write"/>
     <id name="ID" column="id" type="Int32">
-      <generator class="identity"/>
+      <generator class="hilo">
+        <param name="table">hi_value</param>
+        <param name="column">next_value</param>
+        <param name="where">id='village'</param>
+      </generator>
     </id>
     
     <property name="Name" column="name" length="100" type="String"/>

@@ -4,7 +4,11 @@
   <class name="beans.Player, beans" table="users" lazy="true">
     <cache usage="read-write"/>
     <id name="ID" column="id" type="Int32">
-      <generator class="identity"/>
+      <generator class="hilo">
+        <param name="table">hi_value</param>
+        <param name="column">next_value</param>
+        <param name="where">id='player'</param>
+      </generator>
     </id>
     
     <property name="Username" column="username" length="200" type="String" not-null="true" unique="true"/>
@@ -36,6 +40,7 @@
     <bag name="Heroes" table="heroes" cascade="none" fetch="select" inverse="true" lazy="true" >
       <key column="owner" />
       <one-to-many class="beans.Hero, beans"/>
+      <filter name="HeroIsNotRecruiting" condition="is_recruiting=0"></filter>
     </bag>
 
     <idbag name="StaffGroups" table="user_group" lazy="true" cascade="save-update">

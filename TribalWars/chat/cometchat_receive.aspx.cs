@@ -226,7 +226,64 @@ public partial class chat_cometchat_receive : System.Web.UI.Page
         if (Session["chat_sessionvars"] == null)
             Session["chat_sessionvars"] = new ListDictionary();
 
+        ListDictionary messages;
 
+        if (Request["chatbox"] != null)
+        {
+            if (Session["cometchat_user_" + Request["chatbox"]] != null)
+                messages = (ListDictionary)Session["cometchat_user_" + Request["chatbox"]];
+        }
+        else
+        {
+            messages = new ListDictionary();
+            if (Request["buddylist"] != null && Request["buddylist"]=="1")
+                this.GetBuddyList();
+
+            if (Request["initialize"]!= null && Request["initialize"]=="1")
+            {
+                this.GetStatus();
+                if (((ListDictionary)Session["cometchat_sessionvars"])["openChatboxId"]!=null && Session["cometchat_user_" + ((ListDictionary)Session["cometchat_sessionvars"])["openChatboxId"]] != null)
+                {
+                    ListDictionary userMessage = (ListDictionary)Session["cometchat_user_" + ((ListDictionary)Session["cometchat_sessionvars"])["openChatboxId"]];
+                    foreach (object key in userMessage.Keys)
+                        messages.Add(key, userMessage[key]);
+                }
+            }
+            else
+            {
+                if (Session["cometchat_sessionvars"]==null)
+				    Session["cometchat_sessionvars"] = new ListDictionary();
+
+                
+
+			if (Request["updatesession"]!=null && Request["updatesession"] == "1")
+				Session["cometchat_sessionvars"] = Request["sessionvars"];
+
+			if (Session["cometchat_sessionvars"] != Request["sessionvars"])
+				this.response["updatesession"] = Session["cometchat_sessionvars"];
+			
+            }
+        }
+		
+		GetLastTimestamp();
+		FetchMessages();
+        
+        ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
+        IDbCommand cmdUpdateLastUpdate = session.Connection.CreateCommand();
+        cmdUpdateLastUpdate.CommandText = "update users set last_update=@time where id=@userid";
+        IDataParameter paramTime = cmdUpdateLastUpdate.CreateParameter();
+        paramTime.DbType = DbType.DateTime;
+        paramTime.ParameterName = "@time";
+        paramTime.Value = DateTime.Now;
+        IDataParameter paramUserId = cmdUpdateLastUpdate.CreateParameter();
+        paramTime.DbType = DbType.Int32;
+        paramTime.ParameterName = "@userid";
+        paramTime.Value = Session[Constant.NormalUserSessionSign];
+        cmdUpdateLastUpdate.Parameters.Add(paramTime);
+        cmdUpdateLastUpdate.Parameters.Add(paramUserId);
+
+        session.Transaction.Enlist(cmdUpdateLastUpdate);
+        cmdUpdateLastUpdate.ExecuteNonQuery();
 
     }
 }

@@ -69,8 +69,19 @@ namespace beans
                 
                 hero.InVillage = this.Village;
                 hero.Owner = this.Village.Player;
+                hero.IsRecruiting = true;
+                hero.IsDead = true;
 
+                RecruitHero recruit = new RecruitHero();
+                recruit.IsResurrection = false;
+                recruit.Hero = hero;
+                recruit.Owner = this.Village.Player;
+                recruit.StartingTime = DateTime.Now;
+                recruit.FinishTime = recruit.StartingTime.AddMilliseconds(Recruit.GetPrice(TroopType.Nobleman, this.Village[BuildingType.Academy]).BuildTime);
+
+                
                 session.Save(hero);
+                session.Save(recruit);
                 session.Update(this.Village);
                 session.Update(this.Village.Player);
 

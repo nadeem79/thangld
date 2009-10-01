@@ -4,5 +4,5 @@
   <filter-def name="NapFilter"></filter-def>
   <filter-def name="AllyFilter"></filter-def>
   <filter-def name="EnemyFilter"></filter-def>
-
+  <filter-def name="HeroIsNotRecruiting"></filter-def>
 </hibernate-mapping>

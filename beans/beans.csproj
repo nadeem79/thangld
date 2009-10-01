@@ -301,6 +301,7 @@
     <EmbeddedResource Include="MappingFiles\Permission.hbm.xml" />
     <EmbeddedResource Include="MappingFiles\StaffGroup.hbm.xml" />
     <EmbeddedResource Include="MappingFiles\Hero.hbm.xml" />
+    <EmbeddedResource Include="MappingFiles\RecruitHero.hbm.xml" />
     <Content Include="Templates\AttackReport.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

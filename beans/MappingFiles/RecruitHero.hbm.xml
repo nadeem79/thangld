@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+
+  <class name="beans.RecruitHero, beans" table="recruit_hero" lazy="true">
+    <id name="ID" column="id" type="Int32">
+      <generator class="hilo">
+        <param name="table">hi_value</param>
+        <param name="column">next_value</param>
+        <param name="where">id='recruit_hero'</param>
+      </generator>
+    </id>
+    
+    <many-to-one name="Hero" class="beans.Hero, beans" column="hero" not-null="true" lazy="no-proxy" fetch="join"/>
+    <many-to-one name="Owner" class="beans.Player, beans" column="hero" not-null="true" lazy="no-proxy" fetch="select"/>
+    <property name="StartingTime" column="starting_time" type="DateTime" not-null="true" />
+    <property name="FinishTime" column="finish_time" type="DateTime" not-null="true" />
+    <property name="IsResurrection" column="is_resurrection" type="Boolean" not-null="false" />
+  </class>
+
+</hibernate-mapping>
