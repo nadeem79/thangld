@@ -43,13 +43,17 @@ namespace beans
             if (this.Owner.MainVillage.MainHero == null)
             {
                 this.Owner.MainVillage.MainHero = this.Hero;
-                session.Update(this.Owner.MainVillage);
+                
             }
-
+            Price p = Recruit.GetPrice(TroopType.Nobleman);
+            this.Owner.MainVillage.Population += p.Population;
+            this.Owner.MainVillage.Heroes.Add(this.Hero);
+            session.Update(this.Owner.MainVillage);
             this.Hero.IsRecruiting = false;
             this.Hero.IsDead = false;
             session.Update(this.Hero);
             session.Delete(this);
+            
         }
 
 

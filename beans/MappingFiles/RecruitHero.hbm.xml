@@ -11,7 +11,7 @@
     </id>
     
     <many-to-one name="Hero" class="beans.Hero, beans" column="hero" not-null="true" lazy="no-proxy" fetch="join"/>
-    <many-to-one name="Owner" class="beans.Player, beans" column="hero" not-null="true" lazy="no-proxy" fetch="select"/>
+    <many-to-one name="Owner" class="beans.Player, beans" column="owner" not-null="true" lazy="no-proxy" fetch="select"/>
     <property name="StartingTime" column="starting_time" type="DateTime" not-null="true" />
     <property name="FinishTime" column="finish_time" type="DateTime" not-null="true" />
     <property name="IsResurrection" column="is_resurrection" type="Boolean" not-null="false" />
