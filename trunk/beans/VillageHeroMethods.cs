@@ -97,5 +97,64 @@ namespace beans
                 throw ex;
             }
         }
+        public void CancelRecruitHero(int recruit_id, ISession session)
+        {
+
+            Price p = Recruit.GetPrice(TroopType.Nobleman);
+
+
+            RecruitHero recruit = (from r in this.Village.Player.RecruitHeroes
+                               where r.ID == recruit_id
+                                   select r).SingleOrDefault<RecruitHero>();
+
+            if (recruit == null)
+                return;
+
+            Price price = Recruit.GetPrice(TroopType.Nobleman);
+            this.Village.VillageResourceData.Wood += price.Wood;
+            this.Village.VillageResourceData.Clay += price.Clay;
+            this.Village.VillageResourceData.Iron += price.Iron;
+            this.Village.Population -= (int)(price.Population);
+            this.Village.Player.RecruitHeroes.Remove(recruit);
+            
+            IList<Recruit> recruits = null;
+
+            for (int i = 0; i < this.Village.Player.RecruitHeroes.Count; i++)
+            {
+                TimeSpan t = recruits[i].FinishTime - recruits[i].LastUpdate;
+                if (i == 0)
+                    recruits[i].LastUpdate = DateTime.Now;
+                else
+                    recruits[i].LastUpdate = recruits[i - 1].FinishTime;
+
+                recruits[i].FinishTime = recruits[i].LastUpdate + t;
+                session.Update(recruits[i]);
+            }
+
+            session.Delete(recruit.Hero);
+            recruit.Hero = null;
+            session.Delete(recruit);
+            session.Update(this.Village);
+            session.Update(this.Village.Player);
+        }
+
+        public RecruitHero ResurrectHero(int heroId, ISession session)
+        {
+            RecruitHero recruit = new RecruitHero();
+            recruit.Hero = session.Get<Hero>(heroId);
+            if (recruit.Hero == null || recruit.Hero.Owner != this.Village.Player)
+                throw new TribalWarsException("Hero không tồn tại");
+
+            recruit.IsResurrection = true;
+            recruit.Owner = this.Village.Player;
+            recruit.StartingTime = DateTime.Now;
+            
+
+            Price p = Recruit.GetPrice(TroopType.Nobleman);
+            
+
+            session.Save(recruit);
+            return recruit;
+        }
     }
 }

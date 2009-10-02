@@ -37,10 +37,14 @@
       <one-to-many class="beans.Village, beans"/>
     </bag>
 
-    <bag name="Heroes" table="heroes" cascade="none" fetch="select" inverse="true" lazy="true" >
+    <bag name="Heroes" table="heroes" cascade="none" fetch="join" inverse="true" lazy="true" >
       <key column="owner" />
       <one-to-many class="beans.Hero, beans"/>
       <filter name="HeroIsNotRecruiting" condition="is_recruiting=0"></filter>
+    </bag>
+    <bag name="RecruitHeroes" table="recruit_hero" cascade="none" fetch="join" inverse="true" lazy="true" >
+      <key column="owner" />
+      <one-to-many class="beans.RecruitHero, beans"/>
     </bag>
 
     <idbag name="StaffGroups" table="user_group" lazy="true" cascade="save-update">

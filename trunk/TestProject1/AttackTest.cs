@@ -73,7 +73,11 @@ namespace TestProject1
             Attack target = new Attack(); // TODO: Initialize to an appropriate value
             ISession session = NHibernateHelper.CreateSession(); // TODO: Initialize to an appropriate value
             TribalWarsEngine.Start(session);
-            Attack a = session.Get<Attack>(1310720);
+            ITransaction trans = session.BeginTransaction();
+            Village v = session.Get<Village>(24);
+            Attack a = v.VillageTroopMethods.CreateAttack(session, 47, 53, 0, 0, 500, 0, 500, 0, 500, 0, session.Load<Hero>(32768), BuildingType.NoBuiding);
+
+            trans.Commit();
             MovingCommand expected = null; // TODO: Initialize to an appropriate value
             MovingCommand actual;
             actual = a.Effect(session);

@@ -185,6 +185,11 @@ namespace beans
             get;
             set;
         }
+        public virtual IList<RecruitHero> RecruitHeroes
+        {
+            get;
+            set;
+        }
         public virtual Village MainVillage
         {
             get;
@@ -430,6 +435,8 @@ namespace beans
             }
             foreach (Village village in this.Villages)
                 village.VillageCommonMethods.UpdateVillage(time, session);
+            foreach (RecruitHero recruit in this.RecruitHeroes)
+                recruit.Expire(time, session);
         }
 
         public virtual Village GetVillage(int ID)
