@@ -23,6 +23,8 @@ public partial class LoginBox : System.Web.UI.UserControl
 
     protected void login_Click(object sender, ImageClickEventArgs e)
     {
+
+        
         ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
         try
         {
@@ -34,8 +36,10 @@ public partial class LoginBox : System.Web.UI.UserControl
             }
             else
             {
-                Session.Add(Constant.NormalUserSessionSign, id);
-                Session.Add(Constant.Username, this.username.Text);
+                Session[Constant.NormalUserSessionSign] = id;
+                Session[Constant.Username] = this.username.Text;
+                //Session.Add(Constant.NormalUserSessionSign, id);
+                //Session.Add(Constant.Username, this.username.Text);
                 if (this.chkRemember.Checked)
                 {
                     Request.Cookies.Remove("username");
