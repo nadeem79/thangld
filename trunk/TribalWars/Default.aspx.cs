@@ -37,26 +37,28 @@ public partial class index : System.Web.UI.Page
                 }
                 else
                 {
-                    Session.Add("user", id);
+                    Session[Constant.NHibernateSessionSign] = id;
+                    //Session.Add(Constant.NHibernateSessionSign, id);
                 }
             }
             catch (Exception exc)
             {
             }
         }
-
-        switch (Session["user"]==null)
+        Response.Write("gggggggg" + Session[Constant.NHibernateSessionSign]);
+        switch (Session[Constant.NHibernateSessionSign]==null)
         {
             case true:
                 LoginBox login = (LoginBox)Page.LoadControl("LoginBox.ascx");
                 this.pBox.Controls.Add(login);
                 break;
             default:
-                PlayerBox player = (PlayerBox)Page.LoadControl("PlayerBox.ascx");
-                player.Player = session.Get<Player>(Session["user"]);
-                this.pBox.Controls.Add(player);
+                /*PlayerBox player = (PlayerBox)Page.LoadControl("PlayerBox.ascx");
+                player.Player = session.Get<Player>(Session[Constant.NHibernateSessionSign]);
+                this.pBox.Controls.Add(player);*/
                 break;
         }
+        //Response.Write(Session[Constant.NHibernateSessionSign]);
         
     }
 }

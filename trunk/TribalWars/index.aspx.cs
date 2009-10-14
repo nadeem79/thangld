@@ -43,7 +43,7 @@ public partial class index : System.Web.UI.Page
             }
         }
 
-        switch (Session["user"]==null)
+        switch (Session[Constant.NormalUserSessionSign] == null)
         {
             case true:
                 LoginBox login = (LoginBox)Page.LoadControl("LoginBox.ascx");
@@ -51,10 +51,10 @@ public partial class index : System.Web.UI.Page
                 break;
             default:
                 ISession session = (ISession)Context.Items[Constant.NHibernateSessionSign];
-                
-                PlayerBox player = (PlayerBox)Page.LoadControl("PlayerBox.ascx");
-                player.Player = session.Get<Player>(Session["user"]);
-                this.pBox.Controls.Add(player);
+                //PlayerBox player = (PlayerBox)Page.LoadControl("PlayerBox.ascx");
+                Response.Write(Session[Constant.NHibernateSessionSign]);
+                //player.Player = session.Get<Player>(Session[Constant.NHibernateSessionSign]);
+                //this.pBox.Controls.Add(player);
                 break;
         }
         
