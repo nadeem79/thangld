@@ -45,7 +45,9 @@ public partial class CreateHero : System.Web.UI.UserControl
 
         try
         {
+              
             Hero hero = this.Village.VillageHeroMethods.CreateHero(this.txtName.Text, type, session);
+            //RecruitHero recruit = this.Village.VillageHeroMethods.
             Response.Redirect(string.Format("academy.aspx?id={0}&page=details&hero={1}", this.Village.ID, hero.ID), false);
         }
         catch (TribalWarsException ex)
