@@ -186,6 +186,14 @@ namespace beans
                                             (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Recruit.catapult_clay").Value,
                                             (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Recruit.catapult_iron").Value,
                                             Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Recruit.catapult_population").Value);
+            Recruit.pNoble = new Price("Noble",
+                                            (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Recruit.noble_build_time").Value,
+                                            (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Recruit.noble_wood").Value,
+                                            (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Recruit.noble_clay").Value,
+                                            (int)Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Recruit.noble_iron").Value,
+                                            Configuration.TribalWarsConfiguration.GetNumericConfigurationItem("Recruit.noble_population").Value);
+
+
             Recruit.pNoble = new Price("Noble", 9860, 28000, 30000, 25000, 100);
         }
         protected static void CalculateHeroLevel()
