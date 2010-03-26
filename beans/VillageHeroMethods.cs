@@ -27,6 +27,10 @@ namespace beans
                 
 
                 int clay = price.Clay * heroCount, wood = price.Wood * heroCount, iron = price.Iron * heroCount;
+                this.Village[ResourcesType.Wood] -= wood;
+                this.Village[ResourcesType.Clay] -= clay;
+                this.Village[ResourcesType.Iron] -= iron;
+
                 if (this.Village[ResourcesType.Wood] < wood || this.Village[ResourcesType.Clay] < clay || this.Village[ResourcesType.Iron] < iron)
                     throw new TribalWarsException("Không đủ tài nguyên");
 
@@ -130,8 +134,9 @@ namespace beans
                 recruits[i].FinishTime = recruits[i].LastUpdate + t;
                 session.Update(recruits[i]);
             }
+            if (!recruit.IsResurrection)
+                session.Delete(recruit.Hero);
 
-            session.Delete(recruit.Hero);
             recruit.Hero = null;
             session.Delete(recruit);
             session.Update(this.Village);
@@ -148,10 +153,9 @@ namespace beans
             recruit.IsResurrection = true;
             recruit.Owner = this.Village.Player;
             recruit.StartingTime = DateTime.Now;
-            
 
             Price p = Recruit.GetPrice(TroopType.Nobleman);
-            
+            recruit.FinishTime = recruit.StartingTime.AddMilliseconds(p.BuildTime);
 
             session.Save(recruit);
             return recruit;
