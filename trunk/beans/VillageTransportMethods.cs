@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NHibernate;
-using NHibernate.Linq;
+
 using NHibernate.Criterion;
 
 namespace beans
