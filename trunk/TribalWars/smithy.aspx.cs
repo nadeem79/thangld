@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using NHibernate;
-using NHibernate.Linq;
+
 using beans;
 using System.Data;
 using Telerik.Web.UI;
