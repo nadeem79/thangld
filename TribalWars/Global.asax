@@ -6,7 +6,7 @@
     {
         // Code that runs on application startup
         //log4net.Config.XmlConfigurator.Configure();
-        HibernatingRhinos.NHibernate.Profiler.Appender.NHibernateProfiler.Initialize();
+//        HibernatingRhinos.NHibernate.Profiler.Appender.NHibernateProfiler.Initialize();
         Application.Add(Constant.UserLoginCount, 0);
         NHibernate.ISession session = NHibernateHelper.CreateSession();
         beans.TribalWarsEngine.Start(session);

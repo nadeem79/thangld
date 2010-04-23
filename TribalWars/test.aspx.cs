@@ -11,7 +11,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 
 using NHibernate;
-using NHibernate.Linq;
+
 using beans;
 using Telerik.Web.UI;
 using System.Collections.Generic;
