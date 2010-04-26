@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -12,6 +12,10 @@
     <AssemblyName>beans</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -140,11 +144,6 @@
     </Compile>
     <Compile Include="OfferAcceptedReport.cs" />
     <Compile Include="Report.cs" />
-    <Compile Include="reports.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>reports.resx</DependentUpon>
-    </Compile>
     <Compile Include="ResourceReceiveReport.cs" />
     <Compile Include="Return.cs" />
     <Compile Include="SendResource.cs" />
@@ -163,7 +162,6 @@
     <Compile Include="Sex.cs" />
     <Compile Include="SupportReport.cs" />
     <Compile Include="SupportWithdawalReport.cs" />
-    <Compile Include="Test.cs" />
     <Compile Include="Text.cs" />
     <Compile Include="TimeComparer.cs" />
     <Compile Include="TribeDiplomate.cs" />
@@ -284,11 +282,6 @@
   <ItemGroup>
     <EmbeddedResource Include="MappingFiles\Text.hbm.xml">
       <Generator>nhibernate-mapping.xsd</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="reports.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>reports.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
