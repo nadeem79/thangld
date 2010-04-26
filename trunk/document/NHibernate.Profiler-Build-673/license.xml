@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<license id="1494a33d-806c-4c1b-bfcf-bd8fd0c4b04f" expiration="2010-04-27T06:50:56.0000000" type="Trial" prof="NHProf">
+  <name>gdht gru</name>
+  <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+    <SignedInfo>
+      <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
+      <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
+      <Reference URI="">
+        <Transforms>
+          <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
+        </Transforms>
+        <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <DigestValue>88HyU/AaUH3G2iXbsLyBN/BwILQ=</DigestValue>
+      </Reference>
+    </SignedInfo>
+    <SignatureValue>as29mtaQ2yC6B25eIJzlNDbZ2aHPEho0MAjmhtcsL3KhSi0LA0miQEEScYq4GGhIYItcWs2xT1Wt8rQuirfX1ksOQVes68TVgjxdF56RltELRHJMXloSOAisP9m0n3ayQNEpCvijEHMcRizQYJzqkAsU/973/0a9wTRHulati9I=</SignatureValue>
+  </Signature>
+</license>
