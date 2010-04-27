@@ -1,0 +1,51 @@
+﻿Hệ thống start lúc 14:46 ngày 14/09/2009
+Hệ thống start lúc 14:47 ngày 14/09/2009
+15/09/2009 09:44 - thangldThay đổi numeric setting 'Unit.scout_damage' từ 0 sang 2
+15/09/2009 09:44 - thangldThay đổi numeric setting 'Unit.scout_cavalry_defense' từ 0 sang 1
+15/09/2009 10:39 - thangldThay đổi numeric setting 'Unit.ram_damage' từ 0 sang 2
+15/09/2009 10:39 - thangldThay đổi numeric setting 'Unit.ram_cavalry_defense' từ 0 sang 20
+15/09/2009 10:39 - thangldThay đổi numeric setting 'Unit.ram_infantry_defense' từ 0 sang 50
+15/09/2009 10:40 - thangldThay đổi numeric setting 'Unit.ram_infantry_defense' từ 50 sang 0
+15/09/2009 10:40 - thangldThay đổi numeric setting 'Unit.ram_infantry_defense' từ 0 sang 20
+15/09/2009 10:40 - thangldThay đổi numeric setting 'Unit.ram_cavalry_defense' từ 20 sang 50
+15/09/2009 10:40 - thangldThay đổi numeric setting 'Unit.catapult_damage' từ 0 sang 100
+15/09/2009 10:41 - thangldThay đổi numeric setting 'Unit.catapult_infantry_defense' từ 0 sang 100
+15/09/2009 10:41 - thangldThay đổi numeric setting 'Unit.catapult_cavalry_defense' từ 0 sang 50
+17/09/2009 10:05 - thangldTạo mới numeric setting 'Unit.catapult_damage_building' giá trị 2
+17/09/2009 10:42 - thangldTạo mới text setting Building.capital_headquarter
+17/09/2009 10:43 - thangldTạo mới text setting Building.capital_barrack
+17/09/2009 10:43 - thangldTạo mới text setting Building.capital_stable
+17/09/2009 10:43 - thangldTạo mới text setting Building.capital_workshop
+17/09/2009 10:49 - thangldTạo mới text setting Building.capital_smithy
+17/09/2009 10:50 - thangldTạo mới text setting Building.capital_rally
+17/09/2009 10:50 - thangldTạo mới text setting Building.capital_market
+17/09/2009 10:50 - thangldTạo mới text setting Building.capital_timber_camp
+17/09/2009 10:50 - thangldTạo mới text setting Building.capital_clay_pit
+17/09/2009 10:51 - thangldTạo mới text setting Building.capital_iron_mine
+17/09/2009 10:51 - thangldTạo mới text setting Building.capital_farm
+17/09/2009 10:51 - thangldTạo mới text setting Building.capital_warehouse
+17/09/2009 10:51 - thangldTạo mới text setting Building.capital_wall
+17/09/2009 10:54 - thangldTạo mới text setting fsbhah
+17/09/2009 10:54 - thangldPlease, use the Content property of RadEditor to set its content. 
+The value of the Text property is generated using the value of the Content property.
+   at Telerik.Web.UI.RadEditor.set_Text(String value)
+   at administrator_create_text.bttnChangeText_Click(Object sender, EventArgs e) in d:\linq\TribalWars\administrator\create_text.aspx.cs:line 34
+============================================
+
+17/09/2009 10:54 - thangldThay đổi giá trị text setting fsbhah
+17/09/2009 10:54 - thangldThay đổi giá trị text setting Building.capital_workshop
+17/09/2009 10:54 - thangldThay đổi giá trị text setting Building.capital_warehouse
+17/09/2009 10:54 - thangldThay đổi giá trị text setting Building.capital_wall
+17/09/2009 10:54 - thangldThay đổi giá trị text setting Building.capital_timber_camp
+17/09/2009 10:54 - thangldThay đổi giá trị text setting Building.capital_stable
+17/09/2009 10:54 - thangldThay đổi giá trị text setting Building.capital_smithy
+17/09/2009 10:54 - thangldThay đổi giá trị text setting Building.capital_rally
+17/09/2009 10:54 - thangldThay đổi giá trị text setting Building.capital_market
+17/09/2009 10:54 - thangldThay đổi giá trị text setting Building.capital_iron_mine
+17/09/2009 10:54 - thangldThay đổi giá trị text setting Building.capital_headquarter
+17/09/2009 10:54 - thangldThay đổi giá trị text setting Building.capital_farm
+17/09/2009 10:54 - thangldThay đổi giá trị text setting Building.capital_clay_pit
+17/09/2009 10:54 - thangldThay đổi giá trị text setting Building.capital_barrack
+17/09/2009 10:54 - thangldXoá text setting 'fsbhah'
+17/09/2009 11:03 - Hệ thống start
+17/09/2009 11:03 - thangldRestart server

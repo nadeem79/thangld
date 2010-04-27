@@ -1,0 +1,117 @@
+﻿using System;
+using System.Data;
+using System.Configuration;
+
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+
+using System.Data.SqlClient;
+
+/// <summary>
+/// Summary description for Report
+/// </summary>
+public class Report
+{
+
+    public static void WriteAttackReport(
+        string title, int aVillage, int dVillage, string owner, DateTime create_time,
+        int aSpear,  int aSword,  int aAxe,  int aBowman,  int aLight,  int aScout,  int aHeavy,  int aMounted,  int aRam,  int aCatapult,  int aNoble,
+        int dSpear,  int dSword,  int dAxe,  int dBowman,  int dLight,  int dScout,  int dHeavy,  int dMounted,  int dRam,  int dCatapult,  int dNoble,
+        bool winningSide, // true nếu là bên thắng, false nếu là bên thua
+        double luck,
+        int saSpear, int saSword, int saAxe, int saBowman, int saLight, int saScout, int saHeavy, int saMounted, int saRam, int saCatapult, int saNoble,
+        int sdSpear, int sdSword, int sdAxe, int sdBowman, int sdLight, int sdScout, int sdHeavy, int sdMounted, int sdRam, int sdCatapult, int sdNoble,
+        int wood, int clay, int iron)
+    {
+        SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["tw"].ConnectionString);
+        SqlCommand cmdReport = conn.CreateCommand();
+
+        cmdReport.CommandText = "insert into reports (owner, village_1, village_2, create_time, winningside, luck, title, " +
+            "aspear, asword, aaxe, abow, ascout, alight, aheavy, amounted, aram, acatapult, anoble, " +
+            "dspear, dsword, daxe, dbowman, dscout, dlight, dheavy, dmounted, dram, dcatapult, dnoble, " +
+            "saspear, sasword, saaxe, sabowman, sascout, salight, saheavy, samounted, saram, sacatapult, sanoble, " +
+            "sdspear, sdsword, sdaxe, sdbowman, sdscout, sdlight, sdheavy, sdmounted, sdram, sdcatapult, sdnoble, " +
+            "clay, wood, iron) " +
+            " values (@owner, @village_1, @village_2, @create_time, @winningside, @luck, @title, " +
+            "@aspear, @asword, @aaxe, @abow, @ascout, @alight, @aheavy, @amounted, @aram, @acatapult, @anoble, " +
+            "@dspear, @dsword, @daxe, @dbow, @dscout, @dlight, @dheavy, @dmounted, @dram, @dcatapult, @dnoble, " +
+            "@saspear, @sasword, @saaxe, @sabow, @sascout, @salight, @saheavy, @samounted, @saram, @sacatapult, @sanoble, " +
+            "@sdspear, @sdsword, @sdaxe, @sdbow, @sdscout, @sdlight, @sdheavy, @sdmounted, @sdram, @sdcatapult, @sdnoble, " +
+            "@clay, @wood, @iron)";
+
+        cmdReport.Parameters.Add("@owner", SqlDbType.NVarChar, 200).Value = owner;
+        cmdReport.Parameters.Add("@village_1", SqlDbType.Int).Value = aVillage;
+        cmdReport.Parameters.Add("@village_2", SqlDbType.Int).Value = dVillage;
+        cmdReport.Parameters.Add("@create_time", SqlDbType.DateTime).Value = create_time;
+        cmdReport.Parameters.Add("@winningside", SqlDbType.Bit).Value = winningSide;
+        cmdReport.Parameters.Add("@luck", SqlDbType.Float).Value = luck;
+        cmdReport.Parameters.Add("@title", SqlDbType.NVarChar, 500).Value = title;
+
+        cmdReport.Parameters.Add("@aspear", SqlDbType.Int).Value = aSpear;
+        cmdReport.Parameters.Add("@asword", SqlDbType.Int).Value = aSword;
+        cmdReport.Parameters.Add("@aaxe", SqlDbType.Int).Value = aAxe;
+        cmdReport.Parameters.Add("@abow", SqlDbType.Int).Value = aBowman;
+        cmdReport.Parameters.Add("@ascout", SqlDbType.Int).Value = aScout;
+        cmdReport.Parameters.Add("@alight", SqlDbType.Int).Value = aLight;
+        cmdReport.Parameters.Add("@aheavy", SqlDbType.Int).Value = aHeavy;
+        cmdReport.Parameters.Add("@amounted", SqlDbType.Int).Value = aMounted;
+        cmdReport.Parameters.Add("@aram", SqlDbType.Int).Value = aRam;
+        cmdReport.Parameters.Add("@acatapult", SqlDbType.Int).Value = aCatapult;
+        cmdReport.Parameters.Add("@anoble", SqlDbType.Int).Value = aNoble;
+
+        cmdReport.Parameters.Add("@dspear", SqlDbType.Int).Value = dSpear;
+        cmdReport.Parameters.Add("@dsword", SqlDbType.Int).Value = dSword;
+        cmdReport.Parameters.Add("@daxe", SqlDbType.Int).Value = dAxe;
+        cmdReport.Parameters.Add("@dbow", SqlDbType.Int).Value = dBowman;
+        cmdReport.Parameters.Add("@dscout", SqlDbType.Int).Value = dScout;
+        cmdReport.Parameters.Add("@dlight", SqlDbType.Int).Value = dLight;
+        cmdReport.Parameters.Add("@dheavy", SqlDbType.Int).Value = dHeavy;
+        cmdReport.Parameters.Add("@dmounted", SqlDbType.Int).Value = dMounted;
+        cmdReport.Parameters.Add("@dram", SqlDbType.Int).Value = dRam;
+        cmdReport.Parameters.Add("@dcatapult", SqlDbType.Int).Value = dCatapult;
+        cmdReport.Parameters.Add("@dnoble", SqlDbType.Int).Value = dNoble;
+
+        cmdReport.Parameters.Add("@saspear", SqlDbType.Int).Value = saSpear;
+        cmdReport.Parameters.Add("@sasword", SqlDbType.Int).Value = saSword;
+        cmdReport.Parameters.Add("@saaxe", SqlDbType.Int).Value = saAxe;
+        cmdReport.Parameters.Add("@sabow", SqlDbType.Int).Value = saBowman;
+        cmdReport.Parameters.Add("@sascout", SqlDbType.Int).Value = saScout;
+        cmdReport.Parameters.Add("@salight", SqlDbType.Int).Value = saLight;
+        cmdReport.Parameters.Add("@saheavy", SqlDbType.Int).Value = saHeavy;
+        cmdReport.Parameters.Add("@samounted", SqlDbType.Int).Value = saMounted;
+        cmdReport.Parameters.Add("@saram", SqlDbType.Int).Value = saRam;
+        cmdReport.Parameters.Add("@sacatapult", SqlDbType.Int).Value = saCatapult;
+        cmdReport.Parameters.Add("@sanoble", SqlDbType.Int).Value = saNoble;
+
+        cmdReport.Parameters.Add("@sdspear", SqlDbType.Int).Value = sdSpear;
+        cmdReport.Parameters.Add("@sdsword", SqlDbType.Int).Value = sdSword;
+        cmdReport.Parameters.Add("@sdaxe", SqlDbType.Int).Value = sdAxe;
+        cmdReport.Parameters.Add("@sdbow", SqlDbType.Int).Value = sdBowman;
+        cmdReport.Parameters.Add("@sdscout", SqlDbType.Int).Value = sdScout;
+        cmdReport.Parameters.Add("@sdlight", SqlDbType.Int).Value = sdLight;
+        cmdReport.Parameters.Add("@sdheavy", SqlDbType.Int).Value = sdHeavy;
+        cmdReport.Parameters.Add("@sdmounted", SqlDbType.Int).Value = sdMounted;
+        cmdReport.Parameters.Add("@sdram", SqlDbType.Int).Value = sdRam;
+        cmdReport.Parameters.Add("@sdcatapult", SqlDbType.Int).Value = sdCatapult;
+        cmdReport.Parameters.Add("@sdnoble", SqlDbType.Int).Value = sdNoble;
+
+        cmdReport.Parameters.Add("@clay", SqlDbType.Int).Value = clay;
+        cmdReport.Parameters.Add("@wood", SqlDbType.Int).Value = wood;
+        cmdReport.Parameters.Add("@iron", SqlDbType.Int).Value = iron;
+
+        conn.Open();
+        cmdReport.ExecuteNonQuery();
+        conn.Close();
+    }
+
+    public Report()
+    {
+        //
+        // TODO: Add constructor logic here
+        //
+    }
+}

@@ -1,0 +1,74 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="administrator.master.cs"
+    Inherits="administrator_administrator" %>
+
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Trang quản trị</title>
+
+    <script type="text/javascript" src="../js/jquery.js"></script>
+
+    <script type="text/javascript" src="../js/facebox.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../css/facebox.css" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <telerik:RadScriptManager ID="RadScriptManager1" runat="server" 
+            EnableViewState="False" OutputCompression="Forced">
+        </telerik:RadScriptManager>
+        <telerik:RadFormDecorator ID="RadFormDecorator1" runat="server" Skin="Vista" />
+        <table border="1" width="100%">
+            <tbody>
+                <tr>
+                    <td width="15%" valign="top">
+                        <center>
+                            <h1>
+                                MENU</h1>
+                        </center>
+                        <telerik:RadTreeView ID="menu" runat="server" onnodeclick="menu_NodeClick">
+                            <Nodes>
+                                <telerik:RadTreeNode runat="server" Text="Text Settings" Value="TextSettings" PostBack="false">
+                                    <Nodes>
+                                        <telerik:RadTreeNode runat="server" NavigateUrl="~/administrator/text_settings.aspx"
+                                            Text="Danh sách text" Value="list">
+                                        </telerik:RadTreeNode>
+                                        <telerik:RadTreeNode runat="server" Text="Create Text" Value="create" NavigateUrl="~/administrator/create_text.aspx">
+                                        </telerik:RadTreeNode>
+                                    </Nodes>
+                                </telerik:RadTreeNode>
+                                <telerik:RadTreeNode runat="server" Text="Numeric Settings" Value="NumericSettings"
+                                    PostBack="false">
+                                    <Nodes>
+                                        <telerik:RadTreeNode runat="server" NavigateUrl="~/administrator/numeric_settings.aspx"
+                                            Text="Danh sách numeric" Value="list">
+                                        </telerik:RadTreeNode>
+                                        <telerik:RadTreeNode runat="server" PostBack="true" Value="RestartServer"
+                                            Text="Restart Server"></telerik:RadTreeNode>
+                                    </Nodes>
+                                </telerik:RadTreeNode>
+                                <telerik:RadTreeNode runat="server" Text="Quản lý thành viên" Value="StaffGroupManagement"
+                                    PostBack="false">
+                                    <Nodes>
+                                        <telerik:RadTreeNode runat="server" NavigateUrl="~/administrator/staff_groups.aspx"
+                                            Text="Danh sách nhóm quyền" Value="List" PostBack="false">
+                                        </telerik:RadTreeNode>
+                                    </Nodes>
+                                </telerik:RadTreeNode>
+                            </Nodes>
+                        </telerik:RadTreeView>
+                        <td valign="top">
+                            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                            </asp:ContentPlaceHolder>
+                        </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    </form>
+</body>
+</html>
