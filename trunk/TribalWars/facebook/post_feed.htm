@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
+<body>
+    <div id="comments_post">
+        <h3>
+            Post a comment to your Facebook Feed:</h3>
+        <form name="comment_form" method="POST">
+        <div id="user">
+            Name:
+            <input name="name" size="27"><br />
+            <fb:login-button length='long' onlogin="update_user_box();">
+            </fb:login-button>
+        </div>
+        <br />
+        <textarea name="comment" rows="5" cols="30"></textarea>
+        <br />
+        <input type="button" onclick="submit_comment();" value="Submit Comment">
+        </form>
+    </div>
+
+    <script type="text/javascript">
+        function update_user_box() {
+            var user_box = document.getElementById("user");
+
+            user_box.innerHTML =
+"<span>"
++ "<fb:profile-pic uid='loggedinuser' facebook-logo='true'></fb:profile-pic>"
++ "Welcome, <fb:name uid='loggedinuser' useyou='false'></fb:name>"
++ "</span>";
+
+            FB.XFBML.Host.parseDomTree();
+        }
+
+        function update_user_not() {
+        }
+
+        function submit_comment() {
+            comment_text = document.getElementsByName("comment")[0].value;
+            var template_var = { "post-title": "pakt.com",
+            "post-url": "http://1280.com/DreamingFighter",
+            "comment": comment_text,
+                "images": [{ "src": "http://profile.ak.fbcdn.net/v228/1591/10/n579529377_9221.jpg", "href": "http://1280.com/DreamingFighter"}]
+            };
+            FB.Connect.showFeedDialog("138372488356", template_var);
+            document.getElementsByName("comment")[0].value = "";
+        }
+    </script>
+
+    <script type="text/javascript" src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php"
+        mce_src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php"> </script>
+
+    <script type="text/javascript">
+        var api_key = "e094a814cb495379f86202daba4d5bca";
+        var channel_path = "xd_receiver.htm";
+        FB.init(api_key, channel_path, { "ifUserConnected": update_user_box });
+    </script>
+
+</body>
+</html>

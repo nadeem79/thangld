@@ -1,0 +1,565 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="inPage.master.cs" Inherits="inPage"
+    EnableViewState="true" %>
+
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<%@ Register Src="Shoutbox.ascx" TagName="Shoutbox" TagPrefix="uc1" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
+<head runat="server">
+    <title>Medieval War</title>
+    <link rel="icon" type="image/gif" href="favicon.gif">
+    <link rel="stylesheet" type="text/css" href="css/inventory.css" />
+    <link rel="stylesheet" type="text/css" href="css/stamm_new_menu.css" />
+    <link rel="stylesheet" type="text/css" href="css/stamm.css" />
+    <link rel="stylesheet" type="text/css" href="css/overview.css" />
+    <link rel="stylesheet" type="text/css" href="css/facebox.css" />
+    <link rel="stylesheet" type="text/css" href="css/game.css" />
+    <link type="text/css" rel="stylesheet" media="all" href="css/cometchat.css" /> 
+
+    <script src="js/jquery.js" type="text/javascript"></script>
+
+    <script src="js/facebox.js" type="text/javascript"></script>
+    <script type="text/javascript" src="js/tiny_mce/tiny_mce.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $("a[rel*=facebox]").facebox()
+        })
+    </script>
+    
+    <script src="js/script.js" type="text/javascript"></script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+<div id="hgeheheherh"></div>
+    <form id="form1" runat="server">
+    <telerik:RadScriptManager ID="RadScriptManager1" runat="server">
+    </telerik:RadScriptManager>
+    <telerik:RadFormDecorator ID="RadFormDecorator1" runat="server" DecoratedControls="All"
+        Skin="Vista" />
+    <telerik:RadWindowManager ID="RadWindowManager1" runat="server">
+        <Windows>
+            <telerik:RadWindow ID="ConfirmAttack" Modal="true" InitialBehavior="Pin" Width="500" runat="server"
+                Style="z-index: 1;">
+            </telerik:RadWindow>
+        </Windows>
+    </telerik:RadWindowManager>
+    <div class="top_background">
+    </div>
+    <div style="text-align: center;">
+        <table class="navi-border" style="width: 840px; border-collapse: collapse; margin: 11px auto auto;
+            text-align: left;">
+            <tr>
+                <td>
+                    <telerik:RadMenu ID="RadToolBar1" runat="server" DataMember="this.CurrentVillage"
+                        Style="z-index: 0;">
+                        <Items>
+                            <telerik:RadMenuItem runat="server" NavigateUrl="~/logout.aspx" Text="Thoát game">
+                            </telerik:RadMenuItem>
+                            <telerik:RadMenuItem runat="server" Text="Tài khoản" NavigateUrl="user_profile.aspx">
+                                <Items>
+                                    <telerik:RadMenuItem runat="server" Text="Tài khoản" NavigateUrl="user_profile.aspx?type=0"
+                                        ValidationGroup="menu">
+                                    </telerik:RadMenuItem>
+                                    <telerik:RadMenuItem runat="server" Text="Email" NavigateUrl="user_profile.aspx?type=1"
+                                        ValidationGroup="menu">
+                                    </telerik:RadMenuItem>
+                                    <telerik:RadMenuItem runat="server" Text="Mật khẩu" NavigateUrl="user_profile.aspx?type=2"
+                                        ValidationGroup="menu">
+                                    </telerik:RadMenuItem>
+                                </Items>
+                            </telerik:RadMenuItem>
+                            <telerik:RadMenuItem runat="server" Text="Bang hội" NavigateUrl="tribe.aspx">
+                                <Items>
+                                    <telerik:RadMenuItem runat="server" Text="Thông tin" NavigateUrl="tribe.aspx?page=0"
+                                        ValidationGroup="menu">
+                                    </telerik:RadMenuItem>
+                                    <telerik:RadMenuItem runat="server" Text="Thành viên" NavigateUrl="tribe.aspx?page=1"
+                                        ValidationGroup="menu">
+                                    </telerik:RadMenuItem>
+                                    <telerik:RadMenuItem runat="server" Text="Ngoại giao" NavigateUrl="tribe.aspx?page=2"
+                                        ValidationGroup="menu">
+                                    </telerik:RadMenuItem>
+                                    <telerik:RadMenuItem runat="server" Text="Diễn đàn bang" NavigateUrl="tribe.aspx?page=3"
+                                        ValidationGroup="menu">
+                                    </telerik:RadMenuItem>
+                                </Items>
+                            </telerik:RadMenuItem>
+                            <telerik:RadMenuItem runat="server" Text="Báo cáo" NavigateUrl="list_report.aspx">
+                                <Items>
+                                    <telerik:RadMenuItem runat="server" Text="Tất cả" NavigateUrl="list_report.aspx?type=0"
+                                        ValidationGroup="menu">
+                                    </telerik:RadMenuItem>
+                                    <telerik:RadMenuItem runat="server" Text="Tấn công" NavigateUrl="list_report.aspx?type=1"
+                                        ValidationGroup="menu">
+                                    </telerik:RadMenuItem>
+                                    <telerik:RadMenuItem runat="server" Text="Phòng thủ" NavigateUrl="list_report.aspx?type=2"
+                                        ValidationGroup="menu">
+                                    </telerik:RadMenuItem>
+                                    <telerik:RadMenuItem runat="server" Text="Hỗ trợ" NavigateUrl="list_report.aspx?type=3"
+                                        ValidationGroup="menu">
+                                    </telerik:RadMenuItem>
+                                    <telerik:RadMenuItem runat="server" Text="Buôn bán" NavigateUrl="list_report.aspx?type=4"
+                                        ValidationGroup="menu">
+                                    </telerik:RadMenuItem>
+                                </Items>
+                            </telerik:RadMenuItem>
+                            <telerik:RadMenuItem runat="server" Text="Hòm thư" NavigateUrl="list_mail.aspx">
+                                <Items>
+                                    <telerik:RadMenuItem runat="server" Text="Thư đến" NavigateUrl="list_mail.aspx" ValidationGroup="menu">
+                                    </telerik:RadMenuItem>
+                                    <telerik:RadMenuItem runat="server" Text="Thư đi" NavigateUrl="Mail_send.aspx" ValidationGroup="menu">
+                                    </telerik:RadMenuItem>
+                                    <telerik:RadMenuItem runat="server" Text="Viết thư" NavigateUrl="write_mail.aspx"
+                                        ValidationGroup="menu">
+                                    </telerik:RadMenuItem>
+                                    <telerik:RadMenuItem runat="server" Text="Hỗ trợ" NavigateUrl="" ValidationGroup="menu">
+                                    </telerik:RadMenuItem>
+                                </Items>
+                            </telerik:RadMenuItem>
+                        </Items>
+                    </telerik:RadMenu>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div style="text-align: center;">
+        <center>
+            <table width="855">
+                <tr>
+                    <td>
+                        <telerik:RadToolBar ID="menu" runat="server">
+                            <Items>
+                                <telerik:RadToolBarButton runat="server" ImageUrl="~/images/main.png" NavigateUrl="~/headquarters.aspx"
+                                    Text="Nhà chính" >
+                                </telerik:RadToolBarButton>
+                                <telerik:RadToolBarButton runat="server" ImageUrl="~/images/barracks.png" NavigateUrl="~/barrack.aspx"
+                                    Text="Bộ binh">
+                                </telerik:RadToolBarButton>
+                                <telerik:RadToolBarButton runat="server" ImageUrl="~/images/stable.png" NavigateUrl="~/stable.aspx"
+                                    Text="Kị binh">
+                                </telerik:RadToolBarButton>
+                                <telerik:RadToolBarButton runat="server" ImageUrl="~/images/garage.png" NavigateUrl="~/workshop.aspx"
+                                    Text="Nhà xe">
+                                </telerik:RadToolBarButton>
+                                <telerik:RadToolBarButton runat="server" ImageUrl="~/images/smith.png" NavigateUrl="~/smithy.aspx"
+                                    Text="Viện nghiên cứu">
+                                </telerik:RadToolBarButton>
+                                <telerik:RadToolBarButton runat="server" ImageUrl="~/images/place.png" NavigateUrl="~/rally.aspx"
+                                    Text="Trại lính">
+                                </telerik:RadToolBarButton>
+                                <telerik:RadToolBarButton runat="server" ImageUrl="~/images/market.png" NavigateUrl="~/market.aspx"
+                                    Text="Chợ">
+                                </telerik:RadToolBarButton>
+                                <telerik:RadToolBarButton runat="server" ImageUrl="~/images/wood.png" NavigateUrl="~/wood.aspx"
+                                    Text="Trại gỗ">
+                                </telerik:RadToolBarButton>
+                                <telerik:RadToolBarButton runat="server" ImageUrl="~/images/stone.png" NavigateUrl="~/clay.aspx"
+                                    Text="Lò gạch">
+                                </telerik:RadToolBarButton>
+                                <telerik:RadToolBarButton runat="server" ImageUrl="~/images/iron.png" NavigateUrl="~/iron.aspx"
+                                    Text="Mỏ kim loại">
+                                </telerik:RadToolBarButton>
+                                <telerik:RadToolBarButton runat="server" ImageUrl="~/images/farm.png" NavigateUrl="~/farm.aspx"
+                                    Text="Khu dân cư">
+                                </telerik:RadToolBarButton>
+                                <telerik:RadToolBarButton runat="server" ImageUrl="~/images/storage.png" NavigateUrl="~/warehouse.aspx"
+                                    Text="Nhà kho">
+                                </telerik:RadToolBarButton>
+                                <telerik:RadToolBarButton runat="server" ImageUrl="~/images/wall.png" NavigateUrl="~/wall.aspx"
+                                    Text="Tường thành">
+                                </telerik:RadToolBarButton>
+                            </Items>
+                        </telerik:RadToolBar>
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </div>
+    <div style="text-align: center;">
+        <table align="center" width="840" cellspacing="0" style="padding: 0; margin-bottom: 4px">
+            <tr>
+                <td>
+                    <table class="navi-border" style="border-collapse: collapse;">
+                        <tr>
+                            <td>
+                                <table class="menu nowrap" style="width: 100%;">
+                                    <tr id="menu_row2">
+                                        <td>
+                                            <a href="javascript:void(0);" onclick="radopen('shoutbox.aspx', 'Shoutbox');">Shoutbox</a>
+                                        </td>
+                                        <td>
+                                            <a href="map.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>">Bản đồ</a>
+                                        </td>
+                                        <td class="no_hover">
+                                        </td>
+                                        <td style="white-space: normal;">
+                                            <a href='village.aspx?id=<% Response.Write(this.CurrentVillage.ID); %>'><span id="city_name">
+                                                <% Response.Write(this.CurrentVillage.Name); %></span></a> (<% Response.Write(this.CurrentVillage.X.ToString("000")); %>|<% Response.Write(this.CurrentVillage.Y.ToString("000")); %>)
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td align="right">
+                    <table align="right" class="navi-border" style="border-collapse: collapse;">
+                        <tr>
+                            <td>
+                                <table class="box" cellspacing="0">
+                                    <tr style="height: 20px;">
+                                        <td>
+                                            <a href="wood.aspx?id=<% = this.CurrentVillage.ID %>" onclick="jQuery.facebox($('#pTimber').html());return false;">
+                                                <img src="images/holz.png" /></a>
+                                        </td>
+                                        <td>
+                                            <asp:Label ID="lblWood" runat="server"></asp:Label>
+                                        </td>
+                                        <td>
+                                            <a href="clay.aspx?id=<% Response.Write(this.CurrentVillage.ID.ToString()); %>" onclick="jQuery.facebox($('#pClaypit').html());return false;">
+                                                <img src="images/lehm.png" /></a>
+                                        </td>
+                                        <td>
+                                            <asp:Label ID="lblClay" runat="server"></asp:Label>
+                                        </td>
+                                        <td>
+                                            <a href="clay.aspx?id=<% Response.Write(this.CurrentVillage.ID.ToString()); %>" onclick="jQuery.facebox($('#pMine').html());return false;">
+                                                <img src="images/eisen.png" /></a>
+                                        </td>
+                                        <td>
+                                            <asp:Label ID="lblIron" runat="server"></asp:Label>
+                                        </td>
+                                        <td style="border-left: dotted 1px;">
+                                            <a href="resources.aspx?id=<% Response.Write(this.CurrentVillage.ID.ToString()); %>"" onclick="jQuery.facebox($('#pWarehouse').html());return false;">
+                                                <img src="images/res.png" /></a>
+                                        </td>
+                                        <td>
+                                            <% Response.Write(this.CurrentVillage.MaxResources.ToString()); %>
+                                            <asp:Label ID="resource" runat="server"></asp:Label>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td align="center">
+                    <table class="navi-border" style="border-collapse: collapse;">
+                        <tr>
+                            <td style="margin: 0; padding: 0;">
+                                <table class="box" cellspacing="0" style="margin: 0; padding: 0;">
+                                    <tr style="margin: 0; padding: 0;">
+                                        <td width="18" height="20" align="center" style="margin: 0; padding: 0;">
+                                            <a href="farm.aspx?id=<% Response.Write(this.CurrentVillage.ID.ToString()); %>" onclick="jQuery.facebox($('#pFarm').html());return false;">
+                                                <img src="images/face.png" /></a>
+                                        </td>
+                                        <td align="center" style="margin: 0; padding: 0;">
+                                            <% = Math.Round(CurrentVillage.Population)%>/<% =this.CurrentVillage.MaxPopulation %>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <asp:Label ID="incoming" runat="server"></asp:Label>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <table align="center">
+            <tr>
+                <td>
+                    <table class="content-border">
+                        <tr>
+                            <td>
+                                <table class="main" width="840" align="center">
+                                    <tr>
+                                        <td>
+                                            <table width="100%">
+                                                <tr>
+                                                    <td>
+                                                        <asp:ContentPlaceHolder ID="body" runat="server">
+                                                        </asp:ContentPlaceHolder>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="right" style="font-size: 11px;">
+                                                        trang web được tạo trong
+                                                        <asp:Label ID="delay" runat="server"></asp:Label>ms Thời gian:
+                                                        <% = DateTime.Now.ToString("dd/MM/yyyy '<span class=\"increaseTimer\">'hh:mm:ss'</span>'")%>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <script language="javascript" type="text/javascript">
+        <% if (this.CurrentVillage.VillageResourceData.Clay < this.CurrentVillage.MaxResources)
+       { %>
+        production("<% = this.lblClay.ClientID %>", <% Response.Write(this.CurrentVillage.VillageResourceMethods.SecondPerResourceUnit(beans.ResourcesType.Clay)); %>*1000);
+        <%}  if (this.CurrentVillage.VillageResourceData.Wood < this.CurrentVillage.MaxResources) { %>
+        production("<% = this.lblWood.ClientID %>", <% Response.Write(this.CurrentVillage.VillageResourceMethods.SecondPerResourceUnit(beans.ResourcesType.Wood)); %>*1000);
+        <%}  if (this.CurrentVillage.VillageResourceData.Iron < this.CurrentVillage.MaxResources) { %>
+        production("<% = this.lblIron.ClientID %>", <% Response.Write(this.CurrentVillage.VillageResourceMethods.SecondPerResourceUnit(beans.ResourcesType.Iron)); %>*1000);
+        <%} %>
+        attackTimer();
+        increaseTime();
+    </script>
+
+    </form>
+    <div id="pTimber" style="display: none;">
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <img src="images/wood3.png" title="Timber camp" alt="" />
+                    </td>
+                    <td>
+                        <h2>
+                            Trại đốn gỗ cấp
+                            <% = this.CurrentVillage.VillageBuildingData.TimberCamp %></h2>
+                        Mỗi thành phố đều được hệ thống sinh thái rừng rậm bảo vệ khỏi nạn ô nhiễm môi trường
+                        từ khói thuốc, xe cộ và khí thải CO2. Từ rừng, chúng ta mới có những chuyện cổ tích
+                        như Thạch Sanh - Lý Thông hay Cây tre trăm đốt. Hi vọng các bác tiều phu của chúng
+                        ta không đốn quá nhiều, để dành cho con cháu mai sau.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+        <table class="vis">
+            <tbody>
+                <tr>
+                    <td width="200">
+                        <img src="images/resources/wood.png" title="Wood" alt="">
+                        Sản lượng hiện tại
+                    </td>
+                    <td>
+                        Tăng <b>
+                            <% = this.CurrentVillage.VillageResourceMethods.ProductPerHour(beans.ResourcesType.Wood)%></b>&nbsp;đơn
+                        vị gỗ mỗi giờ
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="pClaypit" style="display: none;">
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <img src="images/stone3.png" title="Lò gạch" alt="" />
+                    </td>
+                    <td>
+                        <h2>
+                            Lò gạch cấp
+                            <% = this.CurrentVillage.VillageBuildingData.ClayPit %></h2>
+                        Cung cấp vật liệu xây dựng dùng cho phát triển thành phố to - đẹp - hiện đại. Nghe
+                        giang hồ đồn đại rằng vào những đêm trăng sáng hoặc lễ hội Valentine, 8/3, hai vợ
+                        chồng nhà Thị Nở - Chí Phèo chuyên môn ra đây tâm sự.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <table class="vis">
+            <tbody>
+                <tr>
+                    <td width="200">
+                        <img src="images/lehm.png" title="Wood" alt="">
+                        Sản lượng hiện tại
+                    </td>
+                    <td>
+                        Tăng <b>
+                            <% = this.CurrentVillage.VillageResourceMethods.ProductPerHour(beans.ResourcesType.Clay) %></b>&nbsp;đơn
+                        vị gạch mỗi giờ
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="pMine" style="display: none;">
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <img src="images/iron3.png" title="Mỏ sắt" alt="" />
+                    </td>
+                    <td>
+                        <h2>
+                            Mỏ sắt cấp
+                            <% = this.CurrentVillage.VillageBuildingData.IronMine %></h2>
+                        Không như dầu mỏ Arập hay kim cương Châu Phi, các mỏ sắt trong Medieval Wars không
+                        bao giờ cạn kiệt. Cứ yên tâm khai thác, lấy nhiều được nhiều, lấy ít được ít. Nhưng
+                        cẩn thận đấy: Sắt chuyên dùng cho đào tạo quân đội, nên cũng dễ bị quân đội nơi
+                        khác đến cướp đi.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <table class="vis">
+            <tbody>
+                <tr>
+                    <td width="200">
+                        <img src="images/iron.png" title="Wood" alt="">
+                        Sản lượng hiện tại
+                    </td>
+                    <td>
+                        Tăng <b>
+                            <% = this.CurrentVillage.VillageResourceMethods.ProductPerHour(beans.ResourcesType.Iron) %></b>&nbsp;đơn
+                        vị kim loại mỗi giờ
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="pWarehouse" style="display: none;">
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <img src="images/big_buildings/storage3.png" title="Warehouse" alt="">
+                    </td>
+                    <td>
+                        <h2>
+                            Warehouse Level
+                            <% = this.CurrentVillage[beans.BuildingType.Warehouse]%></h2>
+                        The warehouse stores your resources. The higher its level the more resources can
+                        be stored.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <table>
+            <tbody>
+                <tr>
+                    <td width="220">
+                        Current storage capacity
+                    </td>
+                    <td>
+                        <b>
+                            <% = this.CurrentVillage.MaxResources%></b> units per resource
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Storage capacity on level 29
+                    </td>
+                    <td>
+                        <b>
+                            <% = (int)(this.CurrentVillage.MaxResources + this.CurrentVillage.MaxResources * 0.3)%></b>
+                        units per resource
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <table class="vis">
+            <tbody>
+                <tr>
+                    <th width="150">
+                        Warehouse full
+                    </th>
+                    <th>
+                        Time (hh:mm:ss)
+                    </th>
+                </tr>
+                <tr>
+                    <td width="250">
+                        <img src="images/holz.png" title="Wood" alt="" />
+                        <% = (DateTime.Now + TimeSpan.FromSeconds(this.CurrentVillage.VillageResourceMethods.TimeTillFullWarehouse(DateTime.Now, beans.ResourcesType.Wood))).ToString("'ngày' dd/MM/yyyy 'lúc' HH:mm:ss")%>
+                    </td>
+                    <td>
+                        <span class="timer">
+                            <% = Functions.FormatTime(this.CurrentVillage.VillageResourceMethods.TimeTillFullWarehouse(DateTime.Now, beans.ResourcesType.Wood), false)%></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="250">
+                        <img src="images/lehm.png" title="Clay" alt="" />
+                        <% = (DateTime.Now + TimeSpan.FromSeconds(this.CurrentVillage.VillageResourceMethods.TimeTillFullWarehouse(DateTime.Now, beans.ResourcesType.Clay))).ToString("'ngày' dd/MM/yyyy 'lúc' HH:mm:ss")%>
+                    </td>
+                    <td>
+                        <span class="timer">
+                            <% = Functions.FormatTime(this.CurrentVillage.VillageResourceMethods.TimeTillFullWarehouse(DateTime.Now, beans.ResourcesType.Clay), false)%></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="250">
+                        <img src="images/eisen.png" title="Iron" alt="" />
+                        <% = (DateTime.Now + TimeSpan.FromSeconds(this.CurrentVillage.VillageResourceMethods.TimeTillFullWarehouse(DateTime.Now, beans.ResourcesType.Iron))).ToString("'ngày' dd/MM/yyyy 'lúc' HH:mm:ss")%>
+                    </td>
+                    <td>
+                        <span class="timer">
+                            <% = Functions.FormatTime(this.CurrentVillage.VillageResourceMethods.TimeTillFullWarehouse(DateTime.Now, beans.ResourcesType.Iron), false)%></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="pFarm" style="display: none;">
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <img src="images/big_buildings/farm3.png" title="Farm" alt="">
+                    </td>
+                    <td>
+                        <h2>
+                            Farm Level
+                            <% = this.CurrentVillage[beans.BuildingType.Farm]%></h2>
+                        The farm supplies your workers and troops with food. Without extending your farm
+                        your village cannot grow. The higher its level the more villagers can be supplied.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <table class="vis">
+            <tbody>
+                <tr>
+                    <td>
+                        <img src="images/face.png" title="Villagers" alt="">
+                        Maximum population
+                    </td>
+                    <td>
+                        <b>
+                            <% = this.CurrentVillage.MaxPopulation%></b>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h4>
+            Current population</h4>
+        <table class="vis">
+            <tbody>
+                <tr>
+                    <td>
+                        Tổng cộng
+                    </td>
+                    <td align="right">
+                        <b>
+                            <% = (int)this.CurrentVillage.Population %></b>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
